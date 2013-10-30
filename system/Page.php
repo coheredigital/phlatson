@@ -1,17 +1,8 @@
 <?php 
-
-
-class JPage{
+class Page{
 
 	public $data;
-
-
-
 	function __construct($xmlFile){
-		$this->data =  simplexml_load_file($xmlFile);
+		$this->data = simplexml_load_file($xmlFile);
 	}
-
-
-
-
 }

@@ -5,18 +5,17 @@
  *
  */
 
-spl_autoload_register('JPagesClassLoader');
+spl_autoload_register('XPagesClassLoader');
 
 /**
  * Handles dynamic loading of classes as registered with spl_autoload_register
  *
  */
-function JPagesClassLoader($className) {
+function XPagesClassLoader($className) {
 
-	$file = JPAGES_CORE_PATH . "$className.php";
+	$file = SYSTEM_DIR.$className.".php";
 
-	if(is_file($file)) {
-		require($file);
-	}
+	if(is_file($file)) require($file);
+	
 	
 }
