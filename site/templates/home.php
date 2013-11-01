@@ -5,6 +5,7 @@
 	  <div class="container">
 	    <h1><?php echo $page->title ?></h1>
 	    <h5><?php echo $page->author ?></h5>
+	    <h5><?php echo $page->date ?></h5>
 	  </div>
 	</div>
 	<?php echo $page->content ?>
