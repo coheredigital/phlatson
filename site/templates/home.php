@@ -1,5 +1,4 @@
 <?php include 'inc/head.inc'; ?>
-
 <div class="container">
 	<div class="jumbotron">
 	  <div class="container">
@@ -10,5 +9,4 @@
 	</div>
 	<?php echo $page->content ?>
 </div>
-
 <?php include 'inc/foot.inc'; ?>
