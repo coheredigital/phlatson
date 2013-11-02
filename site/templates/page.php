@@ -1,4 +1,4 @@
-<?php include 'inc/head.inc'; ?>
+<?php include '_head.inc'; ?>
 
 <div class="container">
 	<h1><?php echo $page->title ?></h1>
@@ -7,4 +7,4 @@
 	<?php echo $page->content ?>
 </div>
 
-<?php include 'inc/foot.inc'; ?>
+<?php include '_foot.inc'; ?>

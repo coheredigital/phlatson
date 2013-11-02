@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 class Page{
@@ -11,14 +11,10 @@ class Page{
 
 	function __construct(){
 
-		$uri = ltrim($_SERVER['REQUEST_URI'], SITE_ROOT);
+		$directory = ltrim($_GET['url']);
+		$file = CONTENT_DIR.$directory."/content.xml";
 
-		if(DIRECTORY_SEPARATOR != '/') 
-			$file = str_replace(  DIRECTORY_SEPARATOR,'/', CONTENT_DIR.$uri);
-		$file = ltrim($file, "/")."/content.xml";
-
-		if (is_file($file))
-			$this->data = simplexml_load_file($file);
+		if (is_file($file)) $this->data = simplexml_load_file($file);
 		$this->getTemplate();
 	}
 
@@ -30,7 +26,7 @@ class Page{
 
 
 	public function getData($fp){
-		
+
 	}
 
 	public function getTemplate(){
@@ -38,8 +34,23 @@ class Page{
 	}
 
 
+
+
+	public function get($name){
+		switch ($name) {
+			case 'children':
+				$value = $this->children();
+				break;
+			default:
+				$value = $this->data->{$name};
+				break;
+		}
+		return $value;
+	}
+
+	/* MAGIC!! */
 	public function __get($name){
-		if ($this->data->{$name}) return $this->data->{$name};
-	}	
+		return $this->get($name);
+	}
 
 }
