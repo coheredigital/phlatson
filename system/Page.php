@@ -8,6 +8,7 @@ class Page{
 	protected $_data;
 	protected $_path;
 	protected $_file;
+	protected $_request;
 
 	public $template;
 	public $_dirs = array();
@@ -16,12 +17,12 @@ class Page{
 
 	function __construct(){
 
-		$directory = $_GET['url'] ? ltrim($_GET['url']) : "";
-		if ($directory == "admin") {
-			$this->template = "./system/admin/admin.php";
+		$this->_request = $_GET['url'] ? ltrim($_GET['url']) : "";
+		if ($this->_request == "admin") {
+			$this->template = "./system/admin/index.php";
 		}
 		else{
-			$this->_path = CONTENT_DIR.$directory."/";
+			$this->_path = CONTENT_DIR.$this->_request."/";
 			$this->_file = $this->_path."content.xml";
 
 			if (is_file($this->_file)) $this->_data = simplexml_load_file($this->_file);
