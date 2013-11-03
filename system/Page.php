@@ -5,35 +5,35 @@ class Page{
 
 
 	// define some protected variable to be used by all page objects
-	private $data;
+	private $_data;
 	public $template;
 
 
 	function __construct(){
 
-		$directory = ltrim($_GET['url']);
-		$file = CONTENT_DIR.$directory."/content.xml";
+		$directory = $_GET['url'] ? ltrim($_GET['url']) : "";
+		if ($directory == "admin") {
+			$this->template = "./system/admin/admin.php";
+		}
+		else{
+			$file = CONTENT_DIR.$directory."/content.xml";
 
-		if (is_file($file)) $this->data = simplexml_load_file($file);
-		$this->getTemplate();
-	}
-
-	private function setup(){
-
-	}
-
-
-
-
-	public function getData($fp){
+			if (is_file($file)) $this->data = simplexml_load_file($file);
+			$this->template = "./site/templates/{$this->data->template}.php";
+		}
 
 	}
 
-	public function getTemplate(){
-		$this->template = "./site/templates/{$this->data->template}.php";
+
+
+
+
+
+
+
+	public function render(){
+		return include $this->template;
 	}
-
-
 
 
 	public function get($name){
