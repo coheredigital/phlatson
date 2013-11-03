@@ -5,6 +5,10 @@
 	<hr>
 	<hr>
 	<?php echo $page->content ?>
+
+		<p><?php echo $page->children ?></p>
+
+
 </div>
 
 <?php include '_foot.inc'; ?>
