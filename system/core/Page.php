@@ -15,7 +15,7 @@ class Page{
 
 
 
-	function __construct(){
+	function __construct($url = false){
 
 		$this->_request = $_GET['url'] ? ltrim($_GET['url']) : "";
 		if ($this->_request == "admin") {

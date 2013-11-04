@@ -1,14 +1,15 @@
 <?php
 
-define("SYSTEM_DIR", dirname(__FILE__) . '/');
+define("CORE_DIR", dirname(__FILE__) . '/');
 
-require_once( SYSTEM_DIR . "autoload.php");
+require_once( CORE_DIR . "_autoload.php");
 
 class XPages{
 
 
 	public function __construct(Config $config) {
 		$this->_config($config);
+		$pages = new Pages();
 	}
 
 

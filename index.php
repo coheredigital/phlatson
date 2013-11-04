@@ -19,13 +19,14 @@ function XpagesConfig() {
 	 * Define installation paths and urls
 	 *
 	 */
-	$rootPath = dirname(__FILE__);
+	$rootPath = dirname(__FILE__)."/";
 	$siteDir = 'site';
-	$coreDir = "system";
+	$systemDir = $rootPath."system/";
+	$coreDir = $systemDir."core/";
 	$assetsDir = "$siteDir/assets";
 	$adminTplDir = 'templates-admin';
 
-	require("$rootPath/$coreDir/XPages.php");
+	require("{$coreDir}XPages.php");
 
 	/*
 	 * Setup configuration data and default paths/urls
