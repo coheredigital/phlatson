@@ -1,6 +1,6 @@
 <page>
 	<!-- Reserved -->
-	<template>page</template>
+	<template>default</template>
 
 	<title>This Test New Page Title Here</title>
 	<content>
@@ -17,5 +17,5 @@
 			Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.</p>
 		]]>
 	</content>
-	
+
 </page>

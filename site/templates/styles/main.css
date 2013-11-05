@@ -1,0 +1,35 @@
+body{
+	color: #777;
+}
+.header{
+	background: #a44;
+	color: #fff;
+	line-height: 1em;
+	padding: 3em 0;
+		margin-bottom: 3em;
+}
+.header h1{
+	font-size: 4em;
+	letter-spacing: -4px;
+	line-height: 1em;
+	margin: 0;
+	text-transform: uppercase;
+	font-weight: 100;
+}
+
+.footer{
+	background: #eee;
+	border-top: 1px solid #ddd;
+	text-align: center;
+	padding: 2em 0;
+	margin-top: 3em;
+}
+
+
+
+/*Xpages Stuff*/
+
+.XPages-debug{
+	background: #ddd;
+	padding: 1em;
+}

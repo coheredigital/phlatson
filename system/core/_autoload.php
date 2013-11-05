@@ -13,9 +13,13 @@ spl_autoload_register('XPagesClassLoader');
  */
 function XPagesClassLoader($className) {
 
-	$file = CORE_DIR.$className.".php";
+	$coreFile = CORE_DIR."$className.php";
+	$fieldFile = SYSTEM_DIR."fields/$className.php";
 
-	if(is_file($file)) require($file);
+
+	if(is_file($coreFile)) require($coreFile);
+	elseif(is_file($fieldFile)) require($fieldFile);
+
 
 
 }

@@ -9,7 +9,7 @@ class XPages{
 
 	public function __construct(Config $config) {
 		$this->_config($config);
-		$pages = new Pages();
+
 	}
 
 
@@ -29,3 +29,4 @@ class XPages{
 
 
 }
+

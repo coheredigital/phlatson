@@ -8,8 +8,8 @@ class Page{
 	protected $_data;
 	protected $_path;
 	protected $_file;
-	protected $_request;
 
+	public $url;
 	public $template;
 	public $_dirs = array();
 
@@ -17,18 +17,22 @@ class Page{
 
 	function __construct($url = false){
 
-		$this->_request = $_GET['url'] ? ltrim($_GET['url']) : "";
-		if ($this->_request == "admin") {
-			$this->template = "./system/admin/index.php";
-		}
+		$this->_request = $url ? $url : $_GET['url'];
+		$this->url = SITE_ROOT.$url;
+
+		if ($this->_request == "admin") $this->template = "./system/admin/index.php";
 		else{
 			$this->_path = CONTENT_DIR.$this->_request."/";
 			$this->_file = $this->_path."content.xml";
-
 			if (is_file($this->_file)) $this->_data = simplexml_load_file($this->_file);
-			$this->template = "./site/templates/{$this->_data->template}.php";
 		}
 
+
+		if ($this->_data) $this->_setTemplate($this->_data);
+	}
+
+	protected function _setTemplate($data){
+		$this->template = "./site/templates/{$this->_data->template}.php";
 	}
 
 
@@ -59,6 +63,22 @@ class Page{
 	}
 
 
+	protected function _formatField($f){
+		$attributes = $f->attributes();
+		$value = (string) $f;
+		$type = (string) $f->attributes()->fieldtype;
+		$format = (string) $f->attributes()->format;
+
+		$className = "Field".$type;
+
+		if ($type) {
+			$field = new $className($value, $type, $format);
+			$value = $field;
+		}
+
+
+		return $value;
+	}
 
 
 
@@ -72,7 +92,7 @@ class Page{
 				$value = $this->children();
 				break;
 			default:
-				$value = $this->_data->{$name};
+				$value = $this->_formatField($this->_data->{$name});
 				break;
 		}
 		return $value;

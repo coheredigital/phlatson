@@ -5,9 +5,11 @@
 		<title>
 			Admin
 		</title>
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="/XPages/system/admin/scripts/bootstrap.js" type="text/javascript"></script>
+		<script src="/XPages/system/admin/scripts/redactor/redactor.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="/XPages/system/admin/styles/bootstrap.css" type="text/css">
+		<link rel="stylesheet" href="/XPages/system/admin/scripts/redactor/redactor.css" type="text/css">
 	</head>
 	<body>
 		<div class="container">
@@ -60,6 +62,14 @@
 			<h2>
 				Test
 			</h2>
+
+			<script type="text/javascript">
+			$(function(){
+				$('#Field_Body').redactor();
+			});
+
+			</script>
+			<textarea name="Richtext" id="Field_Body" cols="30" rows="10"></textarea>
 		</div>
 		<?php if ($config->debug): ?>
 			<hr>

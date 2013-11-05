@@ -2,7 +2,8 @@
 
 define("JPAGES", true);
 define('ROOT_DIR', realpath(dirname(__FILE__)) .'/');
-define('SITE_ROOT', 'XPages/');
+define('SYSTEM_DIR', ROOT_DIR.'system/');
+define('SITE_ROOT', 'http://localhost/XPages/');
 define('SITE_DIR', ROOT_DIR . "site/");
 define('CONTENT_DIR', SITE_DIR . "content/");
 
@@ -71,20 +72,16 @@ $config = XpagesConfig();
 
 
 /*
- * Load and execute ProcessWire
+ * Load and execute XPages
  *
  */
-try {
 
-	$XPages = new XPages($config);
 
-	$page = new Page();
-	include $page->template;
+$XPages = new XPages($config);
+$pages = new Pages();
+$page = new Page();
+if ($page->template) include $page->template;
 
-} catch(Exception $e) {
-
-	//  add later
-}
 
 
 
