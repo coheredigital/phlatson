@@ -17,7 +17,8 @@ class Page{
 
 	function __construct($url = false){
 
-		$this->_request = $url ? $url : $_GET['url'];
+		// $this->_request = $url ? $url : $_GET['url'];
+		$this->_request = $_GET['url'];
 		$this->url = SITE_ROOT.$url;
 
 		if ($this->_request == "admin") $this->template = "./system/admin/index.php";
@@ -32,7 +33,7 @@ class Page{
 	}
 
 	protected function _setTemplate($data){
-		$this->template = "./site/templates/{$this->_data->template}.php";
+		$this->template = "./site/layouts/{$this->_data->template}.php";
 	}
 
 
@@ -63,18 +64,33 @@ class Page{
 	}
 
 
-	protected function _formatField($f){
-		$attributes = $f->attributes();
-		$value = (string) $f;
-		$type = (string) $f->attributes()->fieldtype;
-		$format = (string) $f->attributes()->format;
+	protected function _formatField($name){
 
-		$className = "Field".$type;
+		$value = $this->_data->{$name};
+		if (!$value) return false; // return false if node doesn't exist
 
-		if ($type) {
-			$field = new $className($value, $type, $format);
+		$fieldGet = $this->getFieldXML($name);
+
+
+		if ($fieldGet){
+			$fieldtype = (string) $fieldGet->fieldtype;
+			$format = (string) $fieldGet->format;
+		}
+
+		if($value->attributes) {
+			$attributes = $value->attributes();
+			$fieldtype = (string) $value->attributes()->fieldtype;
+			$format = (string) $value->attributes()->format;
+		}
+
+		if ($fieldtype) {
+			$field = new $fieldtype( (string) $value, $fieldtype, $format);
 			$value = $field;
 		}
+		else{
+			$value = $this->_data->{$name};
+		}
+
 
 
 		return $value;
@@ -82,9 +98,17 @@ class Page{
 
 
 
+	public function getFieldXML($name){
+		$file = SITE_DIR."fields/{$name}.xml";
+		if (is_file($file))
+			return simplexml_load_file($file);
+	}
+
+
 	public function render(){
 		return include $this->template;
 	}
+
 
 	public function get($name){
 		switch ($name) {
@@ -92,7 +116,7 @@ class Page{
 				$value = $this->children();
 				break;
 			default:
-				$value = $this->_formatField($this->_data->{$name});
+				$value = $this->_formatField($name);
 				break;
 		}
 		return $value;

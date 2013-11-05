@@ -1,9 +1,9 @@
 <?php
 
 define("JPAGES", true);
+define('SITE_ROOT', 'http://localhost/XPages/');
 define('ROOT_DIR', realpath(dirname(__FILE__)) .'/');
 define('SYSTEM_DIR', ROOT_DIR.'system/');
-define('SITE_ROOT', 'http://localhost/XPages/');
 define('SITE_DIR', ROOT_DIR . "site/");
 define('CONTENT_DIR', SITE_DIR . "content/");
 
@@ -11,8 +11,6 @@ define('CONTENT_DIR', SITE_DIR . "content/");
 /*
  * Setup XPages class autoloads
  */
-
-
 
 function XpagesConfig() {
 

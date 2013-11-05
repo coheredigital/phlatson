@@ -1,0 +1,5 @@
+<field>
+	<fieldtype>FieldtypeDateTime</fieldtype>
+	<label>Published Date</label>
+	<format>Y/m/d</format>
+</field>

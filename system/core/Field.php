@@ -9,7 +9,6 @@ class Field{
 
 	function __construct($v = 0, $t = false, $f = false){
 		$this->_value = $v;
-		$this->_type = $t;
 		$this->_format = $f;
 
 		$this->format();
