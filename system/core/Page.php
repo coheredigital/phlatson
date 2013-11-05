@@ -8,6 +8,7 @@ class Page{
 	protected $_data;
 	protected $_path;
 	protected $_file;
+	protected $_request;
 
 	public $url;
 	public $template;
@@ -17,15 +18,17 @@ class Page{
 
 	function __construct($url = false){
 
-		// $this->_request = $url ? $url : $_GET['url'];
-		$this->_request = $_GET['url'];
-		$this->url = SITE_ROOT.$url;
+		$this->_request = trim($url ? (string) $url : (string) $_GET['url']);
+		$this->url = SITE_ROOT.$this->_request;
 
 		if ($this->_request == "admin") $this->template = "./system/admin/index.php";
 		else{
-			$this->_path = CONTENT_DIR.$this->_request."/";
+			$this->_path = str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR.$this->_request.DIRECTORY_SEPARATOR);
 			$this->_file = $this->_path."content.xml";
-			if (is_file($this->_file)) $this->_data = simplexml_load_file($this->_file);
+
+				$this->_hasFile = 1;
+				$this->_data = simplexml_load_file($this->_file);
+
 		}
 
 
@@ -45,22 +48,20 @@ class Page{
 		foreach($iterator as $file) {
          	if($file->isDir()) {
 
-         		$page = array();
-
-         		// path
          		$path = $file->getRealpath();
-         		$page['path'] = $path;
-
-
-				$path2 = PHP_EOL;
+         		$path2 = PHP_EOL;
 				$path3 = $path.$path2;
 				$array = explode('/', $path3);
 				$result = end($array);
-				// name
-				$page['name'] = basename($result);
-				$this->_dirs[] = $page;
+
+				$url = $this->_request."/".basename($result);
+
+         		$page = new Page($url);
+         		$this->children[] = $page;
+
            }
       	}
+      	return $this->children;
 	}
 
 

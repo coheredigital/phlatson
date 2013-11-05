@@ -6,8 +6,8 @@
 <div class="XPages-debug">
 
 	<?php
-	// var_dump($page);
-	// var_dump($config);
+	var_dump($page);
+	var_dump($config);
 
 	?>
 </div>
