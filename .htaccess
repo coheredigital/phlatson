@@ -1,13 +1,17 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
+
 	RewriteBase /Xpages/
 
 	RewriteRule ^index\.php$ - [L]
-	RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !(favicon\.ico|robots\.txt)
+
+	RewriteRule ^(.*)$ index.php?_request=$1 [L,QSA]
 
 </IfModule>
 
 # Prevent file browsing
-Options -Indexes +FollowSymLinks -MultiViews
+Options -Indexes +FollowSymLinks

@@ -1,6 +1,10 @@
 body{
 	color: #777;
 }
+#nav{
+	margin: 0;
+}
+
 .header{
 	background: #a44;
 	color: #fff;

@@ -12,24 +12,23 @@ class Page{
 
 	public $url;
 	public $template;
-	public $_dirs = array();
+
 
 
 
 	function __construct($url = false){
+		$this->_request = trim($url ? (string) $url : (string) $_GET['_request']);
+		// $this->_request = ltrim($this->_request, "/");
 
-		$this->_request = trim($url ? (string) $url : (string) $_GET['url']);
-		$this->url = SITE_ROOT.$this->_request;
+		$this->url = $this->_request ? SITE_ROOT.$this->_request : SITE_ROOT;
 
-		if ($this->_request == "admin") $this->template = "./system/admin/index.php";
-		else{
-			$this->_path = str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR.$this->_request.DIRECTORY_SEPARATOR);
-			$this->_file = $this->_path."content.xml";
 
-				$this->_hasFile = 1;
-				$this->_data = simplexml_load_file($this->_file);
+		$this->_path = $this->_request ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR.$this->_request.DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR);
+		$this->_file = "{$this->_path}content.xml";
 
-		}
+		$this->_hasFile = 1;
+		$this->_data = simplexml_load_file($this->_file);
+
 
 
 		if ($this->_data) $this->_setTemplate($this->_data);
@@ -43,25 +42,23 @@ class Page{
 
 	public function children(){
 
-		$iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator($this->_path), RecursiveIteratorIterator::SELF_FIRST);
+		$subdirectories = glob("{$this->_path}*" , GLOB_ONLYDIR);
 
-		foreach($iterator as $file) {
-         	if($file->isDir()) {
+		$children = array();
+		foreach($subdirectories as $folder) {
+			$folder = str_replace("/", DIRECTORY_SEPARATOR, $folder);
+			$folder = rtrim($folder, DIRECTORY_SEPARATOR);
 
-         		$path = $file->getRealpath();
-         		$path2 = PHP_EOL;
-				$path3 = $path.$path2;
-				$array = explode('/', $path3);
-				$result = end($array);
+     		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
+     		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+     		$url = ltrim($url, '/');
 
-				$url = $this->_request."/".basename($result);
+     		$page = new Page($url);
+     		$children[] = $page;
 
-         		$page = new Page($url);
-         		$this->children[] = $page;
 
-           }
       	}
-      	return $this->children;
+      	return $children;
 	}
 
 
@@ -126,6 +123,10 @@ class Page{
 	/* MAGIC!! */
 	public function __get($name){
 		return $this->get($name);
+	}
+
+	public function __toString(){
+		return (string) $this->url;
 	}
 
 }
