@@ -46,12 +46,12 @@ class Page{
 
 		$children = array();
 		foreach($subdirectories as $folder) {
-			$folder = str_replace("/", DIRECTORY_SEPARATOR, $folder);
-			$folder = rtrim($folder, DIRECTORY_SEPARATOR);
+
+			$folder = realpath($folder);
 
      		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
      		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-     		$url = ltrim($url, '/');
+     		$url = ltrim($url, DIRECTORY_SEPARATOR);
 
      		$page = new Page($url);
      		$children[] = $page;
@@ -59,6 +59,21 @@ class Page{
 
       	}
       	return $children;
+	}
+
+
+
+	public function parent(){
+
+		$folder = dirname($this->_path);
+		$folder = realpath($folder);
+
+ 		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
+ 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+ 		$url = ltrim($url, DIRECTORY_SEPARATOR);
+
+     	$page = new Page($url);
+      	return $page;
 	}
 
 

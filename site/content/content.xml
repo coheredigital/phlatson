@@ -1,6 +1,6 @@
 <page>
 	<!-- Reserved -->
-	<template>home</template>
+	<template>default</template>
 
 	<!-- Content -->
 	<title>Homepage</title>

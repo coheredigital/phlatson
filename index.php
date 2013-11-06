@@ -69,6 +69,12 @@ function XpagesConfig() {
 $config = XpagesConfig();
 
 
+if ($config->debug) {
+	$debugbar = new DebugBar\StandardDebugBar();
+	$debugbarRenderer = $debugbar->getJavascriptRenderer("/This/");
+	$debugbarRenderer->setBaseUrl(SITE_ROOT."system/plugins/DebugBar/Resources");
+}
+
 /*
  * Load and execute XPages
  *
@@ -78,9 +84,8 @@ $config = XpagesConfig();
 $XPages = new XPages($config);
 $pages = new Pages();
 $page = new Page();
-if ($page->template) include $page->template;
 
 
-
-
-
+// output template
+// NOTE: create a better method of achieving this
+if (is_file($page->template)) include $page->template;
