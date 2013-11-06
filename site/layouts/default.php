@@ -2,25 +2,28 @@
 
 <div class="container">
 
-	<h6><?php echo $page->date ?></h6>
-	<hr>
-	<hr>
 	<?php echo $page->content ?>
 	
 	<?php if ($page->children): ?>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<h4>Child Pages</h4>
-			<ul>
-				<?php foreach ($page->children as $p): ?>
-					<li><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-				<?php endforeach ?>
-			</ul>
+			<?php foreach ($page->children as $p): ?>
+				<p><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></p>
+			<?php endforeach ?>
 		</div>
 	</div>	
 	<?php endif ?>
 
-	<?php $page->parent() ?>
+	<?php if ($page->parent): ?>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h4>Parent Page</h4>
+			<p><a href="<?php echo $page->parent()->url ?>"><?php echo $page->parent->title ?></a></p>
+		</div>
+	</div>
+	<?php endif ?>
+
 
 
 </div>

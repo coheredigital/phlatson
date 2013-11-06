@@ -1,8 +1,10 @@
 <?php
 
+require(dirname(__FILE__).DIRECTORY_SEPARATOR."system".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR."XPages.php");
+
 define("JPAGES", true);
 define('SITE_ROOT', 'http://localhost/XPages/');
-define('ROOT_DIR', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
+define('ROOT_DIR', f::truepath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('SYSTEM_DIR', ROOT_DIR.'system'.DIRECTORY_SEPARATOR);
 define('SITE_DIR', ROOT_DIR . "site".DIRECTORY_SEPARATOR);
 define('CONTENT_DIR', SITE_DIR . "content".DIRECTORY_SEPARATOR);
@@ -25,7 +27,7 @@ function XpagesConfig() {
 	$assetsDir = "$siteDir/assets";
 	$adminTplDir = 'templates-admin';
 
-	require("{$coreDir}XPages.php");
+
 
 	/*
 	 * Setup configuration data and default paths/urls

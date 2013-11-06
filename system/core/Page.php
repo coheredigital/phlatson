@@ -20,14 +20,17 @@ class Page{
 		$this->_request = trim($url ? (string) $url : (string) $_GET['_request']);
 		// $this->_request = ltrim($this->_request, "/");
 
-		$this->url = $this->_request ? SITE_ROOT.$this->_request : SITE_ROOT;
+		$this->url = rtrim(SITE_ROOT.$this->_request, "/");
 
 
 		$this->_path = $this->_request ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR.$this->_request.DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR);
 		$this->_file = "{$this->_path}content.xml";
 
-		$this->_hasFile = 1;
-		$this->_data = simplexml_load_file($this->_file);
+		if (is_file($this->_file)) {
+			$this->_hasFile = 1;
+			$this->_data = simplexml_load_file($this->_file);
+		}
+
 
 
 
@@ -66,13 +69,17 @@ class Page{
 	public function parent(){
 
 		$folder = dirname($this->_path);
-		$folder = realpath($folder);
+		$folder = realpath($folder).DIRECTORY_SEPARATOR;
 
- 		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
- 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
- 		$url = ltrim($url, DIRECTORY_SEPARATOR);
+		if (strlen($folder >= CONTENT_DIR)) {
+	 		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
+	 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+	 		$url = ltrim($url, DIRECTORY_SEPARATOR);
 
-     	$page = new Page($url);
+	 		$page = new Page($url);
+		}
+ 		else $page = false;
+     	
       	return $page;
 	}
 
@@ -127,6 +134,9 @@ class Page{
 		switch ($name) {
 			case 'children':
 				$value = $this->children();
+				break;
+			case 'parent':
+				$value = $this->parent();
 				break;
 			default:
 				$value = $this->_formatField($name);

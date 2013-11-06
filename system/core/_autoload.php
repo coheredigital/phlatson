@@ -1,5 +1,6 @@
 <?php
 
+include '_functions.php';
 /**
  * JPages class autoloader
  *
