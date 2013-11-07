@@ -1,0 +1,19 @@
+.PageTree{
+
+}
+.PageTree > .PageTreeList{
+	padding: 0;
+}
+.PageTreeList{
+	list-style: none;
+	padding-left: 2em;
+}
+.PageTree .panel{
+	margin-bottom: 0.5em;
+}
+.PageTree .panel-body{
+	padding: 0.4em 0.8em;
+}
+
+/* Redactor Styles */
+

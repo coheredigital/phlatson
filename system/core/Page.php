@@ -18,23 +18,31 @@ class Page{
 
 	function __construct($url = false){
 		$this->_request = trim($url ? (string) $url : (string) $_GET['_request']);
-		// $this->_request = ltrim($this->_request, "/");
 
-		$this->url = rtrim(SITE_ROOT.$this->_request, "/");
+		$this->url = rtrim(SITE_URL.$this->_request, "/");
 
-
-		$this->_path = $this->_request ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR.$this->_request.DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_DIR);
-		$this->_file = "{$this->_path}content.xml";
-
-		if (is_file($this->_file)) {
-			$this->_hasFile = 1;
-			$this->_data = simplexml_load_file($this->_file);
+		if ($this->_request != "admin") {
+			$this->_path = $this->_request ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH.$this->_request.DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH);
+			$this->_file = "{$this->_path}content.xml";
+			if (is_file($this->_file)) {
+				$this->_data = simplexml_load_file($this->_file);
+			}
+			if ($this->_data) $this->_setTemplate($this->_data);
+		}
+		else {
+			$this->_path = null;
+			$this->_file = "{$this->_path}content.xml";
+			$this->template = ADMIN_PATH."index.php";
 		}
 
 
 
 
-		if ($this->_data) $this->_setTemplate($this->_data);
+
+
+
+
+
 	}
 
 	protected function _setTemplate($data){
@@ -52,7 +60,7 @@ class Page{
 
 			$folder = realpath($folder);
 
-     		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
+     		$url = str_replace(CONTENT_PATH, '', $folder).DIRECTORY_SEPARATOR;
      		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
      		$url = ltrim($url, DIRECTORY_SEPARATOR);
 
@@ -71,15 +79,15 @@ class Page{
 		$folder = dirname($this->_path);
 		$folder = realpath($folder).DIRECTORY_SEPARATOR;
 
-		if (strlen($folder >= CONTENT_DIR)) {
-	 		$url = str_replace(CONTENT_DIR, '', $folder).DIRECTORY_SEPARATOR;
+		if (strlen($folder >= CONTENT_PATH)) {
+	 		$url = str_replace(CONTENT_PATH, '', $folder).DIRECTORY_SEPARATOR;
 	 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
 	 		$url = ltrim($url, DIRECTORY_SEPARATOR);
 
 	 		$page = new Page($url);
 		}
  		else $page = false;
-     	
+
       	return $page;
 	}
 
@@ -119,7 +127,7 @@ class Page{
 
 
 	public function getFieldXML($name){
-		$file = SITE_DIR."fields/{$name}.xml";
+		$file = SITE_PATH."fields/{$name}.xml";
 		if (is_file($file))
 			return simplexml_load_file($file);
 	}

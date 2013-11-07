@@ -1,3 +1,9 @@
+<?php
+
+$page->title = "Admin";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -5,24 +11,33 @@
 		<title>
 			Admin
 		</title>
+
+		<link rel="stylesheet" href="/XPages/system/admin/styles/bootstrap.css" type="text/css">
+		<link rel="stylesheet" href="/XPages/system/admin/scripts/redactor/redactor.css" type="text/css">
+		<link rel="stylesheet" href="/XPages/system/admin/styles/adminTheme.css" type="text/css">
+
+
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="/XPages/system/admin/scripts/bootstrap.js" type="text/javascript"></script>
 		<script src="/XPages/system/admin/scripts/redactor/redactor.js" type="text/javascript"></script>
-		<link rel="stylesheet" href="/XPages/system/admin/styles/bootstrap.css" type="text/css">
-		<link rel="stylesheet" href="/XPages/system/admin/scripts/redactor/redactor.css" type="text/css">
+
+		<?php if($config->debug) echo $debugbarRenderer->renderHead() ?>
 	</head>
 	<body>
-		<div class="container">
-			<div class="row">
-				<nav class="navbar navbar-default" role="navigation">
-					<!-- Brand and toggle get grouped for better mobile display -->
+		<nav class="navbar navbar-default navbar-static" role="navigation">
+			<div class="container">
+
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span></button> <a class="navbar-brand" href="#">XPages</a>
-					</div><!-- Collect the nav links, forms, and other content for toggling -->
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+						</button>
+						<a class="navbar-brand" href="<?php echo SITE_URL ?>">XPages</a>
+					</div>
+
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
 							<li class="active">
-								<a href="#">Pages</a>
+								<a href="<?php echo ADMIN_URL ?>">Pages</a>
 							</li>
 							<li>
 								<a href="#">Setting</a>
@@ -33,53 +48,30 @@
 								<input type="text" class="form-control" placeholder="Search">
 							</div>
 						</form>
-						<ul class="nav navbar-nav navbar-right">
-							<li>
-								<a href="#">Link</a>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Action</a>
-									</li>
-									<li>
-										<a href="#">Another action</a>
-									</li>
-									<li>
-										<a href="#">Something else here</a>
-									</li>
-									<li>
-										<a href="#">Separated link</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div><!-- /.navbar-collapse -->
+
+					</div>
 				</nav>
 			</div>
 
-			<h2>
-				Test
-			</h2>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<?php
 
-			<script type="text/javascript">
-			$(function(){
-				$('#Field_Body').redactor();
-			});
+					if ($_GET["edit"]) {
+						include 'markup/edit.php';
+					}
+					else{
+						include 'markup/pagetree.php';
+					}
 
-			</script>
-			<textarea name="Richtext" id="Field_Body" cols="30" rows="10"></textarea>
+
+
+					?>
+				</div>
+			</div>
+
 		</div>
-		<?php if ($config->debug): ?>
-			<hr>
-			<pre>
-				<?php
-					var_dump($config);
-					var_dump($page);
-				 ?>
-
-			</pre>
-		<?php endif ?>
+		<?php if($config->debug) echo $debugbarRenderer->render(); ?>
 	</body>
 </html>

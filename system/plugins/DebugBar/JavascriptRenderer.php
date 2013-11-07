@@ -74,7 +74,7 @@ class JavascriptRenderer
         $this->baseUrl = $baseUrl;
 
         if ($basePath === null) {
-            $basePath = __DIR__ . DIRECTORY_SEPARATOR . 'Resources';
+            $basePath = __PATH__ . DIRECTORY_SEPARATOR . 'Resources';
         }
         $this->basePath = $basePath;
 
@@ -94,7 +94,7 @@ class JavascriptRenderer
      *  - controls
      *  - disable_controls
      *  - ignore_collectors
-     * 
+     *
      * @param array $options [description]
      */
     public function setOptions(array $options)
@@ -151,7 +151,7 @@ class JavascriptRenderer
 
     /**
      * Sets the path which assets are relative to
-     * 
+     *
      * @param string $path
      */
     public function setBasePath($path)
@@ -162,7 +162,7 @@ class JavascriptRenderer
 
     /**
      * Returns the path which assets are relative to
-     * 
+     *
      * @return string
      */
     public function getBasePath()
@@ -172,7 +172,7 @@ class JavascriptRenderer
 
     /**
      * Sets the base URL from which assets will be served
-     * 
+     *
      * @param string $url
      */
     public function setBaseUrl($url)
@@ -183,7 +183,7 @@ class JavascriptRenderer
 
     /**
      * Returns the base URL from which assets will be served
-     * 
+     *
      * @return string
      */
     public function getBaseUrl()
@@ -196,7 +196,7 @@ class JavascriptRenderer
      *
      * You can only include js or css vendors using
      * setIncludeVendors('css') or setIncludeVendors('js')
-     * 
+     *
      * @param boolean $enabled
      */
     public function setIncludeVendors($enabled = true)
@@ -216,7 +216,7 @@ class JavascriptRenderer
 
     /**
      * Checks if vendors assets are included
-     * 
+     *
      * @return boolean
      */
     public function areVendorsIncluded()
@@ -226,7 +226,7 @@ class JavascriptRenderer
 
     /**
      * Sets the javascript class name
-     * 
+     *
      * @param string $className
      */
     public function setJavascriptClass($className)
@@ -237,7 +237,7 @@ class JavascriptRenderer
 
     /**
      * Returns the javascript class name
-     * 
+     *
      * @return string
      */
     public function getJavascriptClass()
@@ -247,7 +247,7 @@ class JavascriptRenderer
 
     /**
      * Sets the variable name of the class instance
-     * 
+     *
      * @param string $name
      */
     public function setVariableName($name)
@@ -258,7 +258,7 @@ class JavascriptRenderer
 
     /**
      * Returns the variable name of the class instance
-     * 
+     *
      * @return string
      */
     public function getVariableName()
@@ -272,7 +272,7 @@ class JavascriptRenderer
      *  - INITIALIZE_CONSTRUCTOR: only initializes the instance
      *  - INITIALIZE_CONTROLS: initializes the controls and data mapping
      *  - INITIALIZE_CONSTRUCTOR | INITIALIZE_CONTROLS: initialize everything (default)
-     * 
+     *
      * @param integer $init
      */
     public function setInitialization($init)
@@ -283,7 +283,7 @@ class JavascriptRenderer
 
     /**
      * Returns what should be initialized
-     * 
+     *
      * @return integer
      */
     public function getInitialization()
@@ -293,7 +293,7 @@ class JavascriptRenderer
 
     /**
      * Sets whether to call jQuery.noConflict()
-     * 
+     *
      * @param boolean $enabled
      */
     public function setEnableJqueryNoConflict($enabled = true)
@@ -304,7 +304,7 @@ class JavascriptRenderer
 
     /**
      * Checks if jQuery.noConflict() will be called
-     * 
+     *
      * @return boolean
      */
     public function isJqueryNoConflictEnabled()
@@ -324,7 +324,7 @@ class JavascriptRenderer
      *  - default: a js string, default value of the data map
      *
      * "icon" or "widget" are at least needed
-     * 
+     *
      * @param string $name
      * @param array $options
      */
@@ -339,7 +339,7 @@ class JavascriptRenderer
 
     /**
      * Disables a control
-     * 
+     *
      * @param string $name
      */
     public function disableControl($name)
@@ -352,7 +352,7 @@ class JavascriptRenderer
      * Returns the list of controls
      *
      * This does not include controls provided by collectors
-     * 
+     *
      * @return array
      */
     public function getControls()
@@ -362,7 +362,7 @@ class JavascriptRenderer
 
     /**
      * Ignores widgets provided by a collector
-     * 
+     *
      * @param string $name
      */
     public function ignoreCollector($name)
@@ -373,7 +373,7 @@ class JavascriptRenderer
 
     /**
      * Returns the list of ignored collectors
-     * 
+     *
      * @return array
      */
     public function getIgnoredCollectors()
@@ -383,7 +383,7 @@ class JavascriptRenderer
 
     /**
      * Returns needed asset files relative to the base path
-     * 
+     *
      * @param string $type 'css', 'js' or null for both
      * @return array
      */
@@ -400,7 +400,7 @@ class JavascriptRenderer
      * Sets the class name of the ajax handler
      *
      * Set to false to disable
-     * 
+     *
      * @param string $className
      */
     public function setAjaxHandlerClass($className)
@@ -411,7 +411,7 @@ class JavascriptRenderer
 
     /**
      * Returns the class name of the ajax handler
-     * 
+     *
      * @return string
      */
     public function getAjaxHandlerClass()
@@ -421,7 +421,7 @@ class JavascriptRenderer
 
     /**
      * Sets whether to call bindToJquery() on the ajax handler
-     * 
+     *
      * @param boolean $bind
      */
     public function setBindAjaxHandlerToJquery($bind = true)
@@ -432,7 +432,7 @@ class JavascriptRenderer
 
     /**
      * Checks whether bindToJquery() will be called on the ajax handler
-     * 
+     *
      * @return boolean
      */
     public function isAjaxHandlerBoundToJquery()
@@ -442,7 +442,7 @@ class JavascriptRenderer
 
     /**
      * Sets the class name of the js open handler
-     * 
+     *
      * @param string $className
      */
     public function setOpenHandlerClass($className)
@@ -453,7 +453,7 @@ class JavascriptRenderer
 
     /**
      * Returns the class name of the js open handler
-     * 
+     *
      * @return string
      */
     public function getOpenHandlerClass()
@@ -463,7 +463,7 @@ class JavascriptRenderer
 
     /**
      * Sets the url of the open handler
-     * 
+     *
      * @param string $url
      */
     public function setOpenHandlerUrl($url)
@@ -474,7 +474,7 @@ class JavascriptRenderer
 
     /**
      * Returns the url for the open handler
-     * 
+     *
      * @return string
      */
     public function getOpenHandlerUrl()
@@ -484,7 +484,7 @@ class JavascriptRenderer
 
     /**
      * Returns the list of asset files
-     * 
+     *
      * @param string $type Only return css or js files
      * @return array
      */
@@ -507,7 +507,7 @@ class JavascriptRenderer
 
     /**
      * Filters a tuple of (css, js) assets according to $type
-     * 
+     *
      * @param array $array
      * @param string $type 'css', 'js' or null for both
      * @return array
@@ -544,7 +544,7 @@ class JavascriptRenderer
      * Create an Assetic AssetCollection with the given files.
      * Filenames will be converted to absolute path using
      * the base path.
-     * 
+     *
      * @param array $files
      * @return \Assetic\Asset\AssetCollection
      */
@@ -623,7 +623,7 @@ class JavascriptRenderer
 
     /**
      * Makes a URI relative to another
-     * 
+     *
      * @param string|array $uri
      * @param string $root
      * @return string
@@ -648,7 +648,7 @@ class JavascriptRenderer
      * Returns the code needed to display the debug bar
      *
      * AJAX request should not render the initialization code.
-     * 
+     *
      * @param boolean $initialize Whether to render the de bug bar initialization code
      * @return string
      */
@@ -665,7 +665,7 @@ class JavascriptRenderer
                 $js .= $this->getAddDatasetCode($id, $data, '(stacked)');
             }
         }
-        
+
         $suffix = !$initialize ? '(ajax)' : null;
         $js .= $this->getAddDatasetCode($this->debugBar->getCurrentRequestId(), $this->debugBar->getData(), $suffix);
 
@@ -674,7 +674,7 @@ class JavascriptRenderer
 
     /**
      * Returns the js code needed to initialize the debug bar
-     * 
+     *
      * @return string
      */
     protected function getJsInitializationCode()
@@ -713,7 +713,7 @@ class JavascriptRenderer
      * Returns the js code needed to initialized the controls and data mapping of the debug bar
      *
      * Controls can be defined by collectors themselves or using {@see addControl()}
-     * 
+     *
      * @param string $varname Debug bar's variable name
      * @return string
      */
@@ -778,7 +778,7 @@ class JavascriptRenderer
 
     /**
      * Returns the js code needed to add a dataset
-     * 
+     *
      * @param string $requestId
      * @param array $data
      * @return string
