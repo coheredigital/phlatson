@@ -55,24 +55,19 @@ a.phpdebugbar-minimize-btn {
 }
 
 a.phpdebugbar-tab.phpdebugbar-active {
-  background: #ccc;
-  color: #444;
-  background-image: linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
-  background-image: -o-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
-  background-image: -moz-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
-  background-image: -webkit-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
-  background-image: -ms-linear-gradient(bottom, rgb(173,173,173) 41%, rgb(209,209,209) 71%);
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.41, rgb(173,173,173)), color-stop(0.71, rgb(209,209,209)));
+  background: #333;
+  color: #ddd;
+
 }
   a.phpdebugbar-tab span.phpdebugbar-badge {
     display: none;
     margin-left: 5px;
     font-size: 11px;
     padding: 1px 6px;
-    background: #ccc;
-    border-radius: 4px;
+    background: #eee;
+    font-weight: bold;
+    border-radius: 12px;
     color: #555;
-    font-weight: normal;
     text-shadow: none;
   }
   a.phpdebugbar-tab span.phpdebugbar-badge.phpdebugbar-important {

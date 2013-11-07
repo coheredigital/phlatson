@@ -10,19 +10,22 @@ class Page{
 	protected $_file;
 	protected $_request;
 
-	public $url;
+
 	public $template;
 
 
 
 
 	function __construct($url = false){
-		$this->_request = trim($url ? (string) $url : (string) $_GET['_request']);
 
-		$this->url = rtrim(SITE_URL."/".$this->_request, "/");
+		$url = trim($url ? $url : $_GET['_url'], "/");
+		$this->_request = $this->_requests($url);
 
-		if ($this->_request != "admin") {
-			$this->_path = $this->_request ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH.$this->_request.DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH);
+
+		if ($this->url != "admin") {
+			$this->_path = $this->url ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH.$this->url(false).DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH);
+
+
 			$this->_file = "{$this->_path}content.xml";
 			if (is_file($this->_file)) {
 				$this->_data = simplexml_load_file($this->_file);
@@ -35,19 +38,30 @@ class Page{
 			$this->template = ADMIN_PATH."index.php";
 		}
 
-
-
-
-
-
-
-
-
 	}
+
+
+
+	protected function _requests($url){
+		$array = explode("/", $url);
+		return $array;
+	}
+
 
 	protected function _setTemplate($data){
 		$this->template = "./site/layouts/{$this->_data->template}.php";
 	}
+
+
+
+	public function url($full = true){
+		$url = implode("/", $this->_request);
+		if ($full) {
+			$url = SITE_URL."/".$url;
+		}
+		return $url;
+	}
+
 
 
 
@@ -75,6 +89,31 @@ class Page{
 
 
 	public function parent(){
+
+		// $folder = dirname($this->_path);
+		// $folder = realpath($folder).DIRECTORY_SEPARATOR;
+
+		// if (strlen($folder >= CONTENT_PATH)) {
+	 // 		$url = str_replace(CONTENT_PATH, '', $folder).DIRECTORY_SEPARATOR;
+	 // 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+	 // 		$url = ltrim($url, DIRECTORY_SEPARATOR);
+
+	 // 		$page = new Page($url);
+		// }
+ 	// 	else $page = false;
+
+
+
+
+		$requests = $this->_request;
+		array_pop($requests);
+
+		$page = new Page($url);
+      	return $page;
+	}
+
+
+	public function rootParent(){
 
 		$folder = dirname($this->_path);
 		$folder = realpath($folder).DIRECTORY_SEPARATOR;
@@ -124,7 +163,17 @@ class Page{
 		return $value;
 	}
 
+	protected function createUrl($array){
 
+ 		$url = implode("/", $array);
+ 		if ($url) {
+ 			$url = "/".$url;
+ 		}
+ 		else
+ 		
+
+ 		return $url;
+	}
 
 	public function getFieldXML($name){
 		$file = SITE_PATH."fields/{$name}.xml";
@@ -145,6 +194,9 @@ class Page{
 				break;
 			case 'parent':
 				$value = $this->parent();
+				break;			
+			case 'url':
+				$value = $this->url();
 				break;
 			default:
 				$value = $this->_formatField($name);

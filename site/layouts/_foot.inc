@@ -1,11 +1,14 @@
-<div class="footer">
-	<p>XPages Demo Site &copy; <?php echo date('Y'); ?></p>
-</div>
-	<?php
+			
+	</div>
+	<div class="footer">
+		<p>XPages Demo Site &copy; <?php echo date('Y'); ?></p>
+	</div>
+		<?php
 
-	if($config->debug){
-
-		echo $debugbarRenderer->render();
-	} ?>
+		if($config->debug){
+			$debugbar['messages']->info($input);
+			$debugbar['messages']->info($page);
+			echo $debugbarRenderer->render();
+		} ?>
 </body>
 </html>

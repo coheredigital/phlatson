@@ -1,9 +1,4 @@
-<?php
-include '_head.inc';
-
-	$debugbar['messages']->info($input);
-
-?>
+<?php include '_head.inc' ?>
 
 <div class="container">
 

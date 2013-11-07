@@ -1,15 +1,8 @@
 <?php
 
 class Input{
-
-	public $request;
-
-
 	function __construct(){
-
 		$this->_setup();
-		$this->_requests();
-
 	}
 
 
@@ -17,7 +10,7 @@ class Input{
 
 		$get = new stdClass();
 		foreach ($_GET as $key => $value) {
-			if ($key == "_request") continue; // skip XPages specific request
+			if ($key == "_url") continue; // skip XPages specific request
 			$get->$key = $value;
 		}
 		if (count((array) $get)) $this->get = $get;
@@ -34,14 +27,6 @@ class Input{
 
 	}
 
-	protected function _requests(){
-
-		$url = $_GET["_request"];
-
-		$array = explode("/", $url);
-		$this->request = $array;
-
-	}
 
 
 
