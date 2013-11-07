@@ -3,8 +3,7 @@
 class Input{
 
 	public $request;
-	public $get;
-	public $post;
+
 
 	function __construct(){
 
@@ -21,14 +20,17 @@ class Input{
 			if ($key == "_request") continue; // skip XPages specific request
 			$get->$key = $value;
 		}
-		$this->get = $get;
+		if (count((array) $get)) $this->get = $get;
+
 
 
 		$post = new stdClass();
 		foreach ($_POST as $key => $value) {
 			$post->$key = $value;
 		}
-		$this->post = $post;
+		if (count((array) $post)) $this->post = $post;
+
+
 
 	}
 

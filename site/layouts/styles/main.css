@@ -3,6 +3,18 @@ body{
 }
 #nav{
 	margin: 0;
+	border: none;
+	background: #933;
+
+}
+#nav a{
+	color: #c66;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+#nav .active a{
+	background: #a44;
+	color: #fff;
 }
 
 .header{
@@ -11,6 +23,7 @@ body{
 	line-height: 1em;
 	padding: 3em 0;
 		margin-bottom: 3em;
+		border-bottom: 6px solid #c66;
 }
 .header h1{
 	font-size: 4em;

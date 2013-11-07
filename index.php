@@ -78,6 +78,7 @@ if ($config->debug) {
 	$debugbar = new DebugBar\StandardDebugBar();
 	$debugbarRenderer = $debugbar->getJavascriptRenderer("/This/");
 	$debugbarRenderer->setBaseUrl(SITE_URL."/system/plugins/DebugBar/Resources");
+	$debugbar['time']->startMeasure('pagerender', 'Page Render');
 }
 
 /*
@@ -85,12 +86,12 @@ if ($config->debug) {
  *
  */
 
-
+$debugbar['time']->startMeasure('setup', 'Setup');
 $XPages = new XPages($config);
 $pages = new Pages();
 $page = new Page();
 $input = new Input();
-
+$debugbar['time']->stopMeasure('setup');
 
 // output template
 // NOTE: create a better method of achieving this
