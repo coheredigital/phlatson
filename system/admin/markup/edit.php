@@ -1,10 +1,7 @@
 <?php
 
 	$url = str_replace(SITE_URL, "", $_GET["edit"])."/";
-	$debugbar['messages']->info($_GET["edit"]);
-	$debugbar['messages']->info($url);
 	$pageEdit = $pages->get($url);
-	$debugbar['messages']->info($pageEdit);
 
  ?>
 <form action="" role="form">

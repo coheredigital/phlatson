@@ -89,6 +89,7 @@ if ($config->debug) {
 $XPages = new XPages($config);
 $pages = new Pages();
 $page = new Page();
+$input = new Input();
 
 
 // output template

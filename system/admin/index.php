@@ -20,6 +20,7 @@ $page->title = "Admin";
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="/XPages/system/admin/scripts/bootstrap.js" type="text/javascript"></script>
 		<script src="/XPages/system/admin/scripts/redactor/redactor.js" type="text/javascript"></script>
+		<script src="/XPages/system/admin/scripts/XPages.js" type="text/javascript"></script>
 
 		<?php if($config->debug) echo $debugbarRenderer->renderHead() ?>
 	</head>

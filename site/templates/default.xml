@@ -1,0 +1,4 @@
+<template>
+	<title col="12" ></title>
+	<content col="12" ></content>
+</template>

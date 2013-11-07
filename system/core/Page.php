@@ -19,7 +19,7 @@ class Page{
 	function __construct($url = false){
 		$this->_request = trim($url ? (string) $url : (string) $_GET['_request']);
 
-		$this->url = rtrim(SITE_URL.$this->_request, "/");
+		$this->url = rtrim(SITE_URL."/".$this->_request, "/");
 
 		if ($this->_request != "admin") {
 			$this->_path = $this->_request ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH.$this->_request.DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH);

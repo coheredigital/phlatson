@@ -1,9 +1,16 @@
-<?php include '_head.inc'; ?>
+<?php
+include '_head.inc';
+
+	$debugbar['messages']->info($input);
+
+?>
 
 <div class="container">
 
 	<?php echo $page->content ?>
-	
+
+
+
 	<?php if ($page->children): ?>
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -12,7 +19,7 @@
 				<p><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></p>
 			<?php endforeach ?>
 		</div>
-	</div>	
+	</div>
 	<?php endif ?>
 
 	<?php if ($page->parent): ?>
@@ -23,9 +30,6 @@
 		</div>
 	</div>
 	<?php endif ?>
-
-
-
 </div>
 
 <?php include '_foot.inc'; ?>
