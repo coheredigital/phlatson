@@ -22,20 +22,20 @@
 				</button>
 				<a class="navbar-brand" href="<?php echo $home->url ?>">XPages</a>
 			</div>
-		  <!-- Collect the nav links, forms, and other content for toggling -->
+
+
 		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		    <ul class="nav navbar-nav">
 				<?php foreach ($home->children as $p): ?>
-					<!-- TODO: Fix typecasting requirement here -->
-					<?php $class = $p->url == $page->url ? "class='active'" : "" ?>
+
+					<?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
 					<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
 				<?php endforeach ?>
 		    </ul>
 		  </div>
+
+
 		</div>
-
-
-
 
 	</nav>
 
@@ -46,3 +46,12 @@
 	  </div>
 	</div>
 	<div id="main">
+		<div class="container">
+			<ol class="breadcrumb">
+				<?php $parents = $page->parents() ?>
+				<?php foreach ($parents as $p): ?>
+					<li><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
+				<?php endforeach ?>
+			</ol>
+	
+		</div>

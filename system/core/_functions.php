@@ -29,4 +29,10 @@ class f{
 	}
 
 
+
+}
+
+
+function x($name = 'x') {
+	return X::getFuel($name);
 }

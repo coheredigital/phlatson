@@ -1,40 +1,35 @@
 <?php
 
 
-class Page{
+class Page extends XData implements Countable{
 
+	protected $config;
 
 	// define some protected variable to be used by all page objects
-	protected $_data;
-	protected $_path;
-	protected $_file;
-	protected $_request;
-
-
 	public $template;
-
 
 
 
 	function __construct($url = false){
 
+
 		$url = trim($url ? $url : $_GET['_url'], "/");
 		$this->_request = $this->_requests($url);
 
 
-		if ($this->url != "admin") {
-			$this->_path = $this->url ? str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH.$this->url(false).DIRECTORY_SEPARATOR) : str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH);
+		if ($this->_request[0] != "admin") {
+			$this->_getPath();
 
 
-			$this->_file = "{$this->_path}content.xml";
-			if (is_file($this->_file)) {
-				$this->_data = simplexml_load_file($this->_file);
-			}
+			$this->_file = "{$this->_path}".DIRECTORY_SEPARATOR."content.xml";
+			$this->_loadData($this->_file);
 			if ($this->_data) $this->_setTemplate($this->_data);
+
+
 		}
 		else {
 			$this->_path = null;
-			$this->_file = "{$this->_path}content.xml";
+			$this->_file = "{$this->_path}".DIRECTORY_SEPARATOR."content.xml";
 			$this->template = ADMIN_PATH."index.php";
 		}
 
@@ -67,7 +62,7 @@ class Page{
 
 	public function children(){
 
-		$subdirectories = glob("{$this->_path}*" , GLOB_ONLYDIR);
+		$subdirectories = glob("{$this->_path}".DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
 
 		$children = array();
 		foreach($subdirectories as $folder) {
@@ -86,48 +81,58 @@ class Page{
       	return $children;
 	}
 
-
+	// allows the page array to be counted directly
+	public function count() {
+		return count($this->children());
+	}
 
 	public function parent(){
-
-		// $folder = dirname($this->_path);
-		// $folder = realpath($folder).DIRECTORY_SEPARATOR;
-
-		// if (strlen($folder >= CONTENT_PATH)) {
-	 // 		$url = str_replace(CONTENT_PATH, '', $folder).DIRECTORY_SEPARATOR;
-	 // 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-	 // 		$url = ltrim($url, DIRECTORY_SEPARATOR);
-
-	 // 		$page = new Page($url);
-		// }
- 	// 	else $page = false;
-
-
-
-
 		$requests = $this->_request;
-		array_pop($requests);
+		array_pop($requests); // remove current (last) item to find parent
 
-		$page = new Page($url);
-      	return $page;
+		$url = $this->_createUrl($requests);
+
+		if ($url) {
+			$page = new Page($url);
+	      	return $page;
+		}
+		return false;
+	}
+
+
+	public function parents(){
+		$requests = $this->_request;
+		$parents = array();
+		$urls = array();
+
+		for ($x=count($requests); $x > 0; $x--) { 
+			array_pop($requests);
+			$urls[] = $this->_createUrl($requests);
+			
+		}
+
+		foreach ($urls as $url) {
+     		$page = new Page($url);
+     		$parents[] = $page;
+		}
+
+		return array_reverse($parents);
 	}
 
 
 	public function rootParent(){
 
-		$folder = dirname($this->_path);
-		$folder = realpath($folder).DIRECTORY_SEPARATOR;
+		$url = $this->_request[0];
 
-		if (strlen($folder >= CONTENT_PATH)) {
-	 		$url = str_replace(CONTENT_PATH, '', $folder).DIRECTORY_SEPARATOR;
-	 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-	 		$url = ltrim($url, DIRECTORY_SEPARATOR);
-
-	 		$page = new Page($url);
+		if ($this->url(false) == $url) {
+			return $this;
 		}
- 		else $page = false;
+		elseif ($url) {
+			$page = new Page($url);
+	      	return $page;
+		}
 
-      	return $page;
+		return false;
 	}
 
 
@@ -163,16 +168,15 @@ class Page{
 		return $value;
 	}
 
-	protected function createUrl($array){
+	protected function _createUrl($array){
 
- 		$url = implode("/", $array);
- 		if ($url) {
- 			$url = "/".$url;
- 		}
- 		else
- 		
+		if (is_array($array) && implode("", $this->_request)) {
+			$url = "/".implode("/", $array);
+			return $url;
+		}
 
- 		return $url;
+		return false;
+
 	}
 
 	public function getFieldXML($name){
@@ -194,7 +198,10 @@ class Page{
 				break;
 			case 'parent':
 				$value = $this->parent();
-				break;			
+				break;
+			case 'rootParent':
+				$value = $this->rootParent();
+				break;
 			case 'url':
 				$value = $this->url();
 				break;
@@ -205,13 +212,6 @@ class Page{
 		return $value;
 	}
 
-	/* MAGIC!! */
-	public function __get($name){
-		return $this->get($name);
-	}
 
-	public function __toString(){
-		return (string) $this->url;
-	}
 
 }

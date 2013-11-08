@@ -1,8 +1,9 @@
 <?php
 
 include '_functions.php';
+include '_interfaces.php';
 /**
- * JPages class autoloader
+ * XPages class autoloader
  *
  */
 

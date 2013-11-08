@@ -79,6 +79,7 @@ if ($config->debug) {
 	$debugbarRenderer = $debugbar->getJavascriptRenderer("/This/");
 	$debugbarRenderer->setBaseUrl(SITE_URL."/system/plugins/DebugBar/Resources");
 	$debugbar['time']->startMeasure('pagerender', 'Page Render');
+	$debugbar['time']->startMeasure('setup', 'Setup');
 }
 
 /*
@@ -86,12 +87,19 @@ if ($config->debug) {
  *
  */
 
-$debugbar['time']->startMeasure('setup', 'Setup');
-$XPages = new XPages($config);
-$pages = new Pages();
-$page = new Page();
-$input = new Input();
-$debugbar['time']->stopMeasure('setup');
+try {
+
+	$XPages = new XPages($config);
+
+	$pages = new Pages();
+	$page = new Page();
+	$input = new Input();
+	$session = new Session();
+	$debugbar['time']->stopMeasure('setup');
+} catch (Exception $e) {
+	echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
 
 // output template
 // NOTE: create a better method of achieving this

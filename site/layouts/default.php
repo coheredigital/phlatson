@@ -21,7 +21,16 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<h4>Parent Page</h4>
-			<p><a href="<?php echo $page->parent()->url ?>"><?php echo $page->parent->title ?></a></p>
+			<p><a href="<?php echo $page->parent->url ?>"><?php echo $page->parent->title ?></a></p>
+		</div>
+	</div>
+	<?php endif ?>
+
+	<?php if ($page->rootParent): ?>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h4>Root Parent Page</h4>
+			<p><a href="<?php echo $page->rootParent->url ?>"><?php echo $page->rootParent->title ?></a></p>
 		</div>
 	</div>
 	<?php endif ?>

@@ -15,16 +15,17 @@ $page->title = "Admin";
 		<link rel="stylesheet" href="/XPages/system/admin/styles/bootstrap.css" type="text/css">
 		<link rel="stylesheet" href="/XPages/system/admin/scripts/redactor/redactor.css" type="text/css">
 		<link rel="stylesheet" href="/XPages/system/admin/styles/adminTheme.css" type="text/css">
-
-
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-		<script src="/XPages/system/admin/scripts/bootstrap.js" type="text/javascript"></script>
-		<script src="/XPages/system/admin/scripts/redactor/redactor.js" type="text/javascript"></script>
-		<script src="/XPages/system/admin/scripts/XPages.js" type="text/javascript"></script>
+		<script src="<?php echo SITE_URL ?>/system/admin/scripts/bootstrap.js" type="text/javascript"></script>
+		<script src="<?php echo SITE_URL ?>/system/admin/scripts/redactor/redactor.js" type="text/javascript"></script>
+		<script src="<?php echo SITE_URL ?>/system/admin/scripts/XPages.js" type="text/javascript"></script>
 
-		<?php if($config->debug) echo $debugbarRenderer->renderHead() ?>
+
 	</head>
 	<body>
+
+
+
 		<nav class="navbar navbar-default navbar-static" role="navigation">
 			<div class="container">
 
@@ -73,6 +74,6 @@ $page->title = "Admin";
 			</div>
 
 		</div>
-		<?php if($config->debug) echo $debugbarRenderer->render(); ?>
+
 	</body>
 </html>
