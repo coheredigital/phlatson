@@ -36,3 +36,36 @@ class f{
 function x($name = 'x') {
 	return X::getFuel($name);
 }
+
+
+/**
+ * Emulate register globals OFF
+ *
+ * Should be called after session_start()
+ *
+ * This function is from the PHP documentation at: 
+ * http://www.php.net/manual/en/faq.misc.php#faq.misc.registerglobals
+ *
+ */
+function unregisterGLOBALS() {
+
+	if(!ini_get('register_globals')) {
+		return;
+	}
+
+	// Might want to change this perhaps to a nicer error
+	if(isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS'])) {
+		die();
+	}
+
+	// Variables that shouldn't be unset
+	$noUnset = array('GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+
+	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+
+	foreach ($input as $k => $v) {
+		if(!in_array($k, $noUnset) && isset($GLOBALS[$k])) {
+	    		unset($GLOBALS[$k]);
+		}
+	}
+}

@@ -1,8 +1,6 @@
 <?php
 
-define("CORE_PATH", dirname(__FILE__) . '/');
 
-require_once( CORE_PATH . "_autoload.php");
 
 class XPages{
 

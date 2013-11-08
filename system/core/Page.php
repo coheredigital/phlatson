@@ -4,10 +4,10 @@
 class Page extends XData implements Countable{
 
 	protected $config;
+	protected $_basePath = CONTENT_PATH;
 
 	// define some protected variable to be used by all page objects
 	public $template;
-
 
 
 	function __construct($url = false){
@@ -21,40 +21,19 @@ class Page extends XData implements Countable{
 			$this->_getPath();
 
 
-			$this->_file = "{$this->_path}".DIRECTORY_SEPARATOR."content.xml";
+			$this->_file = $this->_path.DIRECTORY_SEPARATOR."data.xml";
 			$this->_loadData($this->_file);
-			if ($this->_data) $this->_setTemplate($this->_data);
+			if ($this->_data) $this->_setTemplate();
 
 
 		}
 		else {
 			$this->_path = null;
-			$this->_file = "{$this->_path}".DIRECTORY_SEPARATOR."content.xml";
+			$this->_file = $this->_path.DIRECTORY_SEPARATOR."data.xml";
 			$this->template = ADMIN_PATH."index.php";
 		}
 
-	}
 
-
-
-	protected function _requests($url){
-		$array = explode("/", $url);
-		return $array;
-	}
-
-
-	protected function _setTemplate($data){
-		$this->template = "./site/layouts/{$this->_data->template}.php";
-	}
-
-
-
-	public function url($full = true){
-		$url = implode("/", $this->_request);
-		if ($full) {
-			$url = SITE_URL."/".$url;
-		}
-		return $url;
 	}
 
 
@@ -69,7 +48,7 @@ class Page extends XData implements Countable{
 
 			$folder = realpath($folder);
 
-     		$url = str_replace(CONTENT_PATH, '', $folder).DIRECTORY_SEPARATOR;
+     		$url = str_replace($this->_basePath, '', $folder).DIRECTORY_SEPARATOR;
      		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
      		$url = ltrim($url, DIRECTORY_SEPARATOR);
 
@@ -138,34 +117,30 @@ class Page extends XData implements Countable{
 
 	protected function _formatField($name){
 
+		$field = new Field($name);
+
 		$value = $this->_data->{$name};
 		if (!$value) return false; // return false if node doesn't exist
 
-		$fieldGet = $this->getFieldXML($name);
 
+		// find the corresponding field file and retrieve relevant settings
+		
+		$fieldClassname = (string) $field->fieldtype;
+		$fieldFormat = (string) $field->format;
+		
 
-		if ($fieldGet){
-			$fieldtype = (string) $fieldGet->fieldtype;
-			$format = (string) $fieldGet->format;
-		}
-
+		// override default value for field based on attributes
 		if($value->attributes) {
-			$attributes = $value->attributes();
-			$fieldtype = (string) $value->attributes()->fieldtype;
-			$format = (string) $value->attributes()->format;
+			$attr = $value->attributes();
+			$fieldClassname = (string) $attr->fieldtype;
+			$fieldFormat = (string) $attr->format;
 		}
 
-		if ($fieldtype) {
-			$field = new $fieldtype( (string) $value, $fieldtype, $format);
-			$value = $field;
+		if ($fieldClassname) {
+			$fieldtype = new $fieldClassname( (string) $value, $fieldClassname, $fieldFormat);
+			return $fieldtype;
 		}
-		else{
-			$value = $this->_data->{$name};
-		}
-
-
-
-		return $value;
+		else return $this->_data->{$name};
 	}
 
 	protected function _createUrl($array){
@@ -180,7 +155,7 @@ class Page extends XData implements Countable{
 	}
 
 	public function getFieldXML($name){
-		$file = SITE_PATH."fields/{$name}.xml";
+		$file = SITE_PATH."fields/{$name}/data.xml";
 		if (is_file($file))
 			return simplexml_load_file($file);
 	}
@@ -206,6 +181,7 @@ class Page extends XData implements Countable{
 				$value = $this->url();
 				break;
 			default:
+
 				$value = $this->_formatField($name);
 				break;
 		}

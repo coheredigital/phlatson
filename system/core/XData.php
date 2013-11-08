@@ -1,6 +1,6 @@
 <?php
 
-class XData extends X{
+class XData{
 
 	/**
 	 * Holds XML data object
@@ -8,8 +8,26 @@ class XData extends X{
 
 	protected $_data;
 	protected $_path;
+	protected $_basePath = null;
+
+	protected $maxDepth = 0; // 0 is unlimited
 	protected $_file;
 	protected $_request;
+
+
+
+	function __construct($url = false){
+
+
+		$this->_path = null;
+		$this->_file = $this->_basePath.$url.DIRECTORY_SEPARATOR."data.xml";
+		$this->template = ADMIN_PATH."index.php";
+
+		$this->_loadData($this->_file);
+	
+	}
+
+
 
 	/* MAGIC!! */
 	public function __get($name){
@@ -37,24 +55,56 @@ class XData extends X{
 	 * @return mixed|null Returns null if the key was not found. 
 	 *
 	 */
-	public function get($key) {
-		if(is_object($key)) $key = "$key";
-		if(array_key_exists($key, $this->_data)) return $this->_data[$key]; 
+	// public function get($key) {
+	// 	if(is_object($key)) $key = "$key";
+	// 	// if(array_key_exists($key, $this->_data)) return $this->_data[$key]; 
 
-		return parent::__get($key); // back to Wire
+		
+	// }
+
+	public function url($full = true){
+		$url = implode("/", $this->_request);
+		if ($full) {
+			$url = SITE_URL."/".$url;
+		}
+		return $url;
 	}
 
 	protected function _getPath(){
 
 		if ( $this->url ) {
-			$path = CONTENT_PATH.$this->url(false);
-			$path = realpath($path);
+
+			$path = realpath($this->_basePath.$this->url(false));
 			$this->_path = $path;
 		}
 		else{
-			$this->_path = str_replace(DIRECTORY_SEPARATOR, '/', CONTENT_PATH);
+			$this->_path = $this->_basePath;
 		}
 
+	}
+
+
+	protected function _setTemplate(){
+		$file = realpath(LAYOUTS_PATH.$this->_data->template.".php");
+		$file = is_file($file) ? $file : LAYOUTS_PATH."default.php";
+	
+		$this->template = $file;
+	}
+
+
+	protected function _requests($url){
+		$array = explode("/", $url);
+		return $array;
+	}
+
+	public function get($name){
+		switch ($name) {
+			default:
+
+				$value = $this->_data->$name;
+				break;
+		}
+		return $value;
 	}
 
 
