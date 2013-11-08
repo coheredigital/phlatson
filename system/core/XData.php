@@ -18,11 +18,11 @@ class XData{
 
 	function __construct($url = false){
 
-
 		$this->_path = null;
-		$this->_file = $this->_basePath.$url.DIRECTORY_SEPARATOR."data.xml";
+		
 		$this->template = ADMIN_PATH."index.php";
 
+		$this->_loadFile($url);
 		$this->_loadData($this->_file);
 	
 	}
@@ -45,22 +45,9 @@ class XData{
 		return false;
 	}
 
-	/**
-	 * Provides direct reference access to retrieve values in the $data array
-	 *
-	 * If the given $key is an object, it will cast it to a string. 
-	 * If the given key is a string with "|" pipe characters in it, it will try all till it finds a value. 
-	 *
- 	 * @param string|object $key
-	 * @return mixed|null Returns null if the key was not found. 
-	 *
-	 */
-	// public function get($key) {
-	// 	if(is_object($key)) $key = "$key";
-	// 	// if(array_key_exists($key, $this->_data)) return $this->_data[$key]; 
-
-		
-	// }
+	protected function _loadFile($url){
+		$this->_file = $this->_basePath.$url.DIRECTORY_SEPARATOR."data.xml";
+	}
 
 	public function url($full = true){
 		$url = implode("/", $this->_request);
@@ -92,10 +79,6 @@ class XData{
 	}
 
 
-	protected function _requests($url){
-		$array = explode("/", $url);
-		return $array;
-	}
 
 	public function get($name){
 		switch ($name) {

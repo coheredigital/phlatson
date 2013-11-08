@@ -14,7 +14,7 @@ class Page extends XData implements Countable{
 
 
 		$url = trim($url ? $url : $_GET['_url'], "/");
-		$this->_request = $this->_requests($url);
+		$this->_requests($url);
 
 
 		if ($this->_request[0] != "admin") {
@@ -96,6 +96,13 @@ class Page extends XData implements Countable{
 		}
 
 		return array_reverse($parents);
+	}
+
+
+	
+	protected function _requests($url){
+		$array = explode("/", $url);
+		$this->_request = $array;
 	}
 
 
