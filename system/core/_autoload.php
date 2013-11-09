@@ -110,4 +110,4 @@ try {
 
 // output template
 // NOTE: create a better method of achieving this
-if (is_file($page->template)) include $page->template;
+if (is_file($page->layout)) include $page->layout;

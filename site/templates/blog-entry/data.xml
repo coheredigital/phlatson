@@ -1,0 +1,6 @@
+<template>
+	<title col="12" ></title>
+	<author col="6"></author>
+	<published col="6"></published>
+	<content col="12" ></content>
+</template>

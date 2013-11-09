@@ -7,7 +7,8 @@ class Page extends XData implements Countable{
 	protected $_basePath = CONTENT_PATH;
 
 	// define some protected variable to be used by all page objects
-	public $template;
+
+	public $layout;
 
 
 	function __construct($url = false){
@@ -30,7 +31,9 @@ class Page extends XData implements Countable{
 		else {
 			$this->_path = null;
 			$this->_file = $this->_path.DIRECTORY_SEPARATOR."data.xml";
-			$this->template = ADMIN_PATH."index.php";
+			$this->template = "admin";
+			$this->layout = ADMIN_PATH."index.php";
+			
 		}
 
 
@@ -99,7 +102,7 @@ class Page extends XData implements Countable{
 	}
 
 
-	
+
 	protected function _requests($url){
 		$array = explode("/", $url);
 		$this->_request = $array;

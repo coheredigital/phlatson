@@ -3,34 +3,28 @@
 	$url = str_replace(SITE_URL, "", $_GET["edit"])."/";
 	$pageEdit = $pages->get($url);
 
+	$pageTemplate = new Template($pageEdit->template);
+
  ?>
 <form action="" role="form">
-	<script type="text/javascript">
-	$(function(){
-		$('#Field_Body').redactor();
-	});
 
-	</script>
+	
+	<?php 
 
+	$rowCount = 0;
+	foreach ($pageTemplate->_data as $key => $value): 
+
+		$field = new Field($key);
+
+		?>
+		
 	<div class="panel panel-default">
-		<div class="panel-heading">Title</div>
+		<div class="panel-heading"><?php echo $field->label ?></div>
 		<div class="panel-body">
-			<input class="form-control" type="text" name="title" id="" value="<?php echo $pageEdit->title ?>">
+			<input class="form-control" type="text" name="title" id="" value="<?php echo $pageEdit->$key ?>">
 		</div>
 	</div>
-
-
-	<div class="panel panel-default">
-		<div class="panel-heading">Content</div>
-		<div class="panel-body">
-			<textarea name="Richtext" id="Field_Body" cols="30" rows="10">
-				<?php echo $pageEdit->content ?>
-			</textarea>
-		</div>
-
-	</div>
-
-
+	<?php endforeach ?>
 
 
 </form>

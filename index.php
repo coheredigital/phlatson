@@ -13,6 +13,7 @@ define('ADMIN_PATH', SYSTEM_PATH . "admin". DIRECTORY_SEPARATOR);
 define('SITE_PATH', ROOT_PATH . "site". DIRECTORY_SEPARATOR);
 define('LAYOUTS_PATH', SITE_PATH . "layouts". DIRECTORY_SEPARATOR);
 define('FIELDS_PATH', SITE_PATH . "fields". DIRECTORY_SEPARATOR);
+define('TEMPLATES_PATH', SITE_PATH . "templates". DIRECTORY_SEPARATOR);
 define('CONTENT_PATH', SITE_PATH . "content".DIRECTORY_SEPARATOR);
 
 require_once( CORE_PATH . "_autoload.php");

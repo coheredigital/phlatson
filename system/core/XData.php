@@ -6,7 +6,7 @@ class XData{
 	 * Holds XML data object
 	 */
 
-	protected $_data;
+	public $_data;
 	protected $_path;
 	protected $_basePath = null;
 
@@ -75,7 +75,8 @@ class XData{
 		$file = realpath(LAYOUTS_PATH.$this->_data->template.".php");
 		$file = is_file($file) ? $file : LAYOUTS_PATH."default.php";
 	
-		$this->template = $file;
+
+		$this->layout = $file;
 	}
 
 
