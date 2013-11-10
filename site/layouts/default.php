@@ -4,6 +4,24 @@
 
 	<?php echo $page->content ?>
 
+	<p>
+		
+
+		<?php 
+
+			$files = $page->files();
+
+
+		 ?>
+			<?php if (count($files)): ?>
+				<?php foreach ($files as $file): ?>
+					<?php 
+					var_dump($file); 
+
+					?>
+				<?php endforeach ?>
+			<?php endif ?>
+	</p>
 
 
 	<?php if ($page->children): ?>

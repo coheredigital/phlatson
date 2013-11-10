@@ -125,6 +125,25 @@ class Page extends XData implements Countable{
 	}
 
 
+
+	public function files(){
+
+		$files = scandir($this->_path);
+		$array = array();
+
+		foreach ($files as $f) {
+			if (is_file($this->_path.$f)) 
+				$array[] = new File($this->_path,$f);
+		}
+
+
+		if (count($array))
+			return $array;
+
+		return false;
+	}
+
+
 	protected function _formatField($name){
 
 		$field = new Field($name);

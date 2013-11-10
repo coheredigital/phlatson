@@ -7,31 +7,21 @@
 
  ?>
 <form action="" role="form">
-
-	
 	<?php 
-
 	$colCount = 0;
-	foreach ($pageTemplate->_data as $key => $value): 
+	foreach ($pageTemplate->_data as $value): 
 		$attr = $value->attributes();
-		
-
-		$field = new Field($key);
-
-		?>
-		
-	<?php if (!$colCount): ?>
+		$field = new Field($value);
+		if (!$colCount): ?>
 		<div class="row">
-	<?php endif ?>
-	<?php 
-		$colCount = $colCount+$attr->col;
+	<?php endif; $colCount += $attr->col;
 	 ?>
 	
 	<div class="col-md-<?php echo $attr->col ?>">
 		<div class="panel panel-default">
 			<div class="panel-heading"><?php echo $field->label ?></div>
 			<div class="panel-body">
-				<input class="form-control" type="text" name="title" id="" value="<?php echo $pageEdit->$key ?>">
+				<input class="form-control" type="text" name="title" id="" value="<?php echo $pageEdit->$value ?>">
 			</div>
 		</div>
 	</div>

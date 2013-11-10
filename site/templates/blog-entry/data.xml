@@ -1,6 +1,6 @@
 <template>
-	<title col="12" ></title>
-	<author col="6"></author>
-	<published col="6"></published>
-	<content col="12" ></content>
+	<field col="12" >title</field>
+	<field col="8">author</field>
+	<field col="4">published</field>
+	<field col="12" >content</field>
 </template>

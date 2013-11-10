@@ -61,11 +61,11 @@ class XData{
 
 		if ( $this->url ) {
 
-			$path = realpath($this->_basePath.$this->url(false));
+			$path = realpath($this->_basePath.$this->url(false)).DIRECTORY_SEPARATOR;
 			$this->_path = $path;
 		}
 		else{
-			$this->_path = $this->_basePath;
+			$this->_path = $this->_basePath.DIRECTORY_SEPARATOR;
 		}
 
 	}
