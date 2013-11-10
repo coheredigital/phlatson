@@ -132,8 +132,15 @@ class Page extends XData implements Countable{
 		$array = array();
 
 		foreach ($files as $f) {
-			if (is_file($this->_path.$f)) 
-				$array[] = new File($this->_path,$f);
+			if (is_file($this->_path.$f)) {
+				$fileInfo = pathinfo($this->_path.$f);
+				if ($fileInfo["extension"] == "jpg")
+					$array[] = new Image($this->_path,$f);
+				else
+					$array[] = new File($this->_path,$f);
+
+			}
+				
 		}
 
 

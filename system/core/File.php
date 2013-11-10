@@ -18,6 +18,8 @@ class File{
 		$this->extension = $fileInfo['extension'];
 		$this->filename = $f;
 		$this->size = filesize($p.$f);
+
+		// if ($this->extension == "jpg") $this = new Image();
 	}
 
 
