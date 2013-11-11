@@ -63,7 +63,6 @@ class Page extends XData{
 		for ($x=count($requests); $x > 0; $x--) { 
 			array_pop($requests);
 			$urls[] = $this->_createUrl($requests);
-			
 		}
 
 		foreach ($urls as $url) {

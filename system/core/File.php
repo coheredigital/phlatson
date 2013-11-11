@@ -1,6 +1,6 @@
 <?php
 
-class File{
+class File {
 
 	public $name;
 	public $path;
@@ -21,16 +21,14 @@ class File{
 		$this->url = $url.$f;
 		$this->name = $fileInfo['filename'];
 		$this->extension = $fileInfo['extension'];
-		$this->filename = $f;
+		$this->filename = (string) $f;
 		$this->size = filesize($path.$f);
 
-		// if ($this->extension == "jpg") $this = new Image();
 	}
 
 
 	public function __toString(){
-
-		return $this->path.$this->filename;
+		return $this->url.$this->filename;
 	}
 
 }

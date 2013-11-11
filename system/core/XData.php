@@ -92,12 +92,7 @@ class XData implements Countable, IteratorAggregate {
 
 
 	public function get($name){
-		switch ($name) {
-			default:
-
-				$value = $this->_data->$name;
-				break;
-		}
+		$value = $this->_data->$name;
 		return $value;
 	}
 
