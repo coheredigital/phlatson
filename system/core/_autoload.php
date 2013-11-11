@@ -75,7 +75,7 @@ function XpagesConfig() {
 	ini_set('session.use_cookies', true);
 	ini_set('session.use_only_cookies', 1);
 	ini_set("session.gc_maxlifetime", $config->sessionExpireSeconds);
-	// ini_set("session.save_path", rtrim($config->paths->sessions, '/'));
+	ini_set("session.save_path", rtrim(SITE_PATH."assets".DIRECTORY_SEPARATOR."sessions", '/'));
 
 	return $config;
 }

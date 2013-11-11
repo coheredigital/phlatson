@@ -43,5 +43,5 @@
 	</div>
 	<?php endif ?>
 </div>
-
-<?php include '_foot.inc'; ?>
+<?php 
+include '_foot.inc'; ?>
