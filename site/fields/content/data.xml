@@ -1,4 +1,5 @@
 <field>
-	<fieldtype>FieldtypeText</fieldtype>
+	<name>content</name>
+	<fieldtype>FieldtypeTextarea</fieldtype>
 	<label>Content</label>
 </field>

@@ -4,20 +4,25 @@ class File{
 
 	public $name;
 	public $path;
+	public $url;
 	public $filename;
 	public $size;
 	public $extension;
 
 
-	public function __construct($p,$f){
+	public function __construct($u,$f){
 
-		$fileInfo = pathinfo($p.$f);
+		$path = CONTENT_PATH.$u.DIRECTORY_SEPARATOR;
+		$url = CONTENT_URL."/".$u."/";
 
-		$this->path = $p;
+		$fileInfo = pathinfo($path.$f);
+
+		$this->path = $path;
+		$this->url = $url.$f;
 		$this->name = $fileInfo['filename'];
 		$this->extension = $fileInfo['extension'];
 		$this->filename = $f;
-		$this->size = filesize($p.$f);
+		$this->size = filesize($path.$f);
 
 		// if ($this->extension == "jpg") $this = new Image();
 	}

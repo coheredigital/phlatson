@@ -4,6 +4,7 @@
 define("JPAGES", true);
 
 define('SITE_URL', 'http://'.$_SERVER['HTTP_HOST'].'/XPages');
+define('CONTENT_URL', SITE_URL.'/site/content');
 define('ADMIN_URL', SITE_URL.'/admin');
 
 define('ROOT_PATH', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);

@@ -1,0 +1,6 @@
+[
+{ "thumb": "http://localhost/XPages/site/content/test/beans_thumb.jpg", "image": "http://localhost/XPages/site/content/test/beans.jpg", "title": "beans" },
+{ "thumb": "http://localhost/XPages/site/content/test/bilberries_thumb.jpg", "image": "http://localhost/XPages/site/content/test/bilberries.jpg", "title": "bilberries" },
+{ "thumb": "http://localhost/XPages/site/content/test/coffee_thumb.jpg", "image": "http://localhost/XPages/site/content/test/coffee.jpg", "title": "coffee" },
+{ "thumb": "http://localhost/XPages/site/content/test/vb_thumb.jpg", "image": "http://localhost/XPages/site/content/test/vb.jpg", "title": "vb" }
+]

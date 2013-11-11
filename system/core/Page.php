@@ -4,7 +4,7 @@
 class Page extends XData implements Countable{
 
 	protected $config;
-	protected $_basePath = CONTENT_PATH;
+
 
 	// define some protected variable to be used by all page objects
 
@@ -14,26 +14,16 @@ class Page extends XData implements Countable{
 	function __construct($url = false){
 
 
-		$url = trim($url ? $url : $_GET['_url'], "/");
-		$this->_requests($url);
+		
+		parent::__construct($url);
+		
 
 
-		if ($this->_request[0] != "admin") {
-			$this->_getPath();
-
-
-			$this->_file = $this->_path.DIRECTORY_SEPARATOR."data.xml";
-			$this->_loadData($this->_file);
-			if ($this->_data) $this->_setTemplate();
-
-
-		}
-		else {
+		if ($this->_request[0] == "admin") {
 			$this->_path = null;
-			$this->_file = $this->_path.DIRECTORY_SEPARATOR."data.xml";
+			$this->_file = $this->_path.DIRECTORY_SEPARATOR.$this->_dataFile;
 			$this->template = "admin";
 			$this->layout = ADMIN_PATH."index.php";
-			
 		}
 
 
@@ -103,10 +93,6 @@ class Page extends XData implements Countable{
 
 
 
-	protected function _requests($url){
-		$array = explode("/", $url);
-		$this->_request = $array;
-	}
 
 
 	public function rootParent(){
@@ -128,27 +114,59 @@ class Page extends XData implements Countable{
 
 	public function files(){
 
-		$files = scandir($this->_path);
-		$array = array();
-
-		foreach ($files as $f) {
-			if (is_file($this->_path.$f)) {
-				$fileInfo = pathinfo($this->_path.$f);
-				if ($fileInfo["extension"] == "jpg")
-					$array[] = new Image($this->_path,$f);
-				else
-					$array[] = new File($this->_path,$f);
-
-			}
-				
-		}
+		$files = new Files($this->url(false));
+		return $files;
 
 
-		if (count($array))
-			return $array;
-
-		return false;
 	}
+
+	// public function files(){
+
+	// 	$files = scandir($this->_path);
+	// 	$array = array();
+
+	// 	foreach ($files as $f) {
+	// 		if (is_file($this->_path.$f)) {
+	// 			$fileInfo = pathinfo($this->_path.$f);
+	// 			if ($fileInfo["extension"] == "jpg")
+	// 				$array[] = new Image($this->url(false),$f);
+	// 			else
+	// 				$array[] = new File($this->url(false),$f);
+
+	// 		}
+				
+	// 	}
+
+
+	// 	if (count($array))
+	// 		return $array;
+
+	// 	return false;
+	// }
+
+
+	// public function images(){
+
+	// 	$files = scandir($this->_path);
+	// 	$array = array();
+
+	// 	foreach ($files as $f) {
+	// 		if (is_file($this->_path.$f)) {
+	// 			$fileInfo = pathinfo($this->_path.$f);
+	// 			if ($fileInfo["extension"] != "jpg") continue;
+					
+	// 			$array[] = new Image($this->url(false),$f);
+
+	// 		}
+				
+	// 	}
+
+
+	// 	if (count($array))
+	// 		return $array;
+
+	// 	return false;
+	// }
 
 
 	protected function _formatField($name){

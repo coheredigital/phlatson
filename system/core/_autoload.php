@@ -100,7 +100,7 @@ try {
 	$XPages = new XPages($config);
 
 	$pages = new Pages();
-	$page = new Page();
+	$page = new Page($_GET['_url']);
 	$input = new Input();
 	$session = new Session();
 	$debugbar['time']->stopMeasure('setup');

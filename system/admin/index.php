@@ -18,6 +18,7 @@ $page->title = "Admin";
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="<?php echo SITE_URL ?>/system/admin/scripts/bootstrap.js" type="text/javascript"></script>
 		<script src="<?php echo SITE_URL ?>/system/admin/scripts/redactor/redactor.js" type="text/javascript"></script>
+		<script src="<?php echo SITE_URL ?>/system/admin/scripts/tinymce/tinymce.min.js" type="text/javascript"></script>
 		<script src="<?php echo SITE_URL ?>/system/admin/scripts/XPages.js" type="text/javascript"></script>
 
 

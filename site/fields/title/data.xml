@@ -1,4 +1,5 @@
 <field>
+	<name>title</name>
 	<fieldtype>FieldtypeText</fieldtype>
 	<label>Title</label>
 </field>

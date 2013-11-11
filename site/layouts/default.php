@@ -9,18 +9,10 @@
 
 		<?php 
 
-			$files = $page->files();
+		$files = $page->files();
+		var_dump($files);
+		?>
 
-
-		 ?>
-			<?php if (count($files)): ?>
-				<?php foreach ($files as $file): ?>
-					<?php 
-					var_dump($file); 
-
-					?>
-				<?php endforeach ?>
-			<?php endif ?>
 	</p>
 
 

@@ -2,36 +2,46 @@
 
 	$url = str_replace(SITE_URL, "", $_GET["edit"])."/";
 	$pageEdit = $pages->get($url);
+	var_dump($pageEdit->template);
 
-	$pageTemplate = new Template($pageEdit->template);
+	$template = new Template($pageEdit->template);
 
- ?>
-<form action="" role="form">
-	<?php 
 	$colCount = 0;
-	foreach ($pageTemplate->_data as $value): 
+
+	$output = "";
+
+
+
+	$imageJson = "var images = '/XPages/site/content/".$pageEdit->url(false)."/images.json';";
+	$scripts = "<script type='text/javascript'>$imageJson</script>";
+
+	foreach ($template->_data as $value) {
 		$attr = $value->attributes();
 		$field = new Field($value);
-		if (!$colCount): ?>
-		<div class="row">
-	<?php endif; $colCount += $attr->col;
-	 ?>
-	
-	<div class="col-md-<?php echo $attr->col ?>">
-		<div class="panel panel-default">
-			<div class="panel-heading"><?php echo $field->label ?></div>
-			<div class="panel-body">
-				<input class="form-control" type="text" name="title" id="" value="<?php echo $pageEdit->$value ?>">
-			</div>
-		</div>
-	</div>
-	<?php 
-	if ($colCount == 12):
-	 $colCount = 0;?>
-	</div>
-<?php endif; ?>
-	<?php
-	endforeach; ?>
+		$ft = (string) $field->fieldtype;
+		$fieldType = new $ft();
 
+		$input = $fieldType->getInput($field->name, $pageEdit->$value);
 
-</form>
+		if (!$colCount) $output . "<div class='row'>";
+		$colCount += $attr->col;
+
+		$output .= "<div class='col-md-{$attr->col}'>
+						<div class='panel panel-default'>
+							<div class='panel-heading'>{$field->label}</div>
+							<div class='panel-body'>
+								{$input}
+							</div>
+						</div>
+					</div>";
+		if ($colCount == 12) {
+			$colCount = 0;
+			$output . "</div>";
+		}
+
+	}
+
+	$output = "$scripts<form action=' role='form'>{$output}</form>";
+
+	echo $output;
+

@@ -8,7 +8,9 @@ class XData{
 
 	public $_data;
 	protected $_path;
-	protected $_basePath = null;
+	protected $_basePath = CONTENT_PATH;
+	protected $_dataFile = "data.xml";
+
 
 	protected $maxDepth = 0; // 0 is unlimited
 	protected $_file;
@@ -18,12 +20,12 @@ class XData{
 
 	function __construct($url = false){
 
-		$this->_path = null;
-		
-		$this->template = ADMIN_PATH."index.php";
+		$this->_requests($url);
+		$this->_getPath();
 
 		$this->_loadFile($url);
 		$this->_loadData($this->_file);
+		if ($this->_data) $this->_setTemplate();
 	
 	}
 
@@ -46,7 +48,7 @@ class XData{
 	}
 
 	protected function _loadFile($url){
-		$this->_file = $this->_basePath.$url.DIRECTORY_SEPARATOR."data.xml";
+		$this->_file = $this->_basePath.$url.DIRECTORY_SEPARATOR.$this->_dataFile;
 	}
 
 	public function url($full = true){
@@ -56,6 +58,13 @@ class XData{
 		}
 		return $url;
 	}
+
+
+	protected function _requests($url){
+		$array = explode("/", $url);
+		$this->_request = $array;
+	}
+
 
 	protected function _getPath(){
 

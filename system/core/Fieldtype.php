@@ -1,3 +1,5 @@
+
+
 <?php
 
 class Fieldtype{
@@ -23,4 +25,9 @@ class Fieldtype{
 	public function __toString(){
 		return (string) $this->_value;
 	}
+
+	public function getInput($name, $value){
+		return "<input class='form-control' type='text' name='$name' id='' value='$value'>";
+	}
+
 }
