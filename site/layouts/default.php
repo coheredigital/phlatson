@@ -2,18 +2,16 @@
 
 <div class="container">
 
-	<?php echo $page->content ?>
+	<?php 
+		echo $page->content;
 
-	<p>
+		if (count($page->files)) {
+			foreach ($page->files as $file){
+				var_dump($file);
+			}
+		}
 		
-
-		<?php 
-
-		$files = $page->files();
-		var_dump($files);
-		?>
-
-	</p>
+	?>
 
 
 	<?php if ($page->children): ?>

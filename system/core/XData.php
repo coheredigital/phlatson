@@ -1,6 +1,6 @@
 <?php
 
-class XData{
+class XData implements Countable, IteratorAggregate {
 
 	/**
 	 * Holds XML data object
@@ -21,11 +21,12 @@ class XData{
 	function __construct($url = false){
 
 		$this->_requests($url);
-		$this->_getPath();
+		$this->_path = $this->_getPath();
 
-		$this->_loadFile($url);
-		$this->_loadData($this->_file);
-		if ($this->_data) $this->_setTemplate();
+		$this->_file = $this->_path.$this->_dataFile;
+		$this->_data = $this->_loadData();
+		if ($this->_data) 
+			$this->layout = $this->_setTemplate();
 	
 	}
 
@@ -42,21 +43,31 @@ class XData{
 
 	protected function _loadData(){
 		if (is_file($this->_file)) {
-			$this->_data =  simplexml_load_file($this->_file);
+			return simplexml_load_file($this->_file);
 		}
-		return false;
+		return null;
 	}
 
-	protected function _loadFile($url){
-		$this->_file = $this->_basePath.$url.DIRECTORY_SEPARATOR.$this->_dataFile;
+
+
+	protected function _createUrl($array){
+
+		if (is_array($array) && implode("", $this->_request)) {
+			$url = "/".implode("/", $array);
+			return $url;
+		}
+
+		return false;
+
 	}
+
 
 	public function url($full = true){
 		$url = implode("/", $this->_request);
 		if ($full) {
 			$url = SITE_URL."/".$url;
 		}
-		return $url;
+		return trim($url,"/");
 	}
 
 
@@ -67,25 +78,15 @@ class XData{
 
 
 	protected function _getPath(){
-
-		if ( $this->url ) {
-
-			$path = realpath($this->_basePath.$this->url(false)).DIRECTORY_SEPARATOR;
-			$this->_path = $path;
-		}
-		else{
-			$this->_path = $this->_basePath.DIRECTORY_SEPARATOR;
-		}
-
+		$path = realpath($this->_basePath.$this->url(false)).DIRECTORY_SEPARATOR;
+		return $path;
 	}
 
 
 	protected function _setTemplate(){
 		$file = realpath(LAYOUTS_PATH.$this->_data->template.".php");
 		$file = is_file($file) ? $file : LAYOUTS_PATH."default.php";
-	
-
-		$this->layout = $file;
+		return $file;
 	}
 
 
@@ -101,5 +102,14 @@ class XData{
 	}
 
 
+	// allows the data array to be counted directly
+	public function count() {
+		return count($this->_data);
+	}
+
+	// iterate the object data in a foreach
+	public function getIterator() {
+		return $this->_data; 
+	}
 
 }

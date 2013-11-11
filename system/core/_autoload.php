@@ -82,13 +82,6 @@ function XpagesConfig() {
 
 $config = XpagesConfig();
 
-if ($config->debug) {
-	$debugbar = new DebugBar\StandardDebugBar();
-	$debugbarRenderer = $debugbar->getJavascriptRenderer("/This/");
-	$debugbarRenderer->setBaseUrl(SITE_URL."/system/plugins/DebugBar/Resources");
-	$debugbar['time']->startMeasure('pagerender', 'Page Render');
-	$debugbar['time']->startMeasure('setup', 'Setup');
-}
 
 /*
  * Load and execute XPages
@@ -103,7 +96,6 @@ try {
 	$page = new Page($_GET['_url']);
 	$input = new Input();
 	$session = new Session();
-	$debugbar['time']->stopMeasure('setup');
 } catch (Exception $e) {
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
 }

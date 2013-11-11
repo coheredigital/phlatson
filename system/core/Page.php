@@ -1,31 +1,23 @@
 <?php
 
 
-class Page extends XData implements Countable{
-
-	protected $config;
-
+class Page extends XData{
 
 	// define some protected variable to be used by all page objects
-
 	public $layout;
 
 
 	function __construct($url = false){
-
-
 		
 		parent::__construct($url);
-		
 
-
+		// handle admin page request
 		if ($this->_request[0] == "admin") {
 			$this->_path = null;
-			$this->_file = $this->_path.DIRECTORY_SEPARATOR.$this->_dataFile;
-			$this->template = "admin";
+			$this->_file = null;
+			$this->template = null;
 			$this->layout = ADMIN_PATH."index.php";
 		}
-
 
 	}
 
@@ -34,28 +26,19 @@ class Page extends XData implements Countable{
 
 	public function children(){
 
-		$subdirectories = glob("{$this->_path}".DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
+		// get all subfolder of current page path
+		$subs = glob($this->_path.DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
 
 		$children = array();
-		foreach($subdirectories as $folder) {
-
-			$folder = realpath($folder);
-
-     		$url = str_replace($this->_basePath, '', $folder).DIRECTORY_SEPARATOR;
-     		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-     		$url = ltrim($url, DIRECTORY_SEPARATOR);
+		foreach($subs as $folder) {
+			$folder = basename($folder);
+     		$url = $this->url(false)."/".$folder;
 
      		$page = new Page($url);
      		$children[] = $page;
 
-
       	}
       	return $children;
-	}
-
-	// allows the page array to be counted directly
-	public function count() {
-		return count($this->children());
 	}
 
 	public function parent(){
@@ -93,8 +76,6 @@ class Page extends XData implements Countable{
 
 
 
-
-
 	public function rootParent(){
 
 		$url = $this->_request[0];
@@ -106,7 +87,6 @@ class Page extends XData implements Countable{
 			$page = new Page($url);
 	      	return $page;
 		}
-
 		return false;
 	}
 
@@ -117,56 +97,14 @@ class Page extends XData implements Countable{
 		$files = new Files($this->url(false));
 		return $files;
 
-
 	}
 
-	// public function files(){
+	public function images(){
 
-	// 	$files = scandir($this->_path);
-	// 	$array = array();
+		$files = new Images($this->url(false));
+		return $files;
 
-	// 	foreach ($files as $f) {
-	// 		if (is_file($this->_path.$f)) {
-	// 			$fileInfo = pathinfo($this->_path.$f);
-	// 			if ($fileInfo["extension"] == "jpg")
-	// 				$array[] = new Image($this->url(false),$f);
-	// 			else
-	// 				$array[] = new File($this->url(false),$f);
-
-	// 		}
-				
-	// 	}
-
-
-	// 	if (count($array))
-	// 		return $array;
-
-	// 	return false;
-	// }
-
-
-	// public function images(){
-
-	// 	$files = scandir($this->_path);
-	// 	$array = array();
-
-	// 	foreach ($files as $f) {
-	// 		if (is_file($this->_path.$f)) {
-	// 			$fileInfo = pathinfo($this->_path.$f);
-	// 			if ($fileInfo["extension"] != "jpg") continue;
-					
-	// 			$array[] = new Image($this->url(false),$f);
-
-	// 		}
-				
-	// 	}
-
-
-	// 	if (count($array))
-	// 		return $array;
-
-	// 	return false;
-	// }
+	}
 
 
 	protected function _formatField($name){
@@ -197,26 +135,9 @@ class Page extends XData implements Countable{
 		else return $this->_data->{$name};
 	}
 
-	protected function _createUrl($array){
-
-		if (is_array($array) && implode("", $this->_request)) {
-			$url = "/".implode("/", $array);
-			return $url;
-		}
-
-		return false;
-
-	}
-
-	public function getFieldXML($name){
-		$file = SITE_PATH."fields/{$name}/data.xml";
-		if (is_file($file))
-			return simplexml_load_file($file);
-	}
-
 
 	public function render(){
-		return include $this->template;
+		return include $this->layout;
 	}
 
 
@@ -233,6 +154,12 @@ class Page extends XData implements Countable{
 				break;
 			case 'url':
 				$value = $this->url();
+				break;
+			case 'files':
+				$value = $this->files();
+				break;
+			case 'images':
+				$value = $this->images();
 				break;
 			default:
 

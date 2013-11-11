@@ -2,15 +2,11 @@
 
 	$url = str_replace(SITE_URL, "", $_GET["edit"])."/";
 	$pageEdit = $pages->get($url);
-	var_dump($pageEdit->template);
 
 	$template = new Template($pageEdit->template);
 
 	$colCount = 0;
-
 	$output = "";
-
-
 
 	$imageJson = "var images = '/XPages/site/content/".$pageEdit->url(false)."/images.json';";
 	$scripts = "<script type='text/javascript'>$imageJson</script>";
@@ -23,7 +19,7 @@
 
 		$input = $fieldType->getInput($field->name, $pageEdit->$value);
 
-		if (!$colCount) $output . "<div class='row'>";
+		if (!$colCount) $output .= "<div class='row'>";
 		$colCount += $attr->col;
 
 		$output .= "<div class='col-md-{$attr->col}'>
@@ -35,8 +31,8 @@
 						</div>
 					</div>";
 		if ($colCount == 12) {
+			$output .= "</div>";
 			$colCount = 0;
-			$output . "</div>";
 		}
 
 	}
