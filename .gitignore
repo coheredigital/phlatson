@@ -218,3 +218,6 @@ pip-log.txt
 *.sublime-project
 *.sublime-workspace
 
+#CMS Assets
+site/assets/sessions/
+
