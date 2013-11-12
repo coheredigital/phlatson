@@ -36,6 +36,22 @@ class XData implements Countable, IteratorAggregate {
 	public function __get($name){
 		return $this->get($name);
 	}
+	public function get($name){
+		$value = $this->_data->$name;
+		return $value;
+	}
+
+	public function __set($name, $value){
+		return $this->set($name, $value);
+	}
+
+	public function set($name, $value){
+		if ($name && $value && $this->_data) {
+			$this->_data->$name = $value;
+		}
+		
+	}
+
 
 	public function __toString(){
 		return (string) $this->url;
@@ -91,11 +107,11 @@ class XData implements Countable, IteratorAggregate {
 
 
 
-	public function get($name){
-		$value = $this->_data->$name;
-		return $value;
-	}
 
+
+	public function save(){
+		$this->_data->asXML($this->_path.$this->_dataFile);
+	}
 
 	// allows the data array to be counted directly
 	public function count() {

@@ -1,7 +1,22 @@
 <?php
 
-	$url = str_replace(SITE_URL, "", $_GET["edit"])."/";
+	// $url = rawurldecode($_GET["page"]);
+	$url = rawurldecode($input->get->page);
 	$pageEdit = $pages->get($url);
+
+
+	if (count($input->post)) {
+		foreach ($input->post as $key => $value) {
+			// var_dump("KEY: $key => VALUE: $value");
+			
+			if ($key != "content" && $key != "published") {
+				$pageEdit->$key = $input->post->$key;
+			}
+			$pageEdit->save();
+		}
+		
+	}
+
 
 	$template = new Template($pageEdit->template);
 
@@ -11,33 +26,41 @@
 	$imageJson = "var images = '/XPages/site/content/".$pageEdit->url(false)."/images.json';";
 	$scripts = "<script type='text/javascript'>$imageJson</script>";
 
-	foreach ($template->_data as $value) {
+
+	foreach ($template->field as $value) {
 		$attr = $value->attributes();
 		$field = new Field($value);
-		$ft = (string) $field->fieldtype;
-		$fieldType = new $ft();
 
-		$input = $fieldType->getInput($field->name, $pageEdit->$value);
+		if ($field instanceof Field ) {
 
-		if (!$colCount) $output .= "<div class='row'>";
-		$colCount += $attr->col;
+			$ft = (string) $field->fieldtype;
+			$fieldType = new $ft();
 
-		$output .= "<div class='col-md-{$attr->col}'>
-						<div class='panel panel-default'>
-							<div class='panel-heading'>{$field->label}</div>
-							<div class='panel-body'>
-								{$input}
+			$input = $fieldType->getInput($field->name, $pageEdit->$value);
+
+			if (!$colCount) $output .= "<div class='row'>";
+			$colCount += $attr->col;
+
+			$output .= "<div class='col-md-{$attr->col}'>
+							<div class='panel panel-default'>
+								<div class='panel-heading'>{$field->label}</div>
+								<div class='panel-body'>
+									{$input}
+								</div>
 							</div>
-						</div>
-					</div>";
-		if ($colCount == 12) {
-			$output .= "</div>";
-			$colCount = 0;
+						</div>";
+			if ($colCount == 12) {
+				$output .= "</div>";
+				$colCount = 0;
+			}
 		}
+
 
 	}
 
-	$output = "$scripts<form action=' role='form'>{$output}</form>";
+	$submit = "<input class='btn btn-success' type='submit' value='save'>";
+
+	$output = "$scripts<form action='' method='POST' role='form'>{$output}{$submit}</form>";
 
 	echo $output;
 

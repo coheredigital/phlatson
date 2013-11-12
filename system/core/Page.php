@@ -118,7 +118,7 @@ class Page extends XData{
 		
 		$fieldClassname = (string) $field->fieldtype;
 		$fieldFormat = (string) $field->format;
-		
+
 
 		// override default value for field based on attributes
 		if($value->attributes) {
@@ -135,13 +135,45 @@ class Page extends XData{
 	}
 
 
+	public function updateFilelist(){
+		$files = scandir($this->_path);
+	    $dom = new DOMDocument('1.0', 'UTF-8'); 
+	    $root = $dom->appendChild($dom->createElement('files'));
+
+	    if ($files) {
+			foreach ($files as $value) {
+				if(is_file($this->_path.$value)) {
+					//add NodeA element to Root
+				    $fileNode = $dom->createElement('file');
+
+				   	$filenameNode = $dom->createElement('filename');
+				   	$filenameNode->appendChild($dom->createTextNode($value));
+				    $fileNode->appendChild($filenameNode); 
+
+				    $root->appendChild($fileNode);
+				}
+			}
+
+		    $dom->formatOutput = true;
+		    $dom->save($this->_path.'files.xml'); // save as file
+
+	    }
+
+	    return false;
+
+	}
+
 	public function render(){
 		return include $this->layout;
 	}
 
 
+
 	public function get($name){
 		switch ($name) {
+			case 'requests':
+				$value = $this->_request;
+				break;
 			case 'children':
 				$value = $this->children();
 				break;

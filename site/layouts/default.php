@@ -1,17 +1,7 @@
 <?php include '_head.inc' ?>
 
 <div class="container">
-
-	<?php 
-		echo $page->content;
-
-		if (count($page->files)) {
-			foreach ($page->files as $file){
-				var_dump($file);
-			}
-		}
-		
-	?>
+	<?php echo $page->content ?>
 
 
 	<?php if ($page->children): ?>

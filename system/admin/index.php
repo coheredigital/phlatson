@@ -61,7 +61,7 @@ $page->title = "Admin";
 				<div class="col-md-12">
 					<?php
 
-					if ($_GET["edit"]) {
+					if ($page->requests[1] == "edit") {
 						include 'markup/edit.php';
 					}
 					else{
