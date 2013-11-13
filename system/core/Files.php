@@ -17,17 +17,32 @@ class Files extends XData {
 			$files[] = new File($this->url(false), $item->filename);
 		}
 
-
 		$this->_data = new ArrayIterator( $files );
-		if ($this->_fileType) $this->_data = new FilesFilter($this->_data, $this->_fileType, "");
+		if ($this->_fileType) $this->_data = new Filter($this->_data, $this->_fileType);
 
 	}
 
-	public function find($find){
-		$array = $this->_files;
+	public function find($selector){
 
+		if (strrpos($selector, "=")) {
+			$filter = explode("=", $selector);
+			$filterBy = (string) $filter[0];
+			$filterValue = (string) $filter[1];
 
-		return $array;
+			$data = $this->_data;
+			$data = new Filter($data, $filterValue, $filterBy);
+
+			$files = array();
+			foreach ($data as $x) {
+				$files[] = $x;
+			}
+			$data = $files;
+			return $data;
+
+		}
+
+		return false;
+
 	}
 
 	public function updateList(){

@@ -1,6 +1,7 @@
+<?xml version="1.0"?>
 <page>
 	<template>blog-entry</template>
-	<title>About the Team</title>
+	<title>This post is about food!</title>
 	<author>Adam Spruijt</author>
 	<published>1383941363</published>
 

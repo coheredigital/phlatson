@@ -3,21 +3,23 @@
 class Filter extends FilterIterator{
 
     protected $iterator;
-	private $_filterValue = false;
-	private $_filterBy = false;
+	public $filterValue = false;
+	public $filterBy = false;
 
 	function __construct(Iterator $iterator, $filterValue, $filterBy = "extension"){
 
 		parent::__construct($iterator);
 
-		$this->_filterValue = $filterValue;
-		$this->_filterBy = $filterBy;
+		$this->filterValue = $filterValue;
+		$this->filterBy = $filterBy;
+		var_dump("$this->filterValue = $this->filterBy");
 	}
 
     function accept() {
-        $file = $this->getInnerIterator()->current();
-        if($file->{$this->_filterBy} != $this->_filterValue) return false;
-        else return true;
+        $item = $this->getInnerIterator()->current();
+
+        if($item->{$this->filterBy} == $this->filterValue) return true;
+        else return false;
     }
 
 }
