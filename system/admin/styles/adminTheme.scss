@@ -1,0 +1,153 @@
+@import "compass";
+@import "variables";
+@import "normalize";
+
+body{
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 1.2em;
+	color: $gray;
+	background:$soft-gray;
+}
+
+
+a{
+	color: $link-color;
+	text-decoration: none;
+}
+a:hover{
+	color: $link-hover-color;
+}
+
+
+
+
+
+/* Forms */
+
+input, textarea, button{
+	box-sizing: border-box;
+	padding: 0.5em;
+	border: 1px solid $gray;
+	&:focus{
+		outline-color: $blue;
+		border-color: $blue;
+	}
+}
+
+// get grid
+@import "grid";
+
+
+
+/* Layout */
+#main{
+	padding-bottom: 3em;
+}
+
+
+.container{
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
+
+/* Navigation */
+.navbar{
+	background:$blue;
+	position: relative;
+	top: 0;
+	margin-bottom: 1em;
+	// padding: 1em 0;
+}
+.nav{
+	margin: 0;
+	padding: 0;
+	li{
+		display: inline-block;
+	}
+	a{
+		color: $white;
+		display: block;
+		padding: 1.3em 1em;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+	.active a{
+		background:$dark-blue;
+	}
+}
+
+
+/* Page tree */
+
+.page-tree{
+
+}
+.page-tree > .page-tree-list{
+	padding: 0;
+}
+.page-tree-list{
+	list-style: none;
+	margin: 0;
+	padding-left: 2.2em;
+}
+.page-tree-item{
+	padding: 0.7em 1em;
+	margin-top: 0.4em;
+	background: $white;
+	border: 1px solid $light-gray;
+	// border-left: 3px solid $light-green;
+}
+
+
+/* Fields */
+
+.field-item{
+	border: 1px solid $light-gray;
+	background:$white;
+	margin-bottom: 1em;
+}
+.field-heading,
+.field-content{
+	padding: 1em;
+}
+.field-heading{
+	background:$white;
+	font-size: 1.1em;
+	border-bottom: 1px dashed $light-gray;
+}
+.field-input{
+	width: 100%;
+}
+
+
+/* Buttons */
+
+.button{
+	background: $gray;
+	border: 0;
+	padding: 0.7em;
+	text-transform: uppercase;
+	color: $white;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1em;
+	border-radius: 0.2em;
+	outline: none;
+}
+
+.button-save{
+	background: $green;
+}
+
+
+/* Utilities */
+
+.pull-right{
+	float: right;
+}
+.pull-left{
+	float: left;
+}

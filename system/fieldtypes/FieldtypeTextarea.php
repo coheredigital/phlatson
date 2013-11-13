@@ -42,7 +42,7 @@ class FieldtypeTextarea extends Fieldtype{
 		    });
 		});
 		</script>
-		<textarea class='form-control' name='$name' id='Input_$name' cols='30' rows='10'>{$value}</textarea>
+		<textarea class='field-input' name='$name' id='Input_$name' cols='30' rows='10'>{$value}</textarea>
 		";
 	}
 

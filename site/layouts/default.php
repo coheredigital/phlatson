@@ -3,6 +3,10 @@
 <div class="container">
 	<?php echo $page->content ?>
 
+	<?php foreach ($page->files() as $file): ?>
+		<?php var_dump($file) ?>
+	<?php endforeach ?>
+
 
 	<?php if ($page->children): ?>
 	<div class="panel panel-default">

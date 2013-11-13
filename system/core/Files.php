@@ -10,18 +10,17 @@ class Files extends XData {
 	function __construct($url = false){
 		
 		parent::__construct($url);
+		
 		// collect the files
 		$files = array();
 		foreach ($this->_data as $item) {
 			$files[] = new File($this->url(false), $item->filename);
 		}
-		// filter the files if a filetype is set
-		if ($this->_fileType) {
-			$files = array_filter($files, array(new FilesFilter("jpg"), 'filter'));
-		}
 
-		// overwrite _data with file object array
+
 		$this->_data = new ArrayIterator( $files );
+		if ($this->_fileType) $this->_data = new FilesFilter($this->_data, $this->_fileType, "");
+
 	}
 
 	public function find($find){

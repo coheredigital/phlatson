@@ -27,7 +27,7 @@ class Fieldtype{
 	}
 
 	public function getInput($name, $value){
-		return "<input class='form-control' type='text' name='$name' id='' value='$value'>";
+		return "<input class='field-input' type='text' name='$name' id='' value='$value'>";
 	}
 
 }

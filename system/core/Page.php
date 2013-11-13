@@ -22,8 +22,6 @@ class Page extends XData{
 	}
 
 
-
-
 	public function children(){
 
 		// get all subfolder of current page path
@@ -196,6 +194,17 @@ class Page extends XData{
 
 				$value = $this->_formatField($name);
 				break;
+		}
+		return $value;
+	}
+
+
+	public function set($name, $value){
+		if ($this->_data->{$name}) {
+			$this->_data->{$name} = $value;
+		}
+		else{
+			$this->{$name} = $value;
 		}
 		return $value;
 	}

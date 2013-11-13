@@ -41,10 +41,10 @@
 			if (!$colCount) $output .= "<div class='row'>";
 			$colCount += $attr->col;
 
-			$output .= "<div class='col-md-{$attr->col}'>
-							<div class='panel panel-default'>
-								<div class='panel-heading'>{$field->label}</div>
-								<div class='panel-body'>
+			$output .= "<div class='col col-{$attr->col}'>
+							<div class='field-item'>
+								<div class='field-heading'>{$field->label}</div>
+								<div class='field-content'>
 									{$input}
 								</div>
 							</div>
@@ -58,7 +58,7 @@
 
 	}
 
-	$submit = "<input class='btn btn-success' type='submit' value='save'>";
+	$submit = "<input class='button button-save pull-right' type='submit' value='save'>";
 
 	$output = "$scripts<form action='' method='POST' role='form'>{$output}{$submit}</form>";
 

@@ -1,6 +1,6 @@
 <?php
 
-class FilesFilter extends FilterIterator{
+class Filter extends FilterIterator{
 
     protected $iterator;
 	private $_filterValue = false;
@@ -19,5 +19,5 @@ class FilesFilter extends FilterIterator{
         if($file->{$this->_filterBy} != $this->_filterValue) return false;
         else return true;
     }
-    
+
 }
