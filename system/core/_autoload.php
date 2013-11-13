@@ -4,16 +4,16 @@ include '_functions.php';
 include '_interfaces.php';
 
 /**
- * XPages class autoloader
+ * class autoloader
  * Handles dynamic loading of classes as registered with spl_autoload_register
  */
 
-spl_autoload_register('XPagesClassLoader');
-function XPagesClassLoader($className) {
+spl_autoload_register('setupClassLoader');
+function setupClassLoader($className) {
 
-	$coreFile = CORE_PATH."{$className}.php";
-	$pluginFile = SYSTEM_PATH."plugins/{$className}.php";
-	$fieldFile = SYSTEM_PATH."fieldtypes/{$className}.php";
+	$coreFile = ROOT_PATH."system/core/{$className}.php";
+	$pluginFile = ROOT_PATH."system/plugins/{$className}.php";
+	$fieldFile = ROOT_PATH."system/fieldtypes/{$className}.php";
 
 	if(is_file($coreFile)) require_once($coreFile);
 	elseif(is_file($pluginFile)) require_once($pluginFile);
@@ -26,38 +26,62 @@ function XPagesClassLoader($className) {
  * Setup XPages class autoloads
  */
 
-function XpagesConfig() {
+function setupConfig() {
 
-	/*
-	 * Define installation paths and urls
-	 *
-	 */
-	$rootPath = ROOT_PATH;
-	$siteDir = 'site';
-	$systemDir = $rootPath."system/";
-	$coreDir = $systemDir."core/";
-	$assetsDir = "$siteDir/assets";
-	$adminTplDir = 'templates-admin';
+	// start an array of directories
+	$directories = array();
+	// site directories
+	$directories['site'] = 'site';
+	$directories['assets'] = $directories['site'] . '/assets';
+	$directories['content'] = $directories['site'] . '/content';
+	$directories['fields'] = $directories['site'] . '/fields';
+	$directories['templates'] = $directories['site'] . '/templates';
+	$directories['layouts'] = $directories['site'] . '/layouts';
+	$directories['users'] = $directories['site'] . '/users';
+	// system directories
+	$directories['system'] = 'system';
+	$directories['admin'] = $directories['system'] . '/admin';
+	$directories['core'] = $directories['system'] . '/core';
+	$directories['systemFields'] = $directories['system'] . '/fields';
+	$directories['systemTemplates'] = $directories['system'] . '/templates';
+	$directories['fieldtypes'] = $directories['system'] . '/fieldtypes';
+
+
+	if(isset($_SERVER['HTTP_HOST'])) {
+		$httpHost = strtolower($_SERVER['HTTP_HOST']);
+		$rootURL = rtrim(dirname($_SERVER['SCRIPT_NAME']), "/\\") . '/';
+
+	} else {
+		$httpHost = '';
+		$rootURL = '/';
+	}
 
 
 
 	/*
 	 * Setup configuration data and default paths/urls
-	 *
 	 */
-	$config = new Config();
-	/*
-	 * Include system and user-specified configuration options
-	 *
-	 */
-	// include("$rootPath/$wireDir/config.php");
-	$configFile = "$rootPath/$siteDir/config.php";
-	$configFileDev = "$rootPath/$siteDir/config-dev.php";
-	@include(is_file($configFileDev) ? $configFileDev : $configFile);
+	$config = Config::Instance();
+	$urls = new Paths($rootURL); 
+	// loop through directories and set key / value 
+	foreach ($directories as $key => $value) {
+		$urls->{$key} = $value;
+	}
+
+	// clone the urls object and change the root
+	$paths = clone $urls;
+	$paths->root = ROOT_PATH;
+
+	// add the urls anc paths to config
+	$config->urls = $urls; 
+	$config->paths = $paths; 
+
+
+	$configFile = $config->paths->site . "/config.php";
+	@include($configFile);
 
 	/*
-	 * If debug mode is on then echo all errors, if not then disable all error reporting
-	 *
+	 * Output errors if debug true, else disable error reporting
 	 */
 	if($config->debug) {
 		error_reporting(E_ALL ^ E_NOTICE);
@@ -75,12 +99,18 @@ function XpagesConfig() {
 	ini_set('session.use_cookies', true);
 	ini_set('session.use_only_cookies', 1);
 	ini_set("session.gc_maxlifetime", $config->sessionExpireSeconds);
-	ini_set("session.save_path", rtrim(SITE_PATH."assets".DIRECTORY_SEPARATOR."sessions", '/'));
+	ini_set("session.save_path", rtrim($config->paths->assets.DIRECTORY_SEPARATOR."sessions", '/'));
+	ini_set("date.timezone", $config->timezone);
+	ini_set('default_charset','utf-8');
+
+	// HTTPS and AJAX 
+	$config->https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+	$config->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
 	return $config;
 }
 
-$config = XpagesConfig();
+$config = setupConfig();
 
 
 /*
@@ -89,9 +119,6 @@ $config = XpagesConfig();
  */
 
 try {
-
-	$XPages = new XPages($config);
-
 	$pages = new Pages();
 	$page = new Page($_GET['_url']);
 	$input = new Input();

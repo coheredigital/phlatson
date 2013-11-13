@@ -10,8 +10,8 @@ class XData implements Countable, IteratorAggregate {
 	protected $_path;
 	protected $_basePath = CONTENT_PATH;
 	protected $_dataFile = "data.xml";
-
-
+	protected $_config;
+		
 	protected $maxDepth = 0; // 0 is unlimited
 	protected $_file;
 	protected $_request;
@@ -20,6 +20,7 @@ class XData implements Countable, IteratorAggregate {
 
 	function __construct($url = false){
 
+		$this->_config = Config::Instance();
 		$this->_requests($url);
 		$this->_path = $this->_getPath();
 

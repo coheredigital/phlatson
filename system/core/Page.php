@@ -12,11 +12,11 @@ class Page extends XData{
 		parent::__construct($url);
 
 		// handle admin page request
-		if ($this->_request[0] == "admin") {
+		if ($this->_request[0] == $this->_config->adminUrl) {
 			$this->_path = null;
 			$this->_file = null;
 			$this->template = null;
-			$this->layout = ADMIN_PATH."index.php";
+			$this->layout = $this->config->path->admins."index.php";
 		}
 
 	}

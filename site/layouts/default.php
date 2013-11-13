@@ -2,13 +2,10 @@
 
 <div class="container">
 	<?php echo $page->content ?>
-
-
-	<?php 
-	$jpegs = $page->files->find("extension=jpg");
-	 ?>
-
-	 <?php var_dump($jpegs) ?>
+	<h3>
+		<?php echo $config->urls->assets; ?>
+		<?php var_dump($config) ?>
+	</h3>
 
 
 
