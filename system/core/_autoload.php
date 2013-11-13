@@ -32,25 +32,24 @@ function setupConfig() {
 	$directories = array();
 	// site directories
 	$directories['site'] = 'site';
-	$directories['assets'] = $directories['site'] . '/assets';
-	$directories['content'] = $directories['site'] . '/content';
-	$directories['fields'] = $directories['site'] . '/fields';
-	$directories['templates'] = $directories['site'] . '/templates';
-	$directories['layouts'] = $directories['site'] . '/layouts';
-	$directories['users'] = $directories['site'] . '/users';
+	$directories['assets'] = $directories['site'] . '/assets/';
+	$directories['content'] = $directories['site'] . '/content/';
+	$directories['fields'] = $directories['site'] . '/fields/';
+	$directories['templates'] = $directories['site'] . '/templates/';
+	$directories['layouts'] = $directories['site'] . '/layouts/';
+	$directories['users'] = $directories['site'] . '/users/';
 	// system directories
 	$directories['system'] = 'system';
-	$directories['admin'] = $directories['system'] . '/admin';
-	$directories['core'] = $directories['system'] . '/core';
-	$directories['systemFields'] = $directories['system'] . '/fields';
-	$directories['systemTemplates'] = $directories['system'] . '/templates';
-	$directories['fieldtypes'] = $directories['system'] . '/fieldtypes';
+	$directories['admin'] = $directories['system'] . '/admin/';
+	$directories['core'] = $directories['system'] . '/core/';
+	$directories['systemFields'] = $directories['system'] . '/fields/';
+	$directories['systemTemplates'] = $directories['system'] . '/templates/';
+	$directories['fieldtypes'] = $directories['system'] . '/fieldtypes/';
 
 
 	if(isset($_SERVER['HTTP_HOST'])) {
 		$httpHost = strtolower($_SERVER['HTTP_HOST']);
 		$rootURL = rtrim(dirname($_SERVER['SCRIPT_NAME']), "/\\") . '/';
-
 	} else {
 		$httpHost = '';
 		$rootURL = '/';

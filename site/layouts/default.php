@@ -2,12 +2,6 @@
 
 <div class="container">
 	<?php echo $page->content ?>
-	<h3>
-		<?php echo $config->urls->assets; ?>
-		<?php var_dump($config) ?>
-	</h3>
-
-
 
 	<?php if ($page->children): ?>
 	<div class="panel panel-default">

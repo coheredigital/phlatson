@@ -82,7 +82,7 @@ class XData implements Countable, IteratorAggregate {
 	public function url($full = true){
 		$url = implode("/", $this->_request);
 		if ($full) {
-			$url = SITE_URL."/".$url;
+			$url = $this->_config->urls->root.$url;
 		}
 		return trim($url,"/");
 	}
@@ -101,8 +101,8 @@ class XData implements Countable, IteratorAggregate {
 
 
 	protected function _setTemplate(){
-		$file = realpath(LAYOUTS_PATH.$this->_data->template.".php");
-		$file = is_file($file) ? $file : LAYOUTS_PATH."default.php";
+		$file = realpath($this->_config->paths->layouts.$this->_data->template.".php");
+		$file = is_file($file) ? $file : $this->_config->paths->layouts."default.php";
 		return $file;
 	}
 
