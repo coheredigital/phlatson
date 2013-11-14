@@ -6,31 +6,35 @@ class Page extends XData{
 	// define some protected variable to be used by all page objects
 	public $layout;
 
-
 	function __construct($url = false){
 		
 		parent::__construct($url);
 
 		// handle admin page request
-		if ($this->_request[0] == $this->_config->adminUrl) {
-			$this->_path = null;
-			$this->_file = null;
-			$this->template = null;
-			$this->layout = $this->config->path->admins."index.php";
+		// if ($this->pageRequest[0] == $this->config->adminUrl) {
+		if ($this->pageRequest[0] == "admin") {
+			$this->layout = $this->config->paths->admin."index.php";
 		}
 
+		// $this->template = new Template($this->data->template);
+
+	}
+
+
+	public function url($fromRoot = true){
+		return $this->config->urls->root.$this->directory;
 	}
 
 
 	public function children(){
 
 		// get all subfolder of current page path
-		$subs = glob($this->_path.DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
+		$subs = glob($this->path.DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
 
 		$children = array();
 		foreach($subs as $folder) {
 			$folder = basename($folder);
-     		$url = $this->url(false)."/".$folder;
+     		$url = $this->directory."/".$folder;
 
      		$page = new Page($url);
      		$children[] = $page;
@@ -40,10 +44,10 @@ class Page extends XData{
 	}
 
 	public function parent(){
-		$requests = $this->_request;
+		$requests = $this->pageRequest;
 		array_pop($requests); // remove current (last) item to find parent
 
-		$url = $this->_createUrl($requests);
+		$url = $this->createUrl($requests);
 
 		if ($url) {
 			$page = new Page($url);
@@ -54,13 +58,13 @@ class Page extends XData{
 
 
 	public function parents(){
-		$requests = $this->_request;
+		$requests = $this->pageRequest;
 		$parents = array();
 		$urls = array();
 
 		for ($x=count($requests); $x > 0; $x--) { 
 			array_pop($requests);
-			$urls[] = $this->_createUrl($requests);
+			$urls[] = $this->createUrl($requests);
 		}
 
 		foreach ($urls as $url) {
@@ -75,7 +79,7 @@ class Page extends XData{
 
 	public function rootParent(){
 
-		$url = $this->_request[0];
+		$url = $this->pageRequest[0];
 
 		if ($this->url(false) == $url) {
 			return $this;
@@ -104,11 +108,11 @@ class Page extends XData{
 	}
 
 
-	protected function _formatField($name){
+	protected function formatField($name){
 
 		$field = new Field($name);
 
-		$value = $this->_data->{$name};
+		$value = $this->data->{$name};
 		if (!$value) return false; // return false if node doesn't exist
 
 
@@ -129,18 +133,18 @@ class Page extends XData{
 			$fieldtype = new $fieldClassname( (string) $value, $fieldClassname, $fieldFormat);
 			return $fieldtype;
 		}
-		else return $this->_data->{$name};
+		else return $this->data->{$name};
 	}
 
 
 	public function updateFilelist(){
-		$files = scandir($this->_path);
+		$files = scandir($this->path);
 	    $dom = new DOMDocument('1.0', 'UTF-8'); 
 	    $root = $dom->appendChild($dom->createElement('files'));
 
 	    if ($files) {
 			foreach ($files as $value) {
-				if(is_file($this->_path.$value)) {
+				if(is_file($this->path.$value)) {
 					//add NodeA element to Root
 				    $fileNode = $dom->createElement('file');
 
@@ -153,7 +157,7 @@ class Page extends XData{
 			}
 
 		    $dom->formatOutput = true;
-		    $dom->save($this->_path.'files.xml'); // save as file
+		    $dom->save($this->path.'files.xml'); // save as file
 
 	    }
 
@@ -170,7 +174,7 @@ class Page extends XData{
 	public function get($name){
 		switch ($name) {
 			case 'requests':
-				$value = $this->_request;
+				$value = $this->pageRequest;
 				break;
 			case 'children':
 				$value = $this->children();
@@ -192,7 +196,7 @@ class Page extends XData{
 				break;
 			default:
 
-				$value = $this->_formatField($name);
+				$value = $this->formatField($name);
 				break;
 		}
 		return $value;
@@ -200,8 +204,8 @@ class Page extends XData{
 
 
 	public function set($name, $value){
-		if ($this->_data->{$name}) {
-			$this->_data->{$name} = $value;
+		if ($this->data->{$name}) {
+			$this->data->{$name} = $value;
 		}
 		else{
 			$this->{$name} = $value;

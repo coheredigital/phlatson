@@ -2,32 +2,37 @@
 
 class XData implements Countable, IteratorAggregate {
 
-	/**
-	 * Holds XML data object
-	 */
+	public $data;
 
-	public $_data;
-	protected $_path;
-	protected $_basePath = CONTENT_PATH;
-	protected $_dataFile = "data.xml";
-	protected $_config;
-		
-	protected $maxDepth = 0; // 0 is unlimited
-	protected $_file;
-	protected $_request;
+	protected $basePath = CONTENT_PATH;
 
+	protected $dataFile = "data.xml";
+	protected $config;
 
+	public $path;
+	public $directory;
+	public $layout;
+
+	public $pageRequest = array();
 
 	function __construct($url = false){
 
-		$this->_config = Config::Instance();
-		$this->_requests($url);
-		$this->_path = $this->_getPath();
+		$this->config = Config::Instance();
 
-		$this->_file = $this->_path.$this->_dataFile;
-		$this->_data = $this->_loadData();
-		if ($this->_data) 
-			$this->layout = $this->_setTemplate();
+
+		// $url = strrpos($url, $this->config->urls->root) ? str_replace($this->config->urls->root, "", $url) : $url;
+		$this->directory = trim($url, "/");
+
+		$this->pageRequest = $this->getPageRequests($url);
+		$this->path = realpath($this->basePath.$this->directory).DIRECTORY_SEPARATOR;
+
+
+		$this->data = $this->getXML();
+
+		if ($this->data){
+			$this->layout = $this->setTemplate();
+		}
+			
 	
 	}
 
@@ -38,8 +43,7 @@ class XData implements Countable, IteratorAggregate {
 		return $this->get($name);
 	}
 	public function get($name){
-		$value = $this->_data->$name;
-		return $value;
+		return $this->data->$name;
 	}
 
 	public function __set($name, $value){
@@ -47,8 +51,8 @@ class XData implements Countable, IteratorAggregate {
 	}
 
 	public function set($name, $value){
-		if ($name && $value && $this->_data) {
-			$this->_data->$name = $value;
+		if ($name && $value && $this->data) {
+			$this->data->$name = $value;
 		}
 		
 	}
@@ -58,70 +62,47 @@ class XData implements Countable, IteratorAggregate {
 		return (string) $this->url;
 	}
 
-	protected function _loadData(){
-		if (is_file($this->_file)) {
-			return simplexml_load_file($this->_file);
+	protected function getXML(){
+		if (is_file($this->path.$this->dataFile)) {
+			return simplexml_load_file($this->path.$this->dataFile);
 		}
 		return null;
 	}
 
 
 
-	protected function _createUrl($array){
-
-		if (is_array($array) && implode("", $this->_request)) {
+	protected function createUrl($array){
+		if (is_array($array) && implode("", $this->pageRequest)) {
 			$url = "/".implode("/", $array);
 			return $url;
 		}
-
 		return false;
-
 	}
 
 
-	public function url($full = true){
-		$url = implode("/", $this->_request);
-		if ($full) {
-			$url = $this->_config->urls->root.$url;
-		}
-		return trim($url,"/");
-	}
-
-
-	protected function _requests($url){
+	protected function getPageRequests($url){
 		$array = explode("/", $url);
-		$this->_request = $array;
+		return $array;
 	}
 
-
-	protected function _getPath(){
-		$path = realpath($this->_basePath.$this->url(false)).DIRECTORY_SEPARATOR;
-		return $path;
+	protected function setTemplate(){
+		$layoutFile = realpath($this->config->paths->layouts.$this->data->layoutFile.".php");
+		$layoutFile = is_file($layoutFile) ? $layoutFile : $this->config->paths->layouts."default.php";
+		return $layoutFile;
 	}
-
-
-	protected function _setTemplate(){
-		$file = realpath($this->_config->paths->layouts.$this->_data->template.".php");
-		$file = is_file($file) ? $file : $this->_config->paths->layouts."default.php";
-		return $file;
-	}
-
-
-
-
 
 	public function save(){
-		$this->_data->asXML($this->_path.$this->_dataFile);
+		$this->data->asXML($this->path.$this->dataFile);
 	}
 
 	// allows the data array to be counted directly
 	public function count() {
-		return count($this->_data);
+		return count($this->data);
 	}
 
 	// iterate the object data in a foreach
 	public function getIterator() {
-		return $this->_data; 
+		return $this->data; 
 	}
 
 }

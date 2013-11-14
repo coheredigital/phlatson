@@ -1,9 +1,14 @@
 <?php include '_head.inc' ?>
-
 <div class="container">
+
+	<!-- PAGE CONTENT -->
 	<?php echo $page->content ?>
 
+	<?php var_dump($page->template) ?>
+
+	<!-- CHILDREN -->
 	<?php if ($page->children): ?>
+	<hr>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<h4>Child Pages</h4>
@@ -13,24 +18,7 @@
 		</div>
 	</div>
 	<?php endif ?>
+	<!-- end CHILDREN -->
 
-	<?php if ($page->parent): ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<h4>Parent Page</h4>
-			<p><a href="<?php echo $page->parent->url ?>"><?php echo $page->parent->title ?></a></p>
-		</div>
-	</div>
-	<?php endif ?>
-
-	<?php if ($page->rootParent): ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<h4>Root Parent Page</h4>
-			<p><a href="<?php echo $page->rootParent->url ?>"><?php echo $page->rootParent->title ?></a></p>
-		</div>
-	</div>
-	<?php endif ?>
 </div>
-<?php 
-include '_foot.inc'; ?>
+<?php include '_foot.inc'; ?>

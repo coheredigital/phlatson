@@ -2,7 +2,7 @@
 
 final class Config{
 
-	public $_data = array();
+	public $data = array();
 
 
 	static $instance = null;
@@ -14,13 +14,8 @@ final class Config{
     }
 
 
-	private function __construct(){
-
-
-	}
-
 	public function get($name){
-		$value = $this->_data["$name"];
+		$value = $this->data["$name"];
 		return $value;
 	}
 
@@ -30,7 +25,7 @@ final class Config{
 
 
 	public function set($name, $value){
-		$this->_data["$name"] = $value;
+		$this->data["$name"] = $value;
 		return $value;
 	}
 
