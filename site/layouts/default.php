@@ -4,8 +4,6 @@
 	<!-- PAGE CONTENT -->
 	<?php echo $page->content ?>
 
-	<?php var_dump($page->layout) ?>
-
 	<!-- CHILDREN -->
 	<?php if ($page->children): ?>
 	<hr>
@@ -13,6 +11,7 @@
 		<div class="panel-body">
 			<h4>Child Pages</h4>
 			<?php foreach ($page->children as $p): ?>
+
 				<p><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></p>
 			<?php endforeach ?>
 		</div>

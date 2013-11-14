@@ -26,7 +26,7 @@
 		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		    <ul class="nav navbar-nav">
 				<?php foreach ($home->children as $p): ?>
-					<?php $class = $p->url(false) == $page->rootParent->url(false) ? "class='active'" : "" ?>
+					<?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
 					<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
 				<?php endforeach ?>
 		    </ul>

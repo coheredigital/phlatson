@@ -129,9 +129,10 @@ class Page extends XData{
 			$fieldClassname = (string) $attr->fieldtype;
 			$fieldFormat = (string) $attr->format;
 		}
+		
 
 		if ($fieldClassname) {
-			$fieldtype = new $fieldClassname( (string) $value, $fieldClassname, $fieldFormat);
+			$fieldtype = new $fieldClassname( (string) $value, $fieldFormat);
 			return $fieldtype;
 		}
 		else return $this->data->{$name};

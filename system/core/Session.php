@@ -62,5 +62,14 @@ class Session implements IteratorAggregate{
 		return new ArrayObject($_SESSION[$this->className()]); 
 	}
 
-}
 
+	public function login($name,$pass){
+		// ....
+	}
+
+	public function logout(){
+		// ....
+	}
+
+
+}

@@ -2,10 +2,8 @@
 
 class XData implements Countable, IteratorAggregate {
 
-	public $data;
-
+	protected $data;
 	protected $basePath = CONTENT_PATH;
-
 	protected $dataFile = "data.xml";
 	protected $config;
 
@@ -15,19 +13,13 @@ class XData implements Countable, IteratorAggregate {
 
 	public $pageRequest = array();
 
-	function __construct($url = false){
-
+	function __construct($directory = false){
 		$this->config = Config::Instance();
 
-
-		// $url = strrpos($url, $this->config->urls->root) ? str_replace($this->config->urls->root, "", $url) : $url;
-		$this->directory = trim($url, "/");
-
-		$this->pageRequest = $this->getPageRequests($url);
+		$this->directory = trim($directory, "/");
+		$this->pageRequest = $this->getPageRequests($directory);
 		$this->path = realpath($this->basePath.$this->directory).DIRECTORY_SEPARATOR;
-
 		$this->data = $this->getXML();
-		
 	}
 
 

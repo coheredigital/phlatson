@@ -10,7 +10,7 @@ class Fieldtype{
 
 
 
-	function __construct($v = 0, $t = false, $f = false){
+	function __construct($v = 0, $f = false){
 		$this->value = $v;
 		$this->format = $f;
 
