@@ -1,17 +1,17 @@
 <?php
 	$pageEdit = $pages->get($input->get->page);
 
-	// if (count($input->post)) {
-	// 	foreach ($input->post as $key => $value) {
-	// 		// var_dump("KEY: $key => VALUE: $value");
+	if (count($input->post)) {
+		foreach ($input->post as $key => $value) {
+			// var_dump("KEY: $key => VALUE: $value");
 			
-	// 		if ($key != "content" && $key != "published") {
-	// 			$pageEdit->$key = $input->post->$key;
-	// 		}
-	// 		$pageEdit->save();
-	// 	}
+			if ($key != "content" && $key != "published") {
+				$pageEdit->$key = $input->post->$key;
+			}
+			$pageEdit->save();
+		}
 		
-	// }
+	}
 
 
 	$template = new Template($pageEdit->template);
@@ -20,14 +20,11 @@
 	$output = "";
 
 
-
-	$fields = $template->field;
-	var_dump($fields);
 	
-	foreach ($fields as $value) {
+	foreach ($template->field as $key => $value) {
 		$attr = $value->attributes();
-
 		$field = new Field($value);
+
 
 		if ($field instanceof Field ) {
 

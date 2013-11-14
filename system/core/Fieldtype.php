@@ -4,26 +4,26 @@
 
 class Fieldtype{
 
-	protected $_value;
-	protected $_type;
-	protected $_format;
+	protected $value;
+	protected $type;
+	protected $format;
 
 
 
 	function __construct($v = 0, $t = false, $f = false){
-		$this->_value = $v;
-		$this->_format = $f;
+		$this->value = $v;
+		$this->format = $f;
 
 		if ($f) $this->format();
 	}
 
 	public function format(){
-		$this->_value = $this->_value;
+		$this->value = $this->value;
 	}
 
 
 	public function __toString(){
-		return (string) $this->_value;
+		return (string) $this->value;
 	}
 
 	public function getInput($name, $value){

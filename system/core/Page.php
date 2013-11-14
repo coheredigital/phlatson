@@ -10,9 +10,10 @@ class Page extends XData{
 		
 		parent::__construct($url);
 
+		$this->layout = $this->setTemplate();
 		// handle admin page request
-		// if ($this->pageRequest[0] == $this->config->adminUrl) {
-		if ($this->pageRequest[0] == "admin") {
+		if ($this->pageRequest[0] == $this->config->adminUrl) {
+		// if ($this->pageRequest[0] == "admin") {
 			$this->layout = $this->config->paths->admin."index.php";
 		}
 

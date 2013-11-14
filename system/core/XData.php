@@ -11,7 +11,7 @@ class XData implements Countable, IteratorAggregate {
 
 	public $path;
 	public $directory;
-	public $layout;
+
 
 	public $pageRequest = array();
 
@@ -26,14 +26,8 @@ class XData implements Countable, IteratorAggregate {
 		$this->pageRequest = $this->getPageRequests($url);
 		$this->path = realpath($this->basePath.$this->directory).DIRECTORY_SEPARATOR;
 
-
 		$this->data = $this->getXML();
-
-		if ($this->data){
-			$this->layout = $this->setTemplate();
-		}
-			
-	
+		
 	}
 
 
@@ -86,7 +80,7 @@ class XData implements Countable, IteratorAggregate {
 	}
 
 	protected function setTemplate(){
-		$layoutFile = realpath($this->config->paths->layouts.$this->data->layoutFile.".php");
+		$layoutFile = realpath($this->config->paths->layouts.$this->data->template.".php");
 		$layoutFile = is_file($layoutFile) ? $layoutFile : $this->config->paths->layouts."default.php";
 		return $layoutFile;
 	}

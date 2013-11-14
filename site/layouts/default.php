@@ -4,7 +4,7 @@
 	<!-- PAGE CONTENT -->
 	<?php echo $page->content ?>
 
-	<?php var_dump($page->template) ?>
+	<?php var_dump($page->layout) ?>
 
 	<!-- CHILDREN -->
 	<?php if ($page->children): ?>
