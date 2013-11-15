@@ -19,7 +19,10 @@
 				<a href="<?php echo $config->urls->root ?>" class="pull-right button">View Site</a>
 				<ul class="nav navbar-nav">
 					<li class="active">
-						<a href="<?php echo ADMIN_URL ?>">Pages</a>
+						<a href="<?php echo $config->urls->root.$config->adminUrl ?>">Content</a>
+					</li>
+					<li>
+						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/fields/">Fields</a>
 					</li>
 					<li><a href="#">Setting</a></li>
 				</ul>

@@ -11,8 +11,17 @@ $page->title = "Admin";
 
 
 // if page being editted, what one?
-if ($page->requests[1] == "edit") {
-	$page->adminTemplate = $config->paths->admin.'markup/edit.php';
+if ($page->requests[1] == "page") {
+	if ($page->requests[2] == "edit") {
+		$page->adminTemplate = $config->paths->admin.'markup/pageEdit.php';
+	}
+	elseif($page->requests[2] == "new"){
+
+	}
+	
+}
+elseif($page->requests[1] == "fields"){
+	$page->adminTemplate = $config->paths->admin.'markup/fieldsList.php';
 }
 else{
 	$page->adminTemplate = $config->paths->admin.'markup/pagetree.php';

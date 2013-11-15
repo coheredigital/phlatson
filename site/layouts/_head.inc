@@ -7,7 +7,6 @@
 	<link rel="stylesheet" href="/XPages/site/layouts/styles/main.css">
 </head>
 <body>
-
 	<?php $home = $pages->get("/") ?>
 	<nav id="nav" class="navbar navbar-default  navbar-static-top" role="navigation">
 		<div class="container">

@@ -10,18 +10,18 @@
 		}
 	}
 
-
-	$template = new Template($pageEdit->template);
+	$template = $pageEdit->template;
 
 	$colCount = 0;
 	$output = "";
 
+	$fields = $template->fields();
+	// var_dump($fields);
 
-	
-	foreach ($template->field as $key => $value) {
+	foreach ($fields as $key => $value) {
 		$attr = $value->attributes();
+		// var_dump($attr);
 		$field = new Field($value);
-
 
 		if ($field instanceof Field ) {
 
@@ -54,8 +54,4 @@
 	}
 
 	$submit = "<input class='button button-save pull-right' type='submit' value='save'>";
-
 	$output = "<form action='' method='POST' role='form'>{$output}{$submit}</form>";
-
-	
-

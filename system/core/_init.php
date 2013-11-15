@@ -102,15 +102,20 @@ $config = setupConfig();
 
 try {
 	Core::init($config);
-
-	$pages = new Pages();
 	$page = new Page($_GET['_url']);
-	$input = new Input();
-	$session = new Session();
+
+	foreach (Core::apiList() as $name => $classObject) {
+		// var_dump($name);
+		if ($name == "config" || $name == "page") continue; // skip $config, it is already set
+		${$name} = $classObject;
+	}
+
+
 } catch (Exception $e) {
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
 // output template
 // NOTE: create a better method of achieving this
+
 if (is_file($page->layout)) include $page->layout;

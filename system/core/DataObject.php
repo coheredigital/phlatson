@@ -2,8 +2,8 @@
 
 class DataObject extends Core implements Countable, IteratorAggregate {
 
-	protected $data;
-	protected $basePath = CONTENT_PATH;
+	public $data;
+	protected $basePath;
 	protected $dataFile = "data.xml";
 	protected $config;
 
@@ -16,10 +16,13 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 	function __construct($directory = false){
 		$this->config = $this->api('config');
 		
+		$this->basePath = $this->setBasePath();
+
 		$this->directory = trim($directory, "/");
 		$this->pageRequest = $this->getPageRequests($directory);
 		$this->path = realpath($this->basePath.$this->directory).DIRECTORY_SEPARATOR;
 		$this->data = $this->getXML();
+
 	}
 
 
@@ -29,7 +32,7 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 		return $this->get($name);
 	}
 	public function get($name){
-		return $this->data->$name;
+		return $this->data->{$name};
 	}
 
 	public function __set($name, $value){
@@ -38,16 +41,21 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public function set($name, $value){
 		if ($name && $value && $this->data) {
-			$this->data->$name = $value;
+			$this->data->{$name} = $value;
 		}
 		
 	}
 
-
+	/**
+	 * Return the "directory" for this object, sortof ID in this system
+	 */
 	public function __toString(){
-		return (string) $this->url;
+		return (string) $this->directory;
 	}
 
+	/**
+	 * Load XML file into data object for access and reference
+	 */
 	protected function getXML(){
 		if (is_file($this->path.$this->dataFile)) {
 			return simplexml_load_file($this->path.$this->dataFile);
@@ -56,13 +64,12 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
-
 	protected function createUrl($array){
 		if (is_array($array) && implode("", $this->pageRequest)) {
 			$url = "/".implode("/", $array);
 			return $url;
 		}
-		return false;
+		return null;
 	}
 
 
@@ -71,10 +78,21 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 		return $array;
 	}
 
-	protected function setTemplate(){
-		$layoutFile = realpath($this->config->paths->layouts.$this->data->template.".php");
-		$layoutFile = is_file($layoutFile) ? $layoutFile : $this->config->paths->layouts."default.php";
-		return $layoutFile;
+	// override this function in descendant classes to set the basepath during construct
+	protected function setBasePath(){
+		return api('config')->paths->content;
+	}
+
+
+
+	protected function getTemplate(){
+		$templateName = $this->data->template;
+		if ($templateName && !isset($this->template)) {
+			$template = new Template($templateName);
+			$this->template = $template; // cache to $this->template on first request
+		}
+
+		return $template;
 	}
 
 	public function save(){

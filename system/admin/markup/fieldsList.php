@@ -1,0 +1,3 @@
+<?php 
+
+// $fields->all();

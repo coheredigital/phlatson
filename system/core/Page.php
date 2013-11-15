@@ -4,23 +4,23 @@
 class Page extends DataObject{
 
 	// define some protected variable to be used by all page objects
-	public $layout;
+
 
 	function __construct($url = false){
 		
 		parent::__construct($url);
 
-		$this->layout = $this->setTemplate();
-		// handle admin page request
-		if ($this->pageRequest[0] == $this->config->adminUrl) {
-		// if ($this->pageRequest[0] == "admin") {
-			$this->layout = $this->config->paths->admin."index.php";
-		}
 
-		// $this->template = new Template($this->data->template);
+		// handle admin page request
+		if ($this->pageRequest[0] == $this->api('config')->adminUrl) {
+			$this->layout = $this->config->paths->admin."index.php";
+		}	
 
 	}
 
+	protected function setBasePath(){
+		return api('config')->paths->content;
+	}
 
 	public function url($fromRoot = true){
 		return $this->config->urls->root.$this->directory;
@@ -199,8 +199,17 @@ class Page extends DataObject{
 			case 'images':
 				$value = $this->images();
 				break;
+			case 'template':
+				$value = $this->getTemplate();
+				break;
+			case 'layout':
+				// alias for $page->template->layout for ease of use
+				// var_dump($this->template->layout);
+				$template = $this->template;
+				$layout =  $template->layout;
+				$value = $layout ? (string) $layout : null;
+				break;
 			default:
-
 				$value = $this->formatField($name);
 				break;
 		}
@@ -210,7 +219,7 @@ class Page extends DataObject{
 
 	public function set($name, $value){
 		if ($this->data->{$name}) {
-			$this->data->{$name} = $value;
+			$this->data->{$name} = (string) $value;
 		}
 		else{
 			$this->{$name} = $value;

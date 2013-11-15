@@ -1,3 +1,8 @@
 <template>
+	<config>
+		<allowedChildren>
+			<template>blog-entry</template>
+		</allowedChildren>
+	</config>
 	<field col="12" >title</field>
 </template>

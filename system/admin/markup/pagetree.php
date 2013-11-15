@@ -1,24 +1,27 @@
 <?php
 $home = $pages->get("/");
 
-function PageTreeItemTitle($title, $url){
+function PageTreeItemTitle(Page $p){
 	return 	"<div class='page-tree-item'>
-				<a href='http://localhost/XPages/admin/edit/?page=$url'>
-				$title
+				<a href='http://localhost/XPages/admin/page/edit/?page=$p->directory'>
+				$p->title
 				</a>
+				<span>
+				
+				</span>
 			</div>";
 }
 
-$homeItem = PageTreeItemTitle($home->title, $home->directory);
+$homeItem = PageTreeItemTitle($home);
 if (count($home->children)){
 	foreach ($home->children as $p) {
 		$item .= "<li class='page-tree-group'>";
-		$item .= PageTreeItemTitle($p->title, $p->directory);
+		$item .= PageTreeItemTitle($p);
 			if ($p->children){
 				$item .= "<ul class='page-tree-list'>";
 				foreach ($p->children as $p) {
 					$item .= "<li class='page-tree-group'>";
-					$item .= PageTreeItemTitle($p->title, $p->directory);
+					$item .= PageTreeItemTitle($p);
 					$item .= "</li>";
 				}
 				$item .= "</ul>";

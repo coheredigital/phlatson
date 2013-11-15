@@ -8,6 +8,10 @@ abstract class Core{
 	public static function init(Config $config){
 		self::api('config', $config);
 		self::api('fieldtypes', new Fieldtypes());
+		self::api('fields', new Fields());
+		self::api('pages', new Pages());
+		self::api('input', new Input());
+		self::api('session', new Session());
 	}
 
 	// method to get reference to chache api class
@@ -19,6 +23,13 @@ abstract class Core{
 		if (!isset(self::$apis[$name]) && !is_null($object)){
 			self::setApi($name, $object);	
 		}
+	}
+
+	/*
+	return $apis array;
+	*/
+	public static function apiList(){
+		return new ArrayObject(self::$apis);
 	}
 
 	public static function setApi($name, $value){

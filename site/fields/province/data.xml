@@ -1,0 +1,5 @@
+<field>
+	<name>province</name>
+	<fieldtype>FieldtypeText</fieldtype>
+	<label>State / Province</label>
+</field>

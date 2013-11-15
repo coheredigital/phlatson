@@ -1,8 +1,7 @@
 <?php
 
 class Field extends DataObject{
-	protected $basePath = FIELDS_PATH;
-
-
-
+	protected function setBasePath(){
+		return api('config')->paths->fields;
+	}
 }

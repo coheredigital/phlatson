@@ -1,0 +1,5 @@
+<field>
+	<name>city</name>
+	<fieldtype>FieldtypeText</fieldtype>
+	<label>City</label>
+</field>
