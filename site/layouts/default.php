@@ -3,7 +3,6 @@
 
 	<!-- PAGE CONTENT -->
 	<?php echo $page->content ?>
-
 	<!-- CHILDREN -->
 	<?php if ($page->children): ?>
 	<hr>

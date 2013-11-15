@@ -1,6 +1,6 @@
 <?php
 
-class XData extends Core implements Countable, IteratorAggregate {
+class DataObject extends Core implements Countable, IteratorAggregate {
 
 	protected $data;
 	protected $basePath = CONTENT_PATH;

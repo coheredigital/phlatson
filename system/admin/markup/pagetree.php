@@ -9,35 +9,32 @@ function PageTreeItemTitle($title, $url){
 			</div>";
 }
 
+$homeItem = PageTreeItemTitle($home->title, $home->directory);
+if (count($home->children)){
+	foreach ($home->children as $p) {
+		$item .= "<li class='page-tree-group'>";
+		$item .= PageTreeItemTitle($p->title, $p->directory);
+			if ($p->children){
+				$item .= "<ul class='page-tree-list'>";
+				foreach ($p->children as $p) {
+					$item .= "<li class='page-tree-group'>";
+					$item .= PageTreeItemTitle($p->title, $p->directory);
+					$item .= "</li>";
+				}
+				$item .= "</ul>";
+			}
+		$item .= "</li>";
+	}
+}
 
-?>
-<div class="page-tree">
-	<ul class="page-tree-list">
-		<li class="page-tree-group">
-			<?php echo PageTreeItemTitle($home->title, $home->directory) ?>
-			<?php if ($home->children): ?>
-			<ul class="page-tree-list">
+$output = "{$homeItem}<ul class='page-tree-list'> {$item} </ul>";
 
-			<?php foreach ($home->children as $p): ?>
-				<li class="page-tree-group">
-
-					<?php echo PageTreeItemTitle($p->title, $p->directory) ?>
-
-					<?php if ($p->children): ?>
-					<ul class="page-tree-list">
-					<?php foreach ($p->children as $p): ?>
-						<li class="page-tree-group">
-							<?php echo PageTreeItemTitle($p->title, $p->directory) ?>
+$pageTreeRoot = "<div class='page-tree'> 
+					<ul class='page-tree-list'>
+						<li class='page-tree-group'>
+							{$output} 
 						</li>
-					<?php endforeach ?>
 					</ul>
-					<?php endif ?>
-
-				</li>
-			<?php endforeach ?>
-			</ul>
-			<?php endif ?>
-		</li>
-	</ul>
-</div>
-
+				</div>";
+				
+$output = $pageTreeRoot;

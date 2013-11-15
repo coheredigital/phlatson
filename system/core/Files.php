@@ -1,6 +1,6 @@
 <?php
 
-class Files extends XData {
+class Files extends DataObject {
 
 	protected $_dataFile = "files.xml";
 	protected $_fileType = false;

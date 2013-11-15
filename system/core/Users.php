@@ -1,7 +1,7 @@
 <?php
 
 
-class Pages{
+class Users{
 
 
 	// define some protected variable to be used by all page objects

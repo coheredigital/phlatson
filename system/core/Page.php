@@ -1,7 +1,7 @@
 <?php
 
 
-class Page extends XData{
+class Page extends DataObject{
 
 	// define some protected variable to be used by all page objects
 	public $layout;
@@ -118,24 +118,27 @@ class Page extends XData{
 
 
 		// find the corresponding field file and retrieve relevant settings
-		
 		$fieldClassname = (string) $field->fieldtype;
 		$fieldFormat = (string) $field->format;
 
 
 		// override default value for field based on attributes
-		if($value->attributes) {
-			$attr = $value->attributes();
-			$fieldClassname = (string) $attr->fieldtype;
-			$fieldFormat = (string) $attr->format;
-		}
+		// 
+		// NOT SURE I EVEN WANT THIS FEATURE, COMMENTED FOR NOW ATLEAST
+		// 
+		// if($value->attributes) {
+		// 	$attr = $value->attributes();
+		// 	$fieldClassname = (string) $attr->fieldtype;
+		// 	$fieldFormat = (string) $attr->format;
+		// }
 		
-
+		
 		if ($fieldClassname) {
-			$fieldtype = new $fieldClassname( (string) $value, $fieldFormat);
-			return $fieldtype;
+			$fieldtype = new $fieldClassname( );
+			$value = $fieldtype->format( $value, $fieldFormat);
 		}
-		else return $this->data->{$name};
+
+		return $value;
 	}
 
 

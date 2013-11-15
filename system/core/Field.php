@@ -1,6 +1,6 @@
 <?php
 
-class Field extends XData{
+class Field extends DataObject{
 	protected $basePath = FIELDS_PATH;
 
 

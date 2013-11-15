@@ -1,33 +1,19 @@
-
-
 <?php
 
 class Fieldtype{
 
-	protected $value;
-	protected $type;
-	protected $format;
+	// protected $className;
 
+	// public function __constuct(){
+	// 	$this->className = get_class($this);
+	// }
 
-
-	function __construct($v = 0, $f = false){
-		$this->value = $v;
-		$this->format = $f;
-
-		if ($f) $this->format();
+	public function format($value, $format){
+		return $value;
 	}
 
-	public function format(){
-		$this->value = $this->value;
-	}
-
-
-	public function __toString(){
-		return (string) $this->value;
-	}
-
-	public function getInput($name, $value){
-		return "<input class='field-input' type='text' name='$name' id='' value='$value'>";
+	public function render($name, $value){
+		return "<input class='field-input ".get_class($this)."' type='text' name='$name' id='' value='$value'>";
 	}
 
 }

@@ -6,7 +6,7 @@ class Session implements IteratorAggregate{
 	function __construct(){
 
 		@session_start();
-		unregisterGLOBALS();
+		unregister_GLOBALS();
 		$className = $this->className();
 
 		if(empty($_SESSION[$className])) $_SESSION[$className] = array();

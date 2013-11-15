@@ -2,19 +2,20 @@
 
 class FieldtypeDateTime extends Fieldtype{
 
-	const SCRIPT = "pickadate/lib/compressed/picker.js";
+	public function __construct(){
+		$this->className = get_class($this);
+		$config = api("config");
+		$config->scripts->add($config->urls->fieldtypes."$this->className/pickadate/lib/compressed/picker.js");
+		$config->scripts->add($config->urls->fieldtypes."$this->className/pickadate/lib/compressed/picker.date.js");
+		$config->scripts->add($config->urls->fieldtypes."$this->className/$this->className.js");
 
-	public static function getInfo() {
-		return array(
-			'title' => 'Datetime Field', 
-			'version' => 101, 
-			'summary' => 'An example module used for demonstration purposes. See the /site/modules/Helloworld.module file for details.',
-			'href' => 'http://amsul.ca/pickadate.js/',
-		);
+		$config->styles->add($config->urls->fieldtypes."$this->className/pickadate/lib/themes/default.css");
+		$config->styles->add($config->urls->fieldtypes."$this->className/pickadate/lib/themes/default.date.css");
 	}
 
-	public function format(){
-		$this->value = date((string) $this->format, (int) $this->value);
+	public function format($value, $format){
+		$value = date((string) $format, (int) $value);
+		return $value;
 	}
 
 }

@@ -2,15 +2,12 @@
 	$pageEdit = $pages->get($input->get->page);
 
 	if (count($input->post)) {
-		foreach ($input->post as $key => $value) {
-			// var_dump("KEY: $key => VALUE: $value");
-			
+		foreach ($input->post as $key => $value) {			
 			if ($key != "content" && $key != "published") {
 				$pageEdit->$key = $input->post->$key;
 			}
 			$pageEdit->save();
 		}
-		
 	}
 
 
@@ -31,8 +28,7 @@
 			$ft = (string) $field->fieldtype;
 			if ($ft) {
 				$fieldType = new $ft();
-				$input = $fieldType->getInput($field->name, $pageEdit->$value);
-
+				$input = $fieldType->render($field->name, $pageEdit->$value);
 				if (!$colCount) $output .= "<div class='row'>";
 				$colCount += $attr->col;
 
@@ -61,5 +57,5 @@
 
 	$output = "<form action='' method='POST' role='form'>{$output}{$submit}</form>";
 
-	echo $output;
+	
 

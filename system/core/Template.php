@@ -1,5 +1,5 @@
 <?php 
 
-class Template extends XData{
+class Template extends DataObject{
 	protected $basePath = TEMPLATES_PATH;
 }

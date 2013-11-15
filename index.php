@@ -19,4 +19,4 @@ define('TEMPLATES_PATH', SITE_PATH . "templates". DIRECTORY_SEPARATOR);
 define('USERS_PATH', SITE_PATH . "users". DIRECTORY_SEPARATOR);
 define('CONTENT_PATH', SITE_PATH . "content".DIRECTORY_SEPARATOR);
 
-require_once( ROOT_PATH . "system/core/_autoload.php");
+require_once( ROOT_PATH . "system/core/_init.php");
