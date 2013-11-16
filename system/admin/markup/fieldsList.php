@@ -6,6 +6,7 @@
 <?php 
 
 $fieldsList = $fields->all();
+
 foreach ($fieldsList as $field) {
 	$list .= "	<tr>
 					<td><a href='{$adminUrl}fields/edit/?name={$field->name}'>{$field->name}</a></td>

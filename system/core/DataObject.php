@@ -4,6 +4,7 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public $data = array();
 	protected $basePath;
+	protected $className;
 
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
@@ -16,14 +17,20 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public $pageRequest = array();
 
-	function __construct($directory = false){
+	function __construct($directory = false, $path = false){
 
-		
 		$this->basePath = $this->setBasePath();
-
-		$this->directory = trim($directory, "/");
 		$this->pageRequest = $this->getPageRequests($directory);
-		$this->path = realpath($this->basePath.$this->directory).DIRECTORY_SEPARATOR;
+
+		if (!$path) {
+			$this->directory = trim($directory, "/");
+			$this->path = $this->basePath.$this->directory."/";
+		}
+		else{
+			$this->directory = trim(basename($directory), "/");
+			$this->path = $path."/";
+		}
+		
 		$this->data = $this->getXML();
 
 	}
@@ -49,6 +56,11 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 		
 	}
 
+	protected function className(){
+		if (!isset($this->className)) $this->className = get_class($this);
+		return $this->className;
+	}
+
 	/**
 	 * Return the "directory" for this object, sortof ID in this system
 	 */
@@ -60,6 +72,7 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
+
 		if (is_file($this->path.$this->dataFile)) {
 			return simplexml_load_file($this->path.$this->dataFile);
 		}

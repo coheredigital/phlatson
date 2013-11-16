@@ -20,27 +20,25 @@
 
 	foreach ($fields as $key => $value) {
 		$attr = $value->attributes();
-		// var_dump($attr);
 		$field = new Field($value);
 
 		if ($field instanceof Field ) {
 
 			$ft = (string) $field->fieldtype;
 			if ($ft) {
-				$fieldType = new $ft();
-				$input = $fieldType->render($field->name, $pageEdit->$value);
-				if (!$colCount) $output .= "<div class='row'>";
+
+
+				if ($colCount === 0) $output .= "<div class='row'>";
 				$colCount += $attr->col;
 
-				$output .= "<div class='col col-{$attr->col}'>
-								<div class='field-item'>
-									<div class='field-heading'>{$field->label}</div>
-									<div class='field-content'>
-										{$input}
-									</div>
-								</div>
-							</div>";
-				if ($colCount == 12) {
+				$fieldType = new $ft();
+				$fieldType->set('label',$field->label);
+				$fieldType->set('name',$field->name);
+				$fieldType->set('value',$pageEdit->$value);
+				$fieldType->set('columns',$attr->col);
+				$output .= $fieldType->render();
+
+				if ($colCount === 12) {
 					$output .= "</div>";
 					$colCount = 0;
 				}

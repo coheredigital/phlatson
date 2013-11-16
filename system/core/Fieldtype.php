@@ -1,23 +1,27 @@
 <?php
 
 abstract class Fieldtype extends DataObject{
-	private $className;
 	protected $attributes = array();
 
 
 	public function __construct(){
 
-		$this->className = get_class($this);
+		$this->className = $this->className();
 
 		$this->set('label', '');
-		$this->set('label', '');
+		$this->set('columns', 12);
 
 
 		$this->attribute('name', '');
 		$this->attribute('class', 'field-input '.$this->className);
 		$this->attribute('id', '');
 
+		$this->addStyles();
+		$this->addScripts();
+
 	}
+
+
 
 	public function format($value, $format){
 		return $value;
@@ -33,36 +37,29 @@ abstract class Fieldtype extends DataObject{
 		$this->value = $value;
 	}
 
+	protected function addStyles(){}
+	protected function addScripts(){}
+	public function render(){}
 
 
-	public function render(){
-
-		$attributes = $this->getAttributes();
-
-		$output  = "<div class='field-item'>";
-		$output .= "<div class='field-heading'>";
-		$output .= "<label for=''>";
-		$output .= "{$this->label}";
-		$output .= "</label>";
-		$output .= "</div>";
-		$output .= "<div class='field-content'>
-				<input {$attributes} type='text' name='{$this->name}' id='Input_{$this->label}' value='{$this->value}'>
-			</div>
-		</div>";
-		return $output;
-	}
-
-
-	public function getAttributes(){
+	protected function getAttributes(){
 		$string = "";
 
 		foreach ($this->attributes as $key => $value) {
+			// if ($key == "class") 
+			// 	$string .= $this->getInputClass();
 			$string .= "{$key}='$value' ";
 		}
 		return trim($string);
 
 	}
 
+	// protected function getInputClass(){	
+	// 	$defaultClass = $this->attributes['class'];
+	// 	$columns = "col-{$this->columns}";
+	// 	$class = "class='{$defaultClass} {$columns}'";
+	// 	return $class;
+	// }
 
 	public function get($name){
 		return $this->data["{$name}"];

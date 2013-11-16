@@ -25,12 +25,7 @@
 			
 		<div id="main">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<?php echo $output; ?>
-					</div>
-				</div>
-
+				<?php echo $output; ?>
 			</div>
 		</div>
 
