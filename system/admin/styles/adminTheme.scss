@@ -19,22 +19,52 @@ a:hover{
 	color: $link-hover-color;
 }
 
+table{
+	width: 100%;
+	border: 1px solid $light-gray;
+	
+}
 
-
+th, td{
+	background: $white;
+	vertical-align: middle;
+	padding: 0.7em 0.9em;
+	line-height: 1em;
+	text-align: left;
+}
+th{
+	padding: 0.9em;
+	border-bottom: 1px solid $light-gray;
+}
+td{
+	border-top: 1px dashed $lighter-gray;
+	border-left: 1px dashed $lighter-gray;
+}
+tr:first-child td{
+	border-top: 0;
+}
+td:first-child{
+	border-left: 0;
+}
 
 
 /* Forms */
 
-input, textarea, button{
+input, textarea, button, select{
 	box-sizing: border-box;
 	padding: 0.5em;
+	line-height: 1em;
+	vertical-align: middle;
+	// height: 2em;
 	border: 1px solid $gray;
 	&:focus{
 		outline-color: $blue;
 		border-color: $blue;
 	}
 }
-
+select{
+	padding-bottom: 0.4em;
+}
 // get grid
 @import "grid";
 
@@ -105,7 +135,7 @@ input, textarea, button{
 /* Fields */
 
 .field-item{
-	border: 1px solid $light-gray;
+	border: 1px solid $lighter-gray;
 	background:$white;
 	margin-bottom: 1em;
 }
@@ -116,7 +146,7 @@ input, textarea, button{
 .field-heading{
 	background:$white;
 	font-size: 1.1em;
-	border-bottom: 1px dashed $light-gray;
+	border-bottom: 1px dashed $lighter-gray;
 }
 .field-input{
 	width: 100%;

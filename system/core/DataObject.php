@@ -2,10 +2,13 @@
 
 class DataObject extends Core implements Countable, IteratorAggregate {
 
-	public $data;
+	public $data = array();
 	protected $basePath;
-	protected $dataFile = "data.xml";
-	protected $config;
+
+	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
+	protected $dataFolder;
+	protected $dataFile = "data.xml"; // what file name should be check for data, most classes will stick with "data.xml"
+
 
 	public $path;
 	public $directory;
@@ -14,7 +17,7 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 	public $pageRequest = array();
 
 	function __construct($directory = false){
-		$this->config = $this->api('config');
+
 		
 		$this->basePath = $this->setBasePath();
 

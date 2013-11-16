@@ -1,0 +1,5 @@
+<template>
+	<field col="4" >name</field>
+	<field col="4" >label</field>
+	<field col="4" >fieldtype</field>
+</template>

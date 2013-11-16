@@ -1,0 +1,5 @@
+<field>
+	<name>label</name>
+	<label>Label</label>
+	<fieldtype>FieldtypeText</fieldtype>
+</field>

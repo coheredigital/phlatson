@@ -2,7 +2,7 @@
 
 class XData extends Core implements Countable, IteratorAggregate {
 
-	protected $data;
+	public $data;
 	protected $basePath = CONTENT_PATH;
 	protected $dataFile = "data.xml";
 	protected $config;
@@ -14,7 +14,6 @@ class XData extends Core implements Countable, IteratorAggregate {
 	public $pageRequest = array();
 
 	function __construct($directory = false){
-		$this->config = $this->api('config');
 		
 		$this->directory = trim($directory, "/");
 		$this->pageRequest = $this->getPageRequests($directory);

@@ -1,0 +1,4 @@
+<template>
+	<field col="6">title</field>
+	<field col="6">country</field>
+</template>

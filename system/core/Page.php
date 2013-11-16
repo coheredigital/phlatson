@@ -13,7 +13,7 @@ class Page extends DataObject{
 
 		// handle admin page request
 		if ($this->pageRequest[0] == $this->api('config')->adminUrl) {
-			$this->layout = $this->config->paths->admin."index.php";
+			$this->layout = $this->api('config')->paths->admin."index.php";
 		}	
 
 	}
@@ -23,7 +23,7 @@ class Page extends DataObject{
 	}
 
 	public function url($fromRoot = true){
-		return $this->config->urls->root.$this->directory;
+		return $this->api('config')->urls->root.$this->directory;
 	}
 
 

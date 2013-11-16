@@ -4,21 +4,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Admin</title>
-
-		<?php foreach ($config->styles as $file): ?>
-			<link rel="stylesheet" href="<?php echo $file ?>" type="text/css">
-		<?php endforeach ?>
-
-		<?php foreach ($config->scripts as $file): ?>
-			<script src="<?php echo $file ?>"></script>
-		<?php endforeach ?>
+		<?php foreach ($config->styles as $file) echo "<link rel='stylesheet' href='{$file}' type='text/css'>" ?>
+		<?php foreach ($config->scripts as $file) echo "<script src='{$file}'></script>" ?>
 	</head>
 	<body>
 		<nav class="navbar" role="navigation">
 			<div class="container">
 				<a href="<?php echo $config->urls->root ?>" class="pull-right button">View Site</a>
 				<ul class="nav navbar-nav">
-					<li class="active">
+					<li>
 						<a href="<?php echo $config->urls->root.$config->adminUrl ?>">Content</a>
 					</li>
 					<li>

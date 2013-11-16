@@ -8,6 +8,7 @@ $config->scripts->add("//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.j
 // establish the admin pages
 $page->title = "Admin";
 
+$adminUrl = "{$config->urls->root}{$config->adminUrl}/";
 
 
 // if page being editted, what one?
@@ -21,7 +22,12 @@ if ($page->requests[1] == "page") {
 	
 }
 elseif($page->requests[1] == "fields"){
-	$page->adminTemplate = $config->paths->admin.'markup/fieldsList.php';
+	if ($page->requests[2] == "edit") {
+		$page->adminTemplate = $config->paths->admin.'markup/fieldEdit.php';
+	}
+	else{
+		$page->adminTemplate = $config->paths->admin.'markup/fieldsList.php';
+	}
 }
 else{
 	$page->adminTemplate = $config->paths->admin.'markup/pagetree.php';
