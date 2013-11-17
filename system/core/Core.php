@@ -1,7 +1,13 @@
 <?php
 
+/*
+
+Core class to connect most other system classes, stores system wide api variables
+
+ */
 
 abstract class Core{
+
 	private static $apis = array();
 
 	/*Init function sets up default variables and other tasks*/
@@ -12,6 +18,7 @@ abstract class Core{
 		self::api('pages', new Pages());
 		self::api('input', new Input());
 		self::api('session', new Session());
+		self::api('files', new Files());
 	}
 
 	// method to get reference to chache api class

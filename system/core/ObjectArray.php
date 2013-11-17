@@ -18,20 +18,23 @@ abstract class ObjectArray extends Core implements IteratorAggregate{
 
 	// load availabe fields in $data array()
 	protected function load(){
-		$array = glob($this->api('config')->paths->site.$this->dataFolder."*", GLOB_ONLYDIR);
-		if ($this->checkSystem) {
-			$array2 = glob($this->api('config')->paths->system.$this->dataFolder."*", GLOB_ONLYDIR);
-			$array = array_merge($array,$array2);
-		}
+		if ($this->dataFolder) {
+			$array = glob($this->api('config')->paths->site.$this->dataFolder."*", GLOB_ONLYDIR);
+			if ($this->checkSystem) {
+				$array2 = glob($this->api('config')->paths->system.$this->dataFolder."*", GLOB_ONLYDIR);
+				$array = array_merge($array,$array2);
+			}
 
-		// assign key => value pairs
-		$dataArray = array();
-		foreach ($array as $path) {
-			$name = basename($path);
-			$dataArray["$name"] = $path;
-		}
+			// assign key => value pairs
+			$dataArray = array();
+			foreach ($array as $path) {
+				$name = basename($path);
+				$dataArray["$name"] = $path;
+			}
 
-		$this->data = $dataArray;
+			$this->data = $dataArray;
+		}
+		else $this->data = null;
 	}
 
 

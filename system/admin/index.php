@@ -1,4 +1,4 @@
-<?php require_once 'includes/init.php' ?>
+<?php require_once 'includes/route.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -19,6 +19,9 @@
 					</li>
 					<li>
 						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/templates/">Templates</a>
+					</li>
+					<li>
+						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/files/">Files</a>
 					</li>
 					<li class="pull-right">
 						<a href="<?php echo $config->urls->root ?>">View Site</a>

@@ -37,6 +37,14 @@ elseif($page->requests[1] == "fields"){
 		$page->adminTemplate = $config->paths->admin.'markup/fieldsList.php';
 	}
 }
+elseif($page->requests[1] == "files"){
+	if ($page->requests[2] == "edit") {
+		$page->adminTemplate = $config->paths->admin.'markup/fieldEdit.php';
+	}
+	else{
+		$page->adminTemplate = $config->paths->admin.'markup/filesList.php';
+	}
+}
 else{
 	$page->adminTemplate = $config->paths->admin.'markup/pagetree.php';
 }
