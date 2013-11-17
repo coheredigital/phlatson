@@ -2,3 +2,8 @@
 
 // none yet
 
+interface RecursiveSearch{
+
+
+
+}

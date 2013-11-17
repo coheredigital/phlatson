@@ -1,16 +1,13 @@
 <?php 
 
 class Template extends DataObject{
-
-
-	public function fields(){
-		return $this->data->xpath("//field");
-	}
-
 	protected function setBasePath(){
 		return api('config')->paths->templates;
 	}
 
+	public function fields(){
+		return $this->get("//field");
+	}
 
 	private function getLayout(){
 		$layoutFile = $this->api('config')->paths->layouts.$this->directory.".php";
@@ -18,19 +15,15 @@ class Template extends DataObject{
 		return $layoutFile;
 	}
 
-
 	public function get($name){
 		switch ($name) {
 			case 'layout':
-				$value = $this->getLayout();
+				return $this->getLayout();
 				break;
 			default:
-				// if not caught pass back to parent get() 
-				$value = parent::get($name);
+				$this->data->{$name};
 				break;
 		}
-		return $value;
+		return parent::get($name);
 	}
-
-
 }

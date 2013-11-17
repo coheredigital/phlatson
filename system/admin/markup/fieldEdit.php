@@ -1,6 +1,8 @@
 <?php 
 
-$fieldEdit = new Field($input->get->name);
+// $fieldEdit = new Field($input->get->name);
+$fieldName = $input->get->name;
+$fieldEdit = $fields->$fieldName;
 
 $colCount = 0;
 foreach ($fieldEdit->data as $key => $value) {

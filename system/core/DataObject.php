@@ -1,10 +1,12 @@
 <?php
 
-class DataObject extends Core implements Countable, IteratorAggregate {
+abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public $data = array();
 	protected $basePath;
 	protected $className;
+
+	protected $dataReader;
 
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
@@ -18,6 +20,11 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 	public $pageRequest = array();
 
 	function __construct($directory = false, $path = false){
+
+		$this->className = $this->className();
+
+		$this->dataReader = new XMLReader;
+
 
 		$this->basePath = $this->setBasePath();
 		$this->pageRequest = $this->getPageRequests($directory);
@@ -33,6 +40,10 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 		
 		$this->data = $this->getXML();
 
+		if (is_file($this->path.$this->dataFile)) {
+			$this->dataReader->open($this->path.$this->dataFile);
+		}
+		
 	}
 
 
@@ -42,7 +53,22 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 		return $this->get($name);
 	}
 	public function get($name){
-		return $this->data->{$name};
+		if ($name == "name") {
+			// if item doesn't have a formal "name" field, fall back to directory
+			// the two value should ALWAYS be EXACTLY the same and though a name
+			// field should always be defined, a fallback is good
+			return $this->data->{$name} ? $this->data->{$name} : $this->directory;
+		}
+		else{
+			// if string begins with "/" we will use get as an xpath alias
+			if (substr($name, 0, 1) == "/") {
+				return $this->data->xpath("$name");
+			}
+			else{
+				return $this->data->{$name};
+			}
+		}
+		
 	}
 
 	public function __set($name, $value){
@@ -72,7 +98,6 @@ class DataObject extends Core implements Countable, IteratorAggregate {
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
-
 		if (is_file($this->path.$this->dataFile)) {
 			return simplexml_load_file($this->path.$this->dataFile);
 		}

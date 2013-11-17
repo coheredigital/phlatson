@@ -1,8 +1,16 @@
 <?php
 
-class DataArray extends Core implements IteratorAggregate{
-	protected $data = array(); 
+/*
 
+Basic data array to access simple arrays like object and provide common funtionality in the api
+may not be needed long term, possible that ObjectArray could extend from this to simplify the methods in 
+ObjectArray and allow natural fallbacks
+
+ */
+
+abstract class DataArray extends Core implements IteratorAggregate{
+
+	protected $data = array();
 
 
 	public function __set($key, $value) {
@@ -19,9 +27,11 @@ class DataArray extends Core implements IteratorAggregate{
 	}
 	public function get($key) {
 		if(is_object($key)) $key = "$key"; // stringify $object
-		if(isset($this->data[$key])) return $this->data[$key]; 
+		if(isset($this->data[$key])) {
+			return $this->data[$key];
+		}
+		return false;
 	}
-
 
 	public function has($key) {
 		return ($this->get($key) !== null); 

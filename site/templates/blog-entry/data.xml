@@ -1,6 +1,10 @@
 <template>
-	<field col="12">title</field>
-	<field col="9">author</field>
-	<field col="3">published</field>
-	<field col="12">content</field>
+
+	<fields>
+		<field col="12">title</field>
+		<field col="9">author</field>
+		<field col="3">published</field>
+		<field col="12">content</field>
+	</fields>
+
 </template>

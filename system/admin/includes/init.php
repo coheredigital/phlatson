@@ -21,6 +21,14 @@ if ($page->requests[1] == "page") {
 	}
 	
 }
+elseif($page->requests[1] == "templates"){
+	if ($page->requests[2] == "edit") {
+		$page->adminTemplate = $config->paths->admin.'markup/templateEdit.php';
+	}
+	else{
+		$page->adminTemplate = $config->paths->admin.'markup/templatesList.php';
+	}
+}
 elseif($page->requests[1] == "fields"){
 	if ($page->requests[2] == "edit") {
 		$page->adminTemplate = $config->paths->admin.'markup/fieldEdit.php';

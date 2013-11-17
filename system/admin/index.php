@@ -10,7 +10,6 @@
 	<body>
 		<nav class="navbar" role="navigation">
 			<div class="container">
-				<a href="<?php echo $config->urls->root ?>" class="pull-right button">View Site</a>
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="<?php echo $config->urls->root.$config->adminUrl ?>">Content</a>
@@ -18,7 +17,12 @@
 					<li>
 						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/fields/">Fields</a>
 					</li>
-					<li><a href="#">Setting</a></li>
+					<li>
+						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/templates/">Templates</a>
+					</li>
+					<li class="pull-right">
+						<a href="<?php echo $config->urls->root ?>">View Site</a>
+					</li>
 				</ul>
 			</div>
 		</nav>

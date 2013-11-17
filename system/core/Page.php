@@ -170,11 +170,6 @@ class Page extends DataObject{
 
 	}
 
-	public function render(){
-		return include $this->layout;
-	}
-
-
 
 	public function get($name){
 		switch ($name) {
