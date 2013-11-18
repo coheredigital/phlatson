@@ -20,10 +20,6 @@ class Files extends ObjectArray {
 	protected $singularName = "File";
 	protected $depthLimit = 1;
 
-	public function __construct(){
-		$this->load();
-	}
-
 
 	public function load(){
 		$path = $this->api('config')->paths->site.$this->dataFolder;
@@ -35,26 +31,31 @@ class Files extends ObjectArray {
 		$fileList = array();
 		foreach ($regex as  $key => $value) {
 
-			$key = str_replace($this->api('config')->paths->site, "", $key);
+			$key = str_replace(DIRECTORY_SEPARATOR, "/", $key);
+			$key = str_replace($this->api('config')->paths->content, "", $key);
+
 			$key = str_replace($this->dataFile, "", $key);
 			$key = (string) trim($key, "\\");
 
 			$fileList["$key"] = simplexml_load_file($value->getRealPath());
 		}
-		// return $fileList;
+
 		$array = array();
 		foreach ($fileList as $xml) {
-			// var_dump($xml);
-			foreach ($xml->xpath("//file") as $k => $v) {
-				$array[] = new File("$key","$v->filename");
 
-				// $array["$v->filename"] = (string) "$key";
+			foreach ($xml->xpath("//file") as $k => $v) {
+				$folder = $key;
+				$path = $this->api('config')->paths->site.$folder;
+				$array[] = new File("$folder","$v->filename");
 			}
 		}
 		$this->data = $array;
 	}
 
-
+	public function all(){
+		$this->load();
+		return $this->data;
+	}
 
 
 }

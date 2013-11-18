@@ -1,6 +1,4 @@
 <?php 
-	
-	$files->load(); 
-
-	var_dump($files->data);
-
+foreach ($files->all() as $file) {
+	$output .= "<p>{$file->filename} | {$file->type} | $file->size</p>";
+}
