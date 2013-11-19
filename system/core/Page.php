@@ -95,9 +95,12 @@ class Page extends DataObject{
 
 
 	public function files(){
-
-		$files = new Files($this->url(false));
-		return $files;
+		if(!isset($this->files)){
+			$files = new Files;
+			$files->load("$this->directory", 0);
+			$this->files = $files;
+		}
+		return $this->files;
 
 	}
 

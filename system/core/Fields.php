@@ -9,5 +9,4 @@ class Fields extends ObjectArray{
 		$this->load();
 	}
 
-
 }

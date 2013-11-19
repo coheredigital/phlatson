@@ -1,0 +1,5 @@
+<page>
+	<template>admin</template>
+	<layout>PageTree</layout>
+	<title>Page Tree</title>
+</page>

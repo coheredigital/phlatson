@@ -4,6 +4,7 @@
 	<?php echo $page->content ?>
 	<!-- CHILDREN -->
 	<?php if ($page->children): ?>
+
 	<hr>
 	<div class="panel panel-default">
 		<div class="panel-body">

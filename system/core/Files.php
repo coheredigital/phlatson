@@ -18,18 +18,26 @@ class Files extends ObjectArray {
 	protected $dataFolder = "content/";
 	protected $checkSystem = true;
 	protected $singularName = "File";
-	protected $depthLimit = 1;
 
 
-	public function load(){
-		$path = $this->api('config')->paths->site.$this->dataFolder;
-		$directory = new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS);
-		$iterator = new RecursiveIteratorIterator($directory);
-		$regex = new RegexIterator($iterator, "/{$this->dataFile}/");
+
+	public function load($folder = "", $depth = 0){
+		$path = $this->api('config')->paths->site."{$this->dataFolder}{$folder}/";
+		var_dump($path);
+
+		if (!is_dir($path)) return false; // return fallse if the directory passed in is invalid
+
+		$rdi = new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS);
+		$rii = new RecursiveIteratorIterator($rdi);
+		// set the depth limit
+		if ($depth) $rii->setMaxDepth($depth);
+
+		// find only direct matches to our desired "data file"
+		$ri = new RegexIterator($rii, "/{$this->dataFile}/");
 
 
 		$fileList = array();
-		foreach ($regex as  $key => $value) {
+		foreach ($ri as  $key => $value) {
 
 			$key = str_replace(DIRECTORY_SEPARATOR, "/", $key);
 			$key = str_replace($this->api('config')->paths->content, "", $key);
@@ -52,7 +60,8 @@ class Files extends ObjectArray {
 		$this->data = $array;
 	}
 
-	public function all(){
+	// load all file, not depth limit, could be very slow
+	public function all($depth = false){
 		$this->load();
 		return $this->data;
 	}

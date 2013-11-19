@@ -1,12 +1,12 @@
 <?php
 
-abstract class ObjectArray extends Core implements IteratorAggregate{
+abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 
 	
 	// 'name' => 'value' 	pairing of available fields
 	// 'name' => 'path'
 	public $data = array();
-
+	protected $count;
 	// the folder within the site and sytem paths to check for items ex: fields, templates, etc
 	protected $dataFolder;
 	protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
@@ -87,6 +87,11 @@ abstract class ObjectArray extends Core implements IteratorAggregate{
 
 	public function getIterator() {
 		return new ArrayObject($this->data); 
+	}
+
+	public function count(){
+		if (!isset($this->count)) $this->count = count($this->data);
+		return $this->count;
 	}
 
 	public function __unset($key) {

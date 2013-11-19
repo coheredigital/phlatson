@@ -1,9 +1,6 @@
 <?php
 
-class Paths {
-
-
-	public $_data = array();
+class Paths extends DataArray {
 
 	public function __construct($root) {
 		$this->root = $root; 
@@ -22,7 +19,7 @@ class Paths {
 	}
 
 	public function get($name){
-		if ($this->_data["$name"]) $value = $this->_data["$name"];
+		if ($this->data["$name"]) $value = $this->data["$name"];
 		if(!is_null($value)) {
 			if($value[0] == '/' || (DIRECTORY_SEPARATOR != '/' && $value[1] == ':')) return $value; 
 				else $value = $this->root . $value; 
@@ -35,11 +32,11 @@ class Paths {
 	}
 
 	public function set($name, $value){
-		if ($name && $value && is_array($this->_data)) {
-			if (isset($this->_data["$name"]) && $name != "root") return false; // only allow root value to be overwritten when already set
+		if ($name && $value && is_array($this->data)) {
+			if (isset($this->data["$name"]) && $name != "root") return false; // only allow root value to be overwritten when already set
 			$value = $this->normalizeSeparators($value);
 			// if (is_dir($value)) $value = realpath($value);
-			$this->_data[$name] = $value;
+			$this->data[$name] = $value;
 		}
 		
 	}
