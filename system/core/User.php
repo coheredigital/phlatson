@@ -1,10 +1,17 @@
 <?php
 
 
-class User extends XData{
+class User extends DataObject{
 
-	protected $_basePath = USERS_PATH;
+	public $name = "guest";
 
+	protected function setBasePath(){
+		return $this->api('config')->paths->users;
+	}
 
+	public function isLoggedin(){
+		if ($user->name == "guest") return false;
+		return true;
+	}
 
 }

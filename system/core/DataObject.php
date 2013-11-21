@@ -6,43 +6,32 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	protected $basePath;
 	protected $className;
 
-	protected $dataReader;
-
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
 	protected $dataFile = "data.xml"; // what file name should be check for data, most classes will stick with "data.xml"
 
 
 	public $path;
-	public $directory;
 
 
-	public $pageRequest = array();
+	public $urlRequest = array();
 
-	function __construct($directory = false, $path = false){
+	function __construct($url = false, $path = false){
 
 		$this->className = $this->className();
 
-		$this->dataReader = new XMLReader;
-
-
 		$this->basePath = $this->setBasePath();
-		$this->pageRequest = $this->getPageRequests($directory);
+		$this->urlRequest = $this->getUrlRequest($url);
 
-		if (!$path) {
-			$this->directory = trim($directory, "/");
-			$this->path = $this->basePath.$this->directory."/";
+
+		if ($path === false) {
+			$this->path = $this->basePath.$this->getDirectory()."/";
 		}
 		else{
-			$this->directory = trim(basename($directory), "/");
 			$this->path = $path."/";
 		}
 		
 		$this->data = $this->getXML();
-
-		if (is_file($this->path.$this->dataFile)) {
-			$this->dataReader->open($this->path.$this->dataFile);
-		}
 		
 	}
 
@@ -53,22 +42,21 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return $this->get($name);
 	}
 	public function get($name){
-		if ($name == "name") {
-			// if item doesn't have a formal "name" field, fall back to directory
-			// the two value should ALWAYS be EXACTLY the same and though a name
-			// field should always be defined, a fallback is good
-			return $this->data->{$name} ? $this->data->{$name} : $this->directory;
-		}
-		else{
-			// if string begins with "/" we will use get as an xpath alias
-			if (substr($name, 0, 1) == "/") {
-				return $this->data->xpath("$name");
-			}
-			else{
+		switch ($name) {
+			case 'name':
+				return $this->data->{$name} ? $this->data->{$name} : $this->directory;
+				break;
+			case 'directory':
+				return $this->getDirectory();
+			default:
 				return $this->data->{$name};
-			}
-		}
-		
+				break;
+		}		
+	}
+
+	// for now basically an XPATH alias
+	public function find(){
+		return $this->data->xpath("$name");
 	}
 
 	public function __set($name, $value){
@@ -106,7 +94,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	protected function createUrl($array){
-		if (is_array($array) && implode("", $this->pageRequest)) {
+		if (is_array($array) && implode("", $this->urlRequest)) {
 			$url = "/".implode("/", $array);
 			return $url;
 		}
@@ -114,14 +102,20 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
-	protected function getPageRequests($url){
+	protected function getUrlRequest($url){
 		$array = explode("/", $url);
 		return $array;
 	}
 
+	// uses the "urlRequest" array to determine what relative folder we are in
+	protected function getDirectory(){
+		$value = implode("/", $this->urlRequest);
+		return (string) $value;
+	}
+
 	// override this function in descendant classes to set the basepath during construct
 	protected function setBasePath(){
-		return api('config')->paths->content;
+		return $this->api('config')->paths->content;
 	}
 
 

@@ -4,15 +4,16 @@
 class Page extends DataObject{
 
 	// define some protected variable to be used by all page objects
-
+	protected $baseUrl; // only pages with need a url
 
 	function __construct($url = false){
 		
 		parent::__construct($url);
 
+		$this->baseUrl = $this->setBaseUrl();
 
 		// handle admin page request
-		if ($this->pageRequest[0] == $this->api('config')->adminUrl) {
+		if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
 			$this->layout = $this->api('config')->paths->admin."index.php";
 		}	
 
@@ -20,10 +21,14 @@ class Page extends DataObject{
 
 	protected function setBasePath(){
 		return api('config')->paths->content;
+	}	
+	protected function setBaseUrl(){
+		return api('config')->urls->root;
 	}
 
 	public function url($fromRoot = true){
-		return $this->api('config')->urls->root.$this->directory;
+		// var_dump($this->directory);
+		return $this->baseUrl.$this->directory;
 	}
 
 
@@ -36,8 +41,8 @@ class Page extends DataObject{
 		foreach($subs as $folder) {
 			$folder = basename($folder);
      		$url = $this->directory."/".$folder;
-
-     		$page = new Page($url);
+     		// get an new of same class, useful for extending into AdminPage, etc
+     		$page = new $this->className($url);
      		$children[] = $page;
 
       	}
@@ -45,7 +50,7 @@ class Page extends DataObject{
 	}
 
 	public function parent(){
-		$requests = $this->pageRequest;
+		$requests = $this->urlRequest;
 		array_pop($requests); // remove current (last) item to find parent
 
 		$url = $this->createUrl($requests);
@@ -59,7 +64,7 @@ class Page extends DataObject{
 
 
 	public function parents(){
-		$requests = $this->pageRequest;
+		$requests = $this->urlRequest;
 		$parents = array();
 		$urls = array();
 
@@ -69,7 +74,7 @@ class Page extends DataObject{
 		}
 
 		foreach ($urls as $url) {
-     		$page = new Page($url);
+     		$page = new $this->className($url);
      		$parents[] = $page;
 		}
 
@@ -80,13 +85,13 @@ class Page extends DataObject{
 
 	public function rootParent(){
 
-		$url = $this->pageRequest[0];
+		$url = $this->urlRequest[0];
 
 		if ($this->url(false) == $url) {
 			return $this;
 		}
 		elseif ($url) {
-			$page = new Page($url);
+			$page = new $this->className($url);
 	      	return $page;
 		}
 		return false;
@@ -177,7 +182,7 @@ class Page extends DataObject{
 	public function get($name){
 		switch ($name) {
 			case 'requests':
-				$value = $this->pageRequest;
+				$value = $this->urlRequest;
 				break;
 			case 'children':
 				$value = $this->children();
@@ -210,6 +215,10 @@ class Page extends DataObject{
 			default:
 				$value = $this->formatField($name);
 				break;
+		}
+		if (!$value) {
+			// fall back to parent if we failed to find anything
+			$value = parent::get($name);
 		}
 		return $value;
 	}

@@ -23,7 +23,6 @@ class Files extends ObjectArray {
 
 	public function load($folder = "", $depth = 0){
 		$path = $this->api('config')->paths->site."{$this->dataFolder}{$folder}/";
-		var_dump($path);
 
 		if (!is_dir($path)) return false; // return fallse if the directory passed in is invalid
 

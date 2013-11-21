@@ -10,7 +10,6 @@
 		<div class="panel-body">
 			<h4>Child Pages</h4>
 			<?php foreach ($page->children as $p): ?>
-
 				<p><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></p>
 			<?php endforeach ?>
 		</div>

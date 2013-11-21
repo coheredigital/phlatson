@@ -1,42 +1,14 @@
-<?php require_once 'includes/route.php' ?>
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Admin</title>
-		<?php foreach ($config->styles as $file) echo "<link rel='stylesheet' href='{$file}' type='text/css'>" ?>
-		<?php foreach ($config->scripts as $file) echo "<script src='{$file}'></script>" ?>
-	</head>
-	<body>
-		<nav class="navbar" role="navigation">
-			<div class="container">
-				<ul class="nav navbar-nav">
-					<li>
-						<a href="<?php echo $config->urls->root.$config->adminUrl ?>">Content</a>
-					</li>
-					<li>
-						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/fields/">Fields</a>
-					</li>
-					<li>
-						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/templates/">Templates</a>
-					</li>
-					<li>
-						<a href="<?php echo $config->urls->root.$config->adminUrl ?>/files/">Files</a>
-					</li>
-					<li class="pull-right">
-						<a href="<?php echo $config->urls->root ?>">View Site</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-			
-		<div id="main">
-			<div class="container">
-				<?php echo $output; ?>
-			</div>
-		</div>
+<?php 
+$admin = new AdminPage($_GET['_url']);
+$adminHome = new AdminPage("/"); // create home page object for simple ref back to admin root
+
+// admin scripts and themes (default always needed)
+$config->styles->add("{$config->urls->admin}styles/adminTheme.css");
+$config->scripts->add("//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js");
 
 
-	</body>
-</html>
+include $admin->get('layout');
 
+require_once 'markup/_output.php';
+
+// var_dump($admin);
