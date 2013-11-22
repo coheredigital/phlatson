@@ -1,6 +1,8 @@
 <?php
 	$pageEdit = $pages->get($input->get->page);
 
+	var_dump($pageEdit);
+
 	if (count($input->post)) {
 		foreach ($input->post as $key => $value) {			
 			if ($key != "content" && $key != "published") {
@@ -16,7 +18,7 @@
 	$output = "";
 
 	$fields = $template->fields();
-	// var_dump($fields);
+
 
 	foreach ($fields as $key => $value) {
 		$attr = $value->attributes();
@@ -45,14 +47,16 @@
 			}
 
 
-
 		}
 
 
 	}
+	if ($colCount === 12 && $colCount === 0) {
+		$output .= "</div>";
+	}
 
 	$submit = "<button class='button button-save pull-right' type='submit'><i class='icon icon-floppy-o'></i></button>";
-	$output = "<form action='' method='POST' role='form'>{$output}{$submit}</form>";
+	$output = "<form action='' method='POST' role='form'>{$output}{$submit} </form>";
 
 	?>
 

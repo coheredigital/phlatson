@@ -6,7 +6,7 @@ class Template extends DataObject{
 	}
 
 	public function fields(){
-		return $this->get("//field");
+		return $this->find("//field");
 	}
 
 	private function getLayout(){

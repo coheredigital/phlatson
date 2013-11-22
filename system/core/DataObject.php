@@ -56,7 +56,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 	// for now basically an XPATH alias
-	public function find(){
+	public function find($name){
 		return $this->data->xpath("$name");
 	}
 

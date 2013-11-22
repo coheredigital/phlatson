@@ -437,12 +437,12 @@ body {
 }
 
 a {
-  color: #65c3df;
+  color: #444b65;
   text-decoration: none;
 }
 
 a:hover {
-  color: #2696b8;
+  color: #65c3df;
 }
 
 table {
@@ -604,7 +604,36 @@ select {
 /* Layout */
 
 #main {
-  padding-bottom: 3em;
+  position: relative;
+  margin-left: 200px;
+}
+
+.main-header {
+  height: 60px;
+  background: rgba(255, 255, 255, 0.85);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 200px;
+  border-bottom: 2px solid white;
+}
+
+.main-content {
+  padding: 2em;
+  padding-top: 5em;
+}
+
+#sidebar {
+  width: 200px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: #444b65;
+}
+
+.sidebar-header {
+  height: 60px;
+  border-bottom: 2px solid #596283;
 }
 
 .container {
@@ -616,7 +645,6 @@ select {
 /* Navigation */
 
 .navbar {
-  background: #65c3df;
   position: relative;
   top: 0;
   margin-bottom: 1em;
@@ -627,16 +655,11 @@ select {
   padding: 0;
 }
 
-.nav li {
-  display: inline-block;
-}
-
 .nav a {
   color: white;
   display: block;
   padding: 1.3em 1em;
   text-transform: uppercase;
-  font-weight: bold;
 }
 
 .nav .active a {
@@ -712,4 +735,31 @@ select {
 
 .pull-left {
   float: left;
+}
+
+/* MISC */
+
+.view-site {
+  position: absolute;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  padding: 1em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #2f3447;
+  bottom: 0;
+  display: block;
+  width: 100%;
+}
+
+.header-button {
+  line-height: 2.2em;
+  font-size: 2em;
+  vertical-align: middle;
+  float: right;
+  color: #aaaaaa;
+  margin-right: 1em;
 }

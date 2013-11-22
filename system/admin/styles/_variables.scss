@@ -1,5 +1,10 @@
 /* Colors */
 $white: #fff;
+$translucent-white: rgba(255,255,255,0.85);
+
+$black: #000;
+$translucent-black: rgba(0,0,0,0.3);
+
 
 $dark-gray: #555;
 $gray: #aaa;
@@ -12,6 +17,11 @@ $soft-gray: #f5f5f5;
 $blue: #65C3DF;
 $dark-blue: darken($blue,20%);
 
+$navy: #444b65;
+$dark-navy: darken($navy,10%);
+$light-navy: lighten($navy,10%);
+
+
 $green: #56BA6D;
 $dark-green: darken($green,20%);
 $light-green: lighten($green,20%);
@@ -22,5 +32,5 @@ $light-green: lighten($green,20%);
 
 /* Colors By  element */
 
-$link-color: $blue;
-$link-hover-color: $dark-blue;
+$link-color: $navy;
+$link-hover-color: $blue;

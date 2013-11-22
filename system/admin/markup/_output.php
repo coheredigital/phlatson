@@ -7,8 +7,11 @@
 		<?php foreach ($config->scripts as $file) echo "<script src='{$file}'></script>" ?>
 	</head>
 	<body>
-		<nav class="navbar" role="navigation">
-			<div class="container">
+		<div id="sidebar">
+			<div class="sidebar-header">
+				
+			</div>
+			<nav class="navbar" role="navigation">
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="<?php echo $adminHome->url ?>"><?php echo $adminHome->title ?></a>
@@ -20,16 +23,22 @@
 						<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
 						<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
 					<?php endforeach ?>
-					<li class="pull-right">
-						<a href="<?php echo $config->urls->root ?>">View Site</a>
-					</li>
+					
+					
+					
 				</ul>
-			</div>
-		</nav>
+			</nav>
+			
+		</div>
+
 		<div id="main">
-			<div class="container">
+			<div class="main-header">
+				<a class="header-button" href="<?php echo $config->urls->root ?>"><i class="icon icon-globe"></i></a>
+			</div>
+			<div class="main-content">
 				<?php echo $output; ?>
 			</div>
+			
 		</div>
 	</body>
 </html>

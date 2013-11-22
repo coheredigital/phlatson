@@ -2,8 +2,6 @@
 $admin = new AdminPage($_GET['_url']);
 $adminHome = new AdminPage("/"); // create home page object for simple ref back to admin root
 
-
-// var_dump($admin);
 // admin scripts and themes (default always needed)
 $config->styles->add("{$config->urls->admin}styles/adminTheme.css");
 $config->styles->add("{$config->urls->admin}styles/font-awesome/css/font-awesome.css");
