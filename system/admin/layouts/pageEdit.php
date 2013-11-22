@@ -51,5 +51,8 @@
 
 	}
 
-	$submit = "<input class='button button-save pull-right' type='submit' value='save'>";
+	$submit = "<button class='button button-save pull-right' type='submit'><i class='icon icon-floppy-o'></i></button>";
 	$output = "<form action='' method='POST' role='form'>{$output}{$submit}</form>";
+
+	?>
+

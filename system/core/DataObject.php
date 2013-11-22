@@ -32,6 +32,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		}
 		
 		$this->data = $this->getXML();
+
 		
 	}
 
@@ -92,6 +93,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return null;
 	}
 
+	/**
+	 * Determines if we are looking at a valid Object
+	 */
+	public function isValid(){
+		return is_file($this->path.$this->dataFile);
+	}
 
 	protected function createUrl($array){
 		if (is_array($array) && implode("", $this->urlRequest)) {

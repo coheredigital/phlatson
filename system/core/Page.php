@@ -43,8 +43,15 @@ class Page extends DataObject{
 		foreach($subs as $folder) {
 			$folder = basename($folder);
      		$url = $this->directory."/".$folder;
+     		$dataFile = trim($this->path, "/")."/".$folder."/".$this->dataFile;
+     		// skip if no "dataFile" is found
+     		if (!is_file($dataFile)) continue;
+
+
      		// get an new of same class, useful for extending into AdminPage, etc
      		$page = new $this->className($url);
+  
+     		
      		$children[] = $page;
 
       	}
