@@ -1,8 +1,6 @@
 <?php
 	$pageEdit = $pages->get($input->get->page);
 
-	var_dump($pageEdit);
-
 	if (count($input->post)) {
 		foreach ($input->post as $key => $value) {			
 			if ($key != "content" && $key != "published") {
