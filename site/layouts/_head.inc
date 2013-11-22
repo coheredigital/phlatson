@@ -2,46 +2,62 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>XTest - <?php //echo $page->title ?></title>
+	<title>XTest - <?php echo $page->title ?></title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/XPages/site/layouts/styles/main.css">
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,200,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="<?php echo $config->urls->layouts ?>styles/main.css">
 </head>
 <body>
 	<?php $home = $pages->get("/") ?>
-	<nav id="nav" class="navbar navbar-default  navbar-static-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="<?php echo $home->url ?>">XPages</a>
-			</div>
 
-
-		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		    <ul class="nav navbar-nav">
-				<?php foreach ($home->children as $p): ?>
-					<?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
-					<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-				<?php endforeach ?>
-		    </ul>
-		  </div>
-
-
-		</div>
-
-	</nav>
 
 	<div class="header">
 
 	  <div class="container">
-	    <h1><?php echo $page->title ?></h1>
+	  	<div class="row">
+	  		<div class="col col-md-6">
+	  			<h1><?php echo $page->title ?></h1>
+	  		</div><div class="col col-md-6">
+	  			<nav id="nav" class="navbar navbar-default navbar-static-top" role="navigation">
+					
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+
+
+					  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					    <ul class="nav navbar-nav pull-right">
+							<?php foreach ($home->children as $p): ?>
+								<?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
+								<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
+							<?php endforeach ?>
+					    </ul>
+					  </div>
+					
+				</nav>
+	  		</div>
+	  	</div>
 	  </div>
 	</div>
-	<div id="main">
+	<?php if ($page->rootParent->url != "/xpages/blog" && count($page->rootParent->children)): ?>
+	<nav id="subnav" class="navbar navbar-default navbar-static-top" role="navigation">
+		<div class="container">
+		    <ul class="nav navbar-nav">
+				<?php foreach ($page->rootParent->children as $p): ?>
+					<?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
+					<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
+				<?php endforeach ?>
+		    </ul>
+		</div>
+	</nav>
+	<?php endif ?>
+	<div id="breadcrumbs">
 		<div class="container">
 			<?php $parents = $page->parents() ?>
 			<?php if (count($parents) && $page->url != $home->url): ?>
@@ -56,3 +72,6 @@
 			</ol>
 			<?php endif ?>
 		</div>
+	</div>
+	<div id="main">
+

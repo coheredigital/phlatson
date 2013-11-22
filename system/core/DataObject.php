@@ -110,7 +110,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	// uses the "urlRequest" array to determine what relative folder we are in
 	protected function getDirectory(){
 		$value = implode("/", $this->urlRequest);
-		return (string) $value;
+		return (string) trim($value, "/");
 	}
 
 	// override this function in descendant classes to set the basepath during construct
