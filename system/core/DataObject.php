@@ -18,7 +18,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	function __construct($url = false, $path = false){
 
-		$this->className = $this->className();
+		$this->className();
 
 		$this->basePath = $this->setBasePath();
 		$this->urlRequest = $this->getUrlRequest($url);
@@ -87,6 +87,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
+		// var_dump($this->path.$this->dataFile);
 		if (is_file($this->path.$this->dataFile)) {
 			return simplexml_load_file($this->path.$this->dataFile);
 		}
@@ -134,6 +135,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			$this->template = $template; // cache to $this->template on first request
 		}
 
+		// return $this->template;
 		return $template;
 	}
 

@@ -66,6 +66,7 @@ function setupConfig() {
 	 */
 	if($config->debug) {
 		error_reporting(E_ALL ^ E_NOTICE);
+		// error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 	} else {
 		error_reporting(0);
@@ -101,19 +102,21 @@ $config = setupConfig();
 
 try {
 	Core::init($config);
-	$page = new Page($_GET['_url']);
+	
 
 	foreach (Core::apiList() as $name => $classObject) {
 		// var_dump($name);
 		if ($name == "config" || $name == "page") continue; // skip $config, it is already set
 		${$name} = $classObject;
 	}
-
+	$page = new Page($input->url);
 
 } catch (Exception $e) {
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
+
+var_dump($input);
 // output template
 // NOTE: create a better method of achieving this
 

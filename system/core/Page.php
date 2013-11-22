@@ -30,7 +30,6 @@ class Page extends DataObject{
 		// var_dump($this->baseUrl.$this->directory);
 		
 		return $this->baseUrl.$this->directory;
-
 	}
 
 

@@ -23,12 +23,8 @@
 						<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
 						<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
 					<?php endforeach ?>
-					
-					
-					
 				</ul>
 			</nav>
-			
 		</div>
 
 		<div id="main">
@@ -38,7 +34,17 @@
 			<div class="main-content">
 				<?php echo $output; ?>
 			</div>
-			
+			<pre>
+				
+				<?php 
+					var_dump($_GET['_url']);
+					var_dump($input);
+					$pageTest = $pages->get("contact");
+					var_dump($pageTest);
+				 ?>
+			</pre>
 		</div>
+
+
 	</body>
 </html>

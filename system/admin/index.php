@@ -1,5 +1,6 @@
 <?php 
 $admin = new AdminPage($_GET['_url']);
+// $admin = $pages->get($input->url);
 $adminHome = new AdminPage("/"); // create home page object for simple ref back to admin root
 
 // admin scripts and themes (default always needed)

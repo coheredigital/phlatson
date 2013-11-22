@@ -19,7 +19,7 @@ abstract class Core{
 		self::api('input', new Input());
 		self::api('session', new Session());
 		self::api('files', new Files());
-		self::api('user', new User());
+		// self::api('user', new User());
 	}
 
 	// method to get reference to chache api class

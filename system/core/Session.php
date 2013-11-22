@@ -2,6 +2,7 @@
 
 class Session implements IteratorAggregate{
 
+	public $className;
 
 	function __construct(){
 

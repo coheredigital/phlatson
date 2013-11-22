@@ -1,12 +1,16 @@
 <?php
-
 class Input{
+
+	public $url;
+
 	function __construct(){
 		$this->_setup();
 	}
 
 
 	protected function _setup(){
+
+		$this->url = isset($_GET['_url']) ? $_GET['_url'] : "";
 
 		$get = new stdClass();
 		foreach ($_GET as $key => $value) {
@@ -26,9 +30,6 @@ class Input{
 
 
 	}
-
-
-
 
 
 }

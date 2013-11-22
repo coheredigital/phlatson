@@ -70,7 +70,7 @@ abstract class Fieldtype extends DataObject{
 	}
 
 	public function attribute($key, $value = false){
-		if (!$value) return $this->attributes["{$key}"];
+		if (!$value && isset($this->attributes["$key"])) return $this->attributes["$key"];
 		else $this->attributes["{$key}"] = (string) $value; // only string values accepted for attributes
 
 	}
