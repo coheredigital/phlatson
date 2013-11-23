@@ -1,6 +1,8 @@
 <?php 
 
 class Template extends DataObject{
+	protected $dataFolder = "templates";
+
 	protected function setBasePath(){
 		return api('config')->paths->templates;
 	}

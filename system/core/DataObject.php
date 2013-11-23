@@ -27,7 +27,13 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 		if ($path === false) {
-			$this->path = $this->basePath.$this->getDirectory()."/";
+			var_dump($this->dataFolder);
+			$this->path = $this->path = $this->api('config')->paths->site.$this->dataFolder.$this->getDirectory()."/";
+			if (!is_file($this->path.$this->dataFile)) {
+				var_dump("not file");
+			}
+			$this->path = $this->api('config')->paths->system.$this->dataFolder.$this->getDirectory()."/";
+
 		}
 		else{
 			$this->path = $path."/";

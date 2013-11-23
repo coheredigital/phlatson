@@ -1,26 +1,48 @@
 <?php 
 
-// $fieldEdit = new Field($input->get->name);
-$fieldName = $input->get->name;
-$fieldEdit = $fields->$fieldName;
+$fieldEdit = new Field($input->get->name);
+$template = new Template('field', $config->paths->systemTemplates.'field');
+
+// $fieldName = $input->get->name;
+// $fieldEdit = $fields->$fieldName;
+
+
 
 $colCount = 0;
-foreach ($fieldEdit->data as $key => $value) {
+$fieldsOutput = "";
 
-	$attr = $value->attributes();
+$fields = $template->fields();
 
-	if ($colCount === 0) $output .= "<div class='row'>";
-	$colCount += $attr->col;
+var_dump($fields);
+foreach ($fields as $field) {
 
-	$ft = new FieldtypeText();
-	$ft->set("name", $key);
-	$ft->set("label", $key);
-	$ft->set("value", $value);
-	$output .= $ft->render();
 
-	if ($colCount === 12) {
-		$output .= "</div>";
-		$colCount = 0;
+// foreach ($fields as $key => $value) {
+// 	$attr = $value->attributes();
+// 	$field = new Field($value);
+
+
+
+	if ($field instanceof Field ) {
+
+		$ft = (string) $field->fieldtype;
+		// var_dump($field->fieldtype);
+		if ($ft) {
+
+
+			$colCount += $field->attributes('col');
+			$fieldType = new $ft();
+			$fieldType->set('label', $field->label);
+			$fieldType->set('name', $field->name);
+			$fieldType->set('value',$pageEdit->$field);
+			$fieldType->set('columns',$field->attributes('col'));
+			$rowFields .= $fieldType->render();
+		}
 	}
 
+	if ($colCount === 12) {
+		$fieldsOutput .= "<div class='row'>{$rowFields}</div>";
+		$rowFields = "";
+		$colCount = 0;
+	}
 }

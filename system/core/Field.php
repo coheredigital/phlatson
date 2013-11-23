@@ -1,6 +1,7 @@
 <?php
 
 class Field extends DataObject{
+	protected $dataFolder = "fields";
 	private $attributes = array();
 
 	protected function setBasePath(){
