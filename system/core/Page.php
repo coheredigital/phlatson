@@ -2,7 +2,7 @@
 
 
 class Page extends DataObject{
-
+	protected $dataFolder = "content/";
 	// define some protected variable to be used by all page objects
 	protected $baseUrl; // only pages with need a url
 

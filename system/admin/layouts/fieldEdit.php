@@ -13,7 +13,7 @@ $fieldsOutput = "";
 
 $fields = $template->fields();
 
-var_dump($fields);
+// var_dump($fields);
 foreach ($fields as $field) {
 
 
@@ -46,3 +46,5 @@ foreach ($fields as $field) {
 		$colCount = 0;
 	}
 }
+$submit = "<button form='pageEdit' type='button' class='button button-save pull-right'><i class='icon icon-floppy-o'></i></button>";
+$output = "<form id='pageEdit' action='' method='POST' role='form'>{$fieldsOutput}{$submit}</form>";

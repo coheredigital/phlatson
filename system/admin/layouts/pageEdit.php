@@ -49,6 +49,6 @@
 	}
 
 
-	// $submit = "<button form='pageEdit' type='button' class='button button-save pull-right'><i class='icon icon-floppy-o'></i></button>";
-	$submit = "<div class='row'><div class='col-12'><input class='button button-save pull-right' type='submit' value='Save'></div></div>";
+	$submit = "<button form='pageEdit' type='button' class='button button-save pull-right'><i class='icon icon-floppy-o'></i></button>";
+	// $submit = "<div class='row'><div class='col-12'><input class='button button-save pull-right' type='submit' value='Save'></div></div>";
 	$output = "<form id='pageEdit' action='' method='POST' role='form'>{$fieldsOutput}{$submit}</form>";

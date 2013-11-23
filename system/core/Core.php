@@ -13,6 +13,7 @@ abstract class Core{
 	/*Init function sets up default variables and other tasks*/
 	public static function init(Config $config){
 		self::api('config', $config);
+		self::api('fields', new Fields());
 		self::api('templates', new Templates());
 		self::api('pages', new Pages());
 		self::api('input', new Input());
