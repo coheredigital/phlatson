@@ -2,6 +2,7 @@
 class Input{
 
 	public $url;
+	public $query;
 
 	function __construct(){
 		$this->_setup();
@@ -11,6 +12,8 @@ class Input{
 	protected function _setup(){
 
 		$this->url = isset($_GET['_url']) ? $_GET['_url'] : "";
+		unset($_GET['_url']);
+		$this->query = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
 
 		$get = new stdClass();
 		foreach ($_GET as $key => $value) {

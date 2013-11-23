@@ -12,10 +12,11 @@ abstract class Fieldtype extends DataObject{
 		$this->set('columns', 12);
 
 
-		$this->attribute('name', '');
+		// $this->attribute('name', '');
 		$this->attribute('class', 'field-input '.$this->className);
-		$this->attribute('id', '');
+		// $this->attribute('id', '');
 
+		$this->setup();
 		$this->addStyles();
 		$this->addScripts();
 
@@ -27,9 +28,14 @@ abstract class Fieldtype extends DataObject{
 		return $value;
 	}
 
-	public function setupField(Field $field){
-		
+	public function saveFormat($value){
+		return $value;
 	}
+
+
+
+
+	protected function setup(){}
 
 	public function setupBasic($name, $value, $label = ""){
 		$this->name = $name;

@@ -59,6 +59,16 @@ class Session implements IteratorAggregate{
 		return $ip;
 	}
 
+
+	public function redirect($url, $permanent = true) {
+
+		// perform the redirect
+		if($permanent) header("HTTP/1.1 301 Moved Permanently");
+		header("Location: $url");
+		header("Connection: close"); 
+		exit(0);
+	}
+
 	public function getIterator() {
 		return new ArrayObject($_SESSION[$this->className()]); 
 	}

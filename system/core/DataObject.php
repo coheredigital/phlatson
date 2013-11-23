@@ -2,7 +2,9 @@
 
 abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
-	public $data = array();
+	protected $data;
+	protected $saveData;
+
 	protected $basePath;
 	protected $className;
 
@@ -128,6 +130,8 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 
+
+
 	protected function getTemplate(){
 		$templateName = $this->data->template;
 		if ($templateName && !isset($this->template)) {
@@ -139,9 +143,17 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return $template;
 	}
 
-	public function save(){
-		$this->data->asXML($this->path.$this->dataFile);
-	}
+	// public function save($input){
+	// 	$template = $this->getTemplate();
+
+
+	// 	foreach ($template->fields as $f) {
+	// 		$field = new Field($f);
+	// 		$fieldtype = $field->type();
+
+			
+	// 	}
+	// }
 
 	// allows the data array to be counted directly
 	public function count() {

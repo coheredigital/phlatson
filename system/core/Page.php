@@ -124,6 +124,26 @@ class Page extends DataObject{
 
 	}
 
+	public function save($input){
+		// clone the object so we can safely overwrite values
+		$this->saveDate = clone $this->data;
+		$template = $this->getTemplate();
+		
+		foreach ($template->fields() as $f) {
+			$field = new Field("$f");
+			$value = $input->{$field->name};
+
+			
+
+			$fieldtype = $field->type();
+			$value = $fieldtype->saveFormat($value);
+			
+			$this->saveDate->{$field->name} = $value;
+
+		}
+		$this->saveDate->saveXML($this->path.$this->dataFile );
+	}
+
 
 	protected function formatField($name){
 

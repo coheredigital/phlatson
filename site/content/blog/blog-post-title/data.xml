@@ -1,11 +1,15 @@
-<?xml version="1.0"?>
 <page>
 	<template>blog-entry</template>
 	<title>My Noice Post Test</title>
 	<author>Pamela D</author>
-	<published>1383941363</published>
+	<published>1385082780</published>
 
-	<content>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&lt;/p&gt;&lt;ul&gt;&#xD;
-				&lt;li&gt;One&lt;/li&gt;				&lt;li&gt;Two&lt;/li&gt;				&lt;li&gt;Three&lt;/li&gt;				&lt;li&gt;Four&lt;/li&gt;				&lt;li&gt;Five&lt;/li&gt;			&lt;/ul&gt;&lt;p&gt;&#xD;
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&lt;/p&gt;</content>
+	<content>&amp;lt;p&amp;gt;Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&amp;lt;/p&amp;gt;&amp;lt;ul&amp;gt;&#13;
+				&#13;
+&amp;lt;li&amp;gt;One&amp;lt;/li&amp;gt;				&#13;
+&amp;lt;li&amp;gt;Two&amp;lt;/li&amp;gt;				&#13;
+&amp;lt;li&amp;gt;Three&amp;lt;/li&amp;gt;				&#13;
+&amp;lt;li&amp;gt;Four&amp;lt;/li&amp;gt;				&#13;
+&amp;lt;li&amp;gt;Five&amp;lt;/li&amp;gt;			&amp;lt;/ul&amp;gt;&amp;lt;p&amp;gt;&#13;
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&amp;lt;/p&amp;gt;</content>
 </page>

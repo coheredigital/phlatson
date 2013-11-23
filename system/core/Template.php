@@ -6,7 +6,20 @@ class Template extends DataObject{
 	}
 
 	public function fields(){
-		return $this->find("//field");
+		$fieldsArray = $this->find("//field");
+		$fields = array();
+		foreach ($fieldsArray as $f) {
+			$field = new Field($f);
+			$attr = $f->attributes();
+			foreach ($attr as $key => $value) {
+				$field->attributes($key, $value);
+			}
+
+			$fields["$field->name"] = $field;
+
+		}
+
+		return $fields;
 	}
 
 	private function getLayout(){

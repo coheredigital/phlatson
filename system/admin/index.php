@@ -1,5 +1,5 @@
 <?php 
-$admin = new AdminPage($_GET['_url']);
+$admin = new AdminPage($input->url);
 // $admin = $pages->get($input->url);
 $adminHome = new AdminPage("/"); // create home page object for simple ref back to admin root
 

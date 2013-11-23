@@ -17,6 +17,10 @@ class FieldtypeDateTime extends Fieldtype{
 		return $value;
 	}
 
+	public function saveFormat($value){
+		return (int) strtotime($value);
+	}
+
 	public function render(){
 
 		$attributes = $this->getAttributes();
