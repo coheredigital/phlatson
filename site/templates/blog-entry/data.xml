@@ -5,6 +5,7 @@
 		<field col="9">author</field>
 		<field col="3">published</field>
 		<field col="12">content</field>
+		<field col="12">markdown</field>
 	</fields>
 
 </template>

@@ -12,7 +12,7 @@ class FieldtypeDateTime extends Fieldtype{
 		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/$this->className.js");
 	}
 
-	public function format($value, $format){
+	public function outputFormat($value, $format){
 		$value = date((string) $format, (int) $value);
 		return $value;
 	}
@@ -23,21 +23,13 @@ class FieldtypeDateTime extends Fieldtype{
 
 	public function render(){
 
+		$out = new \markup\Fielditem;
+		$out->attributes = $this->getAttributes();
+		$out->name = (string) $this->name;
+		$out->label = (string) $this->label;
+		$out->value = $this->value;
 		$attributes = $this->getAttributes();
-
-		$output  = "<div class='col col-{$this->columns}'>";
-			$output  .= "<div class='field-item'>";
-				$output .= "<div class='field-heading'>";
-					$output .= "<label for=''>";
-					$output .= "{$this->label}";
-					$output .= "</label>";
-				$output .= "</div>";
-				$output .= "<div class='field-content'>";		
-					$output .= "<input {$attributes} type='text' name='{$this->name}' id='Input_{$this->label}' value='{$this->value}'>";	
-				$output .= "</div>";		
-			$output .= "</div>";
-		$output .= "</div>";
-		return $output;
+		return $output = $out->render();
 	}
 
 

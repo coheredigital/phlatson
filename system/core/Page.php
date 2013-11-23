@@ -124,25 +124,7 @@ class Page extends DataObject{
 
 	}
 
-	public function save($input){
-		// clone the object so we can safely overwrite values
-		$this->saveDate = clone $this->data;
-		$template = $this->getTemplate();
-		
-		foreach ($template->fields() as $f) {
-			$field = new Field("$f");
-			$value = $input->{$field->name};
 
-			
-
-			$fieldtype = $field->type();
-			$value = $fieldtype->saveFormat($value);
-			
-			$this->saveDate->{$field->name} = $value;
-
-		}
-		$this->saveDate->saveXML($this->path.$this->dataFile );
-	}
 
 
 	protected function formatField($name){
@@ -155,23 +137,11 @@ class Page extends DataObject{
 
 		// find the corresponding field file and retrieve relevant settings
 		$fieldClassname = (string) $field->fieldtype;
-		$fieldFormat = (string) $field->format;
-
-
-		// override default value for field based on attributes
-		// 
-		// NOT SURE I EVEN WANT THIS FEATURE, COMMENTED FOR NOW ATLEAST
-		// 
-		// if($value->attributes) {
-		// 	$attr = $value->attributes();
-		// 	$fieldClassname = (string) $attr->fieldtype;
-		// 	$fieldFormat = (string) $attr->format;
-		// }
-		
+		$fieldFormat = (string) $field->format;		
 		
 		if ($fieldClassname) {
 			$fieldtype = new $fieldClassname( );
-			$value = $fieldtype->format( $value, $fieldFormat);
+			$value = $fieldtype->outputFormat( $value, $fieldFormat);
 		}
 
 		return $value;

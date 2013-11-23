@@ -24,7 +24,11 @@ abstract class Fieldtype extends DataObject{
 
 
 
-	public function format($value, $format){
+	public function editFormat($value){
+		return $value;
+	}
+
+	public function outputFormat($value, $format){
 		return $value;
 	}
 

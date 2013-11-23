@@ -28,6 +28,7 @@ class FieldtypeTextarea extends Fieldtype{
 
 	public function format($value, $format = false){
 		// $value = $this->purifier->purify($value);
+		$value = htmlspecialchars_decode($value);
 		return $value;
 	}
 

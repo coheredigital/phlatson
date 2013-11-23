@@ -1,11 +1,12 @@
+<?xml version="1.0"?>
 <page>
 	<template>blog-entry</template>
 	<title>Better Blog Post</title>
 	<author>Pamela D</author>
 	<published>1385614800</published>
-	<content>&lt;h2&gt;Lorem ipsum dolor sit amet,&lt;/h2&gt;&lt;p&gt;consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit&lt;/p&gt;&lt;blockquote&gt;amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&lt;/blockquote&gt;&lt;ul&gt;&#13;
+	<content>&lt;h2&gt;Lorem ipsum dolor sit amet,&lt;/h2&gt;&lt;p&gt;consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit&lt;/p&gt;&lt;blockquote&gt;amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&lt;/blockquote&gt;&lt;ul&gt;&#xD;
 &lt;li&gt;One&lt;/li&gt;&lt;li&gt;Two&lt;/li&gt;&lt;li&gt;Three&lt;/li&gt;&lt;li&gt;Four&lt;/li&gt;&lt;li&gt;Five&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&lt;/p&gt;&lt;h2&gt;&lt;/h2&gt;</content>
-<markdown>&lt;p&gt;sdsada &#13;
-asdasd&lt;/p&gt;&#13;
-&lt;p&gt;s&#13;
+<markdown>&lt;p&gt;sdsada &#xD;
+asdasd&lt;/p&gt;&#xD;
+&lt;p&gt;s&#xD;
 adasdasd&lt;/p&gt;</markdown></page>

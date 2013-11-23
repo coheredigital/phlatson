@@ -8,28 +8,30 @@
 	</head>
 	<body>
 		<div id="header">
-			<nav class="navbar" role="navigation">
-				<ul class="nav navbar-nav">
-					<li>
-						<a href="<?php echo $adminHome->url ?>"><?php echo $adminHome->title ?></a>
-					</li>
-					<?php foreach ($adminHome->children as $p): ?>
-						<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
-						<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-					<?php endforeach ?>
-				</ul>
-			</nav>
-		</div>
-
-		<div id="main">
-		<!-- 	<div class="main-header">
-				<a class="header-button" href="<?php echo $config->urls->root ?>"><i class="icon icon-globe"></i></a>
-			</div> -->
-			<div class="main-content">
-				<?php echo $output; ?>
+			<div class="navbar" role="navigation">
+				<div class="container">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="<?php echo $adminHome->url ?>"><?php echo $adminHome->title ?></a>
+						</li>
+						<?php foreach ($adminHome->children as $p): ?>
+							<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
+							<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
+						<?php endforeach ?>
+					</ul>
+				</div>
 			</div>
 		</div>
 
-
+		<div id="main">
+			<div class="container">
+				<?php echo $output; ?>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="container">
+				<p>XPages © Adam Spruijt - 2013</p>
+			</div>
+		</div>
 	</body>
 </html>

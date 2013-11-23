@@ -138,7 +138,29 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
+	public function save($input){
+		// clone the object so we can safely overwrite values
+		$this->saveDate = clone $this->data;
+		$template = $this->getTemplate();
+		
+		foreach ($template->fields() as $f) {
+			$field = new Field("$f");
+			$value = $input->{$field->name};
 
+			
+
+			$fieldtype = $field->type();
+			$value = $fieldtype->saveFormat($value);
+			
+			$this->saveDate->{$field->name} = $value;
+
+		}
+		var_dump($this->saveDate);
+		// save revision
+		$time = date("U");
+		$this->data->saveXML($this->path."alt_".$this->dataFile );
+		$this->saveDate->saveXML($this->path.$this->dataFile );
+	}
 
 
 	protected function getTemplate(){
