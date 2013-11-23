@@ -174,17 +174,32 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return $template;
 	}
 
-	// public function save($input){
-	// 	$template = $this->getTemplate();
+	public function getEditable($name){
+		$value = $this->formatField($name, "edit");
+		return $value;
+	}
 
 
-	// 	foreach ($template->fields as $f) {
-	// 		$field = new Field($f);
-	// 		$fieldtype = $field->type();
+	protected function formatField($name, $type = "output"){
 
-			
-	// 	}
-	// }
+		$field = new Field($name);
+
+		$value = $this->data->{$name};
+		if (!$value) return false; // return false if node doesn't exist
+
+
+		// find the corresponding field file and retrieve relevant settings
+		$fieldClassname = (string) $field->fieldtype;
+		$fieldFormat = (string) $field->format;		
+		
+		if ($fieldClassname) {
+			$fieldtype = new $fieldClassname( );
+			// $value = $fieldtype->outputFormat( $value, $fieldFormat);
+			$value = $fieldtype->format( $value, $type );
+		}
+
+		return $value;
+	}
 
 	// allows the data array to be counted directly
 	public function count() {

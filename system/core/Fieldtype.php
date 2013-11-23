@@ -22,13 +22,31 @@ abstract class Fieldtype extends DataObject{
 
 	}
 
+	// alias for the three available formatting methods, allows passing of type, can auto determing required method
+	public function format($value, $type = "output"){
 
+		switch ($type) {
+			case 'output':
+				return $this->outputFormat($value);
+				break;
+			case 'edit':
+				return $this->editFormat($value);
+				break;
+			case 'save':
+				return $this->saveFormat($value);
+				break;
+			default:
+				return false;
+				break;
+		}
+
+	}
 
 	public function editFormat($value){
 		return $value;
 	}
 
-	public function outputFormat($value, $format){
+	public function outputFormat($value, $format = false){
 		return $value;
 	}
 
@@ -63,13 +81,6 @@ abstract class Fieldtype extends DataObject{
 		return trim($string);
 
 	}
-
-	// protected function getInputClass(){	
-	// 	$defaultClass = $this->attributes['class'];
-	// 	$columns = "col-{$this->columns}";
-	// 	$class = "class='{$defaultClass} {$columns}'";
-	// 	return $class;
-	// }
 
 	public function get($name){
 		return $this->data["{$name}"];

@@ -127,25 +127,6 @@ class Page extends DataObject{
 
 
 
-	protected function formatField($name){
-
-		$field = new Field($name);
-
-		$value = $this->data->{$name};
-		if (!$value) return false; // return false if node doesn't exist
-
-
-		// find the corresponding field file and retrieve relevant settings
-		$fieldClassname = (string) $field->fieldtype;
-		$fieldFormat = (string) $field->format;		
-		
-		if ($fieldClassname) {
-			$fieldtype = new $fieldClassname( );
-			$value = $fieldtype->outputFormat( $value, $fieldFormat);
-		}
-
-		return $value;
-	}
 
 
 	public function updateFilelist(){
@@ -220,6 +201,7 @@ class Page extends DataObject{
 		}
 		return $value;
 	}
+	//  get the value that is ready for editing / may be replaced by get unformatted later
 
 
 	public function set($name, $value){

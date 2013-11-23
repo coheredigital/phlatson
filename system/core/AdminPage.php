@@ -29,9 +29,10 @@ class AdminPage extends Page{
 	}
 
 	public function get($name){
+		// var_dump($name);
 		switch ($name) {
 			case 'layout':
-				$value = (string) $this->api('config')->paths->admin."layouts/".$this->data->layout.".php";
+				return (string) $this->api('config')->paths->admin."layouts/".$this->data->layout.".php";
 				break;
 			default:
 				$value = parent::get($name);

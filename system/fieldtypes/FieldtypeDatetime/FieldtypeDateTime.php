@@ -12,8 +12,13 @@ class FieldtypeDateTime extends Fieldtype{
 		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/$this->className.js");
 	}
 
-	public function outputFormat($value, $format){
+	public function outputFormat($value,  $format = false){
 		$value = date((string) $format, (int) $value);
+		return $value;
+	}
+
+	public function editFormat($value,  $format = false){
+		$value = date("Y/m/d", (int) $value);
 		return $value;
 	}
 

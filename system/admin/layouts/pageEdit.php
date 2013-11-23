@@ -35,7 +35,7 @@
 				$fieldType = new $ft();
 				$fieldType->set('label', $field->label);
 				$fieldType->set('name', $field->name);
-				$fieldType->set('value',$pageEdit->$field);
+				$fieldType->set('value',$pageEdit->getEditable("$field"));
 				$fieldType->set('columns',$field->attributes('col'));
 				$rowFields .= $fieldType->render();
 			}
