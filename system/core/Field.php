@@ -23,4 +23,14 @@ class Field extends DataObject{
 		else return $this->attributes["$key"];
 	}
 
+/*
+
+this needs a better method
+
+ */
+	public function getTemplate(){
+		$template = new Template("field");
+		return $template;
+	}
+
 }

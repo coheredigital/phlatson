@@ -1,7 +1,5 @@
 <template>
-	<name>blog</name>
 	<fields>
 		<field col="12" >title</field>
 	</fields>
-	
 </template>

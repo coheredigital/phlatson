@@ -1,8 +1,3 @@
-<?php 
-
-	// var_dump($admin->layout);
- ?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,6 +12,7 @@
 				<div class="container">
 					<ul class="nav navbar-nav">
 						<?php foreach ($adminHome->children as $p): ?>
+						<?php // var_dump($p) ?>
 							<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
 							<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
 						<?php endforeach ?>

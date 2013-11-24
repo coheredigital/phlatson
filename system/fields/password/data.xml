@@ -1,5 +1,4 @@
 <field>
 	<label>Password</label>
-	<name>password</name>
 	<fieldtype>FieldtypePassword</fieldtype>
 </field>

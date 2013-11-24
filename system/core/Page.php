@@ -4,14 +4,13 @@
 class Page extends DataObject{
 	protected $dataFolder = "content/";
 	// define some protected variable to be used by all page objects
-	protected $baseUrl; // only pages with need a url
+	protected $baseUrl;
 
 	function __construct($url = false){
 		
 		parent::__construct($url);
 
-		$this->baseUrl = $this->setBaseUrl();
-
+		$this->baseUrl = $this->getBaseUrl();
 		// handle admin page request
 		if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
 			$this->layout = $this->api('config')->paths->admin."index.php";
@@ -22,7 +21,7 @@ class Page extends DataObject{
 	protected function setBasePath(){
 		return api('config')->paths->content;
 	}	
-	protected function setBaseUrl(){
+	protected function getBaseUrl(){
 		return api('config')->urls->root;
 	}
 
@@ -34,17 +33,20 @@ class Page extends DataObject{
 
 
 	public function children(){
-
+		if ($this->path === null) return; // break out if no valid path
 		// get all subfolder of current page path
+		
 		$subs = glob($this->path.DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
+
 
 		$children = array();
 		foreach($subs as $folder) {
 			$folder = basename($folder);
      		$url = $this->directory."/".$folder;
-     		$dataFile = trim($this->path, "/")."/".$folder."/".$this->dataFile;
+
+     		$file = trim($this->path, "/")."/".$folder."/".$this->dataFile;
      		// skip if no "dataFile" is found
-     		if (!is_file($dataFile)) continue;
+     		if (!is_file($file)) continue;
 
 
      		// get an new of same class, useful for extending into AdminPage, etc
@@ -161,45 +163,41 @@ class Page extends DataObject{
 	public function get($name){
 		switch ($name) {
 			case 'requests':
-				$value = $this->urlRequest;
+				return $this->urlRequest;
 				break;
 			case 'children':
-				$value = $this->children();
+				return $this->children();
 				break;
 			case 'parent':
-				$value = $this->parent();
+				return $this->parent();
 				break;
 			case 'rootParent':
-				$value = $this->rootParent();
+				return $this->rootParent();
 				break;
 			case 'url':
-				$value = $this->url();
+				return $this->url();
 				break;
 			case 'files':
-				$value = $this->files();
+				return $this->files();
 				break;
 			case 'images':
-				$value = $this->images();
-				break;
+				return $this->images();
+				break;			
 			case 'template':
-				$value = $this->getTemplate();
+				return $this->getTemplate();
 				break;
+
 			case 'layout':
 				// alias for $page->template->layout for ease of use
-				// var_dump($this->template->layout);
-				$template = $this->template;
-				$layout =  $template->layout;
-				$value = $layout ? (string) $layout : null;
+				$layout = $this->template->layout;
+				return $layout ? (string) $layout : null;
 				break;
 			default:
 				$value = $this->formatField($name);
 				break;
 		}
-		if (!$value) {
-			// fall back to parent if we failed to find anything
-			$value = parent::get($name);
-		}
-		return $value;
+		if ($value) return $value;
+		return parent::get($name);		
 	}
 	//  get the value that is ready for editing / may be replaced by get unformatted later
 

@@ -1,8 +1,8 @@
 <page>
 	<template>blog-entry</template>
-	<title>Better Blog Post</title>
+	<title>Better Blog Post 3</title>
 	<author>Pamela D</author>
-	<published>0</published>
+	<published>-68400</published>
 	<content>&lt;h2&gt;Lorem ipsum dolor sit amet,&lt;/h2&gt;&lt;p&gt;consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit&lt;/p&gt;&lt;blockquote&gt;amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&lt;/blockquote&gt;&lt;ul&gt;&#13;
 &lt;li&gt;One&lt;/li&gt;&lt;li&gt;Two&lt;/li&gt;&lt;li&gt;Three&lt;/li&gt;&lt;li&gt;Four&lt;/li&gt;&lt;li&gt;Five&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&lt;/p&gt;&lt;h2&gt;&lt;/h2&gt;</content>
 <markdown>hahahh&#13;

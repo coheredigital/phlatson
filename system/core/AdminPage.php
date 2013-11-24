@@ -24,21 +24,19 @@ class AdminPage extends Page{
 		return $this->api('config')->paths->admin."content/";
 	}
 
-	protected function setBaseUrl(){
+	protected function getBaseUrl(){
 		return api('config')->urls->root.$this->api('config')->adminUrl."/";
 	}
 
 	public function get($name){
-		// var_dump($name);
 		switch ($name) {
 			case 'layout':
-				return (string) $this->api('config')->paths->admin."layouts/".$this->data->layout.".php";
+				return $this->api('config')->paths->admin."layouts/".$this->data->layout.".php";
 				break;
 			default:
-				$value = parent::get($name);
+				return parent::get($name);
 				break;
 		}
-		return $value;
 	}
 
 }

@@ -3,7 +3,7 @@
 
 class FieldtypeText extends Fieldtype{
 
-
+	 public $name = "";
 
 	public function render(){
 

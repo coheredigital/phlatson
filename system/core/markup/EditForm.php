@@ -4,28 +4,22 @@ class EditForm {
 	// array of field markup to be rendered
 	public $page;
 	public $template;
-	public $fields = array();
+
 	public $formID;
 
 	private $colCount = 0;
 
 	public function __construct($dataObject){
 		$this->page = $dataObject;
-		/*
-		
-		FIX THIS HARD CODING OF FIELD, NEEDS TO BE DYNAMIC
-
-		 */
-		$this->template = new \Template('field', api('config')->paths->systemTemplates.'field');
-		$this->fields = $this->template->fields();
+		$this->template = $this->page->getTemplate();
 	}
 
 	public function render(){
-		$fieldsOutput = "";
-		$rowFields = "";
+		$formFields = "";
+		$row = "";
 
-		foreach ($this->fields as $field) {
-			// var_dump($field);
+		foreach ($this->template->fields() as $field) {
+			
 			if ($field instanceof \Field ) {
 
 				$ft = (string) $field->fieldtype;
@@ -35,25 +29,38 @@ class EditForm {
 
 					$this->colCount += $field->attributes('col');
 					$fieldType = new $ft();
+
+					
+
 					$fieldType->set('label', $field->label);
-					$fieldType->set('name', $field->name);
+					$fieldType->name = $field->name;
 					$fieldType->set('value',$this->page->getEditable("$field"));
 					$fieldType->set('columns',$field->attributes('col'));
-					$rowFields .= $fieldType->render();
+					$row .= $fieldType->render();
+
+
 				}
 			}
+
+
+			if ($this->colCount === 12) {
+				$formFields .= "<div class='row'>{$row}</div>";
+				$row = "";
+				$this->colCount = 0;
+			}
+
 		}
 
-		if ($this->colCount === 12) {
-			$fieldsOutput .= "<div class='row'>{$rowFields}</div>";
-			$rowFields = "";
-			$colCount = 0;
-		}
+		
 
-		$submit = "<button form='pageEdit' type='button' class='button button-save pull-right'><i class='icon icon-floppy-o'></i></button>";
-		$output = "<form id='pageEdit' action='' method='POST' role='form'>{$fieldsOutput}{$submit}</form>";
 
+
+		$submit = "<button form='pageEdit' type='submit' class='button button-save pull-right'><i class='icon icon-floppy-o'></i></button>";
+		$output = "<form id='pageEdit' action='' method='POST' role='form'>".$formFields.$submit."</form>";
+		
 		return $output;
+
+
 	}
 
 

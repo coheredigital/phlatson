@@ -13,34 +13,33 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	protected $dataFile = "data.xml"; // what file name should be check for data, most classes will stick with "data.xml"
 
 
+	public $name;
 	public $path;
+	// public $directory;
 
 
 	public $urlRequest = array();
 
-	function __construct($url = false, $path = false){
+	function __construct($url){
 
 		$this->className();
-
 		$this->basePath = $this->setBasePath();
 		$this->urlRequest = $this->getUrlRequest($url);
+		// $this->directory = trim($url);
+
+		$lastRequestIndex = count($this->urlRequest)-1;
+		$this->name = (string) $this->urlRequest[$lastRequestIndex];
 
 
-		if ($path === false) { // path can be overridden if need be
-			$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->getDirectory()."/";
-			$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->getDirectory()."/";
-			if (is_file($sitePath.$this->dataFile)) {
-				$this->path = $sitePath;
-			}
-			else if(is_file($systemPath.$this->dataFile)){
-				$this->path = $systemPath;
-			}
+		$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->directory."/";
+		$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->directory."/";
+		if (is_file($sitePath.$this->dataFile)) {
+			$this->path = $sitePath;
+		}
+		else if(is_file($systemPath.$this->dataFile)){
+			$this->path = $systemPath;
+		}
 			
-
-		}
-		else{
-			$this->path = $path."/";
-		}
 		
 		$this->data = $this->getXML();
 
@@ -55,15 +54,16 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 	public function get($name){
 		switch ($name) {
-			case 'name':
-				return $this->data->{$name} ? $this->data->{$name} : $this->directory;
-				break;
 			case 'directory':
-				return $this->getDirectory();
+				return trim(implode("/", $this->urlRequest), "/");
+			case 'template':
+				return $this->getTemplate();
+				break;
 			default:
 				return $this->data->{$name};
 				break;
-		}		
+		}
+		return $value;
 	}
 
 	// for now basically an XPATH alias
@@ -98,19 +98,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
-		// var_dump($this->path.$this->dataFile);
 		if (is_file($this->path.$this->dataFile)) {
 			return simplexml_load_file($this->path.$this->dataFile);
 		}
 		return null;
 	}
 
-	/**
-	 * Determines if we are looking at a valid Object
-	 */
-	public function isValid(){
-		return is_file($this->path.$this->dataFile);
-	}
 
 	protected function createUrl($array){
 		if (is_array($array) && implode("", $this->urlRequest)) {
@@ -122,14 +115,26 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	protected function getUrlRequest($url){
-		$array = explode("/", $url);
+		$url = rtrim( (string) $url, '/');
+		$array = array();
+		if (strpos($url, "/") !== false) {
+			$array = explode("/", $url);
+		}
+		else{
+			$array[] = $url;
+		}
 		return $array;
 	}
 
-	// uses the "urlRequest" array to determine what relative folder we are in
-	protected function getDirectory(){
-		$value = implode("/", $this->urlRequest);
-		return (string) trim($value, "/");
+
+
+	public function getTemplate(){
+		$templateName = $this->data->template;
+		if ($templateName) {
+			$template = new Template($templateName);
+		}
+
+		return $template;
 	}
 
 	// override this function in descendant classes to set the basepath during construct
@@ -155,24 +160,13 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			$this->saveDate->{$field->name} = $value;
 
 		}
-		var_dump($this->saveDate);
-		// save revision
+
+		// save revision test
 		$time = date("U");
 		$this->data->saveXML($this->path."alt_".$this->dataFile );
 		$this->saveDate->saveXML($this->path.$this->dataFile );
 	}
 
-
-	protected function getTemplate(){
-		$templateName = $this->data->template;
-		if ($templateName && !isset($this->template)) {
-			$template = new Template($templateName);
-			$this->template = $template; // cache to $this->template on first request
-		}
-
-		// return $this->template;
-		return $template;
-	}
 
 	public function getEditable($name){
 		$value = $this->formatField($name, "edit");

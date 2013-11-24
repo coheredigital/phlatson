@@ -1,6 +1,3 @@
 <field>
-	<name>author</name>
-	<label>Author</label>
-	<fieldtype>FieldtypeText</fieldtype>
-	<label>Author</label>
+	<name>author</name><label>Author / Writer</label><fieldtype>FieldtypeText</fieldtype>
 </field>

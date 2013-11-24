@@ -67,6 +67,7 @@ function setupConfig() {
 	if($config->debug) {
 		error_reporting(E_ALL ^ E_NOTICE);
 		// error_reporting(E_ALL);
+		ini_set('xdebug.var_display_max_depth', '10');
 		ini_set('display_errors', 1);
 	} else {
 		error_reporting(0);
@@ -105,7 +106,6 @@ try {
 	
 
 	foreach (Core::apiList() as $name => $classObject) {
-		// var_dump($name);
 		if ($name == "config" || $name == "page") continue; // skip $config, it is already set
 		${$name} = $classObject;
 	}

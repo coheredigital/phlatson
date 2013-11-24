@@ -1,6 +1,4 @@
 <template>
-	<config>
-	</config>
 	<fields>
 		<field col="12" >title</field>
 		<field col="12" >content</field>

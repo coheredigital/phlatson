@@ -6,6 +6,8 @@ abstract class Fieldtype extends DataObject{
 
 	public function __construct(){
 
+
+
 		$this->className = $this->className();
 
 		$this->set('label', '');

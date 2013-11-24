@@ -1,5 +1,4 @@
 <field>
 	<label>Name</label>
-	<name>username</name>
 	<fieldtype>FieldtypeText</fieldtype>
 </field>

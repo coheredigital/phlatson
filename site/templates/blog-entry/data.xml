@@ -1,5 +1,4 @@
 <template>
-
 	<fields>
 		<field col="12">title</field>
 		<field col="9">author</field>
@@ -7,5 +6,4 @@
 		<field col="12">content</field>
 		<field col="12">markdown</field>
 	</fields>
-
 </template>
