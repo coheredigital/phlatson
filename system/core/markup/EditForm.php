@@ -11,14 +11,13 @@ class EditForm {
 
 	public function __construct($dataObject){
 		$this->page = $dataObject;
-		$this->template = $this->page->getTemplate();
 	}
 
 	public function render(){
 		$formFields = "";
 		$row = "";
 
-		foreach ($this->template->fields() as $field) {
+		foreach ($this->page->template->fields() as $field) {
 			
 			if ($field instanceof \Field ) {
 

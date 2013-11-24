@@ -24,8 +24,19 @@ class Template extends DataObject{
 		return $fields;
 	}
 
+	/*
+
+	this needs a better method
+
+	 */
+	public function getTemplate(){
+		$template = new Template("template");
+		return $template;
+	}
+
 	private function getLayout(){
 		$layoutFile = $this->api('config')->paths->layouts.$this->name.".php";
+		var_dump($layoutFile);
 		$layoutFile = is_file($layoutFile) ? $layoutFile : null;
 		return $layoutFile;
 	}
