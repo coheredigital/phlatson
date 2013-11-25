@@ -1,4 +1,4 @@
 <field>
 	<label>Field Type</label>
-	<fieldtype>FieldtypeSelect</fieldtype>
+	<fieldtype>FieldtypeSelectFieldtype</fieldtype>
 </field>

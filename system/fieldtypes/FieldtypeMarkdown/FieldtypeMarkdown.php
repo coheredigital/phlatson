@@ -1,7 +1,7 @@
 
 <?php
 
-class FieldtypeMarkdown extends Fieldtype{
+class FieldtypeMarkdown extends FieldtypeTextarea{
 
 
 	protected function setup(){
@@ -23,23 +23,23 @@ class FieldtypeMarkdown extends Fieldtype{
 	}
 
 
-	public function render(){
+	// public function render(){
 
-		$attributes = $this->getAttributes();
+	// 	$attributes = $this->getAttributes();
 
-		$output  = "<div class='col col-{$this->columns}'>";
-			$output  = "<div class='field-item'>";
-				$output .= "<div class='field-heading'>";
-					$output .= "<label for=''>";
-					$output .= "{$this->label}";
-					$output .= "</label>";
-				$output .= "</div>";
-				$output .= "<div class='field-content'>";
-					$output .= "<textarea {$attributes} name='{$this->name}' id='Input_{$this->name}' cols='30' rows='10'>{$this->value}</textarea>";
-				$output .= "</div>";
-			$output .= "</div>";
-		$output .= "</div>";
-		return $output;
-	}
+	// 	$output  = "<div class='col col-{$this->columns}'>";
+	// 		$output  = "<div class='field-item'>";
+	// 			$output .= "<div class='field-heading'>";
+	// 				$output .= "<label for=''>";
+	// 				$output .= "{$this->label}";
+	// 				$output .= "</label>";
+	// 			$output .= "</div>";
+	// 			$output .= "<div class='field-content'>";
+	// 				$output .= "<textarea {$attributes} name='{$this->name}' id='Input_{$this->name}' cols='30' rows='10'>{$this->value}</textarea>";
+	// 			$output .= "</div>";
+	// 		$output .= "</div>";
+	// 	$output .= "</div>";
+	// 	return $output;
+	// }
 
 }

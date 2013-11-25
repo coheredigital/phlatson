@@ -19,13 +19,14 @@ class FieldtypeSelect extends Fieldtype{
 					$output .= "</label>";
 				$output .= "</div>";
 				$output .= "<div class='field-content'>";		
-					$output .= "<select {$attributes} name='{$name}' id='Input_{$name}'>{$options}</select>";	
+					$output .= "<select {$attributes} name='{$name}' id='Input_{$name}'><option value='CAN'>Canada</option><option value='USA'>United States</option></select>";	
 				$output .= "</div>";		
 			$output .= "</div>";
 		$output .= "</div>";
 		return $output;
 
 	}
+
 
 	protected function getOptions(){
 		$output = "";

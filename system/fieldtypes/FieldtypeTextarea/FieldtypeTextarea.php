@@ -3,37 +3,16 @@
 
 class FieldtypeTextarea extends Fieldtype{
 
-	private $purifier;
 
 
-	protected function setup(){
-		// might use html purifier
-
-		// require_once $this->api("config")->paths->system.'vendor/HTMLPurifier/HTMLPurifier.standalone.php';
-		// $config = HTMLPurifier_Config::createDefault();
-		// $config->set('Core.Encoding', 'UTF-8');
-		// $config->set("AutoFormat.RemoveEmpty", true);
-		// $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
-		// $this->purifier = new HTMLPurifier($config);
-	}
-
-	protected function addStyles(){
-		api('config')->styles->add(api('config')->urls->fieldtypes."{$this->className}/redactor/redactor.css");
-	}
-	protected function addScripts(){
-		api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/redactor/redactor.js");
-		api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/{$this->className}.js");
-	}
 	
 
 	public function format($value, $format = false){
-		// $value = $this->purifier->purify($value);
 		$value = htmlspecialchars_decode($value);
 		return $value;
 	}
 
 	public function saveFormat($value){
-		// $value = $this->purifier->purify($value);
 		return $value;
 	}
 

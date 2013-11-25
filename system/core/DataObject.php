@@ -3,7 +3,7 @@
 abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	protected $data;
-	protected $saveData;
+	// protected $saveData;
 
 	protected $basePath;
 	protected $className;
@@ -39,11 +39,11 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		else if(is_file($systemPath.$this->dataFile)){
 			$this->path = $systemPath;
 		}
-			
-		
+
+
 		$this->data = $this->getXML();
 
-		
+
 	}
 
 
@@ -54,6 +54,10 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 	public function get($name){
 		switch ($name) {
+			case 'name':
+				// return $this->name;
+				$lastRequestIndex = count($this->urlRequest)-1;
+				return (string) $this->urlRequest[$lastRequestIndex];
 			case 'directory':
 				return trim(implode("/", $this->urlRequest), "/");
 			case 'template':
@@ -79,7 +83,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		if ($name && $value && $this->data) {
 			$this->data->{$name} = $value;
 		}
-		
+
 	}
 
 	protected function className(){
@@ -99,6 +103,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 */
 	protected function getXML(){
 		if (is_file($this->path.$this->dataFile)) {
+			// $dom = new DomDocument();
+			// $dom->loadXML($this->path.$this->dataFile);
+			// return $dom;
 			return simplexml_load_file($this->path.$this->dataFile);
 		}
 		return null;
@@ -147,24 +154,30 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		// clone the object so we can safely overwrite values
 		$this->saveDate = clone $this->data;
 		$template = $this->getTemplate();
-		
+
 		foreach ($template->fields() as $f) {
 			$field = new Field("$f");
 			$value = $input->{$field->name};
 
-			
+
 
 			$fieldtype = $field->type();
 			$value = $fieldtype->saveFormat($value);
-			
+
 			$this->saveDate->{$field->name} = $value;
 
 		}
 
 		// save revision test
-		$time = date("U");
-		$this->data->saveXML($this->path."alt_".$this->dataFile );
-		$this->saveDate->saveXML($this->path.$this->dataFile );
+		// $time = date("U");
+		// $this->data->saveXML($this->path."alt_".$this->dataFile );
+		// $this->saveDate->saveXML($this->path.$this->dataFile );
+		$saveData = new DomDocument("1.0");
+		$saveData->preserveWhiteSpace = false;
+		$saveData->formatOutput = true;
+		$saveData->loadXML($this->data->asXML());
+		$saveData->save($this->path."save.xml");
+
 	}
 
 
@@ -184,8 +197,8 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		// find the corresponding field file and retrieve relevant settings
 		$fieldClassname = (string) $field->fieldtype;
-		$fieldFormat = (string) $field->format;		
-		
+		$fieldFormat = (string) $field->format;
+
 		if ($fieldClassname) {
 			$fieldtype = new $fieldClassname( );
 			// $value = $fieldtype->outputFormat( $value, $fieldFormat);
@@ -202,7 +215,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	// iterate the object data in a foreach
 	public function getIterator() {
-		return $this->data; 
+		return $this->data;
 	}
 
 }

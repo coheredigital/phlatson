@@ -3,6 +3,9 @@
 abstract class Fieldtype extends DataObject{
 	protected $attributes = array();
 
+// contains defaults settings and there defaults values
+// can be extended by other Fieldtypes
+protected $settings = array();
 
 	public function __construct(){
 

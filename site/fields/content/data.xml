@@ -1,5 +1,5 @@
 <field>
 	<name>content</name>
-	<fieldtype>FieldtypeTextarea</fieldtype>
+	<fieldtype>FieldtypeRedactor</fieldtype>
 	<label>Content</label>
 </field>
