@@ -67,8 +67,34 @@ protected $settings = array();
 
 	protected function addStyles(){}
 	protected function addScripts(){}
-	public function render(){}
 
+	// we will default to rendering a basic text field since it will be the most common inout type for most field types
+	public function render(){
+
+		
+		$input = $this->renderInput();
+
+		$output  = "<div class='col col-{$this->columns}'>";
+			$output  .= "<div class='field-item'>";
+				if ($this->label) {
+					$output .= "<div class='field-heading'>";
+						$output .= "<label for=''>";
+						$output .= "{$this->label}";
+						$output .= "</label>";
+					$output .= "</div>";
+				}
+				$output .= "<div class='field-content'>";		
+					$output .= $input;	
+				$output .= "</div>";		
+			$output .= "</div>";
+		$output .= "</div>";
+		return $output;
+	}
+	protected function renderInput(){
+		$attributes = $this->getAttributes();
+		$output = "<input {$attributes} type='text' name='{$this->name}' id='Input_{$this->name}' value='{$this->value}'>";
+		return $output;
+	}
 
 	protected function getAttributes(){
 		$string = "";

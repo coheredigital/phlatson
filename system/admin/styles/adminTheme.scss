@@ -19,6 +19,12 @@ a:hover{
 	color: $link-hover-color;
 }
 
+hr{
+	border: none;
+	border-bottom: 1px solid $lighter-gray;
+	margin: 1em 0;
+}
+
 table{
 	width: 100%;
 	border: 1px solid $light-gray;
@@ -152,11 +158,19 @@ select{
 	// border-left: 3px solid $light-green;
 }
 
+/* FORMS */
+
+.edit-form{
+
+	padding-bottom: 4em;
+
+}
 
 /* Fields */
 
 .field-item{
 	border: 1px solid $light-gray;
+	min-height: 1px;
 	background:$white;
 	margin-bottom: 1em;
 }

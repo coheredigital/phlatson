@@ -7,46 +7,42 @@ class EditForm {
 
 	public $formID;
 
-	private $colCount = 0;
-
 	public function __construct($dataObject){
 		$this->page = $dataObject;
 	}
 
 	public function render(){
+		$colCount = 0;
 		$formFields = "";
-		$row = "";
 
-		foreach ($this->page->template->fields() as $field) {
+		$fields = $this->page->template->fields;
+
+		foreach ($fields as $field) {
 			
+			if ($colCount === 0)
+				$formFields .= "<div class='row'>"; // open new row div
+			
+
 			if ($field instanceof \Field ) {
 
-				$ft = (string) $field->fieldtype;
+				$fieldColumns = $field->attributes('col');
+				$colCount += $fieldColumns;
 
-				if ($ft) {
+				$fieldtype = $field->type();
+				$fieldtype->set('label', $field->label);
+				$fieldtype->name = $field->name;
+				$fieldtype->set('value',$this->page->getEditable("$field"));
+				$fieldtype->set('columns',$fieldColumns);
+				$formFields .= $fieldtype->render();
 
-
-					$this->colCount += $field->attributes('col');
-					$fieldType = new $ft();
-
-					
-
-					$fieldType->set('label', $field->label);
-					$fieldType->name = $field->name;
-					$fieldType->set('value',$this->page->getEditable("$field"));
-					$fieldType->set('columns',$field->attributes('col'));
-					$row .= $fieldType->render();
-
-
+				if ($colCount === 12) {
+					$formFields .= "</div>"; // close row div
+					$colCount = 0; // reset colCount
 				}
+
 			}
 
 
-			if ($this->colCount === 12) {
-				$formFields .= "<div class='row'>{$row}</div>";
-				$row = "";
-				$this->colCount = 0;
-			}
 
 		}
 
@@ -55,7 +51,7 @@ class EditForm {
 
 
 		$submit = "<button form='pageEdit' type='submit' class='button button-save pull-right'><i class='icon icon-floppy-o'></i></button>";
-		$output = "<form id='pageEdit' action='' method='POST' role='form'>".$formFields.$submit."</form>";
+		$output = "<form id='pageEdit' class='edit-form' method='POST' role='form'>".$formFields.$submit."</form>";
 		
 		return $output;
 

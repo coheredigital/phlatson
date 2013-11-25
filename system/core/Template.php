@@ -43,10 +43,12 @@ class Template extends DataObject{
 			case 'layout':
 				return $this->getLayout();
 				break;
+			case 'fields':
+				return $this->fields();
+				break;
 			default:
-				$this->data->{$name};
+				return parent::get($name);
 				break;
 		}
-		return parent::get($name);
 	}
 }

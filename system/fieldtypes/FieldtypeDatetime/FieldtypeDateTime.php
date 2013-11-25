@@ -26,16 +26,6 @@ class FieldtypeDateTime extends Fieldtype{
 		return (int) strtotime($value);
 	}
 
-	public function render(){
-
-		$out = new \markup\Fielditem;
-		$out->attributes = $this->getAttributes();
-		$out->name = (string) $this->name;
-		$out->label = (string) $this->label;
-		$out->value = $this->value;
-		$attributes = $this->getAttributes();
-		return $output = $out->render();
-	}
 
 
 }

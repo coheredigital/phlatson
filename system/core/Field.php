@@ -26,14 +26,20 @@ class Field extends DataObject{
 		else return $this->attributes["$key"];
 	}
 
-/*
-
-this needs a better method
-
- */
-	public function getTemplate(){
-		$template = new Template("field");
-		return $template;
+	public function get($name){
+		switch ($name) {
+			case 'type':
+				return $this->type();
+				break;
+			case 'template':
+				$template = new Template("field");
+				return $template;
+				break;
+			default:
+				return parent::get($name);
+				break;
+		}
 	}
+
 
 }
