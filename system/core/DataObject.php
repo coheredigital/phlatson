@@ -44,6 +44,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		}
 
 
+
 		$this->data = $this->getXML();
 
 	}

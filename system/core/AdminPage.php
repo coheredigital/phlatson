@@ -16,8 +16,14 @@ class AdminPage extends Page{
 		parent::__construct($url);
 		array_shift($this->urlRequest);
 
-		$this->path = $this->basePath.$this->directory."/";
+
+
+		$this->path = trim($this->basePath.$this->directory, "/")."/";
+
 		$this->data = $this->getXML();
+
+
+
 	}
 
 	protected function setBasePath(){

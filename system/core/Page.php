@@ -8,6 +8,8 @@ class Page extends DataObject{
 
 	function __construct($url = false){
 		
+
+
 		parent::__construct($url);
 
 		$this->baseUrl = $this->getBaseUrl();
