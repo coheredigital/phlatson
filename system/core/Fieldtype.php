@@ -9,10 +9,6 @@ protected $settings = array();
 
 	public function __construct(){
 
-
-
-		$this->className = $this->className();
-
 		$this->set('label', '');
 		$this->set('columns', 12);
 
@@ -24,7 +20,6 @@ protected $settings = array();
 		$this->setup();
 		$this->addStyles();
 		$this->addScripts();
-
 	}
 
 	// alias for the three available formatting methods, allows passing of type, can auto determing required method

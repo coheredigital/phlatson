@@ -27,7 +27,7 @@ class Page extends DataObject{
 		return api('config')->urls->root;
 	}
 
-	public function url($fromRoot = true){
+	public function url(){
 		return $this->baseUrl.$this->directory;
 	}
 
@@ -51,9 +51,10 @@ class Page extends DataObject{
 
      		// get an new of same class, useful for extending into AdminPage, etc
      		$page = new $this->className($url);
-  
-     		
-     		$children[] = $page;
+
+			// pass the Page to $children array, use url as key to avoid duplicates
+			// should be imposible for any to items to return the same url 
+     		$children["$page->url"] = $page;
 
       	}
       	return $children;
@@ -162,9 +163,7 @@ class Page extends DataObject{
 
 	public function get($name){
 		switch ($name) {
-			case 'requests':
-				return $this->urlRequest;
-				break;
+
 			case 'children':
 				return $this->children();
 				break;
@@ -185,11 +184,9 @@ class Page extends DataObject{
 				break;			
 			case 'template':
 				return $this->getTemplate();
-				break;
-
+				break;	
 			case 'layout':
-				// alias for $page->template->layout for ease of use
-				// var_dump($this->template);
+				// alias for $page->template->layout for simplicity
 				$layout = $this->template->layout;
 				return $layout ? (string) $layout : null;
 				break;

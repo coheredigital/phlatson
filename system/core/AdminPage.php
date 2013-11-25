@@ -17,13 +17,8 @@ class AdminPage extends Page{
 		array_shift($this->urlRequest);
 
 
-
 		$this->path = trim($this->basePath.$this->directory, "/")."/";
-
 		$this->data = $this->getXML();
-
-
-
 	}
 
 	protected function setBasePath(){
@@ -37,7 +32,6 @@ class AdminPage extends Page{
 	public function get($name){
 		switch ($name) {
 			case 'layout':
-				// return $this->api('config')->paths->admin."layouts/".$this->data->layout.".php";
 				$path = $this->api('config')->paths->admin."layouts/";
 				$file = $this->data->getElementsByTagName($name)->item(0)->nodeValue.".php";
 				return $path.$file;

@@ -2,30 +2,27 @@
 
 abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
+	public $name;
+	public $path;
 	protected $data;
-	// protected $saveData;
-
 	protected $basePath;
-	protected $className;
+	private $className = null;
 
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
-	protected $dataFile = "data.xml"; // what file name should be check for data, most classes will stick with "data.xml"
+	protected $dataFile = "data.xml"; // what file name should be check for data
 
-
-	public $name;
-	public $path;
-	// public $directory;
-
+	// what file name should be check for data
+	const DATA_FILE = "data.xml";
 
 	public $urlRequest = array();
 
 	function __construct($url){
 
-		$this->className();
+
 		$this->basePath = $this->setBasePath();
 		$this->urlRequest = $this->getUrlRequest($url);
-		// $this->directory = trim($url);
+
 
 		$lastRequestIndex = count($this->urlRequest)-1;
 		$this->name = $this->urlRequest[$lastRequestIndex] ? (string) $this->urlRequest[$lastRequestIndex] : "home";
@@ -33,13 +30,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->directory."/";
 		$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->directory."/";
-		// var_dump($this->directory);
-		// var_dump($this->urlRequest);
-		// var_dump($sitePath);
-		if (is_file($sitePath.$this->dataFile)) {
+
+
+		if (is_file($sitePath.DataObject::DATA_FILE)) {
 			$this->path = $sitePath;
 		}
-		else if(is_file($systemPath.$this->dataFile)){
+		else if(is_file($systemPath.DataObject::DATA_FILE)){
 			$this->path = $systemPath;
 		}
 
@@ -53,6 +49,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	/* MAGIC!! */
 	public function __get($name){
+		// handle / cache class name request
+		if ($name == "className") {
+			if (!isset($this->className)) $this->className = get_class($this);
+			return $this->className;	
+		}
+
 		return $this->get($name);
 	}
 	public function get($name){
@@ -60,10 +62,17 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			case 'name':
 				// return $this->name;
 				$lastRequestIndex = count($this->urlRequest)-1;
-				return (string) $this->urlRequest[$lastRequestIndex];
+				return (string) $this->urlRequest[$lastRequestIndex];			
+			case 'requests':
+				return $this->urlRequest;
+				break;
 			case 'directory':
-				return trim(implode("/", $this->urlRequest), "/");
+				$directory = trim(implode("/", $this->urlRequest), "/");
+				return $directory;
 			case 'template':
+				return $this->getTemplate();
+				break;
+			case 'templateName':
 				return $this->getTemplate();
 				break;
 			default:
@@ -88,14 +97,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 	public function set($name, $value){
-		if ($name && $value && $this->data) {
-			$this->data->{$name} = $value;
-		}
-	}
+		if ($name && $value) {
 
-	protected function className(){
-		if (!isset($this->className)) $this->className = get_class($this);
-		return $this->className;
+			$this->data->getElementsByTagName($name)->item(0)->nodeValue = $value;
+			// $this->data->{$name} = $value;
+
+		}
 	}
 
 	/**
@@ -110,11 +117,11 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 */
 	protected function getXML(){
 
-		// var_dump($this->path.$this->dataFile);
+		// var_dump($this->path.DataObject::DATA_FILE);
 
-		if (is_file($this->path.$this->dataFile)) {
+		if (is_file($this->path.DataObject::DATA_FILE)) {
 			$dom = new DomDocument();
-			$dom->load($this->path.$this->dataFile);
+			$dom->load($this->path.DataObject::DATA_FILE);
 			return $dom;
 		}
 		return null;
@@ -162,31 +169,23 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	public function save($input){
-		// clone the object so we can safely overwrite values
-		$this->saveDate = clone $this->data;
-		$template = $this->getTemplate();
 
-		foreach ($template->fields() as $f) {
+		// clone self so we can safely overwrite values
+		$saver = clone $this; 
+		$saver->data->loadXML($this->data->saveXML());
+		$saver->data->preserveWhiteSpace = false;
+		$saver->data->formatOutput = true;
 
-			$field = new Field("$f->nodeValue");
-			// var_dump($field);
+		foreach ($this->template->fields() as $field) {
 			$value = $input->{$field->name};
-
-
-
 			$fieldtype = $field->type();
 			$value = $fieldtype->saveFormat($value);
-
-			$this->saveDate->{$field->name} = $value;
-
+			$saver->set("$field->name", $value);
 		}
 
-		$saveData = new DomDocument("1.0");
-		$saveData->preserveWhiteSpace = false;
-		$saveData->formatOutput = true;
-		$saveData->loadXML($this->data->asXML());
-		$saveData->save($this->path."save.xml");
-
+		$saver->data->save($this->path."save.xml");
+		// destroy $saver
+		unset($saver);
 	}
 
 

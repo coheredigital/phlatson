@@ -2,9 +2,7 @@
 
 class PageList {
 
-	public $baseUrl; // all subsequent urls are derived from here
 	public $rootPage;
-
 	public $postTypes = array(); // array representing posts types or "Page Tables" that will be offers at top of the page
 
 
