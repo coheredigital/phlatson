@@ -33,7 +33,7 @@ class Template extends DataObject{
 
 	private function getLayout(){
 		$layoutFile = $this->api('config')->paths->layouts.$this->name.".php";
-		var_dump($layoutFile);
+		// var_dump($layoutFile);
 		$layoutFile = is_file($layoutFile) ? $layoutFile : null;
 		return $layoutFile;
 	}

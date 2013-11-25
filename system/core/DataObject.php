@@ -33,9 +33,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->directory."/";
 		$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->directory."/";
-		var_dump($this->directory);
+		// var_dump($this->directory);
 		// var_dump($this->urlRequest);
-		var_dump($sitePath);
+		// var_dump($sitePath);
 		if (is_file($sitePath.$this->dataFile)) {
 			$this->path = $sitePath;
 		}
@@ -109,7 +109,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 */
 	protected function getXML(){
 
-		var_dump($this->path.$this->dataFile);
+		// var_dump($this->path.$this->dataFile);
 
 		if (is_file($this->path.$this->dataFile)) {
 			$dom = new DomDocument();
@@ -168,7 +168,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		foreach ($template->fields() as $f) {
 
 			$field = new Field("$f->nodeValue");
-			var_dump($field);
+			// var_dump($field);
 			$value = $input->{$field->name};
 
 
@@ -180,10 +180,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		}
 
-		// save revision test
-		// $time = date("U");
-		// $this->data->saveXML($this->path."alt_".$this->dataFile );
-		// $this->saveDate->saveXML($this->path.$this->dataFile );
 		$saveData = new DomDocument("1.0");
 		$saveData->preserveWhiteSpace = false;
 		$saveData->formatOutput = true;
