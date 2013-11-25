@@ -28,11 +28,14 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		// $this->directory = trim($url);
 
 		$lastRequestIndex = count($this->urlRequest)-1;
-		$this->name = (string) $this->urlRequest[$lastRequestIndex];
+		$this->name = $this->urlRequest[$lastRequestIndex] ? (string) $this->urlRequest[$lastRequestIndex] : "home";
 
 
 		$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->directory."/";
 		$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->directory."/";
+		var_dump($this->directory);
+		// var_dump($this->urlRequest);
+		var_dump($sitePath);
 		if (is_file($sitePath.$this->dataFile)) {
 			$this->path = $sitePath;
 		}
@@ -42,7 +45,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 		$this->data = $this->getXML();
-
 
 	}
 
@@ -64,7 +66,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 				return $this->getTemplate();
 				break;
 			default:
-				return $this->data->{$name};
+				return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
 				break;
 		}
 		return $value;
@@ -72,7 +74,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	// for now basically an XPATH alias
 	public function find($name){
-		return $this->data->xpath("$name");
+
+		$xpath = new DOMXPath($this->data);
+		return $xpath->query($name);
+
+		// return $this->data->getElementsByTagName($name);
+		// return $this->data->xpath("$name");
 	}
 
 	public function __set($name, $value){
@@ -83,7 +90,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		if ($name && $value && $this->data) {
 			$this->data->{$name} = $value;
 		}
-
 	}
 
 	protected function className(){
@@ -102,11 +108,13 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
+
+		var_dump($this->path.$this->dataFile);
+
 		if (is_file($this->path.$this->dataFile)) {
-			// $dom = new DomDocument();
-			// $dom->loadXML($this->path.$this->dataFile);
-			// return $dom;
-			return simplexml_load_file($this->path.$this->dataFile);
+			$dom = new DomDocument();
+			$dom->load($this->path.$this->dataFile);
+			return $dom;
 		}
 		return null;
 	}
@@ -136,7 +144,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	public function getTemplate(){
-		$templateName = $this->data->template;
+		// $templateName = $this->data->template;
+		$templateName = $this->data->getElementsByTagName("template")->item(0)->nodeValue;
+		// var_dump($templateName);
 		if ($templateName) {
 			$template = new Template($templateName);
 		}
@@ -156,7 +166,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		$template = $this->getTemplate();
 
 		foreach ($template->fields() as $f) {
-			$field = new Field("$f");
+
+			$field = new Field("$f->nodeValue");
+			var_dump($field);
 			$value = $input->{$field->name};
 
 
@@ -191,7 +203,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		$field = new Field($name);
 
-		$value = $this->data->{$name};
+		$value = $this->{$name};
 		if (!$value) return false; // return false if node doesn't exist
 
 

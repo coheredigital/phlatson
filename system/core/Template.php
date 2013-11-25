@@ -9,12 +9,13 @@ class Template extends DataObject{
 
 	public function fields(){
 		$fieldsArray = $this->find("//field");
+
 		$fields = array();
 		foreach ($fieldsArray as $f) {
-			$field = new Field($f);
-			$attr = $f->attributes();
-			foreach ($attr as $key => $value) {
-				$field->attributes($key, $value);
+			$field = new Field($f->nodeValue);
+			$attr = $f->attributes;
+			foreach ($attr as $a) {
+				$field->attributes($a->nodeName, $a->nodeValue);
 			}
 
 			$fields["$field->name"] = $field;
@@ -24,11 +25,7 @@ class Template extends DataObject{
 		return $fields;
 	}
 
-	/*
-
-	this needs a better method
-
-	 */
+	/* this needs a better method */
 	public function getTemplate(){
 		$template = new Template("template");
 		return $template;

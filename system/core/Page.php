@@ -26,8 +26,6 @@ class Page extends DataObject{
 	}
 
 	public function url($fromRoot = true){
-		// var_dump($this->baseUrl.$this->directory);
-		
 		return $this->baseUrl.$this->directory;
 	}
 
@@ -189,6 +187,7 @@ class Page extends DataObject{
 
 			case 'layout':
 				// alias for $page->template->layout for ease of use
+				// var_dump($this->template);
 				$layout = $this->template->layout;
 				return $layout ? (string) $layout : null;
 				break;

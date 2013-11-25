@@ -9,8 +9,8 @@ class Field extends DataObject{
 	}
 
 	public function type(){
-		if ($this->data->fieldtype) {
-			$name = (string) $this->data->fieldtype;
+		if ($this->fieldtype) {
+			$name = $this->fieldtype;
 			$fieldtype = new $name();
 		}
 		return $fieldtype;
