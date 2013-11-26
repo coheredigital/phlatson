@@ -20,7 +20,7 @@ class FieldtypeFields extends Fieldtype{
 
 			$columns = $field->attributes('col');
 
-			$output .= "<div data-columns='{$columns}' class='{$this->className}_fieldItem col-{$columns}' >
+			$output .= "<div data-columns='{$columns}' data-ss-colspan='{$columns}' class='{$this->className}_fieldItem col_{$columns}' >
 							<div class='{$this->className}_fieldContent' >
 								<div class='{$this->className}_label' >
 									<a href='#'>{$field->label}</a>
