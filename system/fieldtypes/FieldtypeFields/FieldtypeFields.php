@@ -19,22 +19,24 @@ class FieldtypeFields extends Fieldtype{
 		$attributes = $this->getAttributes();
 		foreach ($this->value as $field) {
 
-			$columns = $field->attributes('col');
+			$columns = trim($field->attributes('col'));
 
-			$output .= "<div data-columns='{$columns}' data-ss-colspan='{$columns}' class='{$this->className}_fieldItem col_{$columns}' >
+			$output .= "<div data-ss-colspan='{$columns}' class='{$this->className}_fieldItem col_{$columns}' >
 							<div class='{$this->className}_fieldContent' >
 								<div class='{$this->className}_label label' >
 									<a href='#'>{$field->label}</a>
 								</div>
-								<div class='{$this->className}_name' >
-										{$field->name}
-								</div>
-								<div class='colCount'>columns <span>{$columns}</span></div>
+								<div class='{$this->className}_name name' >{$field->name}</div>
+								<input type='hidden' name='{$this->name}[{$field->name}] value='{$columns}'>
+								<div class='colCount'>columns <span class='colValue'>{$columns}</span></div>
 							</div>
 		
 						</div>";
 		}
-		$output = "<div class='{$this->className}_fieldsGrid clearfix'>{$output}</div>";
+		$output = "	<div class='{$this->className}_fieldsGrid clearfix'>
+						{$output}
+						<div class='inputs'></div>
+					</div>";
 		return $output;
 	}
 

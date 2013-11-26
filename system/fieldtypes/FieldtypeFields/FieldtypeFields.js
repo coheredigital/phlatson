@@ -1,24 +1,43 @@
 $(document).ready(function() {
 	$gridContainer = $(".FieldtypeFields_fieldsGrid");
-	$fieldItem = $(".FieldtypeFields_fieldItem");
-   
+    $fieldItem = $(".FieldtypeFields_fieldItem");
+	$fieldItemColumns = $fieldItem.children(".colCount");
+    $inputsContainer = $gridContainer.find(".input");
 	var gridWidth = $gridContainer.innerWidth();
 	var colWidth = Math.floor(gridWidth / 12);
 
-    $fieldItem.each(function(){
-        var c = $(this).attr('data-columns');
-        var w = colWidth * c;
-        $(this).width(w);
-    });
+    function setWidths(){
+        $fieldItem.each(function(){
+            var $this = $(this);
+            var c = $this.find(".colValue").text();
+            console.log(c);
+            var w = colWidth * c;
+            $this.width(w);
+        });
+    }
+    setWidths();
 
+    function updateInput(){
+        $fieldItem.each(function(){
+            var $this = $(this);
+            var inputName = "fields";
+            var fieldName = $.trim($this.find(".name").text());
+            var fieldCol = $this.attr("data-columns");
 
-$gridContainer.sortable({
-    placeholder: "FieldtypeFields_fieldItem placeholder"
-})
-.on( "sortstart", function( event, ui ) {
-    var w  = ui.helper.outerWidth()- 1;
-    ui.placeholder.width(w);
-} );
+            input = "<input type='text' name='"+inputName+"["+fieldName+"]"+"' value='"+fieldCol+"'>";
+            console.log(input);
+            $inputsContainer.append(input);
+        });
+    }
+    updateInput();
+
+    $gridContainer.sortable({
+        placeholder: "FieldtypeFields_fieldItem placeholder"
+    })
+    .on( "sortstart", function( event, ui ) {
+        var w  = ui.helper.outerWidth()- 1;
+        ui.placeholder.width(w);
+    } );
     
     $fieldItem
     .resizable({
@@ -55,7 +74,8 @@ $gridContainer.sortable({
         });
 
         $colCount.text(colNew);
-        applyShapeshift();
+        updateInput();
+
     } );
     
     function FieldtypeFields_setSizes(){
