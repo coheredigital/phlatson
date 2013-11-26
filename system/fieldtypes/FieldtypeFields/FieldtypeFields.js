@@ -12,7 +12,13 @@ $(document).ready(function() {
     });
 
 
-$gridContainer.sortable();
+$gridContainer.sortable({
+    placeholder: "FieldtypeFields_fieldItem placeholder"
+})
+.on( "sortstart", function( event, ui ) {
+    var w  = ui.helper.outerWidth()- 1;
+    ui.placeholder.width(w);
+} );
     
     $fieldItem
     .resizable({

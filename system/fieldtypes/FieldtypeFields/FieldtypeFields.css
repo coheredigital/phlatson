@@ -13,14 +13,20 @@
     z-index: 100 !important;
 }
 
-.FieldtypeFields_fieldsGrid .ss-placeholder-child {
-    background: transparent;
-    /*border: 1px dashed #ddd;*/
-    /*margin: 4px;*/
-    position: absolute;
-}
 
-.FieldtypeFields_fieldsGrid .ss-placeholder-child:after { 
+
+
+
+.FieldtypeFields_fieldItem{
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+.FieldtypeFields_fieldItem.placeholder {
+    background: transparent !important;
+    min-width: 8.33% !important;
+}
+.FieldtypeFields_fieldItem.placeholder:after { 
     /* done this way to better fit the size of the fieldContent since the gutter and padding settings in ss dont work properly*/
     content: "";
     position: absolute;
@@ -31,13 +37,6 @@
     left: 4px;
     right: 4px;
 }
-
-.FieldtypeFields_fieldItem{
-    position: relative;
-    display: inline-block;
-    float: left;
-}
-
 .FieldtypeFields_fieldContent{
     background: #eee;
     position: absolute;
