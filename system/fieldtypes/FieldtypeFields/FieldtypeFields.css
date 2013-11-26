@@ -32,6 +32,12 @@
     right: 4px;
 }
 
+.FieldtypeFields_fieldItem{
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
 .FieldtypeFields_fieldContent{
     background: #eee;
     position: absolute;
@@ -79,8 +85,10 @@
 
 
 /* jquery ui specific */
+
 .ui-resizable-handle{
     position: absolute;
+    display: none !important;
     cursor: e-resize;
     z-index: 100;
     right: 4px;
@@ -88,8 +96,13 @@
     bottom: 4px;
     width: 8px;
     background: #999;
+
+}
+.FieldtypeFields_fieldItem:hover .ui-resizable-handle{
+    display: block !important;
 }
 .FieldtypeFields_fieldItem.resizing .ui-resizable-handle,
 .ui-resizable-handle:hover{
+    display: block !important;
 	background: #56ba6d !important;
 }

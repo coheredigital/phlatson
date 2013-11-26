@@ -7,9 +7,9 @@ $adminHome = new AdminPage("/"); // create home page object for simple ref back 
 $config->styles->add("{$config->urls->admin}styles/adminTheme.css");
 $config->styles->add("{$config->urls->admin}styles/font-awesome/css/font-awesome.css");
 $config->scripts->add("//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js");
-$config->scripts->add("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js");
+
 $config->scripts->add("{$config->urls->admin}scripts/plugins.js");
-$config->scripts->add("//cdnjs.cloudflare.com/ajax/libs/jquery.shapeshift/2.0/jquery.shapeshift.min.js");
+
 
 
 include $admin->get('layout');

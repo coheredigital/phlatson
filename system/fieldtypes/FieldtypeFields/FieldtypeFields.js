@@ -11,28 +11,16 @@ $(document).ready(function() {
         $(this).width(w);
     });
 
-    function applyShapeshift(){
-        $gridContainer.shapeshift({
-            // enableTrash: true,
-            align: "left",
-            // colWidth: colWidth,
-            columns: 12,
-            animated: false,
-            gutterX: 0,
-            gutterY: 0,
-            paddingX: 0,
-            paddingY: 0
-        });
-    }
-    applyShapeshift();
 
+$gridContainer.sortable();
     
     $fieldItem
     .resizable({
         handles: 'e',
         containment: "parent",
         grid: [ colWidth, 0 ],
-        minWidth: colWidth
+        minWidth: colWidth,
+
     })
     .on( "resizestart", function( event, ui ) {
         $(this)
@@ -40,7 +28,7 @@ $(document).ready(function() {
         .removeClass( function(index, css) {
             return (css.match (/\bcol_\S+/g) || []).join(' ');
         })
-        .css("margin-left","-1px") // prevents "jumping" behavior
+        .css("margin-left","-1px") // prevents "jumping" behavior due to rounding errors
         .addClass("resizing");
 
     })
@@ -56,7 +44,6 @@ $(document).ready(function() {
         .removeClass("resizing")
         .addClass('col_'+colNew)
         .attr({
-            // 'style': null,
             'data-columns': colNew,
             'data-ss-colspan': colNew
         });
