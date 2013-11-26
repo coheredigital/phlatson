@@ -25,12 +25,14 @@ class AdminPage extends Page{
 		return $this->api('config')->paths->admin."content/";
 	}
 
-	protected function getBaseUrl(){
-		return api('config')->urls->root.$this->api('config')->adminUrl."/";
+	public function url(){
+		return 	$this->api('config')->urls->root.$this->api('config')->adminUrl."/".$this->directory;
 	}
-
 	public function get($name){
 		switch ($name) {
+			case 'url':
+				return $this->url();
+				break;
 			case 'layout':
 				$path = $this->api('config')->paths->admin."layouts/";
 				$file = $this->data->getElementsByTagName($name)->item(0)->nodeValue.".php";

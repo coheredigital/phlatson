@@ -3,8 +3,6 @@
 
 class Page extends DataObject{
 	protected $dataFolder = "content/";
-	// define some protected variable to be used by all page objects
-	protected $baseUrl;
 
 	function __construct($url = false){
 		
@@ -12,7 +10,7 @@ class Page extends DataObject{
 
 		parent::__construct($url);
 
-		$this->baseUrl = $this->getBaseUrl();
+		// $this->baseUrl = $this->getBaseUrl();
 		// handle admin page request
 		if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
 			$this->layout = $this->api('config')->paths->admin."index.php";
@@ -20,15 +18,14 @@ class Page extends DataObject{
 
 	}
 
-	protected function setBasePath(){
-		return api('config')->paths->content;
-	}	
-	protected function getBaseUrl(){
-		return api('config')->urls->root;
-	}
+	// protected function setBasePath(){
+	// 	return api('config')->paths->content;
+	// }	
+
 
 	public function url(){
-		return $this->baseUrl.$this->directory;
+		$url = $this->api('config')->urls->root.$this->directory;
+		return $url;
 	}
 
 

@@ -8,7 +8,7 @@ class PageList {
 
 	public function renderPageTitle(\Page $page){
 		$output .= "<div class='page-tree-item'>";
-		$output .= "<a href='{$this->baseUrl}pages/edit/?page=".$page->directory."'>".$page->title."</a>";
+		$output .= "<a href='".api('config')->urls->root.api("config")->adminUrl."/pages/edit/?page=".$page->directory."'>".$page->title."</a>";
 		$output .= "</div>";
 		return $output;
 	}

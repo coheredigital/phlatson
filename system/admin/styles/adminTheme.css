@@ -742,6 +742,12 @@ select {
   float: left;
 }
 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 /* MISC */
 
 .view-site {

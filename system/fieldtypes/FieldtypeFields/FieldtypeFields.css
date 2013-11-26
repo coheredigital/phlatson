@@ -1,0 +1,72 @@
+.FieldtypeFields_fieldsGrid{
+	position: relative;
+	background: #fafafa;
+	border: 1px solid #eee;
+	padding: 2px;
+	padding-top: 6px;
+}
+.FieldtypeFields_fieldItem{
+    position: relative;
+
+    min-height: 75px;
+    display: inline-block;
+    margin-bottom: 6px;
+    float: left;
+}
+
+.FieldtypeFields_fieldContent{
+    background: #ddd;
+    position: absolute;
+    top: 0;
+    padding: 8px 10px;
+
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0 4px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+.FieldtypeFields_fieldContent .FieldtypeFields_label{
+    color: #444;
+}
+.FieldtypeFields_fieldContent .FieldtypeFields_name{
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+}
+.FieldtypeFields_fieldContent .colCount{
+	font-size: 12px;
+	bottom: 0.4em;
+	right: 1em;
+	position: absolute;
+}
+.FieldtypeFields_fieldContent .colCount span{
+	font-size: 16px;
+	font-weight: bold;
+	color: #444b65;
+}
+
+
+
+
+/* jquery ui specific */
+.ui-resizable-handle{
+    position: absolute;
+    cursor: e-resize;
+    z-index: 100;
+    right: 4px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: #777;
+}
+.ui-resizable-handle:hover,
+.ui-resizable-handle.active{
+	background: #56ba6d !important;
+}
+
+.ui-resizable.ui-resizable-risizing .ui-resizable-handle{
+    background: #26f !important;
+    border-color: #05e !important;
+}
