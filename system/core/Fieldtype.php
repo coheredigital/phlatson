@@ -50,7 +50,13 @@ protected $settings = array();
 		return $value;
 	}
 
+	/**
+	 * saveFormat should return type DomElement
+	 */
+
 	public function saveFormat($value){
+		// $dom =  new DomDocument;
+		// $dom->createElement();
 		return $value;
 	}
 

@@ -1,2 +1,10 @@
 <?xml version="1.0"?>
-<template><field col="6">name</field><field col="6">label</field><field col="12">fields</field><name>template</name></template>
+<template>
+  <fields>
+    <field col="6">label</field>
+    <field col="6">name</field>
+    <field col="12">fields</field>
+  </fields>
+  <name>template</name>
+  <label>Template</label>
+</template>

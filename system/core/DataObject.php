@@ -150,7 +150,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		if (is_file($this->path.DataObject::DATA_FILE)) {
 			$dom = new DomDocument();
-			$dom->formatOutput = false;
+			$dom->formatOutput = true;
 			$dom->preserveWhiteSpace = false;
 			$dom->load($this->path.DataObject::DATA_FILE);
 			return $dom;
@@ -205,7 +205,25 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		$saver = clone $this; 
 		$saver->data->loadXML($this->data->saveXML());
 
+		$save = new DomDocument;
+		$root = $save->createElement("root");
+		$save->appendChild($root);
 
+		$root = $save->documentElement;
+
+		// loop through the templates available fields so that we only set values 
+		// for available feilds and ignore the rest
+		foreach ($this->template->fields() as $field) {
+			$value = $postData->{$field->name};
+			
+
+			$fieldtype = $field->type();
+			$value = $fieldtype->saveFormat($value);
+
+			$node = $save->createElement($field->name, $value);
+			$root->appendChild($node);
+			// $save->set("$field->name", $value);
+		}
 
 		// loop through the templates available fields so that we only set values 
 		// for available feilds and ignore the rest
@@ -216,16 +234,14 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			$saver->set("$field->name", $value);
 		}
 
-		// remformat saved data
-
-
 		// save to file
-		$saver->data->save($this->path."save.xml", LIBXML_NOEMPTYTAG);
-		// $saver->data->save($this->path."data.xml", LIBXML_NOEMPTYTAG);
+		$save->save($this->path."new_save.xml", LIBXML_NOEMPTYTAG);
+		$saver->data->save($this->path."old_save.xml", LIBXML_NOEMPTYTAG);
 
 		// destroy $saver
 		unset($saver);
 	}
+
 
 
 	public function getEditable($name){

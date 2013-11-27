@@ -2,8 +2,4 @@
 <field>
   <label>Author</label>
   <fieldtype>FieldtypeText</fieldtype>
-  <saveDate>
-    <label>Author</label>
-    <fieldtype/>
-  </saveDate>
 </field>
