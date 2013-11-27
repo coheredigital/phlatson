@@ -18,7 +18,7 @@ class FieldtypeDateTime extends Fieldtype{
 	}
 
 	public function editFormat($value,  $format = false){
-		$value = date("Y/m/d", (int) $value);
+		$value = date("Y/m/d", $value);
 		return $value;
 	}
 

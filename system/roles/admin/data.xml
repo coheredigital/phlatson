@@ -1,0 +1,6 @@
+<role>
+	<name>admin</name>
+	<permissions>
+		<permission>all</permission>
+	</permissions>
+</role>

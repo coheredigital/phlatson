@@ -1,9 +1,4 @@
+<?xml version="1.0"?>
 <template>
-	<fields>
-		<field col="12">title</field>
-		<field col="9">author</field>
-		<field col="3">published</field>
-		<field col="12">content</field>
-		<field col="12">markdown</field>
-	</fields>
-</template>
+	<fields><field col="12">title</field><field col="10">author</field><field col="2">published</field><field col="12">content</field><field col="12">markdown</field></fields>
+<name>blog-entry</name><label>Article</label></template>

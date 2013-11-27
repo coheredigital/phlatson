@@ -97,12 +97,41 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 	public function set($name, $value){
-		if ($name && $value) {
+		if ($name && $value != "") {
+			// node we are attempting to find
+			$node = $this->data->getElementsByTagName($name)->item(0);
 
-			$this->data->getElementsByTagName($name)->item(0)->nodeValue = $value;
-			// $this->data->{$name} = $value;
+			if (is_string($value) && isset($value)) {
+				
+				if ($node) {
+					$this->data->getElementsByTagName($name)->item(0)->nodeValue = $value;
+				}
+				else{
+					// create a node for the value with the requested name
+					$dom = new DOMDocument('1.0', 'utf-8');
+					$dom->formatOutput = true;
+
+					$node = $dom->createElement($name, $value);
+					$node = $this->data->importNode($node, true);
+					$this->data->documentElement->appendChild($node);
+				}
+				
+			}
+			else if($value instanceof DomElement){
+				// if node exists
+				if ($node) {
+					// replace children
+					$this->data->formatOutput = true;
+					$value = $this->data->importNode($value, true);
+					$this->data->documentElement->replaceChild($value, $node);
+				}
+				else{ // add a new node otherwise
+
+				}
+			}
 
 		}
+		return false;
 	}
 
 	/**
@@ -121,6 +150,8 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		if (is_file($this->path.DataObject::DATA_FILE)) {
 			$dom = new DomDocument();
+			$dom->formatOutput = false;
+			$dom->preserveWhiteSpace = false;
 			$dom->load($this->path.DataObject::DATA_FILE);
 			return $dom;
 		}
@@ -168,22 +199,30 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
-	public function save($input){
+	public function save($postData){
 
 		// clone self so we can safely overwrite values
 		$saver = clone $this; 
 		$saver->data->loadXML($this->data->saveXML());
-		$saver->data->preserveWhiteSpace = false;
-		$saver->data->formatOutput = true;
 
+
+
+		// loop through the templates available fields so that we only set values 
+		// for available feilds and ignore the rest
 		foreach ($this->template->fields() as $field) {
-			$value = $input->{$field->name};
+			$value = $postData->{$field->name};
 			$fieldtype = $field->type();
 			$value = $fieldtype->saveFormat($value);
 			$saver->set("$field->name", $value);
 		}
 
-		$saver->data->save($this->path."save.xml");
+		// remformat saved data
+
+
+		// save to file
+		$saver->data->save($this->path."save.xml", LIBXML_NOEMPTYTAG);
+		// $saver->data->save($this->path."data.xml", LIBXML_NOEMPTYTAG);
+
 		// destroy $saver
 		unset($saver);
 	}

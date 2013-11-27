@@ -17,19 +17,13 @@ $(document).ready(function() {
     }
     setWidths();
 
-    function updateInput(){
-        $fieldItem.each(function(){
-            var $this = $(this);
-            var inputName = "fields";
-            var fieldName = $.trim($this.find(".name").text());
-            var fieldCol = $this.attr("data-columns");
-
-            input = "<input type='text' name='"+inputName+"["+fieldName+"]"+"' value='"+fieldCol+"'>";
-            console.log(input);
-            $inputsContainer.append(input);
+    $.fn.updateInput = function( col ) {
+        $input = this.find('input');
+        $input.attr({
+            value: col
         });
-    }
-    updateInput();
+    };
+
 
     $gridContainer.sortable({
         placeholder: "FieldtypeFields_fieldItem placeholder"
@@ -71,10 +65,10 @@ $(document).ready(function() {
         .attr({
             'data-columns': colNew,
             'data-ss-colspan': colNew
-        });
+        })
+        .updateInput(colNew);
 
         $colCount.text(colNew);
-        updateInput();
 
     } );
     

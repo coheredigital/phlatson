@@ -103,5 +103,6 @@
 .FieldtypeFields_fieldItem.resizing .ui-resizable-handle,
 .ui-resizable-handle:hover{
     display: block !important;
-	background: #56ba6d !important;
+    /*background: #56ba6d !important;*/
+	background: #444 !important;
 }

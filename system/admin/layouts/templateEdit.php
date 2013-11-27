@@ -3,7 +3,7 @@ $templateEdit = new Template($input->get->name);
 
 
 if (count($input->post)) {
-	$fieldEdit->save($input->post);
+	$templateEdit->save($input->post);
 	$session->redirect($input->query);
 }
 

@@ -13,6 +13,20 @@ class FieldtypeFields extends Fieldtype{
 	}
 
 
+	public function saveFormat($value){
+
+		$dom = new DomDocument;
+		$root = $dom->createElement("fields");
+		foreach ($value as $key => $value) {
+			$node = $dom->createElement("field",$key);
+			$node->setAttribute("col", $value);
+			$root->appendChild($node);
+		}	
+		$dom->appendChild($root);
+		return $dom->documentElement;
+
+	}
+
 
 	protected function renderInput(){
 
@@ -27,7 +41,7 @@ class FieldtypeFields extends Fieldtype{
 									<a href='#'>{$field->label}</a>
 								</div>
 								<div class='{$this->className}_name name' >{$field->name}</div>
-								<input type='hidden' name='{$this->name}[{$field->name}] value='{$columns}'>
+								<input type='hidden' name='{$this->name}[{$field->name}]' value='{$columns}' >
 								<div class='colCount'>columns <span class='colValue'>{$columns}</span></div>
 							</div>
 		
