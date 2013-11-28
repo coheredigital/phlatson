@@ -18,8 +18,8 @@ class FieldtypeRedactor extends FieldtypeTextarea{
 		return $value;
 	}
 
-	public function saveFormat($value){
-		return $value;
-	}
+	// public function saveFormat($value){
+	// 	return $value;
+	// }
 
 }

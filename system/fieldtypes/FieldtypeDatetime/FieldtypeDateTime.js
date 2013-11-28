@@ -1,5 +1,5 @@
 
 
 $(function(){
-	$('.FieldtypeDateTime').pickadate();
+	$('.FieldtypeDateTime').datetimepicker();
 });

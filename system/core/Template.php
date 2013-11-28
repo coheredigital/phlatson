@@ -1,29 +1,19 @@
 <?php 
 
-class Template extends DataObject{
+/*
+
+	Template extends fieldgroup because its is essentially a fieldgroup with a layout and more settings
+
+ */
+
+
+class Template extends Fieldgroup{
 	protected $dataFolder = "templates/";
 
 	protected function setBasePath(){
 		return api('config')->paths->templates;
 	}
 
-	public function fields(){
-		$fieldsArray = $this->find("//field");
-
-		$fields = array();
-		foreach ($fieldsArray as $f) {
-			$field = new Field($f->nodeValue);
-			$attr = $f->attributes;
-			foreach ($attr as $a) {
-				$field->attributes($a->nodeName, $a->nodeValue);
-			}
-
-			$fields["$field->name"] = $field;
-
-		}
-
-		return $fields;
-	}
 
 	/* this needs a better method */
 	public function getTemplate(){
@@ -42,9 +32,6 @@ class Template extends DataObject{
 		switch ($name) {
 			case 'layout':
 				return $this->getLayout();
-				break;
-			case 'fields':
-				return $this->fields();
 				break;
 			default:
 				return parent::get($name);

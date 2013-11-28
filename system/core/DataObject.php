@@ -92,47 +92,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		// return $this->data->xpath("$name");
 	}
 
-	public function __set($name, $value){
-		return $this->set($name, $value);
-	}
 
-	public function set($name, $value){
-		if ($name && $value != "") {
-			// node we are attempting to find
-			$node = $this->data->getElementsByTagName($name)->item(0);
-
-			if (is_string($value) && isset($value)) {
-				
-				if ($node) {
-					$this->data->getElementsByTagName($name)->item(0)->nodeValue = $value;
-				}
-				else{
-					// create a node for the value with the requested name
-					$dom = new DOMDocument('1.0', 'utf-8');
-					$dom->formatOutput = true;
-
-					$node = $dom->createElement($name, $value);
-					$node = $this->data->importNode($node, true);
-					$this->data->documentElement->appendChild($node);
-				}
-				
-			}
-			else if($value instanceof DomElement){
-				// if node exists
-				if ($node) {
-					// replace children
-					$this->data->formatOutput = true;
-					$value = $this->data->importNode($value, true);
-					$this->data->documentElement->replaceChild($value, $node);
-				}
-				else{ // add a new node otherwise
-
-				}
-			}
-
-		}
-		return false;
-	}
 
 	/**
 	 * Return the "directory" for this object, sortof ID in this system
@@ -201,11 +161,20 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public function save($postData){
 
-		// clone self so we can safely overwrite values
-		$saver = clone $this; 
-		$saver->data->loadXML($this->data->saveXML());
-
+		// create a domdoc to store saved values
 		$save = new DomDocument;
+		// set the formatting if set in config
+		if ($this->api("config")->formattedXML) {
+			$save->formatOutput = true;
+			$save->preserveWhiteSpace = false;
+		}
+		else{
+			$save->formatOutput = false;
+			$save->preserveWhiteSpace = false;
+		}
+
+
+		// add the root element
 		$root = $save->createElement("root");
 		$save->appendChild($root);
 
@@ -213,30 +182,30 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		// loop through the templates available fields so that we only set values 
 		// for available feilds and ignore the rest
-		foreach ($this->template->fields() as $field) {
+		$fields = $this->template->fields;
+		foreach ($fields as $field) {
 			$value = $postData->{$field->name};
 			
-
 			$fieldtype = $field->type();
-			$value = $fieldtype->saveFormat($value);
 
-			$node = $save->createElement($field->name, $value);
-			$root->appendChild($node);
-			// $save->set("$field->name", $value);
-		}
-
-		// loop through the templates available fields so that we only set values 
-		// for available feilds and ignore the rest
-		foreach ($this->template->fields() as $field) {
-			$value = $postData->{$field->name};
-			$fieldtype = $field->type();
-			$value = $fieldtype->saveFormat($value);
-			$saver->set("$field->name", $value);
+			$formattedValue = $fieldtype->saveFormat($value, $field->name);
+			if ($formattedValue instanceof DomElement) {
+				$node = $save->importNode($formattedValue, true);
+				$save->documentElement->appendChild($node);
+			}
+			elseif($formattedValue instanceof DOMDocument){
+				$node = $save->importNode($formattedValue->documentElement, true);
+				$save->documentElement->appendChild($node);
+			}
+			else{
+				$node = $save->createElement($field->name, $formattedValue);
+				$root->appendChild($node);
+			}
 		}
 
 		// save to file
-		$save->save($this->path."new_save.xml", LIBXML_NOEMPTYTAG);
-		$saver->data->save($this->path."old_save.xml", LIBXML_NOEMPTYTAG);
+		// $save->save($this->path.self::DATA_FILE);
+		$save->save($this->path."save.xml");
 
 		// destroy $saver
 		unset($saver);
@@ -269,6 +238,47 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		}
 
 		return $value;
+	}
+
+	public function __set($name, $value){
+		return $this->set($name, $value);
+	}
+
+	public function set($name, $value){
+		if ($name && $value != "") {
+			// node we are attempting to find
+			$node = $this->data->getElementsByTagName($name)->item(0);
+
+			if (is_string($value) && isset($value)) {
+				
+				if ($node) {
+					$this->data->getElementsByTagName($name)->item(0)->nodeValue = $value;
+				}
+				else{
+					// create a node for the value with the requested name
+					$dom = new DOMDocument('1.0', 'utf-8');
+					$dom->formatOutput = true;
+
+					$node = $dom->createElement($name, $value);
+					$node = $this->data->importNode($node, true);
+					$this->data->documentElement->appendChild($node);
+				}
+				
+			}
+			else if($value instanceof DomElement){
+				// if node exists
+				if ($node) {
+					// replace children
+					$value = $this->data->importNode($value, true);
+					$this->data->documentElement->replaceChild($value, $node);
+				}
+				else{ // add a new node otherwise
+
+				}
+			}
+
+		}
+		return false;
 	}
 
 	// allows the data array to be counted directly

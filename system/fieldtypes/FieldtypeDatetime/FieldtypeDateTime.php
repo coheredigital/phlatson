@@ -3,12 +3,10 @@
 class FieldtypeDateTime extends Fieldtype{
 
 	protected function addStyles(){
-		api('config')->styles->add(api('config')->urls->fieldtypes."$this->className/pickadate/lib/themes/default.css");
-		api('config')->styles->add(api('config')->urls->fieldtypes."$this->className/pickadate/lib/themes/default.date.css");
+		api('config')->styles->add(api('config')->urls->fieldtypes."$this->className/datetimepicker/datetimepicker.css");
 	}
 	protected function addScripts(){
-		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/pickadate/lib/compressed/picker.js");
-		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/pickadate/lib/compressed/picker.date.js");
+		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/datetimepicker/datetimepicker.js");
 		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/$this->className.js");
 	}
 
@@ -22,7 +20,7 @@ class FieldtypeDateTime extends Fieldtype{
 		return $value;
 	}
 
-	public function saveFormat($value){
+	public function saveFormat($value, $name = null){
 		return (int) strtotime($value);
 	}
 

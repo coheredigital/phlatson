@@ -4,7 +4,7 @@
 
 	if (count($input->post)) {
 		$pageEdit->save($input->post);
-		$session->redirect($input->query);
+		// $session->redirect($input->query);
 	}
 
 
