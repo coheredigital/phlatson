@@ -16,7 +16,7 @@ class FieldtypeFields extends Fieldtype{
 	public function saveFormat($value, $name = null){
 
 		$dom = new DomDocument;
-		$root = $dom->createElement("fields");
+		$root = $dom->createElement($name);
 		foreach ($value as $key => $value) {
 			$node = $dom->createElement("field",$key);
 			$node->setAttribute("col", $value);
