@@ -16,16 +16,12 @@ class EditForm {
 	}
 
 
-	public function addFieldgroup(){
-
-
-
+	public function addFieldgroup(\Fieldgroup $fieldgroup){
+		$this->fields[] = $fieldgroup;
 	}
 
 	public function addField(\Field $field){
-
 		$this->fields[] = $field;
-
 	}
 
 
@@ -60,6 +56,14 @@ class EditForm {
 
 			}
 			elseif($field instanceof \Fieldgroup){
+
+				$group = $field;
+				$groupFields = $group->fields();
+
+				// need a method of rendering the group and each field with less spaghetti
+
+
+				// var_dump($groupFields);
 
 			}
 		}
