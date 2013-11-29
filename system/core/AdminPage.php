@@ -17,13 +17,10 @@ class AdminPage extends Page{
 		array_shift($this->urlRequest);
 
 
-		$this->path = trim($this->basePath.$this->directory, "/")."/";
+		$this->path = trim($this->api('config')->paths->admin."content/".$this->directory, "/")."/";
 		$this->data = $this->getXML();
 	}
 
-	protected function setBasePath(){
-		return $this->api('config')->paths->admin."content/";
-	}
 
 	public function url(){
 		return 	$this->api('config')->urls->root.$this->api('config')->adminUrl."/".$this->directory;

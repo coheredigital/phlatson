@@ -10,10 +10,6 @@
 class Template extends Fieldgroup{
 	protected $dataFolder = "templates/";
 
-	protected function setBasePath(){
-		return api('config')->paths->templates;
-	}
-
 
 	/* this needs a better method */
 	public function getTemplate(){

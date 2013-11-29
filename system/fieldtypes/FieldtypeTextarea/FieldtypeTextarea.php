@@ -12,7 +12,7 @@ class FieldtypeTextarea extends Fieldtype{
 		return $value;
 	}
 
-	public function saveFormat($value, $name = null){
+	public function saveFormat($name, $value){
 
 		$dom =  new DomDocument;
         $root = $dom->createElement("$name");

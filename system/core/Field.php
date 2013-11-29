@@ -4,9 +4,6 @@ class Field extends DataObject{
 	protected $dataFolder = "fields/";
 	protected $attributes = array();
 
-	protected function setBasePath(){
-		return $this->api('config')->paths->fields;
-	}
 
 	public function type(){
 		// var_dump($this->data->saveHTML());

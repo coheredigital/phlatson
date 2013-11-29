@@ -54,11 +54,16 @@ protected $settings = array();
 	 * saveFormat should return type DomElement
 	 */
 
-	public function saveFormat($value, $name = null){
-		// $dom =  new DomDocument;
-		// $dom->createElement();
-		return $value;
+	public function saveFormat( $name, $value ){
+
+		$dom = new DomDocument;
+        $node = $dom->createElement("$name", "$value");
+        $dom->appendChild($node);
+
+		return $dom->documentElement;
+
 	}
+
 
 
 

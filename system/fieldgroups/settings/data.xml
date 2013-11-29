@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <fieldgroup>
   <fields>
-    <field col="6">label</field>
-    <field col="6">name</field>
-    <field col="12">fields</field>
+    <field col="6">template</field>
   </fields>
   <name>settings</name>
   <label>Settings</label>

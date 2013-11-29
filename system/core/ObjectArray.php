@@ -16,7 +16,7 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 	protected $singularName;
 
 
-	// load availabe fields in $data array()
+	// load availabe objects into $data array()
 	protected function load(){
 		if ($this->dataFolder) {
 			$array = glob($this->api('config')->paths->site.$this->dataFolder."*", GLOB_ONLYDIR);

@@ -20,8 +20,13 @@ class FieldtypeDateTime extends Fieldtype{
 		return $value;
 	}
 
-	public function saveFormat($value, $name = null){
-		return (int) strtotime($value);
+	public function saveFormat($name, $value){
+
+		$dom = new DomDocument;
+        $node = $dom->createElement("$name", (int) strtotime($value));
+        $dom->appendChild($node);
+
+        return $dom->documentElement;
 	}
 
 

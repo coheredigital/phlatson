@@ -1,6 +1,6 @@
 <?php 
 
-class Templates  extends ObjectArray{
+class Templates extends ObjectArray{
 
 
 	public function __construct(){

@@ -2,10 +2,9 @@
 
 abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
-	public $name;
+	private $name;
 	public $path;
 	protected $data;
-	protected $basePath;
 	private $className = null;
 
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
@@ -19,18 +18,13 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	function __construct($url){
 
-
-		$this->basePath = $this->setBasePath();
 		$this->urlRequest = $this->getUrlRequest($url);
-
 
 		$lastRequestIndex = count($this->urlRequest)-1;
 		$this->name = $this->urlRequest[$lastRequestIndex] ? (string) $this->urlRequest[$lastRequestIndex] : "home";
 
-
 		$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->directory."/";
 		$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->directory."/";
-
 
 		if (is_file($sitePath.DataObject::DATA_FILE)) {
 			$this->path = $sitePath;
@@ -38,8 +32,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		else if(is_file($systemPath.DataObject::DATA_FILE)){
 			$this->path = $systemPath;
 		}
-
-
 
 		$this->data = $this->getXML();
 
@@ -106,8 +98,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 */
 	protected function getXML(){
 
-		// var_dump($this->path.DataObject::DATA_FILE);
-
 		if (is_file($this->path.DataObject::DATA_FILE)) {
 			$dom = new DomDocument();
 			$dom->formatOutput = true;
@@ -153,11 +143,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return $template;
 	}
 
-	// override this function in descendant classes to set the basepath during construct
-	protected function setBasePath(){
-		return $this->api('config')->paths->content;
-	}
-
 
 	public function save($postData){
 
@@ -188,7 +173,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			
 			$fieldtype = $field->type();
 
-			$formattedValue = $fieldtype->saveFormat($value, $field->name);
+			$formattedValue = $fieldtype->saveFormat( $field->name, $value);
 			if ($formattedValue instanceof DomElement) {
 				$node = $save->importNode($formattedValue, true);
 				$save->documentElement->appendChild($node);

@@ -1,0 +1,10 @@
+<?php 
+
+class AdminPageEdit {
+
+
+
+/*PLACEHOLDER FOR NOW, JUST THINKING THROUGH THE STRUCTURE I WANT*/
+
+
+}

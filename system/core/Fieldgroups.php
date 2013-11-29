@@ -1,11 +1,12 @@
 <?php
 
-class Fieldgroup extends DataObject{
-	protected $dataFolder = "fieldgroups/";
+class Fieldgroups extends ObjectArray{
 
-	// protected function setBasePath(){
-	// 	return api('config')->paths->templates;
-	// }
+	public function __construct(){
+		$this->dataFolder = "/fieldgroups/";
+		$this->singularName = "Fieldgroup"; // we can strtoilower() this for some needs, naming MUST be consistent for this
+		$this->load();
+	}
 
 	public function fields(){
 		$fieldsArray = $this->find("//field");
@@ -21,7 +22,7 @@ class Fieldgroup extends DataObject{
 			$fields["$field->name"] = $field;
 
 		}
-
+		
 		return $fields;
 	}
 
