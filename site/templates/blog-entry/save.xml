@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<root>
+  <label>Article</label>
+  <name>blog-entry</name>
+  <fields>
+    <field col="12">title</field>
+    <field col="7">author</field>
+    <field col="5">published</field>
+    <field col="9">content</field>
+    <field col="12">markdown</field>
+  </fields>
+</root>
