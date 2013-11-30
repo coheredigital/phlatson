@@ -33,15 +33,18 @@ class Page extends DataObject{
 		if ($this->path === null) return; // break out if no valid path
 		// get all subfolder of current page path
 		
-		$subs = glob($this->path.DIRECTORY_SEPARATOR."*" , GLOB_ONLYDIR);
+		$subs = glob($this->path."*" , GLOB_ONLYDIR);
 
+		
 
 		$children = array();
 		foreach($subs as $folder) {
 			$folder = basename($folder);
      		$url = $this->directory."/".$folder;
 
-     		$file = trim($this->path, "/")."/".$folder."/".$this->dataFile;
+     		$path = $this->path.$folder.DIRECTORY_SEPARATOR;
+     		$file = $path.$this->dataFile;
+
      		// skip if no "dataFile" is found
      		if (!is_file($file)) continue;
 

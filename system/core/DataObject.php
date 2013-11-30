@@ -23,8 +23,8 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		$lastRequestIndex = count($this->urlRequest)-1;
 		$this->name = $this->urlRequest[$lastRequestIndex] ? (string) $this->urlRequest[$lastRequestIndex] : "home";
 
-		$sitePath = $this->api('config')->paths->site.$this->dataFolder.$this->directory."/";
-		$systemPath = $this->api('config')->paths->system.$this->dataFolder.$this->directory."/";
+		$sitePath = realpath($this->api('config')->paths->site.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
+		$systemPath = realpath($this->api('config')->paths->system.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
 
 		if (is_file($sitePath.DataObject::DATA_FILE)) {
 			$this->path = $sitePath;

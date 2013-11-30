@@ -5,6 +5,11 @@ function api($name) {
 	return Core::api($name);
 }
 
+function pretty_dump($var){
+    echo "</pre>";
+    echo var_dump($var);
+    echo "</pre>";
+}
 
 // Emulate register_globals off
 function unregister_GLOBALS()

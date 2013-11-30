@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <root>
-	<template>blog-entry</template>
   <title>Decoder Ring THeatre</title>
   <author>Adam Spruijt</author>
-  <content>&lt;p&gt;Decoder Ring Theatre's shows are available for free download in mp3 format, either directly from our site, via the &lt;a href="http://decoderring.libsyn.com/rss"&gt;Podcast Feed&lt;/a&gt; or subscribe in &lt;a href="http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=79497721</content>
+  <content><![CDATA[<p>Decoder Ring Theatre's shows are available for free download in mp3 format, either directly from our site, via the <a href="http://decoderring.libsyn.com/rss">Podcast Feed</a> or subscribe in </p>]]></content>
   <published>1385701200</published>
-  <markdown></markdown>
+  <markdown><![CDATA[]]></markdown>
 </root>
+

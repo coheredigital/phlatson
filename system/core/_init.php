@@ -115,7 +115,7 @@ try {
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
-// var_dump($input);
+
 
 // output template
 // NOTE: create a better method of achieving this
