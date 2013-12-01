@@ -1,4 +1,5 @@
 <?php
+
 $home = $pages->get("/");
 
 $pageList = new \markup\PageList;

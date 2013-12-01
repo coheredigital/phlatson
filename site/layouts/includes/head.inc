@@ -45,7 +45,7 @@
 	  	</div>
 	  </div>
 	</div>
-	<?php if ($page->rootParent->url != "/xpages/blog" && count($page->rootParent->children)): ?>
+	<?php if ($page->rootParent->name != "blog" && count($page->rootParent->children)): ?>
 	<nav id="subnav" class="navbar navbar-default navbar-static-top" role="navigation">
 		<div class="container">
 		    <ul class="nav navbar-nav">
@@ -57,21 +57,7 @@
 		</div>
 	</nav>
 	<?php endif ?>
-	<div id="breadcrumbs">
-		<div class="container">
-			<?php $parents = $page->parents() ?>
-			<?php if (count($parents) && $page->url != $home->url): ?>
-			<ol class="breadcrumb">
-				
-				
-				<?php foreach ($parents as $p): ?>
-					<li><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-				<?php endforeach ?>
-				<li><?php echo $page->title ?></li>
+	<?php include "breadcrumbs.inc" ?>
 
-			</ol>
-			<?php endif ?>
-		</div>
-	</div>
 	<div id="main">
 

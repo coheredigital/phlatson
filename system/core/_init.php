@@ -26,7 +26,7 @@ function setupConfig() {
 	$directories['core'] = $directories['system'] . 'core/';
 	$directories['systemFields'] = $directories['system'] . 'fields/';
 	$directories['systemTemplates'] = $directories['system'] . 'templates/';
-	$directories['fieldtypes'] = $directories['system'] . 'fieldtypes/';
+	$directories['fieldtypes'] = $directories['system'] . 'plugins/fieldtypes/';
 
 
 	if(isset($_SERVER['HTTP_HOST'])) {

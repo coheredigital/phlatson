@@ -1,6 +1,6 @@
-<?php include '_head.inc' ?>
+<?php include 'includes/head.inc' ?>
 <div class="container">
 	<!-- PAGE CONTENT -->
 	<?= $page->content ?>
 </div>
-<?php include '_foot.inc'; ?>
+<?php include 'includes/foot.inc'; ?>

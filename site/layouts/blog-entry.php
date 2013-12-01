@@ -1,8 +1,8 @@
-<?php include '_head.inc' ?>
+<?php include 'includes/head.inc' ?>
 
 <div class="container">
 	<?= $page->content ?>
 	<?= $page->markdown ?>
 </div>
 <?php 
-include '_foot.inc'; ?>
+include 'includes/foot.inc'; ?>

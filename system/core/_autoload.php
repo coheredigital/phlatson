@@ -1,23 +1,28 @@
 <?php
 
-
-
 /**
  * class autoloader
  * Handles dynamic loading of classes as registered with spl_autoload_register
  */
 
-spl_autoload_register('setupClassLoader');
-function setupClassLoader($className) {
 
-	// find a more consistent method of moving through the posible lovations of classes, maybe a facory class for fieldtype or plugins
+spl_autoload_register('classLoader');
+function classLoader($className) {
 
-	$coreFile = ROOT_PATH."system/core/{$className}.php";
-	$pluginFile = ROOT_PATH."system/plugins/{$className}.php";
-	$fieldFile = ROOT_PATH."system/fieldtypes/{$className}/{$className}.php";
 
-	if(is_file($coreFile)) require_once($coreFile);
-	elseif(is_file($pluginFile)) require_once($pluginFile);
-	elseif(is_file($fieldFile)) require_once($fieldFile);
+	$namespace = str_replace("\\",DIRECTORY_SEPARATOR,__NAMESPACE__);
+    $className = str_replace("\\",DIRECTORY_SEPARATOR,$className);
+
+    $systemPath = ROOT_PATH."system".DIRECTORY_SEPARATOR."core".DIRECTORY_SEPARATOR;
+    $fieldtypePath = ROOT_PATH."system".DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR."fieldtypes".DIRECTORY_SEPARATOR.$className.DIRECTORY_SEPARATOR;
+    $namespacePath = empty($namespace) ? "" : $namespace.DIRECTORY_SEPARATOR;
+
+    $coreClass = "{$systemPath}{$namespacePath}{$className}.php";
+    $fieldtype = "{$fieldtypePath}{$namespacePath}{$className}.php";
+
+    // var_dump($fieldtype);
+
+    if(is_file($coreClass)) require_once($coreClass);
+    elseif(is_file($fieldtype)) require_once($fieldtype);
 
 }
