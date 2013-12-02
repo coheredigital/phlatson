@@ -163,13 +163,20 @@ class Page extends DataObject{
 
 	public function get($name){
 		switch ($name) {
-
+			// first pass a few request that we dont want passed to "getFormatted() method"
+			// handled by parent
+			case 'name':
+			case 'directory':
+			case 'requests':
+			case 'template':
+				return parent::get($name);
+				break;
 			case 'children':
 				return $this->children();
 				break;
 			case 'parent':
 				return $this->parent();
-				break;
+				break;			
 			case 'rootParent':
 				return $this->rootParent();
 				break;
@@ -191,14 +198,12 @@ class Page extends DataObject{
 				return $layout ? (string) $layout : null;
 				break;
 			default:
-				$value = $this->formatField($name);
+				$value = $this->getFormatted($name);
+				return $value ? $value : parent::get($name);
 				break;
 		}
-		if ($value) return $value;
-		return parent::get($name);		
+		
 	}
-	//  get the value that is ready for editing / may be replaced by get unformatted later
-
 
 	public function set($name, $value){
 		if ($this->data->{$name}) {

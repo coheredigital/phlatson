@@ -68,10 +68,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 				return $this->getTemplate();
 				break;
 			default:
-				return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
+				return $this->getUnformatted($name);
 				break;
 		}
-		return $value;
 	}
 
 	// for now basically an XPATH alias
@@ -199,30 +198,34 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	public function getEditable($name){
-		$value = $this->formatField($name, "edit");
+		$value = $this->getFormatted($name, "edit");
 		return $value;
 	}
 
 
-	protected function formatField($name, $type = "output"){
-
+	protected function getFormatted($name, $type = "output"){
+		// var_dump($name);
 		$field = new Field($name);
 
-		$value = $this->{$name};
+		$value = $this->getUnformatted($name);
 		if (!$value) return false; // return false if node doesn't exist
 
 
 		// find the corresponding field file and retrieve relevant settings
 		$fieldClassname = (string) $field->fieldtype;
-		$fieldFormat = (string) $field->format;
+
 
 		if ($fieldClassname) {
-			$fieldtype = new $fieldClassname( );
-			// $value = $fieldtype->outputFormat( $value, $fieldFormat);
+			$fieldtype = new $fieldClassname( $field );
 			$value = $fieldtype->format( $value, $type );
 		}
 
 		return $value;
+	}
+
+	protected function getUnformatted($name){
+		if (!$this->data || !$this->data->getElementsByTagName($name)) return null;
+		return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
 	}
 
 	public function __set($name, $value){

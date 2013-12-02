@@ -2,12 +2,13 @@
 
 abstract class Fieldtype extends DataObject{
 	protected $attributes = array();
+	protected $field;
+	// contains defaults settings and there defaults values
+	// can be extended by other Fieldtypes
+	protected $settings = array();
 
-// contains defaults settings and there defaults values
-// can be extended by other Fieldtypes
-protected $settings = array();
-
-	public function __construct(){
+	public function __construct(Field $field){
+		$this->field = $field;
 
 		$this->set('label', '');
 		$this->set('columns', 12);
@@ -46,7 +47,7 @@ protected $settings = array();
 		return $value;
 	}
 
-	public function outputFormat($value, $format = false){
+	public function outputFormat($value){
 		return $value;
 	}
 
