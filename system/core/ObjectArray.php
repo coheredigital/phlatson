@@ -1,29 +1,36 @@
 <?php
 
 abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
-
 	
-	// 'name' => 'value' 	pairing of available fields
-	// 'name' => 'path'
 	public $data = array();
 	protected $count;
-	// the folder within the site and sytem paths to check for items ex: fields, templates, etc
-	protected $dataFolder;
-	protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
 
+	// the folder within the site and sytem paths to check for items ex: fields, templates, etc
+	protected $root;
+	protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
+	protected $allowRootRequest = false;
 	// used to identify the singular version of the reperesent array 
 	// Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
 	protected $singularName;
 
+	// status flags
+	protected $dataLoaded = false;
+
+
+	final public function __construct(){
+		$this->data = $this->getList();
+	}
+
 
 	// load availabe objects into $data array()
-	protected function load(){
-		if ($this->dataFolder) {
-			$array = glob($this->api('config')->paths->site.$this->dataFolder."*", GLOB_ONLYDIR);
+	protected function getList(){
+		if ($this->root) {
+			$array = glob($this->api('config')->paths->site.$this->root."*", GLOB_ONLYDIR);
 			if ($this->checkSystem) {
-				$array2 = glob($this->api('config')->paths->system.$this->dataFolder."*", GLOB_ONLYDIR);
+				$array2 = glob($this->api('config')->paths->system.$this->root."*", GLOB_ONLYDIR);
 				$array = array_merge($array,$array2);
 			}
+
 
 			// assign key => value pairs
 			$dataArray = array();
@@ -32,9 +39,11 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 				$dataArray["$name"] = $path;
 			}
 
-			$this->data = $dataArray;
+			return $dataArray;
+
 		}
-		else $this->data = null;
+		
+		return null;
 	}
 
 
@@ -47,6 +56,8 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 	}
 
 	public function all(){
+
+
 		$array = array();
 		foreach ($this->data as $key => $value) {
 			$array[] = new $this->singularName($key, $value);
@@ -59,19 +70,14 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 	}
 
 	public function get($name) {
+
 		if(is_object($name)) $name = (string) $name; // stringify $object
-		if(isset($this->data[$name])) {
-			$path = $this->data[$name];
-			$className = $this->singularName;
-			if ($checkSystem) { // if the check system flag is set we should pass $name and $path of object
-				$object = new $className($name,$path);
-			}
-			else{
-				$object = new $className($name);
-			}
-			
-			return $object;
-		}
+
+		if(!$this->data[$name] && !$this->allowRootRequest) return false;
+		// var_dump($path);
+		$object = new $this->singularName($name);
+		return $object;
+		
 		return false;
 	}
 

@@ -19,7 +19,7 @@ abstract class Core{
 		self::api('input', new Input());
 		self::api('session', new Session());
 		self::api('files', new Files());
-		// self::api('user', new User());
+		self::api('users', new Users());
 	}
 
 	// method to get reference to chache api class
@@ -41,7 +41,9 @@ abstract class Core{
 	}
 
 	public static function setApi($name, $value){
-		if (!isset(self::$apis[$name])) self::$apis[$name] = $value;
+		// if (!isset(self::$apis[$name]))
+			self::$apis[$name] = $value;
 	}
+
 
 }

@@ -1,13 +1,10 @@
 <?php
 
 
-class Pages {
+class Pages extends ObjectArray{
 
-
-
-	public function get($url){
-		$page = new Page($url);
-		return $page;
-	}
+	protected $allowRootRequest = true; // allows a "root" or null request to check for a data file in the "root"
+	protected $root = "pages/";
+	protected $singularName = "Page";
 
 }

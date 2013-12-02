@@ -1,6 +1,6 @@
 <?php
 
-class Session implements IteratorAggregate{
+class Session extends Core implements IteratorAggregate{
 
 	public $className;
 
@@ -38,27 +38,10 @@ class Session implements IteratorAggregate{
 		return $this->set($key, $value); 
 	}
 
-
 	public function className() {
 		if(!$this->className) $this->className = get_class($this);
 		return $this->className;
 	}
-
-	public function getIP($int = false) {
-		if(is_null($this->ip)) { 
-			if(!empty($_SERVER['HTTP_CLIENT_IP'])) $ip = $_SERVER['HTTP_CLIENT_IP']; 
-				else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-				else if(!empty($_SERVER['REMOTE_ADDR'])) $ip = $_SERVER['REMOTE_ADDR']; 
-				else $ip = '';
-			$ip = ip2long($ip);
-			$this->ip = $ip;
-		} else {
-			$ip = $this->ip; 
-		}
-		if(!$int) $ip = long2ip($ip);
-		return $ip;
-	}
-
 
 	public function redirect($url, $permanent = true) {
 
@@ -74,8 +57,20 @@ class Session implements IteratorAggregate{
 	}
 
 
-	public function login($name,$pass){
-		// ....
+	public function login($name, $pass) {
+
+		// should sanitize name
+		$user = $this->api('users')->get("$name"); 
+		if (!$user instanceof User) return null;
+		if($user->pass == $pass) { 
+			session_regenerate_id(true);
+			$this->set('_user_name', $user->name); 
+			$this->set('_user_time', time());
+			$this->setApi('user', $user); 
+			return $user; 
+		}
+
+		return null; 
 	}
 
 	public function logout(){

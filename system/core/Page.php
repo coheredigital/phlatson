@@ -2,7 +2,7 @@
 
 
 class Page extends DataObject{
-	protected $dataFolder = "content/";
+	protected $dataFolder = "pages/";
 
 	function __construct($url = false){
 		

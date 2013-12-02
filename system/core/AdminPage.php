@@ -17,7 +17,7 @@ class AdminPage extends Page{
 		array_shift($this->urlRequest);
 
 
-		$this->path = $this->api('config')->paths->admin."content/".$this->directory.DIRECTORY_SEPARATOR;
+		$this->path = $this->api('config')->paths->admin."pages/".$this->directory.DIRECTORY_SEPARATOR;
 		$this->data = $this->getXML();
 	}
 

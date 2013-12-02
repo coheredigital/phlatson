@@ -2,12 +2,7 @@
 
 
 class User extends DataObject{
-
-	public $name = "guest";
-
-	protected function setBasePath(){
-		return $this->api('config')->paths->users;
-	}
+	protected $dataFolder = "users/";
 
 	public function isLoggedin(){
 		if ($user->name == "guest") return false;
