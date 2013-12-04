@@ -17,9 +17,10 @@ abstract class Core{
 		self::api('templates', new Templates());
 		self::api('pages', new Pages());
 		self::api('input', new Input());
+		self::api('users', new Users());
 		self::api('session', new Session());
 		self::api('files', new Files());
-		self::api('users', new Users());
+		
 	}
 
 	// method to get reference to chache api class

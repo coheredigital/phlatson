@@ -7,4 +7,10 @@ class Users extends ObjectArray{
 	protected $singularName = "User";
 
 
+
+	public function setActiveUser(User $user){
+		$this->currentUser = $user; 
+		$this->api('user', $user); 
+	}
+
 }

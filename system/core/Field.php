@@ -5,7 +5,7 @@ class Field extends DataObject{
 	protected $attributes = array();
 
 
-	public function type(){
+    public function type(){
 		// var_dump($this->data->saveHTML());
 		// print($this->data->saveHTML());
 
