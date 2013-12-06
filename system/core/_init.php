@@ -103,12 +103,12 @@ $config = setupConfig();
 
 try {
 	Core::init($config);
-	
 
-	foreach (Core::apiList() as $name => $classObject) {
-		if ($name == "config" || $name == "page") continue; // skip $config, it is already set
-		${$name} = $classObject;
+	foreach (Core::api() as $name => $object) {
+		if ($name === "config" || $name === "page") continue; // skip $config, it is already set
+		else ${$name} = $object;
 	}
+
 	$page = new Page($input->url);
 
 } catch (Exception $e) {

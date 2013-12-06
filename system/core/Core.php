@@ -8,7 +8,9 @@ Core class to connect most other system classes, stores system wide api variable
 
 abstract class Core{
 
-	private static $apis = array();
+	// private static $apis = array();
+	protected static $registry = null;
+
 
 	/*Init function sets up default variables and other tasks*/
 	public static function init(Config $config){
@@ -20,30 +22,24 @@ abstract class Core{
 		self::api('users', new Users());
 		self::api('session', new Session());
 		self::api('files', new Files());
-		
 	}
 
 	// method to get reference to chache api class
 	// if $value provide, use as a "setter"
-	public static function api($name, $object = null){
-
-		if (isset(self::$apis[(string) $name])) return self::$apis[(string) $name];
-		// if an object is passed, try to set it unless it already exists
-		if (!isset(self::$apis[$name]) && !is_null($object)){
+	public static function api($name = null, $object = null){
+		if (!isset(self::$registry)) self::$registry = new Registry();
+		if (is_null($name)) return self::$registry;
+		if (is_null($object)) {
+			return self::$registry->get($name);
+		}
+        else if (!is_null($object)){
 			self::setApi($name, $object);	
 		}
 	}
 
-	/*
-	return $apis array;
-	*/
-	public static function apiList(){
-		return new ArrayObject(self::$apis);
-	}
-
 	public static function setApi($name, $value){
-		// if (!isset(self::$apis[$name]))
-			self::$apis[$name] = $value;
+		if (!isset(self::$registry)) self::$registry = new Registry();
+		self::$registry->set($name, $value);
 	}
 
 
