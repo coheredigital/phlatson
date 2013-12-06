@@ -224,8 +224,24 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 	protected function getUnformatted($name){
+		// no existing data or valid element return null
 		if (!$this->data || !$this->data->getElementsByTagName($name)) return null;
-		return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
+		else{
+			if ($this->data->getElementsByTagName($name) instanceof DOMNodeList) {
+				$nodeList = $this->data->getElementsByTagName($name)->item(0);
+
+				$array = array();
+				foreach($nodeList as $node){
+				    $array[] = $node;
+				}
+				return $nodeList->nodeValue;
+				// return $array;
+			}
+			else{
+				return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
+			}
+		}
+		
 	}
 
 	public function __set($name, $value){

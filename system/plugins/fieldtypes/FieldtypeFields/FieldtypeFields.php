@@ -14,9 +14,6 @@ class FieldtypeFields extends Fieldtype{
 
 
 	public function saveFormat($name, $value){
-
-		var_dump($name);
-
 		$dom = new DomDocument;
 		$root = $dom->createElement($name);
 		foreach ($value as $key => $value) {
@@ -26,13 +23,13 @@ class FieldtypeFields extends Fieldtype{
 		}	
 		$dom->appendChild($root);
 		return $dom->documentElement;
-
 	}
 
 
 	protected function renderInput(){
 
 		$attributes = $this->getAttributes();
+		var_dump($this->value);
 		foreach ($this->value as $field) {
 
 			$columns = trim($field->attributes('col'));

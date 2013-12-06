@@ -70,13 +70,6 @@ abstract class Fieldtype extends DataObject{
 
 
 	protected function setup(){}
-
-	public function setupBasic($name, $value, $label = ""){
-		$this->name = $name;
-		$this->label = $label ? $label : $name;
-		$this->value = $value;
-	}
-
 	protected function addStyles(){}
 	protected function addScripts(){}
 

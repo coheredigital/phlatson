@@ -2,13 +2,13 @@
 
 class Session extends Core implements IteratorAggregate{
 
-	public $className;
+
 
 	function __construct(){
 
 		@session_start();
 		unregister_GLOBALS();
-		$className = $this->className();
+
 
 		if(empty($_SESSION[$className])) $_SESSION[$className] = array();
 
@@ -34,7 +34,7 @@ class Session extends Core implements IteratorAggregate{
 	 * @return string, array, int
 	 */
 	public function get($key) {
-		$className = $this->className();
+		$className = $this->className;
 		return isset($_SESSION[$className][$key]) ? $_SESSION[$className][$key] : null; 
 	}
 
@@ -56,11 +56,6 @@ class Session extends Core implements IteratorAggregate{
 	}
 	public function __set($key, $value) {
 		return $this->set($key, $value); 
-	}
-
-	public function className() {
-		if(!$this->className) $this->className = get_class($this);
-		return $this->className;
 	}
 
 	public function redirect($url, $permanent = true) {

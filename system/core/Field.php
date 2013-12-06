@@ -11,7 +11,7 @@ class Field extends DataObject{
 
 		if ($this->fieldtype) {
 			$name = $this->fieldtype;
-			$fieldtype = new $name;
+			$fieldtype = new $name($this);
 		}
 		return $fieldtype;
 	}

@@ -45,7 +45,7 @@ class EditForm {
 				$fieldtype = $field->type();
 				$fieldtype->set('label', $field->label);
 				$fieldtype->name = $field->name;
-				$fieldtype->set('value',$this->page->getEditable("$field"));
+				$fieldtype->set('value',$this->page->getEditable($field));
 				$fieldtype->set('columns',$fieldColumns);
 				$formFields .= $fieldtype->render();
 
