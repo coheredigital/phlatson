@@ -76,8 +76,10 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	// for now basically an XPATH alias
 	public function find($name){
 
-		$xpath = new DOMXPath($this->data);
-		return $xpath->query($name);
+		return $this->data->xpath("$name");
+
+		// $xpath = new DOMXPath($this->data);
+		// return $xpath->query($name);
 
 		// return $this->data->getElementsByTagName($name);
 		// return $this->data->xpath("$name");
@@ -98,14 +100,25 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	protected function getXML(){
 
 		if (is_file($this->path.DataObject::DATA_FILE)) {
-			$dom = new DomDocument();
-			$dom->formatOutput = true;
-			$dom->preserveWhiteSpace = false;
-			$dom->load($this->path.DataObject::DATA_FILE);
-			return $dom;
+			return simplexml_load_file($this->path.DataObject::DATA_FILE);
 		}
 		return null;
-	}
+	}	
+
+	/**
+	 * Load XML file into data object for access and reference
+	 */
+	// protected function getXML(){
+
+	// 	if (is_file($this->path.DataObject::DATA_FILE)) {
+	// 		$dom = new DomDocument();
+	// 		$dom->formatOutput = true;
+	// 		$dom->preserveWhiteSpace = false;
+	// 		$dom->load($this->path.DataObject::DATA_FILE);
+	// 		return $dom;
+	// 	}
+	// 	return null;
+	// }
 
 
 	protected function createUrl($array){
@@ -133,7 +146,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public function getTemplate(){
 		// $templateName = $this->data->template;
-		$templateName = $this->data->getElementsByTagName("template")->item(0)->nodeValue;
+		$templateName = $this->data->template;
 		// var_dump($templateName);
 		if ($templateName) {
 			$template = new Template($templateName);
@@ -198,6 +211,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	public function getEditable($name){
+		if (is_object($name)) $name = (string) $name;
 		$value = $this->getFormatted($name, "edit");
 		return $value;
 	}
@@ -225,22 +239,31 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	protected function getUnformatted($name){
 		// no existing data or valid element return null
-		if (!$this->data || !$this->data->getElementsByTagName($name)) return null;
-		else{
-			if ($this->data->getElementsByTagName($name) instanceof DOMNodeList) {
-				$nodeList = $this->data->getElementsByTagName($name)->item(0);
 
-				$array = array();
-				foreach($nodeList as $node){
-				    $array[] = $node;
-				}
-				return $nodeList->nodeValue;
-				// return $array;
-			}
-			else{
-				return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
-			}
-		}
+		return $this->data->$name;
+
+		// if (!$this->data || !$this->data->getElementsByTagName($name)) return null;
+		// else{
+
+		// 	$node = $this->data->getElementsByTagName($name)->item(0);
+		// 	Helpers::dump_node($node);
+
+		// 	var_dump($node);
+
+		// 	if ($count > 0) {			
+		// 		$nodeList = $this->data->getElementsByTagName($name);
+
+		// 		$array = array();
+		// 		foreach($nodeList as $node){
+		// 		    $array[] = $node;
+		// 		}
+		// 		// return $nodeList->nodeValue;
+		// 		return $array;
+		// 	}
+		// 	else{
+		// 		return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
+		// 	}
+		// }
 		
 	}
 

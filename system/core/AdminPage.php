@@ -32,7 +32,7 @@ class AdminPage extends Page{
 				break;
 			case 'layout':
 				$path = $this->api('config')->paths->admin."layouts/";
-				$file = $this->data->getElementsByTagName($name)->item(0)->nodeValue.".php";
+				$file = $this->data->$name.".php";
 				return $path.$file;
 				break;
 			default:
