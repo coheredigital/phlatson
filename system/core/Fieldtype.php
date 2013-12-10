@@ -15,6 +15,7 @@ abstract class Fieldtype extends DataObject{
 
 		$this->attribute('class', 'field-input '.$this->className);
 
+
 		$this->setup();
 		$this->addStyles();
 		$this->addScripts();

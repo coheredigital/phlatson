@@ -27,11 +27,24 @@ class FieldtypeSelect extends Fieldtype{
 
 	}
 
+
+	protected function setup(){
+		$options = $this->field->settings->options->children();
+
+
+		foreach ($options as $option) {
+
+			$key = $option["value"];
+			$this->selectOptions["$option"] = "$option";
+		}
+		var_dump($this->selectOptions);
+	}
+
 	protected function getOptions(){
 		$output = "";
-		foreach ($this->selectOptions as $name => $value) {
+		foreach ($this->selectOptions as $key => $value) {
 			$selected = $this->value == $value ? "selected='selected'" : null;
-			$output .= "<option {$selected} value='{$value}'>{$name}</option>";
+			$output .= "<option {$selected} value='{$value}'>{$key}</option>";
 		}
 		return $output;
 	}

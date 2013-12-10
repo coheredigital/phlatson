@@ -47,7 +47,6 @@ class EditForm {
 				$fieldtype->name = $field->name;
 
 				$value = $this->page->get($field);
-				// var_dump($value);
 
 				$fieldtype->set('value',$value);
 				$fieldtype->set('columns',$fieldColumns);

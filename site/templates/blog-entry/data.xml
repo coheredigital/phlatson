@@ -5,8 +5,9 @@
   <fields>
     <field col="9">title</field>
     <field col="3">author</field>
-    <field col="2">published</field>
-    <field col="10">content</field>
+    <field col="3">published</field>
+    <field col="9">content</field>
     <field col="12">markdown</field>
+    <field col="12">tags</field>
   </fields>
 </root>
