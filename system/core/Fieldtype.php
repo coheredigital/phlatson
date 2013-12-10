@@ -20,13 +20,20 @@ abstract class Fieldtype extends DataObject{
 		$this->addScripts();
 	}
 
-	// alias for the three available formatting methods, allows passing of type, can auto determing required method
+	/**
+	 * alias for the three available formatting methods, 
+	 * allows passing of type, can auto determing required method
+	 * @param  mixed $value raw value from SimpleXML object
+	 * @param  string $type  
+	 * @return mixed        determined by fieldtype object
+	 */
 	public function format($value, $type = "output"){
 
 		switch ($type) {
 			case 'output':
 				return $this->outputFormat($value);
 				break;
+			case 'raw':
 			case 'edit':
 				return $this->editFormat($value);
 				break;
@@ -34,14 +41,14 @@ abstract class Fieldtype extends DataObject{
 				return $this->saveFormat($value);
 				break;
 			default:
-				return false;
+				return null;
 				break;
 		}
 
 	}
 
 	public function editFormat($value){
-		return $value;
+		return (string) $value;
 	}
 
 	public function outputFormat($value){

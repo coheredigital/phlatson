@@ -205,7 +205,8 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		// find the corresponding field file and retrieve relevant settings
 		$fieldClassname = (string) $field->fieldtype;
 
-		$value = $this->getUnformatted("$name");
+		$value = $this->data->{$name};
+
 		if (!$value) return false; // return false if node doesn't exist
 
 
@@ -223,18 +224,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 * @return mixed
 	 */
 	public function getUnformatted($name){
-
-		if (!$this->data) return null;
-		else{
-			$field = $this->api("fields")->get("$name");
-			if ($field) {
-				$fieldClass = (string) $field->fieldtype;
-			}
-			
-			// get the field object matching the passed "$name"
-			$value = $this->data->{$name};
-			return $value;
-		}
+		return $this->getFormatted($name, "raw");
 	}
 
 

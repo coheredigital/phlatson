@@ -30,9 +30,9 @@ class FieldtypeFields extends Fieldtype{
 
 		$attributes = $this->getAttributes();
 		$fields = $this->value;
-		foreach ($fields as $name) {
-			$field = new Field("$name");
-			
+		foreach ($fields as $field) {
+
+
 
 			$columns = trim($field->attributes('col'));
 

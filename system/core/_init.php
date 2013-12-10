@@ -66,7 +66,7 @@ function setupConfig() {
 	 */
 	if($config->debug) {
 		error_reporting(E_ALL ^ E_NOTICE);
-		error_reporting(E_ALL);
+		// error_reporting(E_ALL);
 		ini_set('xdebug.var_display_max_depth', '10');
 		ini_set('display_errors', 1);
 	} else {

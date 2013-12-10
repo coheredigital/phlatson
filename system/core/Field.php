@@ -4,19 +4,27 @@ class Field extends DataObject{
 	protected $dataFolder = "fields/";
 	protected $attributes = null;
 
-
+	/**
+	 * retrieves the filedtype object associated with "$this" field
+	 * @return Fieldtype 
+	 */
     public function type(){
-		if ($this->fieldtype) {
+		if ($this->data->fieldtype) {
 
-			$name = (string) $this->fieldtype;
+			$name = (string) $this->data->fieldtype;
 			$fieldtype = new $name($this);
-
 
 			return $fieldtype;
 		}
 		return null;
 	}
 
+	/**
+	 * get/set field attributes
+	 * @param  string $key
+	 * @param  mixed $value optional
+	 * @return mixed        
+	 */
 	public function attributes($key, $value = null){
 		if (isset($value)) {
 			$this->attributes["$key"] = $value;
@@ -26,6 +34,7 @@ class Field extends DataObject{
 
 	public function get($name){
 		switch ($name) {
+			case 'fieldtype':
 			case 'type':
 				return $this->type();
 				break;
