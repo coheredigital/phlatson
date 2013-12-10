@@ -29,10 +29,8 @@ class FieldtypeFields extends Fieldtype{
 	protected function renderInput(){
 
 		$attributes = $this->getAttributes();
-		$fields = $this->value;
-		foreach ($fields as $field) {
 
-
+		foreach ($this->value as $field) {
 
 			$columns = trim($field->attributes('col'));
 

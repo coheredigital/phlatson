@@ -198,8 +198,7 @@ class Page extends DataObject{
 				return $layout ? (string) $layout : null;
 				break;
 			default:
-				$value = $this->getFormatted($name);
-				return $value ? $value : parent::get($name);
+				return parent::get($name);
 				break;
 		}
 		

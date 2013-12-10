@@ -42,12 +42,12 @@ class EditForm {
 				$fieldColumns = $field->attributes('col');
 				$colCount += $fieldColumns;
 
-				$fieldtype = $field->type();
+				$fieldtype = $field->type;
 				$fieldtype->set('label', $field->label);
 				$fieldtype->name = $field->name;
 
 				$value = $this->page->get($field);
-				var_dump($value);
+				// var_dump($value);
 
 				$fieldtype->set('value',$value);
 				$fieldtype->set('columns',$fieldColumns);
@@ -63,11 +63,6 @@ class EditForm {
 
 				$group = $field;
 				$groupFields = $group->fields();
-
-				// need a method of rendering the group and each field with less spaghetti
-
-
-				// var_dump($groupFields);
 
 			}
 		}

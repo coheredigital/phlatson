@@ -47,12 +47,11 @@ abstract class Fieldtype extends DataObject{
 
 	}
 
-	public function editFormat($value){
+	protected function editFormat($value){
 		return (string) $value;
 	}
-
-	public function outputFormat($value){
-		return $value;
+	protected function outputFormat($value){
+		return (string) $value;
 	}
 
 

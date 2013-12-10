@@ -66,7 +66,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 				return $this->getTemplate();
 				break;
 			default:
-				return $this->getUnformatted($name);
+				return $this->getFormatted($name);
 				break;
 		}
 	}
@@ -188,31 +188,18 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 
-	public function getEditable($name){
-		if (is_object($name)) $name = (string) $name;
-		$value = $this->getFormatted($name, "edit");
-		return $value;
-	}
-
-
 	protected function getFormatted($name, $type = "output"){
 
 		// return null if data does not exist
-		if (!$this->data) return null;
+		if (!$this->data || !$this->data->{$name}) return null;
+
 
 		// get the field object fatching the passed "$name"
 		$field = $this->api("fields")->get("$name");
-		// find the corresponding field file and retrieve relevant settings
-		$fieldClassname = (string) $field->fieldtype;
 
 		$value = $this->data->{$name};
-
-		if (!$value) return false; // return false if node doesn't exist
-
-
-		if ($fieldClassname) {
-			$fieldtype = new $fieldClassname( $field );
-			$value = $fieldtype->format( $value, $type );
+		if ($field->type) {
+			$value =  $field->type->format( $value,"$type" );
 		}
 
 		return $value;
