@@ -2,9 +2,10 @@
 
 abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
-	private $name;
+	// private $name;
 	public $path;
 	protected $data;
+	
 	private $className = null;
 
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
@@ -21,7 +22,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		$this->urlRequest = $this->getUrlRequest($url);
 
 		$lastRequestIndex = count($this->urlRequest)-1;
-		$this->name = $this->urlRequest[$lastRequestIndex] ? (string) $this->urlRequest[$lastRequestIndex] : "home";
+
 
 		$sitePath = realpath($this->api('config')->paths->site.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
 		$systemPath = realpath($this->api('config')->paths->system.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
@@ -46,9 +47,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			if (!isset($this->className)) $this->className = get_class($this);
 			return $this->className;	
 		}
-
 		return $this->get($name);
 	}
+
 	public function get($name){
 		switch ($name) {
 			case 'name':
@@ -75,14 +76,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	// for now basically an XPATH alias
 	public function find($name){
-
 		return $this->data->xpath("$name");
-
-		// $xpath = new DOMXPath($this->data);
-		// return $xpath->query($name);
-
-		// return $this->data->getElementsByTagName($name);
-		// return $this->data->xpath("$name");
 	}
 
 
@@ -99,26 +93,14 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 */
 	protected function getXML(){
 
-		if (is_file($this->path.DataObject::DATA_FILE)) {
-			return simplexml_load_file($this->path.DataObject::DATA_FILE);
+		$file = $this->path.DataObject::DATA_FILE;
+
+		if (is_file($file)) {
+			return simplexml_load_file($file);
 		}
 		return null;
 	}	
 
-	/**
-	 * Load XML file into data object for access and reference
-	 */
-	// protected function getXML(){
-
-	// 	if (is_file($this->path.DataObject::DATA_FILE)) {
-	// 		$dom = new DomDocument();
-	// 		$dom->formatOutput = true;
-	// 		$dom->preserveWhiteSpace = false;
-	// 		$dom->load($this->path.DataObject::DATA_FILE);
-	// 		return $dom;
-	// 	}
-	// 	return null;
-	// }
 
 
 	protected function createUrl($array){
@@ -239,31 +221,21 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	protected function getUnformatted($name){
 		// no existing data or valid element return null
-
-		return $this->data->$name;
-
-		// if (!$this->data || !$this->data->getElementsByTagName($name)) return null;
-		// else{
-
-		// 	$node = $this->data->getElementsByTagName($name)->item(0);
-		// 	Helpers::dump_node($node);
-
-		// 	var_dump($node);
-
-		// 	if ($count > 0) {			
-		// 		$nodeList = $this->data->getElementsByTagName($name);
-
-		// 		$array = array();
-		// 		foreach($nodeList as $node){
-		// 		    $array[] = $node;
-		// 		}
-		// 		// return $nodeList->nodeValue;
-		// 		return $array;
-		// 	}
-		// 	else{
-		// 		return $this->data->getElementsByTagName($name)->item(0)->nodeValue;
-		// 	}
-		// }
+		$element = $this->data->{$name};
+			
+		if (!$this->data || !$element) return null;
+		else{
+			if (count($element->children())) {
+				$array = array();
+				foreach ($element->children() as $key => $value) {
+					$array[] = $value;
+				}
+				$value = $array;
+			}
+			else $value = (string) $this->data->{$name};
+			var_dump($value);
+			return $value;
+		}
 		
 	}
 
@@ -273,39 +245,10 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public function set($name, $value){
 		if ($name && $value != "") {
-			// node we are attempting to find
-			$node = $this->data->getElementsByTagName($name)->item(0);
 
-			if (is_string($value) && isset($value)) {
-				
-				if ($node) {
-					$this->data->getElementsByTagName($name)->item(0)->nodeValue = $value;
-				}
-				else{
-					// create a node for the value with the requested name
-					$dom = new DOMDocument('1.0', 'utf-8');
-					$dom->formatOutput = true;
-
-					$node = $dom->createElement($name, $value);
-					$node = $this->data->importNode($node, true);
-					$this->data->documentElement->appendChild($node);
-				}
-				
-			}
-			else if($value instanceof DomElement){
-				// if node exists
-				if ($node) {
-					// replace children
-					$value = $this->data->importNode($value, true);
-					$this->data->documentElement->replaceChild($value, $node);
-				}
-				else{ // add a new node otherwise
-
-				}
-			}
 
 		}
-		return false;
+
 	}
 
 	// allows the data array to be counted directly

@@ -13,10 +13,7 @@ abstract class Fieldtype extends DataObject{
 		$this->set('label', '');
 		$this->set('columns', 12);
 
-
-		// $this->attribute('name', '');
 		$this->attribute('class', 'field-input '.$this->className);
-		// $this->attribute('id', '');
 
 		$this->setup();
 		$this->addStyles();
@@ -105,8 +102,6 @@ abstract class Fieldtype extends DataObject{
 		$string = "";
 
 		foreach ($this->attributes as $key => $value) {
-			// if ($key == "class") 
-			// 	$string .= $this->getInputClass();
 			$string .= "{$key}='$value' ";
 		}
 		return trim($string);

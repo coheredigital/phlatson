@@ -11,7 +11,7 @@ class EditForm {
 
 	public function __construct($dataObject){
 		$this->page = $dataObject;
-		$this->fields = $this->page->template->fields;
+		$this->fields = $dataObject->template->fields;
 
 	}
 
@@ -47,6 +47,7 @@ class EditForm {
 				$fieldtype->name = $field->name;
 
 				$value = $this->page->getEditable($field);
+
 
 				$fieldtype->set('value',$value);
 				$fieldtype->set('columns',$fieldColumns);

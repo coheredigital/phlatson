@@ -1,4 +1,4 @@
 <template>
-	<field col="6" >label</field>
-	<field col="6" >fieldtype</field>
+	<field col="5" >label</field>
+	<field col="7" >fieldtype</field>
 </template>

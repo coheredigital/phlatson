@@ -2,18 +2,19 @@
 
 class Field extends DataObject{
 	protected $dataFolder = "fields/";
-	protected $attributes = array();
+	protected $attributes = null;
 
 
     public function type(){
-		// var_dump($this->data->saveHTML());
-		// print($this->data->saveHTML());
-
 		if ($this->fieldtype) {
-			$name = $this->fieldtype;
+
+			$name = (string) $this->fieldtype;
 			$fieldtype = new $name($this);
+
+
+			return $fieldtype;
 		}
-		return $fieldtype;
+		return null;
 	}
 
 	public function attributes($key, $value = null){
