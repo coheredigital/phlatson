@@ -10,7 +10,7 @@ abstract class Core{
 
 	// private static $apis = array();
 	protected static $registry = null;
-
+	private $className = null;
 
 	/*Init function sets up default variables and other tasks*/
 	public static function init(Config $config){
@@ -41,6 +41,14 @@ abstract class Core{
 		if (!isset(self::$registry)) self::$registry = new Registry();
 		self::$registry->set($name, $value);
 	}
+
+
+	public function className(){
+
+		if (!isset($this->className)) $this->className = get_class($this);
+		return $this->className;	
+
+	} 
 
 
 }

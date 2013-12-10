@@ -5,8 +5,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	// private $name;
 	public $path;
 	protected $data;
-	
-	private $className = null;
 
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
@@ -44,8 +42,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	public function __get($name){
 		// handle / cache class name request
 		if ($name == "className") {
-			if (!isset($this->className)) $this->className = get_class($this);
-			return $this->className;	
+			return $this->className();	
 		}
 		return $this->get($name);
 	}
@@ -129,7 +126,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	public function getTemplate(){
 		// $templateName = $this->data->template;
 		$templateName = $this->data->template;
-		// var_dump($templateName);
 		if ($templateName) {
 			$template = new Template($templateName);
 		}
@@ -200,15 +196,17 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 	protected function getFormatted($name, $type = "output"){
-		// var_dump($name);
-		$field = new Field($name);
 
-		$value = $this->getUnformatted($name);
-		if (!$value) return false; // return false if node doesn't exist
+		// return null if data does not exist
+		if (!$this->data) return null;
 
-
+		// get the field object fatching the passed "$name"
+		$field = $this->api("fields")->get("$name");
 		// find the corresponding field file and retrieve relevant settings
 		$fieldClassname = (string) $field->fieldtype;
+
+		$value = $this->getUnformatted("$name");
+		if (!$value) return false; // return false if node doesn't exist
 
 
 		if ($fieldClassname) {
@@ -219,25 +217,26 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return $value;
 	}
 
-	protected function getUnformatted($name){
-		// no existing data or valid element return null
-		$element = $this->data->{$name};
-			
-		if (!$this->data || !$element) return null;
+	/**
+	 * public alias for getFormatted($name, "raw")
+	 * @param  string $name
+	 * @return mixed
+	 */
+	public function getUnformatted($name){
+
+		if (!$this->data) return null;
 		else{
-			if (count($element->children())) {
-				$array = array();
-				foreach ($element->children() as $key => $value) {
-					$array[] = $value;
-				}
-				$value = $array;
+			$field = $this->api("fields")->get("$name");
+			if ($field) {
+				$fieldClass = (string) $field->fieldtype;
 			}
-			else $value = (string) $this->data->{$name};
-			var_dump($value);
+			
+			// get the field object matching the passed "$name"
+			$value = $this->data->{$name};
 			return $value;
 		}
-		
 	}
+
 
 	public function __set($name, $value){
 		return $this->set($name, $value);

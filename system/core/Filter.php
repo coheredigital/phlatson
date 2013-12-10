@@ -12,7 +12,6 @@ class Filter extends FilterIterator{
 
 		$this->filterValue = $filterValue;
 		$this->filterBy = $filterBy;
-		var_dump("$this->filterValue = $this->filterBy");
 	}
 
     function accept() {

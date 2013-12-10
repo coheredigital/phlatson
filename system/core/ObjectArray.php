@@ -73,8 +73,7 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 
 		if(is_object($name)) $name = (string) $name; // stringify $object
 
-		if(!$this->data[$name] && !$this->allowRootRequest) return false;
-		// var_dump($path);
+		if(!isset($this->data[$name]) && !$this->allowRootRequest) return false;
 		$object = new $this->singularName($name);
 		return $object;
 		

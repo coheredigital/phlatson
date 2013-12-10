@@ -10,7 +10,7 @@ class Session extends Core implements IteratorAggregate{
 		unregister_GLOBALS();
 
 
-		if(empty($_SESSION[$className])) $_SESSION[$className] = array();
+		// if(empty($_SESSION[$className])) $_SESSION[$className] = array();
 
 		if($username = $this->get('_user_name')) {
 			$user = $this->api('users')->get($username);
@@ -34,7 +34,7 @@ class Session extends Core implements IteratorAggregate{
 	 * @return string, array, int
 	 */
 	public function get($key) {
-		$className = $this->className;
+		$className = $this->className();
 		return isset($_SESSION[$className][$key]) ? $_SESSION[$className][$key] : null; 
 	}
 

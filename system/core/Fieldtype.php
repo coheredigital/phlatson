@@ -48,6 +48,7 @@ abstract class Fieldtype extends DataObject{
 		return $value;
 	}
 
+
 	/**
 	 * saveFormat should return type DomElement
 	 */
