@@ -3,15 +3,6 @@
 
 class FieldtypeTextarea extends Fieldtype{
 
-
-
-	
-
-	public function format($value, $format = false){
-//		$value = htmlspecialchars_decode($value);
-		return $value;
-	}
-
 	public function saveFormat($name, $value){
 
 		$dom =  new DomDocument;
@@ -23,7 +14,6 @@ class FieldtypeTextarea extends Fieldtype{
 		return $dom->documentElement;
 
 	}
-
 
 	protected function renderInput(){
 		$attributes = $this->getAttributes();

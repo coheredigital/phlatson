@@ -28,8 +28,7 @@ abstract class Fieldtype extends DataObject{
 	 * @param  string $type  
 	 * @return mixed        determined by fieldtype object
 	 */
-	public function format($value, $type = "output"){
-
+	final public function format($value, $type){
 		switch ($type) {
 			case 'output':
 				return $this->outputFormat($value);

@@ -17,8 +17,10 @@ class FieldtypeMarkdown extends FieldtypeTextarea{
 	// }
 
 
-	public function outputFormat($value, $format = false){
+	public function outputFormat($value){
+
 		$value = Parsedown::instance()->parse($value);
+
 		return $value;
 	}
 

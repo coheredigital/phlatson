@@ -1,15 +1,21 @@
-<page>
+<?xml version="1.0"?>
+<root>
 	<template>blog-entry</template>
-	<title>About the Team</title>
-	<author>Adam Spruijt</author>
-	<published>1383886800</published>
+  <title>About the Team</title>
+  <author>Adam Spruijt</author>
+  <published>0</published>
+  <content><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+			<ul>
+				<li>One</li>
+				<li>Four</li>
+				<li>Five</li>
+			</ul>
+			<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.</p>]]></content>
+  <markdown><![CDATA[##test markdown field
 
-	<content>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&lt;/p&gt;&#13;
-			&lt;ul&gt;&#13;
-				&lt;li&gt;One&lt;/li&gt;&#13;
-				&lt;li&gt;Four&lt;/li&gt;&#13;
-				&lt;li&gt;Five&lt;/li&gt;&#13;
-			&lt;/ul&gt;&#13;
-			&lt;p&gt;&#13;
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&lt;/p&gt;</content>
-</page>
+This should be **bold**
+
+this is a link  [RIGHT HERE](http://google.ca)]]></markdown>
+  <tags></tags>
+</root>

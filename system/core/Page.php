@@ -4,6 +4,7 @@
 class Page extends DataObject{
 	protected $dataFolder = "pages/";
 
+
 	function __construct($url = false){
 		
 

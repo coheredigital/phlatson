@@ -9,7 +9,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
 	protected $dataFile = "data.xml"; // what file name should be check for data
-
+	private $outputFormat = "output";
 	// what file name should be check for data
 	const DATA_FILE = "data.xml";
 
@@ -67,7 +67,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 				return $this->getTemplate();
 				break;
 			default:
-				return $this->getFormatted($name);
+				return $this->getFormatted($name, $this->outputFormat);
 				break;
 		}
 	}
@@ -122,9 +122,54 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		if ($templateName) {
 			$template = new Template($templateName);
 		}
-
 		return $template;
 	}
+
+
+
+
+	protected function getFormatted($name, $type){
+		// return null if data does not exist
+		if (!$this->data || !$this->data->{$name}) return null;
+
+		// get raw value
+		$rawValue = $this->data->{$name};
+
+		if ($rawValue) {
+			// get the field object fatching the passed "$name"
+			$field = $this->api("fields")->get("$name");
+			if (is_object($field)) {
+				$fieldtype = $field->type;
+			}
+
+
+			if (is_object($fieldtype)) {
+				$value = $fieldtype->format( $rawValue, $type );
+				return $value;
+			}
+
+		}
+	}
+
+	/**
+	 * sets the outputFormat to be used for get method
+	 * @param  string $name should match one of valid format optiona available (output, edit, raw, save)
+	 * @return [type]       [description]
+	 */
+	public function setFormat($name){
+		$this->outputFormat = $name;
+	}
+
+
+	/**
+	 * public alias for getFormatted($name, "raw")
+	 * @param  string $name
+	 * @return mixed
+	 */
+	public function getUnformatted($name){
+		return $this->getFormatted($name, "raw");
+	}
+
 
 
 	public function save($postData){
@@ -181,43 +226,13 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 
-	protected function getFormatted($name, $type = "output"){
-
-		// return null if data does not exist
-		if (!$this->data || !$this->data->{$name}) return null;
-
-
-		// get the field object fatching the passed "$name"
-		$field = $this->api("fields")->get("$name");
-
-		$value = $this->data->{$name};
-		if ($field->type) {
-			$value =  $field->type->format( $value,"$type" );
-		}
-
-		return $value;
-	}
-
-	/**
-	 * public alias for getFormatted($name, "raw")
-	 * @param  string $name
-	 * @return mixed
-	 */
-	public function getUnformatted($name){
-		return $this->getFormatted($name, "raw");
-	}
-
-
 	public function __set($name, $value){
 		return $this->set($name, $value);
 	}
 
 	public function set($name, $value){
 		if ($name && $value != "") {
-
-
 		}
-
 	}
 
 	// allows the data array to be counted directly

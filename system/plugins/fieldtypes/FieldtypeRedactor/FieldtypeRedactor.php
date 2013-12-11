@@ -11,15 +11,4 @@ class FieldtypeRedactor extends FieldtypeTextarea{
 		api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/{$this->className}.js");
 	}
 
-	
-
-	public function format($value, $format = false){
-		$value = htmlspecialchars_decode($value);
-		return $value;
-	}
-
-	// public function saveFormat($value){
-	// 	return $value;
-	// }
-
 }
