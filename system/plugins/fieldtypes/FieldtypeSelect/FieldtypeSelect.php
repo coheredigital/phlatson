@@ -19,7 +19,7 @@ class FieldtypeSelect extends Fieldtype{
 					$output .= "</label>";
 				$output .= "</div>";
 				$output .= "<div class='field-content'>";		
-					$output .= "<select {$attributes} name='{$name}' id='Input_{$name}'>{$options}</select>";	
+					$output .= "<select {$attributes} name='{$this->name}' id='Input_{$name}'>{$options}</select>";	
 				$output .= "</div>";		
 			$output .= "</div>";
 		$output .= "</div>";
@@ -29,15 +29,15 @@ class FieldtypeSelect extends Fieldtype{
 
 
 	protected function setup(){
-		$options = $this->field->settings->options->children();
+		$options = $this->field->settings->options;
+		if ($options) {
+			$options = $this->field->settings->options->children();
 
-
-		foreach ($options as $option) {
-
-			$key = $option["value"];
-			$this->selectOptions["$option"] = "$option";
+			foreach ($options as $option) {
+				$key = $option["value"];
+				$this->selectOptions["$option"] = "$option";
+			}
 		}
-		var_dump($this->selectOptions);
 	}
 
 	protected function getOptions(){

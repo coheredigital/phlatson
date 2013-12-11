@@ -131,7 +131,4 @@ abstract class Fieldtype extends DataObject{
 	}
 
 
-
-
-
 }

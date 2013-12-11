@@ -15,7 +15,8 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public $urlRequest = array();
 
-	function __construct($url){
+	function __construct($url)
+	{
 
 		$this->urlRequest = $this->getUrlRequest($url);
 
@@ -76,14 +77,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		return $this->data->xpath("$name");
 	}
 
-
-
-	/**
-	 * Return the "directory" for this object, sortof ID in this system
-	 */
-	public function __toString(){
-		return (string) $this->directory;
-	}
 
 	/**
 	 * Load XML file into data object for access and reference

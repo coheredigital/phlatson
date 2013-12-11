@@ -50,5 +50,8 @@ abstract class Core{
 
 	} 
 
+	public function __toString(){
+		return $this->className();
+	}
 
 }
