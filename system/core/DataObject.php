@@ -133,9 +133,9 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		if (!$this->data || !$this->data->{$name}) return null;
 
 		// get raw value
-		$rawValue = $this->data->{$name};
+		$value = $this->data->{$name};
 
-		if ($rawValue) {
+		if ($value) {
 			// get the field object fatching the passed "$name"
 			$field = $this->api("fields")->get("$name");
 			if (is_object($field)) {
@@ -143,12 +143,14 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			}
 
 
-			if (is_object($fieldtype)) {
-				$value = $fieldtype->format( $rawValue, $type );
-				return $value;
-			}
 
+			if (is_object($fieldtype)) { 
+				$value = $fieldtype->format( $value, $type );
+				
+			}
 		}
+
+		return $value;
 	}
 
 	/**
@@ -224,14 +226,13 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		unset($saver);
 	}
 
-
-
 	public function __set($name, $value){
 		return $this->set($name, $value);
 	}
 
 	public function set($name, $value){
 		if ($name && $value != "") {
+			$this->data->{$name} = $value;	
 		}
 	}
 

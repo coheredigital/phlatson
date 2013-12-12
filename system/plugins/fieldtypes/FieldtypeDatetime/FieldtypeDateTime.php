@@ -16,8 +16,7 @@ class FieldtypeDateTime extends Fieldtype{
 	}
 
 	public function editFormat($value){
-		var_dump($value);
-		var_dump($this->field->format);
+		$value = (int) $value; // convert value to int
 		$value = date($this->field->format, $value);
 		return $value;
 	}

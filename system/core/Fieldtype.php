@@ -9,6 +9,7 @@ abstract class Fieldtype extends DataObject{
 
 	public function __construct(Field $field){
 		$this->field = $field;
+		$this->data = new stdClass(); // create a stdClass to hold get and set request made by DataObject
 
 		$this->set('label', '');
 		$this->set('columns', 12);
@@ -115,13 +116,8 @@ abstract class Fieldtype extends DataObject{
 
 	}
 
-	public function get($name){
-		return $this->data["{$name}"];
-	}
 
-	public function set($key, $value){
-		$this->data["{$key}"] = $value;
-	}
+
 
 	public function attribute($key, $value = false){
 		if (!$value && isset($this->attributes["$key"])) return $this->attributes["$key"];
