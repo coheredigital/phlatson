@@ -15,7 +15,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public $urlRequest = array();
 
-	function __construct($url)
+	function __construct($url = null)
 	{
 
 		$this->urlRequest = $this->getUrlRequest($url);

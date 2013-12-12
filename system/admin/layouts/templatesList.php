@@ -2,24 +2,16 @@
 
 $templatesList = $templates->all();
 
-foreach ($templatesList as $template) {
-	$list .= "	<tr>
-					<td><a href='{$adminUrl}templates/edit/?name={$template->name}'>{$template->name}</a></td>
-					<td>{$template->label}</td>
-					<td>{$template->templatetype}</td>
-				</tr>";
+$table = $plugins->get("MarkupTable");
+$table->setColumns(array(
+		"Name" => "name", 
+		"Label" => "label" 
+	));
+
+foreach ($templatesList as $item) {
+	$table->addRow(array(
+		"name" => "<a href='{$adminUrl}templates/edit/?name={$item->name}' >{$item->name}</a>",
+		"label" => $item->label
+	));
 }
-
-
-$output = "<table>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Label</th>
-					<th>Feildtype</th>
-				</tr>
-			</thead>
-			<tbody>
-				{$list}
-			</tbody>
-		</table>";
+$output = $table->render();

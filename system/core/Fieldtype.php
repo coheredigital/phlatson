@@ -1,13 +1,13 @@
 <?php
 
-abstract class Fieldtype extends DataObject{
+abstract class Fieldtype extends Plugin{
 	protected $attributes = array();
 	protected $field;
 	// contains defaults settings and there defaults values
 	// can be extended by other Fieldtypes
 	protected $settings = array();
 
-	public function __construct(Field $field){
+	public function __construct(Field $field = null){
 		$this->field = $field;
 		$this->data = new stdClass(); // create a stdClass to hold get and set request made by DataObject
 

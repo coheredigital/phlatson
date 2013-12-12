@@ -8,6 +8,7 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 	// the folder within the site and sytem paths to check for items ex: fields, templates, etc
 	protected $root;
 	protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
+	protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
 	protected $allowRootRequest = false;
 	// used to identify the singular version of the reperesent array 
 	// Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
@@ -18,12 +19,12 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 
 
 	final public function __construct(){
-		$this->data = $this->getList();
+		$this->data = $this->getDataArray();
 	}
 
 
 	// load availabe objects into $data array()
-	protected function getList(){
+	protected function getDataArray(){
 		if ($this->root) {
 			$array = glob($this->api('config')->paths->site.$this->root."*", GLOB_ONLYDIR);
 			if ($this->checkSystem) {
@@ -47,6 +48,30 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 	}
 
 
+	protected function getFileList(){
+
+			$array = glob($this->api('config')->paths->site.$this->root."*", GLOB_ONLYDIR);
+			// add the values found in system folder 
+			if ($this->checkSystem) {
+				$array2 = glob($this->api('config')->paths->system.$this->root."*", GLOB_ONLYDIR);
+				$array = array_merge($array,$array2);
+			}
+
+
+			// assign key => value pairs
+			$dataArray = array();
+			foreach ($array as $path) {
+				$name = basename($path);
+				$dataArray["$name"] = $path;
+			}
+
+			return $dataArray;
+
+	}
+
+
+
+
 	public function __set($key, $value) {
 		$this->set($key, $value); 
 	}
@@ -57,10 +82,9 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 
 	public function all(){
 
-
 		$array = array();
 		foreach ($this->data as $key => $value) {
-			$array[] = new $this->singularName($key, $value);
+			$array[] = $this->$key;
 		}
 		return $array;
 	}

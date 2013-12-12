@@ -1,30 +1,19 @@
-
-
-
-
-
 <?php 
 
 $fieldsList = $fields->all();
 
-foreach ($fieldsList as $field) {
-	$list .= "	<tr>
-					<td><a href='{$adminUrl}fields/edit/?name={$field->name}'>{$field->name}</a></td>
-					<td>{$field->label}</td>
-					<td>{$field->fieldtype}</td>
-				</tr>";
+$table = $plugins->get("MarkupTable");
+$table->setColumns(array(
+		"Name" => "name", 
+		"Label" => "label",
+		"fieldtype" => "fieldtype",
+	));
+
+foreach ($fieldsList as $item) {
+	$table->addRow(array(
+		"name" => "<a href='{$adminUrl}templates/edit/?name={$item->name}' >{$item->name}</a>",
+		"label" => $item->label,
+		"fieldtype" => $item->fieldtype,
+	));
 }
-
-
-$output = "<table>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Label</th>
-					<th>Feildtype</th>
-				</tr>
-			</thead>
-			<tbody>
-				{$list}
-			</tbody>
-		</table>";
+$output = $table->render();

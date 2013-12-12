@@ -11,12 +11,12 @@ interface RecursiveSearch{
 
 // plugin interfaces
 
-interface Plugin {
+// interface Plugin {
 
-	// provides listing and other pages or modules with this modules info
-	public function getInfo();
+// 	// provides listing and other pages or modules with this modules info
+// 	public function getInfo();
 
-}
+// }
 
 interface ConfigurablePlugin {
 
