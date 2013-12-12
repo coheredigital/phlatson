@@ -11,8 +11,7 @@ abstract class Fieldtype extends Plugin{
 		$this->field = $field;
 		$this->data = new stdClass(); // create a stdClass to hold get and set request made by DataObject
 
-		$this->set('label', '');
-		$this->set('columns', 12);
+
 
 		$this->attribute('class', 'field-input '.$this->className);
 
@@ -20,6 +19,8 @@ abstract class Fieldtype extends Plugin{
 		$this->setup();
 		$this->addStyles();
 		$this->addScripts();
+
+		// parent::__construct();
 	}
 
 	/**

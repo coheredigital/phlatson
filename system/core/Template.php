@@ -29,6 +29,10 @@ class Template extends Fieldgroup{
 			case 'layout':
 				return $this->getLayout();
 				break;
+			case 'template':
+				$template = new Template("template");
+				return $template;
+				break;
 			default:
 				return parent::get($name);
 				break;

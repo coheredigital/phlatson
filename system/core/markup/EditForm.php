@@ -2,14 +2,14 @@
 
 class EditForm {
 	// array of field markup to be rendered
-	public $page;
+	public $dataObject;
 	public $formID;
 	public $fields = array();
 
 	public function __construct($dataObject){
-		$this->page = $dataObject;
+		$this->dataObject = $dataObject;
 		$this->fields = $dataObject->template->fields;
-		$this->page->setFormat("edit");
+		$this->dataObject->setFormat("edit");
 	}
 
 
@@ -27,6 +27,7 @@ class EditForm {
 		$formFields = "";
 
 
+		var_dump($this->dataObject->template);
 
 		foreach ($this->fields as $field) {
 			
@@ -45,7 +46,7 @@ class EditForm {
 
 
 				// uses set value, otherwise retrieve value from object being edited by name
-				$value = $this->value ? $this->value : $this->page->get("$field->name");
+				$value = $this->value ? $this->value : $this->dataObject->get("$field->name");
 				$fieldtype->set('value',$value);
 
 				$fieldtype->set('columns',$fieldColumns);

@@ -3,8 +3,11 @@
 // $p = $plugins->get("FieldtypeText");
 $pluginsList = $plugins->all();
 
-$table = $plugins->get("MarkupTable");
 
+$test = $plugins->get("FieldtypeText");
+var_dump($test);
+
+$table = $plugins->get("MarkupTable");
 $table->setColumns(array(
 		"Name" => "className", 
 		"Version" => "version" 
