@@ -3,17 +3,13 @@
 class EditForm {
 	// array of field markup to be rendered
 	public $page;
-	public $template;
-
 	public $formID;
-
 	public $fields = array();
 
 	public function __construct($dataObject){
 		$this->page = $dataObject;
-		$this->page->setFormat("edit");
 		$this->fields = $dataObject->template->fields;
-
+		$this->page->setFormat("edit");
 	}
 
 
@@ -48,8 +44,8 @@ class EditForm {
 				$fieldtype->name = $field->name;
 
 
-
-				$value = $this->page->get($field->name);
+				// uses set value, otherwise retrieve value from object being edited by name
+				$value = $this->value ? $this->value : $this->page->get("$field->name");
 				$fieldtype->set('value',$value);
 
 				$fieldtype->set('columns',$fieldColumns);

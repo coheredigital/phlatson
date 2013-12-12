@@ -11,11 +11,14 @@ if (count($input->post)) {
 
 $form = new \markup\EditForm($pageEdit);
 
-$settingsFieldgroup = new \Fieldgroup("settings");
-$form->addFieldgroup($settingsFieldgroup);
+// $settingsFieldgroup = new \Fieldgroup("settings");
+// $form->addFieldgroup($settingsFieldgroup);
 
 $templateField = $fields->get("template");
 $templateField->attributes('col', 12);
+// $templateField->set("value",  $pageEdit->template->name);
+
+
 
 $form->addField($templateField);
 

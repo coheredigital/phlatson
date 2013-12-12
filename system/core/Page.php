@@ -166,12 +166,6 @@ class Page extends DataObject{
 		switch ($name) {
 			// first pass a few request that we dont want passed to "getFormatted() method"
 			// handled by parent
-			case 'name':
-			case 'directory':
-			case 'requests':
-			case 'template':
-				return parent::get($name);
-				break;
 			case 'children':
 				return $this->children();
 				break;
@@ -190,9 +184,6 @@ class Page extends DataObject{
 			case 'images':
 				return $this->images();
 				break;			
-			case 'template':
-				return $this->getTemplate();
-				break;	
 			case 'layout':
 				// alias for $page->template->layout for simplicity
 				$layout = $this->template->layout;

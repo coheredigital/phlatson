@@ -60,12 +60,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			case 'directory':
 				$directory = trim(implode("/", $this->urlRequest), "/");
 				return $directory;
-			case 'template':
-				return $this->getTemplate();
-				break;
-			case 'templateName':
-				return $this->getTemplate();
-				break;
 			default:
 				return $this->getFormatted($name, $this->outputFormat);
 				break;
