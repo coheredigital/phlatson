@@ -10,7 +10,7 @@ $test = $plugins->get("FieldtypeText");
 $table = $plugins->get("MarkupTable");
 $table->setColumns(array(
 		"Title" => "title", 
-		"Name" => "className", 
+		"" => "description", 
 		"Version" => "version" 
 	));
 
@@ -18,7 +18,7 @@ $table->setColumns(array(
 foreach ($pluginsList as $item) {
 	$table->addRow(array(
 		"title" => $item->title,
-		"className" => $item->className,
+		"description" => $item->description,
 		"version" => $item->version
 	));
 }

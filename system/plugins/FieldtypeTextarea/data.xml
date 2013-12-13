@@ -1,4 +1,4 @@
 <root>
-	<title>Fieldtype Text</title>
+	<title>Textarea</title>
 	<description>Simple text Fieldtype for storing string data.</description>
 </root>

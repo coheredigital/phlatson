@@ -1,4 +1,3 @@
 <root>
-	<title>Fieldtype Text</title>
-	<description>Simple text Fieldtype for storing string data.</description>
+	<title>Password</title>
 </root>

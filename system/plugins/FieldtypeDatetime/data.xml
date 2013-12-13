@@ -1,4 +1,4 @@
 <root>
-	<title>Fieldtype Text</title>
-	<description>Simple text Fieldtype for storing string data.</description>
+	<title>Datetime</title>
+	<description>Store dates and times, supports php date() formats.</description>
 </root>

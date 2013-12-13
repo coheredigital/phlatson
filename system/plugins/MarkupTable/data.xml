@@ -1,4 +1,5 @@
 <root>
-	<title>Fieldtype Text</title>
-	<description>Simple text Fieldtype for storing string data.</description>
+	<title>Table</title>
+	<description>Easy rendering of basic table markup.</description>
+	<version>104</version>
 </root>

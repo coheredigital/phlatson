@@ -1,4 +1,4 @@
 <root>
-	<title>Fieldtype Text</title>
-	<description>Simple text Fieldtype for storing string data.</description>
+	<title>Fieldtype Select</title>
+	<description>Selection input for fieldtypes available</description>
 </root>

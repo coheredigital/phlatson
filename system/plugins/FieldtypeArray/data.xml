@@ -1,4 +1,5 @@
 <root>
-	<title>Fieldtype Text</title>
+	<title>Text</title>
+	<group>Fieldtype</group>
 	<description>Simple text Fieldtype for storing string data.</description>
 </root>

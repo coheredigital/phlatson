@@ -1,5 +1,5 @@
 <root>
-	<title>Fieldtype Text</title>
-	<description>Simple text Fieldtype for storing string data.</description>
+	<title>Redactor</title>
+	<description>Our HTML / WYSIWYG editor of choice, you'll love it!</description>
 	<version>101</version>
 </root>
