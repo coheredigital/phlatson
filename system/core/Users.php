@@ -9,8 +9,7 @@ class Users extends ObjectArray{
 
 
 	public function setActiveUser(User $user){
-		$this->currentUser = $user; 
-		$this->api('user', $user); 
+		$this->setApi('user', $user); 
 	}
 
 }

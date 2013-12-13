@@ -9,6 +9,7 @@
 final class Registry implements IteratorAggregate{
 
 	private $registry = array();
+	private $lock = array();
 
 
 	/**
@@ -16,11 +17,17 @@ final class Registry implements IteratorAggregate{
 	 * @param string $key
 	 * @param object $value
 	 */
- 	public function set($key, $value) {
-		if (isset($this->registry[$key])) {
-			throw new Exception("There is already an entry for '{$key}'!");
+ 	public function set($key, $value, $lock = false) {
+
+
+		if (isset($this->registry[$key]) && in_array($key, $this->lock)) {
+			throw new Exception("There is already an API entry for '{$key}', value is locked.");
 		}
+		// set $key and $value the same to avoid duplicates
+		if($lock) $this->lock[$key] = $key;
+
 		$this->registry[$key] = $value;
+
    	}
 
    	/**

@@ -4,9 +4,21 @@
 class User extends DataObject{
 	protected $dataFolder = "users/";
 
+
+	/**
+	 * is this the guest user?
+	 * @return boolean checks if name === guest
+	 */
+	public function isGuest() {
+		return $this->name == "guest"; 
+	}
+
+	/**
+	 * check if user logged in
+	 * @return boolean opposite of isGuest() result
+	 */
 	public function isLoggedin(){
-		if ($user->name == "guest") return false;
-		return true;
+		return !$this->isGuest();
 	}
 
 }

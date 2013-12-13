@@ -29,6 +29,15 @@
 		<div id="footer">
 			<div class="container">
 				<p>XPages © Adam Spruijt - 2013</p>
+				<?php include "user_menu.php" ?>
+			</div>			
+			<div class="container">
+				<code>
+					<pre>
+					debug box
+					-----------------------------------------------
+					</pre>
+				</code>
 			</div>
 		</div>
 	</body>

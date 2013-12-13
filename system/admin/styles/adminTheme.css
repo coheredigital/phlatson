@@ -453,6 +453,17 @@ hr {
   margin: 1em 0;
 }
 
+pre {
+  font-family: monospace;
+}
+
+code {
+  display: block;
+  border: 1px solid #ccc;
+  padding: 1em;
+  background: #fff;
+}
+
 table {
   width: 100%;
   border: 1px solid #dddddd;

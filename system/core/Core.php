@@ -14,33 +14,37 @@ abstract class Core{
 
 	/*Init function sets up default variables and other tasks*/
 	public static function init(Config $config){
-		self::api('config', $config);
-		self::api('session', new Session());
-		self::api('plugins', new Plugins());
-		self::api('fields', new Fields());
-		self::api('templates', new Templates());
-		self::api('pages', new Pages());
-		self::api('input', new Input());
-		self::api('users', new Users());
-		self::api('files', new Files());
+		self::api('config', $config, true);
+		self::api('users', new Users(), true);
+		self::api('session', new Session(), true);
+		self::api('plugins', new Plugins(), true);
+		self::api('fields', new Fields(), true);
+		self::api('templates', new Templates(), true);
+		self::api('pages', new Pages(), true);
+		self::api('input', new Input(), true);
+		self::api('files', new Files(), true);
 	}
 
 	// method to get reference to chache api class
 	// if $value provide, use as a "setter"
-	public static function api($name = null, $object = null){
+	public static function api($name = null, $object = null, $lock = false){
+		// instantiate the registry if it doesnt yet exist
 		if (!isset(self::$registry)) self::$registry = new Registry();
+		// return registry if no $name supplied
 		if (is_null($name)) return self::$registry;
+		// uses as getter if no object passed
 		if (is_null($object)) {
 			return self::$registry->get($name);
 		}
         else if (!is_null($object)){
-			self::setApi($name, $object);	
+			self::setApi($name, $object, $lock);	
 		}
 	}
 
-	public static function setApi($name, $value){
+	public static function setApi($name, $value, $lock = false){
+
 		if (!isset(self::$registry)) self::$registry = new Registry();
-		self::$registry->set($name, $value);
+		self::$registry->set($name, $value, $lock);
 	}
 
 

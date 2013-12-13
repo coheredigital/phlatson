@@ -2,7 +2,7 @@
 
 if (count($input->post)) {
 	$session->login($input->post->username, $input->post->password);
-	// $session->redirect($input->query);
+	$session->redirect($input->query);
 }
 
 $output = "<label>Username</label>";
