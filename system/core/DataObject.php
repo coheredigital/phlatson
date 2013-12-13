@@ -2,25 +2,30 @@
 
 abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
+	const DATA_FILE = "data.xml";
+
 	// private $name;
 	public $path;
 	protected $data;
 
-	protected $checkSystem = true; // if set to true system should be checked second for named object ex: field checks content folder for "name" field, then finds it in system folder because its a default field. DEFAULT TRUE
 	protected $dataFolder;
 	protected $dataFile = "data.xml"; // what file name should be check for data
+	protected $location = "site/"; // whether found in site or system
 	private $outputFormat = "output";
 	// what file name should be check for data
-	const DATA_FILE = "data.xml";
+
 
 	public $urlRequest = array();
 
 	function __construct($url = null)
 	{
-
+		$url = $url ? $url : $this->name;
 		$this->urlRequest = $this->getUrlRequest($url);
+		$this->setupData();
+	}
 
-		$lastRequestIndex = count($this->urlRequest)-1;
+
+	protected function setupData(){
 
 
 		$sitePath = realpath($this->api('config')->paths->site.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
@@ -31,12 +36,11 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		}
 		else if(is_file($systemPath.DataObject::DATA_FILE)){
 			$this->path = $systemPath;
+			$this->location = "system/";
 		}
-
 		$this->data = $this->getXML();
 
 	}
-
 
 
 	/* MAGIC!! */
@@ -51,9 +55,11 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	public function get($name){
 		switch ($name) {
 			case 'name':
-				// return $this->name;
 				$lastRequestIndex = count($this->urlRequest)-1;
-				return (string) $this->urlRequest[$lastRequestIndex];			
+				return (string) $this->urlRequest[$lastRequestIndex];
+			case 'url':
+				return $this->url();
+				break;		
 			case 'requests':
 				return $this->urlRequest;
 				break;
@@ -72,13 +78,18 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
+	public function url(){
+		return $this->api('config')->urls->root.$this->location.$this->dataFolder.$this->name."/";
+	}
+
+
+
+
 	/**
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
-
 		$file = $this->path.DataObject::DATA_FILE;
-
 		if (is_file($file)) {
 			return simplexml_load_file($file);
 		}

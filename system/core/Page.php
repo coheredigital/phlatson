@@ -24,10 +24,6 @@ class Page extends DataObject{
 	// }	
 
 
-	public function url(){
-		$url = $this->api('config')->urls->root.$this->directory;
-		return $url;
-	}
 
 
 	public function children(){
@@ -160,7 +156,11 @@ class Page extends DataObject{
 	    return false;
 
 	}
-
+	
+	public function url(){
+		$url = $this->api('config')->urls->root.$this->directory;
+		return $url;
+	}
 
 	public function get($name){
 		switch ($name) {
@@ -174,9 +174,6 @@ class Page extends DataObject{
 				break;			
 			case 'rootParent':
 				return $this->rootParent();
-				break;
-			case 'url':
-				return $this->url();
 				break;
 			case 'files':
 				return $this->files();

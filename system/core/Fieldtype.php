@@ -7,20 +7,14 @@ abstract class Fieldtype extends Plugin{
 	// can be extended by other Fieldtypes
 	protected $settings = array();
 
-	public function __construct(Field $field = null){
+	final public function __construct(Field $field = null){
+		parent::__construct();
+
 		$this->field = $field;
-		$this->data = new stdClass(); // create a stdClass to hold get and set request made by DataObject
-
-
-
 		$this->attribute('class', 'field-input '.$this->className);
-
-
 		$this->setup();
 		$this->addStyles();
 		$this->addScripts();
-
-		// parent::__construct();
 	}
 
 	/**

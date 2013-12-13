@@ -8,8 +8,8 @@ class FieldtypeFields extends Fieldtype{
 		api('config')->styles->add(api('config')->urls->fieldtypes."{$this->className}/{$this->className}.css");
 	}
 	protected function addScripts(){
-		api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/shapeshifter/shapeshifter.js");
-		api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/{$this->className}.js");
+		api('config')->scripts->add($this->url."shapeshifter/shapeshifter.js");
+		api('config')->scripts->add($this->url."{$this->className}.js");
 	}
 
 

@@ -1,0 +1,5 @@
+<root>
+	<title>Fieldtype Text</title>
+	<description>Simple text Fieldtype for storing string data.</description>
+	<version>101</version>
+</root>

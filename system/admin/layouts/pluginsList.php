@@ -5,10 +5,11 @@ $pluginsList = $plugins->all();
 
 
 $test = $plugins->get("FieldtypeText");
-var_dump($test);
+// var_dump($config->urls);
 
 $table = $plugins->get("MarkupTable");
 $table->setColumns(array(
+		"Title" => "title", 
 		"Name" => "className", 
 		"Version" => "version" 
 	));
@@ -16,8 +17,9 @@ $table->setColumns(array(
 
 foreach ($pluginsList as $item) {
 	$table->addRow(array(
+		"title" => $item->title,
 		"className" => $item->className,
-		"version" => 100
+		"version" => $item->version
 	));
 }
 
