@@ -1,7 +1,7 @@
 <?php 
 
 // columns should be an array of name retrivable from the data objects passed to the rows
-class MarkupTable extends Plugin {
+class MarkupTable extends Extension {
 
 	protected $rows;
 	protected $columns;

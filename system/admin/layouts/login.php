@@ -1,13 +1,17 @@
 <?php 
+if ($user->isLoggedin()) $session->redirect($config->urls->root.$config->adminUrl);
 
 if (count($input->post)) {
 	$session->login($input->post->username, $input->post->password);
-	$session->redirect($input->query);
+	$session->redirect($config->urls->root.$config->adminUrl);
 }
 
+
+
 $output = "<label>Username</label>";
-$output .= "<input class='field-input' name='username' type='text' value='adam'>";
+$output .= "<input class='field-input' name='username' type='text'>";
 $output .= "<label>Password</label>";
-$output .= "<input class='field-input' name='password' type='text' value='N0n3848y'><br><br>";
-$output .= "<button type='submit' class='button button-success'><i class='icon icon-lock'></i> Submit</button>";
-$output = "<form method='POST'>{$output}</form>";
+$output .= "<input class='field-input' name='password' type='text'>";
+$output .= "<button type='submit' class='button button-success'>Login</button>";
+$output = "<form class='login-form' method='POST'>{$output}</form>";
+

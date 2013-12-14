@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <page>
+	<flags>
+		<published>0</published>
+		<test>4</test>
+	</flags>
 	<template>location</template>
 	<title>Toronto Location</title>
 	<content>

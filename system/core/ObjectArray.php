@@ -80,6 +80,14 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 		return $this; 
 	}
 
+
+	public function find($selector){
+
+
+	}
+
+
+
 	public function all(){
 
 		$array = array();

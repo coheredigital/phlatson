@@ -7,13 +7,17 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	// private $name;
 	public $path;
 	protected $data;
+	// default statuc flags (mostly boolean int, all stored as int)
+	protected $defaultFlags = array(
+		"published" => 1,
+		"locked" => 0
+	);	
+	protected $flags = array();
 
 	protected $dataFolder;
 	protected $dataFile = "data.xml"; // what file name should be check for data
 	protected $location = "site/"; // whether found in site or system
 	private $outputFormat = "output";
-	// what file name should be check for data
-
 
 	public $urlRequest = array();
 
@@ -38,10 +42,45 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			$this->path = $systemPath;
 			$this->location = "system/";
 		}
+
 		$this->data = $this->getXML();
+		$this->setFlags();
 
 	}
 
+	/* =====================
+	 Status / Flag functions
+	====================== */
+
+	protected function setFlags(){
+		if (!$data->flags) return;
+
+		// first merge in default flags
+		$this->flags = array_merge($this->flags, $this->defaultFlags);
+
+		
+		foreach($this->data->flags->children() as $key => $value) {
+			$this->flags["$key"] = (int) $value;
+		}
+		unset($this->data->flags);
+	}
+
+	/**
+	 * getFlag by key
+	 * @param  string $key
+	 * @return int
+	 */
+	public function getFlag($key){
+		return isset($this->flags[$key]) ? $this->flags[$key] : 0;
+	}
+
+	/**
+	 * checks if page is published
+	 * @return boolean converted from int stored in $this->flags array
+	 */
+	public function isPublished(){
+		return $this->getFlag("published") ? true : false;
+	}
 
 	/* MAGIC!! */
 	public function __get($name){

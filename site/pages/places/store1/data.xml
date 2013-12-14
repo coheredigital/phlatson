@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <page>
+	<flags>
+		<published>1</published>
+	</flags>
 	<template>location</template>
 	<title>Niagara Location</title>
 	<content>

@@ -24,8 +24,8 @@ function classLoader($className) {
 
     if(is_file($coreClass)) require_once($coreClass);
     else{
-        $pluginsPath = ROOT_PATH."system".DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR.$className.DIRECTORY_SEPARATOR;
-        $fieldtype = "{$pluginsPath}{$namespacePath}{$className}.php"; 
+        $extensionsPath = ROOT_PATH."system".DIRECTORY_SEPARATOR."extensions".DIRECTORY_SEPARATOR.$className.DIRECTORY_SEPARATOR;
+        $fieldtype = "{$extensionsPath}{$namespacePath}{$className}.php"; 
         if(is_file($fieldtype)) require_once($fieldtype);
     }
 

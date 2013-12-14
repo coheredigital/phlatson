@@ -18,7 +18,7 @@ function setupConfig() {
 	$directories['content'] = $directories['site'] . 'content/';
 	$directories['fields'] = $directories['site'] . 'fields/';
 	$directories['templates'] = $directories['site'] . 'templates/';
-	$directories['plugins'] = $directories['site'] . 'plugins/';
+	$directories['extensions'] = $directories['site'] . 'extensions/';
 	$directories['layouts'] = $directories['site'] . 'layouts/';
 	$directories['users'] = $directories['site'] . 'users/';
 	// system directories
@@ -27,8 +27,8 @@ function setupConfig() {
 	$directories['core'] = $directories['system'] . 'core/';
 	$directories['systemFields'] = $directories['system'] . 'fields/';
 	$directories['systemTemplates'] = $directories['system'] . 'templates/';
-	$directories['systemPlugins'] = $directories['system'] . 'plugins/';
-	$directories['fieldtypes'] = $directories['system'] . 'plugins/fieldtypes/';
+	$directories['systemPlugins'] = $directories['system'] . 'extensions/';
+	$directories['fieldtypes'] = $directories['system'] . 'extensions/fieldtypes/';
 
 
 	if(isset($_SERVER['HTTP_HOST'])) {

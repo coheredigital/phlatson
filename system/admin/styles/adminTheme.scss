@@ -3,7 +3,9 @@
 @import "compass";
 @import "variables";
 @import "normalize";
-
+html{
+	min-height: 100%;
+}
 body{
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 14px;
@@ -257,4 +259,43 @@ select{
 	float: right;
 	color: $gray;
 	margin-right: 1em;
+}
+
+/* Login Page Styles */
+
+.page-login{
+	background: $navy;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
+.page-login #main{
+	// height: 100%;
+	position: relative;
+}
+.login-form{
+	box-sizing: border-box;
+	max-width: 300px;
+	height: 220px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -110px 0 0 -150px;
+	background:#fff;
+	padding: 2em;
+	box-shadow: 0 0 12px $dark-navy;
+}
+.login-form label{
+	line-height: 1.6em;
+	display: block;
+}
+.login-form input{
+	margin-bottom: 0.4em;
+	display: block;
+}
+.login-form .button{
+	margin-top: 0.5em;
+	width: 100%;
+	background: $green;
 }

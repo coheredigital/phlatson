@@ -1,6 +1,6 @@
 <?php
 
-class File extends DataArray{
+class File extends SimpleArray{
 
 	public function __construct($u,$f){
 

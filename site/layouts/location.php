@@ -2,11 +2,8 @@
 <div class="container">
 	<div class="panel panel-default">
 		<div class="panel-body">
-		<?php 
-		$user = $users->get("adam");
-		var_dump($user);
-		var_dump($user->pass);
-		?>
+		<?php var_dump($page); ?>
+		<?php var_dump($page->isPublished()); ?>
 		</div>
 	</div>
 </div>

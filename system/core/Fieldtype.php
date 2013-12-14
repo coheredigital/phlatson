@@ -1,6 +1,6 @@
 <?php
 
-abstract class Fieldtype extends Plugin{
+abstract class Fieldtype extends Extension{
 	protected $attributes = array();
 	protected $field;
 	// contains defaults settings and there defaults values

@@ -6,7 +6,8 @@
 		<?php foreach ($config->styles as $file) echo "<link rel='stylesheet' href='{$file}' type='text/css'>" ?>
 		<?php foreach ($config->scripts as $file) echo "<script src='{$file}'></script>" ?>
 	</head>
-	<body>
+	<body class="<?php echo "page-{$page->name}" ?>">
+		<?php if (!$user->isGuest()): ?>
 		<div id="header">
 			<div class="navbar" role="navigation">
 				<div class="container">
@@ -20,10 +21,15 @@
 				</div>
 			</div>
 		</div>
-
 		<div id="main">
 			<div class="container">
+		<?php endif ?>
+
+
+		
 				<?php echo $output; ?>
+
+		<?php if (!$user->isGuest()): ?>
 			</div>
 		</div>
 		<div id="footer">
@@ -40,5 +46,6 @@
 				</code>
 			</div>
 		</div>
+		<?php endif ?>
 	</body>
 </html>

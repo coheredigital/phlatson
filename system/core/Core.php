@@ -17,12 +17,11 @@ abstract class Core{
 		self::api('config', $config, true);
 		self::api('users', new Users(), true);
 		self::api('session', new Session(), true);
-		self::api('plugins', new Plugins(), true);
+		self::api('extensions', new Extensions(), true);
 		self::api('fields', new Fields(), true);
 		self::api('templates', new Templates(), true);
 		self::api('pages', new Pages(), true);
 		self::api('input', new Input(), true);
-		self::api('files', new Files(), true);
 	}
 
 	// method to get reference to chache api class

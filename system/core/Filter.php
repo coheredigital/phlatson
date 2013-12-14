@@ -6,7 +6,8 @@ class Filter extends FilterIterator{
 	public $filterValue = false;
 	public $filterBy = false;
 
-	function __construct(Iterator $iterator, $filterValue, $filterBy = "extension"){
+	function __construct(Iterator $iterator, $filterValue, $filterBy = "extension")
+	{
 
 		parent::__construct($iterator);
 
@@ -14,7 +15,8 @@ class Filter extends FilterIterator{
 		$this->filterBy = $filterBy;
 	}
 
-    function accept() {
+    function accept()
+    {
         $item = $this->getInnerIterator()->current();
 
         if($item->{$this->filterBy} == $this->filterValue) return true;

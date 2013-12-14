@@ -1,12 +1,16 @@
 <?php 
 
+$admin = new AdminPage($input->url);
+
 if ($input->get->logout == 1) {
 	$session->logout();
 	$session->redirect($config->urls->root.$config->adminUrl);
 }
+if ($user->isGuest() && $admin->name != "login") {
+	$session->redirect($config->urls->root.$config->adminUrl."/login");
+}
 
-$adminRequest = $user->isGuest() ? $config->adminUrl."/login" : $input->url;
-$admin = new AdminPage($adminRequest);
+
 
 $adminHome = new AdminPage("/"); // create home page object for simple ref back to admin root
 

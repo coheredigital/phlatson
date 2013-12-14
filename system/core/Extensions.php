@@ -1,10 +1,10 @@
 <?php
 
 
-class Plugins extends ObjectArray{
+class Extensions extends ObjectArray{
 
-	protected $root = "plugins/";
-	protected $singularName = "plugin";
+	protected $root = "extensions/";
+	protected $singularName = "extension";
 
 
 	public function get($name) {
@@ -14,8 +14,8 @@ class Plugins extends ObjectArray{
 		if(!isset($this->data[$name]) && !$this->allowRootRequest) return false;
 		$object = new $name();
 		return $object;
-		
-		return false;
+
+
 	}
 
 }

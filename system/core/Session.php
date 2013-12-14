@@ -152,12 +152,17 @@ class Session extends Core implements IteratorAggregate{
 		return $this->set($key, $value); 
 	}
 
-	public function redirect($url, $permanent = true) 
+	/**
+	 * redirects page using PHP header
+	 * @param  string or Page object  $url   redirect to url from root or to page
+	 * @param  boolean $permanent is redirect permanent?
+	 */
+	public function redirect($value, $permanent = true) 
 	{
-
+		$url = $value instanceof Page ? $value->url : $value;
 		// perform the redirect
 		if($permanent) header("HTTP/1.1 301 Moved Permanently");
-		header("Location: $url");
+		header("Location: $value");
 		header("Connection: close"); 
 		exit(0);
 	}
@@ -165,7 +170,8 @@ class Session extends Core implements IteratorAggregate{
 	/**
 	 * start the session, provide for syntactical convenience
 	 */
-	protected function start(){
+	protected function start()
+	{
 		@session_start();
 	}
 
@@ -183,14 +189,16 @@ class Session extends Core implements IteratorAggregate{
     /**
      * clear all session variables
      */
-    public function clear(){
+    public function clear()
+    {
     	session_unset();
     }
 
     /**
      * destroy / ends the current session
      */
-    public function destroy(){
+    public function destroy()
+    {
     	session_destroy();
     }
 
@@ -208,10 +216,10 @@ class Session extends Core implements IteratorAggregate{
 	{
 		// should sanitize name
 		$user = $this->api('users')->get("$name"); 
-		if (!$user instanceof User){
+		if (!$user instanceof User) {
 			throw new Exception("User {$name} not found!");
 		}
-		if( $pass == $user->pass) { 
+		if ( $pass == $user->pass) { 
 			$this->regenerate();
 			$this->set('_user_name', $user->name); 
 			$this->set('_user_time', time());
@@ -220,11 +228,15 @@ class Session extends Core implements IteratorAggregate{
 		return null; 
 	}
 
-	public function logout(){
+	public function logout()
+	{
 		$sessionName = $this->name();
 		$this->clear();
 
-		if(isset($_COOKIE[$sessionName])) setcookie($sessionName, '', time()-42000, '/'); 
+		if (isset($_COOKIE[$sessionName])) {
+			setcookie($sessionName, '', time()-42000, '/'); 
+		}
+			
 
 		// end the current session
 		$this->destroy();

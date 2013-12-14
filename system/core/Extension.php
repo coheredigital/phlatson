@@ -1,9 +1,9 @@
 <?php
 
 
-abstract class Plugin extends DataObject{
+abstract class Extension extends DataObject{
 	
-	protected $dataFolder = "plugins/";
+	protected $dataFolder = "extensions/";
 
 
 	public function get($name){

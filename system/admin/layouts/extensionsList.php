@@ -1,13 +1,13 @@
 <?php 
 
 // $p = $plugins->get("FieldtypeText");
-$pluginsList = $plugins->all();
+$extensionsList = $extensions->all();
 
 
-$test = $plugins->get("FieldtypeText");
+$test = $extensions->get("FieldtypeText");
 // var_dump($config->urls);
 
-$table = $plugins->get("MarkupTable");
+$table = $extensions->get("MarkupTable");
 $table->setColumns(array(
 		"Title" => "title", 
 		"" => "description", 
@@ -15,7 +15,7 @@ $table->setColumns(array(
 	));
 
 
-foreach ($pluginsList as $item) {
+foreach ($extensionsList as $item) {
 	$table->addRow(array(
 		"title" => $item->title,
 		"description" => $item->description,

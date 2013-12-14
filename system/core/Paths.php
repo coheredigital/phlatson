@@ -1,6 +1,6 @@
 <?php
 
-class Paths extends DataArray {
+class Paths extends SimpleArray {
 
 	public function __construct($root) {
 		$this->root = $root; 
