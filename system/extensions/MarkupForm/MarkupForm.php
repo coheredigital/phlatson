@@ -1,17 +1,16 @@
-<?php namespace markup;
-
-class EditForm {
+<?php 
+class MarkupForm {
 	// array of field markup to be rendered
 	public $dataObject;
 	public $formID;
 	public $fields = array();
 
-	public function __construct($dataObject){
+
+	public function setup($dataObject){
 		$this->dataObject = $dataObject;
 		$this->fields = $dataObject->template->fields;
 		$this->dataObject->setFormat("edit");
 	}
-
 
 	public function addFieldgroup(\Fieldgroup $fieldgroup){
 		$this->fields[] = $fieldgroup;
@@ -21,13 +20,9 @@ class EditForm {
 		$this->fields[] = $field;
 	}
 
-
 	public function render(){
 		$colCount = 0;
 		$formFields = "";
-
-
-		var_dump($this->dataObject->template);
 
 		foreach ($this->fields as $field) {
 			
@@ -41,13 +36,14 @@ class EditForm {
 				$colCount += $fieldColumns;
 
 				$fieldtype = $field->type;
+
 				$fieldtype->set('label', $field->label);
 				$fieldtype->name = $field->name;
 
 
 				// uses set value, otherwise retrieve value from object being edited by name
 				$value = $this->value ? $this->value : $this->dataObject->get("$field->name");
-				$fieldtype->set('value',$value);
+				$fieldtype->value = $value;
 
 				$fieldtype->set('columns',$fieldColumns);
 				$formFields .= $fieldtype->render();

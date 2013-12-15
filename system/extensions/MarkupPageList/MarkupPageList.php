@@ -1,6 +1,6 @@
-<?php namespace markup;
+<?php
 
-class PageList {
+class MarkupPageList {
 
 	public $rootPage;
 	public $postTypes = array(); // array representing posts types or "Page Tables" that will be offers at top of the page

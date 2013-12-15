@@ -8,5 +8,6 @@ if (count($input->post)) {
 	$session->redirect($input->query);
 }
 
-$form = new \markup\EditForm($fieldEdit);
+$form = $extensions->get("MarkupForm");
+$form->setup($fieldEdit);
 $output = $form->render();

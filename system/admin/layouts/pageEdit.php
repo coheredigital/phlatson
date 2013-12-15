@@ -9,7 +9,8 @@ if (count($input->post)) {
 }
 
 
-$form = new \markup\EditForm($pageEdit);
+$form = $extensions->get("MarkupForm");
+$form->setup($pageEdit);
 
 // $settingsFieldgroup = new \Fieldgroup("settings");
 // $form->addFieldgroup($settingsFieldgroup);

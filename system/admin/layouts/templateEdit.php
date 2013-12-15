@@ -7,5 +7,6 @@ if (count($input->post)) {
 	$session->redirect($input->query);
 }
 
-$form = new \markup\EditForm($templateEdit);
+$form = $extensions->get("MarkupForm");
+$form->setup($templateEdit);
 $output = $form->render();

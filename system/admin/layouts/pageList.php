@@ -1,10 +1,5 @@
 <?php
-
 $home = $pages->get("/");
-
-$pageList = new \markup\PageList;
-
-
-
+$pageList = $extensions->get("MarkupPageList");
 $pageList->rootPage = $home;			
 $output = $pageList->render();

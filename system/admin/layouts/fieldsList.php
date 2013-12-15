@@ -2,7 +2,7 @@
 
 $fieldsList = $fields->all();
 
-$table = $plugins->get("MarkupTable");
+$table = $extensions->get("MarkupTable");
 $table->setColumns(array(
 		"Name" => "name", 
 		"Label" => "label",
