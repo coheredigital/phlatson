@@ -276,9 +276,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	public function set($name, $value){	
 		$value = is_object($value) ? (string) "$value" : $value;
-
 		$this->data->{$name} = $value;
-		var_dump($value);
 	}
 
 	// allows the data array to be counted directly

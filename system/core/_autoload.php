@@ -19,9 +19,6 @@ function classLoader($className) {
 
     $coreClass = "{$systemPath}{$namespacePath}{$className}.php";
 
-
-    // var_dump($fieldtype);
-
     if(is_file($coreClass)) require_once($coreClass);
     else{
         $extensionsPath = ROOT_PATH."system".DIRECTORY_SEPARATOR."extensions".DIRECTORY_SEPARATOR.$className.DIRECTORY_SEPARATOR;

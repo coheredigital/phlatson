@@ -1,11 +1,5 @@
 <?php 
-
-// $p = $plugins->get("FieldtypeText");
 $extensionsList = $extensions->all();
-
-
-$test = $extensions->get("FieldtypeText");
-// var_dump($config->urls);
 
 $table = $extensions->get("MarkupTable");
 $table->setColumns(array(
@@ -14,7 +8,6 @@ $table->setColumns(array(
 		"Version" => "version" 
 	));
 
-
 foreach ($extensionsList as $item) {
 	$table->addRow(array(
 		"title" => $item->title,
@@ -22,6 +15,5 @@ foreach ($extensionsList as $item) {
 		"version" => $item->version
 	));
 }
-
 
 $output = $table->render();

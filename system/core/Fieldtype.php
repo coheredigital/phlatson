@@ -72,6 +72,11 @@ abstract class Fieldtype extends Extension{
 	protected function addStyles(){}
 	protected function addScripts(){}
 
+
+	public function getInput(){
+		$input =  $this->api("extensions")->get("InputtypeText");
+	}
+
 	// we will default to rendering a basic text field since it will be the most common inout type for most field types
 	public function render(){
 

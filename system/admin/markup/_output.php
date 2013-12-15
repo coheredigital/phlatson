@@ -11,13 +11,15 @@
 		<div id="header">
 			<div class="navbar" role="navigation">
 				<div class="container">
-					<ul class="nav navbar-nav">
-						<?php foreach ($adminHome->children as $p): ?>
-						<?php // var_dump($p) ?>
-							<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
-							<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-						<?php endforeach ?>
-					</ul>
+					<nav class="uk-navbar">
+						<ul class="nav navbar-nav uk-navbar-nav">
+							<?php foreach ($adminHome->children as $p): ?>
+								<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
+								<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
+							<?php endforeach ?>
+						</ul>
+					</nav>
+
 				</div>
 			</div>
 		</div>
