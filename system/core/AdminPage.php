@@ -8,6 +8,8 @@ Used in the management of Admin Pages and layouts, uses some special feature and
 
  */
 
+$output = "";
+
 class AdminPage extends Page{
 
 	// define some protected variable to be used by all page objects
@@ -58,7 +60,11 @@ class AdminPage extends Page{
 	}
 
 	public function render(){
-		return $this->extension->render();
+		if ($this->data->extension) {
+			return $this->extension->render();
+		}
+		return false;
 	}
 
 }
+

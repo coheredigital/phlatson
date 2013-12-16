@@ -113,7 +113,7 @@ try {
 		else ${$name} = $object;
 	}
 
-	$page = new Page($input->url);
+	$page = $pages->get($input->url);
 
 } catch (Exception $e) {
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
