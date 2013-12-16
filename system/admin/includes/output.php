@@ -8,19 +8,18 @@
 	</head>
 	<body class="<?php echo "page-{$page->name}" ?>">
 		<?php if (!$user->isGuest()): ?>
-		<div id="header">
+		<div id="header" class="clearfix">
+			
 			<div class="navbar" role="navigation">
-				<div class="container">
-					<nav class="uk-navbar">
-						<ul class="nav navbar-nav uk-navbar-nav">
-							<?php foreach ($adminHome->children as $p): ?>
-								<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
-								<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-							<?php endforeach ?>
-						</ul>
-					</nav>
+				<ul class="nav navbar-nav uk-navbar-nav">
+					<?php include "user_menu.php" ?>	
+					<?php foreach ($adminHome->children as $p): ?>
+						<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
+						<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
+					<?php endforeach ?>		
 
-				</div>
+				</ul>
+				
 			</div>
 		</div>
 		<div id="main">
@@ -37,16 +36,8 @@
 		<div id="footer">
 			<div class="container">
 				<p>XPages © Adam Spruijt - 2013</p>
-				<?php include "user_menu.php" ?>
+				
 			</div>			
-			<div class="container">
-				<code>
-					<pre>
-					debug box
-					-----------------------------------------------
-					</pre>
-				</code>
-			</div>
 		</div>
 		<?php endif ?>
 	</body>

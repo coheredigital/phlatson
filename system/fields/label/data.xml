@@ -2,4 +2,5 @@
 <field>
 	<label>Label</label>
 	<fieldtype>FieldtypeText</fieldtype>
+	<inputtype>InputtypeText</inputtype>
 </field>

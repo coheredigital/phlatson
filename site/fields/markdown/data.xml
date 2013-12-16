@@ -1,5 +1,4 @@
 <field>
-	<name>markdown</name>
 	<fieldtype>FieldtypeMarkdown</fieldtype>
-	<label>Blah Blah Blah</label>
+	<label>Markdown</label>
 </field>

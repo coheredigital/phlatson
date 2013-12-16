@@ -1,26 +1,34 @@
 <?php
 
 
-$pageEdit = $pages->get($input->get->page);
+$edit = $pages->get($input->get->page);
 
 if (count($input->post)) {
-	$pageEdit->save($input->post);
+	$edit->save($input->post);
 	// $session->redirect($input->query);
 }
 
 
-$form = $extensions->get("MarkupForm");
-$form->setup($pageEdit);
-
-// $settingsFieldgroup = new \Fieldgroup("settings");
-// $form->addFieldgroup($settingsFieldgroup);
-
-$templateField = $fields->get("template");
-$templateField->attributes('col', 12);
-// $templateField->set("value",  $pageEdit->template->name);
+$form = $extensions->get("MarkupEditForm");
+$editFields = $edit->template->fields;
+foreach ($editFields as $field) {
+	$input = $field->type;
 
 
+	$input->label = $field->label;
+	$input->columns = $field->attributes('col') ? (int) $field->attributes('col') : 12;
+	$input->value = $edit->getUnformatted($field->name);
+	$input->attribute("name",$field->name);
+	$form->add($input);
+}
 
-$form->addField($templateField);
+$templateField = $extensions->get("FieldtypeText");
+$templateField->label = "Template";
+$templateField->columns = 12;
+$templateField->value = $edit->template->name;
 
+$form->add($templateField);
+
+$submitButtons = $extensions->get("FieldtypeFormActions");
+$form->add($submitButtons);
 $output = $form->render();

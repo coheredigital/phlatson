@@ -9,11 +9,11 @@ class FieldtypeMarkdown extends FieldtypeTextarea{
 	}
 
 	// protected function addStyles(){
-	// 	// api('config')->styles->add(api('config')->urls->fieldtypes."{$this->className}/epiceditor/themes/base/epiceditor.css");
+	// 	api('config')->styles->add($this->url."epiceditor/themes/base/epiceditor.css");
 	// }
 	// protected function addScripts(){
-	// 	api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/epiceditor/js/epiceditor.js");
-	// 	api('config')->scripts->add(api('config')->urls->fieldtypes."{$this->className}/{$this->className}.js");
+	// 	api('config')->scripts->add($this->url."epiceditor/js/epiceditor.js");
+	// 	api('config')->scripts->add($this->url."{$this->className}.js");
 	// }
 
 
@@ -22,6 +22,10 @@ class FieldtypeMarkdown extends FieldtypeTextarea{
 		$value = Parsedown::instance()->parse($value);
 
 		return $value;
+	}
+
+	public function editFormat($value){
+		return trim($value);
 	}
 
 

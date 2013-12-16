@@ -65,7 +65,7 @@ abstract class Inputtype extends Extension{
 
 	public function attribute($key, $value = false){
 		if (!$value && isset($this->attributes["$key"])) return $this->attributes["$key"];
-		else $this->attributes["{$key}"] = (string) $value; // only string values accepted for attributes
+		else $this->attributes["$key"] = $value;
 
 	}
 

@@ -2,8 +2,9 @@
 
 abstract class Fieldtype extends Extension{
 	protected $attributes = array();
+
 	protected $field;
-	protected $data;
+	public $label;
 	public $value;
 
 	// contains defaults settings and there defaults values
@@ -13,9 +14,16 @@ abstract class Fieldtype extends Extension{
 	final public function __construct(Field $field = null){
 		parent::__construct();
 
-		$this->field = $field;
 		$this->attribute('class', 'field-input '.$this->className);
 
+		if ($field instanceof Field) {
+			$this->field = $field;
+			// set defaults
+			$this->label = $field->getUnformatted("label");
+		}
+
+
+		$this->setup();
 		$this->addStyles();
 		$this->addScripts();
 	}
@@ -43,7 +51,6 @@ abstract class Fieldtype extends Extension{
 				return null;
 				break;
 		}
-
 	}
 
 	protected function editFormat($value){
@@ -53,28 +60,33 @@ abstract class Fieldtype extends Extension{
 		return (string) $value;
 	}
 
-
 	/**
 	 * saveFormat should return type DomElement
 	 */
-
 	public function saveFormat( $name, $value ){
 
 		$dom = new DomDocument;
         $node = $dom->createElement("$name", "$value");
         $dom->appendChild($node);
-
 		return $dom->documentElement;
 
 	}
 
 
+	protected function setup(){}
 	protected function addStyles(){}
 	protected function addScripts(){}
 
 
-	public function getInput(){
-		$input =  $this->api("extensions")->get("InputtypeText");
+	public function setField(Field $field)
+	{
+		$this->field = $field;
+	}
+
+	public function getInput()
+	{
+		// $input =  $this->api("extensions")->get("InputtypeText");
+		return $this;
 	}
 
 	// we will default to rendering a basic text field since it will be the most common inout type for most field types
@@ -101,7 +113,7 @@ abstract class Fieldtype extends Extension{
 	}
 	protected function renderInput(){
 		$attributes = $this->getAttributes();
-		$output = "<input {$attributes} type='text' name='{$this->name}' id='Input_{$this->name}' value='{$this->value}'>";
+		$output = "<input {$attributes} type='text' name='{$this->name}' value='{$this->value}'>";
 		return $output;
 	}
 

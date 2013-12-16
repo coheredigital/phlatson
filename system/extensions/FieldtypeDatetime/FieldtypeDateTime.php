@@ -3,11 +3,11 @@
 class FieldtypeDateTime extends Fieldtype{
 
 	protected function addStyles(){
-		api('config')->styles->add(api('config')->urls->fieldtypes."$this->className/datetimepicker/datetimepicker.css");
+		api('config')->styles->add($this->url."/datetimepicker/datetimepicker.css");
 	}
 	protected function addScripts(){
-		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/datetimepicker/datetimepicker.js");
-		api('config')->scripts->add(api('config')->urls->fieldtypes."$this->className/$this->className.js");
+		api('config')->scripts->add($this->url."/datetimepicker/datetimepicker.js");
+		api('config')->scripts->add($this->url."/$this->className.js");
 	}
 
 	public function outputFormat($value){
@@ -16,6 +16,7 @@ class FieldtypeDateTime extends Fieldtype{
 	}
 
 	public function editFormat($value){
+		var_dump($this->field);
 		$value = (int) $value; // convert value to int
 		$value = date($this->field->format, $value);
 		return $value;

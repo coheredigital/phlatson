@@ -5,7 +5,7 @@ class FieldtypeFields extends Fieldtype{
 	private $template;
 
 	protected function addStyles(){
-		api('config')->styles->add(api('config')->urls->fieldtypes."{$this->className}/{$this->className}.css");
+		api('config')->styles->add($this->url."{$this->className}.css");
 	}
 	protected function addScripts(){
 		api('config')->scripts->add($this->url."shapeshifter/shapeshifter.js");
@@ -26,6 +26,7 @@ class FieldtypeFields extends Fieldtype{
 	}
 
 
+
 	protected function renderInput(){
 
 		$attributes = $this->getAttributes();
@@ -40,7 +41,7 @@ class FieldtypeFields extends Fieldtype{
 									<a href='#'>{$field->label}</a>
 								</div>
 								<div class='{$this->className}_name name' >{$field->name}</div>
-								<input type='hidden' name='{$this->name}[{$field->name}]' value='{$columns}' >
+								<input type='hidden' name='".$this->attributes["name"]."[{$field->name}]' value='{$columns}' >
 								<div class='colCount'>columns <span class='colValue'>{$columns}</span></div>
 							</div>
 		

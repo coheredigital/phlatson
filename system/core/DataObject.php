@@ -218,7 +218,11 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 
+
+
+
 	public function save($postData){
+
 
 		// create a domdoc to store saved values
 		$save = new DomDocument;
@@ -252,22 +256,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 				$node = $save->importNode($formattedValue, true);
 				$save->documentElement->appendChild($node);
 			}
-			elseif($formattedValue instanceof DOMDocument){
-				$node = $save->importNode($formattedValue->documentElement, true);
-				$save->documentElement->appendChild($node);
-			}
-			else{
-				$node = $save->createElement($field->name, $formattedValue);
-				$root->appendChild($node);
-			}
 		}
 
 		// save to file
 		// $save->save($this->path.self::DATA_FILE);
 		$save->save($this->path."save.xml");
 
-		// destroy $saver
-		unset($saver);
 	}
 
 	public function __set($name, $value){

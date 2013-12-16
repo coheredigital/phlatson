@@ -24,4 +24,4 @@ $config->scripts->add("{$config->urls->admin}styles/uikit/js/uikit.js");
 
 
 include $admin->get('layout');
-require_once 'markup/_output.php';
+require_once 'includes/output.php';

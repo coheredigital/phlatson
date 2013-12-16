@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<template>
+<root>
+  <label>Blog</label>
+  <name>blog</name>
   <fields>
     <field col="12">title</field>
   </fields>
-  <name>blog</name>
-  <label>Blog</label>
-</template>
+</root>
