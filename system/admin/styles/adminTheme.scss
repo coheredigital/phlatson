@@ -274,6 +274,9 @@ select{
 }
 .button-secondary{
 	background: $dark-gray;
+	&:hover{
+		background: $darker-gray;
+	}
 }
 .button-soft{
 	color: $dark-gray !important;

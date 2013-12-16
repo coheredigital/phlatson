@@ -16,7 +16,4 @@ abstract class Admin implements Plugin{
 			); 
 	}
 
-
-
-
 }

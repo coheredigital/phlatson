@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<page>
-	<template>blog</template>
-	<title>The News</title>
-</page>
+<root>
+  <title>The News</title>
+</root>

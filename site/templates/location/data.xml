@@ -1,4 +1,8 @@
-<template>
-	<field col="6">title</field>
-	<field col="6">country</field>
-</template>
+<?xml version="1.0"?>
+<root>
+  <label>Location</label>
+  <fields>
+    <field col="6">title</field>
+    <field col="6">country</field>
+  </fields>
+</root>

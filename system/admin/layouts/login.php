@@ -11,7 +11,7 @@ if (count($input->post)) {
 $output = "<label>Username</label>";
 $output .= "<input class='field-input' name='username' type='text'>";
 $output .= "<label>Password</label>";
-$output .= "<input class='field-input' name='password' type='text'>";
+$output .= "<input class='field-input' name='password' type='password'>";
 $output .= "<button type='submit' class='button button-success'>Login</button>";
 $output = "<form class='login-form' method='POST'>{$output}</form>";
 

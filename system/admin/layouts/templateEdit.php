@@ -4,7 +4,7 @@ $edit = new Template($input->get->name);
 
 if (count($input->post)) {
 	$edit->save($input->post);
-	// $session->redirect($input->query);
+	$session->redirect($input->query);
 }
 
 

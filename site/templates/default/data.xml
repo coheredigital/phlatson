@@ -1,6 +1,8 @@
-<template>
-	<fields>
-		<field col="12" >title</field>
-		<field col="12" >content</field>
-	</fields>
-</template>
+<?xml version="1.0"?>
+<root>
+  <label>Page (default)</label>
+  <fields>
+    <field col="12">title</field>
+    <field col="12">content</field>
+  </fields>
+</root>

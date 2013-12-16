@@ -30,6 +30,9 @@ class AdminPage extends Page{
 			case 'url':
 				return $this->url();
 				break;
+			case 'extension':
+				return $this->getExtension();
+				break;
 			case 'layout':
 				$path = $this->api('config')->paths->admin."layouts/";
 				$file = $this->data->$name.".php";
@@ -39,6 +42,23 @@ class AdminPage extends Page{
 				return parent::get($name);
 				break;
 		}
+	}
+
+	protected function getExtension(){
+
+
+		if ($this->data->extension) {
+
+			$extension = api("extensions")->get("{$this->data->extension}");
+			$page = api("pages")->get(api("input")->get->page);
+			$extension->setPage($page);
+			return $extension;
+		}
+
+	}
+
+	public function render(){
+		return $this->extension->render();
 	}
 
 }

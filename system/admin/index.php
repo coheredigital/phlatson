@@ -1,5 +1,6 @@
 <?php 
 
+$page = new AdminPage($input->url);
 $admin = new AdminPage($input->url);
 
 if ($input->get->logout == 1) {

@@ -260,7 +260,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			
 			$fieldtype = $field->type();
 
-			$formattedValue = $fieldtype->saveFormat( $field->name, $value);
+			$formattedValue = $fieldtype->getSave( $field->name, $value);
 			if ($formattedValue instanceof DomElement) {
 				$node = $save->importNode($formattedValue, true);
 				$save->documentElement->appendChild($node);
