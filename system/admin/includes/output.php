@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title><?php echo $admin->title ?> | Admin</title>
+		<title><?php echo $page->title ?> | Admin</title>
 		<?php foreach ($config->styles as $file) echo "<link rel='stylesheet' href='{$file}' type='text/css'>" ?>
 		<?php foreach ($config->scripts as $file) echo "<script src='{$file}'></script>" ?>
 	</head>
@@ -14,7 +14,7 @@
 				<ul class="nav navbar-nav uk-navbar-nav">
 					<?php include "user_menu.php" ?>	
 					<?php foreach ($adminHome->children as $p): ?>
-						<?php $class = $p->url == $admin->rootParent->url ? "class='active'" : "" ?>
+						<?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
 						<li <?php echo $class ?>><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
 					<?php endforeach ?>		
 
