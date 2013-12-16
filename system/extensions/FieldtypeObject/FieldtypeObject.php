@@ -4,11 +4,11 @@ class FieldtypeObject extends Fieldtype{
 
 	protected $objectType = null;
 
-	protected function outputFormat($value){
+	protected function getOutput($value){
 		$object = new $this->objectType("$value");
 		return $object;
 	}
-	protected function editFormat($value){
+	protected function getEdit($value){
 		return (string) $value;
 	}
 

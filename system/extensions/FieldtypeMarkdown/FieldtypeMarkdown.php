@@ -17,14 +17,14 @@ class FieldtypeMarkdown extends FieldtypeTextarea{
 	// }
 
 
-	public function outputFormat($value){
+	public function getOutput($value){
 
 		$value = Parsedown::instance()->parse($value);
 
 		return $value;
 	}
 
-	public function editFormat($value){
+	public function getEdit($value){
 		return trim($value);
 	}
 

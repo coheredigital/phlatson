@@ -13,7 +13,7 @@ class FieldtypeFields extends Fieldtype{
 	}
 
 
-	public function saveFormat($name, $value){
+	public function getSave($name, $value){
 		$dom = new DomDocument;
 		$root = $dom->createElement($name);
 		foreach ($value as $key => $value) {

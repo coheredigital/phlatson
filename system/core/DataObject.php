@@ -189,7 +189,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 			if (is_object($fieldtype)) { 
-				$value = $fieldtype->format( $value, $type );
+				$value = $fieldtype->get( $value, $type );
 				
 			}
 		}

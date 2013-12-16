@@ -19,7 +19,7 @@ abstract class Fieldtype extends Extension{
 		if ($field instanceof Field) {
 			$this->field = $field;
 			// set defaults
-			$this->label = $field->getUnformatted("label");
+			// $this->label = $field->getUnformatted("label");
 		}
 
 
@@ -35,35 +35,35 @@ abstract class Fieldtype extends Extension{
 	 * @param  string $type  
 	 * @return mixed        determined by fieldtype object
 	 */
-	final public function format($value, $type){
+	final public function get($value, $type = null){
 		switch ($type) {
 			case 'output':
-				return $this->outputFormat($value);
+				return $this->getOutput($value);
 				break;
 			case 'raw':
 			case 'edit':
-				return $this->editFormat($value);
+				return $this->getEdit($value);
 				break;
 			case 'save':
-				return $this->saveFormat($value);
+				return $this->getSave($value);
 				break;
 			default:
-				return null;
+				return parent::get($value);
 				break;
 		}
 	}
 
-	protected function editFormat($value){
+	protected function getEdit($value){
 		return (string) $value;
 	}
-	protected function outputFormat($value){
+	protected function getOutput($value){
 		return (string) $value;
 	}
 
 	/**
-	 * saveFormat should return type DomElement
+	 * getSave() should return type DomElement
 	 */
-	public function saveFormat( $name, $value ){
+	public function getSave( $name, $value ){
 
 		$dom = new DomDocument;
         $node = $dom->createElement("$name", "$value");

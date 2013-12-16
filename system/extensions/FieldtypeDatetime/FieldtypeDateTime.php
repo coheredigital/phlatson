@@ -10,19 +10,18 @@ class FieldtypeDateTime extends Fieldtype{
 		api('config')->scripts->add($this->url."/$this->className.js");
 	}
 
-	public function outputFormat($value){
+	public function getOutput($value){
 		$value = date((string) $this->field->format, (int) $value);
 		return $value;
 	}
 
-	public function editFormat($value){
-		var_dump($this->field);
+	public function getEdit($value){
 		$value = (int) $value; // convert value to int
 		$value = date($this->field->format, $value);
 		return $value;
 	}
 
-	public function saveFormat($name, $value){
+	public function getSave($name, $value){
 
 		$dom = new DomDocument;
         $node = $dom->createElement("$name", (int) strtotime($value));
