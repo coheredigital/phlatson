@@ -16,7 +16,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 	protected $dataFolder;
 	protected $dataFile = "data.xml"; // what file name should be check for data
-	protected $location = "site/"; // whether found in site or system
+	protected $location = null; // whether found in site or system
 	private $outputFormat = "output";
 
 	public $urlRequest = array();
@@ -25,7 +25,12 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	{
 		$url = $url ? $url : $this->name;
 		$this->urlRequest = $this->getUrlRequest($url);
-		$this->setupData();
+		try {
+			$this->setupData();
+		} catch (Exception $e) {
+			throw new Exception($e->getMessage());
+		}
+		
 	}
 
 
@@ -37,11 +42,15 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		if (is_file($sitePath.DataObject::DATA_FILE)) {
 			$this->path = $sitePath;
+			$this->location = "site/";
 		}
 		else if(is_file($systemPath.DataObject::DATA_FILE)){
 			$this->path = $systemPath;
 			$this->location = "system/";
 		}
+		// else{
+		// 	throw new Exception("No data.xml file found for this object", 1);
+		// }
 
 		$this->data = $this->getXML();
 		$this->setFlags();

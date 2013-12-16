@@ -10,6 +10,9 @@ if (count($input->post)) {
 
 
 $form = $extensions->get("MarkupEditForm");
+$submitButtons = $extensions->get("FieldtypeFormActions");
+$submitButtons->dataObject = $edit;
+$form->add($submitButtons);
 $editFields = $edit->template->fields;
 foreach ($editFields as $field) {
 	$input = $field->type;
@@ -29,6 +32,6 @@ $templateField->value = $edit->template->name;
 
 $form->add($templateField);
 
-$submitButtons = $extensions->get("FieldtypeFormActions");
+
 $form->add($submitButtons);
 $output = $form->render();
