@@ -15,17 +15,9 @@ abstract class Fieldtype extends Extension{
 		parent::__construct();
 
 		$this->attribute('class', 'field-input '.$this->className);
-
 		if ($field instanceof Field) {
 			$this->field = $field;
-			// set defaults
-			// $this->label = $field->getUnformatted("label");
 		}
-
-
-		$this->setup();
-		$this->addStyles();
-		$this->addScripts();
 	}
 
 	/**
@@ -73,9 +65,7 @@ abstract class Fieldtype extends Extension{
 	}
 
 
-	protected function setup(){}
-	protected function addStyles(){}
-	protected function addScripts(){}
+
 
 
 	public function setField(Field $field)

@@ -1,4 +1,4 @@
 <page>
 	<title>Field Edit</title>
-	<layout>fieldEdit</layout>
+	<extension>AdminFieldEdit</extension>
 </page>

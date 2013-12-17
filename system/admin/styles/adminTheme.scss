@@ -83,6 +83,14 @@ input, textarea, button, select{
 		border-color: $blue;
 	}
 }
+legend{
+	font-size: 2em;
+	margin: 1em 0;
+	width: 100%;
+	padding-bottom: 1em;
+	display: block !important;
+	border-bottom: 1px solid $light-gray;
+}
 select{
 	padding-bottom: 0.4em;
 }

@@ -29,15 +29,12 @@ class AdminPage extends Page{
 	}
 	public function get($name){
 		switch ($name) {
-			case 'url':
-				return $this->url();
-				break;
 			case 'extension':
 				return $this->getExtension();
 				break;
 			case 'layout':
 				$path = $this->api('config')->paths->admin."layouts/";
-				$file = $this->data->$name.".php";
+				$file = $this->data->layout.".php";
 				return $path.$file;
 				break;
 			default:

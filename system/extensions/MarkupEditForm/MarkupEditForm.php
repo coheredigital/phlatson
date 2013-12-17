@@ -3,25 +3,26 @@ class MarkupEditForm extends Extension{
 	// array of field markup to be rendered
 	public $dataObject;
 	public $formID;
-	public $fields = array();
+	public $formElements = array();
 
-	public function add(\Fieldtype $input){
-		$this->fields[] = $input;
+	public function add(MarkupFieldgroup $element){
+		$this->formElements[] = $element;
 	}
+
 
 	public function render(){
 		$colCount = 0;
 		$formFields = "";
 
-		foreach ($this->fields as $field) {
-			
+
+		foreach ($this->formElements as $element) {
 			if ($colCount === 0)
 				$formFields .= "<div class='row'>"; // open new row div
 			
-			if (is_object($field)) {
+			if (is_object($element)) {
 
-				$colCount += $field->columns;
-				$formFields .= $field->render();
+				$colCount += $element->columns;
+				$formFields .= $element->render();
 
 				if ($colCount === 12) {
 					$formFields .= "</div>"; // close row div

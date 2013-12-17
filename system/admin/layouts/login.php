@@ -1,9 +1,9 @@
 <?php 
-if ($user->isLoggedin()) $session->redirect($pages->get($config->adminUrl));
+if ($user->isLoggedin()) $session->redirect($config->urls->root.$config->adminUrl);
 
 if (count($input->post)) {
 	$session->login($input->post->username, $input->post->password);
-	$session->redirect($config->urls->root.$config->adminUrl);
+	$session->redirect($config->urls->root.$config->adminUrl."/login");
 }
 
 

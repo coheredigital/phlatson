@@ -1,12 +1,4 @@
 <data>
-	<flags>
-		<visible>0</visible>
-		<published>1</published>
-		<locked>1</locked>
-	</flags>
-
-
-
 	<title>Login</title>
 	<layout>login</layout>
 </data>

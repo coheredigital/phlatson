@@ -1,6 +1,6 @@
 <?php 
 
-class AdminPageEdit extends Extension {
+class AdminTemplateEdit extends Extension {
 
 	private $tabs;
 	private $form;
@@ -9,28 +9,22 @@ class AdminPageEdit extends Extension {
 	public function setup(){
 		$this->form = api("extensions")->get("MarkupEditForm");
 		$this->tabs = api("extensions")->get("MarkupTabs");
-		$this->page = api("fields")->get(api("input")->get->name);
-
+		$this->page = api("templates")->get(api("input")->get->name);
 	}
 
-	private function getTemplateField(){
-		$value =  $this->page->template->name;
-		$selectOptions = array();
-		$templates = api("templates")->all();
-		foreach ($templates as $t) {
-			$selectOptions["$t->label"] = "$t->name";
-		}
-		$input =  api("extensions")->get("FieldtypeSelect");
-		$input->label = "Template";
+	private function getSettings(){
+		$value =  $this->page->icon;
+		$input =  api("extensions")->get("FieldtypeText");
+		$input->label = "Icon";
 		$input->columns = 12;
-		$input->setOptions($selectOptions);
 		$input->value = $value;
-		$input->attribute("name", "template");
+		$input->attribute("name", "icon");
 
 		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
 		$fieldgroup->label = "Settings";
 		$fieldgroup->add($input);
-		return $fieldgroup;
+		$this->form->add($fieldgroup);
+
 	}
 
 	private function addContentFieldgroup(){
@@ -42,7 +36,7 @@ class AdminPageEdit extends Extension {
 			$input = $field->type;
 			$input->label = $field->label;
 			$input->columns = $field->attributes('col') ? (int) $field->attributes('col') : 12;
-			$input->value = $this->page->getUnformatted($field->name);
+			$input->value = $this->page->{$field->name};
 			$input->attribute("name",$field->name);
 			$fieldgroup->add($input);
 		}
@@ -57,21 +51,13 @@ class AdminPageEdit extends Extension {
 
 		$this->addContentFieldgroup();
 
-		
 
-		
 
 		$submitButtons =  api("extensions")->get("FieldtypeFormActions");
 		$submitButtons->dataObject = $this->page;
 		$submitButtonsGroup = api("extensions")->get("MarkupFieldgroup");
 		$submitButtonsGroup->add($submitButtons);
 
-
-
-
-
-
-		$this->form->add($this->getTemplateField());
 
 		// $output = $this->tabs->render();
 		$this->form->add($submitButtonsGroup);

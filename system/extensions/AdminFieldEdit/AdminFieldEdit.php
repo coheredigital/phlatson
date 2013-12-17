@@ -1,6 +1,6 @@
 <?php 
 
-class AdminPageEdit extends Extension {
+class AdminFieldEdit extends Extension {
 
 	private $tabs;
 	private $form;
@@ -10,27 +10,22 @@ class AdminPageEdit extends Extension {
 		$this->form = api("extensions")->get("MarkupEditForm");
 		$this->tabs = api("extensions")->get("MarkupTabs");
 		$this->page = api("fields")->get(api("input")->get->name);
-
 	}
 
-	private function getTemplateField(){
-		$value =  $this->page->template->name;
-		$selectOptions = array();
-		$templates = api("templates")->all();
-		foreach ($templates as $t) {
-			$selectOptions["$t->label"] = "$t->name";
-		}
-		$input =  api("extensions")->get("FieldtypeSelect");
-		$input->label = "Template";
+
+	private function getSettings(){
+		$value =  $this->page->icon;
+		$input =  api("extensions")->get("FieldtypeText");
+		$input->label = "Icon";
 		$input->columns = 12;
-		$input->setOptions($selectOptions);
 		$input->value = $value;
-		$input->attribute("name", "template");
+		$input->attribute("name", "icon");
 
 		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
 		$fieldgroup->label = "Settings";
 		$fieldgroup->add($input);
-		return $fieldgroup;
+		$this->form->add($fieldgroup);
+
 	}
 
 	private function addContentFieldgroup(){
@@ -69,9 +64,9 @@ class AdminPageEdit extends Extension {
 
 
 
+		$this->getSettings();
 
 
-		$this->form->add($this->getTemplateField());
 
 		// $output = $this->tabs->render();
 		$this->form->add($submitButtonsGroup);
