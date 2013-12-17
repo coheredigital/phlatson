@@ -83,12 +83,17 @@ input, textarea, button, select{
 		border-color: $blue;
 	}
 }
+fieldset{
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
 legend{
-	font-size: 2em;
+	font-size: 1.6em;
+	font-weight: 100;
 	margin: 1em 0;
 	width: 100%;
-	padding-bottom: 1em;
-	display: block !important;
+	padding: 0.4em 0;
 	border-bottom: 1px solid $light-gray;
 }
 select{

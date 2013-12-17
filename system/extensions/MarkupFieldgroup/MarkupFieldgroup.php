@@ -13,30 +13,40 @@ class MarkupFieldgroup extends Extension{
 
 	public function render(){
 		$colCount = 0;
+		$rowOpen = false;
 		$fields = "";
 
 		foreach ($this->fields as $field) {
 			
-			if ($colCount === 0)
+			if ($colCount == 0){
 				$fields .= "<div class='row'>"; // open new row div
+				$rowOpen = true;
+			}
+				
 			
 			if (is_object($field)) {
 
 				$colCount += $field->columns;
 				$fields .= $field->render();
 
-				if ($colCount === 12) {
+				if ($colCount == 12) {
 					$fields .= "</div>"; // close row div
 					$colCount = 0; // reset colCount
+					$rowOpen = false;
 				}
 			}
+		}
+		if ($rowOpen) {
+			$fields .= "</div>"; // close row div
+			$colCount = 0; // reset colCount
+			$rowOpen = false;
 		}
 
 		if ($this->label) {
 			$label = "<legend class='row'>{$this->label}</legend>";
 		}
 		
-		$output = "<feildset>{$label}{$fields}{$submit}</feildset>";
+		$output = "<fieldset>{$label}{$fields}{$submit}</fieldset>";
 		return $output;
 
 

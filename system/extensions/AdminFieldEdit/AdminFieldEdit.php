@@ -10,6 +10,12 @@ class AdminFieldEdit extends Extension {
 		$this->form = api("extensions")->get("MarkupEditForm");
 		$this->tabs = api("extensions")->get("MarkupTabs");
 		$this->page = api("fields")->get(api("input")->get->name);
+
+		if (count(api("input")->post)) {
+			$this->page->save(api("input")->post);
+			api("session")->redirect(api("input")->query);
+		}
+
 	}
 
 

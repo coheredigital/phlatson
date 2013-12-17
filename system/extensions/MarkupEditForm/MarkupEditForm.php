@@ -16,18 +16,11 @@ class MarkupEditForm extends Extension{
 
 
 		foreach ($this->formElements as $element) {
-			if ($colCount === 0)
-				$formFields .= "<div class='row'>"; // open new row div
-			
+
 			if (is_object($element)) {
 
 				$colCount += $element->columns;
 				$formFields .= $element->render();
-
-				if ($colCount === 12) {
-					$formFields .= "</div>"; // close row div
-					$colCount = 0; // reset colCount
-				}
 
 			}
 
