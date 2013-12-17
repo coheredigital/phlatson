@@ -799,7 +799,7 @@ select {
 }
 
 .page-tree-item:hover {
-  border-color: #65c3df;
+  border-bottom-color: #65c3df;
 }
 
 .page-tree-item:hover .page-tree-item-buttons {
