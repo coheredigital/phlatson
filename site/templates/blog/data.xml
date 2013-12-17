@@ -3,6 +3,5 @@
   <fields>
     <field col="12">title</field>
   </fields>
-  <name>blog</name>
   <label>Blog</label>
 </template>

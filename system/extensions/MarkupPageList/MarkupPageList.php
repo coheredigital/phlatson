@@ -8,7 +8,11 @@ class MarkupPageList {
 
 	public function renderPageTitle(\Page $page){
 		$output .= "<div class='page-tree-item'>";
-		$output .= "<a href='".api('config')->urls->root.api("config")->adminUrl."/pages/edit/?name=".$page->directory."'>".$page->title."</a>";
+		$output .= $page->title;
+		$output .= "<div class='page-tree-item-buttons'>";
+		$output .= "<a class='button button-secondary pull-right' href='".api('config')->urls->root.api("config")->adminUrl."/pages/edit/?name=".$page->directory."'><i class='icon icon-edit'></i></a>";
+		$output .= "<a class='button button-soft pull-right' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
+		$output .= "</div>";
 		$output .= "</div>";
 		return $output;
 	}
@@ -18,7 +22,8 @@ class MarkupPageList {
 		if (count($page->children)) {
 			$output .= $this->renderPageList($page->children);
 		}
-		$output = "<li class='page-tree-group'> {$output} </li>";
+		
+		$output = "<li class='page-tree-group'> {$output}</li>";
 		return $output;
 	}
 

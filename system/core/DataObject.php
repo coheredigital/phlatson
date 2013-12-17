@@ -34,23 +34,31 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
-	protected function setupData(){
+	protected function setupData($path = null){
 
+		if (is_null($path)) {
+			$sitePath = realpath($this->api('config')->paths->site.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
+			$systemPath = realpath($this->api('config')->paths->system.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
 
-		$sitePath = realpath($this->api('config')->paths->site.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
-		$systemPath = realpath($this->api('config')->paths->system.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
-
-		if (is_file($sitePath.DataObject::DATA_FILE)) {
-			$this->path = $sitePath;
-			$this->location = "site/";
+			if (is_file($sitePath.DataObject::DATA_FILE)) {
+				$this->path = $sitePath;
+				$this->location = "site/";
+			}
+			else if(is_file($systemPath.DataObject::DATA_FILE)){
+				$this->path = $systemPath;
+				$this->location = "system/";
+			}
 		}
-		else if(is_file($systemPath.DataObject::DATA_FILE)){
-			$this->path = $systemPath;
-			$this->location = "system/";
+		else{
+
+			$path = realpath($path).DIRECTORY_SEPARATOR;
+
+			if (is_file($path.DataObject::DATA_FILE)) {
+				$this->path = $path;
+			}
+			
 		}
-		// else{
-		// 	throw new Exception("No data.xml file found for this object", 1);
-		// }
+
 
 		$this->data = $this->getXML();
 		$this->setFlags();

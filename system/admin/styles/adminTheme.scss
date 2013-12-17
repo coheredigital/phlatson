@@ -13,8 +13,27 @@ body{
 	color: $dark-gray;
 	background:$soft-gray;
 }
-
-
+h1, h2, h3, h4{
+	font-weight: 100;
+}
+h1{
+	font-size: 2.5em;
+}
+h2{
+	font-size: 2em;
+}
+h3{
+	font-size: 1.6em;
+}
+h4{
+	font-size: 1.3em;
+}
+h5{
+	font-size: 1em;
+}
+h6{
+	font-size: 0.85em;
+}
 a{
 	color: $link-color;
 	text-decoration: none;
@@ -87,11 +106,12 @@ fieldset{
 	border: 0;
 	padding: 0;
 	margin: 0;
+	margin-bottom: 1em;
 }
 legend{
 	font-size: 1.6em;
 	font-weight: 100;
-	margin: 1em 0;
+	margin: 0.8em 0;
 	width: 100%;
 	padding: 0.4em 0;
 	border-bottom: 1px solid $light-gray;
@@ -134,7 +154,11 @@ select{
 	margin: 0 auto;
 	padding: 0 2em;
 }
-
+@media handheld, only screen and (max-width: 767px) {
+	.container {
+		padding: 0 1em;
+	}
+}
 
 /* Navigation */
 .navbar{
@@ -152,7 +176,7 @@ select{
 		color: $white;
 	}
 	a{
-		color: $white;
+		color: $darker-blue;
 		display: inline-block;
 		padding: 1.5em 1em;
 		// font-weight: bold;
@@ -161,7 +185,8 @@ select{
 		color: $navy;
 	}
 	.active a{
-		background:$dark-blue;
+		// background:$soft-gray;
+		color: $white;
 	}
 }
 
@@ -203,11 +228,50 @@ select{
 	padding-left: 2.2em;
 }
 .page-tree-item{
-	padding: 0.7em 1em;
+	padding: 10px 14px;
 	margin-top: 0.4em;
 	background: $white;
 	border: 1px solid $light-gray;
+	position: relative;
+
 	// border-left: 3px solid $light-green;
+}
+.page-tree-item-buttons{
+	display: none;
+	position: absolute;
+	right: -1px;
+	top: -1px;
+	bottom: -1px;
+	.button{
+		padding: 11px 14px;
+		border: 1px solid rgba(0,0,0,0.1);
+		border-radius: 0;
+		margin-left: -1px;
+	}
+}
+.page-tree-item:hover{
+	border-color: $blue;
+	.page-tree-item-buttons{
+		display: block;
+	}
+}
+/* Page List */
+.page-list{
+	list-style: none;
+	padding: 0;
+}
+.page-list li{
+	background: $white;
+	border: 1px solid $lighter-gray;
+	padding: 0.8em 1em;
+	margin-bottom: 1em;
+}
+.page-list h4{
+	margin: 0;
+	padding: 0.3em 0;
+}
+.page-list p{
+	margin: 0.3em 0;
 }
 
 /* FORMS */

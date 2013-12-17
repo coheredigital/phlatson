@@ -1,0 +1,5 @@
+<page>
+	<title>Fields</title>
+	<description>List of all fields and fieldgroups included in site and system folders.</description>
+	<layout>fieldsList</layout>
+</page>

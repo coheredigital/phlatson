@@ -16,11 +16,14 @@ class AdminPage extends Page{
 
 	function __construct($url = false){
 		parent::__construct($url);
-		array_shift($this->urlRequest);
 
+		if ($this->urlRequest[0] == "admin") {
+			array_shift($this->urlRequest);
+		}
 
-		$this->path = $this->api('config')->paths->admin."pages/".$this->directory.DIRECTORY_SEPARATOR;
-		$this->data = $this->getXML();
+		$path = realpath($this->api('config')->paths->admin."pages/{$this->directory}").DIRECTORY_SEPARATOR;
+		$this->setupData($path);
+
 	}
 
 
@@ -42,6 +45,8 @@ class AdminPage extends Page{
 				break;
 		}
 	}
+
+
 
 	protected function getExtension(){
 		if ($this->data->extension) {

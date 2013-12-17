@@ -1,25 +1,19 @@
 <?php 
 
-class AdminFieldEdit extends Extension {
-
-	private $tabs;
-	private $form;
-	private $page;
+class AdminFieldEdit extends AdminPageEdit {
 
 	public function setup(){
-		$this->form = api("extensions")->get("MarkupEditForm");
-		$this->tabs = api("extensions")->get("MarkupTabs");
+		parent::setup();
+
 		$this->page = api("fields")->get(api("input")->get->name);
 
-		if (count(api("input")->post)) {
-			$this->page->save(api("input")->post);
-			api("session")->redirect(api("input")->query);
-		}
+		$this->title = $this->page->label;
+
 
 	}
 
 
-	private function getSettings(){
+	protected function addSettingsFields(){
 		$value =  $this->page->icon;
 		$input =  api("extensions")->get("FieldtypeText");
 		$input->label = "Icon";
@@ -34,33 +28,12 @@ class AdminFieldEdit extends Extension {
 
 	}
 
-	private function addContentFieldgroup(){
-
-		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
-		$fieldgroup->label = "Content";
-		$fields = $this->page->template->fields;
-		foreach ($fields as $field) {
-			$input = $field->type;
-			$input->label = $field->label;
-			$input->columns = $field->attributes('col') ? (int) $field->attributes('col') : 12;
-			$input->value = $this->page->getUnformatted($field->name);
-			$input->attribute("name",$field->name);
-			$fieldgroup->add($input);
-		}
-
-		$this->form->add($fieldgroup);
-
-	}
 
 
 	public function render(){
 
 
-		$this->addContentFieldgroup();
-
-		
-
-		
+		$this->addDefaultFields();
 
 		$submitButtons =  api("extensions")->get("FieldtypeFormActions");
 		$submitButtons->dataObject = $this->page;
@@ -68,11 +41,7 @@ class AdminFieldEdit extends Extension {
 		$submitButtonsGroup->add($submitButtons);
 
 
-
-
-		$this->getSettings();
-
-
+		$this->addSettingsFields();
 
 		// $output = $this->tabs->render();
 		$this->form->add($submitButtonsGroup);
