@@ -12,7 +12,7 @@ $config->sessionName = 'xpages';
 $config->sessionExpireSeconds = 3600;
 
 
-$config->debug = true;
+$config->debug = false;
 
 // whether or not the saved data should be formatted (human readable) on save 
 $config->formattedXML = true;

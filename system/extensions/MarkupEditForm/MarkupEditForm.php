@@ -5,7 +5,7 @@ class MarkupEditForm extends Extension{
 	public $formID;
 	public $formElements = array();
 
-	public function add(MarkupFieldgroup $element){
+	public function add(MarkupFieldset $element){
 		$this->formElements[] = $element;
 	}
 

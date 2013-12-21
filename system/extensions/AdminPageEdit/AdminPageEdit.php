@@ -4,15 +4,24 @@ class AdminPageEdit extends Extension {
 	protected $title;
 	protected $form;
 	protected $page;
+	protected $template;
+
+	protected $new = false;
 
 	public function setup(){
 
-
 		$this->form = api("extensions")->get("MarkupEditForm");
-		$this->tabs = api("extensions")->get("MarkupTabs");
-		$this->page = api("pages")->get(api("input")->get->name);
 
-		$this->title = $this->page->title;
+		if ($this->new) {
+			$this->page = null;
+			$this->template = api("templates")->get(api("input")->get->template);
+			$this->title = "New: ".$this->template->label;
+		}
+		else{
+			$this->page = api("pages")->get(api("input")->get->name);
+			$this->template = $this->page->template;
+			$this->title = $this->page->title;
+		}
 
 		// process save
 		if (count(api("input")->post)) {
@@ -22,54 +31,76 @@ class AdminPageEdit extends Extension {
 
 	}
 
+	public function setNew(){
+		$this->new = true;
+	}
+
 	protected function addSettingsFields(){
 
-		$settings = api("extensions")->get("MarkupFieldgroup");
+		$settings = api("extensions")->get("MarkupFieldset");
 		$settings->label = "Settings";
 		$settings->add($this->getFieldTemplate());
+		$settings->add($this->getFieldParentSelect());
 
 		$this->form->add($settings);
 	}
 
 	protected function getFieldTemplate(){
 
-		$value =  $this->page->template->name;
+		$value =  $this->template->name;
 		$selectOptions = array();
 		$templates = api("templates")->all();
 		foreach ($templates as $t) {
 			$selectOptions["$t->label"] = "$t->name";
 		}
-		$input =  api("extensions")->get("FieldtypeSelect");
-		$input->label = "Template";
-		$input->columns = 12;
-		$input->setOptions($selectOptions);
-		$input->value = $value;
-		$input->attribute("name", "template");
+
 
 		$input =  api("extensions")->get("FieldtypeSelect");
 		$input->label = "Template";
-		$input->columns = 12;
+		$input->columns = 6;
 		$input->setOptions($selectOptions);
 		$input->value = $value;
 		$input->attribute("name", "template");
+		return $input;
+	}	
+
+	protected function getFieldParentSelect(){
+
+		$value =  $this->page->parent;
+
+		$selectOptions = array();
+		$templates = api("templates")->all();
+		foreach ($templates as $t) {
+			$selectOptions["$t->label"] = "$t->name";
+		}
+		$input =  api("extensions")->get("FieldtypeSelectPage");
+		$input->label = "Parent";
+		$input->columns = 6;
+		$input->value = $value;
+		$input->attribute("name", "template");
+
 		return $input;
 	}
 
 	protected function addDefaultFields(){
 
-		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
-		$fieldgroup->label = "{$this->title}";
-		$fields = $this->page->template->fields;
+		$fieldset = api("extensions")->get("MarkupFieldset");
+		$fieldset->label = "{$this->title}";
+		$fields = $this->template->fields;
 		foreach ($fields as $field) {
 			$input = $field->type;
 			$input->label = $field->label;
 			$input->columns = $field->attributes('col') ? (int) $field->attributes('col') : 12;
-			$input->value = $this->page->getUnformatted($field->name);
+
+			if(!is_null($this->page)){
+				$input->value = $this->page->getUnformatted($field->name);
+			} 
 			$input->attribute("name",$field->name);
-			$fieldgroup->add($input);
+
+			$fieldset->add($input);
 		}
 
-		$this->form->add($fieldgroup);
+		$this->form->add($fieldset);
 
 	}
 
@@ -81,7 +112,7 @@ class AdminPageEdit extends Extension {
 
 		$submitButtons =  api("extensions")->get("FieldtypeFormActions");
 		$submitButtons->dataObject = $this->page;
-		$submitButtonsGroup = api("extensions")->get("MarkupFieldgroup");
+		$submitButtonsGroup = api("extensions")->get("MarkupFieldset");
 		$submitButtonsGroup->add($submitButtons);
 
 

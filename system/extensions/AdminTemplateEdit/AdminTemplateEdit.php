@@ -10,6 +10,7 @@ class AdminTemplateEdit extends Extension {
 		$this->form = api("extensions")->get("MarkupEditForm");
 		$this->tabs = api("extensions")->get("MarkupTabs");
 		$this->page = api("templates")->get(api("input")->get->name);
+		$this->template = api("templates")->get("template");
 	}
 
 	private function getSettings(){
@@ -20,17 +21,17 @@ class AdminTemplateEdit extends Extension {
 		$input->value = $value;
 		$input->attribute("name", "icon");
 
-		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
-		$fieldgroup->label = "Settings";
-		$fieldgroup->add($input);
-		$this->form->add($fieldgroup);
+		$fieldset = api("extensions")->get("MarkupFieldset");
+		$fieldset->label = "Settings";
+		$fieldset->add($input);
+		$this->form->add($fieldset);
 
 	}
 
-	private function addContentFieldgroup(){
+	private function addContentFieldset(){
 
-		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
-		$fieldgroup->label = "Content";
+		$fieldset = api("extensions")->get("MarkupFieldset");
+		$fieldset->label = "Content";
 		$fields = $this->page->template->fields;
 		foreach ($fields as $field) {
 			$input = $field->type;
@@ -38,10 +39,10 @@ class AdminTemplateEdit extends Extension {
 			$input->columns = $field->attributes('col') ? (int) $field->attributes('col') : 12;
 			$input->value = $this->page->{$field->name};
 			$input->attribute("name",$field->name);
-			$fieldgroup->add($input);
+			$fieldset->add($input);
 		}
 
-		$this->form->add($fieldgroup);
+		$this->form->add($fieldset);
 
 	}
 
@@ -49,13 +50,13 @@ class AdminTemplateEdit extends Extension {
 	public function render(){
 
 
-		$this->addContentFieldgroup();
+		$this->addContentFieldset();
 
 
 
 		$submitButtons =  api("extensions")->get("FieldtypeFormActions");
 		$submitButtons->dataObject = $this->page;
-		$submitButtonsGroup = api("extensions")->get("MarkupFieldgroup");
+		$submitButtonsGroup = api("extensions")->get("MarkupFieldset");
 		$submitButtonsGroup->add($submitButtons);
 
 

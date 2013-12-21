@@ -1,5 +1,5 @@
 <?php 
-class MarkupFieldgroup extends Extension{
+class MarkupFieldset extends Extension{
 	// array of field markup to be rendered
 
 	public $fields = array();

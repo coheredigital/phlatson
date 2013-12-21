@@ -7,7 +7,7 @@
  */
 
 
-class Template extends Fieldgroup{
+class Template extends Fieldset{
 	protected $dataFolder = "templates/";
 
 

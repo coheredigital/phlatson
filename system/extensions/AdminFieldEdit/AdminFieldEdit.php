@@ -6,7 +6,7 @@ class AdminFieldEdit extends AdminPageEdit {
 		parent::setup();
 
 		$this->page = api("fields")->get(api("input")->get->name);
-
+		$this->template = api("templates")->get("field");
 		$this->title = $this->page->label;
 
 
@@ -21,10 +21,10 @@ class AdminFieldEdit extends AdminPageEdit {
 		$input->value = $value;
 		$input->attribute("name", "icon");
 
-		$fieldgroup = api("extensions")->get("MarkupFieldgroup");
-		$fieldgroup->label = "Settings";
-		$fieldgroup->add($input);
-		$this->form->add($fieldgroup);
+		$fieldset = api("extensions")->get("MarkupFieldset");
+		$fieldset->label = "Settings";
+		$fieldset->add($input);
+		$this->form->add($fieldset);
 
 	}
 
@@ -37,7 +37,7 @@ class AdminFieldEdit extends AdminPageEdit {
 
 		$submitButtons =  api("extensions")->get("FieldtypeFormActions");
 		$submitButtons->dataObject = $this->page;
-		$submitButtonsGroup = api("extensions")->get("MarkupFieldgroup");
+		$submitButtonsGroup = api("extensions")->get("MarkupFieldset");
 		$submitButtonsGroup->add($submitButtons);
 
 

@@ -90,7 +90,7 @@ abstract class Fieldtype extends Extension{
 				if ($this->label) {
 					$output .= "<div class='field-heading'>";
 						$output .= "<label for=''>";
-						$output .= "{$this->label}";
+						$output .= $this->label ? $this->label : $this->attribute("name");
 						$output .= "</label>";
 					$output .= "</div>";
 				}

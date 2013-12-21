@@ -1,6 +1,6 @@
 <?php
 
-class Fieldgroups extends ObjectArray{
+class Fieldsets extends ObjectArray{
 
 	public function __construct(){
 		$this->dataFolder = "/fieldgroups/";
