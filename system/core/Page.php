@@ -8,23 +8,11 @@ class Page extends DataObject{
 	function __construct($url = false){
 		
 		parent::__construct($url);
-
-		// $this->baseUrl = $this->getBaseUrl();
-		// handle admin page request
-		if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
-			$this->layout = $this->api('config')->paths->admin."index.php";
-		}	
-
 	}
 
-	// protected function setBasePath(){
-	// 	return api('config')->paths->content;
-	// }	
+	public function children()
+	{
 
-
-
-
-	public function children(){
 		if ($this->path === null) return; // break out if no valid path
 		// get all subfolder of current page path
 		
@@ -55,7 +43,9 @@ class Page extends DataObject{
       	return $children;
 	}
 
-	public function parent(){
+	public function parent()
+	{
+
 		$requests = $this->urlRequest;
 		array_pop($requests); // remove current (last) item to find parent
 
@@ -66,10 +56,13 @@ class Page extends DataObject{
 	      	return $page;
 		}
 		return false;
+
 	}
 
 
-	public function parents(){
+	public function parents()
+	{
+
 		$requests = $this->urlRequest;
 		$parents = array();
 		$urls = array();

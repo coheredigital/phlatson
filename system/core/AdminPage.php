@@ -13,11 +13,12 @@ $output = "";
 class AdminPage extends Page{
 
 	// define some protected variable to be used by all page objects
-
-	function __construct($url = false){
+	function __construct($url = false)
+	{
 		parent::__construct($url);
-
-		if ($this->urlRequest[0] == "admin") {
+		$this->layout = $this->api('config')->paths->admin."index.php";
+		
+		if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
 			array_shift($this->urlRequest);
 		}
 
@@ -27,10 +28,14 @@ class AdminPage extends Page{
 	}
 
 
-	public function url(){
+	public function url()
+	{
 		return 	$this->api('config')->urls->root.$this->api('config')->adminUrl."/".$this->directory;
 	}
-	public function get($name){
+
+
+	public function get($name)
+	{
 		switch ($name) {
 			case 'extension':
 				return $this->getExtension();
@@ -47,15 +52,17 @@ class AdminPage extends Page{
 	}
 
 
-
-	protected function getExtension(){
+	protected function getExtension()
+	{
 		if ($this->data->extension) {
 			$extension = api("extensions")->get("{$this->data->extension}");
 			return $extension;
 		}
 	}
 
-	public function render(){
+
+	public function render()
+	{
 		if ($this->data->extension) {
 			return $this->extension->render();
 		}

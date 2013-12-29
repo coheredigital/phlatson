@@ -3,17 +3,23 @@ class Input{
 
 	public $url;
 	public $query;
+	public $request;
 
-	function __construct(){
-		$this->_setup();
+	function __construct()
+	{
+		$this->setup();
 	}
 
 
-	protected function _setup(){
+	protected function setup()
+	{
 
 		$this->url = isset($_GET['_url']) ? $_GET['_url'] : "";
 		unset($_GET['_url']);
+		
 		$this->query = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
+
+		$this->request = explode("/",  $this->url);
 
 		$get = new stdClass();
 		foreach ($_GET as $key => $value) {
@@ -22,15 +28,11 @@ class Input{
 		}
 		if (count((array) $get)) $this->get = $get;
 
-
-
 		$post = new stdClass();
 		foreach ($_POST as $key => $value) {
 			$post->$key = $value;
 		}
 		if (count((array) $post)) $this->post = $post;
-
-
 
 	}
 
