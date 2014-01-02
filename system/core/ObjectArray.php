@@ -83,6 +83,33 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
 
 	public function find($selector){
 
+		$selectors = array();
+
+		if (strpos($selector, ",")) {
+			$array = explode(",", $selector);
+			foreach ($array as $selector) {
+				if (strpos($selector, "=")) {
+					$selector = explode("=", $selector);
+					$key = trim($selector[0]);
+					$value = trim($selector[1]);
+				}
+				$selectors[$key] = $value;
+
+				
+
+			}
+
+		}
+		else{
+			if (strpos($selector, "=")) {
+				$selector = explode("=", $selector);
+				$key = trim($selector[0]);
+				$value = trim($selector[1]);
+			}
+			$selectors[$key] = $value;
+		}
+
+		var_dump($selectors);
 
 	}
 

@@ -10,6 +10,10 @@ if ($user->isGuest() && $page->name != "login") {
 
 $adminHome = new AdminPage("/"); // create home page object for simple ref back to admin root
 
+if ($page->directory == $adminHome->directory) {
+	$pages->find("name=content");
+
+}
 // admin scripts and themes (default always needed)
 
 $config->styles->add("{$config->urls->admin}styles/adminTheme.css");
