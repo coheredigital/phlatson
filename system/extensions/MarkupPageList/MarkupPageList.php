@@ -8,9 +8,8 @@ class MarkupPageList {
 
 	public function renderPageTitle(\Page $page){
 		$output .= "<div class='page-tree-item'>";
-		$output .= $page->title;
+		$output .= "<a class='' href='".api('config')->urls->root.api("config")->adminUrl."/pages/edit/?name=".$page->directory."'>{$page->title}</i></a>";
 		$output .= "<div class='page-tree-item-buttons'>";
-		$output .= "<a class='button button-secondary pull-right' href='".api('config')->urls->root.api("config")->adminUrl."/pages/edit/?name=".$page->directory."'><i class='icon icon-edit'></i></a>";
 		$output .= "<a class='button button-soft pull-right' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
 		$output .= "</div>";
 		$output .= "</div>";
