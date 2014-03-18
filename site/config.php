@@ -1,6 +1,6 @@
 <?php
 
-if(!defined("JPAGES")) die();
+if(!defined("XPAGES")) die();
 
 
 $config->adminUrl = "admin";

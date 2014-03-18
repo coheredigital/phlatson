@@ -87,17 +87,17 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 * @param  string $key
 	 * @return int
 	 */
-	public function getFlag($key){
-		return isset($this->flags[$key]) ? $this->flags[$key] : 0;
-	}
+	// public function getFlag($key){
+	// 	return isset($this->flags[$key]) ? $this->flags[$key] : 0;
+	// }
 
 	/**
 	 * checks if page is published
 	 * @return boolean converted from int stored in $this->flags array
 	 */
-	public function isPublished(){
-		return $this->getFlag("published") ? true : false;
-	}
+	// public function isPublished(){
+	// 	return $this->getFlag("published") ? true : false;
+	// }
 
 	/* MAGIC!! */
 	public function __get($name){
@@ -139,8 +139,6 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
-
-
 	/**
 	 * Load XML file into data object for access and reference
 	 */
@@ -149,9 +147,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		if (is_file($file)) {
 			return simplexml_load_file($file);
 		}
-		return null;
 	}	
-
 
 
 	protected function createUrl($array){
