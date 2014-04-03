@@ -18,10 +18,7 @@ class FieldtypeMarkdown extends FieldtypeTextarea{
 
 
 	public function getOutput($value){
-
-		$value = Parsedown::instance()->parse($value);
-
-		return $value;
+		return Parsedown::instance()->parse($value);
 	}
 
 	public function getEdit($value){

@@ -1,9 +1,8 @@
 <?php
 
-
 class User extends DataObject{
-	protected $dataFolder = "users/";
 
+	protected $dataFolder = "users/";
 
 	/**
 	 * is this the guest user?

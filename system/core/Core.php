@@ -12,7 +12,7 @@ abstract class Core{
 	protected static $registry = null;
 	private $className = null;
 
-	/*Init function sets up default variables and other tasks*/
+	/*Init function sets up default api objects*/
 	public static function init(Config $config)
 	{
 		self::api('config', $config, true);

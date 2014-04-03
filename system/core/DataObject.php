@@ -239,16 +239,10 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 		// create a domdoc to store saved values
 		$save = new DomDocument;
-		// set the formatting if set in config
-		if ($this->api("config")->formattedXML) {
-			$save->formatOutput = true;
-			$save->preserveWhiteSpace = false;
-		}
-		else{
-			$save->formatOutput = false;
-			$save->preserveWhiteSpace = false;
-		}
 
+		// set the formatting
+		$save->formatOutput = true;
+		$save->preserveWhiteSpace = false;
 
 		// add the root element
 		$root = $save->createElement("root");

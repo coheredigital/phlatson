@@ -4,5 +4,5 @@
 	<?= $page->content ?>
 	<?= $page->markdown ?>
 </div>
-<?php 
-include 'includes/foot.inc'; ?>
+
+<?php include 'includes/foot.inc' ?>

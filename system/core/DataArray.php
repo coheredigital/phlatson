@@ -46,6 +46,11 @@ abstract class DataArray extends Core implements IteratorAggregate{
 		return new ArrayObject($this->data); 
 	}
 
+	// allows the data array to be counted directly
+	public function count() {
+		return count($this->data);
+	}
+
 	public function __unset($key) {
 		$this->remove($key); 
 	}
