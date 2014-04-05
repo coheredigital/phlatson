@@ -1,6 +1,6 @@
 <?php
 
-class Fieldset extends DataObject{
+class Fieldset extends Object{
 	protected $dataFolder = "fieldgroups/";
 
 	public function fields(){

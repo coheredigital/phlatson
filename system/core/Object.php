@@ -1,6 +1,6 @@
 <?php
 
-abstract class DataObject extends Core implements Countable, IteratorAggregate {
+abstract class Object extends Core implements Countable, IteratorAggregate {
 
 	const DATA_FILE = "data.xml";
 
@@ -40,11 +40,11 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 			$sitePath = realpath($this->api('config')->paths->site.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
 			$systemPath = realpath($this->api('config')->paths->system.$this->dataFolder.$this->directory).DIRECTORY_SEPARATOR;
 
-			if (is_file($sitePath.DataObject::DATA_FILE)) {
+			if (is_file($sitePath.Object::DATA_FILE)) {
 				$this->path = $sitePath;
 				$this->location = "site/";
 			}
-			else if(is_file($systemPath.DataObject::DATA_FILE)){
+			else if(is_file($systemPath.Object::DATA_FILE)){
 				$this->path = $systemPath;
 				$this->location = "system/";
 			}
@@ -53,7 +53,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 			$path = realpath($path).DIRECTORY_SEPARATOR;
 
-			if (is_file($path.DataObject::DATA_FILE)) {
+			if (is_file($path.Object::DATA_FILE)) {
 				$this->path = $path;
 			}
 			
@@ -143,7 +143,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	 * Load XML file into data object for access and reference
 	 */
 	protected function getXML(){
-		$file = $this->path.DataObject::DATA_FILE;
+		$file = $this->path.Object::DATA_FILE;
 		if (is_file($file)) {
 			return simplexml_load_file($file);
 		}
@@ -173,16 +173,14 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 
 
 
-	public function getTemplate(){
+	public function getTemplate($name = null){
 		// $templateName = $this->data->template;
-		$templateName = $this->data->template;
+		$templateName = $name ? $name : $this->data->template;
 		if ($templateName) {
 			$template = new Template($templateName);
 		}
 		return $template;
 	}
-
-
 
 
 	protected function getFormatted($name, $type){
@@ -230,11 +228,7 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 	}
 
 
-
-
-
-
-	public function save($postData){
+	public function save($postData = null){
 
 
 		// create a domdoc to store saved values
@@ -253,8 +247,17 @@ abstract class DataObject extends Core implements Countable, IteratorAggregate {
 		// loop through the templates available fields so that we only set values 
 		// for available feilds and ignore the rest
 		$fields = $this->template->fields;
+
+//        var_dump($this);
+//        var_dump($this->get("name"));
+//        var_dump($this->get("fullname"));
+//        var_dump($this->get("password"));
+//        var_dump($this->get("template")); die();
+
 		foreach ($fields as $field) {
-			$value = $postData->{$field->name};
+            var_dump($field);
+
+			$value = $postData->{$field->name} ? $postData->{$field->name} : $this->{$field->name};
 			
 			$fieldtype = $field->type();
 

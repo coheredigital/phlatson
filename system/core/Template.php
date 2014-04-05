@@ -11,11 +11,6 @@ class Template extends Fieldset{
 	protected $dataFolder = "templates/";
 
 
-	/* this needs a better method */
-	public function getTemplate(){
-		$template = new Template("template");
-		return $template;
-	}
 
 	private function getLayout(){
 		$layoutFile = $this->api('config')->paths->layouts.$this->name.".php";
@@ -25,6 +20,9 @@ class Template extends Fieldset{
 
 	public function get($name){
 		switch ($name) {
+            case 'template':
+                return $this->getTemplate("template");
+                break;
 			case 'layout':
 				return $this->getLayout();
 				break;

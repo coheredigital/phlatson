@@ -1,4 +1,5 @@
-<user>
-	<fullname>Adam Spruijt</fullname>
-	<pass>N0n3848y</pass>
-</user>
+<?xml version="1.0"?>
+<root>
+    <fullname>Adam Spruijt</fullname>
+    <password>$2y$10$xVq4dmNWUDFB73DS.e98wecNfICNsSIV22bcwI2OBPWECCektZpTi</password>
+</root>

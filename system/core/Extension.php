@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class Extension extends DataObject{
+abstract class Extension extends Object{
 	
 	protected $dataFolder = "extensions/";
 

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<template>
-  <field col="12">username</field>
-  <field col="12">password</field>
-  <label>User</label>
-  <name>user</name>
-</template>

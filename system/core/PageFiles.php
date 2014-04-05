@@ -1,7 +1,7 @@
 <?php
 
 
-class Page extends DataObject{
+class Page extends Object{
 	protected $dataFolder = "pages/";
 
 

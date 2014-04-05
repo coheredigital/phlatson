@@ -1,6 +1,6 @@
 <?php
 
-class Field extends DataObject{
+class Field extends Object{
 	protected $dataFolder = "fields/";
 	protected $attributes = null;
 

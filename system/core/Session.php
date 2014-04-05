@@ -212,20 +212,21 @@ class Session extends Core implements IteratorAggregate{
     }
 
 
-	public function login($name, $pass) 
+	public function login($name, $password)
 	{
 		// should sanitize name
 		$user = $this->api('users')->get("$name"); 
 		if (!$user instanceof User) {
 			throw new Exception("User {$name} not found!");
 		}
-		if ( $pass == $user->pass) { 
-			$this->regenerate();
-			$this->set('_user_name', $user->name); 
+
+		if ( $user->authenticate($password)) {
+			$this->regenerate(); // rebuild session data
+			$this->set('_user_name', $user->name);
 			$this->set('_user_time', time());
 			$this->api('user', $user);
 		}
-		return null; 
+		return null;
 	}
 
 	public function logout()
