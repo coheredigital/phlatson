@@ -12,7 +12,7 @@ files shoulde be stored in a key => value array where key is /path/to/folder/ an
 
  */
 
-class Files extends ObjectArray
+class Files extends Objects
 {
 
     protected $dataFile = "files.xml";

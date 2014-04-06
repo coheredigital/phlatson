@@ -13,8 +13,5 @@
                 </div>
             </div>
         <?php endif ?>
-        <pre>
-        <?php var_dump($page->template->fields) ?>
-    </pre>
     </div>
 <?php include 'includes/foot.inc'; ?>

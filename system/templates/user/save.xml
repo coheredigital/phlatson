@@ -2,7 +2,7 @@
 <root>
   <label>User</label>
   <fields>
-    <field col="6">fullname</field>
-    <field col="6">password</field>
+    <field col="12">fullname</field>
+    <field col="12">password</field>
   </fields>
 </root>

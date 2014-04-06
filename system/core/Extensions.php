@@ -1,7 +1,7 @@
 <?php
 
 
-class Extensions extends ObjectArray
+class Extensions extends Objects
 {
 
     protected $root = "extensions/";

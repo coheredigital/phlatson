@@ -5,7 +5,7 @@ class Page extends Object
 {
     protected $dataFolder = "pages/";
 
-    protected $defaultFields = array("template", "name", "parent");
+    public $defaultFields = array("template", "name", "parent");
 
     function __construct($url = false)
     {
@@ -14,8 +14,7 @@ class Page extends Object
             $field = api("fields")->get($fieldName);
             array_push($defaultFields, $field);
         }
-        $this->defaultFields = $defaultFields; // replace default fields named array with ObjectArray
-
+        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
         parent::__construct($url);
     }
@@ -183,6 +182,9 @@ class Page extends Object
                 break;
             case 'images':
                 return $this->images();
+                break;
+            case 'fields':
+                return $this->template->fields($this->defaultFields);
                 break;
             case 'layout':
                 // alias for $page->template->layout for simplicity

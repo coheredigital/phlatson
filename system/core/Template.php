@@ -5,7 +5,7 @@ class Template extends Object
 
     protected $dataFolder = "templates/";
 
-    public function fields()
+    public function fields($fieldArray = null)
     {
         $fieldsArray = $this->find("//field");
 
@@ -22,8 +22,8 @@ class Template extends Object
 
         }
 
-        if ($this->defaultFields) {
-
+        if (is_array($fieldArray)) {
+            array_merge($fields,$fieldArray);
         }
 
         return $fields;

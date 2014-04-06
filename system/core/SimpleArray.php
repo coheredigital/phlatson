@@ -3,8 +3,8 @@
 /*
 
 Basic data array to access simple arrays like object and provide common funtionality in the api
-may not be needed long term, possible that ObjectArray could extend from this to simplify the methods in 
-ObjectArray and allow natural fallbacks
+may not be needed long term, possible that Objects could extend from this to simplify the methods in
+Objects and allow natural fallbacks
 
  */
 

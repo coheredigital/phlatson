@@ -1,7 +1,7 @@
 <?php
 
 
-class Pages extends ObjectArray
+class Pages extends Objects
 {
 
     protected $allowRootRequest = true; // allows a "root" or null request to check for a data file in the "root"

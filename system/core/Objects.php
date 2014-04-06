@@ -1,6 +1,6 @@
 <?php
 
-abstract class ObjectArray extends Core implements IteratorAggregate, Countable
+abstract class Objects extends Core implements IteratorAggregate, Countable
 {
 
     public $data = array();
@@ -85,37 +85,6 @@ abstract class ObjectArray extends Core implements IteratorAggregate, Countable
         return $this;
     }
 
-
-    public function find($selector)
-    {
-
-        $selectors = array();
-
-        if (strpos($selector, ",")) {
-            $array = explode(",", $selector);
-            foreach ($array as $selector) {
-                if (strpos($selector, "=")) {
-                    $selector = explode("=", $selector);
-                    $key = trim($selector[0]);
-                    $value = trim($selector[1]);
-                }
-                $selectors[$key] = $value;
-
-
-            }
-
-        } else {
-            if (strpos($selector, "=")) {
-                $selector = explode("=", $selector);
-                $key = trim($selector[0]);
-                $value = trim($selector[1]);
-            }
-            $selectors[$key] = $value;
-        }
-
-        var_dump($selectors);
-
-    }
 
 
     public function all()
