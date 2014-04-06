@@ -1,52 +1,58 @@
-<?php 
+<?php
 
 // columns should be an array of name retrivable from the data objects passed to the rows
-class MarkupTable extends Extension {
+class MarkupTable extends Extension
+{
 
-	protected $rows;
-	protected $columns;
+    protected $rows;
+    protected $columns;
 
-	public function setColumns(array $array){
-		$this->columns = $array;
-	}
+    public function setColumns(array $array)
+    {
+        $this->columns = $array;
+    }
 
-	public function addRow(array $array){
-		$this->rows[] = $array;
-	}
+    public function addRow(array $array)
+    {
+        $this->rows[] = $array;
+    }
 
 
-	public function render(){
+    public function render()
+    {
 
-		$output = "";
+        $output = "";
 
-		// return false if columns or rows data missing, not much of a table without them
-		if (!$this->columns || !$this->rows) return false;
+        // return false if columns or rows data missing, not much of a table without them
+        if (!$this->columns || !$this->rows) {
+            return false;
+        }
 
-		// create the table header 
-		$columnsOutput = "";
-		foreach ($this->columns as $key => $value) {
-			// if $key is string use it for heading label
-			$value = is_string($key) ? $key : $value;
-			$columnsOutput .= "<th>{$value}</th>";
-		}
-		$thead = "<thead><tr>{$columnsOutput}<tr></thead>";
-		
-		$rowsOutput = "";
-		foreach ($this->rows as $row) {
-			$rowOutput = "";
-			foreach ($this->columns as $column) {
-				$value = $row["$column"];
-				$rowOutput .= "<td>{$value}</td>";
-			}
-			$rowsOutput .= "<tr>{$rowOutput}</tr>";
-		}
-		$tbody = "<tbody><tr>{$rowsOutput}<tr></tbody>";
+        // create the table header
+        $columnsOutput = "";
+        foreach ($this->columns as $key => $value) {
+            // if $key is string use it for heading label
+            $value = is_string($key) ? $key : $value;
+            $columnsOutput .= "<th>{$value}</th>";
+        }
+        $thead = "<thead><tr>{$columnsOutput}<tr></thead>";
 
-		// wrap $output in "table" markup
-		$output = "<table>{$thead}{$tbody}</table>";
+        $rowsOutput = "";
+        foreach ($this->rows as $row) {
+            $rowOutput = "";
+            foreach ($this->columns as $column) {
+                $value = $row["$column"];
+                $rowOutput .= "<td>{$value}</td>";
+            }
+            $rowsOutput .= "<tr>{$rowOutput}</tr>";
+        }
+        $tbody = "<tbody><tr>{$rowsOutput}<tr></tbody>";
 
-		return $output;
+        // wrap $output in "table" markup
+        $output = "<table>{$thead}{$tbody}</table>";
 
-	}
+        return $output;
+
+    }
 
 }

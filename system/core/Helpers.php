@@ -1,11 +1,10 @@
-<?php 
+<?php
+
 /**
  * Various helper classes  :)
  */
-
-
-class Helpers {
-
+class Helpers
+{
 
 
 }

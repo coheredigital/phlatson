@@ -1,6 +1,8 @@
 <?php
 
-if(!defined("XPAGES")) die();
+if (!defined("XPAGES")) {
+    die();
+}
 
 $config->adminUrl = "admin";
 $config->timezone = 'America/New_York';

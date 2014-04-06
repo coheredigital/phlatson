@@ -2,8 +2,8 @@
 
 // none yet
 
-interface RecursiveSearch{
-
+interface RecursiveSearch
+{
 
 
 }
@@ -18,10 +18,12 @@ interface RecursiveSearch{
 
 // }
 
-interface ConfigurablePlugin {
+interface ConfigurablePlugin
+{
 
-	// get and set data in /assets/plugins/{$className}.xml
-	public function __get($key);
-	public function __set($key, $value); 
+    // get and set data in /assets/plugins/{$className}.xml
+    public function __get($key);
+
+    public function __set($key, $value);
 
 }

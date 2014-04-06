@@ -1,11 +1,13 @@
 <?php
 
 // returns api object for use basically anywhere
-function api($name) {
-	return Core::api($name);
+function api($name)
+{
+    return Core::api($name);
 }
 
-function pretty_dump($var){
+function pretty_dump($var)
+{
     echo "</pre>";
     echo var_dump($var);
     echo "</pre>";
@@ -24,16 +26,27 @@ function unregister_GLOBALS()
     }
 
     // Variables that shouldn't be unset
-    $noUnset = array('GLOBALS',  '_GET',
-                     '_POST',    '_COOKIE',
-                     '_REQUEST', '_SERVER',
-                     '_ENV',     '_FILES');
+    $noUnset = array(
+        'GLOBALS',
+        '_GET',
+        '_POST',
+        '_COOKIE',
+        '_REQUEST',
+        '_SERVER',
+        '_ENV',
+        '_FILES'
+    );
 
-    $input = array_merge($_GET,    $_POST,
-                         $_COOKIE, $_SERVER,
-                         $_ENV,    $_FILES,
-                         isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
-    
+    $input = array_merge(
+        $_GET,
+        $_POST,
+        $_COOKIE,
+        $_SERVER,
+        $_ENV,
+        $_FILES,
+        isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array()
+    );
+
     foreach ($input as $k => $v) {
         if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) {
             unset($GLOBALS[$k]);
@@ -58,12 +71,13 @@ if (!defined('PASSWORD_DEFAULT')) {
      * Hash the password using the specified algorithm
      *
      * @param string $password The password to hash
-     * @param int    $algo     The algorithm to use (Defined by PASSWORD_* constants)
-     * @param array  $options  The options for the algorithm to use
+     * @param int $algo The algorithm to use (Defined by PASSWORD_* constants)
+     * @param array $options The options for the algorithm to use
      *
      * @return string|false The hashed password, or false on error.
      */
-    function password_hash($password, $algo, array $options = array()) {
+    function password_hash($password, $algo, array $options = array())
+    {
         if (!function_exists('crypt')) {
             trigger_error("Crypt must be loaded for password_hash to function", E_USER_WARNING);
             return null;
@@ -73,7 +87,10 @@ if (!defined('PASSWORD_DEFAULT')) {
             return null;
         }
         if (!is_int($algo)) {
-            trigger_error("password_hash() expects parameter 2 to be long, " . gettype($algo) . " given", E_USER_WARNING);
+            trigger_error(
+                "password_hash() expects parameter 2 to be long, " . gettype($algo) . " given",
+                E_USER_WARNING
+            );
             return null;
         }
         switch ($algo) {
@@ -83,7 +100,10 @@ if (!defined('PASSWORD_DEFAULT')) {
                 if (isset($options['cost'])) {
                     $cost = $options['cost'];
                     if ($cost < 4 || $cost > 31) {
-                        trigger_error(sprintf("password_hash(): Invalid bcrypt cost parameter specified: %d", $cost), E_USER_WARNING);
+                        trigger_error(
+                            sprintf("password_hash(): Invalid bcrypt cost parameter specified: %d", $cost),
+                            E_USER_WARNING
+                        );
                         return null;
                     }
                 }
@@ -94,7 +114,10 @@ if (!defined('PASSWORD_DEFAULT')) {
                 $hash_format = sprintf("$2y$%02d$", $cost);
                 break;
             default:
-                trigger_error(sprintf("password_hash(): Unknown password hashing algorithm: %s", $algo), E_USER_WARNING);
+                trigger_error(
+                    sprintf("password_hash(): Unknown password hashing algorithm: %s", $algo),
+                    E_USER_WARNING
+                );
                 return null;
         }
         if (isset($options['salt'])) {
@@ -104,11 +127,11 @@ if (!defined('PASSWORD_DEFAULT')) {
                 case 'integer':
                 case 'double':
                 case 'string':
-                    $salt = (string) $options['salt'];
+                    $salt = (string)$options['salt'];
                     break;
                 case 'object':
                     if (method_exists($options['salt'], '__tostring')) {
-                        $salt = (string) $options['salt'];
+                        $salt = (string)$options['salt'];
                         break;
                     }
                 case 'array':
@@ -118,7 +141,14 @@ if (!defined('PASSWORD_DEFAULT')) {
                     return null;
             }
             if (strlen($salt) < $required_salt_len) {
-                trigger_error(sprintf("password_hash(): Provided salt is too short: %d expecting %d", strlen($salt), $required_salt_len), E_USER_WARNING);
+                trigger_error(
+                    sprintf(
+                        "password_hash(): Provided salt is too short: %d expecting %d",
+                        strlen($salt),
+                        $required_salt_len
+                    ),
+                    E_USER_WARNING
+                );
                 return null;
             } elseif (0 == preg_match('#^[a-zA-Z0-9./]+$#D', $salt)) {
                 $salt = str_replace('+', '.', base64_encode($salt));
@@ -191,7 +221,8 @@ if (!defined('PASSWORD_DEFAULT')) {
      *
      * @return array The array of information about the hash.
      */
-    function password_get_info($hash) {
+    function password_get_info($hash)
+    {
         $return = array(
             'algo' => 0,
             'algoName' => 'unknown',
@@ -211,13 +242,14 @@ if (!defined('PASSWORD_DEFAULT')) {
      *
      * If the answer is true, after validating the password using password_verify, rehash it.
      *
-     * @param string $hash    The hash to test
-     * @param int    $algo    The algorithm used for new password hashes
-     * @param array  $options The options array passed to password_hash
+     * @param string $hash The hash to test
+     * @param int $algo The algorithm used for new password hashes
+     * @param array $options The options array passed to password_hash
      *
      * @return boolean True if the password needs to be rehashed.
      */
-    function password_needs_rehash($hash, $algo, array $options = array()) {
+    function password_needs_rehash($hash, $algo, array $options = array())
+    {
         $info = password_get_info($hash);
         if ($info['algo'] != $algo) {
             return true;
@@ -237,11 +269,12 @@ if (!defined('PASSWORD_DEFAULT')) {
      * Verify a password against a hash using a timing attack resistant approach
      *
      * @param string $password The password to verify
-     * @param string $hash     The hash to verify against
+     * @param string $hash The hash to verify against
      *
      * @return boolean If the password matches the hash
      */
-    function password_verify($password, $hash) {
+    function password_verify($password, $hash)
+    {
         if (!function_exists('crypt')) {
             trigger_error("Crypt must be loaded for password_verify to function", E_USER_WARNING);
             return false;

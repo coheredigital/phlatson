@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <field>
-	<label>Label</label>
-	<fieldtype>FieldtypeText</fieldtype>
-	<inputtype>InputtypeText</inputtype>
+    <label>Label</label>
+    <fieldtype>FieldtypeText</fieldtype>
+    <inputtype>InputtypeText</inputtype>
 </field>

@@ -1,46 +1,47 @@
-.FieldtypeFields_fieldsGrid{
-	position: relative;
-	/*background: #fafafa;*/
-	/*border: 1px solid #eee;*/
-/*	padding: 2px;
-	padding-top: 6px;*/
+.FieldtypeFields_fieldsGrid {
+    position: relative;
+    /*background: #fafafa;*/
+    /*border: 1px solid #eee;*/
+    /*	padding: 2px;
+        padding-top: 6px;*/
 }
-.FieldtypeFields_fieldItem{
+
+.FieldtypeFields_fieldItem {
     position: absolute;
     height: 75px;
 }
-.FieldtypeFields_fieldItem.resizing{
+
+.FieldtypeFields_fieldItem.resizing {
     z-index: 100 !important;
 }
 
-
-
-
-
-.FieldtypeFields_fieldItem{
+.FieldtypeFields_fieldItem {
     position: relative;
     display: inline-block;
     float: left;
 }
+
 .FieldtypeFields_fieldItem.placeholder {
     background: transparent !important;
     min-width: 8.33% !important;
 }
-.FieldtypeFields_fieldItem.placeholder:after { 
+
+.FieldtypeFields_fieldItem.placeholder:after {
     /* done this way to better fit the size of the fieldContent since the gutter and padding settings in ss dont work properly*/
     content: "";
     position: absolute;
-     border: 1px dashed #aaa;
+    border: 1px dashed #aaa;
     background: #fff;
     top: 4px;
     bottom: 4px;
     left: 4px;
     right: 4px;
 }
-.FieldtypeFields_fieldContent{
+
+.FieldtypeFields_fieldContent {
     background: #eee;
     position: absolute;
-    top: 0;    
+    top: 0;
     bottom: 0;
     right: 0;
     left: 0;
@@ -49,43 +50,81 @@
     overflow: hidden;
     border: 1px solid #ddd;
 }
-.FieldtypeFields_fieldContent .FieldtypeFields_label{
+
+.FieldtypeFields_fieldContent .FieldtypeFields_label {
     color: #444;
 }
-.FieldtypeFields_fieldContent .FieldtypeFields_name{
+
+.FieldtypeFields_fieldContent .FieldtypeFields_name {
     font-family: monospace;
     font-size: 12px;
     font-weight: bold;
 }
-.FieldtypeFields_fieldContent .colCount{
-	font-size: 12px;
-	bottom: 0.4em;
-	right: 1em;
-	position: absolute;
-}
-.FieldtypeFields_fieldContent .colCount span{
-	font-size: 16px;
-	font-weight: bold;
-	color: #444b65;
+
+.FieldtypeFields_fieldContent .colCount {
+    font-size: 12px;
+    bottom: 0.4em;
+    right: 1em;
+    position: absolute;
 }
 
-.FieldtypeFields_fieldsGrid > .col_12 { width: 100% !important }
-.FieldtypeFields_fieldsGrid > .col_11 { width: 91.66% !important }
-.FieldtypeFields_fieldsGrid > .col_10 { width: 83.333% !important }
-.FieldtypeFields_fieldsGrid > .col_9 { width: 75% !important }
-.FieldtypeFields_fieldsGrid > .col_8 { width: 66.66% !important }
-.FieldtypeFields_fieldsGrid > .col_7 { width: 58.33% !important }
-.FieldtypeFields_fieldsGrid > .col_6 { width: 50% !important }
-.FieldtypeFields_fieldsGrid > .col_5 { width: 41.66% !important }
-.FieldtypeFields_fieldsGrid > .col_4 { width: 33.33% !important }
-.FieldtypeFields_fieldsGrid > .col_3 { width: 25% !important }
-.FieldtypeFields_fieldsGrid > .col_2 { width: 16.667% !important }
-.FieldtypeFields_fieldsGrid > .col_1 { width: 8.33% !important }
+.FieldtypeFields_fieldContent .colCount span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444b65;
+}
 
+.FieldtypeFields_fieldsGrid > .col_12 {
+    width: 100% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_11 {
+    width: 91.66% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_10 {
+    width: 83.333% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_9 {
+    width: 75% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_8 {
+    width: 66.66% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_7 {
+    width: 58.33% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_6 {
+    width: 50% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_5 {
+    width: 41.66% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_4 {
+    width: 33.33% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_3 {
+    width: 25% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_2 {
+    width: 16.667% !important
+}
+
+.FieldtypeFields_fieldsGrid > .col_1 {
+    width: 8.33% !important
+}
 
 /* jquery ui specific */
 
-.ui-resizable-handle{
+.ui-resizable-handle {
     position: absolute;
     display: none !important;
     cursor: e-resize;
@@ -97,12 +136,14 @@
     background: #999;
 
 }
-.FieldtypeFields_fieldItem:hover .ui-resizable-handle{
+
+.FieldtypeFields_fieldItem:hover .ui-resizable-handle {
     display: block !important;
 }
+
 .FieldtypeFields_fieldItem.resizing .ui-resizable-handle,
-.ui-resizable-handle:hover{
+.ui-resizable-handle:hover {
     display: block !important;
     /*background: #56ba6d !important;*/
-	background: #444 !important;
+    background: #444 !important;
 }

@@ -1,8 +1,7 @@
-<?php 
+<?php
 
 $newTemplateName = $input->get->template;
 $template = $templates->get($newTemplateName);
-
 
 
 // $form = $extensions->get("MarkupEditForm");
@@ -19,8 +18,6 @@ $template = $templates->get($newTemplateName);
 // $templateField->attribute("name", "template");
 // $templateField->label = "Template";
 // $templateField->columns = 12;
-
-
 
 
 // $fieldset->add($nameField);

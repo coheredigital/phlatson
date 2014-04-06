@@ -1,17 +1,17 @@
 <field>
-	<fieldtype>FieldtypeSelect</fieldtype>
-	<label>Tags</label>
-	<settings>
-		<multiple>1</multiple>
-		<options>
-			<option value="Blue">Blue</option>
-			<option value="Red">Red</option>
-			<option value="Green">Green</option>
-			<option value="Yellow">Yellow</option>
-			<option value="Purple">Purple</option>
-			<option value="Black">Black</option>
-			<option value="Grey">Grey</option>
-		</options>
-	</settings>
+    <fieldtype>FieldtypeSelect</fieldtype>
+    <label>Tags</label>
+    <settings>
+        <multiple>1</multiple>
+        <options>
+            <option value="Blue">Blue</option>
+            <option value="Red">Red</option>
+            <option value="Green">Green</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Purple">Purple</option>
+            <option value="Black">Black</option>
+            <option value="Grey">Grey</option>
+        </options>
+    </settings>
 
 </field>

@@ -1,9 +1,10 @@
 <?php
 
 
-class Fields extends ObjectArray{
+class Fields extends ObjectArray
+{
 
-	protected $root = "fields/";
-	protected $singularName = "Field";
+    protected $root = "fields/";
+    protected $singularName = "Field";
 
 }

@@ -1,4 +1,4 @@
 <field>
-	<label>Name</label>
-	<fieldtype>FieldtypeText</fieldtype>
+    <label>Name</label>
+    <fieldtype>FieldtypeText</fieldtype>
 </field>

@@ -1,5 +1,6 @@
 <?php
 
-class FieldtypeTemplate extends FieldtypeObject{
-	protected $objectType = "template";
+class FieldtypeTemplate extends FieldtypeObject
+{
+    protected $objectType = "template";
 }

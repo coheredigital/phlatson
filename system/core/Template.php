@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
 
@@ -7,32 +7,29 @@
  */
 
 
-class Template extends Fieldset{
-	protected $dataFolder = "templates/";
+class Template extends Fieldset
+{
+    protected $dataFolder = "templates/";
 
+    private function getLayout()
+    {
+        $layoutFile = $this->api('config')->paths->layouts . $this->name . ".php";
+        $layoutFile = is_file($layoutFile) ? $layoutFile : null;
+        return $layoutFile;
+    }
 
-
-	private function getLayout(){
-		$layoutFile = $this->api('config')->paths->layouts.$this->name.".php";
-		$layoutFile = is_file($layoutFile) ? $layoutFile : null;
-		return $layoutFile;
-	}
-
-	public function get($name){
-		switch ($name) {
+    public function get($name)
+    {
+        switch ($name) {
             case 'template':
                 return $this->getTemplate("template");
                 break;
-			case 'layout':
-				return $this->getLayout();
-				break;
-			case 'template':
-				$template = new Template("template");
-				return $template;
-				break;
-			default:
-				return parent::get($name);
-				break;
-		}
-	}
+            case 'layout':
+                return $this->getLayout();
+                break;
+            default:
+                return parent::get($name);
+                break;
+        }
+    }
 }

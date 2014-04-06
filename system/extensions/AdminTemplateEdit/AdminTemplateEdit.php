@@ -1,69 +1,73 @@
-<?php 
+<?php
 
-class AdminTemplateEdit extends Extension {
+class AdminTemplateEdit extends Extension
+{
 
-	private $tabs;
-	private $form;
-	private $page;
+    private $tabs;
+    private $form;
+    private $page;
 
-	public function setup(){
-		$this->form = api("extensions")->get("MarkupEditForm");
-		$this->tabs = api("extensions")->get("MarkupTabs");
-		$this->page = api("templates")->get(api("input")->get->name);
-		$this->template = api("templates")->get("template");
-	}
+    public function setup()
+    {
+        $this->form = api("extensions")->get("MarkupEditForm");
+        $this->tabs = api("extensions")->get("MarkupTabs");
+        $this->page = api("templates")->get(api("input")->get->name);
+        $this->template = api("templates")->get("template");
+    }
 
-	private function getSettings(){
-		$value =  $this->page->icon;
-		$input =  api("extensions")->get("FieldtypeText");
-		$input->label = "Icon";
-		$input->columns = 12;
-		$input->value = $value;
-		$input->attribute("name", "icon");
+    private function getSettings()
+    {
+        $value = $this->page->icon;
+        $input = api("extensions")->get("FieldtypeText");
+        $input->label = "Icon";
+        $input->columns = 12;
+        $input->value = $value;
+        $input->attribute("name", "icon");
 
-		$fieldset = api("extensions")->get("MarkupFieldset");
-		$fieldset->label = "Settings";
-		$fieldset->add($input);
-		$this->form->add($fieldset);
+        $fieldset = api("extensions")->get("MarkupFieldset");
+        $fieldset->label = "Settings";
+        $fieldset->add($input);
+        $this->form->add($fieldset);
 
-	}
+    }
 
-	private function addContentFieldset(){
+    private function addContentFieldset()
+    {
 
-		$fieldset = api("extensions")->get("MarkupFieldset");
-		$fieldset->label = "Content";
-		$fields = $this->page->template->fields;
-		foreach ($fields as $field) {
-			$input = $field->type;
-			$input->label = $field->label;
-			$input->columns = $field->attributes('col') ? (int) $field->attributes('col') : 12;
-			$input->value = $this->page->{$field->name};
-			$input->attribute("name",$field->name);
-			$fieldset->add($input);
-		}
+        $fieldset = api("extensions")->get("MarkupFieldset");
+        $fieldset->label = "Content";
+        $fields = $this->page->template->fields;
+        foreach ($fields as $field) {
+            $input = $field->type;
+            $input->label = $field->label;
+            $input->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
+            $input->value = $this->page->{$field->name};
+            $input->attribute("name", $field->name);
+            $fieldset->add($input);
+        }
 
-		$this->form->add($fieldset);
+        $this->form->add($fieldset);
 
-	}
-
-
-	public function render(){
-
-
-		$this->addContentFieldset();
+    }
 
 
-
-		$submitButtons =  api("extensions")->get("FieldtypeFormActions");
-		$submitButtons->dataObject = $this->page;
-		$submitButtonsGroup = api("extensions")->get("MarkupFieldset");
-		$submitButtonsGroup->add($submitButtons);
+    public function render()
+    {
 
 
-		// $output = $this->tabs->render();
-		$this->form->add($submitButtonsGroup);
-		return $this->form->render();
+        $this->addContentFieldset();
 
-	}
+
+        $submitButtons = api("extensions")->get("FieldtypeFormActions");
+        $submitButtons->dataObject = $this->page;
+        $submitButtonsGroup = api("extensions")->get("MarkupFieldset");
+        $submitButtonsGroup->add($submitButtons);
+
+
+        // $output = $this->tabs->render();
+        $this->form->add($submitButtonsGroup);
+        return $this->form->render();
+
+    }
 
 }

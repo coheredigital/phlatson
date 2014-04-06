@@ -1,4 +1,4 @@
 <root>
-	<title>Datetime</title>
-	<description>Store dates and times, supports php date() formats.</description>
+    <title>Datetime</title>
+    <description>Store dates and times, supports php date() formats.</description>
 </root>

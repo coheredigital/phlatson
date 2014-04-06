@@ -1,5 +1,5 @@
 <field>
-	<name>country</name>
-	<fieldtype>FieldtypeSelect</fieldtype>
-	<label>Country</label>
+    <name>country</name>
+    <fieldtype>FieldtypeSelect</fieldtype>
+    <label>Country</label>
 </field>

@@ -1,6 +1,6 @@
 <field>
-	<name>published</name>
-	<fieldtype>FieldtypeDateTime</fieldtype>
-	<label>Published Date</label>
-	<format>F jS, Y</format>
+    <name>published</name>
+    <fieldtype>FieldtypeDateTime</fieldtype>
+    <label>Published Date</label>
+    <format>F jS, Y</format>
 </field>

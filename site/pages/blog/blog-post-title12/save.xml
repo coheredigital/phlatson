@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <root>
-  <title>This post is about food!</title>
-  <author>Adam Spruijt</author>
-  <content><![CDATA[<p><img src="http://www.novascotia.com/site/media/novascotia/Flip-Burger.jpg" alt="" style="float: left; width: 430px; margin: 0px 10px 10px 0px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+    <title>This post is about food!</title>
+    <author>Adam Spruijt</author>
+    <content><![CDATA[<p><img src="http://www.novascotia.com/site/media/novascotia/Flip-Burger.jpg" alt="" style="float: left; width: 430px; margin: 0px 10px 10px 0px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
 			<p><img src="http://www.torontolife.com/wp-content/uploads/2013/09/Pizza-Burger-Final.jpg" style="width: 194px; float: right; margin: 0px 0px 10px 10px;" alt="">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.</p>]]></content>
-  <published>1383886800</published>
-  <markdown><![CDATA[]]></markdown>
+    <published>1383886800</published>
+    <markdown><![CDATA[]]></markdown>
 </root>

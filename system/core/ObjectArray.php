@@ -1,165 +1,182 @@
 <?php
 
-abstract class ObjectArray extends Core implements IteratorAggregate, Countable{
-	
-	public $data = array();
-	protected $count;
+abstract class ObjectArray extends Core implements IteratorAggregate, Countable
+{
 
-	// the folder within the site and sytem paths to check for items ex: fields, templates, etc
-	protected $root;
-	protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
-	protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
-	protected $allowRootRequest = false;
-	// used to identify the singular version of the reperesent array 
-	// Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
-	protected $singularName;
+    public $data = array();
+    protected $count;
 
-	// status flags
-	protected $dataLoaded = false;
+    // the folder within the site and system paths to check for items ex: fields, templates, etc
+    protected $root;
+    protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
+    protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
+    protected $allowRootRequest = false;
+    // used to identify the singular version of the reperesent array
+    // Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
+    protected $singularName;
 
-
-	final public function __construct(){
-		$this->data = $this->getDataArray();
-	}
+    // status flags
+    protected $dataLoaded = false;
 
 
-	// load availabe objects into $data array()
-	protected function getDataArray(){
-		if ($this->root) {
-			$array = glob($this->api('config')->paths->site.$this->root."*", GLOB_ONLYDIR);
-			if ($this->checkSystem) {
-				$array2 = glob($this->api('config')->paths->system.$this->root."*", GLOB_ONLYDIR);
-				$array = array_merge($array,$array2);
-			}
+    final public function __construct()
+    {
+        $this->data = $this->getDataArray();
+    }
 
 
-			// assign key => value pairs
-			$dataArray = array();
-			foreach ($array as $path) {
-				$name = basename($path);
-				$dataArray["$name"] = $path;
-			}
-
-			return $dataArray;
-
-		}
-		
-		return null;
-	}
+    // load availabe objects into $data array()
+    protected function getDataArray()
+    {
+        if ($this->root) {
+            $array = glob($this->api('config')->paths->site . $this->root . "*", GLOB_ONLYDIR);
+            if ($this->checkSystem) {
+                $array2 = glob($this->api('config')->paths->system . $this->root . "*", GLOB_ONLYDIR);
+                $array = array_merge($array, $array2);
+            }
 
 
-	protected function getFileList(){
+            // assign key => value pairs
+            $dataArray = array();
+            foreach ($array as $path) {
+                $name = basename($path);
+                $dataArray["$name"] = $path;
+            }
 
-			$array = glob($this->api('config')->paths->site.$this->root."*", GLOB_ONLYDIR);
-			// add the values found in system folder 
-			if ($this->checkSystem) {
-				$array2 = glob($this->api('config')->paths->system.$this->root."*", GLOB_ONLYDIR);
-				$array = array_merge($array,$array2);
-			}
+            return $dataArray;
 
+        }
 
-			// assign key => value pairs
-			$dataArray = array();
-			foreach ($array as $path) {
-				$name = basename($path);
-				$dataArray["$name"] = $path;
-			}
-
-			return $dataArray;
-
-	}
+        return null;
+    }
 
 
+    protected function getFileList()
+    {
+
+        $array = glob($this->api('config')->paths->site . $this->root . "*", GLOB_ONLYDIR);
+        // add the values found in system folder
+        if ($this->checkSystem) {
+            $array2 = glob($this->api('config')->paths->system . $this->root . "*", GLOB_ONLYDIR);
+            $array = array_merge($array, $array2);
+        }
 
 
-	public function __set($key, $value) {
-		$this->set($key, $value); 
-	}
-	public function set($key, $value) {
-		$this->data[$key] = $value; 
-		return $this; 
-	}
+        // assign key => value pairs
+        $dataArray = array();
+        foreach ($array as $path) {
+            $name = basename($path);
+            $dataArray["$name"] = $path;
+        }
+
+        return $dataArray;
+
+    }
 
 
-	public function find($selector){
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
 
-		$selectors = array();
-
-		if (strpos($selector, ",")) {
-			$array = explode(",", $selector);
-			foreach ($array as $selector) {
-				if (strpos($selector, "=")) {
-					$selector = explode("=", $selector);
-					$key = trim($selector[0]);
-					$value = trim($selector[1]);
-				}
-				$selectors[$key] = $value;
-
-				
-
-			}
-
-		}
-		else{
-			if (strpos($selector, "=")) {
-				$selector = explode("=", $selector);
-				$key = trim($selector[0]);
-				$value = trim($selector[1]);
-			}
-			$selectors[$key] = $value;
-		}
-
-		var_dump($selectors);
-
-	}
+    public function set($key, $value)
+    {
+        $this->data[$key] = $value;
+        return $this;
+    }
 
 
+    public function find($selector)
+    {
 
-	public function all(){
+        $selectors = array();
 
-		$array = array();
-		foreach ($this->data as $key => $value) {
-			$array[] = $this->$key;
-		}
-		return $array;
-	}
-
-	public function __get($key) {
-		return $this->get($key); 
-	}
-
-	public function get($name) {
-
-		if(is_object($name)) $name = (string) $name; // stringify $object
-
-		if(!isset($this->data[$name]) && !$this->allowRootRequest) return false;
-		$object = new $this->singularName($name);
-		return $object;
-		
-		return false;
-	}
+        if (strpos($selector, ",")) {
+            $array = explode(",", $selector);
+            foreach ($array as $selector) {
+                if (strpos($selector, "=")) {
+                    $selector = explode("=", $selector);
+                    $key = trim($selector[0]);
+                    $value = trim($selector[1]);
+                }
+                $selectors[$key] = $value;
 
 
-	public function has($key) {
-		return ($this->get($key) !== null); 
-	}
+            }
 
-	public function remove($key) {
-		unset($this->data[$key]);
-		return $this;
-	}
+        } else {
+            if (strpos($selector, "=")) {
+                $selector = explode("=", $selector);
+                $key = trim($selector[0]);
+                $value = trim($selector[1]);
+            }
+            $selectors[$key] = $value;
+        }
 
-	public function getIterator() {
-		return new ArrayObject($this->data); 
-	}
+        var_dump($selectors);
 
-	public function count(){
-		if (!isset($this->count)) $this->count = count($this->data);
-		return $this->count;
-	}
+    }
 
-	public function __unset($key) {
-		$this->remove($key); 
-	}
+
+    public function all()
+    {
+
+        $array = array();
+        foreach ($this->data as $key => $value) {
+            $array[] = $this->$key;
+        }
+        return $array;
+    }
+
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+    public function get($name)
+    {
+
+        if (is_object($name)) {
+            $name = (string)$name;
+        } // stringify $object
+
+        if (!isset($this->data[$name]) && !$this->allowRootRequest) {
+            return false;
+        }
+        $object = new $this->singularName($name);
+        return $object;
+
+        return false;
+    }
+
+
+    public function has($key)
+    {
+        return ($this->get($key) !== null);
+    }
+
+    public function remove($key)
+    {
+        unset($this->data[$key]);
+        return $this;
+    }
+
+    public function getIterator()
+    {
+        return new ArrayObject($this->data);
+    }
+
+    public function count()
+    {
+        if (!isset($this->count)) {
+            $this->count = count($this->data);
+        }
+        return $this->count;
+    }
+
+    public function __unset($key)
+    {
+        $this->remove($key);
+    }
 
 }

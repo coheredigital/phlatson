@@ -1,7 +1,7 @@
 <?php
 
-class FieldtypePassword extends Fieldtype{
-
+class FieldtypePassword extends Fieldtype
+{
 
 
 }

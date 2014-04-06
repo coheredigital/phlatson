@@ -1,4 +1,4 @@
 <field>
-	<fieldtype>FieldtypeMarkdown</fieldtype>
-	<label>Markdown</label>
+    <fieldtype>FieldtypeMarkdown</fieldtype>
+    <label>Markdown</label>
 </field>

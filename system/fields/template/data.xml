@@ -1,5 +1,5 @@
 <root>
-	<name>template</name>
-	<label>Template</label>
-	<fieldtype>FieldtypeTemplate</fieldtype>
+    <name>template</name>
+    <label>Template</label>
+    <fieldtype>FieldtypeTemplate</fieldtype>
 </root>

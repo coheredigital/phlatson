@@ -1,4 +1,4 @@
 <field>
-	<label>Password</label>
-	<fieldtype>FieldtypePassword</fieldtype>
+    <label>Password</label>
+    <fieldtype>FieldtypePassword</fieldtype>
 </field>

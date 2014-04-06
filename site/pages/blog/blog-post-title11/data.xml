@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <root>
-<template>blog-entry</template>
-  <title>Decoder Ring THeatre</title>
-  <author>Adam Spruijt</author>
-  <content><![CDATA[<p>Decoder Ring Theatre's shows are available for free download in mp3 format, either directly from our site, via the <a href="http://decoderring.libsyn.com/rss">Podcast Feed</a> or subscribe in </p>]]></content>
-  <published>1385701200</published>
-  <markdown><![CDATA[]]></markdown>
+    <template>blog-entry</template>
+    <title>Decoder Ring THeatre</title>
+    <author>Adam Spruijt</author>
+    <content>
+        <![CDATA[<p>Decoder Ring Theatre's shows are available for free download in mp3 format, either directly from our site, via the <a href="http://decoderring.libsyn.com/rss">Podcast Feed</a> or subscribe in </p>]]></content>
+    <published>1385701200</published>
+    <markdown><![CDATA[]]></markdown>
 </root>
 

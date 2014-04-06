@@ -1,28 +1,28 @@
 /*! UIkit 2.0.0 | http://www.getuikit.com | (c) 2013 YOOtheme | MIT License */
 
-(function($, UI){
+(function ($, UI) {
 
-    var FormPassword = function(element, options) {
+    var FormPassword = function (element, options) {
 
         var $this = this, $element = $(element);
 
-        if($element.data("formPassword")) return;
+        if ($element.data("formPassword")) return;
 
         this.options = $.extend({}, FormPassword.defaults, options);
 
-        this.element = $element.on("click", function(e) {
+        this.element = $element.on("click", function (e) {
 
             e.preventDefault();
 
-            if($this.input.length) {
+            if ($this.input.length) {
                 var type = $this.input.attr("type");
-                $this.input.attr("type", type=="text" ? "password":"text");
-                $this.element.text($this.options[type=="text" ? "lblShow":"lblHide"]);
+                $this.input.attr("type", type == "text" ? "password" : "text");
+                $this.element.text($this.options[type == "text" ? "lblShow" : "lblHide"]);
             }
         });
 
         $this.input = this.element.next("input").length ? this.element.next("input") : this.element.prev("input");
-        $this.element.text(this.options[$this.input.is("[type='password']") ? "lblShow":"lblHide"]);
+        $this.element.text(this.options[$this.input.is("[type='password']") ? "lblShow" : "lblHide"]);
 
         this.element.data("formPassword", this);
     };
@@ -35,7 +35,7 @@
     UI["formPassword"] = FormPassword;
 
     // init code
-    $(document).on("click.formpassword.uikit", "[data-uk-form-password]", function(e) {
+    $(document).on("click.formpassword.uikit", "[data-uk-form-password]", function (e) {
 
         var ele = $(this);
         if (!ele.data("formPassword")) {

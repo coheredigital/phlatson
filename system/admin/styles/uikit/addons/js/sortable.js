@@ -4,9 +4,9 @@
  * Based on Nestable jQuery Plugin - Copyright (c) 2012 David Bushell - http://dbushell.com/
  */
 
-(function($, UI, window, document, undefined) {
-    var hasTouch     = 'ontouchstart' in window,
-        html         = $("html"),
+(function ($, UI, window, document, undefined) {
+    var hasTouch = 'ontouchstart' in window,
+        html = $("html"),
         touchedlists = [];
 
     /**
@@ -14,9 +14,8 @@
      * events are normally disabled on the dragging element to avoid conflicts
      * https://github.com/ausi/Feature-detection-technique-for-pointer-events/blob/master/modernizr-pointerevents.js
      */
-    var hasPointerEvents = (function()
-    {
-        var el    = document.createElement('div'),
+    var hasPointerEvents = (function () {
+        var el = document.createElement('div'),
             docEl = document.documentElement;
         if (!('pointerEvents' in el.style)) {
             return false;
@@ -29,40 +28,38 @@
         return !!supports;
     })();
 
-    var eStart  = hasTouch ? 'touchstart'  : 'mousedown',
-        eMove   = hasTouch ? 'touchmove'   : 'mousemove',
-        eEnd    = hasTouch ? 'touchend'    : 'mouseup',
+    var eStart = hasTouch ? 'touchstart' : 'mousedown',
+        eMove = hasTouch ? 'touchmove' : 'mousemove',
+        eEnd = hasTouch ? 'touchend' : 'mouseup',
         eCancel = hasTouch ? 'touchcancel' : 'mouseup';
 
-    function Plugin(element, options)
-    {
+    function Plugin(element, options) {
         var $element = $(element);
 
-        if($element.data("uksortable")) return;
+        if ($element.data("uksortable")) return;
 
 
-        this.w  = $(window);
+        this.w = $(window);
         this.el = $element;
         this.options = $.extend({}, $.fn.uksortable.defaults, options);
 
         this.tplempty = '<div class="' + this.options.emptyClass + '"/>';
 
-        this.el.find(">"+this.options.itemNodeName).addClass(this.options.listitemClass).end().find("ul:not(.ignore-list)").addClass(this.options.listClass).find(">li").addClass(this.options.listitemClass);
+        this.el.find(">" + this.options.itemNodeName).addClass(this.options.listitemClass).end().find("ul:not(.ignore-list)").addClass(this.options.listClass).find(">li").addClass(this.options.listitemClass);
 
-        if(!this.el.children(this.options.itemNodeName).length) {
+        if (!this.el.children(this.options.itemNodeName).length) {
             this.el.append(this.tplempty);
         }
 
         this.el.data("uksortable", this);
-        this.el.data("uksortable-id", "ID"+(new Date().getTime())+"RAND"+(Math.ceil(Math.random() *100000)));
+        this.el.data("uksortable-id", "ID" + (new Date().getTime()) + "RAND" + (Math.ceil(Math.random() * 100000)));
 
         this.init();
     }
 
     Plugin.prototype = {
 
-        init: function()
-        {
+        init: function () {
             var list = this;
 
             list.reset();
@@ -71,13 +68,11 @@
 
             list.placeEl = $('<div class="' + list.options.placeClass + '"/>');
 
-            $.each(this.el.find(list.options.itemNodeName), function(k, el)
-            {
+            $.each(this.el.find(list.options.itemNodeName), function (k, el) {
                 list.setParent($(el));
             });
 
-            list.el.on('click', '[data-sortable-action]', function(e)
-            {
+            list.el.on('click', '[data-sortable-action]', function (e) {
                 if (list.dragEl || (!hasTouch && e.button !== 0)) {
                     return;
                 }
@@ -86,7 +81,7 @@
 
                 var target = $(e.currentTarget),
                     action = target.data('sortableAction'),
-                    item   = target.closest(list.options.itemNodeName);
+                    item = target.closest(list.options.itemNodeName);
                 if (action === 'collapse') {
                     list.collapseItem(item);
                 }
@@ -98,8 +93,7 @@
                 }
             });
 
-            var onStartEvent = function(e)
-            {
+            var onStartEvent = function (e) {
                 var handle = $(e.target);
                 if (!handle.hasClass(list.options.handleClass)) {
                     if (handle.closest('.' + list.options.noDragClass).length) {
@@ -114,16 +108,14 @@
                 list.dragStart(hasTouch ? e.touches[0] : e);
             };
 
-            var onMoveEvent = function(e)
-            {
+            var onMoveEvent = function (e) {
                 if (list.dragEl) {
                     e.preventDefault();
                     list.dragMove(hasTouch ? e.touches[0] : e);
                 }
             };
 
-            var onEndEvent = function(e)
-            {
+            var onEndEvent = function (e) {
                 if (list.dragEl) {
                     e.preventDefault();
                     list.dragStop(hasTouch ? e.touches[0] : e);
@@ -143,42 +135,36 @@
 
         },
 
-        serialize: function()
-        {
+        serialize: function () {
             var data,
                 depth = 0,
-                list  = this;
-                step  = function(level, depth)
-                {
-                    var array = [ ],
-                        items = level.children(list.options.itemNodeName);
-                    items.each(function()
-                    {
-                        var li   = $(this),
-                            item = $.extend({}, li.data()),
-                            sub  = li.children(list.options.listNodeName);
-                        if (sub.length) {
-                            item.children = step(sub, depth + 1);
-                        }
-                        array.push(item);
-                    });
-                    return array;
-                };
+                list = this;
+            step = function (level, depth) {
+                var array = [ ],
+                    items = level.children(list.options.itemNodeName);
+                items.each(function () {
+                    var li = $(this),
+                        item = $.extend({}, li.data()),
+                        sub = li.children(list.options.listNodeName);
+                    if (sub.length) {
+                        item.children = step(sub, depth + 1);
+                    }
+                    array.push(item);
+                });
+                return array;
+            };
             data = step(list.el, depth);
             return data;
         },
 
-        list: function(options)
-        {
+        list: function (options) {
             var data = [],
                 list = this,
                 depth = 0,
                 options = $.extend({}, list.options, options),
-                step = function(level, depth, parent)
-                {
+                step = function (level, depth, parent) {
                     var items = level.children(options.itemNodeName);
-                    items.each(function(index)
-                    {
+                    items.each(function (index) {
                         var li = $(this),
                             item = $.extend({parent_id: (parent ? parent : null), depth: depth, order: index}, li.data()),
                             sub = li.children(options.listNodeName);
@@ -193,36 +179,35 @@
             return data;
         },
 
-        reset: function()
-        {
+        reset: function () {
             this.mouse = {
-                offsetX   : 0,
-                offsetY   : 0,
-                startX    : 0,
-                startY    : 0,
-                lastX     : 0,
-                lastY     : 0,
-                nowX      : 0,
-                nowY      : 0,
-                distX     : 0,
-                distY     : 0,
-                dirAx     : 0,
-                dirX      : 0,
-                dirY      : 0,
-                lastDirX  : 0,
-                lastDirY  : 0,
-                distAxX   : 0,
-                distAxY   : 0
+                offsetX: 0,
+                offsetY: 0,
+                startX: 0,
+                startY: 0,
+                lastX: 0,
+                lastY: 0,
+                nowX: 0,
+                nowY: 0,
+                distX: 0,
+                distY: 0,
+                dirAx: 0,
+                dirX: 0,
+                dirY: 0,
+                lastDirX: 0,
+                lastDirY: 0,
+                distAxX: 0,
+                distAxY: 0
             };
-            this.moving     = false;
-            this.dragEl     = null;
+            this.moving = false;
+            this.dragEl = null;
             this.dragRootEl = null;
-            this.dragDepth  = 0;
+            this.dragDepth = 0;
             this.hasNewRoot = false;
-            this.pointEl    = null;
+            this.pointEl = null;
 
-            for(var i=0; i<touchedlists.length; i++) {
-                if(!touchedlists[i].children().length) {
+            for (var i = 0; i < touchedlists.length; i++) {
+                if (!touchedlists[i].children().length) {
                     touchedlists[i].append(this.tplempty);
                 }
             }
@@ -230,60 +215,51 @@
             touchedlists = [];
         },
 
-        toggleItem: function(li) {
-            this[li.hasClass(this.options.collapsedClass) ? "expandItem":"collapseItem"](li);
+        toggleItem: function (li) {
+            this[li.hasClass(this.options.collapsedClass) ? "expandItem" : "collapseItem"](li);
         },
 
-        expandItem: function(li)
-        {
+        expandItem: function (li) {
             li.removeClass(this.options.collapsedClass);
         },
 
-        collapseItem: function(li)
-        {
+        collapseItem: function (li) {
             var lists = li.children(this.options.listNodeName);
             if (lists.length) {
                 li.addClass(this.options.collapsedClass);
             }
         },
 
-        expandAll: function()
-        {
+        expandAll: function () {
             var list = this;
-            list.el.find(list.options.itemNodeName).each(function()
-            {
+            list.el.find(list.options.itemNodeName).each(function () {
                 list.expandItem($(this));
             });
         },
 
-        collapseAll: function()
-        {
+        collapseAll: function () {
             var list = this;
-            list.el.find(list.options.itemNodeName).each(function()
-            {
+            list.el.find(list.options.itemNodeName).each(function () {
                 list.collapseItem($(this));
             });
         },
 
-        setParent: function(li)
-        {
+        setParent: function (li) {
             if (li.children(this.options.listNodeName).length) {
                 li.addClass("uk-parent");
             }
         },
 
-        unsetParent: function(li)
-        {
-            li.removeClass('uk-parent '+this.options.collapsedClass);
+        unsetParent: function (li) {
+            li.removeClass('uk-parent ' + this.options.collapsedClass);
             li.children(this.options.listNodeName).remove();
         },
 
-        dragStart: function(e)
-        {
-            var mouse    = this.mouse,
-                target   = $(e.target),
+        dragStart: function (e) {
+            var mouse = this.mouse,
+                target = $(e.target),
                 dragItem = target.closest(this.options.itemNodeName),
-                offset   = dragItem.offset();
+                offset = dragItem.offset();
 
             this.placeEl.css('height', dragItem.height());
 
@@ -307,8 +283,8 @@
             $(document.body).append(this.dragEl);
 
             this.dragEl.css({
-                left : offset.left,
-                top  : offset.top
+                left: offset.left,
+                top: offset.top
             });
 
             // total depth of dragging item
@@ -324,8 +300,7 @@
             html.addClass(this.options.movingClass);
         },
 
-        dragStop: function(e)
-        {
+        dragStop: function (e) {
             // fix for zepto.js
             //this.placeEl.replaceWith(this.dragEl.children(this.options.itemNodeName + ':first').detach());
             var el = this.dragEl.children(this.options.itemNodeName).first();
@@ -345,23 +320,22 @@
             html.removeClass(this.options.movingClass);
         },
 
-        dragMove: function(e)
-        {
+        dragMove: function (e) {
             var list, parent, prev, next, depth,
-                opt   = this.options,
+                opt = this.options,
                 mouse = this.mouse;
 
             this.dragEl.css({
-                left : e.pageX - mouse.offsetX,
-                top  : e.pageY - mouse.offsetY
+                left: e.pageX - mouse.offsetX,
+                top: e.pageY - mouse.offsetY
             });
 
             // mouse position last events
             mouse.lastX = mouse.nowX;
             mouse.lastY = mouse.nowY;
             // mouse position this events
-            mouse.nowX  = e.pageX;
-            mouse.nowY  = e.pageY;
+            mouse.nowX = e.pageX;
+            mouse.nowY = e.pageY;
             // distance mouse moved between events
             mouse.distX = mouse.nowX - mouse.lastX;
             mouse.distY = mouse.nowY - mouse.lastY;
@@ -372,11 +346,11 @@
             mouse.dirX = mouse.distX === 0 ? 0 : mouse.distX > 0 ? 1 : -1;
             mouse.dirY = mouse.distY === 0 ? 0 : mouse.distY > 0 ? 1 : -1;
             // axis mouse is now moving on
-            var newAx   = Math.abs(mouse.distX) > Math.abs(mouse.distY) ? 1 : 0;
+            var newAx = Math.abs(mouse.distX) > Math.abs(mouse.distY) ? 1 : 0;
 
             // do nothing on first move
             if (!mouse.moving) {
-                mouse.dirAx  = newAx;
+                mouse.dirAx = newAx;
                 mouse.moving = true;
                 return;
             }
@@ -453,9 +427,9 @@
                 this.pointEl = this.pointEl.closest(opt.itemNodeName);
             } else {
 
-                var sortableitem = this.pointEl.closest('.'+opt.itemClass);
+                var sortableitem = this.pointEl.closest('.' + opt.itemClass);
 
-                if(sortableitem.length) {
+                if (sortableitem.length) {
                     this.pointEl = sortableitem.closest(opt.itemNodeName);
                 }
             }
@@ -473,9 +447,9 @@
 
             // find parent list of item under cursor
             var pointElRoot = this.el,
-                tmpRoot     = this.pointEl.closest('.uk-sortable'),
-                isNewRoot   = pointElRoot[0] !== this.pointEl.closest('.uk-sortable')[0],
-                $newRoot    = tmpRoot;
+                tmpRoot = this.pointEl.closest('.uk-sortable'),
+                isNewRoot = pointElRoot[0] !== this.pointEl.closest('.uk-sortable')[0],
+                $newRoot = tmpRoot;
 
             /**
              * move vertical
@@ -494,7 +468,7 @@
                     return;
                 }
                 var before = e.pageY < (this.pointEl.offset().top + this.pointEl.height() / 2);
-                    parent = this.placeEl.parent();
+                parent = this.placeEl.parent();
                 // if empty create new list to replace empty placeholder
                 if (isEmpty) {
                     this.pointEl.replaceWith(this.placeEl);
@@ -506,7 +480,7 @@
                     this.pointEl.after(this.placeEl);
                 }
                 if (!parent.children().length) {
-                    if(!parent.data("uksortable")) this.unsetParent(parent.parent());
+                    if (!parent.data("uksortable")) this.unsetParent(parent.parent());
                 }
                 if (!this.dragRootEl.find(opt.itemNodeName).length && !this.dragRootEl.children().length) {
                     this.dragRootEl.append(this.tplempty);
@@ -522,15 +496,13 @@
 
     };
 
-    $.fn.uksortable = function(params)
-    {
-        var lists  = this,
+    $.fn.uksortable = function (params) {
+        var lists = this,
             retval = this;
 
-        lists.each(function()
-        {
+        lists.each(function () {
             var element = $(this),
-                plugin  = element.data("uksortable");
+                plugin = element.data("uksortable");
 
             if (!plugin) {
                 plugin = new Plugin(element, params);
@@ -545,33 +517,33 @@
     };
 
     $.fn.uksortable.defaults = {
-        listNodeName    : 'ul',
-        itemNodeName    : 'li',
-        listClass       : 'uk-sortable-list',
-        listitemClass   : 'uk-sortable-list-item',
-        itemClass       : 'uk-sortable-item',
-        dragClass       : 'uk-sortable-list-dragged',
-        movingClass     : 'uk-sortable-moving',
-        handleClass     : 'uk-sortable-handle',
-        collapsedClass  : 'uk-collapsed',
-        placeClass      : 'uk-sortable-placeholder',
-        noDragClass     : 'uk-sortable-nodrag',
-        emptyClass      : 'uk-sortable-empty',
-        group           : 0,
-        maxDepth        : 10,
-        threshold       : 20
+        listNodeName: 'ul',
+        itemNodeName: 'li',
+        listClass: 'uk-sortable-list',
+        listitemClass: 'uk-sortable-list-item',
+        itemClass: 'uk-sortable-item',
+        dragClass: 'uk-sortable-list-dragged',
+        movingClass: 'uk-sortable-moving',
+        handleClass: 'uk-sortable-handle',
+        collapsedClass: 'uk-collapsed',
+        placeClass: 'uk-sortable-placeholder',
+        noDragClass: 'uk-sortable-nodrag',
+        emptyClass: 'uk-sortable-empty',
+        group: 0,
+        maxDepth: 10,
+        threshold: 20
     };
 
-    $(document).on("uk-domready", function(e) {
+    $(document).on("uk-domready", function (e) {
 
-        $("[data-uk-sortable]").each(function(){
+        $("[data-uk-sortable]").each(function () {
 
-          var ele     = $(this),
-              options = $.extend({}, $.fn.uksortable.defaults, UI.Utils.options(ele.attr("data-uk-sortable")));
+            var ele = $(this),
+                options = $.extend({}, $.fn.uksortable.defaults, UI.Utils.options(ele.attr("data-uk-sortable")));
 
-          if(!ele.data("uksortable")) {
-              ele.uksortable(options);
-          }
+            if (!ele.data("uksortable")) {
+                ele.uksortable(options);
+            }
 
         });
     });

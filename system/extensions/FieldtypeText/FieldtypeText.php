@@ -1,8 +1,7 @@
 <?php
 
-class FieldtypeText extends Fieldtype{
-
-
+class FieldtypeText extends Fieldtype
+{
 
 
 }

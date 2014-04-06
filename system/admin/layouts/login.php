@@ -1,11 +1,12 @@
-<?php 
-if ($user->isLoggedin()) $session->redirect($config->urls->root.$config->adminUrl);
-
-if (count($input->post)) {
-	$session->login($input->post->username, $input->post->password);
-	$session->redirect($config->urls->root.$config->adminUrl."/login");
+<?php
+if ($user->isLoggedin()) {
+    $session->redirect($config->urls->root . $config->adminUrl);
 }
 
+if (count($input->post)) {
+    $session->login($input->post->username, $input->post->password);
+    $session->redirect($config->urls->root . $config->adminUrl . "/login");
+}
 
 
 $output = "<label>Username</label>";

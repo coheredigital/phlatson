@@ -1,5 +1,3 @@
-
-
-$(function(){
-	$('.FieldtypeDateTime').datetimepicker();
+$(function () {
+    $('.FieldtypeDateTime').datetimepicker();
 });
