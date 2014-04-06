@@ -164,9 +164,9 @@ class Page extends Object
         return $url;
     }
 
-    public function get($name)
+    public function get($string)
     {
-        switch ($name) {
+        switch ($string) {
             // first pass a few request that we dont want passed to "getFormatted() method"
             // handled by parent
             case 'children':
@@ -190,7 +190,7 @@ class Page extends Object
                 return $layout ? (string)$layout : null;
                 break;
             default:
-                return parent::get($name);
+                return parent::get($string);
                 break;
         }
 

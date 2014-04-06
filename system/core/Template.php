@@ -1,15 +1,37 @@
 <?php
 
-/*
-
-	Template extends fieldgroup because its is essentially a fieldgroup with a layout and more settings
-
- */
-
-
-class Template extends Fieldset
+class Template extends Object
 {
+
     protected $dataFolder = "templates/";
+
+    public function fields()
+    {
+        $fieldsArray = $this->find("//field");
+
+        $fields = array();
+        foreach ($fieldsArray as $f) {
+            $field = new Field($f);
+            $attr = $f->attributes();
+
+            foreach ($attr as $key => $value) {
+                $field->attributes($key, $value);
+            }
+
+            $fields["$field->name"] = $field;
+
+        }
+
+        if ($this->defaultFields) {
+
+        }
+
+        return $fields;
+    }
+
+
+
+
 
     private function getLayout()
     {
@@ -18,9 +40,15 @@ class Template extends Fieldset
         return $layoutFile;
     }
 
-    public function get($name)
+    public function get($string)
     {
-        switch ($name) {
+        switch ($string) {
+            case 'fields':
+                return $this->fields();
+                break;
+            default:
+                return parent::get($string);
+                break;
             case 'template':
                 return $this->getTemplate("template");
                 break;
@@ -28,8 +56,9 @@ class Template extends Fieldset
                 return $this->getLayout();
                 break;
             default:
-                return parent::get($name);
+                return parent::get($string);
                 break;
         }
     }
+
 }

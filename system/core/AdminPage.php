@@ -35,9 +35,9 @@ class AdminPage extends Page
     }
 
 
-    public function get($name)
+    public function get($string)
     {
-        switch ($name) {
+        switch ($string) {
             case 'extension':
                 return $this->getExtension();
                 break;
@@ -47,7 +47,7 @@ class AdminPage extends Page
                 return $path . $file;
                 break;
             default:
-                return parent::get($name);
+                return parent::get($string);
                 break;
         }
     }

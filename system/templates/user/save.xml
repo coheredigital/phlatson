@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<root>
+  <label>User</label>
+  <fields>
+    <field col="6">fullname</field>
+    <field col="6">password</field>
+  </fields>
+</root>

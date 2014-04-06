@@ -27,13 +27,13 @@ abstract class Extension extends Object
     {
     }
 
-    public function get($name)
+    public function get($string)
     {
-        switch ($name) {
+        switch ($string) {
             case 'name':
                 return $this->className;
             default:
-                return parent::get($name);
+                return parent::get($string);
                 break;
         }
     }

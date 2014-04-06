@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <template>
     <label>User</label>
-    <name>user</name>
     <fields>
         <field col="12">fullname</field>
         <field col="12">password</field>

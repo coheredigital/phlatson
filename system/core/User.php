@@ -41,14 +41,14 @@ class User extends Object
     }
 
 
-    public function get($name)
+    public function get($string)
     {
-        switch ($name) {
+        switch ($string) {
             case 'template':
                 return $this->getTemplate("user");
                 break;
             default:
-                return parent::get($name);
+                return parent::get($string);
                 break;
         }
     }

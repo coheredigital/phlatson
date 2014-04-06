@@ -1,19 +1,14 @@
 <?xml version="1.0"?>
 <root>
-    <title>About the Team</title>
-    <content>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et
-        dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur
-        sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua.&lt;/p&gt;&#xD;
-        &lt;ul&gt;&#xD;
-        &lt;li&gt;One&lt;/li&gt;&#xD;
-        &lt;li&gt;Two&lt;/li&gt;&#xD;
-        &lt;li&gt;Three&lt;/li&gt;&#xD;
-        &lt;li&gt;Four&lt;/li&gt;&#xD;
-        &lt;li&gt;Five&lt;/li&gt;&#xD;
-        &lt;/ul&gt;&#xD;
-        &lt;p&gt;&#xD;
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-        dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis
-        nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&lt;/p&gt;</content>
+  <title>About the Team</title>
+  <content>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Sanctus sea sed takimata ut vero voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.&lt;/p&gt;&#xD;
+			&lt;ul&gt;&#xD;
+				&lt;li&gt;One&lt;/li&gt;&#xD;
+				&lt;li&gt;Two&lt;/li&gt;&#xD;
+				&lt;li&gt;Three&lt;/li&gt;&#xD;
+				&lt;li&gt;Four&lt;/li&gt;&#xD;
+				&lt;li&gt;Five&lt;/li&gt;&#xD;
+			&lt;/ul&gt;&#xD;
+			&lt;p&gt;&#xD;
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Sanctus sea sed takimata ut vero voluptua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.&lt;/p&gt;</content>
 </root>

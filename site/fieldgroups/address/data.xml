@@ -1,6 +1,0 @@
-<fieldgroup>
-    <field col="12">street</field>
-    <field col="6">city</field>
-    <field col="3">province</field>
-    <field col="3">country</field>
-</fieldgroup>

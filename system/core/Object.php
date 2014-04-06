@@ -118,9 +118,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $this->get($name);
     }
 
-    public function get($name)
+    public function get($string)
     {
-        switch ($name) {
+        switch ($string) {
             case 'name':
                 $lastRequestIndex = count($this->urlRequest) - 1;
                 return (string)$this->urlRequest[$lastRequestIndex];
@@ -134,7 +134,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 $directory = trim(implode("/", $this->urlRequest), "/");
                 return $directory;
             default:
-                return $this->getFormatted($name, $this->outputFormat);
+                return $this->getFormatted($string, $this->outputFormat);
                 break;
         }
     }
@@ -268,14 +268,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // for available feilds and ignore the rest
         $fields = $this->template->fields;
 
-//        var_dump($this);
-//        var_dump($this->get("name"));
-//        var_dump($this->get("fullname"));
-//        var_dump($this->get("password"));
-//        var_dump($this->get("template")); die();
-
         foreach ($fields as $field) {
-            var_dump($field);
 
             $value = $postData->{$field->name} ? $postData->{$field->name} : $this->{$field->name};
 

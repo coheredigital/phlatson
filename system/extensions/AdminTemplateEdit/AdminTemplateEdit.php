@@ -13,6 +13,14 @@ class AdminTemplateEdit extends Extension
         $this->tabs = api("extensions")->get("MarkupTabs");
         $this->page = api("templates")->get(api("input")->get->name);
         $this->template = api("templates")->get("template");
+
+        // process save
+        if (count(api("input")->post)) {
+            $this->page->save(api("input")->post);
+            api("session")->redirect(api("input")->query);
+        }
+
+
     }
 
     private function getSettings()
