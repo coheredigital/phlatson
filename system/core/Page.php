@@ -5,7 +5,7 @@ class Page extends Object
 {
     protected $dataFolder = "pages/";
 
-    public $defaultFields = array("template", "name", "parent");
+    protected $defaultFields = array("template", "name", "parent");
 
     function __construct($url = false)
     {

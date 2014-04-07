@@ -13,6 +13,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         "published" => 1,
         "locked" => 0
     );
+    protected $defaultFields = array("template", "name");
     protected $flags = array();
 
     protected $dataFolder;
@@ -227,8 +228,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     /**
      * sets the outputFormat to be used for get method
-     * @param  string $name should match one of valid format optiona available (output, edit, raw, save)
-     * @return [type]       [description]
+     * @param  string $name should match one of valid format optional available (output, edit, raw, save)
      */
     public function setFormat($name)
     {
@@ -266,7 +266,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
-        $fields = $this->template->fields;
+        $fields = $this->template->fields($this->defaultFields);
+
 
         foreach ($fields as $field) {
 

@@ -1,6 +1,6 @@
 <?php
 
-class Config extends DataArray
+class Config extends DataContainer
 {
 
     public function __construct()

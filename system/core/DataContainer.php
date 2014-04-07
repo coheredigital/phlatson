@@ -8,7 +8,7 @@ Objects and allow natural fallbacks
 
  */
 
-abstract class DataArray extends Core implements IteratorAggregate
+abstract class DataContainer extends Core
 {
 
     protected $data = array();
@@ -51,11 +51,6 @@ abstract class DataArray extends Core implements IteratorAggregate
     {
         unset($this->data[$key]);
         return $this;
-    }
-
-    public function getIterator()
-    {
-        return new ArrayObject($this->data);
     }
 
     // allows the data array to be counted directly

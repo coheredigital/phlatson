@@ -9,7 +9,8 @@ class Template extends Object
     {
         $fieldsArray = $this->find("//field");
 
-        $fields = array();
+
+        $fields = new FieldArray();
         foreach ($fieldsArray as $f) {
             $field = new Field($f);
             $attr = $f->attributes();
@@ -18,12 +19,12 @@ class Template extends Object
                 $field->attributes($key, $value);
             }
 
-            $fields["$field->name"] = $field;
+            $fields->add($field);
 
         }
 
         if (is_array($fieldArray)) {
-            array_merge($fields,$fieldArray);
+            $fields->import($fieldArray);
         }
 
         return $fields;

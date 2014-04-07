@@ -93,7 +93,7 @@ class AdminPageEdit extends Extension
         $fieldset = api("extensions")->get("MarkupFieldset");
         $fieldset->label = "{$this->title}";
         $defaultFields = $this->page->defaultFields;
-        $fields = $this->page->template->fields($defaultFields);
+        $fields = $this->page->template->fields();
         foreach ($fields as $field) {
             $input = $field->type;
             $input->label = $field->label;
