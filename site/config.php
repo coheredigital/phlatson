@@ -10,4 +10,4 @@ $config->timezone = 'America/New_York';
 $config->sessionName = 'xpages';
 $config->sessionExpireSeconds = 3600;
 
-$config->debug = true;
+$config->debug = false;

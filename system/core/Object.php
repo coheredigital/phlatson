@@ -13,7 +13,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         "published" => 1,
         "locked" => 0
     );
-    protected $defaultFields = array("template", "name");
+    protected $defaultFields = array();
     protected $flags = array();
 
     protected $dataFolder;
@@ -271,11 +271,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         foreach ($fields as $field) {
 
-            $value = $postData->{$field->name} ? $postData->{$field->name} : $this->{$field->name};
+            $value = $postData->{$field->name};
 
             $fieldtype = $field->type();
 
-            $formattedValue = $fieldtype->getSave($field->name, $value);
+            $formattedValue = $value ? $fieldtype->getSave($field->name, $value) : $this->{$field->name};
             if ($formattedValue instanceof DomElement) {
                 $node = $save->importNode($formattedValue, true);
                 $save->documentElement->appendChild($node);
@@ -283,8 +283,14 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         }
 
         // save to file
-        // $save->save($this->path.self::DATA_FILE);
-        $save->save($this->path . "save.xml");
+        if(api("config")->debug){
+            $saveFile = "save.xml";
+        }
+        else{
+            $saveFile = self::DATA_FILE;
+        }
+
+        $save->save($this->path.$saveFile);
 
     }
 

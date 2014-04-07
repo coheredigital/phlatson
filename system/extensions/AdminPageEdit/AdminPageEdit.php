@@ -82,7 +82,7 @@ class AdminPageEdit extends Extension
         $input->label = "Parent";
         $input->columns = 6;
         $input->value = $value;
-        $input->attribute("name", "template");
+        $input->attribute("name", "parent");
 
         return $input;
     }

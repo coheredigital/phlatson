@@ -5,7 +5,7 @@ class Page extends Object
 {
     protected $dataFolder = "pages/";
 
-    protected $defaultFields = array("template", "name", "parent");
+    protected $defaultFields = array("template");
 
     function __construct($url = false)
     {
@@ -64,8 +64,8 @@ class Page extends Object
         $url = $this->createUrl($requests);
 
         if ($url) {
-            $page = new Page($url);
-            return $page;
+            $parent = api("pages")->get($url);
+            return $parent;
         }
         return false;
 
@@ -127,35 +127,6 @@ class Page extends Object
 
     }
 
-
-    public function updateFilelist()
-    {
-        $files = scandir($this->path);
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $root = $dom->appendChild($dom->createElement('files'));
-
-        if ($files) {
-            foreach ($files as $value) {
-                if (is_file($this->path . $value)) {
-                    //add NodeA element to Root
-                    $fileNode = $dom->createElement('file');
-
-                    $filenameNode = $dom->createElement('filename');
-                    $filenameNode->appendChild($dom->createTextNode($value));
-                    $fileNode->appendChild($filenameNode);
-
-                    $root->appendChild($fileNode);
-                }
-            }
-
-            $dom->formatOutput = true;
-            $dom->save($this->path . 'files.xml'); // save as file
-
-        }
-
-        return false;
-
-    }
 
     public function url()
     {
