@@ -36,7 +36,7 @@ class Page extends Object
             $url = $this->directory . "/" . $folder;
 
             $path = $this->path . $folder . DIRECTORY_SEPARATOR;
-            $file = $path . $this->dataFile;
+            $file = $path . Object::DATA_FILE;
 
             // skip if no "dataFile" is found
             if (!is_file($file)) {
