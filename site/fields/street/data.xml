@@ -1,5 +1,0 @@
-<field>
-    <name>street</name>
-    <fieldtype>FieldtypeText</fieldtype>
-    <label>Street Address</label>
-</field>

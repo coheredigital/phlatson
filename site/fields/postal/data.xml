@@ -1,5 +1,0 @@
-<field>
-    <name>postal</name>
-    <fieldtype>FieldtypeText</fieldtype>
-    <label>Postal / ZIP Code</label>
-</field>

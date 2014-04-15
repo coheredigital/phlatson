@@ -3,7 +3,7 @@
 abstract class Object extends Core implements Countable, IteratorAggregate
 {
 
-    const DATA_FILE = "data.xml";
+    const DATA_FILE = "data.json";
 
     // private $name;
     public $path;
@@ -17,7 +17,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected $flags = array();
 
     protected $dataFolder;
-    protected $dataFile = "data.xml"; // what file name should be check for data
+    // protected $dataFile = "data.js"; // what file name should be checked for data
     protected $location = null; // whether found in site or system
     private $outputFormat = "output";
 
@@ -67,7 +67,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         }
 
 
-        $this->data = $this->getXML();
+        $this->data = $this->getData();
         $this->setFlags();
 
     }
@@ -156,11 +156,12 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     /**
      * Load XML file into data object for access and reference
      */
-    protected function getXML()
+    protected function getData()
     {
         $file = $this->path . Object::DATA_FILE;
         if (is_file($file)) {
-            return simplexml_load_file($file);
+
+            return json_decode(file_get_contents($file));
         }
     }
 
