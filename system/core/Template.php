@@ -7,17 +7,18 @@ class Template extends Object
 
     public function fields($fieldArray = null)
     {
-        $fieldsArray = $this->find("//field");
+
+        $fieldsArray = $this->find("fields");
 
 
         $fields = new FieldArray();
         foreach ($fieldsArray as $f) {
-            $field = new Field($f);
-            $attr = $f->attributes();
+            $field = new Field($f->name);
+            // $attr = $f->attributes();
 
-            foreach ($attr as $key => $value) {
-                $field->attributes($key, $value);
-            }
+            // foreach ($attr as $key => $value) {
+            //     $field->attributes($key, $value);
+            // }
 
             $fields->add($field);
 

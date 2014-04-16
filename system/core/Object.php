@@ -25,6 +25,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     function __construct($url = null)
     {
+        $this->data = new stdClass();
         $url = $url ? $url : $this->name;
         $this->urlRequest = $this->getUrlRequest($url);
         try {
@@ -143,7 +144,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     // for now basically an XPATH alias
     public function find($name)
     {
-        return $this->data->xpath("$name");
+        // TEMP TO DEAL WITH OLD XPATH USE
+        return $this->data->{$name};
     }
 
 

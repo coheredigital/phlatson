@@ -1,11 +1,13 @@
 {
-	"label":"Page (default)",
-	"fields": {
-		"title": {
-			"columns":12
-		},
-		"content": {
-			"columns":12
-		}
-	}
+    "label": "Page (default)",
+    "fields": [
+        {
+            "name": "title",
+            "columns": 12
+        },
+        {
+            "name": "content",
+            "columns": 12
+        }
+    ]
 }
