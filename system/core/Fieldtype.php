@@ -64,10 +64,7 @@ abstract class Fieldtype extends Extension
     public function getSave($name, $value)
     {
 
-        $dom = new DomDocument;
-        $node = $dom->createElement("$name", "$value");
-        $dom->appendChild($node);
-        return $dom->documentElement;
+        return $value;
 
     }
 

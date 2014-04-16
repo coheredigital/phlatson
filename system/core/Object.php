@@ -93,22 +93,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         unset($this->data->flags);
     }
 
-    /**
-     * getFlag by key
-     * @param  string $key
-     * @return int
-     */
-    // public function getFlag($key){
-    // 	return isset($this->flags[$key]) ? $this->flags[$key] : 0;
-    // }
-
-    /**
-     * checks if page is published
-     * @return boolean converted from int stored in $this->flags array
-     */
-    // public function isPublished(){
-    // 	return $this->getFlag("published") ? true : false;
-    // }
 
     /* MAGIC!! */
     public function __get($name)
@@ -163,7 +147,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         $file = $this->path . Object::DATA_FILE;
         if (is_file($file)) {
 
-            return json_decode(file_get_contents($file));
+            return json_decode(file_get_contents($file), true);
         }
     }
 
@@ -205,15 +189,17 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected function getFormatted($name, $type)
     {
         // return null if data does not exist
-        if (!$this->data || !$this->data->{$name}) {
+//        if (!$this->data || !$this->data->{$name}) {
+        if (!$this->data || !$this->data[$name]) {
             return null;
         }
 
         // get raw value
-        $value = $this->data->{$name};
+        // $value = $this->data->{$name};
+        $value = $this->data[$name];
 
         if ($value) {
-            // get the field object fatching the passed "$name"
+            // get the field object matching the passed "$name"
             $field = $this->api("fields")->get("$name");
             if (is_object($field)) {
                 $fieldtype = $field->type;
@@ -254,19 +240,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
 
 
-        // create a domdoc to store saved values
-        $save = new DomDocument;
-
-        // set the formatting
-        $save->formatOutput = true;
-        $save->preserveWhiteSpace = false;
-
-        // add the root element
-        $root = $save->createElement("root");
-        $save->appendChild($root);
-
-        $root = $save->documentElement;
-
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
         $fields = $this->template->fields($this->defaultFields);
@@ -279,21 +252,20 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $fieldtype = $field->type();
 
             $formattedValue = $value ? $fieldtype->getSave($field->name, $value) : $this->{$field->name};
-            if ($formattedValue instanceof DomElement) {
-                $node = $save->importNode($formattedValue, true);
-                $save->documentElement->appendChild($node);
-            }
+            
+            $this->set($field->name,$formattedValue);
+            
         }
 
         // save to file
         if(api("config")->debug){
-            $saveFile = "save.xml";
+            $saveFile = "save.json";
         }
         else{
             $saveFile = self::DATA_FILE;
         }
 
-        $save->save($this->path.$saveFile);
+        file_put_contents($this->path.$saveFile, json_encode($this->data));
 
     }
 
@@ -305,7 +277,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function set($name, $value)
     {
         $value = is_object($value) ? (string)"$value" : $value;
-        $this->data->{$name} = $value;
+//        $this->data->{$name} = $value;
+        $this->data[$name] = $value;
     }
 
     // allows the data array to be counted directly

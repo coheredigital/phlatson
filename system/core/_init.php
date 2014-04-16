@@ -129,3 +129,5 @@ try {
 if (is_file($page->layout)) {
     include $page->layout;
 }
+
+var_dump($page->template);

@@ -43,7 +43,6 @@ class Page extends Object
                 continue;
             }
 
-
             // get an new of same class, useful for extending into AdminPage, etc
             $page = new $this->className($url);
 

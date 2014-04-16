@@ -11,9 +11,11 @@ class Field extends Object
      */
     public function type()
     {
-        if ($this->data->fieldtype) {
+//        if ($this->data->fieldtype) {
+        if ($this->data["fieldtype"]) {
 
-            $name = (string)$this->data->fieldtype;
+//            $name = (string) $this->data->fieldtype;
+            $name = (string) $this->data["fieldtype"];
             $fieldtype = new $name($this);
 
             return $fieldtype;
