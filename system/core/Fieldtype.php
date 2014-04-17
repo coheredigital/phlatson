@@ -61,7 +61,7 @@ abstract class Fieldtype extends Extension
     /**
      * getSave() should return type DomElement
      */
-    public function getSave($name, $value)
+    public function getSave($value)
     {
 
         return $value;

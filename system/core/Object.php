@@ -139,9 +139,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    /**
-     * Load XML file into data object for access and reference
-     */
     protected function getData()
     {
         $file = $this->path . Object::DATA_FILE;
@@ -246,27 +243,28 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         $fields = $this->template->fields($this->defaultFields);
 
 
+        $saveData = array();
+
         foreach ($fields as $field) {
 
-            $value = $postData->{$field->name};
+            $value = $postData->{$field->name} ? $postData->{$field->name} : $this->get("$field->name");
 
             $fieldtype = $field->type();
+            $value = $fieldtype->get($value, "save");
 
-            $formattedValue = $value ? $fieldtype->getSave($field->name, $value) : $this->{$field->name};
-            
-            $this->set($field->name,$formattedValue);
+            $saveData[$field->name] = $value;
             
         }
 
         // save to file
-        if(api("config")->debug){
+        if(api("config")->disableSave){
             $saveFile = "save.json";
         }
         else{
             $saveFile = self::DATA_FILE;
         }
 
-        file_put_contents($this->path.$saveFile, json_encode($this->data));
+        file_put_contents($this->path.$saveFile, json_encode($saveData));
 
     }
 
