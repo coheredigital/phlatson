@@ -126,8 +126,7 @@ try {
 // output template
 // NOTE: create a better method of achieving this
 
-if (is_file($page->layout)) {
-    include $page->layout;
-}
+if (is_file($page->layout)) include $page->layout;
 
-var_dump($page->template);
+var_dump($page->get("layout"));
+var_dump($page->layout);

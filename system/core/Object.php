@@ -197,6 +197,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // get raw value
         // $value = $this->data->{$name};
         $value = $this->data[$name];
+        if($type == "raw") return $value;
+
 
         if ($value) {
             // get the field object matching the passed "$name"
@@ -205,11 +207,10 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 $fieldtype = $field->type;
             }
 
-
             if (is_object($fieldtype)) {
                 $value = $fieldtype->get($value, $type);
-
             }
+
         }
 
         return $value;

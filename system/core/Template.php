@@ -5,15 +5,16 @@ class Template extends Object
 
     protected $dataFolder = "templates/";
 
-    public function fields($fieldArray = null)
+    public function fields($defaultFields = null)
     {
 
-        $fieldsArray = $this->find("fields");
+        $fieldsArray = $this->getUnformatted("fields");
 
 
         $fields = new FieldArray();
         foreach ($fieldsArray as $f) {
-            $field = new Field($f->name);
+
+            $field = new Field($f["name"]);
             // $attr = $f->attributes();
 
             // foreach ($attr as $key => $value) {
@@ -24,16 +25,12 @@ class Template extends Object
 
         }
 
-        if (is_array($fieldArray)) {
-            $fields->import($fieldArray);
+        if (is_array($defaultFields)) {
+            $fields->import($defaultFields);
         }
 
         return $fields;
     }
-
-
-
-
 
     private function getLayout()
     {

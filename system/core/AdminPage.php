@@ -17,7 +17,7 @@ class AdminPage extends Page
     function __construct($url = false)
     {
         parent::__construct($url);
-        $this->layout = $this->api('config')->paths->admin . "index.php";
+        $this->set("layout", $this->api('config')->paths->admin . "index.php");
 
         if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
             array_shift($this->urlRequest);
@@ -43,7 +43,7 @@ class AdminPage extends Page
                 break;
             case 'layout':
                 $path = $this->api('config')->paths->admin . "layouts/";
-                $file = $this->data->layout . ".php";
+                $file = $this->getUnformatted("layout") . ".php";
                 return $path . $file;
                 break;
             default:
@@ -55,8 +55,8 @@ class AdminPage extends Page
 
     protected function getExtension()
     {
-        if ($this->data->extension) {
-            $extension = api("extensions")->get("{$this->data->extension}");
+        if ($this->getUnformatted("extension")) {
+            $extension = api("extensions")->get($this->getUnformatted("extension"));
             return $extension;
         }
     }
@@ -64,7 +64,7 @@ class AdminPage extends Page
 
     public function render()
     {
-        if ($this->data->extension) {
+        if ($this->getUnformatted("extension")) {
             return $this->extension->render();
         }
         return false;

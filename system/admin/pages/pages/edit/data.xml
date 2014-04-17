@@ -1,5 +1,0 @@
-<page>
-    <title>Edit Page</title>
-    <layout>pageEdit</layout>
-    <extension>AdminPageEdit</extension>
-</page>

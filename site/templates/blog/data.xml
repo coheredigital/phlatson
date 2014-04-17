@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<template>
-    <fields>
-        <field col="12">title</field>
-    </fields>
-    <label>Blog</label>
-</template>
