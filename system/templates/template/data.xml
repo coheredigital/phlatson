@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<template>
-    <fields>
-        <field col="12">label</field>
-        <field col="12">fields</field>
-    </fields>
-    <name>template</name>
-    <label>Template</label>
-</template>

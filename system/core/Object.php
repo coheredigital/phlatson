@@ -5,7 +5,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     const DATA_FILE = "data.json";
 
-    // private $name;
+    public $name;
     public $path;
     protected $data;
     // default statuc flags (mostly boolean int, all stored as int)
@@ -23,17 +23,16 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     public $urlRequest = array();
 
-    function __construct($url = null)
+    function __construct($url)
     {
         $this->data = new stdClass();
-        $url = $url ? $url : $this->name;
+        // $url = $url ? $url : $this->name;
         $this->urlRequest = $this->getUrlRequest($url);
-        try {
-            $this->setupData();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
 
+        $lastRequestIndex = count($this->urlRequest) - 1;
+        $this->name = "{$this->urlRequest[$lastRequestIndex]}";
+
+        $this->setupData();
     }
 
 
@@ -41,12 +40,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
 
         if (is_null($path)) {
-            $sitePath = realpath(
-                    $this->api('config')->paths->site . $this->dataFolder . $this->directory
-                ) . DIRECTORY_SEPARATOR;
-            $systemPath = realpath(
-                    $this->api('config')->paths->system . $this->dataFolder . $this->directory
-                ) . DIRECTORY_SEPARATOR;
+            $sitePath = realpath($this->api('config')->paths->site . $this->dataFolder . $this->directory) . DIRECTORY_SEPARATOR;
+            $systemPath = realpath($this->api('config')->paths->system . $this->dataFolder . $this->directory) . DIRECTORY_SEPARATOR;
 
             if (is_file($sitePath . Object::DATA_FILE)) {
                 $this->path = $sitePath;
@@ -62,7 +57,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $path = realpath($path) . DIRECTORY_SEPARATOR;
 
             if (is_file($path . Object::DATA_FILE)) {
-                $this->path = $path;
+                $this->set("path" , $path);
             }
 
         }
@@ -107,9 +102,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function get($string)
     {
         switch ($string) {
-            case 'name':
-                $lastRequestIndex = count($this->urlRequest) - 1;
-                return (string)$this->urlRequest[$lastRequestIndex];
+//            case 'name':
+//                $lastRequestIndex = count($this->urlRequest) - 1;
+//                return (string)$this->urlRequest[$lastRequestIndex];
             case 'url':
                 return $this->url();
                 break;
@@ -119,6 +114,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             case 'directory':
                 $directory = trim(implode("/", $this->urlRequest), "/");
                 return $directory;
+            case 'template':
+                return $this->getTemplate($this->data["template"]);
             default:
                 return $this->getFormatted($string, $this->outputFormat);
                 break;
@@ -172,13 +169,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    public function getTemplate($name = null)
+    public function getTemplate($name)
     {
-        // $templateName = $this->data->template;
-        $templateName = $name ? $name : $this->data->template;
-        if ($templateName) {
-            $template = new Template($templateName);
-        }
+        $template = new Template($name);
         return $template;
     }
 
@@ -240,20 +233,25 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
-        $fields = $this->template->fields($this->defaultFields);
+        $template = $this->get("template");
+        $fields = $template->fields();
 
+        // add the default fields
+        if(count($this->defaultFields)) $fields->import($this->defaultFields);
 
+        // setup array to store save data
         $saveData = array();
+
+//        if(!count($fields)) throw new Exception("No fields found for {$this}");
 
         foreach ($fields as $field) {
 
-            $value = $postData->{$field->name} ? $postData->{$field->name} : $this->get("$field->name");
+            $value = isset($postData->{$field->name}) ? $postData->{$field->name} : $this->getUnformatted("$field->name");
 
             $fieldtype = $field->type();
             $value = $fieldtype->get($value, "save");
 
             $saveData[$field->name] = $value;
-            
         }
 
         // save to file
@@ -264,7 +262,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $saveFile = self::DATA_FILE;
         }
 
-        file_put_contents($this->path.$saveFile, json_encode($saveData));
+        $saveData = json_encode($saveData);
+
+        file_put_contents($this->path.$saveFile, $saveData);
 
     }
 

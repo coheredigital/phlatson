@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<root>
-    <label>Field</label>
-    <fields>
-        <field col="5">label</field>
-        <field col="7">fieldtype</field>
-    </fields>
-</root>

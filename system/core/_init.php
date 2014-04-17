@@ -108,25 +108,23 @@ try {
     Core::init($config);
 
     foreach (Core::api() as $name => $object) {
-        if ($name === "config" || $name === "page") {
+        if ($name === "config" || $name === "page") { // skip $config, it is already set
             continue;
-        } // skip $config, it is already set
+        }
         else {
             ${$name} = $object;
         }
     }
 
     $page = $pages->get($input->url);
+    // output template
+    // NOTE: create a better method of achieving this
+
+
 
 } catch (Exception $e) {
     echo 'Caught exception: ', $e->getMessage(), "\n";
 }
 
-
-// output template
-// NOTE: create a better method of achieving this
-
 if (is_file($page->layout)) include $page->layout;
-
 var_dump($page->get("layout"));
-var_dump($page->layout);

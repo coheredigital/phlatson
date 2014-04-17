@@ -41,10 +41,10 @@ class Field extends Object
             case 'type':
                 return $this->type();
                 break;
-//            case 'template':
-//                $template = new Template("field");
-//                return $template;
-//                break;
+            case 'template':
+                $template = new Template("field");
+                return $template;
+                break;
             default:
                 return parent::get($string);
                 break;

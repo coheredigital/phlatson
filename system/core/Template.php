@@ -5,7 +5,7 @@ class Template extends Object
 
     protected $dataFolder = "templates/";
 
-    public function fields($defaultFields = null)
+    public function fields()
     {
 
         $fieldsArray = $this->getUnformatted("fields");
@@ -14,20 +14,14 @@ class Template extends Object
         $fields = new FieldArray();
         foreach ($fieldsArray as $f) {
 
-            $field = new Field($f["name"]);
-            // $attr = $f->attributes();
-
-            // foreach ($attr as $key => $value) {
-            //     $field->attributes($key, $value);
-            // }
-
+            $field = api("fields")->get($f["name"]);
             $fields->add($field);
 
         }
 
-        if (is_array($defaultFields)) {
-            $fields->import($defaultFields);
-        }
+//        if (is_array($defaultFields)) {
+//            $fields->import($defaultFields);
+//        }
 
         return $fields;
     }
@@ -44,9 +38,6 @@ class Template extends Object
         switch ($string) {
             case 'fields':
                 return $this->fields();
-                break;
-            default:
-                return parent::get($string);
                 break;
             case 'template':
                 return $this->getTemplate("template");

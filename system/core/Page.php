@@ -33,7 +33,7 @@ class Page extends Object
         $children = array();
         foreach ($subs as $folder) {
             $folder = basename($folder);
-            $url = $this->directory . "/" . $folder;
+            $url = $this->get("directory") . "/" . $folder;
 
             $path = $this->path . $folder . DIRECTORY_SEPARATOR;
             $file = $path . Object::DATA_FILE;
@@ -154,11 +154,12 @@ class Page extends Object
                 return $this->images();
                 break;
             case 'fields':
-                return $this->template->fields($this->defaultFields);
+                return $this->get("template")->fields($this->defaultFields);
                 break;
             case 'layout':
                 // alias for $page->template->layout for simplicity
-                $layout = $this->template->layout;
+                $template = $this->get("template");
+                $layout = $template->get("layout");
                 return $layout ? (string)$layout : null;
                 break;
             default:

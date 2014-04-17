@@ -11,7 +11,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
     protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
     protected $allowRootRequest = false;
-    // used to identify the singular version of the reperesent array
+    // used to identify the singular version of the represent an array
     // Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
     protected $singularName;
 
@@ -21,28 +21,29 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
     final public function __construct()
     {
-        $this->data = $this->getDataArray();
+        $this->data = $this->setupData();
     }
 
 
-    // load availabe objects into $data array()
-    protected function getDataArray()
+    // load available objects into $data array()
+    protected function setupData()
     {
         if ($this->root) {
-            $array = glob($this->api('config')->paths->site . $this->root . "*", GLOB_ONLYDIR);
-            if ($this->checkSystem) {
-                $array2 = glob($this->api('config')->paths->system . $this->root . "*", GLOB_ONLYDIR);
-                $array = array_merge($array, $array2);
-            }
 
+            $objects = glob($this->api('config')->paths->site . $this->root . "*", GLOB_ONLYDIR);
+
+            // get system items
+            if ($this->checkSystem) {
+                $systemObjects = glob($this->api('config')->paths->system . $this->root . "*", GLOB_ONLYDIR);
+                $objects = array_merge($objects, $systemObjects);
+            }
 
             // assign key => value pairs
             $dataArray = array();
-            foreach ($array as $path) {
+            foreach ($objects as $path) {
                 $name = basename($path);
                 $dataArray["$name"] = $path;
             }
-
             return $dataArray;
 
         }
@@ -50,28 +51,6 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         return null;
     }
 
-
-    protected function getFileList()
-    {
-
-        $array = glob($this->api('config')->paths->site . $this->root . "*", GLOB_ONLYDIR);
-        // add the values found in system folder
-        if ($this->checkSystem) {
-            $array2 = glob($this->api('config')->paths->system . $this->root . "*", GLOB_ONLYDIR);
-            $array = array_merge($array, $array2);
-        }
-
-
-        // assign key => value pairs
-        $dataArray = array();
-        foreach ($array as $path) {
-            $name = basename($path);
-            $dataArray["$name"] = $path;
-        }
-
-        return $dataArray;
-
-    }
 
 
     public function __set($key, $value)
@@ -105,9 +84,9 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     public function get($name)
     {
 
-        if (is_object($name)) {
+        if (is_object($name)) { // stringify $object
             $name = (string)$name;
-        } // stringify $object
+        }
 
         if (!isset($this->data[$name]) && !$this->allowRootRequest) {
             return false;
@@ -115,19 +94,6 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         $object = new $this->singularName($name);
         return $object;
 
-        return false;
-    }
-
-
-    public function has($key)
-    {
-        return ($this->get($key) !== null);
-    }
-
-    public function remove($key)
-    {
-        unset($this->data[$key]);
-        return $this;
     }
 
     public function getIterator()

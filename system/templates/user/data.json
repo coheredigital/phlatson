@@ -1,0 +1,13 @@
+{
+    "label": "User",
+    "fields": [
+        {
+            "name": "fullname",
+            "columns": "12"
+        },
+        {
+            "name": "password",
+            "columns": "12"
+        }
+    ]
+}

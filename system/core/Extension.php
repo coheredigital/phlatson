@@ -8,7 +8,7 @@ abstract class Extension extends Object
 
     public function __construct(Field $field = null)
     {
-        parent::__construct();
+        parent::__construct($field);
 
         $this->setup();
         $this->addStyles();

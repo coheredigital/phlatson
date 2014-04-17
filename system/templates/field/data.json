@@ -1,0 +1,13 @@
+{
+    "label": "Field",
+    "fields": [
+        {
+            "columns": "5",
+            "name": "label"
+        },
+        {
+            "columns": "7",
+            "name": "fieldtype"
+        }
+    ]
+}
