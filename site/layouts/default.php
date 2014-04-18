@@ -13,5 +13,16 @@
                 </div>
             </div>
         <?php endif ?>
+
+        <pre>
+            <?php
+
+            $ext =  $extensions->get("FieldtypeDatetime");
+            var_dump($ext->directory);
+            ?>
+
+
+
+        </pre>
     </div>
 <?php include 'includes/foot.inc'; ?>

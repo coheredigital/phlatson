@@ -27,7 +27,7 @@ class FieldtypeDateTime extends Fieldtype
         return $value;
     }
 
-    public function getSave($name, $value)
+    public function getSave($value)
     {
 
         $dom = new DomDocument;

@@ -17,7 +17,7 @@ class FieldtypeFields extends Fieldtype
     }
 
 
-    public function getSave($name, $value)
+    public function getSave($value)
     {
         $dom = new DomDocument;
         $root = $dom->createElement($name);

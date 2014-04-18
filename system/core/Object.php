@@ -5,7 +5,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     const DATA_FILE = "data.json";
 
-    public $name;
     public $path;
     protected $data;
     // default statuc flags (mostly boolean int, all stored as int)
@@ -16,7 +15,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected $defaultFields = array();
     protected $flags = array();
 
-    protected $dataFolder;
+    protected $root;
     // protected $dataFile = "data.js"; // what file name should be checked for data
     protected $location = null; // whether found in site or system
     private $outputFormat = "output";
@@ -26,11 +25,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     function __construct($url)
     {
         $this->data = new stdClass();
-        // $url = $url ? $url : $this->name;
-        $this->urlRequest = $this->getUrlRequest($url);
 
-        $lastRequestIndex = count($this->urlRequest) - 1;
-        $this->name = "{$this->urlRequest[$lastRequestIndex]}";
+        $this->urlRequest = $this->getUrlRequest($url);
 
         $this->setupData();
     }
@@ -40,8 +36,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
 
         if (is_null($path)) {
-            $sitePath = realpath($this->api('config')->paths->site . $this->dataFolder . $this->directory) . DIRECTORY_SEPARATOR;
-            $systemPath = realpath($this->api('config')->paths->system . $this->dataFolder . $this->directory) . DIRECTORY_SEPARATOR;
+            $sitePath = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+            $systemPath = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
 
             if (is_file($sitePath . Object::DATA_FILE)) {
                 $this->path = $sitePath;
@@ -81,7 +77,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // first merge in default flags
         $this->flags = array_merge($this->flags, $this->defaultFlags);
 
-
         foreach ($this->data->flags->children() as $key => $value) {
             $this->flags["$key"] = (int)$value;
         }
@@ -102,9 +97,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function get($string)
     {
         switch ($string) {
-//            case 'name':
-//                $lastRequestIndex = count($this->urlRequest) - 1;
-//                return (string)$this->urlRequest[$lastRequestIndex];
+            case 'name':
+                $lastRequestIndex = count($this->urlRequest) - 1;
+                return (string)$this->urlRequest[$lastRequestIndex];
             case 'url':
                 return $this->url();
                 break;
@@ -132,7 +127,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     public function url()
     {
-        return $this->api('config')->urls->root . $this->location . $this->dataFolder . $this->name . "/";
+        return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
     }
 
 
@@ -179,13 +174,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected function getFormatted($name, $type)
     {
         // return null if data does not exist
-//        if (!$this->data || !$this->data->{$name}) {
         if (!$this->data || !$this->data[$name]) {
             return null;
         }
 
         // get raw value
-        // $value = $this->data->{$name};
         $value = $this->data[$name];
         if($type == "raw") return $value;
 
@@ -242,8 +235,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // setup array to store save data
         $saveData = array();
 
-//        if(!count($fields)) throw new Exception("No fields found for {$this}");
-
         foreach ($fields as $field) {
 
             $value = isset($postData->{$field->name}) ? $postData->{$field->name} : $this->getUnformatted("$field->name");
@@ -276,7 +267,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function set($name, $value)
     {
         $value = is_object($value) ? (string)"$value" : $value;
-//        $this->data->{$name} = $value;
         $this->data[$name] = $value;
     }
 

@@ -3,8 +3,7 @@
 
 class Page extends Object
 {
-    protected $dataFolder = "pages/";
-
+    protected $root = "pages/";
     protected $defaultFields = array("template");
 
     function __construct($url = false)

@@ -8,7 +8,6 @@ Used in the management of Admin Pages and layouts, uses some special feature and
 
  */
 
-$output = "";
 
 class AdminPage extends Page
 {

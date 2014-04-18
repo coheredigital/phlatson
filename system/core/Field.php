@@ -2,7 +2,7 @@
 
 class Field extends Object
 {
-    protected $dataFolder = "fields/";
+    protected $root = "fields/";
     protected $attributes = null;
 
     /**

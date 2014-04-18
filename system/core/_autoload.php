@@ -10,7 +10,6 @@ spl_autoload_register('classLoader');
 function classLoader($className)
 {
 
-
     $namespace = str_replace("\\", DIRECTORY_SEPARATOR, __NAMESPACE__);
     $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
 
