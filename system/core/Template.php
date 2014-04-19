@@ -7,22 +7,12 @@ class Template extends Object
 
     public function fields()
     {
-
         $fieldsArray = $this->getUnformatted("fields");
-
-
         $fields = new FieldArray();
         foreach ($fieldsArray as $f) {
-
             $field = api("fields")->get($f["name"]);
             $fields->add($field);
-
         }
-
-//        if (is_array($defaultFields)) {
-//            $fields->import($defaultFields);
-//        }
-
         return $fields;
     }
 
@@ -40,8 +30,7 @@ class Template extends Object
                 return $this->fields();
                 break;
             case 'template':
-                $template = new Template("template");
-                return $template;
+                return new Template("template");
                 break;
             case 'layout':
                 return $this->getLayout();

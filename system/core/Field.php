@@ -13,8 +13,7 @@ class Field extends Object
     {
         if ($this->data["fieldtype"]) {
             $name = (string) $this->data["fieldtype"];
-            $fieldtype = new $name($this);
-            return $fieldtype;
+            return new $name($this);
         }
         return null;
     }
@@ -42,8 +41,7 @@ class Field extends Object
                 return $this->type();
                 break;
             case 'template':
-                $template = new Template("field");
-                return $template;
+                return new Template("field");
                 break;
             default:
                 return parent::get($string);

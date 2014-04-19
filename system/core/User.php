@@ -45,7 +45,7 @@ class User extends Object
     {
         switch ($string) {
             case 'template':
-                return $this->getTemplate("user");
+                return new Template("user");
                 break;
             default:
                 return parent::get($string);

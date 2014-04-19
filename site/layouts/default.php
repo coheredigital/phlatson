@@ -19,6 +19,7 @@
 
             $ext =  $extensions->get("FieldtypeDatetime");
             var_dump($ext->name);
+            var_dump($ext->title);
             var_dump($ext->directory);
             ?>
 
