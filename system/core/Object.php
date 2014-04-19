@@ -2,25 +2,23 @@
 
 abstract class Object extends Core implements Countable, IteratorAggregate
 {
-
     const DATA_FILE = "data.json";
 
     public $path;
     protected $data;
+    protected $root;
+    protected $location = null; // whether found in site or system
+
+    private $outputFormat = "output";
+
     // default statuc flags (mostly boolean int, all stored as int)
     protected $defaultFlags = array(
         "published" => 1,
         "locked" => 0
     );
     protected $defaultFields = array();
-    protected $flags = array();
 
-    protected $root;
-    // protected $dataFile = "data.js"; // what file name should be checked for data
-    protected $location = null; // whether found in site or system
-    private $outputFormat = "output";
-
-    public $urlRequest = array();
+    protected $urlRequest = array();
 
     function __construct($url)
     {
