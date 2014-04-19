@@ -132,6 +132,15 @@ class Page extends Object
         return $url;
     }
 
+    protected function createUrl($array)
+    {
+        if (is_array($array) && implode("", $this->urlRequest)) {
+            $url = "/" . implode("/", $array);
+            return $url;
+        }
+        return null;
+    }
+
     public function get($string)
     {
         switch ($string) {

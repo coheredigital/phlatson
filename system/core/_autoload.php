@@ -9,23 +9,18 @@
 spl_autoload_register('classLoader');
 function classLoader($className)
 {
-
-    $namespace = str_replace("\\", DIRECTORY_SEPARATOR, __NAMESPACE__);
+    $systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR;
     $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
 
-    $systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR;
 
-    $namespacePath = empty($namespace) ? "" : $namespace . DIRECTORY_SEPARATOR;
-
-    $coreClass = "{$systemPath}{$namespacePath}{$className}.php";
-
-    if (is_file($coreClass)) {
-        require_once($coreClass);
-    } else {
+    if (is_file($systemPath . $className . ".php")) {
+        require_once $systemPath . $className . ".php";
+    }
+    else {
         $extensionsPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
-        $fieldtype = "{$extensionsPath}{$namespacePath}{$className}.php";
-        if (is_file($fieldtype)) {
-            require_once($fieldtype);
+        $extension = $extensionsPath . $className . ".php";
+        if (is_file($extension)) {
+            require_once($extension);
         }
     }
 

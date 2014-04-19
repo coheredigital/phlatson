@@ -24,11 +24,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     function __construct($url)
     {
-        $this->data = new stdClass();
-
         $this->urlRequest = $this->getUrlRequest($url);
-
         $this->setupData();
+
+        $lastRequestIndex = count($this->urlRequest) - 1;
+        $this->set("name", $this->urlRequest[$lastRequestIndex]);
     }
 
 
@@ -58,30 +58,10 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         }
 
-
         $this->data = $this->getData();
-        $this->setFlags();
 
     }
 
-    /* =====================
-     Status / Flag functions
-    ====================== */
-
-    protected function setFlags()
-    {
-        if (!$data->flags) {
-            return;
-        }
-
-        // first merge in default flags
-        $this->flags = array_merge($this->flags, $this->defaultFlags);
-
-        foreach ($this->data->flags->children() as $key => $value) {
-            $this->flags["$key"] = (int)$value;
-        }
-        unset($this->data->flags);
-    }
 
 
     /* MAGIC!! */
@@ -97,11 +77,15 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function get($string)
     {
         switch ($string) {
-            case 'name':
-                $lastRequestIndex = count($this->urlRequest) - 1;
-                return (string)$this->urlRequest[$lastRequestIndex];
             case 'url':
-                return $this->url();
+                if(!$this->getUnformatted("url")){
+                    $value  = $this->url();
+                    $this->set("url", $value);
+                }
+                else{
+                    $value = $this->getUnformatted("url");
+                }
+                return $value;
                 break;
             case 'requests':
                 return $this->urlRequest;
@@ -141,14 +125,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    protected function createUrl($array)
-    {
-        if (is_array($array) && implode("", $this->urlRequest)) {
-            $url = "/" . implode("/", $array);
-            return $url;
-        }
-        return null;
-    }
 
 
     protected function getUrlRequest($url)
