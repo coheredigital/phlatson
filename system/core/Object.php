@@ -23,10 +23,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     function __construct($url = null)
     {
         // default to using the name when no url parameter passed
-        $url = $url ? $url : $this->name;
+        $url = $url ? $url : $this->name; // this should be simplified
         $this->urlRequest = $this->getUrlRequest($url);
 
-        $this->urlRequest = $this->getUrlRequest($url);
         $this->setupData();
 
         $lastRequestIndex = count($this->urlRequest) - 1;
@@ -41,8 +40,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $sitePath = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
             $systemPath = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
 
-            if (is_file($sitePath . Object::DATA_FILE)) {
-                $this->path = $sitePath;
+            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
+                $this->set("path", $sitePath);
                 $this->location = "site/";
             } else {
                 if (is_file($systemPath . Object::DATA_FILE)) {
@@ -60,7 +59,12 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         }
 
-        $this->data = $this->getData();
+        $file = $this->path . Object::DATA_FILE;
+        if (is_file($file)) {
+
+            $this->data = json_decode(file_get_contents($file), true);
+        }
+
 
     }
 
@@ -78,15 +82,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
     }
 
-
-    protected function getData()
-    {
-        $file = $this->path . Object::DATA_FILE;
-        if (is_file($file)) {
-
-            return json_decode(file_get_contents($file), true);
-        }
-    }
 
 
 

@@ -11,9 +11,8 @@
     } ?>
 </head>
 <body class="<?php echo "page-{$page->name}" ?>">
-<?php if (!$user->isGuest()): ?>
-    <div id="header" class="clearfix">
 
+    <div id="sidebar">
         <div class="navbar" role="navigation">
             <ul class="nav navbar-nav uk-navbar-nav">
                 <?php include "user_menu.php" ?>
@@ -26,23 +25,18 @@
 
         </div>
     </div>
-<div id="main">
-    <div class="container">
-        <?php endif ?>
 
 
-
-        <?php echo $output; ?>
-
-        <?php if (!$user->isGuest()): ?>
+    <div id="main">
+        <div class="container">
+            <?php echo $output; ?>
+        </div>
     </div>
-</div>
     <div id="footer">
         <div class="container">
-            <p>XPages © Adam Spruijt - 2013</p>
 
         </div>
     </div>
-<?php endif ?>
+
 </body>
 </html>
