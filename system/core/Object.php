@@ -36,16 +36,17 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected function setupData()
     {
 
-        $path = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
-        $file = $sitePath . Object::DATA_FILE;
+        $folder = api('config')->paths->site . $this->root . $this->directory;
+        $path = realpath($folder) . DIRECTORY_SEPARATOR;
+        $file = $path . Object::DATA_FILE;
 
         if (is_file($file)) { // check site path first
             $this->set("path", $path);
             $this->location = "site/";
         }
         else {
-
-            $path = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+            $folder = api('config')->paths->system . $this->root . $this->directory;
+            $path = realpath($folder) . DIRECTORY_SEPARATOR;
             $file = $path . Object::DATA_FILE;
 
             if (is_file($file)) {
