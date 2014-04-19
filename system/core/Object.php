@@ -20,8 +20,12 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     protected $urlRequest = array();
 
-    function __construct($url)
+    function __construct($url = null)
     {
+        // default to using the name when no url parameter passed
+        $url = $url ? $url : $this->name;
+        $this->urlRequest = $this->getUrlRequest($url);
+
         $this->urlRequest = $this->getUrlRequest($url);
         $this->setupData();
 
