@@ -40,7 +40,8 @@ class Template extends Object
                 return $this->fields();
                 break;
             case 'template':
-                return $this->getTemplate("template");
+                $template = new Template("template");
+                return $template;
                 break;
             case 'layout':
                 return $this->getLayout();

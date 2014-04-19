@@ -61,44 +61,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-
-    /* MAGIC!! */
-    public function __get($name)
-    {
-        // handle / cache class name request
-        if ($name == "className") {
-            return $this->className();
-        }
-        return $this->get($name);
-    }
-
-    public function get($string)
-    {
-        switch ($string) {
-            case 'url':
-                if(!$this->getUnformatted("url")){
-                    $value  = $this->url();
-                    $this->set("url", $value);
-                }
-                else{
-                    $value = $this->getUnformatted("url");
-                }
-                return $value;
-                break;
-            case 'requests':
-                return $this->urlRequest;
-                break;
-            case 'directory':
-                $directory = trim(implode("/", $this->urlRequest), "/");
-                return $directory;
-            case 'template':
-                return $this->getTemplate($this->data["template"]);
-            default:
-                return $this->getFormatted($string, $this->outputFormat);
-                break;
-        }
-    }
-
     // for now basically an XPATH alias
     public function find($name)
     {
@@ -135,13 +97,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $array[] = $url;
         }
         return $array;
-    }
-
-
-    public function getTemplate($name)
-    {
-        $template = new Template($name);
-        return $template;
     }
 
 
@@ -231,6 +186,44 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         file_put_contents($this->path.$saveFile, $saveData);
 
+    }
+
+    public function __get($name)
+    {
+        // handle / cache class name request
+        if ($name == "className") {
+            return $this->className();
+        }
+        return $this->get($name);
+    }
+
+
+    public function get($string)
+    {
+        switch ($string) {
+            case 'url':
+                if(!$this->getUnformatted("url")){
+                    $value  = $this->url();
+                    $this->set("url", $value);
+                }
+                else{
+                    $value = $this->getUnformatted("url");
+                }
+                return $value;
+                break;
+            case 'requests':
+                return $this->urlRequest;
+                break;
+            case 'directory':
+                $directory = trim(implode("/", $this->urlRequest), "/");
+                return $directory;
+            case 'template':
+                $template = new Template($this->getUnformatted("template"));
+                return $template;
+            default:
+                return $this->getFormatted($string, $this->outputFormat);
+                break;
+        }
     }
 
     public function __set($name, $value)
