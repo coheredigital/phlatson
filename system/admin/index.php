@@ -21,8 +21,9 @@ $config->scripts->add("{$config->urls->admin}styles/uikit/js/uikit.js");
 // admin pages 
 if ($output = $page->render()) {
 } else {
-    include $page->get('layout');
+    if(is_file($page->get('layout'))){
+        include $page->get('layout');
+    }
 }
-
 
 require_once 'includes/output.php';

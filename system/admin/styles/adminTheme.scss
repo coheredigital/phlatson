@@ -146,7 +146,7 @@ select {
   position: relative;
   // margin-left: 200px;
   margin: 0 auto;
-  padding: 1em;
+  padding: 2em 1em;
   margin-left: 100px;
 }
 #sidebar{
@@ -207,7 +207,7 @@ select {
   a {
     color: #fff;
     display: block;
-    padding: 1.5em 1em;
+    padding: 1em 1em;
     // font-weight: bold;
   }
   a:hover {
@@ -222,7 +222,7 @@ select {
 .user-menu {
   background: $dark-blue;
   padding: 0 1em;
-
+  margin-bottom: 1em;
   p, a {
     padding-left: 0;
     padding-right: 0;
@@ -494,4 +494,12 @@ select {
   margin-top: 0.5em;
   width: 100%;
   background: $green;
+}
+
+// xdebug fixes
+
+.xdebug-error,
+.xe-warning{
+  margin-left: 144px;
+  width: auto;
 }

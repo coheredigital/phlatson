@@ -427,7 +427,7 @@ a {
 }
 
 a:hover {
-  color: #65c3df;
+  color: #52b4df;
 }
 
 hr {
@@ -488,8 +488,8 @@ input, textarea, button, select {
   border: 1px solid #aaaaaa;
 }
 input:focus, textarea:focus, button:focus, select:focus {
-  outline-color: #65c3df;
-  border-color: #65c3df;
+  outline-color: #52b4df;
+  border-color: #52b4df;
 }
 
 fieldset {
@@ -595,7 +595,7 @@ select {
 #main {
   position: relative;
   margin: 0 auto;
-  padding: 1em;
+  padding: 2em 1em;
   margin-left: 100px;
 }
 
@@ -619,7 +619,7 @@ select {
 }
 
 #header {
-  background: #65c3df;
+  background: #52b4df;
 }
 
 .container {
@@ -651,10 +651,10 @@ select {
 .nav a {
   color: #fff;
   display: block;
-  padding: 1.5em 1em;
+  padding: 1em 1em;
 }
 .nav a:hover {
-  color: #65c3df;
+  color: #52b4df;
 }
 .nav .active a {
   background: whitesmoke;
@@ -662,8 +662,9 @@ select {
 }
 
 .user-menu {
-  background: #3bb3d6;
+  background: #28a1d6;
   padding: 0 1em;
+  margin-bottom: 1em;
 }
 .user-menu p, .user-menu a {
   padding-left: 0;
@@ -677,7 +678,7 @@ select {
   color: #444b65;
 }
 .user-menu .seperator {
-  color: #65c3df;
+  color: #52b4df;
 }
 
 /* Page tree */
@@ -771,7 +772,7 @@ select {
 
 /* Buttons */
 .button {
-  background: #65c3df;
+  background: #52b4df;
   border: 0;
   padding: 1em 1.1em;
   display: inline-block;
@@ -784,7 +785,7 @@ select {
   outline: none;
 }
 .button:hover {
-  background: #3bb3d6;
+  background: #28a1d6;
 }
 .button:active {
   background: #555555 !important;
@@ -915,4 +916,10 @@ select {
   margin-top: 0.5em;
   width: 100%;
   background: #56ba6d;
+}
+
+.xdebug-error,
+.xe-warning {
+  margin-left: 144px;
+  width: auto;
 }

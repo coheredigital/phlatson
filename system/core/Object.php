@@ -33,38 +33,30 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    protected function setupData($path = null)
+    protected function setupData()
     {
 
-        if (is_null($path)) {
-            $sitePath = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
-            $systemPath = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+        $path = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+        $file = $sitePath . Object::DATA_FILE;
 
-            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
-                $this->set("path", $sitePath);
-                $this->location = "site/";
-            } else {
-                if (is_file($systemPath . Object::DATA_FILE)) {
-                    $this->path = $systemPath;
-                    $this->location = "system/";
-                }
+        if (is_file($file)) { // check site path first
+            $this->set("path", $path);
+            $this->location = "site/";
+        }
+        else {
+
+            $path = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+            $file = $path . Object::DATA_FILE;
+
+            if (is_file($file)) {
+                $this->set("path", $path);
+                $this->location = "system/";
             }
-        } else {
-
-            $path = realpath($path) . DIRECTORY_SEPARATOR;
-
-            if (is_file($path . Object::DATA_FILE)) {
-                $this->set("path" , $path);
-            }
-
         }
 
-        $file = $this->path . Object::DATA_FILE;
         if (is_file($file)) {
-
             $this->data = json_decode(file_get_contents($file), true);
         }
-
 
     }
 
@@ -81,9 +73,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
         return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
     }
-
-
-
 
 
     protected function getUrlRequest($url)
@@ -127,15 +116,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $value;
     }
 
-    /**
-     * sets the outputFormat to be used for get method
-     * @param  string $name should match one of valid format optional available (output, edit, raw, save)
-     */
-    public function setFormat($name)
-    {
-        $this->outputFormat = $name;
-    }
-
 
     /**
      * public alias for getFormatted($name, "raw")
@@ -144,7 +124,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
      */
     public function getUnformatted($name)
     {
-        return $this->getFormatted($name, "raw");
+        return $this->data[$name];
     }
 
 
@@ -217,8 +197,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 $directory = trim(implode("/", $this->urlRequest), "/");
                 return $directory;
             case 'template':
-                $template = new Template($this->getUnformatted("template"));
+                $templateName = $this->getUnformatted("template");
+                $template = new Template($templateName);
                 return $template;
+            case 'outputFormat':
+                $this->outputFormat = $string;
             default:
                 return $this->getFormatted($string, $this->outputFormat);
                 break;

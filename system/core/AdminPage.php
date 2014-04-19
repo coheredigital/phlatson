@@ -64,7 +64,7 @@ class AdminPage extends Page
     public function render()
     {
         if ($this->getUnformatted("extension")) {
-            return $this->extension->render();
+            return $this->get("extension")->render();
         }
         return false;
     }

@@ -14,15 +14,11 @@ class AdminPageEdit extends Extension
 
         $this->form = api("extensions")->get("MarkupEditForm");
 
-        if ($this->new) {
-            $this->page = null;
-            $this->template = api("templates")->get(api("input")->get->template);
-            $this->title = "New: " . $this->template->label;
-        } else {
-            $this->page = api("pages")->get(api("input")->get->name);
-            $this->template = $this->page->template;
-            $this->title = $this->page->title;
-        }
+
+        $this->page = api("pages")->get(api("input")->get->name);
+        $this->template = $this->page->template;
+        $this->title = $this->page->title;
+
 
         // process save
         if (count(api("input")->post)) {
@@ -51,6 +47,7 @@ class AdminPageEdit extends Extension
     protected function getFieldTemplate()
     {
 
+        $template = $this->template;
         $value = $this->template->name;
         $selectOptions = array();
         $templates = api("templates")->all();
