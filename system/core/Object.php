@@ -160,15 +160,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     }
 
-    public function __get($name)
-    {
-        // handle / cache class name request
-        if ($name == "className") {
-            return $this->className();
-        }
-        return $this->get($name);
-    }
-
 
     public function get($string)
     {
@@ -189,23 +180,35 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 $templateName = $this->getUnformatted("template");
                 $template = new Template($templateName);
                 return $template;
-            case 'outputFormat':
-                $this->outputFormat = $string;
+            case 'class':
+            case 'className':
+                return $this->className();
             default:
                 return $this->getFormatted($string, $this->outputFormat);
                 break;
         }
     }
 
-    public function __set($name, $value)
+    public function __get($name)
     {
-        return $this->set($name, $value);
+        return $this->get($name);
     }
 
     public function set($name, $value)
     {
-        $value = is_object($value) ? (string)"$value" : $value;
-        $this->data[$name] = $value;
+        switch($name){
+            case 'outputFormat':
+                $this->outputFormat = $value; // move this into a method to handle validating the set value against allowed options
+            default:
+                $value = is_object($value) ? (string)"$value" : $value;
+                $this->data[$name] = $value;
+        }
+
+    }
+
+    public function __set($name, $value)
+    {
+        return $this->set($name, $value);
     }
 
     // allows the data array to be counted directly

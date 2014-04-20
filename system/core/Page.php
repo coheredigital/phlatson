@@ -19,6 +19,40 @@ class Page extends Object
     }
 
 
+    protected function setupData($path = null)
+    {
+        // this all need work, its unclear what is happening
+        if (is_null($path)) {
+            $sitePath = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+            $systemPath = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+
+            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
+                $this->set("path", $sitePath);
+                $this->location = "site/";
+            } else {
+                if (is_file($systemPath . Object::DATA_FILE)) {
+                    $this->path = $systemPath;
+                    $this->location = "system/";
+                }
+            }
+        } else {
+
+            $path = realpath($path) . DIRECTORY_SEPARATOR;
+
+            if (is_file($path . Object::DATA_FILE)) {
+                $this->set("path" , $path);
+            }
+
+        }
+
+        $file = $this->path . Object::DATA_FILE;
+        if (is_file($file)) {
+
+            $this->data = json_decode(file_get_contents($file), true);
+        }
+
+
+    }
 
     public function children()
     {
@@ -71,7 +105,6 @@ class Page extends Object
 
     }
 
-
     public function parents()
     {
 
@@ -92,7 +125,6 @@ class Page extends Object
         return array_reverse($parents);
     }
 
-
     public function rootParent()
     {
 
@@ -106,8 +138,6 @@ class Page extends Object
         }
         return false;
     }
-
-
 
     protected function createUrl($array)
     {
