@@ -11,25 +11,23 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     private $outputFormat = "output";
 
-    // default statuc flags (mostly boolean int, all stored as int)
+    // default static flags (mostly boolean int, all stored as int)
     protected $defaultFlags = array(
         "published" => 1,
         "locked" => 0
     );
     protected $defaultFields = array();
 
-    protected $urlRequest = array();
+    protected $route = array();
 
     function __construct($url = null)
     {
         // default to using the name when no url parameter passed
         $url = $url ? $url : $this->name; // this should be simplified
-        $this->urlRequest = $this->getUrlRequest($url);
+        $this->route = $this->getRoute($url);
 
         $this->setupData();
 
-        $lastRequestIndex = count($this->urlRequest) - 1;
-        $this->set("name", $this->urlRequest[$lastRequestIndex]);
     }
 
 
@@ -70,13 +68,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    public function url()
-    {
-        return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
-    }
-
-
-    protected function getUrlRequest($url)
+    protected function getRoute($url)
     {
         $url = rtrim((string)$url, '/');
         $array = array();
@@ -181,21 +173,17 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function get($string)
     {
         switch ($string) {
+            case 'name':
+                $lastRequestIndex = count($this->route) - 1;
+                $this->route[$lastRequestIndex];
             case 'url':
-                if(!$this->getUnformatted("url")){
-                    $value  = $this->url();
-                    $this->set("url", $value);
-                }
-                else{
-                    $value = $this->getUnformatted("url");
-                }
-                return $value;
+                return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
                 break;
             case 'requests':
-                return $this->urlRequest;
+                return $this->route;
                 break;
             case 'directory':
-                $directory = trim(implode("/", $this->urlRequest), "/");
+                $directory = trim(implode("/", $this->route), "/");
                 return $directory;
             case 'template':
                 $templateName = $this->getUnformatted("template");

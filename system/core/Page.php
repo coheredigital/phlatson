@@ -93,7 +93,7 @@ class Page extends Object
     public function parent()
     {
 
-        $requests = $this->urlRequest;
+        $requests = $this->route;
         array_pop($requests); // remove current (last) item to find parent
 
         $url = $this->createUrl($requests);
@@ -110,7 +110,7 @@ class Page extends Object
     public function parents()
     {
 
-        $requests = $this->urlRequest;
+        $requests = $this->route;
         $parents = array();
         $urls = array();
 
@@ -131,47 +131,22 @@ class Page extends Object
     public function rootParent()
     {
 
-        $url = $this->urlRequest[0];
+        $name = $this->route[0];
 
-        if ($this->url(false) == $url) {
+        if ($name == $this->get("url")) {
             return $this;
-        } elseif ($url) {
-            $page = new $this->className($url);
+        } else if ($name) {
+            $page = new $this->className($name);
             return $page;
         }
         return false;
     }
 
 
-    public function files()
-    {
-        if (!isset($this->files)) {
-            $files = new Files;
-            $files->load("$this->directory", 0);
-            $this->files = $files;
-        }
-        return $this->files;
-
-    }
-
-    public function images()
-    {
-
-        $files = new Images($this->url(false));
-        return $files;
-
-    }
-
-
-    public function url()
-    {
-        $url = $this->api('config')->urls->root . $this->directory;
-        return $url;
-    }
 
     protected function createUrl($array)
     {
-        if (is_array($array) && implode("", $this->urlRequest)) {
+        if (is_array($array) && implode("", $this->route)) {
             $url = "/" . implode("/", $array);
             return $url;
         }
@@ -183,6 +158,9 @@ class Page extends Object
         switch ($string) {
             // first pass a few request that we dont want passed to "getFormatted() method"
             // handled by parent
+            case 'url':
+                return $this->api('config')->urls->root . $this->directory;
+                break;
             case 'children':
                 return $this->children();
                 break;

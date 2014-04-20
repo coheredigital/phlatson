@@ -18,8 +18,8 @@ class AdminPage extends Page
         parent::__construct($url);
         $this->set("layout", $this->api('config')->paths->admin . "index.php");
 
-        if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
-            array_shift($this->urlRequest);
+        if ($this->route[0] == $this->api('config')->adminUrl) {
+            array_shift($this->route);
         }
 
         $path = realpath($this->api('config')->paths->admin . "pages/{$this->directory}") . DIRECTORY_SEPARATOR;
@@ -28,15 +28,12 @@ class AdminPage extends Page
     }
 
 
-    public function url()
-    {
-        return $this->api('config')->urls->root . $this->api('config')->adminUrl . "/" . $this->directory;
-    }
-
-
     public function get($string)
     {
         switch ($string) {
+            case 'url':
+                return $this->api('config')->urls->root . $this->api('config')->adminUrl . "/" . $this->directory;
+                break;
             case 'extension':
                 return $this->getExtension();
                 break;
