@@ -177,7 +177,7 @@ class Page extends Object
                 return $this->images();
                 break;
             case 'fields':
-                return $this->get("template")->fields($this->defaultFields);
+                return $this->get("template")->getFields($this->defaultFields);
                 break;
             case 'layout':
                 // alias for $page->template->layout for simplicity

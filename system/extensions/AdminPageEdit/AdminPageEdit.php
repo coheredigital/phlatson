@@ -47,8 +47,8 @@ class AdminPageEdit extends Extension
     protected function getFieldTemplate()
     {
 
-        $template = $this->template;
-        $value = $this->template->name;
+        $template = $this->get("template");
+        $value = $template->get("name");
         $selectOptions = array();
         $templates = api("templates")->all();
         foreach ($templates as $t) {
@@ -88,20 +88,25 @@ class AdminPageEdit extends Extension
     {
 
         $fieldset = api("extensions")->get("MarkupFieldset");
-        $fieldset->label = "{$this->title}";
-        $defaultFields = $this->page->defaultFields;
-        $fields = $this->page->template->fields();
+        $fieldset->label = $this->get("title");
+
+        $page = $this->page;
+        $template = $page->get("template");
+        $fields = $template->get("fields");
         foreach ($fields as $field) {
-            $input = $field->type;
-            $input->label = $field->label;
-            $input->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
+            $fieldtype = $field->type;
+            $fieldtype->label = $field->label;
+            $fieldtype->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
 
             if (!is_null($this->page)) {
-                $input->value = $this->page->getUnformatted($field->name);
+                $name = $field->get("name");
+                $fieldtype->value = $this->page->getUnformatted($name);
+                $fieldtype->attribute("name", $name);
+                $fieldset->add($fieldtype);
             }
-            $input->attribute("name", $field->name);
 
-            $fieldset->add($input);
+
+
         }
 
         $this->form->add($fieldset);

@@ -3,17 +3,21 @@
 class Template extends Object
 {
 
+    protected $fields;
     protected $root = "templates/";
 
-    public function fields()
+    protected function getFields()
     {
-        $fieldsArray = $this->getUnformatted("fields");
-        $fields = new FieldArray();
-        foreach ($fieldsArray as $f) {
-            $field = api("fields")->get($f["name"]);
-            $fields->add($field);
+        if (!$this->fields){
+            $fieldsArray = $this->getUnformatted("fields");
+            $fields = new FieldArray();
+            foreach ($fieldsArray as $f) {
+                $field = api("fields")->get($f["name"]);
+                $fields->add($field);
+            }
+            $this->fields = $fields;
         }
-        return $fields;
+        return $this->fields;
     }
 
     private function getLayout()
@@ -27,7 +31,7 @@ class Template extends Object
     {
         switch ($string) {
             case 'fields':
-                return $this->fields();
+                return $this->getFields();
                 break;
             case 'template':
                 return new Template("template");

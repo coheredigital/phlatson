@@ -20,7 +20,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     protected $route = array();
 
-    function __construct($url = null)
+    function __construct($url)
     {
         // default to using the name when no url parameter passed
         $url = $url ? $url : $this->name; // this should be simplified
@@ -128,7 +128,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
         $template = $this->get("template");
-        $fields = $template->fields();
+        $fields = $template->getFields();
 
         // add the default fields
         if(count($this->defaultFields)) $fields->import($this->defaultFields);
@@ -175,7 +175,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         switch ($string) {
             case 'name':
                 $lastRequestIndex = count($this->route) - 1;
-                $this->route[$lastRequestIndex];
+                return $this->route[$lastRequestIndex];
             case 'url':
                 return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
                 break;
