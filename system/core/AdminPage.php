@@ -13,14 +13,13 @@ class AdminPage extends Page
 {
 
     // define some protected variable to be used by all page objects
-    function __construct($name = null)
+    function __construct($url = false)
     {
-        parent::__construct($name);
-
+        parent::__construct($url);
         $this->set("layout", $this->api('config')->paths->admin . "index.php");
 
-        if ($this->route[0] == $this->api('config')->adminUrl) {
-            array_shift($this->route);
+        if ($this->urlRequest[0] == $this->api('config')->adminUrl) {
+            array_shift($this->urlRequest);
         }
 
         $path = realpath($this->api('config')->paths->admin . "pages/{$this->directory}") . DIRECTORY_SEPARATOR;

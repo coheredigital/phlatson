@@ -13,9 +13,45 @@ class Page extends Object
             $field = api("fields")->get($fieldName);
             array_push($defaultFields, $field);
         }
-        $this->defaultFields = $defaultFields;
+        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
         parent::__construct($url);
+    }
+
+
+    protected function setupData($path = null)
+    {
+
+        if (is_null($path)) {
+            $sitePath = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+            $systemPath = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+
+            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
+                $this->set("path", $sitePath);
+                $this->location = "site/";
+            } else {
+                if (is_file($systemPath . Object::DATA_FILE)) {
+                    $this->path = $systemPath;
+                    $this->location = "system/";
+                }
+            }
+        } else {
+
+            $path = realpath($path) . DIRECTORY_SEPARATOR;
+
+            if (is_file($path . Object::DATA_FILE)) {
+                $this->set("path" , $path);
+            }
+
+        }
+
+        $file = $this->path . Object::DATA_FILE;
+        if (is_file($file)) {
+
+            $this->data = json_decode(file_get_contents($file), true);
+        }
+
+
     }
 
 
@@ -57,7 +93,7 @@ class Page extends Object
     public function parent()
     {
 
-        $requests = $this->route;
+        $requests = $this->urlRequest;
         array_pop($requests); // remove current (last) item to find parent
 
         $url = $this->createUrl($requests);
@@ -74,7 +110,7 @@ class Page extends Object
     public function parents()
     {
 
-        $requests = $this->route;
+        $requests = $this->urlRequest;
         $parents = array();
         $urls = array();
 
@@ -95,7 +131,7 @@ class Page extends Object
     public function rootParent()
     {
 
-        $url = $this->route[0];
+        $url = $this->urlRequest[0];
 
         if ($this->url(false) == $url) {
             return $this;
@@ -135,7 +171,7 @@ class Page extends Object
 
     protected function createUrl($array)
     {
-        if (is_array($array) && implode("", $this->route)) {
+        if (is_array($array) && implode("", $this->urlRequest)) {
             $url = "/" . implode("/", $array);
             return $url;
         }

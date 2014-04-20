@@ -116,7 +116,10 @@ try {
         }
     }
 
-    $page = api("pages")->get(api("input")->url);
+    $page = $pages->get($input->url);
+    // output template
+    // NOTE: create a better method of achieving this
+
 
 
 } catch (Exception $e) {

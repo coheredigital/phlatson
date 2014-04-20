@@ -4,35 +4,34 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 {
     const DATA_FILE = "data.json";
 
-    public $name;
     public $path;
-
     protected $data;
     protected $root;
     protected $location = null; // whether found in site or system
 
     private $outputFormat = "output";
 
-    // default static flags (mostly boolean int, all stored as int)
+    // default statuc flags (mostly boolean int, all stored as int)
     protected $defaultFlags = array(
         "published" => 1,
         "locked" => 0
     );
     protected $defaultFields = array();
 
-    protected $route = array();
+    protected $urlRequest = array();
 
-    function __construct($url)
+    function __construct($url = null)
     {
-        $this->route = $this->setupRoute($url);
-        $this->setupName();
+        // default to using the name when no url parameter passed
+        $url = $url ? $url : $this->name; // this should be simplified
+        $this->urlRequest = $this->getUrlRequest($url);
+
         $this->setupData();
+
+        $lastRequestIndex = count($this->urlRequest) - 1;
+        $this->set("name", $this->urlRequest[$lastRequestIndex]);
     }
 
-    protected function setupName(){
-        $lastRequestIndex = count($this->route) - 1;
-        $this->name = $this->route[$lastRequestIndex];
-    }
 
     protected function setupData()
     {
@@ -42,7 +41,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         $file = $path . Object::DATA_FILE;
 
         if (is_file($file)) { // check site path first
-            $this->path = $path;
+            $this->set("path", $path);
             $this->location = "site/";
         }
         else {
@@ -51,7 +50,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $file = $path . Object::DATA_FILE;
 
             if (is_file($file)) {
-                $this->path = $path;
+                $this->set("path", $path);
                 $this->location = "system/";
             }
         }
@@ -67,7 +66,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function find($name)
     {
         // TEMP TO DEAL WITH OLD XPATH USE
-        return $this->data[$name];
+        return $this->data->{$name};
     }
 
 
@@ -77,7 +76,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    protected function setupRoute($url)
+    protected function getUrlRequest($url)
     {
         $url = rtrim((string)$url, '/');
         $array = array();
@@ -193,10 +192,10 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 return $value;
                 break;
             case 'requests':
-                return $this->route;
+                return $this->urlRequest;
                 break;
             case 'directory':
-                $directory = trim(implode("/", $this->route), "/");
+                $directory = trim(implode("/", $this->urlRequest), "/");
                 return $directory;
             case 'template':
                 $templateName = $this->getUnformatted("template");
