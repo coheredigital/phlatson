@@ -23,13 +23,10 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     function __construct($url)
     {
         // default to using the name when no url parameter passed
-        $url = $url ? $url : $this->name; // this should be simplified
-        $this->route = $this->getRoute($url);
-
+        $this->route = api("input")->request;
         $this->setupData();
 
     }
-
 
     protected function setupData()
     {
@@ -59,14 +56,12 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     }
 
-
     // for now basically an XPATH alias
     public function find($name)
     {
         // TEMP TO DEAL WITH OLD XPATH USE
         return $this->data->{$name};
     }
-
 
     protected function getRoute($url)
     {
@@ -75,7 +70,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         if (strpos($url, "/") !== false) {
             $array = explode("/", $url);
         } else {
-            $array[] = $url;
+            $array[0] = $url;
         }
         return $array;
     }
@@ -109,7 +104,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $value;
     }
 
-
     /**
      * public alias for getFormatted($name, "raw")
      * @param  string $name
@@ -119,7 +113,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
         return $this->data[$name];
     }
-
 
     public function save($postData = null)
     {
@@ -159,7 +152,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         file_put_contents($this->path.$saveFile, $saveData);
 
     }
-
 
     public function get($string)
     {
@@ -203,7 +195,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 $value = is_object($value) ? (string)"$value" : $value;
                 $this->data[$name] = $value;
         }
-
     }
 
     public function __set($name, $value)

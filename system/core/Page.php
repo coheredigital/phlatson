@@ -6,14 +6,15 @@ class Page extends Object
     protected $root = "pages/";
     protected $defaultFields = array("template");
 
-    function __construct($url = false)
+    function __construct($url)
     {
-        $defaultFields = array();
-        foreach ($this->defaultFields as $fieldName) {
-            $field = api("fields")->get($fieldName);
-            array_push($defaultFields, $field);
-        }
-        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
+
+//        $defaultFields = array();
+//        foreach ($this->defaultFields as $fieldName) {
+//            $field = api("fields")->get($fieldName);
+//            array_push($defaultFields, $field);
+//        }
+//        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
         parent::__construct($url);
     }
