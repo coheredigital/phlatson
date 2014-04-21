@@ -9,18 +9,18 @@ class Pages extends Objects
     protected $singularName = "Page";
 
 
-    public function get($name)
+    public function get($url)
     {
-        if (is_object($name)) {
-            $name = (string)$name;
+        if (is_object($url)) {
+            $url = (string)$url;
         } // stringify $object
-        $requests = explode("/", $name);
+        $requests = explode("/", $url);
 
         // if first segment is equal to configured adminUrl we return an AdminPage object
         if ($requests[0] == api("config")->adminUrl) {
-            return new AdminPage($name);
+            return new AdminPage($url);
         } else {
-            return parent::get($name);
+            return parent::get($url);
         }
     }
 

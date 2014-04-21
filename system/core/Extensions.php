@@ -8,17 +8,17 @@ class Extensions extends Objects
     protected $singularName = "extension";
 
 
-    public function get($name)
+    public function get($url)
     {
 
-        if (is_object($name)) {
-            $name = (string)$name;
+        if (is_object($url)) {
+            $url = (string)$url;
         } // stringify $object
 
-        if (!isset($this->data[$name]) && !$this->allowRootRequest) {
+        if (!isset($this->data[$url]) && !$this->allowRootRequest) {
             return false;
         }
-        $object = new $name();
+        $object = new $url();
         return $object;
 
 

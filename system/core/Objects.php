@@ -81,17 +81,17 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         return $this->get($key);
     }
 
-    public function get($name)
+    public function get($url)
     {
 
-        if (is_object($name)) { // stringify $object
-            $name = (string)$name;
+        if (is_object($url)) { // stringify $object
+            $url = (string)$url;
         }
 
-        if (!$this->has($name) && !$this->allowRootRequest) {
+        if (!$this->has($url) && !$this->allowRootRequest) {
             throw new Exception("name value required to fetch Object - {$this->singularName}");
         }
-        $object = new $this->singularName($name);
+        $object = new $this->singularName($url);
         if(!is_subclass_of($object,"Object")){
             throw new Exception("Failed to retrieve valid object subclass : {$this->singularName}");
         }

@@ -23,7 +23,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     function __construct($url)
     {
         // default to using the name when no url parameter passed
-        $this->route = api("input")->request;
+        $this->route = $this->getRoute($url);
         $this->setupData();
 
     }

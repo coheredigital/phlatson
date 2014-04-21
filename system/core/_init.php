@@ -125,6 +125,6 @@ try {
     echo 'Caught exception: ', $e->getMessage(), "\n";
 }
 
-$layoutFile = $page->get("layout");
+$layoutFile = $page->layout; // look into why $page->layout works but $page->get("layout") doesn't
 
 if (is_file($layoutFile)) include $layoutFile;
