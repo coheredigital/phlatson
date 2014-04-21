@@ -13,8 +13,7 @@ class Field extends Object
     {
         if ($this->getUnformatted("fieldtype")) {
             $name = (string) $this->getUnformatted("fieldtype");
-            $fieldtype = new $name($this->get("className"));
-            return $fieldtype;
+            return new $name($this);
         }
         return null;
     }
