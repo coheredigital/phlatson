@@ -117,9 +117,14 @@ try {
     }
 
     $page = api("pages")->get(api("input")->url);
+    if(!$page instanceof Page){
+        throw new Exception("No valid page found (404?)");
+    }
 
 } catch (Exception $e) {
     echo 'Caught exception: ', $e->getMessage(), "\n";
 }
 
-if (is_file($page->layout)) include $page->layout;
+$layoutFile = $page->get("layout");
+
+if (is_file($layoutFile)) include $layoutFile;
