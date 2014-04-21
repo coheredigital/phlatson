@@ -460,12 +460,16 @@ select {
   top: 0;
   bottom: 0;
   width: 100%;
+  #main {
+    height: 100%;
+    position: relative;
+  }
+  #sidebar{
+    display: none;
+  }
 }
 
-.page-login #main {
-  // height: 100%;
-  position: relative;
-}
+
 
 .login-form {
   box-sizing: border-box;
@@ -478,23 +482,26 @@ select {
   background: #fff;
   padding: 2em;
   box-shadow: 0 2px 8px darken($darker-gray, 6%);
+
+  label {
+    line-height: 1.6em;
+    display: block;
+  }
+  input {
+    margin-bottom: 0.4em;
+    display: block;
+  }
+  .button {
+    margin-top: 0.5em;
+    width: 100%;
+    background: $green;
+  }
 }
 
-.login-form label {
-  line-height: 1.6em;
-  display: block;
-}
 
-.login-form input {
-  margin-bottom: 0.4em;
-  display: block;
-}
 
-.login-form .button {
-  margin-top: 0.5em;
-  width: 100%;
-  background: $green;
-}
+
+
 
 // xdebug fixes
 

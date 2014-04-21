@@ -6,9 +6,9 @@ abstract class Extension extends Object
 
     protected $root = "extensions/";
 
-    public function __construct(Field $field = null)
+    public function __construct()
     {
-        parent::__construct($field);
+        parent::__construct(null);
 
         $this->setup();
         $this->addStyles();
@@ -31,7 +31,8 @@ abstract class Extension extends Object
     {
         switch ($string) {
             case 'name':
-                return $this->className;
+            case 'directory':
+                return $this->get("className");
             default:
                 return parent::get($string);
                 break;

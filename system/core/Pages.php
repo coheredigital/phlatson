@@ -11,9 +11,7 @@ class Pages extends Objects
 
     public function get($url)
     {
-        if (is_object($url)) {
-            $url = (string)$url;
-        } // stringify $object
+        $url = (string)$url; // stringify $object
         $requests = explode("/", $url);
 
         // if first segment is equal to configured adminUrl we return an AdminPage object

@@ -53,6 +53,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         if (is_file($file)) {
             $this->data = json_decode(file_get_contents($file), true);
         }
+        else{
+//            throw new Exception("failed to load Object ({$this->className}) name:'{$this->name}' file ({$file}) missing or not found");
+        }
 
     }
 
@@ -157,6 +160,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
         switch ($string) {
             case 'name':
+            case 'directory':
                 $lastRequestIndex = count($this->route) - 1;
                 return $this->route[$lastRequestIndex];
             case 'url':
@@ -165,9 +169,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             case 'requests':
                 return $this->route;
                 break;
-            case 'directory':
-                $directory = trim(implode("/", $this->route), "/");
-                return $directory;
             case 'template':
                 $templateName = $this->getUnformatted("template");
                 $template = new Template($templateName);

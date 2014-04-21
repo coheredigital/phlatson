@@ -152,6 +152,9 @@ class Page extends Object
     public function get($string)
     {
         switch ($string) {
+            case 'directory':
+                $directory = trim(implode("/", $this->route), "/");
+                return $directory;
             case 'url':
                 return $this->api('config')->urls->root . $this->directory;
                 break;

@@ -5,8 +5,8 @@ abstract class Fieldtype extends Extension
     protected $attributes = array();
 
     protected $field;
-//    public $label;
-//    public $value;
+    public $label;
+    public $value;
 
     // contains defaults settings and there defaults values
     // can be extended by other Fieldtypes

@@ -884,9 +884,12 @@ select {
   bottom: 0;
   width: 100%;
 }
-
 .page-login #main {
+  height: 100%;
   position: relative;
+}
+.page-login #sidebar {
+  display: none;
 }
 
 .login-form {
@@ -901,17 +904,14 @@ select {
   padding: 2em;
   box-shadow: 0 2px 8px #242424;
 }
-
 .login-form label {
   line-height: 1.6em;
   display: block;
 }
-
 .login-form input {
   margin-bottom: 0.4em;
   display: block;
 }
-
 .login-form .button {
   margin-top: 0.5em;
   width: 100%;

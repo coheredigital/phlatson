@@ -30,7 +30,8 @@ class User extends Object
             so we can determine that the password has not been hashed yet, but avoid
             a possible brute force string match to the hash
         */
-        $hash = password_hash($this->get("password"), PASSWORD_BCRYPT);
+        $passGet = $this->get("password");
+        $hash = password_hash($passGet, PASSWORD_BCRYPT);
         if (password_verify($pass, $hash)) {
             $this->password = $hash;
             $this->save();
