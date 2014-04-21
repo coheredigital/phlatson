@@ -151,8 +151,6 @@ class Page extends Object
     public function get($string)
     {
         switch ($string) {
-            // first pass a few request that we dont want passed to "getFormatted() method"
-            // handled by parent
             case 'url':
                 return $this->api('config')->urls->root . $this->directory;
                 break;
@@ -164,12 +162,6 @@ class Page extends Object
                 break;
             case 'rootParent':
                 return $this->rootParent();
-                break;
-            case 'files':
-                return $this->files();
-                break;
-            case 'images':
-                return $this->images();
                 break;
             case 'fields':
                 return $this->get("template")->getFields($this->defaultFields);

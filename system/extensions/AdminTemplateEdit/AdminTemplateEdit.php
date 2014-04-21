@@ -41,21 +41,20 @@ class AdminTemplateEdit extends Extension
 
     private function addContentFieldset()
     {
-
         $fieldset = api("extensions")->get("MarkupFieldset");
         $fieldset->label = "Content";
-        $fields = $this->page->template->fields;
+        $page = $this->page;
+        $template = $page->get("template");
+        $fields = $template->get("fields");
         foreach ($fields as $field) {
             $input = $field->type;
             $input->label = $field->label;
             $input->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
             $input->value = $this->page->{$field->name};
-            $input->attribute("name", $field->name);
+//            $input->attribute("name", $field->name);
             $fieldset->add($input);
         }
-
         $this->form->add($fieldset);
-
     }
 
 

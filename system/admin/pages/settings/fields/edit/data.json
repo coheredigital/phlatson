@@ -1,4 +1,4 @@
 {
-        "layout": "AdminFieldEdit",
+        "extension": "AdminFieldEdit",
         "title": "Field Edit"
 }

@@ -1,1 +1,4 @@
-{"layout": "AdminTemplateEdit", "title": "Edit Template"}
+{
+    "extension": "AdminTemplateEdit",
+    "title": "Edit Template"
+}
