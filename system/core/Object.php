@@ -31,30 +31,29 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected function setupData()
     {
 
+        // check site path first
         $folder = api('config')->paths->site . $this->root . $this->directory;
         $path = realpath($folder) . DIRECTORY_SEPARATOR;
         $file = $path . Object::DATA_FILE;
 
-        if (is_file($file)) { // check site path first
-            $this->set("path", $path);
+        if (is_file($file)) {
             $this->location = "site/";
         }
         else {
+            //  otherwise check for file in system
             $folder = api('config')->paths->system . $this->root . $this->directory;
             $path = realpath($folder) . DIRECTORY_SEPARATOR;
             $file = $path . Object::DATA_FILE;
 
             if (is_file($file)) {
-                $this->set("path", $path);
                 $this->location = "system/";
             }
         }
 
+        // setup data if we found a valid file (object)
         if (is_file($file)) {
+            $this->path = $path;
             $this->data = json_decode(file_get_contents($file), true);
-        }
-        else{
-//            throw new Exception("failed to load Object ({$this->className}) name:'{$this->name}' file ({$file}) missing or not found");
         }
 
     }
@@ -120,7 +119,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function save($postData = null)
     {
 
-
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
         $template = $this->get("template");
@@ -152,7 +150,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         $saveData = json_encode($saveData);
 
-        file_put_contents($this->path.$saveFile, $saveData);
+        file_put_contents( $this->path . $saveFile , $saveData );
 
     }
 
