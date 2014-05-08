@@ -1,4 +1,5 @@
 {
     "description": "Creates the forms and enable the edit/saving of templates.",
-    "title": "Template Edit"
+    "title": "Template Edit",
+    "type": "Admin"
 }

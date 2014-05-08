@@ -1,3 +1,4 @@
-<root>
-    <title>Form Actions</title>
-</root>
+{
+    "title": "Form Actions",
+    "type": "Fieldtype"
+}

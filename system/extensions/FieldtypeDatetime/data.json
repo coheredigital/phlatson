@@ -1,4 +1,5 @@
 {
     "description": "Store dates and times, supports php date() formats.",
-    "title": "Datetime"
+    "title": "Datetime",
+    "type": "Fieldtype"
 }

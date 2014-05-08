@@ -1,6 +1,6 @@
 <?php
 
-class MarkupPageList
+class MarkupPageList extends Extension
 {
 
     public $rootPage;

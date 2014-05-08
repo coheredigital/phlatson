@@ -1,5 +1,6 @@
 {
-    "title":"Markup - Form",
+    "title": "Edit Form",
     "description":"Easy rendering of basic form edit markup.",
+    "type": "Markup",
     "version": 104
 }

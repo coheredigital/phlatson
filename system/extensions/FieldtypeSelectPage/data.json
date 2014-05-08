@@ -1,4 +1,5 @@
 {
     "title": "Page Select",
-    "description": "Selection input for page object."
+    "description": "Selection input for page object.",
+    "type": "Fieldtype"
 }
