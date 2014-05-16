@@ -3,10 +3,13 @@
 
 class Page extends Object
 {
+
+    protected $parent = null;
+
     protected $root = "pages/";
     protected $defaultFields = array("template");
 
-    function __construct($url)
+    function __construct($url = null)
     {
 
 //        $defaultFields = array();
@@ -90,19 +93,22 @@ class Page extends Object
         return $children;
     }
 
-    public function parent()
+    protected function parent()
     {
 
-        $requests = $this->route;
-        array_pop($requests); // remove current (last) item to find parent
+        if(!$this->parent){
+            $requests = $this->route;
+            array_pop($requests); // remove current (last) item to find parent
 
-        $url = $this->createUrl($requests);
+            $url = $this->createUrl($requests);
 
-        if ($url) {
-            $parent = api("pages")->get($url);
-            return $parent;
+            if ($url) {
+                $parent = api("pages")->get($url);
+                $this->parent = $parent;
+            }
         }
-        return false;
+
+        return $this->parent;
 
     }
 
@@ -185,12 +191,19 @@ class Page extends Object
 
     public function set($name, $value)
     {
-        if ($this->data->{$name}) {
-            $this->data->{$name} = (string)$value;
-        } else {
-            $this->{$name} = $value;
+        switch ($string) {
+            case 'parent':
+                // todo: add validation to check valid page object passed
+                $this->parent = $value;
+            default:
+                parent::set($name, $value);
+//                if ($this->data->{$name}) {
+//                    $this->data->{$name} = (string)$value;
+//                } else {
+//                    $this->{$name} = $value;
+//                }
         }
-        return $value;
+
     }
 
 

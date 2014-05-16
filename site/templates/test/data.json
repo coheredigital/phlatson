@@ -1,0 +1,13 @@
+{
+    "label": "Test",
+    "fields": [
+        {
+            "name": "title",
+            "columns": 12
+        },
+        {
+            "name": "content",
+            "columns": 12
+        }
+    ]
+}

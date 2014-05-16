@@ -4,9 +4,10 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 {
     const DATA_FILE = "data.json";
 
-    public $path;
+    protected $path;
     protected $data;
     protected $root;
+
     protected $location = null; // whether found in site or system
 
     private $outputFormat = "output";
@@ -14,10 +15,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     // default static flags (mostly boolean int, all stored as int)
     protected $defaultFlags = array(
         "published" => 1,
-        "locked" => 0
+        "locked" => 0,
+        "system" => 1
     );
-    protected $defaultFields = array();
 
+    protected $defaultFields = array();
     protected $route = array();
 
     function __construct($url)
@@ -38,6 +40,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         if (is_file($file)) {
             $this->location = "site/";
+            $this->defaultFlags["system"] = 0;
         }
         else {
             //  otherwise check for file in system
@@ -58,13 +61,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     }
 
-    // for now basically an XPATH alias
-    public function find($name)
-    {
-        // TEMP TO DEAL WITH OLD XPATH USE
-        return $this->data->{$name};
-    }
-
     protected function getRoute($url)
     {
         $url = rtrim((string)$url, '/');
@@ -76,7 +72,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         }
         return $array;
     }
-
 
     protected function getFormatted($name, $type)
     {
@@ -154,15 +149,24 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     }
 
+
+
+
     public function get($string)
     {
         switch ($string) {
             case 'name':
             case 'directory':
-                $lastRequestIndex = count($this->route) - 1;
-                return $this->route[$lastRequestIndex];
+                if(is_null($this->name)){
+                    $lastRequestIndex = count($this->route) - 1;
+                    $this->name = $this->route[$lastRequestIndex];
+                }
+                return $this->name;
             case 'url':
                 return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
+                break;
+            case 'path':
+                return $this->path;
                 break;
             case 'requests':
                 return $this->route;
@@ -193,6 +197,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             default:
                 $value = is_object($value) ? (string)"$value" : $value;
                 $this->data[$name] = $value;
+                // temp solution
+                $this->{$name} = $value;
         }
     }
 
