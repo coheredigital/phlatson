@@ -12,12 +12,12 @@ class Page extends Object
     function __construct($url = null)
     {
 
-//        $defaultFields = array();
-//        foreach ($this->defaultFields as $fieldName) {
-//            $field = api("fields")->get($fieldName);
-//            array_push($defaultFields, $field);
-//        }
-//        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
+        $defaultFields = array();
+        foreach ($this->defaultFields as $fieldName) {
+            $field = api("fields")->get($fieldName);
+            array_push($defaultFields, $field);
+        }
+        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
         parent::__construct($url);
     }
@@ -176,6 +176,7 @@ class Page extends Object
             case 'fields':
                 return $this->get("template")->getFields($this->defaultFields);
                 break;
+
             case 'layout':
                 // alias for $page->template->layout for simplicity
                 $template = $this->get("template");
@@ -193,15 +194,16 @@ class Page extends Object
     {
         switch ($string) {
             case 'parent':
-                // todo: add validation to check valid page object passed
-                $this->parent = $value;
+                if($value instanceof Page){
+                    $this->parent = $value;
+                }
             default:
-                parent::set($name, $value);
-//                if ($this->data->{$name}) {
-//                    $this->data->{$name} = (string)$value;
-//                } else {
-//                    $this->{$name} = $value;
-//                }
+//                parent::set($name, $value);
+                if ($this->data->{$name}) {
+                    $this->data->{$name} = (string)$value;
+                } else {
+                    $this->{$name} = $value;
+                }
         }
 
     }

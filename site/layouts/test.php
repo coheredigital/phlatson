@@ -14,9 +14,8 @@
             </div>
         <?php endif ?>
 
-        <pre>
-            <?php
 
+            <?php
                 $p = new Page;
                 $p->template = "default";
                 $p->parent = $page;
@@ -26,6 +25,6 @@
 
             ?>
 
-        </pre>
+
     </div>
 <?php include 'includes/foot.inc'; ?>

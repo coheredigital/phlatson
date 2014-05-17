@@ -34,7 +34,7 @@ class Template extends Object
                 return $this->getFields();
                 break;
             case 'template':
-                return new Template("template");
+                return api("templates")->get("template");
                 break;
             case 'layout':
                 return $this->getLayout();

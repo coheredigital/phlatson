@@ -41,7 +41,7 @@ class Field extends Object
                 return $this->type();
                 break;
             case 'template':
-                return new Template("field");
+                return api("templates")->get("field");
                 break;
             default:
                 return parent::get($string);

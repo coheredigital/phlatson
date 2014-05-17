@@ -11,4 +11,4 @@ $config->sessionName = 'xpages';
 $config->sessionExpireSeconds = 3600;
 
 $config->debug = true;
-//$config->disableSave = true;
+$config->disableSave = true;

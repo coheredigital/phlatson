@@ -116,15 +116,15 @@ try {
         }
     }
 
-    $page = api("pages")->get(api("input")->url);
+    $page = api("pages")->get( api("input")->url );
     if(!$page instanceof Page){
         throw new Exception("No valid page found (404?)");
     }
+
+    $layoutFile = $page->layout; // look into why $page->layout works but $page->get("layout") doesn't
+    if (is_file($layoutFile)) include $layoutFile;
 
 } catch (Exception $e) {
     echo 'Caught exception: ', $e->getMessage(), "\n";
 }
 
-$layoutFile = $page->layout; // look into why $page->layout works but $page->get("layout") doesn't
-
-if (is_file($layoutFile)) include $layoutFile;

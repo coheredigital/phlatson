@@ -18,12 +18,10 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     // status flags
     protected $dataLoaded = false;
 
-
     final public function __construct()
     {
         $this->data = $this->setupData();
     }
-
 
     // load available objects into $data array()
     protected function setupData()
@@ -51,8 +49,6 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         return null;
     }
 
-
-
     public function __set($key, $value)
     {
         $this->set($key, $value);
@@ -63,8 +59,6 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         $this->data[$key] = $value;
         return $this;
     }
-
-
 
     public function all()
     {
@@ -81,22 +75,38 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         return $this->get($key);
     }
 
-    public function get($url)
+    public function get($query)
     {
 
-        if (is_object($url)) { // stringify $object
-            $url = (string)$url;
+
+
+        // handle single get request
+        if(is_string($query)){
+
+            if (!$this->has($query) && !$this->allowRootRequest) {
+                return false;
+                // throw new Exception("Object ({$url}) does not exist in {$this->singularName}");
+            }
+
+
+            $object = new $this->singularName($query);
+            if(!$object instanceof $this->singularName){
+                throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
+            }
+            return $object;
+        }
+        else if(is_array($query)){
+            $arrayType = "{$this->singularName}Array";
+            $objectArray = new $arrayType;
+            foreach($query as $url){
+                $object = $this->get($url);
+                $objectArray->add($object);
+
+            }
+            return $objectArray;
         }
 
-        if (!$this->has($url) && !$this->allowRootRequest) {
-            return false;
-//            throw new Exception("Object ({$url}) does not exist in {$this->singularName}");
-        }
-        $object = new $this->singularName($url);
-        if(!$object instanceof $this->singularName){
-            throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $url");
-        }
-        return $object;
+
 
     }
 

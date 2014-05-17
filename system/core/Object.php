@@ -24,6 +24,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     function __construct($url)
     {
+        // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrival and the original string etc.
         // default to using the name when no url parameter passed
         $this->route = $this->getRoute($url);
         $this->setupData();
@@ -143,14 +144,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $saveFile = self::DATA_FILE;
         }
 
-        $saveData = json_encode($saveData);
+        $saveData = json_encode($saveData, JSON_PRETTY_PRINT);
 
         file_put_contents( $this->path . $saveFile , $saveData );
 
     }
-
-
-
 
     public function get($string)
     {

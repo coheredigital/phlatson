@@ -55,7 +55,6 @@ class AdminPageEdit extends Extension
             $selectOptions["$t->label"] = "$t->name";
         }
 
-
         $input = api("extensions")->get("FieldtypeSelect");
         $input->label = "Template";
         $input->columns = 6;
