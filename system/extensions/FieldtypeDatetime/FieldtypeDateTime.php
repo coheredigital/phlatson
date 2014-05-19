@@ -27,15 +27,15 @@ class FieldtypeDateTime extends Fieldtype
         return $value;
     }
 
-    public function getSave($value)
-    {
-
-        $dom = new DomDocument;
-        $node = $dom->createElement("$name", (int)strtotime($value));
-        $dom->appendChild($node);
-
-        return $dom->documentElement;
-    }
+//    public function getSave($value)
+//    {
+//
+//        $dom = new DomDocument;
+//        $node = $dom->createElement("$name", (int)strtotime($value));
+//        $dom->appendChild($node);
+//
+//        return $dom->documentElement;
+//    }
 
 
 }

@@ -25,7 +25,7 @@ class AdminPage extends Page
         }
 
         $path = realpath($this->api('config')->paths->admin . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
-        $this->setupData($path);
+        $this->setup($path);
 
     }
 

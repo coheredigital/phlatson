@@ -23,7 +23,7 @@ class Page extends Object
     }
 
 
-    protected function setupData($path = null)
+    protected function setup($path = null)
     {
         // this all need work, its unclear what is happening
         if (is_null($path)) {
@@ -192,18 +192,15 @@ class Page extends Object
 
     public function set($name, $value)
     {
-        switch ($string) {
+        switch ($name) {
             case 'parent':
                 if($value instanceof Page){
                     $this->parent = $value;
                 }
+                break;
             default:
-//                parent::set($name, $value);
-                if ($this->data->{$name}) {
-                    $this->data->{$name} = (string)$value;
-                } else {
-                    $this->{$name} = $value;
-                }
+                parent::set($name, $value);
+
         }
 
     }

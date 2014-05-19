@@ -5,33 +5,38 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     const DATA_FILE = "data.json";
 
     protected $path;
-    protected $data;
+    protected $data = array();
     protected $root;
+
+    protected $isNew = true;
 
     protected $location = null; // whether found in site or system
 
     private $outputFormat = "output";
 
-    // default static flags (mostly boolean int, all stored as int)
+    // default static flags (mostly boolean)
     protected $defaultFlags = array(
-        "published" => 1,
-        "locked" => 0,
-        "system" => 1
+        "published" => false,
+        "locked"    => false,
+        "system"    => true
     );
 
     protected $defaultFields = array();
     protected $route = array();
 
-    function __construct($url)
+    function __construct($url = null)
     {
         // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrival and the original string etc.
         // default to using the name when no url parameter passed
-        $this->route = $this->getRoute($url);
-        $this->setupData();
+        if(!is_null($url)) {
+            $this->route = $this->getRoute($url);
+            $this->setup();
+        }
+
 
     }
 
-    protected function setupData()
+    protected function setup()
     {
 
         // check site path first
@@ -56,6 +61,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         // setup data if we found a valid file (object)
         if (is_file($file)) {
+            $this->new = false;
             $this->path = $path;
             $this->data = json_decode(file_get_contents($file), true);
         }
@@ -115,6 +121,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function save($postData = null)
     {
 
+        // TODO - add more validation to page save
+
+
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
         $template = $this->get("template");
@@ -135,6 +144,21 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
             $saveData[$field->name] = $value;
         }
+
+        // set name value
+        if($postData->name){
+            $pageName = $postData->name; // TODO add page name sanitizer
+            $this->name = $pageName;
+        }
+
+        if($this->isNew){
+            // TODO - validate parent
+            $this->path = $this->parent->path . $this->name . DIRECTORY_SEPARATOR;
+            if (!file_exists($this->path)) {
+                mkdir($this->path, 0777, true);
+            }
+        }
+
 
         // save to file
         if(api("config")->disableSave){
@@ -192,8 +216,13 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         switch($name){
             case 'outputFormat':
                 $this->outputFormat = $value; // move this into a method to handle validating the set value against allowed options
+            case 'template':
+                if($value instanceof Template){
+                    $this->data["template"] = $value->name;
+                    break;
+                }
             default:
-                $value = is_object($value) ? (string)"$value" : $value;
+//                $value = is_object($value) ? (string)"$value" : $value;
                 $this->data[$name] = $value;
                 // temp solution
                 $this->{$name} = $value;

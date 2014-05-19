@@ -14,10 +14,22 @@ class AdminPageEdit extends Extension
 
         $this->form = api("extensions")->get("MarkupEditForm");
 
+        if(!api("input")->get->new){
+            $this->page = api("pages")->get(api("input")->get->name);
+            $this->template = $this->page->template;
+            $this->title = $this->page->title;
+        }
+        else{
+            $this->page = new Page;
+            $this->page->template = api("templates")->get(api("input")->get->template);
 
-        $this->page = api("pages")->get(api("input")->get->name);
-        $this->template = $this->page->template;
-        $this->title = $this->page->title;
+            // set parent from get parameter
+            $parentUrl = api("input")->get->parent;
+            $this->page->parent = api("pages")->get($parentUrl); // TODO reevaluate, I shouldn't need to actually retrieve this object. maybe just verify its valid, not sure
+
+            $this->template = $this->page->template;
+            $this->title = "New Page";
+        }
 
 
         // process save
@@ -89,8 +101,7 @@ class AdminPageEdit extends Extension
         $fieldset = api("extensions")->get("MarkupFieldset");
         $fieldset->label = $this->get("title");
 
-        $page = $this->page;
-        $template = $page->get("template");
+        $template = $this->template;
         $fields = $template->get("fields");
         foreach ($fields as $field) {
             $fieldtype = $field->type;
@@ -103,8 +114,6 @@ class AdminPageEdit extends Extension
                 $fieldtype->attribute("name", $name);
                 $fieldset->add($fieldtype);
             }
-
-
 
         }
 

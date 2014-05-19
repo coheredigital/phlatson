@@ -2,6 +2,7 @@
     <div class="container">
         <!-- PAGE CONTENT -->
         <?= $page->content ?>
+        <?php $page->children ?>
         <?php if ($page->children): ?>
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -12,16 +13,17 @@
                     </ul>
                 </div>
             </div>
-        <?php endif ?>
-
-
-            <?php
-                $p = new Page;
-                $p->template = "default";
-                $p->parent = $page;
-                $p->name = "test-page";
-
-                $p->save();
+        <?php
+        endif;
+//                $p = new Page;
+//                $p->template = "default";
+//                $p->parent = $page;
+//                $p->name = "test-page";
+//
+//                $p->title = "This page is brand new!";
+//                $p->content = "Blah blah blah.";
+//
+//                $p->save();
 
             ?>
 

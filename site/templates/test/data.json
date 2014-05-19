@@ -6,7 +6,19 @@
             "columns": 12
         },
         {
+            "name": "author",
+            "columns": 12
+        },
+        {
+            "name": "date",
+            "columns": 12
+        },
+        {
             "name": "content",
+            "columns": 12
+        },
+        {
+            "name": "name",
             "columns": 12
         }
     ]

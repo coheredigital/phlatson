@@ -29,8 +29,8 @@ function setupConfig()
     $directories['core'] = $directories['system'] . 'core/';
     $directories['systemFields'] = $directories['system'] . 'fields/';
     $directories['systemTemplates'] = $directories['system'] . 'templates/';
-    $directories['systemPlugins'] = $directories['system'] . 'extensions/';
-    $directories['fieldtypes'] = $directories['system'] . 'extensions/fieldtypes/';
+    $directories['systemExtensions'] = $directories['system'] . 'extensions/';
+
 
 
     if (isset($_SERVER['HTTP_HOST'])) {
@@ -61,8 +61,11 @@ function setupConfig()
     $config->paths = $paths;
 
 
-    $configFile = $config->paths->site . "/config.php";
+    $configFile = $config->paths->site . "config.php";
     @include($configFile);
+
+
+
 
     /*
      * Output errors if debug true, else disable error reporting
@@ -104,7 +107,7 @@ $config = setupConfig();
  *
  */
 
-try {
+//try {
     Core::init($config);
 
     foreach (Core::api() as $name => $object) {
@@ -123,8 +126,8 @@ try {
 
     $layoutFile = $page->layout; // look into why $page->layout works but $page->get("layout") doesn't
     if (is_file($layoutFile)) include $layoutFile;
-
-} catch (Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
-}
+//
+//} catch (Exception $e) {
+//    echo 'Caught exception: ', $e->getMessage(), "\n";
+//}
 
