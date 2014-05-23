@@ -30,13 +30,13 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // default to using the name when no url parameter passed
         if(!is_null($url)) {
             $this->route = $this->getRoute($url);
-            $this->setup();
+            $this->load();
         }
 
 
     }
 
-    protected function setup()
+    protected function load()
     {
 
         // check site path first
@@ -61,7 +61,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         // setup data if we found a valid file (object)
         if (is_file($file)) {
-            $this->new = false;
+            $this->isNew = false;
             $this->path = $path;
             $this->data = json_decode(file_get_contents($file), true);
         }

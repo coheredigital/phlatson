@@ -693,21 +693,20 @@ select {
 }
 
 .page-tree-item {
-  padding: 10px 14px;
-  margin-top: 0.4em;
+  padding: .6em 1em;
+  margin-top: -1px;
   background: white;
   border: 1px solid #dddddd;
   position: relative;
 }
 
 .page-tree-item-buttons {
-  position: absolute;
-  right: -1px;
-  top: -1px;
-  bottom: -1px;
+  float: right;
+  margin-top: -.4em;
+  margin-right: -.8em;
 }
 .page-tree-item-buttons .button {
-  padding: 11px 14px;
+  padding: .4em .5em;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0;
   margin-left: -1px;
