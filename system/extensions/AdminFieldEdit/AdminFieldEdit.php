@@ -8,7 +8,7 @@ class AdminFieldEdit extends AdminPageEdit
         parent::setup();
 
         $this->page = api("fields")->get(api("input")->get->name);
-        $this->template = api("templates")->get("field");
+        $this->template = $this->page->template;
         $this->title = $this->page->label;
 
 

@@ -5,6 +5,11 @@ class Field extends Object
     protected $root = "fields/";
     protected $attributes = null;
 
+    protected $defaultFields = array(
+        "label",
+        "fieldtype"
+    );
+
     /**
      * retrieves the filedtype object associated with "$this" field
      * @return Fieldtype

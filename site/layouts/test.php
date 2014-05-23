@@ -15,17 +15,19 @@
             </div>
         <?php
         endif;
-//                $p = new Page;
-//                $p->template = "default";
-//                $p->parent = $page;
-//                $p->name = "test-page";
-//
-//                $p->title = "This page is brand new!";
-//                $p->content = "Blah blah blah.";
-//
-//                $p->save();
 
-            ?>
+        // just some rough ideas of how I want to handle sort, filter, find etc
+
+        if(1 == 2){
+
+            $pages->find("title==this");
+            $pages->filter("!published");
+            
+        }
+
+
+
+        ?>
 
 
     </div>

@@ -6,6 +6,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     protected $path;
     protected $data = array();
+    protected $properties = array(
+        "published" => false,
+        "locked"    => false,
+        "system"    => true
+    );
     protected $root;
 
     protected $isNew = true;
@@ -14,12 +19,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     private $outputFormat = "output";
 
-    // default static flags (mostly boolean)
-    protected $defaultFlags = array(
-        "published" => false,
-        "locked"    => false,
-        "system"    => true
-    );
 
     protected $defaultFields = array();
     protected $route = array();
@@ -196,6 +195,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             case 'template':
                 $templateName = $this->getUnformatted("template");
                 $template = new Template($templateName);
+                $template->defaultFields = $this->defaultFields;
                 return $template;
             case 'class':
             case 'className':
@@ -222,7 +222,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                     break;
                 }
             default:
-//                $value = is_object($value) ? (string)"$value" : $value;
                 $this->data[$name] = $value;
                 // temp solution
                 $this->{$name} = $value;
