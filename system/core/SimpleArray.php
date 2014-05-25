@@ -2,16 +2,31 @@
 
 /*
 
-Basic data array to access simple arrays like object and provide common funtionality in the api
+Basic data array to access simple arrays like object and provide common functionality in the api
 may not be needed long term, possible that Objects could extend from this to simplify the methods in
-Objects and allow natural fallbacks
+Objects and allow natural fall-backs
 
  */
 
-abstract class SimpleArray extends Core implements IteratorAggregate
+class SimpleArray extends Core implements IteratorAggregate
 {
 
     protected $data = array();
+
+
+    public function add($filename)
+    {
+        $key = $this->getKey($filename);
+        $this->data[$key] = $filename;
+        return $this;
+    }
+
+    protected function getKey($filename)
+    {
+        $pos = strpos($filename, '?');
+        $key = $pos ? substr($filename, 0, $pos) : $filename;
+        return md5($key);
+    }
 
 
     public function __set($key, $value)

@@ -6,16 +6,16 @@ class FieldtypeSelectFieldtype extends FieldtypeSelect
 
     protected function setup()
     {
+        $options = array();
 
-        $path = $this->api('config')->paths->fieldtypes;
-        $paths = glob($path . "*", GLOB_ONLYDIR);
-        $fieldtypes = array();
-        foreach ($paths as $path) {
-            $value = basename($path);
-            $name = str_replace("Fieldtype", "", $value);
-            $fieldtypes["$name"] = "$value";
+        $fieldtypes = api("extensions")->fieldtypes;
+        if (!$fieldtypes) return false;
+        foreach ( $fieldtypes as $fieldtype ) {
+
+            $title = str_replace("Fieldtype", "", $fieldtype->title);
+            $options["$title"] = $fieldtype->name;
         }
-        $this->selectOptions = $fieldtypes;
+        $this->selectOptions = $options;
     }
 
 }

@@ -95,6 +95,25 @@ class AdminPageEdit extends Extension
         return $input;
     }
 
+    protected function getFieldFiles()
+    {
+
+        $value = $this->page->files();
+
+        $selectOptions = array();
+        $templates = api("templates")->all();
+        foreach ($templates as $t) {
+            $selectOptions["$t->label"] = "$t->name";
+        }
+        $input = api("extensions")->get("FieldtypeSelectPage");
+        $input->label = "Parent";
+        $input->columns = 6;
+        $input->value = $value;
+        $input->attribute("name", "parent");
+
+        return $input;
+    }
+
     protected function addDefaultFields()
     {
 

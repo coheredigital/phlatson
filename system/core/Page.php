@@ -7,10 +7,16 @@ class Page extends Object
     protected $parent = null;
 
     protected $root = "pages/";
-    protected $defaultFields = array("template");
+    protected $defaultFields = array("template","files");
 
     function __construct($url = null)
     {
+        array_merge( $this->properties, array(
+                "published" => false,
+                "locked"    => false,
+                "system"    => true
+         ));
+
 
         $defaultFields = array();
         foreach ($this->defaultFields as $fieldName) {
@@ -54,8 +60,38 @@ class Page extends Object
 
             $this->data = json_decode(file_get_contents($file), true);
         }
+    }
 
 
+    protected function files(){
+
+        $fileArray = new FileArray();
+
+        foreach( $this->getFileList() as $file){
+
+            $fileObject = new File( $this , $file );
+            if($fileObject){
+                $fileArray->add($fileObject);
+            }
+
+        }
+
+        return $fileArray;
+    }
+
+    protected function getFileList(){
+        $files = scandir($this->path);
+        // filter non files
+        $files = array_filter($files, function($item){
+                return !is_dir( $this->path . $item);
+            });
+        //filter JSON files
+        $files = array_filter($files, function($item){
+            $mime = pathinfo ($this->path . $item);
+            return $mime["extension"] != "json";
+        });
+
+        return $files;
     }
 
     public function children()
@@ -175,6 +211,9 @@ class Page extends Object
                 break;
             case 'fields':
                 return $this->get("template")->getFields($this->defaultFields);
+                break;
+            case 'files':
+                return $this->files();
                 break;
 
             case 'layout':

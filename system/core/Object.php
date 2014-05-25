@@ -7,8 +7,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected $path;
     protected $data = array();
     protected $properties = array(
-        "published" => false,
-        "locked"    => false,
         "system"    => true
     );
     protected $root;

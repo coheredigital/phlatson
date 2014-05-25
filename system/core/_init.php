@@ -16,13 +16,14 @@ function setupConfig()
     $directories = array();
     // site directories
     $directories['site'] = 'site/';
-    $directories['assets'] = $directories['site'] . 'assets/';
-    $directories['content'] = $directories['site'] . 'content/';
+    $directories['assets'] = 'assets/';
+    $directories['pages'] = $directories['site'] . 'pages/';
     $directories['fields'] = $directories['site'] . 'fields/';
     $directories['templates'] = $directories['site'] . 'templates/';
     $directories['extensions'] = $directories['site'] . 'extensions/';
     $directories['layouts'] = $directories['site'] . 'layouts/';
     $directories['users'] = $directories['site'] . 'users/';
+
     // system directories
     $directories['system'] = 'system/';
     $directories['admin'] = $directories['system'] . 'admin/';

@@ -5,8 +5,8 @@ class Config extends DataContainer
 
     public function __construct()
     {
-        $this->styles = new FileArray();
-        $this->scripts = new FileArray();
+        $this->styles = new SimpleArray();
+        $this->scripts = new SimpleArray();
     }
 
 }

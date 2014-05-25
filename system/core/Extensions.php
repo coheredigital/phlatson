@@ -8,18 +8,30 @@ class Extensions extends Objects
     protected $singularName = "extension";
 
 
-    public function get($query)
+    protected function fieldtypes(){
+        $array = $this->all();
+        $array = array_filter($array, function($extension){
+                $type = $extension->type;
+                return $type == "Fieldtype";
+            });
+        return $array;
+    }
+
+    public function get($name)
     {
 
-        if (is_object($query)) {
-            $query = (string)$query;
-        } // stringify $object
-
-        if (!isset($this->data[$query]) && !$this->allowRootRequest) {
-            return false;
+        switch ($name){
+            case 'fieldtypes':
+                return $this->fieldtypes();
+            default:
+                if (!isset($this->data[$name]) && !$this->allowRootRequest) {
+                    return false;
+                }
+                $object = new $name();
+                return $object;
         }
-        $object = new $query();
-        return $object;
+
+
 
 
     }

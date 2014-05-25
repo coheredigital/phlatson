@@ -25,9 +25,22 @@
             
         }
 
-
+        var_dump($extensions->fieldtypes);
 
         ?>
+        <h4>Page Files</h4>
+        <ul>
+
+        <?php
+
+        foreach($page->files as $file){
+            // var_dump($file);
+            echo "<li><a href='$file->url'>$file->name</a></li>";
+        }
+
+        ?>
+
+        </ul>
 
 
     </div>

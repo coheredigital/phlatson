@@ -14,36 +14,44 @@ abstract class Fieldtype extends Extension
 
     final public function __construct(Field $field = null)
 {
-        parent::__construct();
+
 
         $this->attribute('class', 'field-input ' . $this->className);
         if ($field instanceof Field) {
             $this->field = $field;
         }
+         parent::__construct();
     }
 
     /**
      * alias for the three available formatting methods,
      * allows passing of type, can auto determing required method
-     * @param  mixed $value raw value from SimpleXML object
+     * @param  mixed $name raw value from SimpleXML object
      * @param  string $type
      * @return mixed        determined by fieldtype object
      */
-    final public function get($value, $type = null)
+    final public function get($name, $type = null)
     {
         switch ($type) {
             case 'output':
-                return $this->getOutput($value);
+                return $this->getOutput($name);
                 break;
             case 'raw':
             case 'edit':
-                return $this->getEdit($value);
+                return $this->getEdit($name);
                 break;
             case 'save':
-                return $this->getSave($value);
+                return $this->getSave($name);
                 break;
+            case 'type':
+                return "Fieldtype";
+        }
+
+        switch ($name) {
+            case 'type':
+                return "Fieldtype";
             default:
-                return parent::get($value);
+                return parent::get($name);
                 break;
         }
     }

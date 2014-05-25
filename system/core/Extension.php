@@ -13,12 +13,13 @@ abstract class Extension extends Object
 
 
         $this->setup();
-        $this->addStyles();
-        $this->addScripts();
+
     }
 
     protected function setup()
     {
+        $this->addStyles();
+        $this->addScripts();
     }
 
     protected function addStyles()
@@ -35,6 +36,8 @@ abstract class Extension extends Object
             case 'name':
             case 'directory':
                 return $this->get("className");
+            case 'type':
+                return "Extension";
             default:
                 return parent::get($string);
                 break;
