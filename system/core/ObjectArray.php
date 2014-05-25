@@ -39,6 +39,23 @@ abstract class ObjectArray extends Core implements IteratorAggregate, ArrayAcces
     }
 
 
+    public function filter($array){
+
+        $objects = $this->all();
+
+        foreach ($array as $key => $value) {
+
+            if ( !$object->{$key}) continue;
+
+            $objects = array_filter($objects, function($extension){
+                return $object->{$key} == $value;
+            });
+
+        }
+        return $objects;
+    }
+
+
     /* Interface requirements */
     public function getIterator() {
         return new ArrayObject($this->data);

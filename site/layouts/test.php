@@ -25,8 +25,6 @@
             
         }
 
-        var_dump($extensions->fieldtypes);
-
         ?>
         <h4>Page Files</h4>
         <ul>

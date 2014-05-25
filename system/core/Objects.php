@@ -70,6 +70,25 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         return $array;
     }
 
+    public function filter($array){
+
+        $objects = $this->all();
+
+        foreach ($array as $key => $value) {
+
+            $objects = array_filter($objects, function($object) use($key, $value){
+
+                // TODO : this should actually fail / throwException
+                if ( !$object->{$key}) return true;
+
+                $what = $object->{$key};
+                return $what == $value;
+            });
+
+        }
+        return $objects;
+    }
+
     public function __get($key)
     {
         return $this->get($key);
