@@ -11,10 +11,14 @@ class File extends Core
 
         $this->path = $page->path;
         $this->url = api("config")->urls->pages . $page->directory . "/" . rawurlencode( $name );
-        $this->file = $path . $name;
+        $this->file = $page->path . $name;
         $this->name = $name;
+        $this->ext = pathinfo($name, PATHINFO_EXTENSION);
+
 
     }
+
+
 
     public function get($string)
     {

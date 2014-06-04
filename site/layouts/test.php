@@ -26,7 +26,7 @@
         }
 
         ?>
-        <h4>Page Files</h4>
+        <h4>Files</h4>
         <ul>
 
         <?php
@@ -34,6 +34,21 @@
         foreach($page->files as $file){
             // var_dump($file);
             echo "<li><a href='$file->url'>$file->name</a></li>";
+        }
+
+        ?>
+
+        </ul>
+
+
+        <h4>Images</h4>
+        <ul>
+
+        <?php
+
+        foreach($page->images as $image){
+             // var_dump($file);
+            echo "<li><a href='$image->url'>$image->name</a></li>";
         }
 
         ?>

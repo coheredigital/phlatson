@@ -64,35 +64,14 @@ class Page extends Object
 
 
     protected function files(){
-
-        $fileArray = new FileArray();
-
-        foreach( $this->getFileList() as $file){
-
-            $fileObject = new File( $this , $file );
-            if($fileObject){
-                $fileArray->add($fileObject);
-            }
-
-        }
-
-        return $fileArray;
+        return new FileArray($this);
     }
 
-    protected function getFileList(){
-        $files = scandir($this->path);
-        // filter non files
-        $files = array_filter($files, function($item){
-                return !is_dir( $this->path . $item);
-            });
-        //filter JSON files
-        $files = array_filter($files, function($item){
-            $mime = pathinfo ($this->path . $item);
-            return $mime["extension"] != "json";
-        });
-
-        return $files;
+    protected function images(){
+        return new ImageArray($this);
     }
+
+
 
     public function children()
     {
@@ -214,6 +193,9 @@ class Page extends Object
                 break;
             case 'files':
                 return $this->files();
+                break;
+            case 'images':
+                return $this->images();
                 break;
 
             case 'layout':
