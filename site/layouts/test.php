@@ -49,6 +49,7 @@
         foreach($page->images as $image){
              // var_dump($file);
             echo "<li><a href='$image->url'>$image->name</a></li>";
+            var_dump($image->type);
         }
 
         ?>
@@ -57,8 +58,11 @@
         <?php
         $images = $page->images;
         $image = $images->first();
-        $image->resize(200,200);
-        var_dump($image);
+
+        $image->edit()->resize(200,200)->save();
+        $image->edit()->resize(200,200)->invert()->save();
+        $image->edit()->resize(200,200)->grayscale()->save();
+
         ?>
         <h4>Single Image</h4>
 
