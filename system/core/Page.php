@@ -9,6 +9,9 @@ class Page extends Object
     protected $root = "pages/";
     protected $defaultFields = array("template","files");
 
+    protected $filesArray;
+    protected $imagesArray;
+
     function __construct($url = null)
     {
         array_merge( $this->properties, array(

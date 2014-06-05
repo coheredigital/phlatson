@@ -56,6 +56,13 @@ abstract class ObjectArray extends Core implements IteratorAggregate, ArrayAcces
     }
 
 
+    /**
+     * return first item in data array
+     */
+    public function first(){
+        return $this->data[0];
+    }
+
     /* Interface requirements */
     public function getIterator() {
         return new ArrayObject($this->data);

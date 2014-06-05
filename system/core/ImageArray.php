@@ -11,7 +11,7 @@ class ImageArray extends FileArray
         $this->data = array_filter( $this->data, function($file){
             return $file instanceof Image;
         });
-
+        $this->data = array_values($this->data); // reset array keys
     }
 
 }

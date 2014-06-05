@@ -3,12 +3,14 @@
 class File extends Core
 {
 
+    protected $page;
     protected $data = array();
 
     public function __construct( $page , $name ){
 
         // TODO : throw exception if not valid file
 
+        $this->page = $page;
         $this->path = $page->path;
         $this->url = api("config")->urls->pages . $page->directory . "/" . rawurlencode( $name );
         $this->file = $page->path . $name;
@@ -29,9 +31,7 @@ class File extends Core
                     $this->name = $this->route[$lastRequestIndex];
                 }
                 return $this->name;
-            case 'path':
-                return $this->path;
-                break;
+
             default:
                 return $this->data[$string];
                 break;

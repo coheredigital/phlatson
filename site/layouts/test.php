@@ -54,7 +54,15 @@
         ?>
 
         </ul>
+        <?php
+        $images = $page->images;
+        $image = $images->first();
+        $image->resize(200,200);
+        var_dump($image);
+        ?>
+        <h4>Single Image</h4>
 
+        <img src="<?php echo $image->get("url") ?>" alt=""/>
 
     </div>
 <?php include 'includes/foot.inc'; ?>

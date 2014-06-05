@@ -17,6 +17,7 @@ function setupConfig()
     // site directories
     $directories['site'] = 'site/';
     $directories['assets'] = 'assets/';
+    $directories['cache'] = $directories['assets'] . 'cache/';
     $directories['pages'] = $directories['site'] . 'pages/';
     $directories['fields'] = $directories['site'] . 'fields/';
     $directories['templates'] = $directories['site'] . 'templates/';
