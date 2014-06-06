@@ -49,7 +49,7 @@
         foreach($page->images as $image){
              // var_dump($file);
             echo "<li><a href='$image->url'>$image->name</a></li>";
-            var_dump($image->type);
+
         }
 
         ?>
@@ -57,16 +57,21 @@
         </ul>
         <?php
         $images = $page->images;
-        $image = $images->first();
+        $image = $images->index(2);
 
-        $image->edit()->resize(200,200)->save();
-        $image->edit()->resize(200,200)->invert()->save();
-        $image->edit()->resize(200,200)->grayscale()->save();
+        $grayscale = $image
+            ->edit()
+            ->resize(400,400)
+            // ->grayscale()
+            // ->invert()
+            // ->rotate(45)
+            ->save();
+
 
         ?>
         <h4>Single Image</h4>
 
-        <img src="<?php echo $image->get("url") ?>" alt=""/>
+        <img src="<?php echo $grayscale->get("url") ?>" alt=""/>
 
     </div>
 <?php include 'includes/foot.inc'; ?>

@@ -11,15 +11,6 @@ class Image extends File
 
     protected $alternateName; // name the edited made to the image
 
-
-
-    protected $imageTypes = [
-        "1" =>	IMAGETYPE_GIF,
-        "2" =>	IMAGETYPE_JPEG,
-        "3" =>	IMAGETYPE_PNG
-    ];
-
-
     protected $appliedResize = [];
 
     // store applied filters in order to be used in file name if no image alt name provided
@@ -28,6 +19,11 @@ class Image extends File
         // "brightness_-20,
         // "invert"
     ];
+
+
+    // output settings
+    protected $quality = 90;
+
 
     public function __construct( $page , $name ){
         parent::__construct( $page , $name );
@@ -42,8 +38,6 @@ class Image extends File
         $this->width = $info[0];
         $this->height = $info[1];
         if( $this->type = $info[2]){ // file type returned from getimagesize()
-            $this->bits = $info["bits"];
-            $this->channels = $info["channels"];
             $this->mimeType = $info["mime"];
         } else if(function_exists("exif_imagetype")) {
             $this->type = exif_imagetype($this->file);
@@ -56,6 +50,21 @@ class Image extends File
 
         $this->imageCopy = clone $this;
         $this->imageCopy->original = false;
+
+
+        switch($this->type){
+            case IMAGETYPE_JPEG:
+                $this->imageCopy->imageData = imagecreatefromjpeg($this->file);
+                break;
+            case IMAGETYPE_GIF:
+                $this->imageCopy->imageData = imagecreatefromgif($this->file);
+                break;
+            case IMAGETYPE_PNG:
+                $this->imageCopy->imageData = imagecreatefrompng($this->file);
+                break;
+        }
+
+
         return $this->imageCopy;
     }
 
@@ -67,16 +76,19 @@ class Image extends File
             "crop" => $crop
         ];
 
-
-        $image = imagecreatefromjpeg($this->file);
         $image_resize = imagecreatetruecolor($width, $height);
-        imagecopyresampled($image_resize, $image, 0, 0, 0, 0, $width, $height, $this->width, $this->height); // samepled from original
+        imagecopyresampled($image_resize, $this->imageData, 0, 0, 0, 0, $width, $height, $this->width, $this->height); // samepled from original
 
         $this->imageData = $image_resize;
 
         return $this;
     }
 
+//    public function crop(){
+//
+//        imagecrop($this->imageData);
+//
+//    }
 
     /*
      * Image Effects
@@ -188,6 +200,44 @@ class Image extends File
         return $this;
     }
 
+    /**
+     *	Rotate the image by set degree
+     *	@return object
+     **/
+    function rotate($angle) {
+        $this->imageData = imagerotate ($this->imageData, $angle, 255);
+        $this->trackFilter( __FUNCTION__ , $angle);
+        return $this;
+    }
+
+
+
+    /**
+     *	Apply sketch effect
+     *	@return object
+     *  @param $selective bool
+     *
+     *  requires PHP 5.5+
+     **/
+//    function flip($direction) {
+//
+//        switch($direction){
+//            case "horizontal":
+//                imageflip( $this->imageData, IMG_FLIP_HORIZONTAL);
+//                break;
+//            case "vertical":
+//                imageflip( $this->imageData, IMG_FLIP_VERTICAL);
+//                break;
+//            case "both":
+//                imageflip( $this->imageData, IMG_FLIP_BOTH);
+//                break;
+//        }
+//
+//        $this->trackFilter( __FUNCTION__ , ucfirst( $direction ) );
+//        return $this;
+//    }
+
+
 
     // gets an image based on a predefined size and set of parameters
     public function getAlternate($name){
@@ -220,6 +270,7 @@ class Image extends File
 
         }
 
+        $name .= $this->ext; // append file extension
 
 
         // create directory if not exist
@@ -227,26 +278,25 @@ class Image extends File
             mkdir( $location , 0777, true);
         }
 
-        imagejpeg($this->imageData, $location . DIRECTORY_SEPARATOR . $name . $this->ext );
+
+        switch($this->type){
+            case IMAGETYPE_JPEG:
+                imagejpeg($this->imageData, $location . DIRECTORY_SEPARATOR . $name , $this->quality );
+                break;
+            case IMAGETYPE_GIF:
+                imagegif($this->imageData, $location . DIRECTORY_SEPARATOR . $name);
+                break;
+            case IMAGETYPE_PNG:
+                imagepng($this->imageData, $location . DIRECTORY_SEPARATOR . $name ,  -1); // use default compiled into the zlib library
+                break;
+        }
+
+
+
+        $this->url = $this->url = api("config")->urls->cache . $this->page->directory . "/" . rawurlencode( $name );
 
         return $this;
     }
 
-
-    public function get($string)
-    {
-        switch ($string) {
-            case 'directory':
-                if(is_null($this->name)){
-                    $lastRequestIndex = count($this->route) - 1;
-                    $this->name = $this->route[$lastRequestIndex];
-                }
-                return $this->name;
-
-            default:
-                return parent::get($string);
-                break;
-        }
-    }
 
 }
