@@ -96,17 +96,17 @@ abstract class Fieldtype extends Extension
         $input = $this->renderInput();
 
         $output = "<div class='col col-{$this->columns}'>";
-        $output .= "<div class='field-item'>";
+        $output .= "<div class='field'>";
         if ($this->label) {
-            $output .= "<div class='field-heading'>";
+
             $output .= "<label for=''>";
             $output .= $this->label ? $this->label : $this->attribute("name");
             $output .= "</label>";
-            $output .= "</div>";
+
         }
-        $output .= "<div class='field-content'>";
+
         $output .= $input;
-        $output .= "</div>";
+
         $output .= "</div>";
         $output .= "</div>";
         return $output;

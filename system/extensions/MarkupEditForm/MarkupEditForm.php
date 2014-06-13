@@ -27,8 +27,6 @@ class MarkupEditForm extends Extension
                 $formFields .= $element->render();
 
             }
-
-
         }
 
         $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" . $formFields . $submit . "</form>";

@@ -47,10 +47,10 @@ class MarkupFieldset extends Extension
         }
 
         if ($this->label) {
-            $label = "<legend class='row'>{$this->label}</legend>";
+            $label = "<h3 class='ui dividing header'>{$this->label}</h3>";
         }
 
-        $output = "<fieldset>{$label}{$fields}{$submit}</fieldset>";
+        $output = "<div>{$label}{$fields}{$submit}</div>";
         return $output;
 
 
