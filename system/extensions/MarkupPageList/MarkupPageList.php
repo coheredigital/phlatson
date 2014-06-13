@@ -6,6 +6,12 @@ class MarkupPageList extends Extension
     public $rootPage;
     public $postTypes = array(); // array representing posts types or "Page Tables" that will be offers at top of the page
 
+    protected function setup()
+    {
+        api('config')->scripts->add($this->url . "jquery-sortable.js");
+        api('config')->scripts->add($this->url . "{$this->className}.js");
+    }
+
 
     public function renderPageTitle(\Page $page)
     {
@@ -43,7 +49,7 @@ class MarkupPageList extends Extension
     public function render()
     {
         $output = $this->renderPageItem($this->rootPage);
-        $output = "<div class='page-tree'><ul class='page-tree-list'>{$output}</ul></div>";
+        $output = "<div class='page-tree'><ul class='page-tree-list page-tree-root'>{$output}</ul></div>";
         return $output;
     }
 
