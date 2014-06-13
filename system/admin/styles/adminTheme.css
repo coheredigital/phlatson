@@ -681,7 +681,7 @@ select {
   color: #52b4df;
 }
 
-/* Page tree */
+/* Draggable styles */
 body.dragging, body.dragging * {
   cursor: move !important;
 }
@@ -699,9 +699,15 @@ ol.example li.placeholder {
 
 ol.example li.placeholder:before {
   position: absolute;
-  /** Define arrowhead **/
+  width: 0;
+  height: 0;
+  z-index: 100;
+  border-style: solid;
+  border-width: 6px 0 6px 8px;
+  border-color: transparent transparent transparent #007bff;
 }
 
+/* Page tree */
 .page-tree > .page-tree-list {
   padding: 0;
 }

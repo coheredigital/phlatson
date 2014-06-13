@@ -8,7 +8,6 @@ class MarkupPageList extends Extension
 
     protected function setup()
     {
-        api('config')->scripts->add($this->url . "jquery-sortable.js");
         api('config')->scripts->add($this->url . "{$this->className}.js");
     }
 

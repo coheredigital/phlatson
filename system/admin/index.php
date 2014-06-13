@@ -21,7 +21,7 @@ $config->styles->add("{$config->urls->admin}styles/adminTheme.css");
 $config->styles->add("{$config->urls->admin}styles/font-awesome/css/font-awesome.css");
 $config->scripts->add("//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js");
 $config->scripts->add("{$config->urls->admin}scripts/plugins.js");
-
+$config->scripts->add("{$config->urls->admin}scripts/jquery-sortable.js");
 // admin pages 
 if ($output = $page->render()) {
 } else {
