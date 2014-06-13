@@ -66,7 +66,7 @@ class Page extends Object
     }
 
 
-    protected function files(){
+    public function files(){
         return new FileArray($this);
     }
 

@@ -56,6 +56,16 @@ class AdminPageEdit extends Extension
         $this->form->add($settings);
     }
 
+    protected function addFilesFields()
+    {
+
+        $settings = api("extensions")->get("MarkupFieldset");
+        $settings->label = "Files";
+        $settings->add($this->getFieldFiles());
+
+        $this->form->add($settings);
+    }
+
     protected function getFieldTemplate()
     {
 
@@ -105,9 +115,9 @@ class AdminPageEdit extends Extension
         foreach ($templates as $t) {
             $selectOptions["$t->label"] = "$t->name";
         }
-        $input = api("extensions")->get("FieldtypeSelectPage");
-        $input->label = "Parent";
-        $input->columns = 6;
+        $input = api("extensions")->get("FieldtypeFiles");
+        $input->label = "Files";
+        $input->columns = 12;
         $input->value = $value;
         $input->attribute("name", "parent");
 
@@ -153,6 +163,7 @@ class AdminPageEdit extends Extension
         $submitButtonsGroup->add($submitButtons);
 
 
+        $this->addFilesFields();
         $this->addSettingsFields();
 
         // $output = $this->tabs->render();
