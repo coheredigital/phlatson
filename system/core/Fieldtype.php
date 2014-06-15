@@ -50,6 +50,35 @@ abstract class Fieldtype extends Extension
         switch ($name) {
             case 'type':
                 return "Fieldtype";
+                break;
+            case 'columns':
+                $columns = $this->getUnformatted("columns");
+                switch($columns){
+                    case 12:
+                        return "twelve";
+                    case 11:
+                        return "eleven";
+                    case 10:
+                        return "ten";
+                    case 9:
+                        return "nine";
+                    case 8:
+                        return "eight";
+                    case 7:
+                        return "seven";
+                    case 6:
+                        return "six";
+                    case 5:
+                        return "fix";
+                    case 4:
+                        return "four";
+                    case 3:
+                        return "three";
+                    case 2:
+                        return "two";
+                    case 1:
+                        return "one";
+                }
             default:
                 return parent::get($name);
                 break;
@@ -95,7 +124,7 @@ abstract class Fieldtype extends Extension
 
         $input = $this->renderInput();
 
-        $output = "<div class='col col-{$this->columns}'>";
+        $output = "<div class='column $this->columns wide'>";
         $output .= "<div class='field'>";
         if ($this->label) {
 

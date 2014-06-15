@@ -49,7 +49,7 @@ class MarkupTable extends Extension
         $tbody = "<tbody><tr>{$rowsOutput}<tr></tbody>";
 
         // wrap $output in "table" markup
-        $output = "<table>{$thead}{$tbody}</table>";
+        $output = "<table class='ui table segment'>{$thead}{$tbody}</table>";
 
         return $output;
 

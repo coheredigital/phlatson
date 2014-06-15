@@ -9,10 +9,29 @@ if (count($input->post)) {
 }
 
 
-$output = "<label>Username</label>";
-$output .= "<input class='field-input' name='username' type='text'>";
-$output .= "<label>Password</label>";
-$output .= "<input class='field-input' name='password' type='password'>";
-$output .= "<button type='submit' class='button button-success'>Login</button>";
-$output = "<form class='login-form' method='POST'>{$output}</form>";
+
+$output .= "<div class='field'>
+    <label>Username</label>
+    <div class='ui left labeled icon input'>
+      <input name='username' type='text' placeholder='Username'>
+      <i class='user icon'></i>
+      <div class='ui corner label'>
+        <i class='icon asterisk'></i>
+      </div>
+    </div>
+  </div>";
+
+  $output .= "<div class='field'>
+    <label>Password</label>
+    <div class='ui left labeled icon input'>
+      <input name='password' type='password' placeholder='Password'>
+      <i class='user icon'></i>
+      <div class='ui corner label'>
+        <i class='icon asterisk'></i>
+      </div>
+    </div>
+  </div>";
+
+$output .= "<button type='submit' class='ui button green fluid'>Login</button>";
+$output = "<form class='ui form segment form-login' method='POST'>{$output}</form>";
 

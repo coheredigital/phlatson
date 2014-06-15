@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeObject extends Fieldtype
+class FieldtypeObject extends FieldtypeSelect
 {
 
     protected $objectType = null;

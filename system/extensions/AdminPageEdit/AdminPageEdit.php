@@ -69,25 +69,17 @@ class AdminPageEdit extends Extension
     protected function getFieldTemplate()
     {
 
-        $template = $this->get("template");
-        $value = $template->get("name");
-        $selectOptions = array();
-        $templates = api("templates")->all();
-        foreach ($templates as $t) {
-            $selectOptions["$t->label"] = "$t->name";
-        }
+        $field = api("fields")->get("template");
 
-        $input = api("extensions")->get("FieldtypeSelect");
-        $input->label = "Template";
-        $input->columns = 6;
-        $input->setOptions($selectOptions);
-        $input->value = $value;
-        $input->attribute("name", "template");
-        return $input;
+        $fieldtype = $field->type;
+        $fieldtype->setPage($this->page);
+        return $fieldtype;
     }
 
     protected function getFieldParentSelect()
     {
+
+        $field = api("fields")->get("parent");
 
         $value = $this->page->parent;
 
@@ -96,13 +88,14 @@ class AdminPageEdit extends Extension
         foreach ($templates as $t) {
             $selectOptions["$t->label"] = "$t->name";
         }
-        $input = api("extensions")->get("FieldtypeSelectPage");
-        $input->label = "Parent";
-        $input->columns = 6;
-        $input->value = $value;
-        $input->attribute("name", "parent");
 
-        return $input;
+        $fieldtype = $field->type;
+        $fieldtype->label = "Parent";
+        $fieldtype->columns = 6;
+        $fieldtype->value = $value;
+        $fieldtype->attribute("name", "parent");
+
+        return $fieldtype;
     }
 
     protected function getFieldFiles()

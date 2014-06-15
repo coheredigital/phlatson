@@ -13,16 +13,12 @@ class FieldtypeSelect extends Fieldtype
         $options = $this->getOptions();
 
 
-        $output = "<div class='col col-{$this->columns}'>";
-        $output .= "<div class='field-item'>";
-        $output .= "<div class='field-heading'>";
+        $output = "<div class='column $this->columns wide'>";
+        $output .= "<div class='field'>";
         $output .= "<label for=''>";
         $output .= "{$this->label}";
         $output .= "</label>";
-        $output .= "</div>";
-        $output .= "<div class='field-content'>";
         $output .= "<select {$attributes} >{$options}</select>";
-        $output .= "</div>";
         $output .= "</div>";
         $output .= "</div>";
         return $output;

@@ -14,11 +14,16 @@ class MarkupPageList extends Extension
 
     public function renderPageTitle(\Page $page)
     {
-        $output .= "<div class='page-tree-item'>";
-        $output .= "<a class='' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<div class='page-tree-item ui segment'>";
+        $output .= "<div class='tiny icon ui buttons right floated'>";
+        $output .= "<a class='ui button' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=test&new=1'><i class='icon plus'></i></a>";
+        $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
+        $output .= "</div>";
+        $output .= "<a class='page-item-edit-link' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
-        $output .= "<a class='button button-soft pull-right' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=test&new=1'><i class='icon icon-plus'></i></a>";
-        $output .= "<a class='button button-soft pull-right' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
+
+
+
         $output .= "</div>";
         $output .= "</div>";
         return $output;

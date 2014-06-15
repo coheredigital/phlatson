@@ -23,7 +23,7 @@ class MarkupFieldset extends Extension
         foreach ($this->fields as $field) {
 
             if ($colCount == 0) {
-                $fields .= "<div class='row'>"; // open new row div
+                $fields .= "<div class='grid'>"; // open new row div
                 $rowOpen = true;
             }
 

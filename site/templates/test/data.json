@@ -7,11 +7,11 @@
         },
         {
             "name": "author",
-            "columns": 12
+            "columns": 6
         },
         {
             "name": "date",
-            "columns": 12
+            "columns": 6
         },
         {
             "name": "content",
