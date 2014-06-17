@@ -5,10 +5,7 @@ foreach ($page->children() as $p) {
     if ($p->description) {
         $description = "<p>{$p->description}</p>";
     }
-    $output .= "<li>
-					{$title}
-					{$description}
-				</li>";
+    $output .= "{$title}{$description}";
 }
 
-$output = "<ul class='page-list'>{$output}</ul>";
+$output = "<div class='ui list'>{$output}</div>";
