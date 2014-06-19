@@ -1,4 +1,8 @@
 {
-        "fieldtype": "FieldtypeSelectPage",
-        "label": "Parent Page"
+        "fieldtype": "FieldtypeParent",
+        "label": "Parent Page",
+        "settings" : {
+            "allowedTemplates": 0,
+            "root" : 0
+        }
 }

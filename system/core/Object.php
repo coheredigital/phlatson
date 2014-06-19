@@ -11,7 +11,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     );
     protected $root;
 
-    protected $isNew = true;
 
     protected $location = null; // whether found in site or system
 
@@ -58,7 +57,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         // setup data if we found a valid file (object)
         if (is_file($file)) {
-            $this->isNew = false;
             $this->path = $path;
             $this->data = json_decode(file_get_contents($file), true);
         }
@@ -115,7 +113,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $this->data[$name];
     }
 
-    public function save($postData = null)
+    public function save($postData = null, $saveName = null)
     {
 
         // TODO - add more validation to page save
@@ -147,8 +145,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $pageName = $postData->name; // TODO add page name sanitizer
             $this->name = $pageName;
         }
+        else{ // generate page name from defined field
+            $this->name = api("sanitizer")->name($postData->title);
+        }
 
-        if($this->isNew){
+        if($this->isNew()){
             // TODO - validate parent
             $this->path = $this->parent->path . $this->name . DIRECTORY_SEPARATOR;
             if (!file_exists($this->path)) {
@@ -158,8 +159,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
 
         // save to file
-        if(api("config")->disableSave){
-            $saveFile = "save.json";
+        if($saveName){
+            $saveFile = "$saveName.json";
         }
         else{
             $saveFile = self::DATA_FILE;
@@ -170,6 +171,15 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         file_put_contents( $this->path . $saveFile , $saveData );
 
     }
+
+
+    public function isNew(){
+        // if the object does not have a matching existing directory it is assumed new
+        // directory will be created when saved
+        if(!$this->directory) return true;
+
+    }
+
 
     public function get($string)
     {

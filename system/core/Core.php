@@ -17,6 +17,7 @@ abstract class Core
     public static function init(Config $config)
     {
         self::api('config', $config, true);
+        self::api('sanitizer', new Sanitizer(), true);
         self::api('input', new Input(), true);
         self::api('users', new Users(), true);
         self::api('session', new Session(), true);

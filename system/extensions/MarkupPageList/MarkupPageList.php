@@ -12,11 +12,13 @@ class MarkupPageList extends Extension
     }
 
 
-    public function renderPageTitle(\Page $page)
+    public function renderPageTitle(Page $page)
     {
         $output .= "<div class='page-tree-item ui segment'>";
         $output .= "<div class='tiny icon ui buttons right floated'>";
-        $output .= "<a class='ui button' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=test&new=1'><i class='icon plus'></i></a>";
+
+        $output .= $this->renderPageItemNew($page);
+
         $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
         $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
@@ -26,7 +28,7 @@ class MarkupPageList extends Extension
         return $output;
     }
 
-    public function renderPageItem(\Page $page)
+    public function renderPageItem(Page $page)
     {
         $output = $this->renderPageTitle($page);
         if (count($page->children)) {
@@ -45,6 +47,40 @@ class MarkupPageList extends Extension
         }
         $output = "<ul class='page-tree-list'> {$output} </ul>";
         return $output;
+    }
+
+    private function renderPageItemNew(Page $page){
+
+        $templates = api("templates")->all(); // TODO: change to list only supported child templates for this template
+
+
+
+        if(count($templates) > 1){
+
+            $output = '<div class="ui right pointing dropdown icon button">';
+            $output .= '<i class="plus icon"></i>';
+            $output .= '<div class="menu">';
+
+            foreach($templates as $t){
+                $output .= '<div class="item">';
+                $output .= "<a href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $t->name . "&new=1'>{$t->name}</a>";
+
+                $output .= '</div>';
+
+            }
+
+            $output .= '</div>';
+            $output .= '</div>';
+
+            return $output;
+        }
+        else if ( count($templates) ){
+
+            $output = "<a class='ui button' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $templates[0]->name . "&new=1'><i class='icon plus'></i></a>";
+            return $output;
+        }
+
+
     }
 
     public function render()

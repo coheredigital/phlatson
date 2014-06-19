@@ -9,26 +9,37 @@ class FileArray extends ObjectArray
 
         $this->page = $page;
 
-        foreach($this->getFileList() as $file){
+        $fileList = $this->getFileList();
+
+        if($fileList){
+
+            foreach($this->getFileList() as $file){
 
 
-            if(!getimagesize( $page->path . $file )){
-                $fileObject = new File( $this->page , $file );
-            }
-            else{
-                $fileObject = new Image( $this->page , $file );
-            }
+                if(!getimagesize( $page->path . $file )){
+                    $fileObject = new File( $this->page , $file );
+                }
+                else{
+                    $fileObject = new Image( $this->page , $file );
+                }
 
-            if($fileObject){
-                $this->add($fileObject);
+                if($fileObject){
+                    $this->add($fileObject);
+                }
+
             }
 
         }
+
+
 
     }
 
 
     protected function getFileList(){
+
+        if( $this->page->isNew() ) return false;
+
         $files = scandir($this->page->path);
         // filter non files
         $files = array_filter($files, function($item){

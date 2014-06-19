@@ -40,6 +40,8 @@
 
         </ul>
 
+        <h4>Name Test</h4>
+        <?php echo $sanitizer->name("Test this string  to see how well! is wordk 3490397()^(@)^(!)__=") ?>
 
         <h4>Images</h4>
         <ul>
@@ -57,21 +59,29 @@
         </ul>
         <?php
         $images = $page->images;
-        $image = $images->index(2);
+        if($images){
+            $image = $images->index(2);
+            if($image){
+                $grayscale = $image
+                    ->edit()
+                    ->resize(400,400)
+                    // ->grayscale()
+                    // ->invert()
+                    // ->rotate(45)
+                    ->save();
 
-        $grayscale = $image
-            ->edit()
-            ->resize(400,400)
-            // ->grayscale()
-            // ->invert()
-            // ->rotate(45)
-            ->save();
+                echo "<h4>Single Image</h4>";
+                echo "<img src='{$grayscale->url}' alt=''/>";
+            }
+
+        }
+
 
 
         ?>
-        <h4>Single Image</h4>
 
-        <img src="<?php echo $grayscale->get("url") ?>" alt=""/>
+
+
 
     </div>
 <?php include 'includes/foot.inc'; ?>

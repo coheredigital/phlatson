@@ -81,13 +81,7 @@ class AdminPageEdit extends Extension
 
         $field = api("fields")->get("parent");
 
-        $value = $this->page->parent;
-
-        $selectOptions = array();
-        $templates = api("templates")->all();
-        foreach ($templates as $t) {
-            $selectOptions["$t->label"] = "$t->name";
-        }
+        $value = $this->page->parent->directory;
 
         $fieldtype = $field->type;
         $fieldtype->label = "Parent";
