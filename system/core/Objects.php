@@ -15,8 +15,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     // Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
     protected $singularName;
 
-    // status flags
-    protected $dataLoaded = false;
+
 
     final public function __construct()
     {
@@ -28,26 +27,56 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     {
         if ($this->root) {
 
-            $objects = glob($this->api('config')->paths->site . $this->root . "*", GLOB_ONLYDIR);
+            $siteObjects = $this->getObjectList();
 
             // get system items
             if ($this->checkSystem) {
-                $systemObjects = glob($this->api('config')->paths->system . $this->root . "*", GLOB_ONLYDIR);
-                $objects = array_merge($objects, $systemObjects);
+
+                $systemObjects = $this->getObjectList("system");
+                if(is_array($systemObjects))
+                    $objects = array_merge($siteObjects, $this->getObjectList("system"));
             }
 
-            // assign key => value pairs
-            $dataArray = array();
-            foreach ($objects as $path) {
-                $name = basename($path);
-                $dataArray["$name"] = $path;
-            }
-            return $dataArray;
+            return $objects;
 
         }
 
         return null;
     }
+
+    // return a key => value array of valid object locations
+    public function getObjectList($root = "site", $dataFile = "data.json"){
+
+        $path = realpath( $this->api('config')->paths->{$root} . $this->root );
+
+        if ( !$path ) return array();
+
+        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+
+        foreach ($iterator as $item) {
+            // Note SELF_FIRST, so array keys are in place before values are pushed.
+            $itemPath = realpath($item->getPathName());
+
+            $itemParts = explode(DIRECTORY_SEPARATOR, $item);
+            $itemFilename = end($itemParts);
+
+            if($itemFilename != $dataFile) continue;
+
+            $directory = str_replace($path,"",$itemPath);
+            $directory = str_replace($itemFilename,"",$directory);
+            $directory = trim($directory,DIRECTORY_SEPARATOR);
+
+
+            $array["$directory"] = $itemPath;
+
+        }
+
+        return $array;
+
+
+    }
+
 
     public function __set($key, $value)
     {
@@ -63,11 +92,12 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     public function all()
     {
 
-        $array = array();
-        foreach ($this->data as $key => $value) {
-            $array[] = $this->$key;
-        }
-        return $array;
+       $array = array();
+       foreach ($this->data as $key => $value) {
+           $array[] = $this->$key;
+       }
+       return $array;
+
     }
 
     public function filter($array){
@@ -97,35 +127,17 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     public function get($query)
     {
 
+        if( !$query )  throw new Exception("Method: get() required parameter missing");
 
-
-        // handle single get request
-        if(is_string($query)){
-
-            if (!$this->has($query) && !$this->allowRootRequest) {
-                return false;
-                // throw new Exception("Object ({$url}) does not exist in {$this->singularName}");
-            }
-
-
-            $object = new $this->singularName($query);
-            if(!$object instanceof $this->singularName){
-                throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
-            }
-            return $object;
-        }
-        else if(is_array($query)){
-            $arrayType = "{$this->singularName}Array";
-            $objectArray = new $arrayType;
-            foreach($query as $url){
-                $object = $this->get($url);
-                $objectArray->add($object);
-
-            }
-            return $objectArray;
+        if (!$this->has($query) && !$this->allowRootRequest) {
+             throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
         }
 
-
+        $object = new $this->singularName($query);
+        if(!$object instanceof $this->singularName){
+            throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
+        }
+        return $object;
 
     }
 

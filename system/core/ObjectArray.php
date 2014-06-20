@@ -5,8 +5,6 @@ abstract class ObjectArray extends Core implements IteratorAggregate, ArrayAcces
 
     protected $data = array();
 
-
-
     protected function isValidItem($item){
 
         if($item instanceof Object){
@@ -39,21 +37,21 @@ abstract class ObjectArray extends Core implements IteratorAggregate, ArrayAcces
     }
 
 
-    public function filter($array){
-
-        $objects = $this->all();
-
-        foreach ($array as $key => $value) {
-
-            if ( !$object->{$key}) continue;
-
-            $objects = array_filter($objects, function($extension){
-                return $object->{$key} == $value;
-            });
-
-        }
-        return $objects;
-    }
+//    public function filter($array){
+//
+//        $objects = $this->all();
+//
+//        foreach ($array as $key => $value) {
+//
+//            if ( !$object->{$key}) continue;
+//
+//            $objects = array_filter($objects, function($extension){
+//                return $object->{$key} == $value;
+//            });
+//
+//        }
+//        return $objects;
+//    }
 
 
     /**

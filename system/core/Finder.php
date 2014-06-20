@@ -1,16 +1,34 @@
 <?php
 
-class Finder extends Core
+class Finder extends RecursiveFilterIterator
 {
-
-    $filtersArray = array();
-
-
-    function __construct(Object $object, $string)
-    {
-
-
-
-    }
+//
+//    protected $file;
+//
+//    public function __construct( $iterator, $file = "data.json")
+//    {
+//        $this->file = $file;
+//        parent::__construct($iterator);
+//
+//    }
+//
+//    public function accept()
+//    {
+////        return true;
+//        $current = $this->current();
+//        return $this->hasChildren() || $current->isFile() && $current->getFilename() == $this->file;
+//    }
+//
+//    public function getChildren() {
+//
+//        $array = $this->getInnerIterator()->getChildren();
+//
+//        return new self($array, $this->file);
+//    }
+//
+//    public function __toString()
+//    {
+//        return $this->current()->getFilename();
+//    }
 
 }
