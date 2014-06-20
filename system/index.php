@@ -30,5 +30,9 @@ if ($output = $page->render()) {
         include $page->get('layout');
     }
 }
-
-require_once $config->paths->systemLayouts . 'includes/default-layout.php';
+if( $user->isLoggedin() ){
+    require_once $config->paths->systemLayouts . 'includes/default-layout.php';
+}
+else{
+    require_once $config->paths->systemLayouts . 'includes/login-layout.php';
+}

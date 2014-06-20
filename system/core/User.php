@@ -42,14 +42,14 @@ class User extends Object
     }
 
 
-    public function get($string)
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
             case 'template':
                 return api("templates")->get("user");
                 break;
             default:
-                return parent::get($string);
+                return parent::get($name);
                 break;
         }
     }

@@ -161,9 +161,9 @@ class Page extends Object
         return null;
     }
 
-    public function get($string)
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
             case 'directory':
                 $directory = trim(implode("/", $this->route), "/");
                 return normalizeDirectory($directory);
@@ -196,7 +196,7 @@ class Page extends Object
                 return $layout ? (string)$layout : null;
                 break;
             default:
-                return parent::get($string);
+                return parent::get($name);
                 break;
         }
 

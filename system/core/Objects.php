@@ -40,7 +40,8 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
         $dataFile = "data.json";
 
-        $path = realpath( $this->api('config')->paths->{$root} . $this->rootFolder );
+        $path = $this->api('config')->paths->{$root} . $this->rootFolder;
+        $path = realpath( $path );
 
         if ( !$path ) return array();
 
@@ -124,9 +125,9 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         if( !$query )  throw new Exception("Method: get() required parameter missing");
 
         if (!$this->has($query)) {
-            return false;
+//            return false;
             // TODO : this should actually fail / throwException, disbaled for now because failing to much
-            // throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
+             throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
         }
 
         $file = $this->data[$query];

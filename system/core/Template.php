@@ -22,14 +22,14 @@ class Template extends Object
 
     private function getLayout()
     {
-        $layoutFile = $this->api('config')->paths->layouts . $this->name . ".php";
+        $layoutFile = api('config')->paths->layouts . $this->name . ".php";
         $layoutFile = is_file($layoutFile) ? $layoutFile : null;
         return $layoutFile;
     }
 
-    public function get($string)
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
             case 'fields':
                 return $this->getFields();
                 break;
@@ -40,7 +40,7 @@ class Template extends Object
                 return $this->getLayout();
                 break;
             default:
-                return parent::get($string);
+                return parent::get($name);
                 break;
         }
     }

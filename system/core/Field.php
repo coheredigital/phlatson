@@ -38,9 +38,9 @@ class Field extends Object
         }
     }
 
-    public function get($string)
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
             case 'fieldtype':
             case 'type':
                 return $this->type();
@@ -49,7 +49,7 @@ class Field extends Object
                 return api("templates")->get("field");
                 break;
             default:
-                return parent::get($string);
+                return parent::get($name);
                 break;
         }
     }

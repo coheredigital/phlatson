@@ -2,7 +2,7 @@
 
 /*
 
-Basic data array to access simple arrays like object and provide common funtionality in the api
+Basic data array to access simple arrays like object and provide common functionality in the api
 may not be needed long term, possible that Objects could extend from this to simplify the methods in
 Objects and allow natural fallbacks
 

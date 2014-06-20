@@ -30,9 +30,9 @@ class AdminPage extends Page
     }
 
 
-    public function get($string)
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
 //            case 'url':
 //                return $this->api('config')->urls->root . $this->api('config')->adminUrl . "/" . $this->directory;
             case 'extension':
@@ -42,7 +42,7 @@ class AdminPage extends Page
                 $file = $path . $this->getUnformatted("layout") . ".php";
                 return $file;
             default:
-                return parent::get($string);
+                return parent::get($name);
         }
     }
 

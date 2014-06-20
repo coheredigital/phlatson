@@ -31,14 +31,16 @@ abstract class Core
     // if $value provide, use as a "setter"
     public static function api($name = null, $object = null, $lock = false)
     {
-        // instantiate the registry if it doesnt yet exist
+        // instantiate the registry if it doesn't yet exist
         if (!isset(self::$registry)) {
             self::$registry = new Registry();
         }
+
         // return registry if no $name supplied
         if (is_null($name)) {
             return self::$registry;
         }
+
         // uses as getter if no object passed
         if (is_null($object)) {
             return self::$registry->get($name);

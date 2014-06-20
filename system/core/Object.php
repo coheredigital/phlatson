@@ -180,9 +180,14 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     }
 
 
-    public function get($string)
+    public function has($key){
+        return array_key_exists($key,$this->data);
+    }
+
+
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
             case 'name':
                 if(is_null($this->name)){
                     $lastRequestIndex = count($this->route) - 1;
@@ -209,7 +214,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             case 'className':
                 return $this->className();
             default:
-                return $this->getFormatted($string, $this->outputFormat);
+                return $this->getFormatted($name, $this->outputFormat);
                 break;
         }
     }
@@ -232,7 +237,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             default:
                 $this->data[$name] = $value;
                 // temp solution
-                $this->{$name} = $value;
+//                $this->{$name} = $value;
         }
     }
 

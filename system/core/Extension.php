@@ -30,16 +30,16 @@ abstract class Extension extends Object
     {
     }
 
-    public function get($string)
+    public function get($name)
     {
-        switch ($string) {
+        switch ($name) {
             case 'name':
             case 'directory':
                 return $this->get("className");
             case 'type':
                 return "Extension";
             default:
-                return parent::get($string);
+                return parent::get($name);
                 break;
         }
     }
