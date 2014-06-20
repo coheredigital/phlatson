@@ -10,8 +10,10 @@ class Pages extends Objects
     public function get($query)
     {
         $requests = explode("/", $query);
+        $requestRoot = normalizeDirectory($requests[0]);
+        $adminUrl = normalizeDirectory(api("config")->adminUrl);
         // if first segment is equal to configured adminUrl we return an AdminPage object
-        if ($requests[0] == api("config")->adminUrl) {
+        if ( $requestRoot == $adminUrl) {
             $this->singularName = "AdminPage";
         }
         else{

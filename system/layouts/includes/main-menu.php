@@ -2,7 +2,10 @@
 
 
     <?php foreach ($adminHome->children as $p): ?>
-        <?php $state = $p->url == $page->rootParent->url ? "active" : "" ?>
+        <?php
+        $rootParent = $page->rootParent;
+        $state = $p->url == $rootParent->url ? "active" : "";
+        ?>
         <a class="item <?php echo $state ?>"  href="<?php echo $p->url ?>"><?php echo $p->title ?></a>
     <?php endforeach ?>
 

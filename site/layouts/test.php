@@ -17,15 +17,12 @@
         endif;
 
 
-        $p = $pages->get("/");
-        var_dump($p);
+        $p = $pages->get("/about-us/blah");
+        var_dump($p->url);
 
-        $list = $pages->all();
+        $root = $p->rootParent;
+        var_dump($root->url);
 
-        foreach($list as $p){
-            echo "$p->title | $p->directory <br>";
-        }
-//        var_dump($list);
 
         ?>
 

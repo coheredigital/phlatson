@@ -23,6 +23,7 @@ class Extensions extends Objects
                 return $this->fieldtypes();
             default:
                 if ($this->has($name)) {
+                    $name = trim($name, "/"); // TODO : improve this so trim not needed
                     return new $name();
                 }
 

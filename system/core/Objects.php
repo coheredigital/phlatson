@@ -124,7 +124,9 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         if( !$query )  throw new Exception("Method: get() required parameter missing");
 
         if (!$this->has($query)) {
-             throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
+            return false;
+            // TODO : this should actually fail / throwException, disbaled for now because failing to much
+            // throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
         }
 
         $file = $this->data[$query];

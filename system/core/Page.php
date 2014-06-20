@@ -143,15 +143,13 @@ class Page extends Object
     public function rootParent()
     {
 
-        $name = $this->route[0];
+        $name = normalizeDirectory($this->route[1]);
 
         if ($name == $this->get("url")) {
             return $this;
-        } else if ($name) {
-            $page = new $this->className($name);
-            return $page;
         }
-        return false;
+        return api("pages")->get($name);
+
     }
 
     protected function createUrl($array)
@@ -170,7 +168,7 @@ class Page extends Object
                 $directory = trim(implode("/", $this->route), "/");
                 return normalizeDirectory($directory);
             case 'url':
-                return $this->api('config')->urls->root . $this->directory;
+                return api('config')->urls->root . ltrim($this->directory, "/");
                 break;
             case 'children':
                 return $this->children();
