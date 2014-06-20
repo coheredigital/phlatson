@@ -3,7 +3,7 @@
 class Templates extends Objects
 {
 
-    protected $root = "templates/";
+    protected $rootFolder = "templates/";
     protected $singularName = "Template";
 
 

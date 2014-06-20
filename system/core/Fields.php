@@ -4,7 +4,7 @@
 class Fields extends Objects
 {
 
-    protected $root = "fields/";
+    protected $rootFolder = "fields/";
     protected $singularName = "Field";
 
 }

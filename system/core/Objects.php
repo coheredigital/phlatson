@@ -7,15 +7,13 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     protected $count;
 
     // the folder within the site and system paths to check for items ex: fields, templates, etc
-    protected $root;
-    protected $checkSystem = true; // flag whether or not to load values from identical forlder in system directory (ex: false for users | true for fields | defaults to true)
+    protected $rootFolder;
+
     protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
-    protected $allowRootRequest = false;
+
     // used to identify the singular version of the represent an array
     // Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
     protected $singularName;
-
-
 
     final public function __construct()
     {
@@ -25,29 +23,24 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     // load available objects into $data array()
     protected function setupData()
     {
-        if ($this->root) {
 
-            $siteObjects = $this->getObjectList();
+        $objects = $this->getObjectList("system");
 
-            // get system items
-            if ($this->checkSystem) {
-
-                $systemObjects = $this->getObjectList("system");
-                if(is_array($systemObjects))
-                    $objects = array_merge($siteObjects, $this->getObjectList("system"));
-            }
-
-            return $objects;
-
+        $siteObjects = $this->getObjectList();
+        if(is_array($siteObjects)){
+            $objects = array_merge($objects, $siteObjects);
         }
 
-        return null;
+        return $objects;
+
     }
 
     // return a key => value array of valid object locations
-    public function getObjectList($root = "site", $dataFile = "data.json"){
+    public function getObjectList($root = "site"){
 
-        $path = realpath( $this->api('config')->paths->{$root} . $this->root );
+        $dataFile = "data.json";
+
+        $path = realpath( $this->api('config')->paths->{$root} . $this->rootFolder );
 
         if ( !$path ) return array();
 
@@ -55,25 +48,23 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($iterator as $item) {
-            // Note SELF_FIRST, so array keys are in place before values are pushed.
-            $itemPath = realpath($item->getPathName());
 
-            $itemParts = explode(DIRECTORY_SEPARATOR, $item);
-            $itemFilename = end($itemParts);
+            $itemPath = realpath($item->getPathName());
+            $itemFilename = $item->getFileName();
 
             if($itemFilename != $dataFile) continue;
 
             $directory = str_replace($path,"",$itemPath);
             $directory = str_replace($itemFilename,"",$directory);
             $directory = trim($directory,DIRECTORY_SEPARATOR);
+            $directory = normalizeDirectory($directory);
 
-
+            // add root items for pages to allow home selection
             $array["$directory"] = $itemPath;
 
         }
 
         return $array;
-
 
     }
 
@@ -127,13 +118,18 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     public function get($query)
     {
 
+        // normalize the query
+        $query = normalizeDirectory($query);
+
         if( !$query )  throw new Exception("Method: get() required parameter missing");
 
-        if (!$this->has($query) && !$this->allowRootRequest) {
+        if (!$this->has($query)) {
              throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
         }
 
-        $object = new $this->singularName($query);
+        $file = $this->data[$query];
+
+        $object = new $this->singularName($query, $file);
         if(!$object instanceof $this->singularName){
             throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
         }
@@ -142,6 +138,8 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     }
 
     public function has($key){
+
+        $key = normalizeDirectory($key);
         return array_key_exists($key, $this->data);
     }
 

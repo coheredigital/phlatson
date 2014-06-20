@@ -4,7 +4,7 @@ class Template extends Object
 {
 
     protected $fields;
-    protected $root = "templates/";
+    protected $rootFolder = "templates/";
 
     protected function getFields()
     {

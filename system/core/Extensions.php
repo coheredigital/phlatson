@@ -4,7 +4,7 @@
 class Extensions extends Objects
 {
 
-    protected $root = "extensions/";
+    protected $rootFolder = "extensions/";
     protected $singularName = "extension";
 
 
@@ -22,14 +22,13 @@ class Extensions extends Objects
             case 'fieldtypes':
                 return $this->fieldtypes();
             default:
-                if (!isset($this->data[$name]) && !$this->allowRootRequest) {
-                    return false;
+                if ($this->has($name)) {
+                    return new $name();
                 }
-                $object = new $name();
-                return $object;
+
         }
 
-
+//        return parent::get($name);
 
 
     }

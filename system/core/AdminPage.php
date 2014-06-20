@@ -13,18 +13,18 @@ class AdminPage extends Page
 {
 
     // define some protected variable to be used by all page objects
-    function __construct($url = false)
+    function __construct($directory, $file)
     {
 
-        parent::__construct($url);
+        parent::__construct($directory, $file);
 
-        $this->set("layout", $this->api('config')->paths->admin . "index.php");
+        $this->set("layout", $this->api('config')->paths->system . "index.php");
 
         if ($this->route[0] == $this->api('config')->adminUrl) {
             array_shift($this->route);
         }
 
-        $path = realpath($this->api('config')->paths->admin . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+        $path = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
         $this->setup($path);
 
     }
@@ -33,20 +33,16 @@ class AdminPage extends Page
     public function get($string)
     {
         switch ($string) {
-            case 'url':
-                return $this->api('config')->urls->root . $this->api('config')->adminUrl . "/" . $this->directory;
-                break;
+//            case 'url':
+//                return $this->api('config')->urls->root . $this->api('config')->adminUrl . "/" . $this->directory;
             case 'extension':
                 return $this->getExtension();
-                break;
             case 'layout':
-                $path = $this->api('config')->paths->admin . "layouts/";
-                $file = $this->getUnformatted("layout") . ".php";
-                return $path . $file;
-                break;
+                $path = $this->api('config')->paths->system . "layouts/";
+                $file = $path . $this->getUnformatted("layout") . ".php";
+                return $file;
             default:
                 return parent::get($string);
-                break;
         }
     }
 

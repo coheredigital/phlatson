@@ -4,7 +4,7 @@
 abstract class Extension extends Object
 {
 
-    protected $root = "extensions/";
+    protected $rootFolder = "extensions/";
 
     public function __construct()
     {

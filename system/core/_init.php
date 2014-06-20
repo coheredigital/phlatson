@@ -27,8 +27,10 @@ function setupConfig()
 
     // system directories
     $directories['system'] = 'system/';
-    $directories['admin'] = $directories['system'] . 'admin/';
     $directories['core'] = $directories['system'] . 'core/';
+    // system alternatives
+    $directories['systemPages'] = $directories['system'] . 'pages/';
+    $directories['systemLayouts'] = $directories['system'] . 'layouts/';
     $directories['systemFields'] = $directories['system'] . 'fields/';
     $directories['systemTemplates'] = $directories['system'] . 'templates/';
     $directories['systemExtensions'] = $directories['system'] . 'extensions/';

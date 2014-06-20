@@ -4,7 +4,7 @@
 class Users extends Objects
 {
 
-    protected $root = "users/";
+    protected $rootFolder = "users/";
     protected $singularName = "User";
 
 

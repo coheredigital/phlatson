@@ -17,9 +17,15 @@
         endif;
 
 
-        $list = $templates->getObjectList();
+        $p = $pages->get("/");
+        var_dump($p);
 
-        var_dump($list);
+        $list = $pages->all();
+
+        foreach($list as $p){
+            echo "$p->title | $p->directory <br>";
+        }
+//        var_dump($list);
 
         ?>
 

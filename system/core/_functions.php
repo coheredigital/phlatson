@@ -54,6 +54,25 @@ function unregister_GLOBALS()
     }
 }
 
+
+function normalizeUrl($url){
+    $url = str_replace("\\", "/", $url);
+    $url = trim($url, "/");
+    return $url;
+}
+
+function normalizeDirectory($directory){
+
+    $directory = normalizeUrl($directory);
+
+    if(substr( $directory, 0, 1 ) !== "/"){
+        $directory = "/" . $directory;
+    }
+
+    return $directory;
+}
+
+
 /**
  * A Compatibility library with PHP 5.5's simplified password hashing API.
  *

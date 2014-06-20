@@ -3,7 +3,7 @@
 class User extends Object
 {
 
-    protected $root = "users/";
+    protected $rootFolder = "users/";
 
     /**
      * is this the guest user?

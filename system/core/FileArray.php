@@ -15,8 +15,11 @@ class FileArray extends ObjectArray
 
             foreach($this->getFileList() as $file){
 
+                $file = $page->path . $file;
 
-                if(!getimagesize( $page->path . $file )){
+                if( !is_file($file ) ) return false;
+
+                if(!getimagesize( )){
                     $fileObject = new File( $this->page , $file );
                 }
                 else{

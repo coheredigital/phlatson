@@ -7,9 +7,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected $path;
     protected $data = array();
     protected $properties = array(
-        "system"    => true
+        "system" => true
     );
-    protected $root;
+    protected $rootFolder;
 
 
     protected $location = null; // whether found in site or system
@@ -20,25 +20,24 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected $defaultFields = array();
     protected $route = array();
 
-    function __construct($url = null)
+    function __construct($directory, $file = null)
     {
-        // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrival and the original string etc.
+        // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrieval and the original string etc.
         // default to using the name when no url parameter passed
-        if(!is_null($url)) {
-            $this->route = $this->getRoute($url);
-            $this->load();
+        if(!is_null($directory)) {
+            $this->route = $this->getRoute($directory);
+            $this->load($file);
         }
 
 
     }
 
-    protected function load()
+    protected function load($file = null)
     {
 
         // check site path first
-        $folder = api('config')->paths->site . $this->root . $this->directory;
-        $path = realpath($folder) . DIRECTORY_SEPARATOR;
-        $file = $path . Object::DATA_FILE;
+
+
 
         if (is_file($file)) {
             $this->location = "site/";
@@ -46,7 +45,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         }
         else {
             //  otherwise check for file in system
-            $folder = api('config')->paths->system . $this->root . $this->directory;
+            $folder = api('config')->paths->system . $this->rootFolder . $this->directory;
             $path = realpath($folder) . DIRECTORY_SEPARATOR;
             $file = $path . Object::DATA_FILE;
 
@@ -57,7 +56,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
         // setup data if we found a valid file (object)
         if (is_file($file)) {
-            $this->path = $path;
+            $this->path = realpath(str_replace(Object::DATA_FILE,"",$file));
             $this->data = json_decode(file_get_contents($file), true);
         }
 
@@ -185,14 +184,15 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
         switch ($string) {
             case 'name':
-            case 'directory':
                 if(is_null($this->name)){
                     $lastRequestIndex = count($this->route) - 1;
                     $this->name = $this->route[$lastRequestIndex];
                 }
                 return $this->name;
+            case 'directory':
+                return normalizeDirectory($this->name);
             case 'url':
-                return $this->api('config')->urls->root . $this->location . $this->root . $this->name . "/";
+                return $this->api('config')->urls->root . $this->location . $this->rootFolder . $this->name . "/";
                 break;
             case 'path':
                 return $this->path;
@@ -202,7 +202,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 break;
             case 'template':
                 $templateName = $this->getUnformatted("template");
-                $template = new Template($templateName);
+                $template = api("templates")->get($templateName);
                 $template->defaultFields = $this->defaultFields;
                 return $template;
             case 'class':

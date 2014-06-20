@@ -6,13 +6,13 @@ class Page extends Object
 
     protected $parent = null;
 
-    protected $root = "pages/";
+    protected $rootFolder = "pages/";
     protected $defaultFields = array("template","files");
 
     protected $filesArray;
     protected $imagesArray;
 
-    function __construct($url = null)
+    function __construct($directory, $file)
     {
         array_merge( $this->properties, array(
                 "published" => false,
@@ -28,7 +28,7 @@ class Page extends Object
         }
         $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
-        parent::__construct($url);
+        parent::__construct($directory, $file);
     }
 
 
@@ -36,8 +36,8 @@ class Page extends Object
     {
         // this all need work, its unclear what is happening
         if (is_null($path)) {
-            $sitePath = realpath($this->api('config')->paths->site . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
-            $systemPath = realpath($this->api('config')->paths->system . $this->root . $this->directory) . DIRECTORY_SEPARATOR;
+            $sitePath = realpath($this->api('config')->paths->site . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
+            $systemPath = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
 
             if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
                 $this->set("path", $sitePath);
@@ -83,29 +83,22 @@ class Page extends Object
             return;
         } // break out if no valid path
         // get all subfolder of current page path
+        // TODO: improve validation of existing Object, unless new, a path being none existing should throw an exception
 
-        $subs = glob($this->path . "*", GLOB_ONLYDIR);
-
+        $subs = glob($this->path . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR);
 
         $children = array();
         foreach ($subs as $folder) {
-            $folder = basename($folder);
-            $url = $this->get("directory") . "/" . $folder;
 
-            $path = $this->path . $folder . DIRECTORY_SEPARATOR;
-            $file = $path . Object::DATA_FILE;
-
-            // skip if no "dataFile" is found
-            if (!is_file($file)) {
-                continue;
-            }
+            $url = $this->get("directory") . "/" . basename($folder);
 
             // get an new of same class, useful for extending into AdminPage, etc
-            $page = new $this->className($url);
-
-            // pass the Page to $children array, use url as key to avoid duplicates
-            // should be imposible for any to items to return the same url
-            $children["$page->url"] = $page;
+            $page = api("pages")->get($url);
+            if( $page  ){
+                // pass the Page to $children array, use url as key to avoid duplicates
+                // should be imposible for any to items to return the same url
+                $children["$page->url"] = $page;
+            }
 
         }
         return $children;
@@ -120,13 +113,10 @@ class Page extends Object
 
             $url = $this->createUrl($requests);
 
-            if ($url) {
-                $parent = api("pages")->get($url);
-                $this->parent = $parent;
-            }
+            if (!$url) return false;
         }
 
-        return $this->parent;
+        return api("pages")->get($url);
 
     }
 
@@ -143,7 +133,7 @@ class Page extends Object
         }
 
         foreach ($urls as $url) {
-            $page = new $this->className($url);
+            $page = api("pages")->get($url);
             $parents[] = $page;
         }
 
@@ -178,7 +168,7 @@ class Page extends Object
         switch ($string) {
             case 'directory':
                 $directory = trim(implode("/", $this->route), "/");
-                return $directory;
+                return normalizeDirectory($directory);
             case 'url':
                 return $this->api('config')->urls->root . $this->directory;
                 break;
