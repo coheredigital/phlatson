@@ -14,8 +14,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     protected $location = null; // whether found in site or system
 
-    private $outputFormat = "output";
-
 
     protected $defaultFields = array();
     protected $route = array();
@@ -36,9 +34,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
 
         // check site path first
-
-
-
         if (is_file($file)) {
             $this->location = "site/";
             $this->defaultFlags["system"] = 0;
@@ -74,32 +69,18 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $array;
     }
 
-    protected function getFormatted($name, $type)
+    protected function getFormatted($name)
     {
-        // return null if data does not exist
-        if (!$this->data || !$this->data[$name]) {
-            return null;
-        }
 
-        // get raw value
-        $value = $this->data[$name];
-        if($type == "raw") return $value;
-
-
-        if ($value) {
+        // get raw value & continue if found
+        if ($value = $this->getUnformatted($name)) {
             // get the field object matching the passed "$name"
             $field = $this->api("fields")->get("$name");
-            if (is_object($field)) {
-                $fieldtype = $field->type;
-            }
-
-            if (is_object($fieldtype)) {
-                $value = $fieldtype->get($value, $type);
-            }
-
+            $value = $field->type->get($value, "output");
+            return $value;
         }
 
-        return $value;
+        return null;
     }
 
     /**
@@ -189,11 +170,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
         switch ($name) {
             case 'name':
-                if(is_null($this->name)){
-                    $lastRequestIndex = count($this->route) - 1;
-                    $this->name = $this->route[$lastRequestIndex];
-                }
-                return $this->name;
+                $lastRequestIndex = count($this->route) - 1;
+                $name = $this->route[$lastRequestIndex];
+                return $name;
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'url':
@@ -214,7 +193,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             case 'className':
                 return $this->className();
             default:
-                return $this->getFormatted($name, $this->outputFormat);
+                return $this->getFormatted($name);
                 break;
         }
     }

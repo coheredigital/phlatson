@@ -11,8 +11,13 @@ class Config extends Object
         // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrieval and the original string etc.
         // default to using the name when no url parameter passed
 
-        $this->load("C:\\xampp2\\htdocs\\xpages\\site\\config.json");
+        $this->styles = new SimpleArray();
+        $this->scripts = new SimpleArray();
+
         $this->setupDirectories();
+
+        $this->load("{$this->paths->site}config.json");
+
 
         /*
          * Output errors if debug true, else disable error reporting
@@ -45,7 +50,7 @@ class Config extends Object
     {
         if (is_file($file)) {
             $this->path = realpath(str_replace(Object::DATA_FILE,"",$file));
-            $this->data = json_decode(file_get_contents($file), true);
+            $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
         }
     }
 

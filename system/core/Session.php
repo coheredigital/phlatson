@@ -168,7 +168,7 @@ class Session extends Core implements IteratorAggregate
         if ($permanent) {
             header("HTTP/1.1 301 Moved Permanently");
         }
-        header("Location: $value");
+        header("Location: $url");
         header("Connection: close");
         exit(0);
     }

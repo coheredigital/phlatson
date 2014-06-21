@@ -188,12 +188,9 @@ class Page extends Object
             case 'images':
                 return $this->images();
                 break;
-
             case 'layout':
                 // alias for $page->template->layout for simplicity
-                $template = $this->get("template");
-                $layout = $template->get("layout");
-                return $layout ? (string)$layout : null;
+                return $this->template->layout;
                 break;
             default:
                 return parent::get($name);

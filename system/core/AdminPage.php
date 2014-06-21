@@ -20,9 +20,9 @@ class AdminPage extends Page
 
         $this->set("layout", $this->api('config')->paths->system . "index.php");
 
-        if ($this->route[0] == $this->api('config')->adminUrl) {
-            array_shift($this->route);
-        }
+//        if ($this->route[0] == $this->api('config')->adminUrl) {
+//            array_shift($this->route);
+//        }
 
         $path = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
         $this->setup($path);
@@ -33,14 +33,11 @@ class AdminPage extends Page
     public function get($name)
     {
         switch ($name) {
-//            case 'url':
-//                return $this->api('config')->urls->root . $this->api('config')->adminUrl . "/" . $this->directory;
             case 'extension':
                 return $this->getExtension();
             case 'layout':
-                $path = $this->api('config')->paths->system . "layouts/";
-                $file = $path . $this->getUnformatted("layout") . ".php";
-                return $file;
+
+                return $this->getUnformatted("layout");
             default:
                 return parent::get($name);
         }

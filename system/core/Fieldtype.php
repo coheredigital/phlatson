@@ -13,9 +13,7 @@ abstract class Fieldtype extends Extension
     protected $settings = array();
 
     final public function __construct(Field $field = null)
-{
-
-
+    {
         $this->attribute('class', 'field-input ' . $this->className);
         if ($field instanceof Field) {
             $this->field = $field;
@@ -32,25 +30,10 @@ abstract class Fieldtype extends Extension
      */
     final public function get($name, $type = null)
     {
-        switch ($type) {
-            case 'output':
-                return $this->getOutput($name);
-                break;
-            case 'raw':
-            case 'edit':
-                return $this->getEdit($name);
-                break;
-            case 'save':
-                return $this->getSave($name);
-                break;
-            case 'type':
-                return "Fieldtype";
-        }
 
         switch ($name) {
             case 'type':
                 return "Fieldtype";
-                break;
             case 'columns':
                 $columns = $this->getUnformatted("columns");
                 switch($columns){
@@ -80,15 +63,16 @@ abstract class Fieldtype extends Extension
                         return "one";
                 }
             default:
+                switch ($type) {
+                    case 'output':
+                        return $this->getOutput($name);
+                    case 'save':
+                        return $this->getSave($name);
+                }
                 return parent::get($name);
-                break;
         }
     }
 
-    protected function getEdit($value)
-    {
-        return (string)$value;
-    }
 
     protected function getOutput($value)
     {
