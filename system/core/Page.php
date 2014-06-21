@@ -32,38 +32,38 @@ class Page extends Object
     }
 
 
-    protected function setup($path = null)
-    {
-        // this all need work, its unclear what is happening
-        if (is_null($path)) {
-            $sitePath = realpath($this->api('config')->paths->site . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
-            $systemPath = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
-
-            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
-                $this->set("path", $sitePath);
-                $this->location = "site/";
-            } else {
-                if (is_file($systemPath . Object::DATA_FILE)) {
-                    $this->path = $systemPath;
-                    $this->location = "system/";
-                }
-            }
-        } else {
-
-            $path = realpath($path) . DIRECTORY_SEPARATOR;
-
-            if (is_file($path . Object::DATA_FILE)) {
-                $this->set("path" , $path);
-            }
-
-        }
-
-        $file = $this->path . Object::DATA_FILE;
-        if (is_file($file)) {
-
-            $this->data = json_decode(file_get_contents($file), true);
-        }
-    }
+//    protected function setup($path = null)
+//    {
+//        // this all need work, its unclear what is happening
+//        if (is_null($path)) {
+//            $sitePath = realpath($this->api('config')->paths->site . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
+//            $systemPath = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
+//
+//            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
+//                $this->set("path", $sitePath);
+//                $this->location = "site/";
+//            } else {
+//                if (is_file($systemPath . Object::DATA_FILE)) {
+//                    $this->path = $systemPath;
+//                    $this->location = "system/";
+//                }
+//            }
+//        } else {
+//
+//            $path = realpath($path) . DIRECTORY_SEPARATOR;
+//
+//            if (is_file($path . Object::DATA_FILE)) {
+//                $this->set("path" , $path);
+//            }
+//
+//        }
+//
+//        $file = $this->path . Object::DATA_FILE;
+//        if (is_file($file)) {
+//
+//            $this->data = json_decode(file_get_contents($file), true);
+//        }
+//    }
 
 
     public function files(){

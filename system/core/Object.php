@@ -18,7 +18,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected $defaultFields = array();
     protected $route = array();
 
-    function __construct($directory, $file = null)
+    function __construct($file = null, $directory = null)
     {
         // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrieval and the original string etc.
         // default to using the name when no url parameter passed
@@ -34,26 +34,10 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     {
 
         // check site path first
-        if (is_file($file)) {
-            $this->location = "site/";
-            $this->defaultFlags["system"] = 0;
-        }
-        else {
-            //  otherwise check for file in system
-            $folder = api('config')->paths->system . $this->rootFolder . $this->directory;
-            $path = realpath($folder) . DIRECTORY_SEPARATOR;
-            $file = $path . Object::DATA_FILE;
+        if (!is_file($file)) return false;
 
-            if (is_file($file)) {
-                $this->location = "system/";
-            }
-        }
-
-        // setup data if we found a valid file (object)
-        if (is_file($file)) {
-            $this->path = realpath(str_replace(Object::DATA_FILE,"",$file));
-            $this->data = json_decode(file_get_contents($file), true);
-        }
+        $this->path = realpath(str_replace(Object::DATA_FILE,"",$file));
+        $this->data = json_decode(file_get_contents($file), true);
 
     }
 
@@ -185,9 +169,11 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 return $this->route;
                 break;
             case 'template':
-                $templateName = $this->getUnformatted("template");
-                $template = api("templates")->get($templateName);
-                $template->defaultFields = $this->defaultFields;
+                $template = $this->getUnformatted("template");
+                if(!is_object($template)){
+                    $template = api("templates")->get($templateName);
+                    $template->defaultFields = $this->defaultFields;
+                }
                 return $template;
             case 'class':
             case 'className':
@@ -206,8 +192,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function set($name, $value)
     {
         switch($name){
-            case 'outputFormat':
-                $this->outputFormat = $value; // move this into a method to handle validating the set value against allowed options
+            // TODO: reevaluate, not sure I like the way the name is set as appossed to the object, I believe I did this for saving reasons
             case 'template':
                 if($value instanceof Template){
                     $this->data["template"] = $value->name;
@@ -215,8 +200,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 }
             default:
                 $this->data[$name] = $value;
-                // temp solution
-//                $this->{$name} = $value;
         }
     }
 

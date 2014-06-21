@@ -26,8 +26,8 @@ $config->scripts->add("{$config->urls->systemLayouts}scripts/semantic.min.js");
 // admin pages
 if ($output = $page->render()) {
 } else {
-    if(is_file($page->get('layout'))){
-        include $page->get('layout');
+    if(is_file($page->layout)){
+        include $page->layout;
     }
 }
 if( $user->isLoggedin() ){

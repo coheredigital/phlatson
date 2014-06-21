@@ -122,7 +122,6 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         // normalize the query
         $query = normalizeDirectory($query);
 
-        if( !$query )  throw new Exception("Method: get() required parameter missing");
 
         if (!$this->has($query)) {
 //            return false;
@@ -130,14 +129,18 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
              throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
         }
 
-        $file = $this->data[$query];
+        $file = $this->getFilename($query);
 
-        $object = new $this->singularName($query, $file);
+        $object = new $this->singularName($file, $query);
         if(!$object instanceof $this->singularName){
             throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
         }
         return $object;
 
+    }
+
+    protected function getFilename($key){
+        return $this->data[$key];
     }
 
     public function has($key){

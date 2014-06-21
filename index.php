@@ -12,7 +12,7 @@ require_once 'system/core/_interfaces.php';
 $config = new Config;
 
 // execute core init GET THIS PARTY STARTED!!!
-try {
+//try {
 
     Core::init($config);
 
@@ -27,10 +27,16 @@ try {
         throw new Exception("No valid page found (404?)");
     }
 
-    $layout = $page->layout;
-    if (is_file($layout)) include $layout;
+    if( $page instanceof AdminPage) {
+        $layoutFile = api('config')->paths->system . "index.php";
+    }
+    else{
+        $layoutFile = $page->layout;
+    }
 
-} catch (Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
-}
+    include $layoutFile;
+
+//} catch (Exception $e) {
+//    echo 'Caught exception: ', $e->getMessage(), "\n";
+//}
 

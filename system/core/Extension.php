@@ -9,7 +9,7 @@ abstract class Extension extends Object
     public function __construct()
     {
         $this->load(); // called manually because most object wont call load unless a URL paramter has been passed to __construct
-        parent::__construct(null);
+        parent::__construct();
 
 
         $this->setup();

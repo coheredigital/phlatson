@@ -13,45 +13,32 @@ class AdminPage extends Page
 {
 
     // define some protected variable to be used by all page objects
-    function __construct($directory, $file)
+    function __construct($file, $directory)
     {
 
-        parent::__construct($directory, $file);
+        parent::__construct($file, $directory);
 
-        $this->set("layout", $this->api('config')->paths->system . "index.php");
 
-//        if ($this->route[0] == $this->api('config')->adminUrl) {
-//            array_shift($this->route);
-//        }
+//        $template = new Template(); // create blank template
+//        $template->layout = $this->getUnformatted("layout");
+//        $this->template = $template;
 
-        $path = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
-        $this->setup($path);
 
     }
+
 
 
     public function get($name)
     {
         switch ($name) {
             case 'extension':
-                return $this->getExtension();
+                return api("extensions")->get($this->getUnformatted("extension"));
             case 'layout':
-
-                return $this->getUnformatted("layout");
+                return api("config")->paths->systemLayouts . $this->getUnformatted("layout") . ".php";
             default:
                 return parent::get($name);
         }
     }
-
-
-    protected function getExtension()
-    {
-        if ($this->getUnformatted("extension")) {
-            $extension = api("extensions")->get($this->getUnformatted("extension"));
-            return $extension;
-        }
-    }
-
 
     public function render()
     {
