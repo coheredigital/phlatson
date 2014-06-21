@@ -12,29 +12,16 @@ Used in the management of Admin Pages and layouts, uses some special feature and
 class AdminPage extends Page
 {
 
-    // define some protected variable to be used by all page objects
-    function __construct($file, $directory)
-    {
-
-        parent::__construct($file, $directory);
-
-
-//        $template = new Template(); // create blank template
-//        $template->layout = $this->getUnformatted("layout");
-//        $this->template = $template;
-
-
-    }
-
-
-
     public function get($name)
     {
         switch ($name) {
             case 'extension':
-                return api("extensions")->get($this->getUnformatted("extension"));
-            case 'layout':
-                return api("config")->paths->systemLayouts . $this->getUnformatted("layout") . ".php";
+                return api("extensions")->get( $this->getUnformatted("extension") );
+            case 'template':
+                $template = new AdminTemplate();
+                $template->layout = $this->getUnformatted("layout");
+                return $template;
+
             default:
                 return parent::get($name);
         }

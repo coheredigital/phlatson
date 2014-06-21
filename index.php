@@ -31,7 +31,7 @@ $config = new Config;
         $layoutFile = api('config')->paths->system . "index.php";
     }
     else{
-        $layoutFile = $page->layout;
+        $layoutFile = $page->template->layout;
     }
 
     include $layoutFile;

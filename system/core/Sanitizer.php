@@ -20,21 +20,5 @@ class Sanitizer extends Core
 
     }
 
-    public function directory($directory){
-
-        $directory = normalizeUrl($directory);
-
-        if(substr( $directory, 0, 1 ) !== "/"){
-            $directory = "/" . $directory;
-        }
-
-        return $directory;
-    }
-
-    public function url($url){
-        $url = str_replace("\\", "/", $url);
-        $url = trim($url, "/");
-        return $url;
-    }
 
 }

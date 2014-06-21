@@ -20,14 +20,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     function __construct($file = null, $directory = null)
     {
-        // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrieval and the original string etc.
-        // default to using the name when no url parameter passed
-        if(!is_null($directory)) {
-            $this->route = $this->getRoute($directory);
-            $this->load($file);
-        }
-
-
+        if(!is_null($directory)) $this->route = $this->getRoute($directory);
+        $this->load($file);
     }
 
     protected function load($file = null)
@@ -171,7 +165,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             case 'template':
                 $template = $this->getUnformatted("template");
                 if(!is_object($template)){
-                    $template = api("templates")->get($templateName);
+                    $template = api("templates")->get($template);
                     $template->defaultFields = $this->defaultFields;
                 }
                 return $template;

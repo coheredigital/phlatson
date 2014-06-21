@@ -20,7 +20,6 @@ class Template extends Object
         return $this->fields;
     }
 
-
     public function get($name)
     {
         switch ($name) {
