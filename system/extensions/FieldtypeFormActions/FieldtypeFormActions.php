@@ -5,7 +5,7 @@ class FieldtypeFormActions extends Fieldtype
 
     public $dataObject;
 
-    protected function addStyles()
+    protected function setup()
     {
         api('config')->styles->add($this->url . "{$this->className}.css");
     }

@@ -3,13 +3,9 @@
 class FieldtypeDateTime extends Fieldtype
 {
 
-    protected function addStyles()
+    protected function setup()
     {
         api('config')->styles->add($this->url . "/datetimepicker/datetimepicker.css");
-    }
-
-    protected function addScripts()
-    {
         api('config')->scripts->add($this->url . "/datetimepicker/datetimepicker.js");
         api('config')->scripts->add($this->url . "/$this->className.js");
     }

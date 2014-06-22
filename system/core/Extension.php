@@ -6,7 +6,7 @@ abstract class Extension extends Object
 
     protected $rootFolder = "extensions/";
 
-    final public function __construct($file)
+    public function __construct($file)
     {
         parent::__construct($file);
         $this->setup();

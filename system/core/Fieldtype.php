@@ -7,6 +7,17 @@ abstract class Fieldtype extends Extension
     protected $field;
     public $value;
 
+    final public function __construct($file)
+    {
+
+
+        $this->attribute('class', 'field-input ' . $this->className);
+        if ($field instanceof Field) {
+            $this->field = $field;
+        }
+        parent::__construct($file);
+    }
+
     /**
      * alias for the three available formatting methods,
      * allows passing of type, can auto determing required method
@@ -37,14 +48,10 @@ abstract class Fieldtype extends Extension
         return (string)$value;
     }
 
-    /**
-     * getSave() should return type DomElement
-     */
+
     public function getSave($value)
     {
-
         return $value;
-
     }
 
     public function setField(Field $field)
@@ -65,7 +72,7 @@ abstract class Fieldtype extends Extension
 
         $input = $this->renderInput();
 
-        $output = "<div class='column $this->columns wide'>";
+        $output = "<div class='column wide'>";
         $output .= "<div class='field'>";
         if ($this->label) {
 

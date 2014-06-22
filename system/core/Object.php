@@ -153,7 +153,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 return normalizeDirectory($this->name);
             case 'location':
                 // we assume site location if system path not found because new Object can only be added to site and not system
-                if( strpos($this->file, api("config")->paths->system) ){
+                if( strpos($this->file, api("config")->paths->system) !== false){
                     return "system";
                 }
                 else{

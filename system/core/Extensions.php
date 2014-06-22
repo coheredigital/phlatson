@@ -22,15 +22,14 @@ class Extensions extends Objects
             case 'fieldtypes':
                 return $this->fieldtypes();
             default:
-                if ($this->has($name)) {
-                    $file = $this->getFilename($name);
-                    $extension = new $name($file);
-                    return $extension;
-                }
+                if ( !$this->has($name)) return false;
+
+                $file = $this->getFilename($name);
+                $extension = new $name($file);
+                return $extension;
+
 
         }
-
-
 
 
     }

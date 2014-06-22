@@ -5,13 +5,9 @@ class FieldtypeFields extends Fieldtype
 
     private $template;
 
-    protected function addStyles()
+    protected function setup()
     {
         api('config')->styles->add($this->url . "{$this->className}.css");
-    }
-
-    protected function addScripts()
-    {
         api('config')->scripts->add($this->url . "shapeshifter/shapeshifter.js");
         api('config')->scripts->add($this->url . "{$this->className}.js");
     }
