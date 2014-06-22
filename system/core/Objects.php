@@ -136,7 +136,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     }
 
     protected function getFilename($key){
-        return $this->data[$key];
+        return $this->data["$key"];
     }
 
     public function has($key){
