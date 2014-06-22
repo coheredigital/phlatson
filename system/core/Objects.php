@@ -19,7 +19,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     {
         // manually add the special case of the home page
         if ($this instanceof Pages) {
-            $this->data['/'] = api("config")->paths->pages . "data.json";
+            $this->data['/'] = new Page(api("config")->paths->pages . "data.json", "/");
         }
 //        $this->getObjectList();
     }
@@ -82,7 +82,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
     }
 
-    protected function getItem( $query){
+    protected function getItem( $query ){
 
 
         $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
@@ -97,7 +97,21 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         }
 
         $file = $path . "data.json";
-        if(is_file($file)) $this->data[$query] = $file;
+        if(is_file($file)){
+
+            if ( $this instanceof Extensions ) {
+                $object = new $query($file);
+            }
+            else {
+                $object = new $this->singularName($file, $query);
+            }
+
+            if(!$object instanceof $this->singularName){
+                throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
+            }
+
+            $this->data[$query] = $object;
+        }
 
     }
 
@@ -171,17 +185,13 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
             if(!$this->has($query)) return false; // return false if item still does not exist
         }
 
-        $file = $this->getFilename($query);
+        return $this->getObject($query);
 
-        $object = new $this->singularName($file, $query);
-        if(!$object instanceof $this->singularName){
-            throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
-        }
-        return $object;
+
 
     }
 
-    protected function getFilename($key){
+    protected function getObject($key){
         return $this->data["$key"];
     }
 

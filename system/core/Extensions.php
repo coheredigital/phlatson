@@ -25,7 +25,7 @@ class Extensions extends Objects
                 $this->getItem($name);
                 if ( !$this->has($name)) return false;
 
-                $file = $this->getFilename($name);
+                $file = $this->getObject($name);
                 $extension = new $name($file);
                 return $extension;
 
