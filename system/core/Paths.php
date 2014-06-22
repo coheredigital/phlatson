@@ -51,7 +51,6 @@ class Paths extends SimpleArray
                 return false;
             } // only allow root value to be overwritten when already set
             $value = $this->normalizeSeparators($value);
-            // if (is_dir($value)) $value = realpath($value);
             $this->data[$name] = $value;
         }
 

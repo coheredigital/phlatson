@@ -27,6 +27,19 @@ class AdminPage extends Page
         }
     }
 
+    public function rootParent()
+    {
+
+        $directory = $this->route[0] . "/" . $this->route[1];
+
+        if ($directory == $this->get("url")) {
+            return $this;
+        }
+        return api("pages")->get($directory);
+
+    }
+
+
     public function render()
     {
         if ($this->getUnformatted("extension")) {
@@ -34,6 +47,8 @@ class AdminPage extends Page
         }
         return false;
     }
+
+
 
 }
 

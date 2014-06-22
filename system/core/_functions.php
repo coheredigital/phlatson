@@ -58,11 +58,18 @@ function normalizeDirectory($directory){
 
     $directory = normalizeUrl($directory);
 
-    if(substr( $directory, 0, 1 ) !== "/"){
-        $directory = "/" . $directory;
+    if( strlen($directory) === 0 ){
+        $directory = "/";
     }
 
     return $directory;
+}
+
+function normalizePath($path){
+    $path = realpath($path);
+    $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
+    $path = is_file($path) ? $path : $path . "/";
+    return $path;
 }
 
 

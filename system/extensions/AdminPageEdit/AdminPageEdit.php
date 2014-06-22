@@ -40,10 +40,6 @@ class AdminPageEdit extends Extension
 
     }
 
-    public function setNew()
-    {
-        $this->new = true;
-    }
 
     protected function addSettingsFields()
     {

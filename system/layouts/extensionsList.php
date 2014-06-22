@@ -11,13 +11,16 @@ $table->setColumns(
     )
 );
 
-foreach ($extensionsList as $item) {
+foreach ($extensionsList as $name) {
+
+    $extension = $extensions->get($name);
+
     $table->addRow(
         array(
-            "title" => $item->title,
-            "type" => $item->type,
-            "description" => $item->description,
-            "version" => $item->version
+            "title" => $extension->title,
+            "type" => $extension->type,
+            "description" => $extension->description,
+            "version" => $extension->version
         )
     );
 }

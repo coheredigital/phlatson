@@ -1,12 +1,11 @@
 <?php
 
-define("XPAGES", true);
-define('ROOT_PATH', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
-
-
 require_once 'system/core/_autoload.php';
 require_once 'system/core/_functions.php';
 require_once 'system/core/_interfaces.php';
+
+define("XPAGES", true);
+define('ROOT_PATH', normalizePath(dirname(__FILE__)));
 
 
 $config = new Config;

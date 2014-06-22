@@ -3,17 +3,12 @@
 abstract class Object extends Core implements Countable, IteratorAggregate
 {
     const DATA_FILE = "data.json";
-
-    protected $path;
-    protected $data = array();
-    protected $properties = array(
-        "system" => true
-    );
     protected $rootFolder;
 
+    protected $path;
+    protected $file;
 
-    protected $location = null; // whether found in site or system
-
+    protected $data = array();
 
     protected $defaultFields = array();
     protected $route = array();
@@ -24,13 +19,14 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         $this->load($file);
     }
 
-    protected function load($file = null)
+    protected function load($file)
     {
 
         // check site path first
         if (!is_file($file)) return false;
 
-        $this->path = realpath(str_replace(Object::DATA_FILE,"",$file));
+        $this->file = $file;
+        $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
         $this->data = json_decode(file_get_contents($file), true);
 
     }
@@ -42,7 +38,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         if (strpos($url, "/") !== false) {
             $array = explode("/", $url);
         } else {
-            $array[0] = $url;
+            $array[] = $url;
         }
         return $array;
     }
@@ -50,15 +46,17 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     protected function getFormatted($name)
     {
 
-        // get raw value & continue if found
-        if ($value = $this->getUnformatted($name)) {
-            // get the field object matching the passed "$name"
-            $field = $this->api("fields")->get("$name");
-            $value = $field->type->get($value, "output");
-            return $value;
+        // get raw value
+        $value = $this->getUnformatted($name);
+
+        // get the field object matching the passed "$name"
+        if ( $field = $this->api("fields")->get($name) ){
+            $fieldtype = $field->type;
+            $value = $fieldtype->get($value, "output");
         }
 
-        return null;
+
+        return $value;
     }
 
     /**
@@ -153,15 +151,20 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 return $name;
             case 'directory':
                 return normalizeDirectory($this->name);
+            case 'location':
+                // we assume site location if system path not found because new Object can only be added to site and not system
+                if( strpos($this->file, api("config")->paths->system) ){
+                    return "system";
+                }
+                else{
+                    return "site";
+                }
             case 'url':
-                return $this->api('config')->urls->root . $this->location . $this->rootFolder . $this->name . "/";
-                break;
+                return $this->api('config')->urls->root . $this->location . "/" . $this->rootFolder . $this->name . "/";
             case 'path':
                 return $this->path;
-                break;
             case 'requests':
                 return $this->route;
-                break;
             case 'template':
                 $template = $this->getUnformatted("template");
                 if(!is_object($template)){
@@ -174,7 +177,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 return $this->className();
             default:
                 return $this->getFormatted($name);
-                break;
         }
     }
 

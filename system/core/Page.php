@@ -12,14 +12,8 @@ class Page extends Object
     protected $filesArray;
     protected $imagesArray;
 
-    function __construct($directory, $file)
+    function __construct($file, $directory)
     {
-        array_merge( $this->properties, array(
-                "published" => false,
-                "locked"    => false,
-                "system"    => true
-         ));
-
 
         $defaultFields = array();
         foreach ($this->defaultFields as $fieldName) {
@@ -28,42 +22,8 @@ class Page extends Object
         }
         $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
-        parent::__construct($directory, $file);
+        parent::__construct($file, $directory);
     }
-
-
-//    protected function setup($path = null)
-//    {
-//        // this all need work, its unclear what is happening
-//        if (is_null($path)) {
-//            $sitePath = realpath($this->api('config')->paths->site . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
-//            $systemPath = realpath($this->api('config')->paths->system . $this->rootFolder . $this->directory) . DIRECTORY_SEPARATOR;
-//
-//            if (is_file($sitePath . Object::DATA_FILE)) { // check site path first
-//                $this->set("path", $sitePath);
-//                $this->location = "site/";
-//            } else {
-//                if (is_file($systemPath . Object::DATA_FILE)) {
-//                    $this->path = $systemPath;
-//                    $this->location = "system/";
-//                }
-//            }
-//        } else {
-//
-//            $path = realpath($path) . DIRECTORY_SEPARATOR;
-//
-//            if (is_file($path . Object::DATA_FILE)) {
-//                $this->set("path" , $path);
-//            }
-//
-//        }
-//
-//        $file = $this->path . Object::DATA_FILE;
-//        if (is_file($file)) {
-//
-//            $this->data = json_decode(file_get_contents($file), true);
-//        }
-//    }
 
 
     public function files(){
@@ -73,8 +33,6 @@ class Page extends Object
     protected function images(){
         return new ImageArray($this);
     }
-
-
 
     public function children()
     {
@@ -96,7 +54,7 @@ class Page extends Object
             $page = api("pages")->get($url);
             if( $page  ){
                 // pass the Page to $children array, use url as key to avoid duplicates
-                // should be imposible for any to items to return the same url
+                // should be impossible for any to items to return the same url
                 $children["$page->url"] = $page;
             }
 
@@ -143,7 +101,7 @@ class Page extends Object
     public function rootParent()
     {
 
-        $name = normalizeDirectory($this->route[1]);
+        $name = $this->route[0];
 
         if ($name == $this->get("url")) {
             return $this;

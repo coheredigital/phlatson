@@ -49,7 +49,7 @@ class Config extends Object
     protected function load($file)
     {
         if (is_file($file)) {
-            $this->path = realpath(str_replace(Object::DATA_FILE,"",$file));
+            $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
             $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
         }
     }

@@ -5,21 +5,7 @@ abstract class Fieldtype extends Extension
     protected $attributes = array();
 
     protected $field;
-    public $label;
     public $value;
-
-    // contains defaults settings and there defaults values
-    // can be extended by other Fieldtypes
-    protected $settings = array();
-
-    final public function __construct(Field $field = null)
-    {
-        $this->attribute('class', 'field-input ' . $this->className);
-        if ($field instanceof Field) {
-            $this->field = $field;
-        }
-         parent::__construct();
-    }
 
     /**
      * alias for the three available formatting methods,
@@ -34,34 +20,6 @@ abstract class Fieldtype extends Extension
         switch ($name) {
             case 'type':
                 return "Fieldtype";
-            case 'columns':
-                $columns = $this->getUnformatted("columns");
-                switch($columns){
-                    case 12:
-                        return "twelve";
-                    case 11:
-                        return "eleven";
-                    case 10:
-                        return "ten";
-                    case 9:
-                        return "nine";
-                    case 8:
-                        return "eight";
-                    case 7:
-                        return "seven";
-                    case 6:
-                        return "six";
-                    case 5:
-                        return "fix";
-                    case 4:
-                        return "four";
-                    case 3:
-                        return "three";
-                    case 2:
-                        return "two";
-                    case 1:
-                        return "one";
-                }
             default:
                 switch ($type) {
                     case 'output':
@@ -88,7 +46,6 @@ abstract class Fieldtype extends Extension
         return $value;
 
     }
-
 
     public function setField(Field $field)
     {

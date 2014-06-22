@@ -6,27 +6,13 @@ abstract class Extension extends Object
 
     protected $rootFolder = "extensions/";
 
-    public function __construct()
+    final public function __construct($file)
     {
-        $this->load(); // called manually because most object wont call load unless a URL paramter has been passed to __construct
-        parent::__construct();
-
-
+        parent::__construct($file);
         $this->setup();
-
     }
 
     protected function setup()
-    {
-        $this->addStyles();
-        $this->addScripts();
-    }
-
-    protected function addStyles()
-    {
-    }
-
-    protected function addScripts()
     {
     }
 
@@ -43,5 +29,6 @@ abstract class Extension extends Object
                 break;
         }
     }
+
 
 }

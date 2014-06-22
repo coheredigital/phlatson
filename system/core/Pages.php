@@ -9,11 +9,10 @@ class Pages extends Objects
 
     public function get($query)
     {
-        $requests = explode("/", $query);
-        $requestRoot = normalizeDirectory($requests[0]);
-        $adminUrl = normalizeDirectory(api("config")->adminUrl);
+
+
         // if first segment is equal to configured adminUrl we return an AdminPage object
-        if ( $requestRoot == $adminUrl) {
+        if ( $this->isAdminRequest($query)) {
             $this->singularName = "AdminPage";
         }
         else{
@@ -21,6 +20,14 @@ class Pages extends Objects
         }
 
         return parent::get($query);
+    }
+
+    protected function isAdminRequest($query){
+        $requests = explode("/", $query);
+        $requestRoot = normalizeDirectory($requests[0]);
+        $adminUrl = normalizeDirectory(api("config")->adminUrl);
+
+        return $requestRoot == $adminUrl;
     }
 
 }

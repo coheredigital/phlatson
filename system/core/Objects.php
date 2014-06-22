@@ -41,7 +41,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         $dataFile = "data.json";
 
         $path = $this->api('config')->paths->{$root} . $this->rootFolder;
-        $path = realpath( $path );
+        $path = normalizePath( $path );
 
         if ( !$path ) return array();
 
@@ -50,12 +50,13 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
         foreach ($iterator as $item) {
 
-            $itemPath = realpath($item->getPathName());
+            $itemPath = $item->getPathName();
+            $itemPath = normalizePath($itemPath);
             $itemFilename = $item->getFileName();
 
             if($itemFilename != $dataFile) continue;
 
-            $directory = str_replace($path,"",$itemPath);
+            $directory = str_replace($path, "", $itemPath);
             $directory = str_replace($itemFilename,"",$directory);
             $directory = trim($directory,DIRECTORY_SEPARATOR);
             $directory = normalizeDirectory($directory);
@@ -119,15 +120,10 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     public function get($query)
     {
 
-        // normalize the query
+        // normalize the query to avoid error in the case of a page request that might get passed as ( /about-us/staff ) but should be ( about-us/staff )
         $query = normalizeDirectory($query);
 
-
-        if (!$this->has($query)) {
-//            return false;
-            // TODO : this should actually fail / throwException, disbaled for now because failing to much
-             throw new Exception("{$this->singularName} ('{$query}') does not exist in {$this}");
-        }
+        if (!$this->has($query)) return false;
 
         $file = $this->getFilename($query);
 

@@ -18,7 +18,7 @@ class Field extends Object
     {
         if ($this->getUnformatted("fieldtype")) {
             $name = (string) $this->getUnformatted("fieldtype");
-            return new $name($this);
+            return api("extensions")->get($name);
         }
         return null;
     }
