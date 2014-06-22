@@ -17,22 +17,12 @@ class Extensions extends Objects
 
     public function get($name)
     {
-
         switch ($name){
             case 'fieldtypes':
                 return $this->fieldtypes();
             default:
-                $this->getItem($name);
-                if ( !$this->has($name)) return false;
-
-                $file = $this->getObject($name);
-                $extension = new $name($file);
-                return $extension;
-
-
+                return parent::get($name);
         }
-
-
     }
 
 }

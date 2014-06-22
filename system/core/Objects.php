@@ -21,7 +21,7 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         if ($this instanceof Pages) {
             $this->data['/'] = new Page(api("config")->paths->pages . "data.json", "/");
         }
-//        $this->getObjectList();
+
     }
 
     // load available objects into $data array()
@@ -62,58 +62,9 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
         closedir($dir);
 
-//        foreach ($iterator as $item) {
-//
-//            $itemPath = $item->getPathName();
-//            $itemPath = normalizePath($itemPath);
-//            $itemFilename = $item->getFileName();
-//
-//            if($itemFilename != "data.json") continue;
-//
-//            $directory = str_replace($root, "", $itemPath);
-//            $directory = str_replace($itemFilename,"",$directory);
-//            $directory = trim($directory,DIRECTORY_SEPARATOR);
-//            $directory = normalizeDirectory($directory);
-//
-//            // add root items for pages to allow home selection
-//            $this->data["$directory"] = $itemPath;
-//
-//        }
 
     }
 
-    protected function getItem( $query ){
-
-
-        $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
-        $path = normalizePath( $root . $query );
-
-        if( !$this->isValidPath( $path ) ){
-            $root = normalizePath( $this->api('config')->paths->system . $this->rootFolder );
-            $path = normalizePath( $root . $query );
-
-            if( !$this->isValidPath( $path ) ) return false;
-
-        }
-
-        $file = $path . "data.json";
-        if(is_file($file)){
-
-            if ( $this instanceof Extensions ) {
-                $object = new $query($file);
-            }
-            else {
-                $object = new $this->singularName($file, $query);
-            }
-
-            if(!$object instanceof $this->singularName){
-                throw new Exception("Failed to retrieve valid object subclass : {$this->singularName} : request - $query");
-            }
-
-            $this->data[$query] = $object;
-        }
-
-    }
 
 
     public function __set($key, $value)
@@ -176,23 +127,39 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
     public function get($query)
     {
-
         // normalize the query to avoid error in the case of a page request that might get passed as ( /about-us/staff ) but should be ( about-us/staff )
         $query = normalizeDirectory($query);
-
-        if (!$this->has($query)) { // object not found in cached items array
-            $this->getItem($query); // try to find it and its siblings
-            if(!$this->has($query)) return false; // return false if item still does not exist
-        }
-
         return $this->getObject($query);
-
-
-
     }
 
     protected function getObject($key){
-        return $this->data["$key"];
+
+        if ( isset($this->data[$key]) ) return $this->data[$key];
+
+        $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
+        $path = normalizePath( $root . $key );
+
+        if( !$this->isValidPath( $path ) ){
+            $root = normalizePath( $this->api('config')->paths->system . $this->rootFolder );
+            $path = normalizePath( $root . $key );
+
+            if( !$this->isValidPath( $path ) ) return false;
+        }
+
+        $file = $path . "data.json";
+        if(is_file($file)){
+
+            if ( $this instanceof Extensions ) {
+                $object = new $key($file);
+            }
+            else {
+                $object = new $this->singularName($file, $key);
+                $this->data[$key] = $object; // we don't add extensions so we can make multiple instances
+            }
+
+            return $object;
+        }
+
     }
 
     public function has($key){

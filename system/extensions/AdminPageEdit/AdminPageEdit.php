@@ -4,10 +4,7 @@ class AdminPageEdit extends Extension
 {
     protected $title;
     protected $form;
-    protected $page;
-    protected $template;
-
-    protected $new = false;
+    protected $object;
 
     public function setup()
     {
@@ -15,26 +12,23 @@ class AdminPageEdit extends Extension
         $this->form = api("extensions")->get("MarkupEditForm");
 
         if(!api("input")->get->new){
-            $this->page = api("pages")->get(api("input")->get->name);
-            $this->template = $this->page->template;
-            $this->title = $this->page->title;
+            $this->object = api("pages")->get(api("input")->get->name);
+            $this->template = $this->object->template;
+            $this->title = $this->object->title;
         }
         else{
-            $this->page = new Page;
-            $this->page->template = api("templates")->get(api("input")->get->template);
+            $this->object = new Page;
 
             // set parent from get parameter
             $parentUrl = api("input")->get->parent;
-            $this->page->parent = api("pages")->get($parentUrl); // TODO reevaluate, I shouldn't need to actually retrieve this object. maybe just verify its valid, not sure
-
-            $this->template = $this->page->template;
+            $this->object->parent = api("pages")->get($parentUrl); // TODO reevaluate, I shouldn't need to actually retrieve this object. maybe just verify its valid, not sure
             $this->title = "New Page";
         }
 
 
         // process save
         if (count(api("input")->post)) {
-            $this->page->save(api("input")->post);
+            $this->object->save(api("input")->post);
             api("session")->redirect(api("input")->query);
         }
 
@@ -68,7 +62,7 @@ class AdminPageEdit extends Extension
         $field = api("fields")->get("template");
 
         $fieldtype = $field->type;
-        $fieldtype->setPage($this->page);
+        $fieldtype->setPage($this->object);
         return $fieldtype;
     }
 
@@ -77,7 +71,7 @@ class AdminPageEdit extends Extension
 
         $field = api("fields")->get("parent");
 
-        $value = $this->page->parent->directory;
+        $value = $this->object->parent->directory;
 
         $fieldtype = $field->type;
         $fieldtype->label = "Parent";
@@ -91,7 +85,7 @@ class AdminPageEdit extends Extension
     protected function getFieldFiles()
     {
 
-        $value = $this->page->files();
+        $value = $this->object->files();
 
         $selectOptions = array();
         $templates = api("templates")->all();
@@ -118,11 +112,11 @@ class AdminPageEdit extends Extension
         foreach ($fields as $field) {
             $fieldtype = $field->type;
             $fieldtype->label = $field->label;
-            $fieldtype->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
+            // $fieldtype->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
 
-            if (!is_null($this->page)) {
+            if (!is_null($this->object)) {
                 $name = $field->get("name");
-                $fieldtype->value = $this->page->getUnformatted($name);
+                $fieldtype->value = $this->object->getUnformatted($name);
                 $fieldtype->attribute("name", $name);
                 $fieldset->add($fieldtype);
             }
@@ -141,7 +135,7 @@ class AdminPageEdit extends Extension
         $this->addDefaultFields();
 
         $submitButtons = api("extensions")->get("FieldtypeFormActions");
-        $submitButtons->dataObject = $this->page;
+        $submitButtons->dataObject = $this->object;
         $submitButtonsGroup = api("extensions")->get("MarkupFieldset");
         $submitButtonsGroup->add($submitButtons);
 

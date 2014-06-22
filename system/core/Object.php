@@ -168,10 +168,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                 return $this->route;
             case 'template':
                 $template = $this->getUnformatted("template");
-                if(!is_object($template)){
-                    $template = api("templates")->get($template);
-                    $template->defaultFields = $this->defaultFields;
-                }
+                $template = api("templates")->get($template);
                 return $template;
             case 'class':
             case 'className':
