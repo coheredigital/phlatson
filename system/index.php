@@ -1,5 +1,7 @@
 <?php
 
+
+
 if ($input->get->logout == 1) {
     $session->logout();
     $session->redirect($config->urls->root . $config->adminUrl);

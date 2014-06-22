@@ -39,9 +39,11 @@ class Page extends Object
 
         if ($this->path === null) {
             return;
-        } // break out if no valid path
+        }
+        // break out if no valid path
         // get all subfolder of current page path
         // TODO: improve validation of existing Object, unless new, a path being none existing should throw an exception
+
 
         $subs = glob($this->path . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR);
 
@@ -52,10 +54,10 @@ class Page extends Object
 
             // get an new of same class, useful for extending into AdminPage, etc
             $page = api("pages")->get($url);
-            if( $page  ){
+            if( $page instanceof Page ){
                 // pass the Page to $children array, use url as key to avoid duplicates
                 // should be impossible for any to items to return the same url
-                $children["$page->url"] = $page;
+                $children["$page->directory"] = $page;
             }
 
         }

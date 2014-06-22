@@ -21,7 +21,7 @@ $config = new Config;
         }
     }
 
-    $page = api("pages")->get( api("input")->url );
+    $page = $pages->get( $input->url );
     if(!$page instanceof Page){
         throw new Exception("No valid page found (404?)");
     }

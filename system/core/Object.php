@@ -50,8 +50,9 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        if ( $field = $this->api("fields")->get($name) ){
-            $fieldtype = $field->type;
+        $field = api("fields")->get($name);
+        if ( $field ){
+            $fieldtype = $field->type();
             $value = $fieldtype->get($value, "output");
         }
 

@@ -22,6 +22,7 @@ class Extensions extends Objects
             case 'fieldtypes':
                 return $this->fieldtypes();
             default:
+                $this->getItem($name);
                 if ( !$this->has($name)) return false;
 
                 $file = $this->getFilename($name);

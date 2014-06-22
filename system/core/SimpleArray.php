@@ -14,12 +14,22 @@ class SimpleArray extends Core implements IteratorAggregate
     protected $data = array();
 
 
-    public function add($filename)
+    public function add($name)
     {
-        $key = $this->getKey($filename);
-        $this->data[$key] = $filename;
+        $key = $this->getKey($name);
+        $this->data[$key] = $name;
         return $this;
     }
+
+    public function import($array = null)
+    {
+
+        if(is_array($array)) {
+            array_merge($this->data, $array);
+        }
+        return $this;
+    }
+
 
     protected function getKey($filename)
     {
