@@ -13,17 +13,17 @@ class FileArray extends ObjectArray
 
         if($fileList){
 
-            foreach($this->getFileList() as $file){
+            foreach($this->getFileList() as $filename){
 
-                $file = $page->path . $file;
+                $file = $page->path . $filename;
 
-                if( !is_file($file ) ) return false;
+                if( !is_file( $file ) ) return false;
 
-                if(!getimagesize( )){
-                    $fileObject = new File( $this->page , $file );
+                if(!getimagesize( $file )){
+                    $fileObject = new File( $this->page , $filename );
                 }
                 else{
-                    $fileObject = new Image( $this->page , $file );
+                    $fileObject = new Image( $this->page , $filename );
                 }
 
                 if($fileObject){
