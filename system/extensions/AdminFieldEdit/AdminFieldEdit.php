@@ -8,9 +8,8 @@ class AdminFieldEdit extends AdminPageEdit
         parent::setup();
 
         if( $name = api("input")->get->name ){
-            $this->page = api("fields")->get($name);
-            $this->template = $this->page->template;
-            $this->title = $this->page->label;
+            $this->object = api("fields")->get($name);
+            $this->title = $this->object->label;
         }
 
 
@@ -26,7 +25,7 @@ class AdminFieldEdit extends AdminPageEdit
         $this->addDefaultFields();
 
         $submitButtons = api("extensions")->get("FieldtypeFormActions");
-        $submitButtons->dataObject = $this->page;
+        $submitButtons->dataObject = $this->object;
         $submitButtonsGroup = api("extensions")->get("MarkupFieldset");
         $submitButtonsGroup->add($submitButtons);
 

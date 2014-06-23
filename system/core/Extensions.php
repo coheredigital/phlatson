@@ -9,7 +9,7 @@ class Extensions extends Objects
 
 
     protected function fieldtypes(){
-        $array = $this->filter(array(
+        $array = $this->all()->filter(array(
             "type" => "Fieldtype"
         ));
         return $array;

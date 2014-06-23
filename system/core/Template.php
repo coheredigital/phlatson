@@ -10,7 +10,7 @@ class Template extends Object
     {
         if (!$this->fields){
             $fieldsArray = $this->getUnformatted("fields");
-            $fields = new FieldArray();
+            $fields = new ObjectArray();
             foreach ($fieldsArray as $f) {
                 $field = api("fields")->get($f["name"]);
                 $fields->add($field);

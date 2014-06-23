@@ -1,6 +1,6 @@
 <?php
 
-abstract class Objects extends Core implements IteratorAggregate, Countable
+abstract class Objects extends Core
 {
 
     public $data = array();
@@ -19,31 +19,90 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
     {
         // manually add the special case of the home page
         if ($this instanceof Pages) {
-            $this->data['/'] = new Page(api("config")->paths->pages . "data.json", "/");
+            $this->data['/'] = api("config")->paths->pages . "data.json";
         }
 
     }
 
-    // load available objects into $data array()
+    protected function getItem($key){
+
+        if ( isset($this->data[$key]) ) return $this->data[$key];
+
+        $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
+        $path = normalizePath( $root . $key );
+
+        if( !$this->isValidPath( $path ) ){
+            $root = normalizePath( $this->api('config')->paths->system . $this->rootFolder );
+            $path = normalizePath( $root . $key );
+
+            if( !$this->isValidPath( $path ) ) return false;
+        }
+
+        $file = $path . "data.json";
+        if(is_file($file)){
+
+            $this->set($key, $file);
+
+        }
+
+    }
+
 
     // return a key => value array of valid object locations
     protected function getObjectList($path = null){
 
-        $root = normalizePath( $this->api('config')->paths->system . $this->rootFolder );
-        if( $this->isValidPath( normalizePath( $root . $path ) ) ){
-            $this->getList($root, $path);
+
+        $systemPath =  $this->api('config')->paths->system . $this->rootFolder;
+        $systemPath = normalizePath( $systemPath );
+
+        $systemPathCheck =  $systemPath . $path;
+        $systemPathCheck = normalizePath( $systemPathCheck );
+
+        if( $this->isValidPath($systemPathCheck) ){
+            $this->getListRecursive($systemPath, $systemPathCheck);
         }
 
-        $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
-        if( $this->isValidPath( normalizePath( $root . $path ) ) ){
-            $this->getList($root, $path);
+
+        $sitePath =  $this->api('config')->paths->site . $this->rootFolder;
+        $sitePath = normalizePath( $sitePath );
+
+        $sitePathCheck =  $sitePath . $path;
+        $sitePathCheck = normalizePath( $sitePathCheck );
+
+        if( $this->isValidPath($sitePathCheck) ){
+            $this->getListRecursive($sitePath, $sitePathCheck);
         }
 
     }
 
-    protected function getList($root, $query){
+    protected function getListRecursive($root, $path, $depth = 1){
 
-        $queryPath = normalizePath( $root . $query );
+        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+        $iterator->setMaxDepth($depth);
+
+        foreach ($iterator as $item) {
+
+            $itemPath = $item->getPathName();
+            $itemPath = normalizePath($itemPath);
+            $itemFilename = $item->getFileName();
+
+            if($itemFilename != "data.json") continue;
+
+            $directory = str_replace($root, "", $itemPath);
+            $directory = str_replace($itemFilename,"",$directory);
+            $directory = trim($directory,DIRECTORY_SEPARATOR);
+            $directory = normalizeDirectory($directory);
+
+            // add root items for pages to allow home selection
+            $this->data["$directory"] = $itemPath;
+
+        }
+
+    }
+
+
+    protected function getList($root, $query){
 
         $dir = opendir($queryPath);
         while(($name = readdir($dir)) !== false)
@@ -80,33 +139,53 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
 
     public function all()
     {
+        $this->getObjectList();
+        $arrayType = $this->singularName . "Array";
 
-       $array = array();
-       foreach ($this->data as $key => $value) {
-           $array[] = $this->$key;
-       }
-       return $array;
+        $objectArray = new ObjectArray();
 
-    }
-
-    public function filter($array){
-
-        $objects = $this->all();
-
-        foreach ($array as $key => $value) {
-
-            $objects = array_filter($objects, function($object) use($key, $value){
-
-                // TODO : this should actually fail / throwException
-                if ( !$object->{$key}) return true;
-
-                $what = $object->{$key};
-                return $what == $value;
-            });
-
+        foreach ($this->data as $key => $value){
+            $object = $this->getObject($key);
+            $objectArray->add($object);
         }
-        return $objects;
+
+        return $objectArray;
     }
+
+    protected function getObject($key){
+        if ( !$this->has($key) ){
+            $this->getItem($key);
+            if ( !$this->has($key) ) return false;
+        }
+        $file = $this->data[$key];
+
+        if ( $this instanceof Extensions ) {
+            $object = new $key($file);
+        }
+        else {
+            $object = new $this->singularName($file, $key);
+        }
+        return $object;
+    }
+
+//    public function filter($array){
+//
+//        $objects = $this->all();
+//
+//        foreach ($array as $key => $value) {
+//
+//            $objects = array_filter($objects, function($object) use($key, $value){
+//
+//                // TODO : this should actually fail / throwException
+//                if ( !$object->{$key}) return true;
+//
+//                $what = $object->{$key};
+//                return $what == $value;
+//            });
+//
+//        }
+//        return $objects;
+//    }
 
 
 
@@ -125,64 +204,21 @@ abstract class Objects extends Core implements IteratorAggregate, Countable
         return $this->get($key);
     }
 
-    public function get($query)
+    public function get($key)
     {
         // normalize the query to avoid error in the case of a page request that might get passed as ( /about-us/staff ) but should be ( about-us/staff )
-        $query = normalizeDirectory($query);
-        return $this->getObject($query);
+        $key = normalizeDirectory($key);
+
+        $object = $this->getObject($key);
+        return $object;
     }
 
-    protected function getObject($key){
 
-        if ( isset($this->data[$key]) ) return $this->data[$key];
-
-        $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
-        $path = normalizePath( $root . $key );
-
-        if( !$this->isValidPath( $path ) ){
-            $root = normalizePath( $this->api('config')->paths->system . $this->rootFolder );
-            $path = normalizePath( $root . $key );
-
-            if( !$this->isValidPath( $path ) ) return false;
-        }
-
-        $file = $path . "data.json";
-        if(is_file($file)){
-
-            if ( $this instanceof Extensions ) {
-                $object = new $key($file);
-            }
-            else {
-                $object = new $this->singularName($file, $key);
-                $this->data[$key] = $object; // we don't add extensions so we can make multiple instances
-            }
-
-            return $object;
-        }
-
-    }
 
     public function has($key){
         $key = normalizeDirectory($key);
         return array_key_exists($key, $this->data);
     }
 
-    public function getIterator()
-    {
-        return new ArrayObject($this->data);
-    }
-
-    public function count()
-    {
-        if (!isset($this->count)) {
-            $this->count = count($this->data);
-        }
-        return $this->count;
-    }
-
-    public function __unset($key)
-    {
-        $this->remove($key);
-    }
 
 }

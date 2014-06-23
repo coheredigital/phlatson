@@ -1,6 +1,6 @@
 <?php
 
-abstract class ObjectArray extends Core implements IteratorAggregate, ArrayAccess, Countable
+class ObjectArray extends Core implements IteratorAggregate, ArrayAccess, Countable
 {
 
     protected $data = array();
@@ -37,21 +37,24 @@ abstract class ObjectArray extends Core implements IteratorAggregate, ArrayAcces
     }
 
 
-//    public function filter($array){
-//
-//        $objects = $this->all();
-//
-//        foreach ($array as $key => $value) {
-//
-//            if ( !$object->{$key}) continue;
-//
-//            $objects = array_filter($objects, function($extension){
-//                return $object->{$key} == $value;
-//            });
-//
-//        }
-//        return $objects;
-//    }
+    public function filter($array){
+
+        $objects = $this->data;
+
+        foreach ($array as $key => $value) {
+
+            $objects = array_filter($objects, function($object) use($key, $value){
+
+                    // TODO : this should actually fail / throwException
+                    if ( !$object->{$key}) return true;
+
+                    $what = $object->{$key};
+                    return $what == $value;
+                });
+
+        }
+        return $objects;
+    }
 
 
     /**
