@@ -25,6 +25,10 @@ class AdminPageEdit extends Extension
             $this->title = "New Page";
         }
 
+        // detect files submissions
+        if (!empty($_FILES)) {
+            $this->processFiles();
+        }
 
         // process save
         if (count(api("input")->post)) {
@@ -146,6 +150,13 @@ class AdminPageEdit extends Extension
         // $output = $this->tabs->render();
         $this->form->add($submitButtonsGroup);
         return $this->form->render();
+
+    }
+
+    public function processFiles(){
+
+        $uploader = new Upload($this->object);
+        $uploader->send($_FILES);
 
     }
 

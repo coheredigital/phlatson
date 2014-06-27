@@ -4,6 +4,19 @@ class FieldtypeFiles extends Fieldtype
 {
 
 
+    protected function setup(){
+
+        api("config")->scripts->add( $this->url . "dropzone.js" );
+        api("config")->scripts->add( $this->url . $this->className . ".js" );
+//        api("config")->styles->add( $this->url . $this->className . ".css" );
+        api("config")->styles->add( $this->url . "temp.css" );
+
+
+
+
+    }
+
+
     public function render()
     {
 
@@ -28,22 +41,31 @@ class FieldtypeFiles extends Fieldtype
 
     protected function renderInput()
     {
-        $attributes = $this->getAttributes();
+//        $attributes = $this->getAttributes();
+
+        $output .= "<div class='ui divided list'>";
 
         foreach ($this->value as $file){
-            $output .= "<div class='file'>";
+            $output .= "<div class='item'>";
             if($file instanceof Image){
-                $output .= "<img src='{$file->url}' height='100' width='100'>";
+                $output .= "<img  class='ui image' src='{$file->url}' height='32' width='32'>";
             }
-            $output .= "{$file->name}</div>";
-
-
+            $output .= "<div class='right floated tiny red ui button'>Remove</div>";
+            $output .= "<div class='content'>";
+            $output .= "<div class='header''>{$file->name}</div>";
+            $output .= "</div>";
+            $output .= "</div>";
 
         }
 
-        $output .= "<input {$attributes} type='file' name='{$this->name}' value='{$this->value}'>";
+        $output .= "<div action='./' class='dropzone' id='files'></div>";
+
+        $output .= "</div>";
         return $output;
     }
+
+
+
 
 }
 

@@ -14,10 +14,14 @@ class Config extends Object
         $this->styles = new SimpleArray();
         $this->scripts = new SimpleArray();
 
+        // setup default urls / paths
         $this->setupDirectories();
 
+        // load site config
         $this->load("{$this->paths->site}config.json");
 
+        // add admin url for convenience
+        $this->urls->admin = $this->urls->root . $this->adminUrl;
 
         /*
          * Output errors if debug true, else disable error reporting
@@ -99,6 +103,9 @@ class Config extends Object
         foreach ($directories as $key => $value) {
             $urls->{$key} = $value;
         }
+
+
+
 
         // clone the urls object and change the root
         $paths = clone $urls;
