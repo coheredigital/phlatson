@@ -14,7 +14,6 @@ if(!$user->isGuest() && !$input->request[1]){
     $session->redirect($config->urls->root . $config->adminUrl . "/pages");
 }
 
-
 $adminHome = $pages->get($config->adminUrl); // create home page object for simple ref back to admin root
 
 // admin scripts and themes (default always needed)
@@ -24,6 +23,7 @@ $config->styles->add("{$config->urls->systemLayouts}styles/semantic.min.css");
 $config->scripts->add("{$config->urls->systemLayouts}scripts/jquery-2.1.1.min.js");
 $config->scripts->add("{$config->urls->systemLayouts}scripts/jquery-sortable.js");
 $config->scripts->add("{$config->urls->systemLayouts}scripts/semantic.min.js");
+$config->scripts->add("{$config->urls->systemLayouts}scripts/init.js");
 
 // admin pages
 if ($output = $page->render()) {

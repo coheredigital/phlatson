@@ -58,9 +58,7 @@ class FieldtypeFiles extends Fieldtype
 
         }
 
-        $output .= "<div action='./' class='dropzone' id='files'></div>";
-
-        $output .= "</div>";
+        $output .= "<div action='./?name=" . api("input")->get->name . "' class='dropzone' id='files'></div></div>";
         return $output;
     }
 

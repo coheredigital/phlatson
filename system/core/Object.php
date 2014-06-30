@@ -4,6 +4,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 {
     const DATA_FILE = "data.json";
     protected $rootFolder;
+    protected $objectOrigin = null;
 
     protected $path;
     protected $file;
@@ -15,7 +16,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     function __construct($file = null, $directory = null)
     {
-        if(!is_null($directory)) $this->route = $this->getRoute($directory);
+        $this->route = $this->getRoute($file);
         $this->load($file);
     }
 
@@ -31,15 +32,23 @@ abstract class Object extends Core implements Countable, IteratorAggregate
 
     }
 
-    protected function getRoute($url)
+    protected function getRoute($file)
     {
-        $url = rtrim((string)$url, '/');
-        $array = array();
-        if (strpos($url, "/") !== false) {
-            $array = explode("/", $url);
-        } else {
-            $array[] = $url;
-        }
+        $relativePath = str_replace(api("config")->paths->root, "", $file );
+        $relativePath = str_replace($this::DATA_FILE, "", $relativePath );
+        $relativePath = rtrim($relativePath, '/');
+
+        if (strpos($relativePath, "/") === false) throw new Exception("Invalid request - {$file} - passed to {$this->className}");
+
+        $array = explode("/", $relativePath);
+
+        $this->objectOrigin = array_shift($array);
+        $rootFolder = array_shift($array);
+
+        if($rootFolder !== $this->rootFolder && $rootFolder !== $this->className ) throw new Exception("Invalid request passed to {$this->className} : array( " . implode(", ", $array) . " ) $rootFolder !== $this->rootFolder || $rootFolder !== $this->className");
+
+        if(!count($array)) $array[] = "";
+
         return $array;
     }
 
@@ -106,9 +115,15 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $this->name = api("sanitizer")->name($postData->title);
         }
 
+        // handle new object creation
         if($this->isNew()){
             // TODO - validate parent
-            $this->path = $this->parent->path . $this->name . DIRECTORY_SEPARATOR;
+
+            if(!$this->parent instanceof Page){
+                throw new Exception("cannot create new page without valid parent");
+            }
+
+            $this->path = $this->parent->path . $this->name . "/";
             if (!file_exists($this->path)) {
                 mkdir($this->path, 0777, true);
             }
@@ -133,7 +148,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
     public function isNew(){
         // if the object does not have a matching existing directory it is assumed new
         // directory will be created when saved
-        if(!$this->directory) return true;
+        if(is_null($this->file)) return true;
 
     }
 

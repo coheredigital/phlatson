@@ -1,0 +1,21 @@
+{
+    "label": "Post",
+    "files": false,
+    "fields": [
+        {
+            "name": "title"
+        },
+        {
+            "name": "author"
+        },
+        {
+            "name": "date"
+        },
+        {
+            "name": "content"
+        },
+        {
+            "name": "name"
+        }
+    ]
+}

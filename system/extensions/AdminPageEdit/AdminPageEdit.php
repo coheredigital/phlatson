@@ -11,18 +11,27 @@ class AdminPageEdit extends Extension
 
         $this->form = api("extensions")->get("MarkupEditForm");
 
-        if(!api("input")->get->new){
-            $this->object = api("pages")->get(api("input")->get->name);
-            $this->template = $this->object->template;
-            $this->title = $this->object->title;
-        }
-        else{
-            $this->object = new Page;
+        if(api("input")->get->new){
+
+            $this->object = new Page();
 
             // set parent from get parameter
             $parentUrl = api("input")->get->parent;
             $this->object->parent = api("pages")->get($parentUrl); // TODO reevaluate, I shouldn't need to actually retrieve this object. maybe just verify its valid, not sure
+
+            $templateName = api("input")->get->template;
+//            $template = api("templates")->();
+            $this->object->template = $templateName;
+
             $this->title = "New Page";
+
+
+        }
+        else{
+            $this->object = api("pages")->get(api("input")->get->name);
+            $this->template = $this->object->template;
+            $this->title = $this->object->title;
+
         }
 
         // detect files submissions
@@ -38,6 +47,14 @@ class AdminPageEdit extends Extension
 
     }
 
+
+
+    public function processFiles(){
+
+        $uploader = new Upload($this->object);
+        $uploader->send($_FILES);
+
+    }
 
     protected function addSettingsFields()
     {
@@ -153,11 +170,5 @@ class AdminPageEdit extends Extension
 
     }
 
-    public function processFiles(){
-
-        $uploader = new Upload($this->object);
-        $uploader->send($_FILES);
-
-    }
 
 }

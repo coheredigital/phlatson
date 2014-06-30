@@ -6,13 +6,15 @@ class Page extends Object
 
     protected $parent = null;
 
-    protected $rootFolder = "pages/";
+    protected $rootFolder = "pages";
+
+
     protected $defaultFields = array("template","files");
 
     protected $filesArray;
     protected $imagesArray;
 
-    function __construct($file, $directory)
+    function __construct($file = null)
     {
 
         $defaultFields = array();
@@ -22,7 +24,8 @@ class Page extends Object
         }
         $this->defaultFields = $defaultFields; // replace default fields named array with Objects
 
-        parent::__construct($file, $directory);
+        parent::__construct($file);
+
     }
 
 
@@ -37,13 +40,11 @@ class Page extends Object
     public function children()
     {
 
-        if ($this->path === null) {
-            return;
-        }
+        if ($this->path === null) return;
+
         // break out if no valid path
         // get all subfolder of current page path
         // TODO: improve validation of existing Object, unless new, a path being none existing should throw an exception
-
 
         $subs = glob($this->path . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR);
 
