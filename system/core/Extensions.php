@@ -4,7 +4,7 @@
 class Extensions extends Objects
 {
 
-    protected $rootFolder = "extensions/";
+    protected $rootFolder = "extensions";
     protected $singularName = "extension";
 
 

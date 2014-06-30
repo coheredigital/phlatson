@@ -176,7 +176,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
                     return "site";
                 }
             case 'url':
-                return $this->api('config')->urls->root . $this->location . "/" . $this->rootFolder . $this->name . "/";
+                return $this->api('config')->urls->root . $this->location . "/" . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
                 return $this->path;
             case 'requests':
