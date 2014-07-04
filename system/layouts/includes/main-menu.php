@@ -1,4 +1,4 @@
-<div class="ui tabular menu">
+<div class="ui menu">
 
 
     <?php foreach ($adminHome->children as $p): ?>

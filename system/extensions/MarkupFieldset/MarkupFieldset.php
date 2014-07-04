@@ -6,7 +6,6 @@ class MarkupFieldset extends Extension
 
     public $fields = array();
     public $label;
-    private $tabs;
 
     public function add(\Fieldtype $field)
     {
@@ -50,7 +49,7 @@ class MarkupFieldset extends Extension
             $label = "<h3 class='ui dividing header'>{$this->label}</h3>";
         }
 
-        $output = "<div>{$label}{$fields}{$submit}</div>";
+        $output = "<div class='{$this->className}'>{$label}{$fields}{$submit}</div>";
         return $output;
 
 

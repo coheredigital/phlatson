@@ -25,8 +25,6 @@ class Upload extends Core
             $this->path = $this->page->path;
         }
 
-
-
     }
 
 

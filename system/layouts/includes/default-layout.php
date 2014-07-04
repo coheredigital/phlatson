@@ -9,15 +9,17 @@
 
 
     <div id="main">
-        <div class="container">
+
             <?php echo $output; ?>
-        </div>
+
     </div>
     <div id="footer">
         <div class="container">
 
         </div>
     </div>
-
+    <?php foreach ($config->scripts as $file) {
+        echo "<script src='{$file}'></script>";
+    } ?>
 </body>
 </html>

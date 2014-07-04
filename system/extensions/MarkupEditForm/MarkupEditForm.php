@@ -5,31 +5,57 @@ class MarkupEditForm extends Extension
     // array of field markup to be rendered
     public $dataObject;
     public $formID;
-    public $formElements = array();
 
-    public function add(MarkupFieldset $element)
+    public $tabs = array();
+    public $formControls;
+
+    public function add(MarkupFormtab $element)
     {
-        $this->formElements[] = $element;
+        $this->tabs[] = $element;
     }
 
 
     public function render()
     {
         $colCount = 0;
-        $formFields = "";
+        $formTabMenu = "";
+        $formTabContent = "";
+        $formControls = $this->formControls->render();
 
-
-        foreach ($this->formElements as $element) {
-
+        $tabCount = 0;
+        foreach ($this->tabs as $element) {
+            $tabCount++;
             if (is_object($element)) {
-
+                $class = $tabCount == 1 ? "active" : "";
                 $colCount += $element->columns;
-                $formFields .= $element->render();
+                $formTabMenu .= "<a class='item tab-item {$class}' data-tab='{$element->id}'>$element->label</a>";
 
             }
         }
+        $formTabMenu = "<div class='ui top attached tabular menu'>{$formTabMenu}</div>";
 
-        $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" . $formFields . $submit . "</form>";
+        $tabCount = 0;
+        foreach ($this->tabs as $element) {
+
+            if (is_object($element)) {
+
+                $tabCount++;
+                $active = $tabCount == 1 ? true : false;
+
+                $colCount += $element->columns;
+                $formTabContent .= $element->render($active);
+
+            }
+        }
+        $formTabContent = "<div class='ui segment MarkupFormTab'><div class='container'>{$formTabContent}</div></div>";
+
+        $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" .
+            "<div class='container'>$formTabMenu</div>".
+            $formTabContent .
+
+            "<div class='container'> $formControls</div>".
+
+            "</form>";
 
         return $output;
 

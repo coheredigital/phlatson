@@ -40,6 +40,7 @@ class Config extends Object
          *
          */
         session_name($this->sessionName);
+
         ini_set('session.use_cookies', true);
         ini_set('session.use_only_cookies', 1);
         ini_set("session.gc_maxlifetime", $this->sessionExpireSeconds);

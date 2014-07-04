@@ -49,6 +49,7 @@ class AdminPageEdit extends Extension
 
 
 
+
     public function processFiles(){
 
         $uploader = new Upload($this->object);
@@ -59,7 +60,7 @@ class AdminPageEdit extends Extension
     protected function addSettingsFields()
     {
 
-        $settings = api("extensions")->get("MarkupFieldset");
+        $settings = api("extensions")->get("MarkupFormtab");
         $settings->label = "Settings";
         $settings->add($this->getFieldTemplate());
         $settings->add($this->getFieldParentSelect());
@@ -70,7 +71,7 @@ class AdminPageEdit extends Extension
     protected function addFilesFields()
     {
 
-        $settings = api("extensions")->get("MarkupFieldset");
+        $settings = api("extensions")->get("MarkupFormtab");
         $settings->label = "Files";
         $settings->add($this->getFieldFiles());
 
@@ -113,7 +114,7 @@ class AdminPageEdit extends Extension
         foreach ($templates as $t) {
             $selectOptions["$t->label"] = "$t->name";
         }
-        $input = api("extensions")->get("FieldtypeFiles");
+        $input = api("extensions")->get("FieldtypePageFiles");
         $input->label = "Files";
         $input->columns = 12;
         $input->value = $value;
@@ -125,7 +126,7 @@ class AdminPageEdit extends Extension
     protected function addDefaultFields()
     {
 
-        $fieldset = api("extensions")->get("MarkupFieldset");
+        $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
@@ -165,7 +166,7 @@ class AdminPageEdit extends Extension
         $this->addSettingsFields();
 
         // $output = $this->tabs->render();
-        $this->form->add($submitButtonsGroup);
+        $this->form->formControls = $submitButtonsGroup;
         return $this->form->render();
 
     }
