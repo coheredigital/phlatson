@@ -53,16 +53,16 @@ class FieldtypePageFiles extends Fieldtype
             $output .= "<div class='right floated red ui icon button'><i class='trash icon'></i></div>";
             $output .= "<div class='content'>";
             $output .= "<div class='header'>{$file->name}</div>";
-            $output .= "<div class='sub header'>{$file->size}</div>";
+            $output .= "<div class='description'>{$file->filesizeFormatted}</div>";
             $output .= "</div>";
             $output .= "</div>";
 
         }
         $output .= "</div>";
-        $output .= "<div action='./' class='' id='files'></div>";
+        $output .= "<div action='./?name=" . api("input")->get->name . "' class='' id='files'></div>";
         $output .= "<div class='ui segment {$this->className}-dragndrop dz-clickable dropzone'>";
         $output .= "<span class='ui header'><i class='big cloud upload icon'></i> <span class='content'>Drag &amp; drop files here";
-        $output .= '<div class=" sub header">or click to choose files</div>';
+        $output .= '<div class="sub header">or click to choose files</div>';
         $output .= "</span>";
         $output .= "</span>";
 

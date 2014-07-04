@@ -1,0 +1,8 @@
+.redactor_box{
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .3125em;
+    overflow: hidden;
+}
+.redactor_toolbar li a{
+    padding: 0.85em;
+}

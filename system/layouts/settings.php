@@ -8,4 +8,4 @@ foreach ($page->children() as $p) {
     $output .= "{$title}{$description}";
 }
 
-$output = "<div class='ui list'>{$output}</div>";
+$output = "<div class='container'><div class='ui list'>{$output}</div></div>";
