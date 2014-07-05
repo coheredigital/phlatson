@@ -61,31 +61,32 @@ body {
 .page-tree-list .page-tree-item.ui.segment a.page-item-edit-link:hover {
   text-decoration: underline;
 }
-.page-tree-list .placeholder {
+
+.sortable-placeholder {
   position: relative;
   background: #eee;
 }
-.page-tree-list .placeholder:before, .page-tree-list .placeholder:after {
+.sortable-placeholder:before, .sortable-placeholder:after {
   position: absolute;
   z-index: 100;
   content: "";
 }
-.page-tree-list .placeholder:before {
+.sortable-placeholder:before {
   width: 0;
   height: 0;
   margin-top: -5px;
   left: -5px;
-  top: -5px;
+  top: -3px;
   border-style: solid;
   border-width: 7px 0 7px 10px;
   border-color: transparent transparent transparent #007bff;
 }
-.page-tree-list .placeholder:after {
+.sortable-placeholder:after {
   width: 8px;
   height: 6px;
   margin-top: -5px;
   left: -12px;
-  top: -1px;
+  top: 1px;
   background: #007bff;
 }
 

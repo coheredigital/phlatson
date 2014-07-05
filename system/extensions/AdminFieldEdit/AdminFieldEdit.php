@@ -20,18 +20,8 @@ class AdminFieldEdit extends AdminPageEdit
 
     public function render()
     {
-
-
         $this->addDefaultFields();
-
-        $submitButtons = api("extensions")->get("FieldtypeFormActions");
-        $submitButtons->dataObject = $this->object;
-        $submitButtonsGroup = api("extensions")->get("MarkupFieldset");
-        $submitButtonsGroup->add($submitButtons);
-
-        $this->form->add($submitButtonsGroup);
         return $this->form->render();
-
     }
 
 }

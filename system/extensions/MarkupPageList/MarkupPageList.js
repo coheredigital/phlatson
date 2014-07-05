@@ -1,6 +1,6 @@
 $(function  () {
     $("ul.page-tree-root").sortable({
-    	placeholder: '<li class="placeholder"/>',
+    	placeholder: '<li class="sortable-placeholder"/>',
     	distance: 5,
     	handle: ".reorder",
     	isValidTarget: function  (item, container) {

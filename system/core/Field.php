@@ -17,8 +17,9 @@ class Field extends Object
     public function type()
     {
         if ($this->getUnformatted("fieldtype")) {
-            $name = (string) $this->getUnformatted("fieldtype");
+            $name = $this->getUnformatted("fieldtype");
             $fieldtype = api("extensions")->get($name);
+            $fieldtype->setField($this);
             return $fieldtype;
         }
         return null;

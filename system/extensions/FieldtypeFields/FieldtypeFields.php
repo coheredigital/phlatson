@@ -8,22 +8,36 @@ class FieldtypeFields extends Fieldtype
     protected function setup()
     {
         api('config')->styles->add($this->url . "{$this->className}.css");
-        api('config')->scripts->add($this->url . "shapeshifter/shapeshifter.js");
+//        api('config')->scripts->add($this->url . "shapeshifter/shapeshifter.js");
         api('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
 
-    public function getSave($value)
+    public function getOutput($array)
     {
-        $dom = new DomDocument;
-        $root = $dom->createElement($name);
-        foreach ($value as $key => $value) {
-            $node = $dom->createElement("field", $key);
-            $node->setAttribute("col", $value);
-            $root->appendChild($node);
+
+        $fields = new ObjectArray();
+
+        foreach ($array as $item){
+
+            if (!isset($item['name'])) continue;
+
+            $field = api("fields")->get($item['name']);
+            $fields->add($field);
         }
-        $dom->appendChild($root);
-        return $dom->documentElement;
+
+        return $fields;
+    }
+
+    public function getSave($array)
+    {
+
+        // remove invalid fields
+        foreach ($array as $key => $name) {
+            if (!api("fields")->get($name)) unset($array[$key]);
+        }
+
+        return $array;
     }
 
 
@@ -32,26 +46,31 @@ class FieldtypeFields extends Fieldtype
 
         $attributes = $this->getAttributes();
 
+        $fields = api("fields")->all();
+        $fieldsSelect = api("extensions")->get("FieldtypeSelect");
+
+        $fieldsSelect->setOptions($fields);
+
+        $fieldAdd = $fieldsSelect->render();
+
         foreach ($this->value as $field) {
 
             $columns = trim($field->attributes('col'));
 
-            $output .= "<div data-ss-colspan='{$columns}' class='{$this->className}_fieldItem col_{$columns}' >
-							<div class='{$this->className}_fieldContent' >
-								<div class='{$this->className}_label label' >
-									<a href='#'>{$field->label}</a>
-								</div>
-								<div class='{$this->className}_name name' >{$field->name}</div>
-								<input type='hidden' name='" . $this->attributes["name"] . "[{$field->name}]' value='{$columns}' >
-								<div class='colCount'>columns <span class='colValue'>{$columns}</span></div>
-							</div>
-		
+            $output .= "<div class='item' >
+                            <div class='header' >
+                                {$field->label}
+                            </div>
+                            <div>{$field->name}</div>
+                            <input type='hidden' name='" . $this->field->name . "[{$field->name}]' value='{$columns}' >
 						</div>";
         }
-        $output = "	<div class='{$this->className}_fieldsGrid clearfix'>
+
+        $output = "	$fieldAdd
+	                <div class='{$this->className} ui list selection animated segment'>
 						{$output}
-						<div class='inputs'></div>
-					</div>";
+					</div>
+					<div class='inputs'></div>";
         return $output;
     }
 

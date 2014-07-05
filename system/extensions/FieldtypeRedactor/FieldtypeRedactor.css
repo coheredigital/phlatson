@@ -3,6 +3,11 @@
     border-radius: .3125em;
     overflow: hidden;
 }
+
 .redactor_toolbar li a{
     padding: 0.85em;
+}
+.redactor_input{
+    width: 100%;
+    box-sizing: border-box;
 }

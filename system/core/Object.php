@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object extends Core implements Countable, IteratorAggregate
+abstract class Object extends Core
 {
     const DATA_FILE = "data.json";
     protected $rootFolder;
@@ -65,7 +65,6 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $value = $fieldtype->get($value, "output");
         }
 
-
         return $value;
     }
 
@@ -88,7 +87,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         // loop through the templates available fields so that we only set values
         // for available feilds and ignore the rest
         $template = $this->get("template");
-        $fields = $template->getFields();
+        $fields = $template->fields;
 
         // add the default fields
         if(count($this->defaultFields)) $fields->import($this->defaultFields);
@@ -101,7 +100,7 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $value = isset($postData->{$field->name}) ? $postData->{$field->name} : $this->getUnformatted("$field->name");
 
             $fieldtype = $field->type();
-            $value = $fieldtype->get($value, "save");
+            $value = $fieldtype->getSave($value);
 
             $saveData[$field->name] = $value;
         }
@@ -135,7 +134,8 @@ abstract class Object extends Core implements Countable, IteratorAggregate
             $saveFile = "$saveName.json";
         }
         else{
-            $saveFile = self::DATA_FILE;
+//            $saveFile = self::DATA_FILE;
+            $saveFile = "test.json";
         }
 
         $saveData = json_encode($saveData, JSON_PRETTY_PRINT);
@@ -217,16 +217,5 @@ abstract class Object extends Core implements Countable, IteratorAggregate
         return $this->set($name, $value);
     }
 
-    // allows the data array to be counted directly
-    public function count()
-    {
-        return count($this->data);
-    }
-
-    // iterate the object data in a foreach
-    public function getIterator()
-    {
-        return $this->data;
-    }
 
 }

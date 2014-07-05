@@ -3,11 +3,10 @@
 class MarkupEditForm extends Extension
 {
     // array of field markup to be rendered
-    public $dataObject;
+    public $object;
     public $formID;
 
     public $tabs = array();
-    public $formControls;
 
     public function add(MarkupFormtab $element)
     {
@@ -20,7 +19,6 @@ class MarkupEditForm extends Extension
         $colCount = 0;
         $formTabMenu = "";
         $formTabContent = "";
-        $formControls = $this->formControls->render();
 
         $tabCount = 0;
         foreach ($this->tabs as $element) {
@@ -49,11 +47,17 @@ class MarkupEditForm extends Extension
         }
         $formTabContent = "<div class='ui segment MarkupFormTab'><div class='container'>{$formTabContent}</div></div>";
 
+
+        // add the form controls
+        $formActions = api("extensions")->get("FieldtypeFormActions");
+        $formActions->object = $this->object;
+        $formActions = $formActions->render();
+
         $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" .
             "<div class='container'>$formTabMenu</div>".
             $formTabContent .
 
-            "<div class='container'> $formControls</div>".
+            "<div class='container'>$formActions</div>".
 
             "</form>";
 

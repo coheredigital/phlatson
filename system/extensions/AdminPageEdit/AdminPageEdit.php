@@ -20,7 +20,6 @@ class AdminPageEdit extends Extension
             $this->object->parent = api("pages")->get($parentUrl); // TODO reevaluate, I shouldn't need to actually retrieve this object. maybe just verify its valid, not sure
 
             $templateName = api("input")->get->template;
-//            $template = api("templates")->();
             $this->object->template = $templateName;
 
             $this->title = "New Page";
@@ -33,6 +32,9 @@ class AdminPageEdit extends Extension
             $this->title = $this->object->title;
 
         }
+
+        // set form object
+        $this->form->object = $this->object;
 
         // detect files submissions
         if (!empty($_FILES)) {
@@ -153,20 +155,10 @@ class AdminPageEdit extends Extension
     public function render()
     {
 
-
         $this->addDefaultFields();
-
-        $submitButtons = api("extensions")->get("FieldtypeFormActions");
-        $submitButtons->dataObject = $this->object;
-        $submitButtonsGroup = api("extensions")->get("MarkupFieldset");
-        $submitButtonsGroup->add($submitButtons);
-
-
         $this->addFilesFields();
         $this->addSettingsFields();
 
-        // $output = $this->tabs->render();
-        $this->form->formControls = $submitButtonsGroup;
         return $this->form->render();
 
     }

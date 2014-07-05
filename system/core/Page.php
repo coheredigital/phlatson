@@ -9,7 +9,7 @@ class Page extends Object
     protected $rootFolder = "pages";
 
 
-    protected $defaultFields = array("template","files");
+    protected $defaultFields = array("template");
 
     protected $filesArray;
     protected $imagesArray;

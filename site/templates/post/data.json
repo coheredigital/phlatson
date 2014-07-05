@@ -1,6 +1,5 @@
 {
     "label": "Post",
-    "files": false,
     "fields": [
         {
             "name": "title"

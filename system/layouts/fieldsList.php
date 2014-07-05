@@ -21,3 +21,4 @@ foreach ($fieldsList as $item) {
     );
 }
 $output = $table->render();
+$output = "<div class='container'><div class='ui list'>{$output}</div></div>";

@@ -1,7 +1,7 @@
 $(function(){
-    $('.ui.dropdown')
-        .dropdown()
-    ;
+
+    $('.ui.dropdown').dropdown();
+
     $(".tab-item ").tab({
         history:false
     });

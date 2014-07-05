@@ -5,7 +5,7 @@ class AdminTemplateEdit extends Extension
 
     private $tabs;
     private $form;
-    private $page;
+    private $object;
 
     public function setup()
     {
@@ -13,15 +13,13 @@ class AdminTemplateEdit extends Extension
         $this->tabs = api("extensions")->get("MarkupTabs");
 
         if( $name = api("input")->get->name){
-            $this->page = api("templates")->get($name);
+            $this->object = api("templates")->get($name);
             $this->template = api("templates")->get("template");
         }
 
-
-
         // process save
         if (count(api("input")->post)) {
-            $this->page->save(api("input")->post);
+            $this->object->save(api("input")->post);
             api("session")->redirect(api("input")->query);
         }
 
@@ -30,14 +28,14 @@ class AdminTemplateEdit extends Extension
 
     private function getSettings()
     {
-        $value = $this->page->icon;
+        $value = $this->object->icon;
         $input = api("extensions")->get("FieldtypeText");
         $input->label = "Icon";
         $input->columns = 12;
         $input->value = $value;
         $input->attribute("name", "icon");
 
-        $fieldset = api("extensions")->get("MarkupFieldset");
+        $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = "Settings";
         $fieldset->add($input);
         $this->form->add($fieldset);
@@ -46,18 +44,16 @@ class AdminTemplateEdit extends Extension
 
     private function addContentFieldset()
     {
-        $fieldset = api("extensions")->get("MarkupFieldset");
+        $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = "Content";
-        $page = $this->page;
-        $template = $page->get("template");
+        $object = $this->object;
+        $template = $object->get("template");
         $fields = $template->get("fields");
         foreach ($fields as $field) {
-            $input = $field->type;
-            $input->label = $field->label;
-            $input->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
-            $input->value = $this->page->{$field->name};
-//            $input->attribute("name", $field->name);
-            $fieldset->add($input);
+            $fieldtype = $field->type;
+            $fieldtype->label = $field->label;
+            $fieldtype->value = $this->object->{$field->name};
+            $fieldset->add($fieldtype);
         }
         $this->form->add($fieldset);
     }
@@ -65,19 +61,7 @@ class AdminTemplateEdit extends Extension
 
     public function render()
     {
-
-
         $this->addContentFieldset();
-
-
-        $submitButtons = api("extensions")->get("FieldtypeFormActions");
-        $submitButtons->dataObject = $this->page;
-        $submitButtonsGroup = api("extensions")->get("MarkupFieldset");
-        $submitButtonsGroup->add($submitButtons);
-
-
-        // $output = $this->tabs->render();
-        $this->form->add($submitButtonsGroup);
         return $this->form->render();
 
     }

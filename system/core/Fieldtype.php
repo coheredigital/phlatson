@@ -11,7 +11,7 @@ abstract class Fieldtype extends Extension
     {
 
 
-        $this->attribute('class', 'field-input ' . $this->className);
+        $this->attribute('class', 'ui input ' . $this->className);
         if ($field instanceof Field) {
             $this->field = $field;
         }
