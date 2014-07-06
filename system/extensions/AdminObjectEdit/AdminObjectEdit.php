@@ -40,7 +40,6 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
 
             if (!is_null($this->object)) {
                 $name = $field->get("name");
-                $fieldtype->value = $this->object->getUnformatted($name);
                 $fieldtype->attribute("name", $name);
                 $fieldset->add($fieldtype);
             }

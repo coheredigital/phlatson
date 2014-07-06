@@ -33,7 +33,7 @@ abstract class Fieldtype extends Extension
             case 'type':
                 return "Fieldtype";
             case 'value':
-                return $this->object->getUnformatted($name);
+                return $this->object->get($this->field->name);
             default:
                 switch ($type) {
                     case 'output':
@@ -98,8 +98,9 @@ abstract class Fieldtype extends Extension
 
     protected function renderInput()
     {
+        $value = $this->value;
         $attributes = $this->getAttributes();
-        $output = "<input {$attributes} type='text' name='{$this->name}' value='{$this->value}'>";
+        $output = "<input {$attributes} type='text' name='{$this->name}' value='{$value}'>";
         return $output;
     }
 

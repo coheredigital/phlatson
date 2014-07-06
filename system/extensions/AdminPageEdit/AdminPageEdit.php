@@ -79,14 +79,10 @@ class AdminPageEdit extends AdminObjectEdit
     {
 
         $field = api("fields")->get("parent");
-
-        $value = $this->object->parent->directory;
-
         $fieldtype = $field->type;
         $fieldtype->setObject($this->object);
         $fieldtype->label = "Parent";
         $fieldtype->columns = 6;
-        $fieldtype->value = $value;
         $fieldtype->attribute("name", "parent");
 
         return $fieldtype;
@@ -94,8 +90,6 @@ class AdminPageEdit extends AdminObjectEdit
 
     protected function getFieldFiles()
     {
-
-        $value = $this->object->files();
 
         $selectOptions = array();
         $templates = api("templates")->all();
@@ -106,7 +100,6 @@ class AdminPageEdit extends AdminObjectEdit
         $fieldtype->setObject($this->object);
         $fieldtype->label = "Files";
         $fieldtype->columns = 12;
-        $fieldtype->value = $value;
         $fieldtype->attribute("name", "parent");
 
         return $input;
