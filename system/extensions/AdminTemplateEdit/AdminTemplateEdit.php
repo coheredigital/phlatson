@@ -1,46 +1,45 @@
 <?php
 
-class AdminTemplateEdit extends Extension
+class AdminTemplateEdit extends AdminObjectEdit
 {
 
-    private $tabs;
-    private $form;
-    private $object;
+    protected function setupObject(){
 
-    public function setup()
-    {
-        $this->form = api("extensions")->get("MarkupEditForm");
-        $this->tabs = api("extensions")->get("MarkupTabs");
+        if(api("input")->get->new){
 
-        if( $name = api("input")->get->name){
+            $this->object = new Template();
+
+            $templateName = api("input")->get->template;
+            $this->object->template = $templateName;
+
+            $this->title = "New Template";
+
+        }
+        else{
+            $name = api("input")->get->name;
             $this->object = api("templates")->get($name);
-            $this->template = api("templates")->get("template");
-        }
+            $this->template = $this->object->template;
+            $this->title = $this->object->title;
 
-        // process save
-        if (count(api("input")->post)) {
-            $this->object->save(api("input")->post);
-            api("session")->redirect(api("input")->query);
         }
-
 
     }
 
-    private function getSettings()
-    {
-        $value = $this->object->icon;
-        $input = api("extensions")->get("FieldtypeText");
-        $input->label = "Icon";
-        $input->columns = 12;
-        $input->value = $value;
-        $input->attribute("name", "icon");
-
-        $fieldset = api("extensions")->get("MarkupFormtab");
-        $fieldset->label = "Settings";
-        $fieldset->add($input);
-        $this->form->add($fieldset);
-
-    }
+//    private function getSettings()
+//    {
+//        $value = $this->object->icon;
+//        $input = api("extensions")->get("FieldtypeText");
+//        $input->label = "Icon";
+//        $input->columns = 12;
+//        $input->value = $value;
+//        $input->attribute("name", "icon");
+//
+//        $fieldset = api("extensions")->get("MarkupFormtab");
+//        $fieldset->label = "Settings";
+//        $fieldset->add($input);
+//        $this->form->add($fieldset);
+//
+//    }
 
     private function addContentFieldset()
     {

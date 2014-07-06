@@ -54,7 +54,7 @@ abstract class Fieldtype extends Extension
         return $value;
     }
 
-    public function setField(Field $field)
+    final public function setField(Field $field)
     {
         $this->field = $field;
     }

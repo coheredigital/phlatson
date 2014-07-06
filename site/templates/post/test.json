@@ -1,3 +1,20 @@
-[
-
-]
+{
+    "label": "Post",
+    "fields": [
+        {
+            "name": "title"
+        },
+        {
+            "name": "author"
+        },
+        {
+            "name": "date"
+        },
+        {
+            "name": "content"
+        },
+        {
+            "name": "name"
+        }
+    ]
+}

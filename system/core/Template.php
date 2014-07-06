@@ -3,10 +3,7 @@
 class Template extends Object
 {
 
-    protected $fields;
     protected $rootFolder = "templates";
-
-
 
     public function get($name)
     {

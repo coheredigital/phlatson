@@ -5,11 +5,6 @@ class Field extends Object
     protected $rootFolder = "fields";
     protected $attributes = null;
 
-    protected $defaultFields = array(
-        "label",
-        "fieldtype"
-    );
-
     /**
      * retrieves the filedtype object associated with "$this" field
      * @return Fieldtype
@@ -43,6 +38,7 @@ class Field extends Object
     public function get($name)
     {
         switch ($name) {
+
             case 'fieldtype':
             case 'type':
                 return $this->type();

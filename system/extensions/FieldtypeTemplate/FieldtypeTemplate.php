@@ -5,6 +5,23 @@ class FieldtypeTemplate extends FieldtypeObject
     protected $page;
     protected $objectType = "template";
 
+
+    public function getOutput($name)
+    {
+        $template = api("templates")->get("$name");
+        return $template;
+    }
+
+    public function getSave($value)
+    {
+        if ( $value instanceof Template) {
+            $value = $value->name;
+        }
+        $value = "$value"; // stringify for certainty :)
+        return $value;
+    }
+
+
     protected function setup(){
         $this->label = "Template";
         $this->columns = 6;

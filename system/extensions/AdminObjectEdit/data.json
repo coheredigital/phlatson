@@ -1,0 +1,5 @@
+{
+    "description": "Creates the forms and enable the edit/saving of objects. To be extended by Page, Field and Template edit extensions for simplicity sake.",
+    "title": "Base Object Edit",
+    "type": "Admin"
+}

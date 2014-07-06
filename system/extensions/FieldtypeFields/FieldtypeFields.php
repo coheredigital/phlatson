@@ -32,12 +32,17 @@ class FieldtypeFields extends Fieldtype
     public function getSave($array)
     {
 
+        $formattedArray = [];
+
         // remove invalid fields
         foreach ($array as $key => $name) {
-            if (!api("fields")->get($name)) unset($array[$key]);
+            if (!api("fields")->get($key)) unset($array[$key]);
+            else{
+                $formattedArray[] = ["name" => $key];
+            }
         }
 
-        return $array;
+        return $formattedArray;
     }
 
 

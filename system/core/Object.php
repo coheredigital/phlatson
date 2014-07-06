@@ -61,7 +61,7 @@ abstract class Object extends Core
         // get the field object matching the passed "$name"
         $field = api("fields")->get($name);
         if ( $field ){
-            $fieldtype = $field->type();
+            $fieldtype = $field->type;
             $value = $fieldtype->get($value, "output");
         }
 
@@ -85,9 +85,9 @@ abstract class Object extends Core
 
 
         // loop through the templates available fields so that we only set values
-        // for available feilds and ignore the rest
-        $template = $this->get("template");
-        $fields = $template->fields;
+        // for available fields and ignore the rest
+
+        $fields = $this->template->fields;
 
         // add the default fields
         if(count($this->defaultFields)) $fields->import($this->defaultFields);

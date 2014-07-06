@@ -1,20 +1,51 @@
 <?php
 
-class AdminFieldEdit extends AdminPageEdit
+class AdminFieldEdit extends AdminObjectEdit
 {
 
-    public function setup()
-    {
-        parent::setup();
+    protected function setupObject(){
 
-        if( $name = api("input")->get->name ){
-            $this->object = api("fields")->get($name);
-            $this->title = $this->object->label;
+        if(api("input")->get->new){
+            $field =  new Field();
+            $field->template = "field";
+
+            $this->object = $field;
+            $this->title = "New Field";
         }
-
+        else{
+            $name = api("input")->get->name;
+            $this->object = api("fields")->get($name);
+            $this->template = $this->object->template;
+            $this->title = $this->object->title;
+        }
 
     }
 
+
+    protected function addDefaultFields()
+    {
+
+        $fieldset = api("extensions")->get("MarkupFormtab");
+        $fieldset->label = $this->get("title");
+
+        $template = $this->object->template;
+        $fields = $template->fields;
+        foreach ($fields as $field) {
+            $fieldtype = $field->type;
+            $fieldtype->label = $field->label;
+
+            if (!is_null($this->object)) {
+                $name = $field->get("name");
+                $fieldtype->value = $this->object->getUnformatted($name);
+                $fieldtype->attribute("name", $name);
+                $fieldset->add($fieldtype);
+            }
+
+        }
+
+        $this->form->add($fieldset);
+
+    }
 
 
 

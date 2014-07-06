@@ -8,7 +8,6 @@ class Page extends Object
 
     protected $rootFolder = "pages";
 
-
     protected $defaultFields = array("template");
 
     protected $filesArray;
