@@ -32,7 +32,6 @@ class FieldtypeTemplate extends FieldtypeObject
         $this->page = $page;
         $this->setAllowedTemplates();
         $this->value = $this->page->template->name;
-
     }
 
     protected function setAllowedTemplates(){
