@@ -3,7 +3,12 @@
 class ObjectArray extends Core implements IteratorAggregate, ArrayAccess, Countable
 {
 
+    protected $object;
     protected $data = array();
+
+    public function setObject($object){
+        $this->object = $object;
+    }
 
     protected function isValidItem($item){
 

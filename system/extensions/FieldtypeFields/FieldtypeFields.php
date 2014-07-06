@@ -30,6 +30,8 @@ class FieldtypeFields extends Fieldtype
             }
         }
 
+        // attached the reference Object
+        $fields->setObject($this->object);
         return $fields;
     }
 
@@ -64,7 +66,8 @@ class FieldtypeFields extends Fieldtype
 
         foreach ($this->value as $field) {
 
-            $columns = trim($field->attributes('col'));
+            // retrieve the field object because "$this->value" will return an unformatted value
+            $field = api("fields")->get($field["name"]);
 
             $output .= "<div class='item' >
                             <div class='header' >

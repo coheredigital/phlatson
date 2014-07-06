@@ -33,7 +33,9 @@ abstract class Fieldtype extends Extension
             case 'type':
                 return "Fieldtype";
             case 'value':
-                return $this->object->get($this->field->name);
+                if($this->object instanceof Object){
+                    return $this->object->getUnformatted($this->field->name);
+                }
             default:
                 switch ($type) {
                     case 'output':

@@ -1,11 +1,11 @@
 <?php
 
 foreach ($page->children() as $p) {
-    $title = "<h4><a href='{$p->url}'>{$p->title}</a></h4>";
+    $title = "<a class='header' href='{$p->url}'>{$p->title}</a>";
     if ($p->description) {
-        $description = "<p>{$p->description}</p>";
+        $description = "<div class='description'>{$p->description}</div>";
     }
-    $output .= "{$title}{$description}";
+    $output .= "<div class='content'><div class='item'>{$title}{$description}</div></div>";
 }
 
 $output = "<div class='container'><div class='ui list'>{$output}</div></div>";

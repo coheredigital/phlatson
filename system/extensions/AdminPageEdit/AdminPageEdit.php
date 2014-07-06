@@ -49,22 +49,22 @@ class AdminPageEdit extends AdminObjectEdit
     protected function addSettingsFields()
     {
 
-        $settings = api("extensions")->get("MarkupFormtab");
-        $settings->label = "Settings";
-        $settings->add($this->getFieldTemplate());
-        $settings->add($this->getFieldParentSelect());
+        $tab = api("extensions")->get("MarkupFormtab");
+        $tab->label = "Settings";
+        $tab->add($this->getFieldTemplate());
+        $tab->add($this->getFieldParentSelect());
 
-        $this->form->add($settings);
+        $this->form->add($tab);
     }
 
     protected function addFilesFields()
     {
 
-        $settings = api("extensions")->get("MarkupFormtab");
-        $settings->label = "Files";
-        $settings->add($this->getFieldFiles());
+        $tab = api("extensions")->get("MarkupFormtab");
+        $tab->label = "Files";
+        $tab->add($this->getFieldFiles());
 
-        $this->form->add($settings);
+        $this->form->add($tab);
     }
 
     protected function getFieldTemplate()
@@ -91,18 +91,13 @@ class AdminPageEdit extends AdminObjectEdit
     protected function getFieldFiles()
     {
 
-        $selectOptions = array();
-        $templates = api("templates")->all();
-        foreach ($templates as $t) {
-            $selectOptions["$t->label"] = "$t->name";
-        }
         $fieldtype = api("extensions")->get("FieldtypePageFiles");
         $fieldtype->setObject($this->object);
         $fieldtype->label = "Files";
         $fieldtype->columns = 12;
         $fieldtype->attribute("name", "parent");
 
-        return $input;
+        return $fieldtype;
     }
 
 

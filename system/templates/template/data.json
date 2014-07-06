@@ -1,13 +1,11 @@
 {
-    "label": "Template",
     "fields": [
         {
-            "name": "label",
-            "columns": "12"
+            "name": "label"
         },
         {
-            "name": "fields",
-            "columns": "12"
+            "name": "fields"
         }
-    ]
+    ],
+    "label": "Template"
 }

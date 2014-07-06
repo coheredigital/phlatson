@@ -37,6 +37,7 @@ class AdminFieldEdit extends AdminObjectEdit
             if (!is_null($this->object)) {
                 $name = $field->get("name");
                 $fieldtype->value = $this->object->getUnformatted($name);
+                $fieldtype->setObject($this->object);
                 $fieldtype->attribute("name", $name);
                 $fieldset->add($fieldtype);
             }

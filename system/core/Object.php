@@ -74,7 +74,24 @@ abstract class Object extends Core
     }
 
     /**
-     * public alias for getFormatted($name, "raw")
+     * set value directly to $this->data[$name]
+     * skips validation of passed value
+     * should not generally be used on public facing API
+     *
+     * @param  string $name
+     * @param  mixed $value
+     * @return mixed
+     */
+    public function setUnformatted($name, $value)
+    {
+        return $this->data[$name] = $value;
+    }
+
+    /**
+     * get value directly to $this->data[$name]
+     * skips formatting of passed value
+     * should not generally be used on public facing API
+     *
      * @param  string $name
      * @return mixed
      */

@@ -25,31 +25,15 @@ class AdminTemplateEdit extends AdminObjectEdit
 
     }
 
-//    private function getSettings()
-//    {
-//        $value = $this->object->icon;
-//        $input = api("extensions")->get("FieldtypeText");
-//        $input->label = "Icon";
-//        $input->columns = 12;
-//        $input->value = $value;
-//        $input->attribute("name", "icon");
-//
-//        $fieldset = api("extensions")->get("MarkupFormtab");
-//        $fieldset->label = "Settings";
-//        $fieldset->add($input);
-//        $this->form->add($fieldset);
-//
-//    }
 
     private function addContentFieldset()
     {
         $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = "Content";
-        $object = $this->object;
-        $template = $object->get("template");
-        $fields = $template->get("fields");
+        $fields = $this->object->template->fields;
         foreach ($fields as $field) {
             $fieldtype = $field->type;
+            $fieldtype->setObject($this->object);
             $fieldtype->label = $field->label;
             $fieldtype->value = $this->object->{$field->name};
             $fieldset->add($fieldtype);
