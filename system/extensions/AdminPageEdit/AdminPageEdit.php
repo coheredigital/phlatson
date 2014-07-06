@@ -23,15 +23,15 @@ class AdminPageEdit extends AdminObjectEdit
 
             $this->object = new Page();
 
-            // set parent from get parameter
-            $parentUrl = api("input")->get->parent;
-            $this->object->parent = api("pages")->get($parentUrl); // TODO reevaluate, I shouldn't need to actually retrieve this object. maybe just verify its valid, not sure
-
+            // set the template first so following value can be set properly
             $templateName = api("input")->get->template;
             $this->object->template = $templateName;
 
-            $this->title = "New Page";
+            // set parent from get parameter
+            $parentUrl = api("input")->get->parent;
+            $this->object->parent = $parentUrl;
 
+            $this->title = "New Page";
 
         }
         else{

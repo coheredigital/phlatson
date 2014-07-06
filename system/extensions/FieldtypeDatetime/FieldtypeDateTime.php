@@ -16,22 +16,13 @@ class FieldtypeDateTime extends Fieldtype
         return $value;
     }
 
-    public function getEdit($value)
+
+
+    public function getSave($value)
     {
-        $value = (int)$value; // convert value to int
-        $value = date($this->field->format, $value);
+        $value = strtotime($value);
         return $value;
     }
-
-//    public function getSave($value)
-//    {
-//
-//        $dom = new DomDocument;
-//        $node = $dom->createElement("$name", (int)strtotime($value));
-//        $dom->appendChild($node);
-//
-//        return $dom->documentElement;
-//    }
 
 
 }

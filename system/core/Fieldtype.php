@@ -5,6 +5,7 @@ abstract class Fieldtype extends Extension
     protected $attributes = array();
 
     protected $field;
+    protected $object;
     public $value;
 
     final public function __construct($file)
@@ -42,6 +43,10 @@ abstract class Fieldtype extends Extension
         }
     }
 
+
+    public function setObject($object){
+        $this->object = $object;
+    }
 
     protected function getOutput($value)
     {

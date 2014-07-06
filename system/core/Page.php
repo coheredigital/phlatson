@@ -8,25 +8,10 @@ class Page extends Object
 
     protected $rootFolder = "pages";
 
-    protected $defaultFields = array("template");
+    protected $defaultFields = array("template", "parent");
 
     protected $filesArray;
     protected $imagesArray;
-
-    function __construct($file = null)
-    {
-
-        $defaultFields = array();
-        foreach ($this->defaultFields as $fieldName) {
-            $field = api("fields")->get($fieldName);
-            array_push($defaultFields, $field);
-        }
-        $this->defaultFields = $defaultFields; // replace default fields named array with Objects
-
-        parent::__construct($file);
-
-    }
-
 
     public function files(){
         return new FileArray($this);
@@ -102,14 +87,11 @@ class Page extends Object
 
     public function rootParent()
     {
-
         $name = $this->route[0];
-
         if ($name == $this->get("url")) {
             return $this;
         }
         return api("pages")->get($name);
-
     }
 
     protected function createUrl($array)
@@ -133,14 +115,8 @@ class Page extends Object
             case 'children':
                 return $this->children();
                 break;
-            case 'parent':
-                return $this->parent();
-                break;
             case 'rootParent':
                 return $this->rootParent();
-                break;
-            case 'fields':
-                return $this->get("template")->getFields($this->defaultFields);
                 break;
             case 'files':
                 return $this->files();
@@ -159,18 +135,28 @@ class Page extends Object
 
     }
 
+
     public function set($name, $value)
     {
-        switch ($name) {
-            case 'parent':
-                if($value instanceof Page){
-                    $this->parent = $value;
-                }
+
+        // only allow values to be set for existing fields ??
+
+        switch ($name){
+            case "template":
+                parent::set($name, $value);
                 break;
             default:
-                parent::set($name, $value);
-
+                $field = $this->template->fields->get("$name");
+                if( $field instanceof Field ){
+                    $fieldtype = $field->type;
+                    $this->data[$name] = $fieldtype->getSave($value);
+                }
+                else {
+                    parent::set($name, $value);
+                }
         }
+
+
 
     }
 

@@ -1,7 +1,5 @@
 <?php
 
-
-
 if ($input->get->logout == 1) {
     $session->logout();
     $session->redirect($config->urls->root . $config->adminUrl);
@@ -9,6 +7,7 @@ if ($input->get->logout == 1) {
 if ($user->isGuest() && $page->name != "login") {
     $session->redirect($config->urls->root . $config->adminUrl . "/login");
 }
+
 // when user is logged in but does not define a page, go to page tree
 if(!$user->isGuest() && !$input->request[1]){
     $session->redirect($config->urls->root . $config->adminUrl . "/pages");

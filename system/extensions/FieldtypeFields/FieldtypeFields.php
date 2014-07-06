@@ -3,12 +3,9 @@
 class FieldtypeFields extends Fieldtype
 {
 
-    private $template;
-
     protected function setup()
     {
         api('config')->styles->add($this->url . "{$this->className}.css");
-//        api('config')->scripts->add($this->url . "shapeshifter/shapeshifter.js");
         api('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
@@ -18,12 +15,22 @@ class FieldtypeFields extends Fieldtype
 
         $fields = new ObjectArray();
 
-        foreach ($array as $item){
+        if( count($array) ) foreach ($array as $item){
 
             if (!isset($item['name'])) continue;
 
             $field = api("fields")->get($item['name']);
             $fields->add($field);
+        }
+
+        if( is_object($this->object) && count( $this->object->defaultFields) ){
+            foreach ($this->object->defaultFields as $item){
+
+                if (!isset($item['name'])) continue;
+
+                $field = api("fields")->get($item['name']);
+                $fields->add($field);
+            }
         }
 
         return $fields;

@@ -60,7 +60,8 @@ abstract class Object extends Core
         $field = api("fields")->get($name);
         if ( $field ){
             $fieldtype = $field->type;
-            $value = $fieldtype->get($value, "output");
+            $fieldtype->setObject($this);
+            $value = $fieldtype->getOutput($value);
         }
 
         return $value;

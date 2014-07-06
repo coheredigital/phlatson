@@ -17,7 +17,7 @@ class ObjectArray extends Core implements IteratorAggregate, ArrayAccess, Counta
     public function add($item) {
 
         if($item){
-            $this->data[] = $item;
+            $this->data[$item->name] = $item;
             return $this;
         }
 
@@ -56,6 +56,17 @@ class ObjectArray extends Core implements IteratorAggregate, ArrayAccess, Counta
         return $objects;
     }
 
+
+    public function get($name){
+        if ( $this->has($name) ){
+            return $this->data[$name];
+        }
+    }
+
+
+    public function has($name){
+        return isset($this->data[$name]);
+    }
 
     /**
      * return first item in data array

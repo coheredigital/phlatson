@@ -13,14 +13,23 @@
                 </div>
             </div>
         <?php endif ?>
-
-        <pre>
-            <?php
-
-            $ext =  $extensions->get("FieldtypeDatetime");
-            var_dump($ext->name);
-            ?>
-
-        </pre>
     </div>
-<?php include 'includes/foot.inc'; ?>
+<?php
+
+$page->title = "This is a page";
+$page->date = "July 1, 2014";
+
+$template = $page->template;
+
+$pageFields = $template->fields;
+
+$parent = $page->parent;
+
+$parentTitle = $parent->title;
+
+
+
+include 'includes/foot.inc';
+
+
+?>
