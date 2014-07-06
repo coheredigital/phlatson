@@ -6,7 +6,7 @@ abstract class Fieldtype extends Extension
 
     protected $field;
     protected $object;
-    public $value;
+//    public $value;
 
     final public function __construct($file)
     {
@@ -32,6 +32,8 @@ abstract class Fieldtype extends Extension
         switch ($name) {
             case 'type':
                 return "Fieldtype";
+            case 'value':
+                return $this->object->getUnformatted($name);
             default:
                 switch ($type) {
                     case 'output':

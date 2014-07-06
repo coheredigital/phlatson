@@ -32,11 +32,11 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
-        $fields = $template->get("fields");
+        $fields = $template->fields;
         foreach ($fields as $field) {
             $fieldtype = $field->type;
+            $fieldtype->setObject($this->object);
             $fieldtype->label = $field->label;
-            // $fieldtype->columns = $field->attributes('col') ? (int)$field->attributes('col') : 12;
 
             if (!is_null($this->object)) {
                 $name = $field->get("name");

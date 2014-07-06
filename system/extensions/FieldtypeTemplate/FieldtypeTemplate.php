@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeTemplate extends FieldtypeObject
+class FieldtypeTemplate extends FieldtypeSelect
 {
 
     protected $objectType = "template";
@@ -28,6 +28,11 @@ class FieldtypeTemplate extends FieldtypeObject
         $this->attribute("name", "template");
     }
 
+    public function setObject( $page){
+        $this->object = $page;
+        $this->setAllowedTemplates();
+        $this->value = $this->object->template->name;
+    }
 
     protected function setAllowedTemplates(){
         $selectOptions = array();

@@ -71,10 +71,8 @@ class AdminPageEdit extends AdminObjectEdit
     {
 
         $field = api("fields")->get("template");
-
-        $fieldtype = $field->type;
-        $fieldtype->setPage($this->object);
-        return $fieldtype;
+        $field->type->setObject($this->object);
+        return $field->type;
     }
 
     protected function getFieldParentSelect()
@@ -85,6 +83,7 @@ class AdminPageEdit extends AdminObjectEdit
         $value = $this->object->parent->directory;
 
         $fieldtype = $field->type;
+        $fieldtype->setObject($this->object);
         $fieldtype->label = "Parent";
         $fieldtype->columns = 6;
         $fieldtype->value = $value;
@@ -103,11 +102,12 @@ class AdminPageEdit extends AdminObjectEdit
         foreach ($templates as $t) {
             $selectOptions["$t->label"] = "$t->name";
         }
-        $input = api("extensions")->get("FieldtypePageFiles");
-        $input->label = "Files";
-        $input->columns = 12;
-        $input->value = $value;
-        $input->attribute("name", "parent");
+        $fieldtype = api("extensions")->get("FieldtypePageFiles");
+        $fieldtype->setObject($this->object);
+        $fieldtype->label = "Files";
+        $fieldtype->columns = 12;
+        $fieldtype->value = $value;
+        $fieldtype->attribute("name", "parent");
 
         return $input;
     }
