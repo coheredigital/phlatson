@@ -14,22 +14,20 @@ abstract class Object extends Core
     protected $defaultFields = array();
     protected $route = array();
 
-    function __construct($file = null, $directory = null)
+    function __construct($file = null)
     {
-        $this->route = $this->getRoute($file);
-        $this->load($file);
+        if(is_file($file)){
+            $this->route = $this->getRoute($file);
+            $this->load($file);
+        }
+
     }
 
     protected function load($file)
     {
-
-        // check site path first
-        if (!is_file($file)) return false;
-
         $this->file = $file;
         $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
         $this->data = json_decode(file_get_contents($file), true);
-
     }
 
     protected function getRoute($file)
@@ -81,12 +79,8 @@ abstract class Object extends Core
     public function save($postData = null, $saveName = null)
     {
 
-        // TODO - add more validation to page save
-
-
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
-
         $fields = $this->template->fields;
 
         // add the default fields
@@ -134,8 +128,7 @@ abstract class Object extends Core
             $saveFile = "$saveName.json";
         }
         else{
-//            $saveFile = self::DATA_FILE;
-            $saveFile = "test.json";
+            $saveFile = self::DATA_FILE;
         }
 
         $saveData = json_encode($saveData, JSON_PRETTY_PRINT);
@@ -181,10 +174,6 @@ abstract class Object extends Core
                 return $this->path;
             case 'requests':
                 return $this->route;
-            case 'template':
-                $template = $this->getUnformatted("template");
-                $template = api("templates")->get($template);
-                return $template;
             case 'class':
             case 'className':
                 return $this->className();
@@ -200,16 +189,7 @@ abstract class Object extends Core
 
     public function set($name, $value)
     {
-        switch($name){
-            // TODO: reevaluate, not sure I like the way the name is set as appossed to the object, I believe I did this for saving reasons
-            case 'template':
-                if($value instanceof Template){
-                    $this->data["template"] = $value->name;
-                    break;
-                }
-            default:
-                $this->data[$name] = $value;
-        }
+        $this->data[$name] = $value;
     }
 
     public function __set($name, $value)

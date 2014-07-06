@@ -17,7 +17,7 @@ class File extends Core
         $this->filesize = filesize($this->file);
         $this->filesizeFormatted = $this->formatSizeUnits($this->filesize);
         $this->name = $name;
-        $this->ext = pathinfo($name, PATHINFO_EXTENSION);
+        $this->extension = pathinfo($name, PATHINFO_EXTENSION);
 
 
     }

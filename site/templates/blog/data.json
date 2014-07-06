@@ -1,9 +1,0 @@
-{
-    "label": "Blog",
-    "fields": [
-        {
-            "name": "title",
-            "columns": 12
-        }
-    ]
-}
