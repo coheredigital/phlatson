@@ -23,13 +23,10 @@ class FieldtypeFields extends Fieldtype
             $fields->add($field);
         }
 
-        if( is_object($this->object) && count( $this->object->defaultFields) ){
+        if( $this->object instanceof Object && count( $this->object->defaultFields ) ){
             foreach ($this->object->defaultFields as $item){
-
-                if (!isset($item['name'])) continue;
-
-                $field = api("fields")->get($item['name']);
-                $fields->add($field);
+                $field = api("fields")->get($item);
+                if ( $field instanceof Field ) $fields->add($field);
             }
         }
 

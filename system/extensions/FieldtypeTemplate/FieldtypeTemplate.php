@@ -2,13 +2,14 @@
 
 class FieldtypeTemplate extends FieldtypeObject
 {
-    protected $page;
+
     protected $objectType = "template";
 
 
     public function getOutput($name)
     {
         $template = api("templates")->get("$name");
+        $template->setReference($this->object);
         return $template;
     }
 
@@ -21,18 +22,12 @@ class FieldtypeTemplate extends FieldtypeObject
         return $value;
     }
 
-
     protected function setup(){
         $this->label = "Template";
         $this->columns = 6;
         $this->attribute("name", "template");
     }
 
-    public function setPage(Page $page){
-        $this->page = $page;
-        $this->setAllowedTemplates();
-        $this->value = $this->page->template->name;
-    }
 
     protected function setAllowedTemplates(){
         $selectOptions = array();

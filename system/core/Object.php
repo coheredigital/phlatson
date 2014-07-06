@@ -60,7 +60,13 @@ abstract class Object extends Core
         $field = api("fields")->get($name);
         if ( $field ){
             $fieldtype = $field->type;
-            $fieldtype->setObject($this);
+            if ( $this instanceof Template && $name === "fields") { // TODO : special case could be handled better
+                $fieldtype->setObject($this->referenceObject);
+            }
+            else{
+                $fieldtype->setObject($this);
+            }
+
             $value = $fieldtype->getOutput($value);
         }
 

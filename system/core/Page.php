@@ -8,7 +8,7 @@ class Page extends Object
 
     protected $rootFolder = "pages";
 
-    protected $defaultFields = array("template", "parent");
+    public $defaultFields = array("template", "parent");
 
     protected $filesArray;
     protected $imagesArray;
@@ -146,8 +146,8 @@ class Page extends Object
                 parent::set($name, $value);
                 break;
             default:
-                $field = $this->template->fields->get("$name");
-                if( $field instanceof Field ){
+                if( $this->defaultFields[$name] || $this->template->fields->has($name) ) {
+                    $field = api("fields")->get("$name");
                     $fieldtype = $field->type;
                     $this->data[$name] = $fieldtype->getSave($value);
                 }

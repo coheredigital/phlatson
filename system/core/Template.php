@@ -3,7 +3,12 @@
 class Template extends Object
 {
 
+    protected $referenceObject; // TODO :  bettername
     protected $rootFolder = "templates";
+
+    public function setReference($object){
+        $this->referenceObject = $object;
+    }
 
     public function get($name)
     {
