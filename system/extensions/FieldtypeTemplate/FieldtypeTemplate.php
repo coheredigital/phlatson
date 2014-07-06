@@ -8,7 +8,7 @@ class FieldtypeTemplate extends FieldtypeSelect
 
     public function getOutput($name)
     {
-        $template = api("templates")->get("$name");
+        $template = api("templates")->get($name);
         $template->setReference($this->object);
         return $template;
     }

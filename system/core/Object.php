@@ -21,6 +21,8 @@ abstract class Object extends Core
             $this->load($file);
         }
 
+
+
     }
 
     protected function load($file)
@@ -28,6 +30,10 @@ abstract class Object extends Core
         $this->file = $file;
         $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
         $this->data = json_decode(file_get_contents($file), true);
+        
+        // set object name
+        $lastRequestIndex = count($this->route) - 1;
+        $this->name = $this->route[$lastRequestIndex];
     }
 
     protected function getRoute($file)
@@ -124,7 +130,7 @@ abstract class Object extends Core
         }
 
         // set name value
-        if($postData->name){
+        if($postData->name){ // TODO : this is temp
             $pageName = $postData->name; // TODO add page name sanitizer
             $this->name = $pageName;
         }
@@ -178,10 +184,6 @@ abstract class Object extends Core
     public function get($name)
     {
         switch ($name) {
-            case 'name':
-                $lastRequestIndex = count($this->route) - 1;
-                $name = $this->route[$lastRequestIndex];
-                return $name;
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'location':
