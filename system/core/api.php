@@ -4,11 +4,11 @@
  * API Registry class contains all core api classes to be accessed by any
  * class extending the core. or any class via the api() function defined in _functions.php
  */
-final class Registry implements IteratorAggregate
+final class api implements IteratorAggregate
 {
 
-    private $registry = array();
-    private $lock = array();
+    private static $registry = array();
+    private static $lock = array();
 
 
     /**
@@ -16,19 +16,19 @@ final class Registry implements IteratorAggregate
      * @param string $key
      * @param object $value
      */
-    public function set($key, $value, $lock = false)
+    public static function register($key, $value, $lock = false)
     {
 
 
-        if (isset($this->registry[$key]) && in_array($key, $this->lock)) {
+        if (isset(self::$registry[$key]) && in_array($key, self::$lock)) {
             throw new Exception("There is already an API entry for '{$key}', value is locked.");
         }
         // set $key and $value the same to avoid duplicates
         if ($lock) {
-            $this->lock[$key] = $key;
+            self::$lock[$key] = $key;
         }
 
-        $this->registry[$key] = $value;
+        self::$registry[$key] = $value;
 
     }
 
@@ -37,12 +37,19 @@ final class Registry implements IteratorAggregate
      * @param  string $key
      * @return object
      */
-    public function get($key)
+    public static function get($key = null)
     {
-        if (!isset($this->registry[$key])) {
-            throw new Exception("There is no '{$key}' entry in the API registry!");
+
+        if( is_null($key) ){
+            return self::$registry;
         }
-        return $this->registry[$key];
+        else{
+            if (!isset(self::$registry[$key])) {
+                throw new Exception("There is no '{$key}' entry in the API registry!");
+            }
+            return self::$registry[$key];
+        }
+
     }
 
     public function __get($key)

@@ -11,7 +11,7 @@ class Session extends Core implements IteratorAggregate
 
         // check for a logged in user
         if ($username = $this->get('_user_name')) {
-            $user = api('users')->get($username);
+            $user = api::get('users')->get($username);
             // update timestamp to extend session life
             if ($user) {
                 $this->set('_user_ts', time());
@@ -20,7 +20,7 @@ class Session extends Core implements IteratorAggregate
         } else {
             $user = api('users')->get("guest");
         }
-        api('users')->setActiveUser($user);
+        api::get('users')->setActiveUser($user);
 
     }
 

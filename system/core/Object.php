@@ -195,7 +195,7 @@ abstract class Object extends Core
                     return "site";
                 }
             case 'url':
-                return $this->api('config')->urls->root . $this->location . "/" . $this->rootFolder . "/" . $this->name . "/";
+                return api::get('config')->urls->root . $this->location . "/" . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
                 return $this->path;
             case 'requests':

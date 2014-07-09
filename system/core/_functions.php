@@ -3,7 +3,7 @@
 // returns api object for use basically anywhere
 function api($name)
 {
-    return Core::api($name);
+    return api::get($name);
 }
 
 // Emulate register_globals off

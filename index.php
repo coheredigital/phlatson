@@ -7,18 +7,26 @@ require_once 'system/core/_interfaces.php';
 define("XPAGES", true);
 define('ROOT_PATH', normalizePath(dirname(__FILE__)));
 
+// instatiate api variables
+api::register('config', new Config, true);
+api::register('sanitizer', new Sanitizer(), true);
+api::register('input', new Input(), true);
+api::register('users', new Users(), true);
+api::register('session', new Session(), true);
+api::register('extensions', new Extensions(), true);
+api::register('fields', new Fields(), true);
+api::register('templates', new Templates(), true);
+api::register('pages', new Pages(), true);
 
-$config = new Config;
 
 // execute core init GET THIS PARTY STARTED!!!
 //try {
 
-    Core::init($config);
+    // loop through api registry and assign variable for easy use in layout files
+    // $page->get('/some-page') instead of api::get('pages')->get('/some-page') YUCK!  :)
 
-    foreach (Core::api() as $name => $object) {
-        if ($name !== "config" && $name !== "page" ) { // skip $config, it is already set
-            ${$name} = $object;
-        }
+    foreach (api::get() as $name => $object) {
+        ${$name} = $object;
     }
 
     $page = $pages->get( $input->url );
@@ -27,7 +35,7 @@ $config = new Config;
     }
 
     if( $page instanceof AdminPage) {
-        $layoutFile = api('config')->paths->system . "index.php";
+        $layoutFile = api::get('config')->paths->system . "index.php";
     }
     else{
         $template = $page->template;

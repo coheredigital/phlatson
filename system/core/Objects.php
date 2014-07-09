@@ -28,11 +28,11 @@ abstract class Objects extends Core
 
         if ( isset($this->data[$key]) ) return $this->data[$key];
 
-        $root = normalizePath( $this->api('config')->paths->site . $this->rootFolder );
+        $root = normalizePath( api::get('config')->paths->site . $this->rootFolder );
         $path = normalizePath( $root . $key );
 
         if( !$this->isValidPath( $path ) ){
-            $root = normalizePath( $this->api('config')->paths->system . $this->rootFolder );
+            $root = normalizePath( api::get('config')->paths->system . $this->rootFolder );
             $path = normalizePath( $root . $key );
 
             if( !$this->isValidPath( $path ) ) return false;
@@ -52,7 +52,7 @@ abstract class Objects extends Core
     protected function getObjectList($path = null){
 
 
-        $systemPath =  $this->api('config')->paths->system . $this->rootFolder;
+        $systemPath =  api::get('config')->paths->system . $this->rootFolder;
         $systemPath = normalizePath( $systemPath );
 
         $systemPathCheck =  $systemPath . $path;
@@ -63,7 +63,7 @@ abstract class Objects extends Core
         }
 
 
-        $sitePath =  $this->api('config')->paths->site . $this->rootFolder;
+        $sitePath =  api::get('config')->paths->site . $this->rootFolder;
         $sitePath = normalizePath( $sitePath );
 
         $sitePathCheck =  $sitePath . $path;
