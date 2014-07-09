@@ -1,6 +1,6 @@
 <?php
 
-class Sanitizer extends Core
+class Sanitizer
 {
 
     /**

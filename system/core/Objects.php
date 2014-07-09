@@ -1,6 +1,6 @@
 <?php
 
-abstract class Objects extends Core
+abstract class Objects
 {
 
     public $data = array();

@@ -1,7 +1,10 @@
 <?php
 
-abstract class Object extends Core
+abstract class Object
 {
+
+    private $className = null;
+
     const DATA_FILE = "data.json";
     protected $rootFolder;
     protected $objectOrigin = null;
@@ -221,6 +224,24 @@ abstract class Object extends Core
     public function __set($name, $value)
     {
         return $this->set($name, $value);
+    }
+
+
+
+
+    public function className()
+    {
+
+        if (!isset($this->className)) {
+            $this->className = get_class($this);
+        }
+        return $this->className;
+
+    }
+
+    public function __toString()
+    {
+        return $this->className();
     }
 
 

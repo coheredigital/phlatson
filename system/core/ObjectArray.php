@@ -1,6 +1,6 @@
 <?php
 
-class ObjectArray extends Core implements IteratorAggregate, ArrayAccess, Countable
+class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
 {
 
     protected $object;

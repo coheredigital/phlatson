@@ -8,7 +8,7 @@ Objects and allow natural fall-backs
 
  */
 
-class SimpleArray extends Core implements IteratorAggregate
+class SimpleArray implements IteratorAggregate
 {
 
     protected $data = array();

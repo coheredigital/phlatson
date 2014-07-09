@@ -1,6 +1,6 @@
 <?php
 
-class Session extends Core implements IteratorAggregate
+class Session implements IteratorAggregate
 {
 
 
