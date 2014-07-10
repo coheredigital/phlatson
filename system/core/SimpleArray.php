@@ -11,13 +11,25 @@ Objects and allow natural fall-backs
 class SimpleArray implements IteratorAggregate
 {
 
-    protected $data = array();
+    protected $data = [];
 
 
     public function add($name)
     {
         $key = $this->getKey($name);
         $this->data[$key] = $name;
+        return $this;
+    }
+
+    public function prepend($name){
+        $key = $this->getKey($name);
+        $this->data = [$key => $name] + $this->data;
+        return $this;
+    }
+
+    public function append($name){
+        $key = $this->getKey($name);
+        $this->data = $this->data + [$key => $name];
         return $this;
     }
 

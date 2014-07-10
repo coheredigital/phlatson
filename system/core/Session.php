@@ -18,7 +18,7 @@ class Session implements IteratorAggregate
             }
             // set current user to the logged in user
         } else {
-            $user = api('users')->get("guest");
+            $user = api::get('users')->get("guest");
         }
         api::get('users')->setActiveUser($user);
 
@@ -221,7 +221,7 @@ class Session implements IteratorAggregate
     public function login($name, $password)
     {
         // should sanitize name
-        $user = $this->api('users')->get("$name");
+        $user = api::get('users')->get("$name");
         if (!$user instanceof User) {
             throw new Exception("User {$name} not found!");
         }
@@ -230,7 +230,7 @@ class Session implements IteratorAggregate
             $this->regenerate(); // rebuild session data
             $this->set('_user_name', $user->name);
             $this->set('_user_time', time());
-            $this->api('user', $user);
+            api::get('user', $user);
         }
         return null;
     }
@@ -252,8 +252,8 @@ class Session implements IteratorAggregate
         $this->regenerate();
 
         $this->clear();
-        $guest = $this->api('users')->get("guest");
-        $this->api('user', $guest);
+        $guest = api::get('users')->get("guest");
+        api::get('user', $guest);
 
         return $this;
     }

@@ -16,7 +16,7 @@ class AdminPage extends Page
     {
         switch ($name) {
             case 'extension':
-                return api("extensions")->get( $this->getUnformatted("extension") );
+                return api::get("extensions")->get( $this->getUnformatted("extension") );
             case 'template':
                 $template = new AdminTemplate();
                 $template->layout = $this->getUnformatted("layout");
@@ -35,7 +35,7 @@ class AdminPage extends Page
         if ($directory == $this->get("url")) {
             return $this;
         }
-        return api("pages")->get($directory);
+        return api::get("pages")->get($directory);
 
     }
 

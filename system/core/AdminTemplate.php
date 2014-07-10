@@ -23,10 +23,10 @@ class AdminTemplate extends Template
         switch ($name) {
             case 'extension':
                 $extensionName = $this->getUnformatted("extension");
-                return api("extensions")->get( $extensionName );
+                return api::get("extensions")->get( $extensionName );
             case 'layout':
                 $layoutName = $this->getUnformatted("layout");
-                $layoutFile = api("config")->paths->systemLayouts . $layoutName . ".php";
+                $layoutFile = api::get("config")->paths->systemLayouts . $layoutName . ".php";
                 return $layoutFile;
             default:
                 return parent::get($name);

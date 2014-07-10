@@ -5,7 +5,7 @@ class AdminFieldEdit extends AdminObjectEdit
 
     protected function setupObject(){
 
-        if(api("input")->get->new){
+        if( api::get("input")->get->new ){
             $field =  new Field();
             $field->template = "field";
 
@@ -13,8 +13,8 @@ class AdminFieldEdit extends AdminObjectEdit
             $this->title = "New Field";
         }
         else{
-            $name = api("input")->get->name;
-            $this->object = api("fields")->get($name);
+            $name = api::get("input")->get->name;
+            $this->object = api::get("fields")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
         }
@@ -25,7 +25,7 @@ class AdminFieldEdit extends AdminObjectEdit
     protected function addDefaultFields()
     {
 
-        $fieldset = api("extensions")->get("MarkupFormtab");
+        $fieldset = api::get("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;

@@ -5,19 +5,19 @@ class AdminTemplateEdit extends AdminObjectEdit
 
     protected function setupObject(){
 
-        if(api("input")->get->new){
+        if(api::get("input")->get->new){
 
             $this->object = new Template();
 
-            $templateName = api("input")->get->template;
+            $templateName = api::get("input")->get->template;
             $this->object->template = $templateName;
 
             $this->title = "New Template";
 
         }
         else{
-            $name = api("input")->get->name;
-            $this->object = api("templates")->get($name);
+            $name = api::get("input")->get->name;
+            $this->object = api::get("templates")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
 
@@ -28,7 +28,7 @@ class AdminTemplateEdit extends AdminObjectEdit
 
     private function addContentFieldset()
     {
-        $fieldset = api("extensions")->get("MarkupFormtab");
+        $fieldset = api::get("extensions")->get("MarkupFormtab");
         $fieldset->label = "Content";
         $fields = $this->object->template->fields;
         foreach ($fields as $field) {

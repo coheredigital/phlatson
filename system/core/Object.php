@@ -19,12 +19,11 @@ abstract class Object
 
     function __construct($file = null)
     {
-        if(is_file($file)){
-            $this->route = $this->getRoute($file);
-            $this->load($file);
-        }
+        $this->file = $file;
 
 
+        $this->route = $this->getRoute($file);
+        $this->load($file);
 
     }
 
@@ -41,7 +40,7 @@ abstract class Object
 
     protected function getRoute($file)
     {
-        $relativePath = str_replace(api("config")->paths->root, "", $file );
+        $relativePath = str_replace(api::get("config")->paths->root, "", $file );
         $relativePath = str_replace($this::DATA_FILE, "", $relativePath );
         $relativePath = rtrim($relativePath, '/');
 
@@ -66,7 +65,7 @@ abstract class Object
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        $field = api("fields")->get($name);
+        $field = api::get("fields")->get($name);
         if ( $field ){
             $fieldtype = $field->type;
             if ( $this instanceof Template && $name === "fields") { // TODO : special case could be handled better
@@ -138,7 +137,7 @@ abstract class Object
             $this->name = $pageName;
         }
         else{ // generate page name from defined field
-            $this->name = api("sanitizer")->name($postData->title);
+            $this->name = api::get("sanitizer")->name($postData->title);
         }
 
         // handle new object creation
@@ -191,7 +190,7 @@ abstract class Object
                 return normalizeDirectory($this->name);
             case 'location':
                 // we assume site location if system path not found because new Object can only be added to site and not system
-                if( strpos($this->file, api("config")->paths->system) !== false){
+                if( strpos($this->file, api::get("config")->paths->system) !== false){
                     return "system";
                 }
                 else{

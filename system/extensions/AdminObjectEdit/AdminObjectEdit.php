@@ -9,7 +9,7 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     public function setup()
     {
 
-        if( !api("input")->get->name ) return false;
+        if( !api::get("input")->get->name ) return false;
 
         $this->setupObject();
         $this->setupForm();
@@ -20,7 +20,7 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     protected function setupObject(){}
 
     protected function setupForm(){
-        $this->form = api("extensions")->get("MarkupEditForm");
+        $this->form = api::get("extensions")->get("MarkupEditForm");
         $this->form->object = $this->object;
     }
 
@@ -28,7 +28,7 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     protected function addDefaultFields()
     {
 
-        $fieldset = api("extensions")->get("MarkupFormtab");
+        $fieldset = api::get("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
@@ -60,9 +60,9 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     }
 
     public function processSave(){
-        if (count(api("input")->post)) {
-            $this->object->save(api("input")->post);
-            api("session")->redirect(api("input")->query);
+        if (count(api::get("input")->post)) {
+            $this->object->save(api::get("input")->post);
+            api::get("session")->redirect(api::get("input")->query);
         }
     }
 

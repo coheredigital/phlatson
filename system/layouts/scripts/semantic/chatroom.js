@@ -299,7 +299,7 @@ $.fn.chatroom = function(parameters) {
           // sends chat message
           send: function(message) {
             if( !module.utils.emptyString(message) ) {
-              $.api({
+              $.api::get({
                 url    : settings.endpoint.message,
                 method : 'POST',
                 data   : {

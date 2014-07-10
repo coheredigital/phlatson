@@ -296,7 +296,7 @@ $.fn.search = function(source, parameters) {
             module.search.cancel();
             module.debug('Executing search');
             $.extend(true, apiSettings, settings.apiSettings);
-            $.api(apiSettings);
+            $.api::get(apiSettings);
           },
 
           cache: {

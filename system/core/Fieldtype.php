@@ -70,7 +70,7 @@ abstract class Fieldtype extends Extension
 
     public function getInput()
     {
-        // $input =  $this->api("extensions")->get("InputtypeText");
+        // $input =  $this->api::get("extensions")->get("InputtypeText");
         return $this;
     }
 

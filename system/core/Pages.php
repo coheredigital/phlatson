@@ -25,7 +25,7 @@ class Pages extends Objects
     protected function isAdminRequest($query){
         $requests = explode("/", $query);
         $requestRoot = normalizeDirectory($requests[0]);
-        $adminUrl = normalizeDirectory(api("config")->adminUrl);
+        $adminUrl = normalizeDirectory(api::get("config")->adminUrl);
 
         return $requestRoot == $adminUrl;
     }

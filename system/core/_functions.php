@@ -1,11 +1,5 @@
 <?php
 
-// returns api object for use basically anywhere
-function api($name)
-{
-    return api::get($name);
-}
-
 // Emulate register_globals off
 function unregister_GLOBALS()
 {

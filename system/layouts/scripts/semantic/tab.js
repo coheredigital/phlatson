@@ -315,7 +315,7 @@
             console.log(settings.apiSettings);
             requestSettings = $.extend(true, { headers: { 'X-Remote': true } }, settings.apiSettings, apiSettings);
             module.debug('Retrieving remote content', fullTabPath, requestSettings);
-            $.api( requestSettings );
+            $.api::get( requestSettings );
           }
           else {
             module.error(error.api);

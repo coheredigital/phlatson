@@ -12,7 +12,7 @@ class File extends Core
 
         $this->page = $page;
         $this->path = $page->path;
-        $this->url = api("config")->urls->pages . $page->directory . "/" . rawurlencode( $name );
+        $this->url = api::get("config")->urls->pages . $page->directory . "/" . rawurlencode( $name );
         $this->file = $page->path . $name;
         $this->filesize = filesize($this->file);
         $this->filesizeFormatted = $this->formatSizeUnits($this->filesize);

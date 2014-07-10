@@ -7,7 +7,7 @@ class FieldtypeField extends FieldtypeObject
 
     public function getOutput($name)
     {
-        $field = api("fields")->get("$name");
+        $field = api::get("fields")->get("$name");
         return $field;
     }
 

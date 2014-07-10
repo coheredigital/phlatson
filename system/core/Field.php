@@ -13,7 +13,7 @@ class Field extends Object
     {
         if ($this->getUnformatted("fieldtype")) {
             $name = $this->getUnformatted("fieldtype");
-            $fieldtype = api("extensions")->get($name);
+            $fieldtype = api::get("extensions")->get($name);
             $fieldtype->setField($this);
             return $fieldtype;
         }
@@ -44,7 +44,7 @@ class Field extends Object
                 return $this->type();
                 break;
             case 'template':
-                return api("templates")->get("field");
+                return api::get("templates")->get("field");
                 break;
             default:
                 return parent::get($name);

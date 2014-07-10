@@ -6,7 +6,7 @@ class FieldtypeSelectFieldtype extends FieldtypeSelect
 
     public function getOutput($name)
     {
-        $template = api("fields")->get("$name");
+        $template = api::get("fields")->get("$name");
         return $template;
     }
 
@@ -24,7 +24,7 @@ class FieldtypeSelectFieldtype extends FieldtypeSelect
     {
         $options = array();
 
-        $fieldtypes = api("extensions")->fieldtypes;
+        $fieldtypes = api::get("extensions")->fieldtypes;
         if (!$fieldtypes) return false;
         foreach ( $fieldtypes as $fieldtype ) {
 

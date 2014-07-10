@@ -49,7 +49,7 @@ class MarkupEditForm extends Extension
 
 
         // add the form controls
-        $formActions = api("extensions")->get("FieldtypeFormActions");
+        $formActions = api::get("extensions")->get("FieldtypeFormActions");
         $formActions->object = $this->object;
         $formActions = $formActions->render();
 

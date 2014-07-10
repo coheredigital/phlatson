@@ -5,11 +5,11 @@ class FieldtypeRedactor extends FieldtypeTextarea
 
     protected function setup()
     {
-        api('config')->styles->add($this->url . "redactor/redactor.css");
-        api('config')->styles->add($this->url . "{$this->className}.css");
+        api::get('config')->styles->add($this->url . "redactor/redactor.css");
+        api::get('config')->styles->add($this->url . "{$this->className}.css");
 
-        api('config')->scripts->add($this->url . "redactor/redactor.js");
-        api('config')->scripts->add($this->url . "{$this->className}.js");
+        api::get('config')->scripts->add($this->url . "redactor/redactor.js");
+        api::get('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
 }

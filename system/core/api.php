@@ -2,9 +2,9 @@
 
 /**
  * API Registry class contains all core api classes to be accessed by any
- * class extending the core. or any class via the api() function defined in _functions.php
+ * class extending the core. or any class via the api::get() function defined in _functions.php
  */
-final class api implements IteratorAggregate
+final class Api
 {
 
     private static $registry = array();
@@ -12,9 +12,10 @@ final class api implements IteratorAggregate
 
 
     /**
-     * set registry API by key
-     * @param string $key
-     * @param object $value
+     * @param $key
+     * @param $value
+     * @param bool $lock
+     * @throws Exception
      */
     public static function register($key, $value, $lock = false)
     {
@@ -33,9 +34,9 @@ final class api implements IteratorAggregate
     }
 
     /**
-     * get registry by key
-     * @param  string $key
-     * @return object
+     * @param null $key
+     * @return array
+     * @throws Exception
      */
     public static function get($key = null)
     {
@@ -52,14 +53,6 @@ final class api implements IteratorAggregate
 
     }
 
-    public function __get($key)
-    {
-        return $this->get($key);
-    }
 
-    public function getIterator()
-    {
-        return new ArrayObject($this->registry);
-    }
 
 }

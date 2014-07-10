@@ -19,7 +19,7 @@ abstract class Objects
     {
         // manually add the special case of the home page
         if ($this instanceof Pages) {
-            $this->data['/'] = api("config")->paths->pages . "data.json";
+            $this->data['/'] = api::get("config")->paths->pages . "data.json";
         }
 
     }
@@ -171,7 +171,7 @@ abstract class Objects
 
     public function isValidPath($path){
         $path = normalizePath($path);
-        if(strpos( $path,  api("config")->paths->root ) !== false){
+        if(strpos( $path,  api::get("config")->paths->root ) !== false){
             return true;
         }
         else{

@@ -19,17 +19,17 @@ $adminHome = $pages->get($config->adminUrl); // create home page object for simp
 $config->styles->add("{$config->urls->systemLayouts}styles/adminTheme.css");
 $config->styles->add("{$config->urls->systemLayouts}styles/semantic.min.css");
 
-$config->scripts->add("{$config->urls->systemLayouts}scripts/jquery-2.1.1.min.js");
+$config->scripts->prepend("{$config->urls->systemLayouts}scripts/semantic.min.js");
+$config->scripts->prepend("{$config->urls->systemLayouts}scripts/jquery-1.11.1.min.js");
 $config->scripts->add("{$config->urls->systemLayouts}scripts/jquery-sortable.js");
-$config->scripts->add("{$config->urls->systemLayouts}scripts/semantic.min.js");
+
 $config->scripts->add("{$config->urls->systemLayouts}scripts/init.js");
 
 // admin pages
 if ($output = $page->render()) {
-} else {
-    if(is_file($page->layout)){
-        include $page->layout;
-    }
+}
+else {
+    include $page->layout;
 }
 if( $user->isLoggedin() ){
     require_once $config->paths->systemLayouts . 'includes/default-layout.php';

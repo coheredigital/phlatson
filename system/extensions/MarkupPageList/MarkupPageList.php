@@ -8,7 +8,7 @@ class MarkupPageList extends Extension
 
     protected function setup()
     {
-        api('config')->scripts->add($this->url . "{$this->className}.js");
+        api::get('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
 
@@ -21,7 +21,7 @@ class MarkupPageList extends Extension
 
         $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= "</div>";
         $output .= "</div>";
@@ -51,7 +51,7 @@ class MarkupPageList extends Extension
 
     private function renderPageItemNew(Page $page){
 
-        $templates = api("templates")->all(); // TODO: change to list only supported child templates for this template
+        $templates = api::get("templates")->all(); // TODO: change to list only supported child templates for this template
 
 
 
@@ -63,7 +63,7 @@ class MarkupPageList extends Extension
 
             foreach($templates as $t){
                 $output .= '<div class="item">';
-                $output .= "<a href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $t->name . "&new=1'>{$t->name}</a>";
+                $output .= "<a href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $t->name . "&new=1'>{$t->name}</a>";
 
                 $output .= '</div>';
 
@@ -76,7 +76,7 @@ class MarkupPageList extends Extension
         }
         else if ( count($templates) ){
 
-            $output = "<a class='ui button' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $templates[0]->name . "&new=1'><i class='icon plus'></i></a>";
+            $output = "<a class='ui button' href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $templates[0]->name . "&new=1'><i class='icon plus'></i></a>";
             return $output;
         }
 
