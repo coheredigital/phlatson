@@ -23,16 +23,19 @@ abstract class Object
 
 
         $this->route = $this->getRoute($file);
-        $this->load($file);
-
+        $this->loadData($file);
+        $this->setName();
     }
 
-    protected function load($file)
+    protected function loadData($file)
     {
         $this->file = $file;
         $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
         $this->data = json_decode(file_get_contents($file), true);
-        
+    }
+
+    protected function setName()
+    {
         // set object name
         $lastRequestIndex = count($this->route) - 1;
         $this->name = $this->route[$lastRequestIndex];

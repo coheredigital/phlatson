@@ -41,7 +41,16 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
         return $this;
     }
 
-
+    /**
+     * @param $array
+     * @return array
+     *
+     * filters $this->data by $key => $value set matches
+     *
+     * $key must match a valid parameter of $this (name, published, location, a field name, etc)
+     *
+     */
+    // TODO: move filtering into its own class
     public function filter($array){
 
         $objects = $this->data;
@@ -58,7 +67,8 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
                 });
 
         }
-        return $objects;
+        $this->data = $objects;
+        return $this;
     }
 
 
