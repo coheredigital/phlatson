@@ -9,7 +9,9 @@ class FieldtypeTemplate extends FieldtypeSelect
     public function getOutput($name)
     {
         $template = api::get("templates")->get($name);
-        $template->setReference($this->object);
+        if ($this->object){
+            $template->setReference($this->object);
+        }
         return $template;
     }
 
@@ -28,7 +30,7 @@ class FieldtypeTemplate extends FieldtypeSelect
         $this->attribute("name", "template");
     }
 
-    public function setObject( $page){
+    public function setObject( $page ){
         $this->object = $page;
         $this->setAllowedTemplates();
         $this->value = $this->object->template->name;

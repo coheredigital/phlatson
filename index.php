@@ -20,7 +20,7 @@ api::register('extensions', new Extensions);
 
 api::register('session', new Session);
 
-try {
+//try {
 
     /*
      * loop through api registry and assign variable for easy use in layout files
@@ -43,8 +43,8 @@ try {
     }
 
     include $layoutFile;
-
-} catch (Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
-}
+//
+//} catch (Exception $e) {
+//    echo 'Caught exception: ', $e->getMessage(), "\n";
+//}
 

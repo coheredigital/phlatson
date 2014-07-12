@@ -6,7 +6,7 @@ class AdminFieldEdit extends AdminObjectEdit
     protected function setupObject(){
 
         if( api::get("input")->get->new ){
-            $field =  new Field();
+            $field = new Field();
             $field->template = "field";
 
             $this->object = $field;
@@ -35,8 +35,8 @@ class AdminFieldEdit extends AdminObjectEdit
             $fieldtype->label = $field->label;
 
             if (!is_null($this->object)) {
-                $name = $field->get("name");
-                $fieldtype->value = $this->object->getUnformatted($name);
+                $name = $field->name;
+//                $fieldtype->value = $this->object->getUnformatted($name);
                 $fieldtype->setObject($this->object);
                 $fieldtype->attribute("name", $name);
                 $fieldset->add($fieldtype);

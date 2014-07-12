@@ -19,5 +19,19 @@ foreach ($fieldsList as $item) {
         )
     );
 }
+
 $output = $table->render();
-$output = "<div class='container'><div class='ui list'>{$output}</div></div>";
+
+$controls = "<div class='ui secondary pointing menu'>
+                <a class='item' href='{$page->url}/edit?new=1'>New</a>
+                <div class='right menu'>
+                    <div class='item'>
+                        <div class='ui icon input'>
+                            <input type='text' placeholder='Filter...'>
+                            <i class='search link icon'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+
+$output = "<div class='container'>{$controls}{$output}</div>";

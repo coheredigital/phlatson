@@ -9,7 +9,7 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     public function setup()
     {
 
-        if( !api::get("input")->get->name ) return false;
+        if( !api::get("input")->get->name && !api::get("input")->get->new ) return false;
 
         $this->setupObject();
         $this->setupForm();
@@ -17,7 +17,9 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     }
 
 
-    protected function setupObject(){}
+    protected function setupObject(){
+        return false;
+    }
 
     protected function setupForm(){
         $this->form = api::get("extensions")->get("MarkupEditForm");

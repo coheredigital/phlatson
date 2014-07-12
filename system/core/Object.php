@@ -22,9 +22,12 @@ abstract class Object
         $this->file = $file;
 
 
-        $this->route = $this->getRoute($file);
-        $this->loadData($file);
-        $this->setName();
+        if ( is_file($file) ) {
+            $this->route = $this->getRoute($file);
+            $this->loadData($file);
+            $this->setName();
+        }
+
     }
 
     protected function loadData($file)
@@ -43,6 +46,7 @@ abstract class Object
 
     protected function getRoute($file)
     {
+
         $relativePath = str_replace(api::get("config")->paths->root, "", $file );
         $relativePath = str_replace($this::DATA_FILE, "", $relativePath );
         $relativePath = rtrim($relativePath, '/');
