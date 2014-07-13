@@ -163,7 +163,7 @@ abstract class Objects
             $object = new $key($file);
         }
         else {
-            $object = new $this->singularName($file, $key);
+            $object = new $this->singularName($file);
         }
         return $object;
     }

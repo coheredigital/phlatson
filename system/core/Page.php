@@ -19,10 +19,13 @@ class Page extends Object
         parent::__construct($file);
 
         // set parent page value
-        $requests = $this->route;
-        array_pop($requests); // remove current (last) item to find parent
-        $parentUrl = $this->createUrl($requests);
-        $this->setUnformatted("parent", $parentUrl);
+        if ( !$this->isNew() ) {
+            $requests = $this->route;
+            array_pop($requests); // remove current (last) item to find parent
+            $parentUrl = $this->createUrl($requests);
+            $this->setUnformatted("parent", $parentUrl);
+        }
+
 
 
     }
@@ -139,13 +142,11 @@ class Page extends Object
     {
 
         // only allow values to be set for existing fields ??
-
         switch ($name){
             case "template":
                 parent::set($name, $value);
                 break;
             default:
-
                 if( $this->template && $this->template->fields->has($name) ) {
                     $field = api::get("fields")->get("$name");
                     $fieldtype = $field->type;

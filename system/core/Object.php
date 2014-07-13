@@ -7,6 +7,7 @@ abstract class Object
 
     protected $path;
     protected $file;
+    protected $location;
 
     // main data container, holds data loaded from JSON file
     protected $data = array();
@@ -21,9 +22,9 @@ abstract class Object
         if ( is_file($file) ) {
 
             $this->file = $file;
-            $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
-            $this->route = $this->getRoute($file);
-            $this->data = json_decode(file_get_contents($file), true);
+            $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$this->file));
+            $this->route = $this->getRoute($this->file);
+            $this->data = json_decode(file_get_contents($this->file), true);
             $this->name = $this->getName();
 
         }
@@ -51,6 +52,7 @@ abstract class Object
         $array = explode("/", $relativePath);
 
         $this->location = array_shift($array);
+//        $this->set("location", array_shift($array));
         $rootFolder = array_shift($array);
 
         if($rootFolder !== $this->rootFolder && $rootFolder !== $this->className ) throw new Exception("Invalid request passed to {$this->className} : array( " . implode(", ", $array) . " ) $rootFolder !== $this->rootFolder || $rootFolder !== $this->className");
@@ -188,8 +190,6 @@ abstract class Object
     public function get($name)
     {
         switch ($name) {
-            case 'template':
-                return $this->template;
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'location':
@@ -218,16 +218,7 @@ abstract class Object
 
     public function set($name, $value)
     {
-        switch ($name) {
-            case "template":
-                $template = api::get("templates")->get($value);
-                $this->template = $template;
-                break;
-            default:
-                $this->data[$name] = $value;
-                break;
-        }
-
+        $this->data[$name] = $value;
     }
 
     public function __set($name, $value)

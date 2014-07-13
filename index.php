@@ -39,7 +39,8 @@ api::register('session', new Session);
         $layoutFile = api::get('config')->paths->system . "index.php";
     }
     else{
-        $layoutFile = $page->template->layout;
+        $template = $page->template;
+        $layoutFile = $template->layout;
     }
 
     include $layoutFile;

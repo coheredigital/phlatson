@@ -55,7 +55,6 @@ class FieldtypeFields extends Fieldtype
     {
         api::get('config')->styles->add($this->url . "{$this->className}.css");
         api::get('config')->scripts->add($this->url . "{$this->className}.js");
-        $attributes = $this->getAttributes();
 
         $fields = api::get("fields")->all();
         $fieldsSelect = api::get("extensions")->get("FieldtypeSelect");

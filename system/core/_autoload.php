@@ -9,7 +9,7 @@
 spl_autoload_register('classLoader');
 function classLoader($className)
 {
-    $systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR;
+    $systemPath = ROOT_PATH . "system/core/";
     $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
 
 
