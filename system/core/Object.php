@@ -3,14 +3,13 @@
 abstract class Object
 {
 
-    private $className = null;
-
     const DATA_FILE = "data.json";
-    protected $rootFolder;
-    protected $objectOrigin = null;
 
+    protected $name;
     protected $path;
     protected $file;
+
+    protected $location;
 
     protected $data = array();
 
@@ -55,7 +54,7 @@ abstract class Object
 
         $array = explode("/", $relativePath);
 
-        $this->objectOrigin = array_shift($array);
+        $this->location = array_shift($array);
         $rootFolder = array_shift($array);
 
         if($rootFolder !== $this->rootFolder && $rootFolder !== $this->className ) throw new Exception("Invalid request passed to {$this->className} : array( " . implode(", ", $array) . " ) $rootFolder !== $this->rootFolder || $rootFolder !== $this->className");
@@ -110,7 +109,7 @@ abstract class Object
      * @param  string $name
      * @return mixed
      */
-    public function getUnformatted($name)
+    protected function getUnformatted($name)
     {
         return $this->data[$name];
     }
@@ -193,6 +192,8 @@ abstract class Object
     public function get($name)
     {
         switch ($name) {
+            case 'template':
+                return $this->template;
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'location':
@@ -207,11 +208,8 @@ abstract class Object
                 return api::get('config')->urls->root . $this->location . "/" . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
                 return $this->path;
-            case 'requests':
-                return $this->route;
-            case 'class':
             case 'className':
-                return $this->className();
+                return get_class($this);
             default:
                 return $this->getFormatted($name);
         }
@@ -224,7 +222,16 @@ abstract class Object
 
     public function set($name, $value)
     {
-        $this->data[$name] = $value;
+        switch ($name) {
+            case "template":
+                $template = api::get("templates")->get($value);
+                $this->template = $template;
+                break;
+            default:
+                $this->data[$name] = $value;
+                break;
+        }
+
     }
 
     public function __set($name, $value)
@@ -235,19 +242,9 @@ abstract class Object
 
 
 
-    public function className()
-    {
-
-        if (!isset($this->className)) {
-            $this->className = get_class($this);
-        }
-        return $this->className;
-
-    }
-
     public function __toString()
     {
-        return $this->className();
+        return $this->className;
     }
 
 
