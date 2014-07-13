@@ -8,10 +8,7 @@ class AdminTemplateEdit extends AdminObjectEdit
         if(api::get("input")->get->new){
 
             $this->object = new Template();
-
-            $templateName = api::get("input")->get->template;
-            $this->object->template = $templateName;
-
+            $this->object->template = "template";
             $this->title = "New Template";
 
         }

@@ -5,12 +5,10 @@ abstract class Object
 
     const DATA_FILE = "data.json";
 
-    protected $name;
     protected $path;
     protected $file;
 
-    protected $location;
-
+    // main data container, holds data loaded from JSON file
     protected $data = array();
 
     protected $defaultFields = array();
@@ -18,37 +16,35 @@ abstract class Object
 
     function __construct($file = null)
     {
-        $this->file = $file;
 
 
         if ( is_file($file) ) {
+
+            $this->file = $file;
+            $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
             $this->route = $this->getRoute($file);
-            $this->loadData($file);
-            $this->setName();
+            $this->data = json_decode(file_get_contents($file), true);
+            $this->name = $this->getName();
+
         }
 
     }
 
-    protected function loadData($file)
-    {
-        $this->file = $file;
-        $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
-        $this->data = json_decode(file_get_contents($file), true);
-    }
 
-    protected function setName()
+    protected function getName()
     {
         // set object name
         $lastRequestIndex = count($this->route) - 1;
-        $this->name = $this->route[$lastRequestIndex];
+        return $this->route[$lastRequestIndex];
     }
 
     protected function getRoute($file)
     {
 
-        $relativePath = str_replace(api::get("config")->paths->root, "", $file );
-        $relativePath = str_replace($this::DATA_FILE, "", $relativePath );
-        $relativePath = rtrim($relativePath, '/');
+
+        $relativePath = str_replace(api::get("config")->paths->root, "", $file ); // trim the root path to get root relative path
+        $relativePath = str_replace($this::DATA_FILE, "", $relativePath ); // trim of file name to isolote path
+        $relativePath = rtrim($relativePath, '/'); // trim excess slashes
 
         if (strpos($relativePath, "/") === false) throw new Exception("Invalid request - {$file} - passed to {$this->className}");
 
@@ -240,12 +236,9 @@ abstract class Object
     }
 
 
-
-
     public function __toString()
     {
         return $this->className;
     }
-
 
 }

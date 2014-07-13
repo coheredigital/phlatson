@@ -15,7 +15,7 @@ foreach ($fieldsList as $item) {
         array(
             "name" => "<a href='{$adminUrl}fields/edit/?name={$item->name}' >{$item->name}</a>",
             "label" => $item->label,
-            "fieldtype" => $item->getUnformatted("type") // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
+            "fieldtype" => $item->type // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
         )
     );
 }

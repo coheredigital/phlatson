@@ -18,7 +18,7 @@ class Config extends Object
         $this->setupDirectories();
 
         // load site config
-        $this->loadData("{$this->paths->site}config.json");
+        $this->getData("{$this->paths->site}config.json");
 
         // add admin url for convenience
         $this->urls->admin = $this->urls->root . $this->adminUrl;
@@ -51,7 +51,7 @@ class Config extends Object
     }
 
 
-    protected function loadData($file)
+    protected function getData($file)
     {
         if (is_file($file)) {
             $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));

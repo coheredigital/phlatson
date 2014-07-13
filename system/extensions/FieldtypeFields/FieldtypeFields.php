@@ -64,7 +64,7 @@ class FieldtypeFields extends Fieldtype
 
         $fieldAdd = $fieldsSelect->render();
 
-        foreach ($this->value as $field) {
+        if($this->value) foreach ($this->value as $field) {
 
             // retrieve the field object because "$this->value" will return an unformatted value
             $field = api::get("fields")->get($field["name"]);

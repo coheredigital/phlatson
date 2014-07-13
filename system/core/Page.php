@@ -145,7 +145,8 @@ class Page extends Object
                 parent::set($name, $value);
                 break;
             default:
-                if( $this->defaultFields[$name] || $this->template->fields->has($name) ) {
+
+                if( $this->template && $this->template->fields->has($name) ) {
                     $field = api::get("fields")->get("$name");
                     $fieldtype = $field->type;
                     $this->data[$name] = $fieldtype->getSave($value);
