@@ -26,7 +26,8 @@ $config->scripts->add("{$config->urls->systemLayouts}scripts/jquery-sortable.js"
 $config->scripts->add("{$config->urls->systemLayouts}scripts/init.js");
 
 // admin pages
-if ($output = $page->render()) {
+if ($page->extension) {
+    $output = $page->render();
 }
 else {
     include $page->layout;

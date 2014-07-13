@@ -28,7 +28,7 @@ class AdminFieldEdit extends AdminObjectEdit
         $fieldset = api::get("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
-        $template = $this->object->template;
+        $template = $this->object->get("template");
         $fields = $template->fields;
         foreach ($fields as $field) {
             $fieldtype = $field->type;

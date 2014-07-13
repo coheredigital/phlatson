@@ -9,11 +9,18 @@ abstract class Extension extends Object
     public function __construct($file)
     {
         parent::__construct($file);
-        $this->setup();
+        if ( $this->autoload !== false){
+            $this->setup();
+        }
+
     }
 
     protected function setup()
     {
+    }
+    public function init() //  TODO temp workaround remove
+    {
+        $this->setup();
     }
 
     public function get($name)

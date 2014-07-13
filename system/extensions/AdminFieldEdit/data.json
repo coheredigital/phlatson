@@ -1,6 +1,7 @@
 {
     "description": "Creates the forms and enable the edit/saving of fields.",
     "title": "Field Edit",
-    "type": "Admin"
+    "type": "Admin",
+    "autoload": false
 }
 

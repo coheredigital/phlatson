@@ -1,5 +1,6 @@
 {
     "description": "Creates the forms and enable the edit/saving of pages.",
     "title": "Page Edit",
-    "type": "Admin"
+    "type": "Admin",
+    "autoload": false
 }

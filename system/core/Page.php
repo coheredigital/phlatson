@@ -5,12 +5,7 @@ class Page extends Object
 {
 
     protected $rootFolder = "pages";
-
     public $defaultFields = array("template");
-
-    protected $filesArray;
-    protected $imagesArray;
-
 
     function __construct($file = null)
     {
