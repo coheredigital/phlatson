@@ -2,12 +2,13 @@
     "label": "Page (default)",
     "fields": [
         {
-            "name": "title",
-            "columns": 12
+            "name": "title"
         },
         {
-            "name": "content",
-            "columns": 12
+            "name": "content"
+        },
+        {
+            "name": "date"
         }
     ]
 }

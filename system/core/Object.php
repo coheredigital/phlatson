@@ -9,6 +9,8 @@ abstract class Object
     protected $file;
     protected $location;
 
+    protected $rootFolder;
+
     // main data container, holds data loaded from JSON file
     protected $data = array();
 
@@ -22,8 +24,8 @@ abstract class Object
         if ( is_file($file) ) {
 
             $this->file = $file;
-            $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$this->file));
-            $this->route = $this->getRoute($this->file);
+            $this->path = $this->getPath();
+            $this->route = $this->getRoute();
             $this->data = json_decode(file_get_contents($this->file), true);
             $this->name = $this->getName();
 
@@ -39,27 +41,50 @@ abstract class Object
         return $this->route[$lastRequestIndex];
     }
 
-    protected function getRoute($file)
+    protected function getPath()
+    {
+        if (!$this->isNew()){
+            return normalizePath(str_replace(Object::DATA_FILE,"",$this->file));
+        }
+        else {
+
+        }
+    }
+
+
+    protected function getRootRelativePath()
     {
 
-
-        $relativePath = str_replace(api::get("config")->paths->root, "", $file ); // trim the root path to get root relative path
+        $relativePath = str_replace(api::get("config")->paths->root, "", $this->file ); // trim the root path to get root relative path
         $relativePath = str_replace($this::DATA_FILE, "", $relativePath ); // trim of file name to isolote path
         $relativePath = rtrim($relativePath, '/'); // trim excess slashes
 
         if (strpos($relativePath, "/") === false) throw new Exception("Invalid request - {$file} - passed to {$this->className}");
+        return $relativePath;
+    }
 
-        $array = explode("/", $relativePath);
 
-        $this->location = array_shift($array);
-//        $this->set("location", array_shift($array));
-        $rootFolder = array_shift($array);
 
-        if($rootFolder !== $this->rootFolder && $rootFolder !== $this->className ) throw new Exception("Invalid request passed to {$this->className} : array( " . implode(", ", $array) . " ) $rootFolder !== $this->rootFolder || $rootFolder !== $this->className");
+    protected function getRoute()
+    {
 
-        if(!count($array)) $array[] = "";
+        $pathArray = explode( "/", $this->getRootRelativePath() );
 
-        return $array;
+        $this->location = array_shift($pathArray);
+        $rootFolder = array_shift($pathArray);
+
+        if(
+            $rootFolder !== $this->rootFolder &&
+            $rootFolder !== $this->className
+        ) {
+            throw new Exception("Invalid request passed to {$this->className} : array( " . implode(", ", $pathArray) . " ) $rootFolder !== $this->rootFolder || $rootFolder !== $this->className");
+        }
+
+        if( !count( $pathArray ) ) {
+            $pathArray[] = "";
+        }
+
+        return $pathArray;
     }
 
     protected function getFormatted($name)
@@ -112,9 +137,10 @@ abstract class Object
         return $this->data[$name];
     }
 
-    public function save($postData = null, $saveName = null)
-    {
 
+    protected function processSaveInput(){
+
+        $post = api::get("input")->post;
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
         $fields = $this->template->fields;
@@ -122,27 +148,37 @@ abstract class Object
         // add the default fields
         if(count($this->defaultFields)) $fields->import($this->defaultFields);
 
-        // setup array to store save data
-        $saveData = array();
 
         foreach ($fields as $field) {
-
-            $value = isset($postData->{$field->name}) ? $postData->{$field->name} : $this->getUnformatted("$field->name");
-
-            $fieldtype = $field->type();
-            $value = $fieldtype->getSave($value);
-
-            $saveData[$field->name] = $value;
+            $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
+            $this->{$field->name} = $value;
         }
 
+
+    }
+
+    protected function processSaveName(){
+
+        $post = api::get("input")->post;
+
         // set name value
-        if($postData->name){ // TODO : this is temp
-            $pageName = $postData->name; // TODO add page name sanitizer
+        if($post->name){ // TODO : this is temp
+            $pageName = api::get("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
         }
         else{ // generate page name from defined field
-            $this->name = api::get("sanitizer")->name($postData->title);
+            $this->name = api::get("sanitizer")->name($post->title);
         }
+
+    }
+
+    public function save( $saveName = null )
+    {
+
+        $this->processSaveInput();
+        $this->processSaveName();
+
+
 
         // handle new object creation
         if($this->isNew()){
@@ -164,10 +200,11 @@ abstract class Object
             $saveFile = "$saveName.json";
         }
         else{
-            $saveFile = self::DATA_FILE;
+//            $saveFile = self::DATA_FILE;
+            $saveFile = "test.json";
         }
 
-        $saveData = json_encode($saveData, JSON_PRETTY_PRINT);
+        $saveData = json_encode($this->data, JSON_PRETTY_PRINT);
 
         file_put_contents( $this->path . $saveFile , $saveData );
 

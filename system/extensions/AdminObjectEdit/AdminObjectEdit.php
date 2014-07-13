@@ -63,8 +63,13 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
 
     public function processSave(){
         if (count(api::get("input")->post)) {
-            $this->object->save(api::get("input")->post);
-            api::get("session")->redirect(api::get("input")->query);
+
+            $this->object->save();
+
+            api::get("session")->redirect(
+                api::get("input")->query
+            );
+
         }
     }
 
