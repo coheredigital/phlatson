@@ -204,6 +204,7 @@ abstract class Object
             }
 
             $this->path = $this->parent->path . $this->name . "/";
+
             if (!file_exists($this->path)) {
                 mkdir($this->path, 0777, true);
             }
@@ -240,7 +241,10 @@ abstract class Object
 
         if ( $name == $this->name ) return false;
 
-        rename( $this->path , $this->parent->path . $name . "/" );
+        $current = $this->path;
+        $destination = $this->parent->path . $name . "/";
+
+        rename( $current , $destination );
 
     }
 
@@ -261,6 +265,7 @@ abstract class Object
     public function get($name)
     {
         switch ($name) {
+
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'location':
@@ -289,6 +294,11 @@ abstract class Object
 
     public function set($name, $value)
     {
+        switch ( $name ) {
+            case "name":
+                $name = api::get("sanitizer")->name($value);
+                $this->name = $name;
+        }
         $this->data[$name] = $value;
         return $this;
     }

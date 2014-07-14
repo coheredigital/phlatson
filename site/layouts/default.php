@@ -27,8 +27,8 @@ $parent = $page->parent;
 
 $parentTitle = $parent->title;
 
-$p->get("about-us/sdsdsd");
-$p->rename("cat");
+//$p = $pages->get("about/sdsdsd");
+//$p->rename("cat");
 
 
 include 'includes/foot.inc';

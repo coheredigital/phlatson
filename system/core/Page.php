@@ -4,7 +4,7 @@
 class Page extends Object
 {
 
-    protected $parent;
+
 
     protected $rootFolder = "pages";
     public $defaultFields = array("template");
