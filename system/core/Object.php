@@ -5,6 +5,7 @@ abstract class Object
 
     const DATA_FILE = "data.json";
 
+    protected $name;
     protected $path;
     protected $file;
     protected $location;
@@ -155,11 +156,16 @@ abstract class Object
         if(count($this->defaultFields)) $fields->import($this->defaultFields);
 
 
+        $saveData = array();
+
         foreach ($fields as $field) {
             $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
-            $this->{$field->name} = $value;
+
+            $value = $field->type->getSave($value);
+            $saveData[$field->name] = $value;
         }
 
+        $this->data = $saveData;
 
 
 
@@ -168,6 +174,12 @@ abstract class Object
     protected function processSaveName(){
 
         $post = api::get("input")->post;
+
+        if ( !$this->isNew() ){
+            $previousName = $this->name;
+        }
+
+
 
         // set name value
         if($post->name){ // TODO : this is temp
@@ -224,6 +236,14 @@ abstract class Object
 
     }
 
+    public function rename($name) {
+
+        if ( $name == $this->name ) return false;
+
+        rename( $this->path , $this->parent->path . $name . "/" );
+
+    }
+
 
     public function isNew(){
         // if the object does not have a matching existing directory it is assumed new
@@ -234,7 +254,7 @@ abstract class Object
 
 
     public function has($key){
-        return array_key_exists($key,$this->data);
+        return array_key_exists( $key, $this->data );
     }
 
 
@@ -270,11 +290,12 @@ abstract class Object
     public function set($name, $value)
     {
         $this->data[$name] = $value;
+        return $this;
     }
 
     public function __set($name, $value)
     {
-        return $this->set($name, $value);
+        $this->set($name, $value);
     }
 
 

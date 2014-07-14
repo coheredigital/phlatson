@@ -9,7 +9,7 @@ class Field extends Object
      * retrieves the filedtype object associated with "$this" field
      * @return Fieldtype
      */
-    public function type()
+    public function getType()
     {
         if ($this->getUnformatted("fieldtype")) {
             $name = $this->getUnformatted("fieldtype");
@@ -67,7 +67,7 @@ class Field extends Object
 
             case 'fieldtype':
             case 'type':
-                return $this->type();
+                return $this->getType();
                 break;
             case 'template':
                 return api::get("templates")->get("field");

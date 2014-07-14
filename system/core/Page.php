@@ -4,23 +4,26 @@
 class Page extends Object
 {
 
+    protected $parent;
+
     protected $rootFolder = "pages";
     public $defaultFields = array("template");
 
     function __construct($file = null)
     {
 
-
         parent::__construct($file);
+
 
         // set parent page value
         if ( !$this->isNew() ) {
             $requests = $this->route;
             array_pop($requests); // remove current (last) item to find parent
             $parentUrl = $this->createUrl($requests);
-            $this->setUnformatted("parent", $parentUrl);
-        }
 
+            $this->setUnformatted("parent", $parentUrl);
+
+        }
 
 
     }
@@ -120,26 +123,19 @@ class Page extends Object
                 return normalizeDirectory($directory);
             case 'url':
                 return api::get('config')->urls->root . ltrim($this->directory, "/");
-                break;
             case 'children':
                 return $this->children();
-                break;
             case 'rootParent':
                 return $this->rootParent();
-                break;
             case 'files':
                 return $this->files();
-                break;
             case 'images':
                 return $this->images();
-                break;
             case 'layout':
                 // alias for $page->template->layout (required by AdminPage class)
                 return $this->template->layout;
-                break;
             default:
                 return parent::get($name);
-                break;
         }
 
     }
