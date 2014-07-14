@@ -1,6 +1,6 @@
 <?php
 
-class File extends Core
+class File
 {
 
     protected $page;
