@@ -54,6 +54,34 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
 
 
 
+
+    protected function addSettingsFields()
+    {
+
+        $tab = api::get("extensions")->get("MarkupFormtab");
+        $tab->label = "Settings";
+
+        $tab->add( $this->getModifiedField() );
+
+        $this->form->add($tab);
+    }
+
+
+    protected function getModifiedField()
+    {
+
+        $fieldtype = api::get("extensions")->get("FieldtypeText");
+
+        $fieldtype->label = "Last Modified";
+        $fieldtype->value = date("Y/m/d - H:m",$this->object->modified);
+        $fieldtype->columns = 12;
+        $fieldtype->attribute("name", "parent");
+
+        return $fieldtype;
+    }
+
+
+
     public function processFiles(){
         if (!empty($_FILES)) {
             $uploader = new Upload($this->object);

@@ -9,6 +9,7 @@ abstract class Object
     protected $path;
     protected $file;
     protected $location;
+    protected $modified;
 
     protected $rootFolder;
 
@@ -30,6 +31,7 @@ abstract class Object
             $this->data = json_decode(file_get_contents($this->file), true);
             $this->name = $this->getName();
 
+            $this->modified = filemtime($this->file);
         }
 
     }
