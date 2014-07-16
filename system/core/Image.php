@@ -13,7 +13,7 @@ class Image extends File
 
     protected $appliedResize = [];
 
-    // store applied filters in order to be used in file name if no image alt name provided
+    // store applied filters in order to be used in file name if no image recipe name provided
     protected $appliedFilters = [
         // "blur_3",
         // "brightness_-20,
@@ -27,9 +27,7 @@ class Image extends File
 
     public function __construct( $page , $name ){
         parent::__construct( $page , $name );
-
         $this->setImageInfo();
-
     }
 
     public function setImageInfo(){
