@@ -18,6 +18,7 @@ $adminHome = $pages->get($config->adminUrl); // create home page object for simp
 // admin scripts and themes (default always needed)
 $config->styles->add("{$config->urls->systemLayouts}styles/adminTheme.css");
 $config->styles->add("{$config->urls->systemLayouts}styles/semantic.min.css");
+$config->styles->append("{$config->urls->systemLayouts}styles/font-awesome-4.1.0/css/font-awesome.css");
 
 $config->scripts->prepend("{$config->urls->systemLayouts}scripts/semantic.min.js");
 $config->scripts->prepend("{$config->urls->systemLayouts}scripts/jquery-1.11.1.min.js");
