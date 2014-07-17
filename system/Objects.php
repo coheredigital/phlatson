@@ -31,18 +31,9 @@ abstract class Objects
         $root = normalizePath( api::get('config')->paths->site . $this->rootFolder );
         $path = normalizePath( $root . $key );
 
-        if( !$this->isValidPath( $path ) ){
-            $root = normalizePath( api::get('config')->paths->system . $this->rootFolder );
-            $path = normalizePath( $root . $key );
-
-            if( !$this->isValidPath( $path ) ) return false;
-        }
-
         $file = $path . "data.json";
         if(is_file($file)){
-
             $this->set($key, $file);
-
         }
 
     }
@@ -170,6 +161,7 @@ abstract class Objects
     public function get($key)
     {
         // normalize the query to avoid error in the case of a page request that might get passed as ( /about-us/staff ) but should be ( about-us/staff )
+
         $key = normalizeDirectory($key);
 
         $object = $this->getObject($key);

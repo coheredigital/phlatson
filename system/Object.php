@@ -64,11 +64,10 @@ abstract class Object
     protected function getRootRelativePath()
     {
 
-        $relativePath = str_replace(api::get("config")->paths->root, "", $this->file ); // trim the root path to get root relative path
+        $relativePath = str_replace( api::get("config")->paths->site . $this->rootFolder , "", $this->file ); // trim the root path to get root relative path
         $relativePath = str_replace($this::DATA_FILE, "", $relativePath ); // trim of file name to isolote path
         $relativePath = rtrim($relativePath, '/'); // trim excess slashes
 
-        if (strpos($relativePath, "/") === false) throw new Exception("Invalid request - {$file} - passed to {$this->className}");
         return $relativePath;
     }
 
@@ -77,20 +76,11 @@ abstract class Object
     protected function getRoute()
     {
 
-        $pathArray = explode( "/", $this->getRootRelativePath() );
-
-        $this->location = array_shift($pathArray);
-        $rootFolder = array_shift($pathArray);
-
-        if(
-            $rootFolder !== $this->rootFolder &&
-            $rootFolder !== $this->className
-        ) {
-            throw new Exception("Invalid request passed to {$this->className} : array( " . implode(", ", $pathArray) . " ) $rootFolder !== $this->rootFolder || $rootFolder !== $this->className");
-        }
+        $directory = $this->getRootRelativePath();
+        $pathArray = explode( "/", $directory );
 
         if( !count( $pathArray ) ) {
-            $pathArray[] = "";
+            $pathArray[] = "$directory";
         }
 
         return $pathArray;
