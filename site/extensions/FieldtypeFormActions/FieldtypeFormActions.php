@@ -7,9 +7,10 @@ class FieldtypeFormActions extends Fieldtype
 
     public function render()
     {
-        $output = "<div class='row clearfix'>";
+        $output = "<div class='container'>";
+        $output .= "<div class='row clearfix ui segment field field-{$this->className}'>";
         $output .= "<div class='column twelve wide'>";
-        $output .= "<div class='field field-{$this->className}'>";
+        $output .= "<div class=''>";
 
         $output .= "<button type='submit' class='ui green icon button'><i class='icon save'></i> </button> ";
         $output .= "<button type='submit' class='ui red icon button'> <i class='icon trash'></i></button> ";
@@ -17,6 +18,7 @@ class FieldtypeFormActions extends Fieldtype
             $output .= "<a href='{$this->dataObject->url}' target='_external' class='ui button black'><i class='icon share'></i></a>";
         $output .= "</div>";
 
+        $output .= "</div>";
         $output .= "</div>";
         $output .= "</div>";
         $output .= "</div>";

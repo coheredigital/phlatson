@@ -16,22 +16,6 @@
     </div>
 <?php
 
-$page->title = "This is a page";
-$page->date = "July 1, 2014";
-
-$template = $page->template;
-
-$pageFields = $template->fields;
-
-$parent = $page->parent;
-
-$parentTitle = $parent->title;
-
-//$p = $pages->get("about/sdsdsd");
-//$p->rename("cat");
-
-
 include 'includes/foot.inc';
-
 
 ?>

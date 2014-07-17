@@ -281,7 +281,8 @@ abstract class Object
             case 'url':
                 return api::get('config')->urls->root . $this->location . "/" . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
-                return $this->path;
+            case 'name':
+                return $this->{$name};
             case 'className':
                 return get_class($this);
             default:

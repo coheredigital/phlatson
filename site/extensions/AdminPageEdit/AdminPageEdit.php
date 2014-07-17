@@ -76,7 +76,6 @@ class AdminPageEdit extends AdminObjectEdit
 
         $this->addDefaultFields();
         $this->addFilesFields();
-        $this->addSettingsFields();
 
         return $this->form->render();
 

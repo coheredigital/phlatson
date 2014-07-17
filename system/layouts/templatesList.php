@@ -18,7 +18,7 @@ foreach ($templatesList as $item) {
         )
     );
 }
-$output = $table->render();
+$output->main = $table->render();
 $controls = "<div class='ui secondary pointing menu'>
                 <a class='item' href='{$page->url}/edit?new=1'>New</a>
                 <div class='right menu'>
@@ -31,4 +31,4 @@ $controls = "<div class='ui secondary pointing menu'>
                 </div>
             </div>";
 
-$output = "<div class='container'>{$controls}{$output}</div>";
+$output->main = "<div class='container'>{$controls}{$output->main}</div>";

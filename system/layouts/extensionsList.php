@@ -25,5 +25,5 @@ foreach ($extensionsList as $name) {
     );
 }
 
-$output = $table->render();
-$output = "<div class='container'><div class='ui list'>{$output}</div></div>";
+$output->main  = $table->render();
+$output->main = "<div class='container'><div class='ui list'>{$output->main}</div></div>";

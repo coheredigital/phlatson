@@ -3,6 +3,16 @@
 class AdminFieldEdit extends AdminObjectEdit
 {
 
+    public static function getInfo() {
+        return array(
+            'title' => 'ColorPicker',
+            'version' => 104,
+            'summary' => 'Choose your colors the easy way.',
+            'href' => 'http://processwire.com/talk/topic/865-module-colorpicker/page__gopid__7340#entry7340',
+            'requires' => array("FieldtypeColorPicker")
+        );
+    }
+
     protected function setupObject(){
 
         if( api::get("input")->get->new ){

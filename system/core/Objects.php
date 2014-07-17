@@ -49,36 +49,37 @@ abstract class Objects
 
 
     // return a key => value array of valid object locations
-    protected function getObjectList($path = null){
+    protected function getObjectList($directory = null){
 
 
-        $systemPath =  api::get('config')->paths->system . $this->rootFolder;
-        $systemPath = normalizePath( $systemPath );
+        $systemRootPath =  api::get('config')->paths->system . $this->rootFolder;
+        $systemRootPath = normalizePath( $systemRootPath );
 
-        $systemPathCheck =  $systemPath . $path;
+        $systemPathCheck =  $systemRootPath . $directory;
         $systemPathCheck = normalizePath( $systemPathCheck );
 
         if( $this->isValidPath($systemPathCheck) ){
-            $this->getListRecursive($systemPath, $systemPathCheck);
+            $this->getListRecursive($systemRootPath, $systemPathCheck);
         }
 
 
-        $sitePath =  api::get('config')->paths->site . $this->rootFolder;
-        $sitePath = normalizePath( $sitePath );
+        $siteRootPath =  api::get('config')->paths->site . $this->rootFolder;
+        $siteRootPath = normalizePath( $siteRootPath );
 
-        $sitePathCheck =  $sitePath . $path;
+        $sitePathCheck =  $siteRootPath . $directory;
         $sitePathCheck = normalizePath( $sitePathCheck );
 
         if( $this->isValidPath($sitePathCheck) ){
-            $this->getListRecursive($sitePath, $sitePathCheck);
+            $this->getListRecursive($siteRootPath, $sitePathCheck);
         }
 
     }
 
     protected function getListRecursive($root, $path, $depth = 1){
 
-        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
-        $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
+        $iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::SELF_FIRST );
+
         $iterator->setMaxDepth($depth);
 
         foreach ($iterator as $item) {
@@ -87,7 +88,7 @@ abstract class Objects
             $itemPath = normalizePath($itemPath);
             $itemFilename = $item->getFileName();
 
-            if($itemFilename != "data.json") continue;
+            if( $itemFilename != "data.json" ) continue;
 
             $directory = str_replace($root, "", $itemPath);
             $directory = str_replace($itemFilename,"",$directory);
@@ -140,8 +141,6 @@ abstract class Objects
     public function all()
     {
         $this->getObjectList();
-        $arrayType = $this->singularName . "Array";
-
         $objectArray = new ObjectArray();
 
         foreach ($this->data as $key => $value){
@@ -169,14 +168,10 @@ abstract class Objects
     }
 
 
-    public function isValidPath($path){
+    public function isValidPath( $path ){
         $path = normalizePath($path);
-        if(strpos( $path,  api::get("config")->paths->root ) !== false){
-            return true;
-        }
-        else{
-            return false;
-        }
+        if( strpos( $path,  api::get("config")->paths->root ) !== false ) return true;
+        return false;
     }
 
     public function __get($key)
