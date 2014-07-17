@@ -1,8 +1,8 @@
 <?php
 
-require_once 'system/core/_autoload.php';
-require_once 'system/core/_functions.php';
-require_once 'system/core/_interfaces.php';
+require_once 'system/_autoload.php';
+require_once 'system/_functions.php';
+
 
 define("XPAGES", true);
 define('ROOT_PATH', normalizePath(dirname(__FILE__)));
@@ -20,26 +20,24 @@ api::register('extensions', new Extensions);
 
 api::register('session', new Session);
 
-//try {
 
-    extract( api::get() );
+extract( api::get() );
 
-    $page = $pages->get( $input->url );
-    if(!$page instanceof Page){
-        throw new Exception("No valid page found (404?)");
-    }
 
-    if( $page instanceof AdminPage) {
-        $layoutFile = api::get('config')->paths->system . "index.php";
-    }
-    else{
-        $template = $page->template;
-        $layoutFile = $template->layout;
-    }
 
-    include $layoutFile;
-//
-//} catch (Exception $e) {
-//    echo 'Caught exception: ', $e->getMessage(), "\n";
-//}
+$page = $pages->get( $input->url );
+if(!$page instanceof Page){
+    throw new Exception("No valid page found (404?)");
+}
+
+if( $page instanceof AdminPage) {
+    $layoutFile = api::get('config')->paths->root . "admin.php";
+}
+else{
+    $template = $page->template;
+    $layoutFile = $template->layout;
+}
+
+include $layoutFile;
+
 
