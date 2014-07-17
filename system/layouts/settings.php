@@ -5,7 +5,7 @@ foreach ($page->children() as $p) {
     if ($p->description) {
         $description = "<div class='description'>{$p->description}</div>";
     }
-    $output .= "<div class='content'><div class='item'>{$title}{$description}</div></div>";
+    $output->main .= "<div class='item'><div class='content'>{$title}{$description}</div></div>";
 }
 
-$output = "<div class='container'><div class='ui list'>{$output}</div></div>";
+$output->main = "<div class='container'><div class='ui list'>{$output->main}</div></div>";

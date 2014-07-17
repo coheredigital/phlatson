@@ -15,6 +15,8 @@ if(!$user->isGuest() && !$input->request[1]){
 
 $adminHome = $pages->get($config->adminUrl); // create home page object for simple ref back to admin root
 
+
+
 // admin scripts and themes (default always needed)
 $config->styles->add("{$config->urls->systemLayouts}styles/adminTheme.css");
 $config->styles->add("{$config->urls->systemLayouts}styles/semantic.min.css");
@@ -26,9 +28,19 @@ $config->scripts->add("{$config->urls->systemLayouts}scripts/jquery-sortable.js"
 
 $config->scripts->add("{$config->urls->systemLayouts}scripts/init.js");
 
+
+/* SETUP MARKUP STORAGE */
+
+
+api::register("output", new SimpleArray() );
+$output = api::get("output");
+
+$markup = new MarkupFile("{$config->paths->systemLayouts}includes/main-menu.php");
+$output->header = $markup->render();
+
 // admin pages
 if ($page->extension) {
-    $output = $page->render();
+    $output->main = $page->render();
 }
 else {
     include $page->layout;

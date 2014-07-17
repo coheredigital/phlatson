@@ -49,8 +49,8 @@
 /* Views */
 // @import "semantic-ui/views/comment";
 // @import "semantic-ui/views/feed";
-// @import "semantic-ui/views/item";
-// @import "semantic-ui/views/list";
+@import "semantic-ui/views/item";
+@import "semantic-ui/views/list";
 // @import "semantic-ui/views/statistic";
 
 
@@ -75,12 +75,14 @@ a{
 }
 
 #header{
-  padding: 1em 0 0 0;
-//  background: #f90;
+  padding: 1em 0 2em 0;
 }
 
 #main{
-  padding: 2em 0;
+//  padding: 2em 0;
+  > .container{
+    padding: 2em 0;
+  }
 }
 
 .container{

@@ -10,7 +10,7 @@ if (count($input->post)) {
 
 
 
-$output .= "<div class='field'>
+$output->main .= "<div class='field'>
     <label>Username</label>
     <div class='ui left labeled icon input'>
       <input name='username' type='text' placeholder='Username'>
@@ -21,7 +21,7 @@ $output .= "<div class='field'>
     </div>
   </div>";
 
-  $output .= "<div class='field'>
+$output->main .= "<div class='field'>
     <label>Password</label>
     <div class='ui left labeled icon input'>
       <input name='password' type='password' placeholder='Password'>
@@ -32,6 +32,6 @@ $output .= "<div class='field'>
     </div>
   </div>";
 
-$output .= "<button type='submit' class='ui button green fluid'>Login</button>";
-$output = "<form class='ui form segment form-login' method='POST'>{$output}</form>";
+$output->main .= "<button type='submit' class='ui button green fluid'>Login</button>";
+$output->main = "<form class='ui form segment form-login' method='POST'>{$output->main}</form>";
 

@@ -22,13 +22,7 @@ api::register('session', new Session);
 
 //try {
 
-    /*
-     * loop through api registry and assign variable for easy use in layout files
-     * $page->get('/some-page') instead of api::get('pages')->get('/some-page') YUCK!  :)
-     * */
-    foreach (api::get() as $name => $object) {
-        ${$name} = $object;
-    }
+    extract( api::get() );
 
     $page = $pages->get( $input->url );
     if(!$page instanceof Page){

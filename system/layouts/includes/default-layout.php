@@ -2,21 +2,15 @@
 <body class="<?php echo "page-{$page->name}" ?>">
 
     <div id="header">
-        <div class="container">
-            <?php include "main-menu.php" ?>
-        </div>
+        <?php echo $output->header ?>
     </div>
 
 
     <div id="main">
-
-            <?php echo $output; ?>
-
+        <?php echo $output->main ?>
     </div>
     <div id="footer">
-        <div class="container">
 
-        </div>
     </div>
     <?php foreach ($config->scripts as $file) {
         echo "<script src='{$file}'></script>";
