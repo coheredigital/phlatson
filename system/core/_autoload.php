@@ -17,10 +17,17 @@ function classLoader($className)
         require_once $systemPath . $className . ".php";
     }
     else {
-        $extensionsPath = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
-        $extension = $extensionsPath . $className . ".php";
-        if (is_file($extension)) {
-            require_once($extension);
+
+        $extensionsSitePath = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
+        $extensionsSystemPath = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
+
+        $extensionSite = $extensionsSitePath . $className . ".php";
+        $extensionSystem = $extensionsSystemPath . $className . ".php";
+        if (is_file($extensionSite)) {
+            require_once $extensionSite;
+        }
+        else if( is_file($extensionSystem) ) {
+            require_once $extensionSystem;
         }
     }
 
