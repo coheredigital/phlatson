@@ -1,10 +1,12 @@
 <?php
 
-require_once 'system/_autoload.php';
-require_once 'system/_functions.php';
-
 define("XPAGES", true);
 define('ROOT_PATH', normalizePath(dirname(__FILE__)));
+
+require_once ROOT_PATH . 'system/_autoload.php';
+require_once ROOT_PATH . 'system/_functions.php';
+
+
 
 /* instatiate api variables */
 api::register('router', new Router());
