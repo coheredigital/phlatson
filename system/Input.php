@@ -16,8 +16,8 @@ class Input
     protected function setup()
     {
 
-        $this->url = isset($_GET['_url']) ? $_GET['_url'] : "/";
-        unset($_GET['_url']);
+        $this->url = isset($_GET['uri']) ? $_GET['uri'] : "/";
+        unset($_GET['uri']);
 
         $this->query = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
 
@@ -26,7 +26,7 @@ class Input
         // setup GET & POST variables
         $get = new stdClass();
         foreach ($_GET as $key => $value) {
-            if ($key == "_url") {
+            if ($key == "uri") {
                 continue;
             } // skip XPages specific request
             $get->$key = $value;

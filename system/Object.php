@@ -72,7 +72,6 @@ abstract class Object
     }
 
 
-
     protected function getRoute()
     {
 
