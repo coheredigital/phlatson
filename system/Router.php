@@ -26,10 +26,9 @@ class Router {
 
         extract( api::get() ); // get access to api variables
 
-
         if( isset( self::$routes[ $input->url ] ) ){
             echo "Match!";
-            call_user_func( $this->routes[$uri] );
+            call_user_func( self::$routes[$input->url] );
         }
         else {
             $page = api::get('pages')->get( $input->url );

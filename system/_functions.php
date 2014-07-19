@@ -1,5 +1,10 @@
 <?php
 
+// shorthand for api::get()
+function api($name){
+    return api::get($name);
+}
+
 // Emulate register_globals off
 function unregister_GLOBALS()
 {

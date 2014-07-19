@@ -95,14 +95,11 @@ abstract class Object
         $field = api::get("fields")->get($name);
         if ( $field ){
             $fieldtype = $field->type;
-            if ( $this instanceof Template && $name === "fields") { // TODO : special case could be handled better
-                $fieldtype->setObject($this->referenceObject);
-            }
-            else{
-                $fieldtype->setObject($this);
-            }
 
-            $value = $fieldtype->getOutput($value);
+            if ( $fieldtype instanceof Fieldtype ) {
+                $value = $fieldtype->get($value, "output");
+
+            }
         }
 
         return $value;

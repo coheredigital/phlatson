@@ -12,17 +12,15 @@ $api = new api();
 
 $api::register('router', new Router());
 $api::register('config', new Config);
+$api::register('extensions', new Extensions);
 $api::register('sanitizer', new Sanitizer);
 $api::register('input', new Input);
 $api::register('pages', new Pages);
 $api::register('users', new Users);
 $api::register('fields', new Fields);
 $api::register('templates', new Templates);
-$api::register('extensions', new Extensions);
+
 $api::register('session', new Session);
 
 // execute the app
 Router::execute();
-
-
-

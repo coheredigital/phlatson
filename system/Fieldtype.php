@@ -5,13 +5,10 @@ abstract class Fieldtype extends Extension
     protected $attributes = array();
 
     protected $field;
-    protected $object;
-//    public $value;
+    protected $value;
 
     final public function __construct($file)
     {
-
-
         $this->attribute('class', 'ui input ' . $this->className);
         if ($field instanceof Field) {
             $this->field = $field;
@@ -47,14 +44,9 @@ abstract class Fieldtype extends Extension
         }
     }
 
-
-    public function setObject($object){
-        $this->object = $object;
-    }
-
     protected function getOutput($value)
     {
-        return (string)$value;
+        return (string) $value;
     }
 
 

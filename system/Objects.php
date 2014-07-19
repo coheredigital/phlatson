@@ -82,27 +82,7 @@ abstract class Objects
     }
 
 
-    protected function getList($root, $query){
 
-        $dir = opendir($queryPath);
-        while(($name = readdir($dir)) !== false)
-        {
-
-            if ( $name == '.' or $name == '..' ) continue;
-
-            $directory = $query . $name;
-            $file = normalizePath( $queryPath . $directory ) . "data.json";
-
-            if ( !is_file($file)) continue;
-
-
-            $this->data[$directory] = $file;
-        }
-
-        closedir($dir);
-
-
-    }
 
 
 

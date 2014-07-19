@@ -14,8 +14,12 @@ class Field extends Object
         if ($this->getUnformatted("fieldtype")) {
             $name = $this->getUnformatted("fieldtype");
             $fieldtype = api::get("extensions")->get($name);
-            $fieldtype->setField($this);
-            return $fieldtype;
+
+            if( $fieldtype instanceof Fieldtype ) {
+                $fieldtype->setField($this);
+                return  $fieldtype;
+            }
+
         }
         return null;
     }
@@ -23,7 +27,7 @@ class Field extends Object
     protected function getNewName()
     {
         // set object name
-        if ( $this->template->settings->nameFrom  && $this->template->fields->has( $this->settings->nameFrom ) ) { // TODO : this is not in yetr, we need support for creating the name from referencing another field
+        if ( $this->template->settings->nameFrom  && $this->template->fields->has( $this->settings->nameFrom ) ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
             return api::get("sanitizer")->name( $this->settings->nameFrom );
         }
         else {
