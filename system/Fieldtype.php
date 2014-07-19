@@ -44,7 +44,7 @@ abstract class Fieldtype extends Extension
         }
     }
 
-    protected function getOutput($value)
+    public function getOutput($value)
     {
         return (string) $value;
     }

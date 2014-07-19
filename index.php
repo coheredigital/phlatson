@@ -10,11 +10,12 @@ require_once ROOT_PATH . 'system/_autoload.php';
 
 $api = new api();
 
+$api::register('input', new Input);
 $api::register('router', new Router());
 $api::register('config', new Config);
 $api::register('extensions', new Extensions);
 $api::register('sanitizer', new Sanitizer);
-$api::register('input', new Input);
+
 $api::register('pages', new Pages);
 $api::register('users', new Users);
 $api::register('fields', new Fields);

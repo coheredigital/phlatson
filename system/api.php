@@ -44,12 +44,13 @@ final class Api
         if( is_null($key) ){
             return self::$registry;
         }
-        else{
-            if (!isset(self::$registry[$key])) {
-                throw new Exception("There is no '{$key}' entry in the API registry!");
-            }
+
+        if (isset(self::$registry[$key])) {
             return self::$registry[$key];
         }
+
+        return false;
+
 
     }
 

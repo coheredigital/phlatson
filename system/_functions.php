@@ -1,7 +1,7 @@
 <?php
 
 // shorthand for api::get()
-function api($name){
+function api($name = null){
     return api::get($name);
 }
 

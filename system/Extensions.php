@@ -7,16 +7,10 @@ class Extensions
     protected $path;
     protected $data;
 
-    protected $rootFolder = "extensions";
-    protected $singularName = "extension";
-
-
     public function __construct()
     {
         $this->path = api("config")->paths->extensions;
-
         $this->data = $this->getList();
-
     }
 
     protected function getList()
@@ -54,21 +48,11 @@ class Extensions
 
     }
 
-//    protected function fieldtypes(){
-//        $array = $this->all()->filter(array(
-//            "type" => "Fieldtype"
-//        ));
-//        return $array;
-//    }
-
     public function get($name)
     {
         switch ($name){
-//            case 'fieldtypes':
-//                return $this->fieldtypes();
             default:
                 $key = normalizeDirectory($name);
-
                 if ( isset($this->data[$key]) ) return $this->data[$key];
         }
     }

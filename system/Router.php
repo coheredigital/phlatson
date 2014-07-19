@@ -13,7 +13,7 @@ class Router {
     private static $routes = array();
 
 
-    public static function add( $uri , callable $method )
+    public static function add( $uri , $method )
     {
         $uri = self::normalizeRoute($uri);
         self::$routes[$uri] = $method;
@@ -27,21 +27,33 @@ class Router {
         extract( api::get() ); // get access to api variables
 
         if( isset( self::$routes[ $input->url ] ) ){
-            echo "Match!";
             call_user_func( self::$routes[$input->url] );
         }
         else {
             $page = api::get('pages')->get( $input->url );
+
+            if( $page instanceof Page ) {
+                include $page->template->layout;
+            }
+            else{
+                throw new Exception("404");
+            }
+
         }
 
 
-        include $page->template->layout;
+
+
+    }
+
+
+    protected function isMatch(){
 
     }
 
     protected static function normalizeRoute( $uri )
     {
-        $uri = $uri ? "/" . rtrim( $uri, "/") : "/";
+        $uri = $uri ? "/" . trim( $uri, "/") : "/";
         return $uri;
     }
 

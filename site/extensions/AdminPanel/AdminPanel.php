@@ -13,6 +13,27 @@ class AdminPanel extends Extension {
 
         api::register("Admin", $this);
 
+
+        Router::add("/admin", function(){
+                $this->render();
+            });
+
+        Router::add("/admin/pages", function(){
+                $this->render();
+            });
+
+        Router::add("/admin/login", function(){
+                $this->render();
+            });
+
+
+    }
+
+    public function render(){
+        extract(api());
+        $page = new Page(__DIR__ . "/pages/data.json");
+
+        include __DIR__ . "/layouts/index.php";
     }
 
 } 

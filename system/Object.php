@@ -92,13 +92,12 @@ abstract class Object
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        $field = api::get("fields")->get($name);
+        $field = api::get("fields") ? api::get("fields")->get($name) : false ;
         if ( $field ){
             $fieldtype = $field->type;
 
             if ( $fieldtype instanceof Fieldtype ) {
-                $value = $fieldtype->get($value, "output");
-
+                $value = $fieldtype->getOutput($value);
             }
         }
 

@@ -10,7 +10,7 @@ class Input
     function __construct()
     {
 
-        $this->url = isset($_GET['_uri']) ? $_GET['_uri'] : "/";
+        $this->url = isset($_GET['_uri']) ? "/" . $_GET['_uri'] : "/";
         unset( $_GET['_uri'] ); // unset URI so it doesn't get included in $input->get array and can't be accessed later
 
 

@@ -1,14 +1,14 @@
 <?php
 
 
-abstract class Extension
+abstract class Extension extends Object
 {
 
     protected $rootFolder = "extensions";
 
     public function __construct($file)
     {
-//        parent::__construct($file);
+        parent::__construct($file);
         if ( $this->autoload === true ){
             $this->setup();
         }
@@ -31,9 +31,9 @@ abstract class Extension
                 return $this->get("className");
             case 'type':
                 return "Extension";
-//            default:
-//                return parent::get($name);
-//                break;
+            default:
+                return parent::get($name);
+                break;
         }
     }
 
