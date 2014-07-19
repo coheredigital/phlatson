@@ -21,13 +21,34 @@ class Router {
 
 
 
+
+    protected static function getMatch($uri){
+
+        foreach ( self::$routes as $key => $value){
+            if( strpos($uri, $key) === 0){
+                return $value;
+            }
+        }
+    }
+
+    protected static function normalizeRoute( $uri )
+    {
+        $uri = $uri ? "/" . trim( $uri, "/") : "/";
+        return $uri;
+    }
+
+
+
+
     public static function execute( )
     {
 
         extract( api::get() ); // get access to api variables
 
-        if( isset( self::$routes[ $input->url ] ) ){
-            call_user_func( self::$routes[$input->url] );
+        $match = self::getMatch( $input->url );
+
+        if( $match ){
+            call_user_func( $match );
         }
         else {
             $page = api::get('pages')->get( $input->url );
@@ -41,20 +62,6 @@ class Router {
 
         }
 
-
-
-
-    }
-
-
-    protected function isMatch(){
-
-    }
-
-    protected static function normalizeRoute( $uri )
-    {
-        $uri = $uri ? "/" . trim( $uri, "/") : "/";
-        return $uri;
     }
 
 }

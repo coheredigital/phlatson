@@ -27,12 +27,12 @@ $output = new SimpleArray();
 $markup = new MarkupFile("{$config->paths->layouts}admin/includes/main-menu.php");
 $output->header = $markup->render();
 
-//if ($page->extension) {
-//    $output->main = $page->render();
-//}
-//else {
-//    include $page->layout;
-//}
+if ($page->extension) {
+    $output->main = $page->render();
+}
+else {
+    include $page->layout;
+}
 
 if( $user->isLoggedin() ){
     require_once 'main.php';

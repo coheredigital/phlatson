@@ -8,7 +8,6 @@ abstract class Object
     protected $name;
     protected $path;
     protected $file;
-    protected $location;
     protected $modified;
 
     protected $rootFolder;
