@@ -9,26 +9,18 @@ class Input
 
     function __construct()
     {
-        $this->setup();
-    }
 
+        $this->url = isset($_GET['_uri']) ? $_GET['_uri'] : "/";
+        unset( $_GET['_uri'] ); // unset URI so it doesn't get included in $input->get array and can't be accessed later
 
-    protected function setup()
-    {
-
-        $this->url = isset($_GET['uri']) ? $_GET['uri'] : "/";
-        unset($_GET['uri']);
 
         $this->query = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
 
-        $this->request = explode("/", trim($this->url, "/"));
+        $this->request = explode("/", trim( $this->url , "/"));
 
         // setup GET & POST variables
         $get = new stdClass();
         foreach ($_GET as $key => $value) {
-            if ($key == "uri") {
-                continue;
-            } // skip XPages specific request
             $get->$key = $value;
         }
         if (count((array)$get)) {
@@ -44,6 +36,7 @@ class Input
         }
 
     }
+
 
 
 }

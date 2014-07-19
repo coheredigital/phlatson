@@ -9,6 +9,10 @@
 
 class AdminPanel extends Extension {
 
-    // LOL I have no idea what to do here yet  :)
+    public function __construct(){
+
+        api::register("Admin", $this);
+
+    }
 
 } 

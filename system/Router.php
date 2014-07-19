@@ -8,11 +8,14 @@
 
 class Router {
 
+
+
     private static $routes = array();
+
 
     public static function add( $uri , callable $method )
     {
-        $uri = self::normalizeUri($uri);
+        $uri = self::normalizeRoute($uri);
         self::$routes[$uri] = $method;
     }
 
@@ -21,22 +24,26 @@ class Router {
     public static function execute( )
     {
 
-        $uri = self::normalizeUri($_GET['uri']);
+        extract( api::get() ); // get access to api variables
 
-        if( isset(self::$routes[$uri] ) ){
+
+        if( isset( self::$routes[ $input->url ] ) ){
             echo "Match!";
-            call_user_func($this->routes[$uri]);
+            call_user_func( $this->routes[$uri] );
         }
         else {
-            $page = api::get('pages')->get($uri);
-            api::register('page', $page);
+            $page = api::get('pages')->get( $input->url );
         }
+
+
+        include $page->template->layout;
 
     }
 
-    protected static function normalizeUri( $uri )
+    protected static function normalizeRoute( $uri )
     {
-        return  $uri ? "/" . trim( $uri, "/") : "/";
+        $uri = $uri ? "/" . rtrim( $uri, "/") : "/";
+        return $uri;
     }
 
 }

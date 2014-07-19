@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
-	#RewriteBase /
+	RewriteBase /xpages/
 
 	RewriteRule ^index\.php$ - [L]
 
@@ -9,7 +9,7 @@
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !(favicon\.ico|robots\.txt)
 
-	RewriteRule ^(.*)$ index.php?uri=$1 [L,QSA]
+	RewriteRule ^(.+)$ index.php?_uri=$1 [L,QSA]
 
 </IfModule>
 
