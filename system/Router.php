@@ -57,8 +57,8 @@ class Router {
      */
     public static function dispatch()
     {
-        $uri = api("input")->url;
-        $method = $_SERVER['REQUEST_METHOD'];
+        $uri =  api('request')->url;
+        $method = api('request')->method;
 
         $searches = array_keys(static::$patterns);
         $replaces = array_values(static::$patterns);
