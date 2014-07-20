@@ -9,7 +9,7 @@ require_once ROOT_PATH . 'system/_autoload.php';
 /* instatiate api variables */
 
 api('input', new Input);
-api('router', $router = new Router());
+api('router', new Router());
 api('config', new Config);
 api('extensions', new Extensions);
 api('sanitizer', new Sanitizer);
@@ -19,7 +19,15 @@ api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
 
-Router::add("fields", "/fields/:name", function($name = null){
+//Router::add("pages", "/:url", function($url = null){
+//        $page = api("pages")->get($url);
+//        if( $page instanceof Page ) {
+//            extract( api::get() ); // get access to api variables for rendered layout
+//            include $page->template->layout;
+//        }
+//    });
+
+Router::add("fields", "/fields/<name>", function($name = null){
         $field = api("fields")->get($name);
         var_dump($field);
     });

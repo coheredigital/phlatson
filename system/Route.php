@@ -26,15 +26,13 @@ class Route {
 
     protected function setParameters($url){
 
-        $this->urlArray =  explode( "/", $url );
+        $this->urlArray =  explode( "/",  trim($url, "/") );
 
         $i = 0;
         foreach ( $this->urlArray as $parameter ){
 
-            if($parameter[0] == ":"){
-                $key = trim($parameter, ":");
-
-                $this->parameters[$i] = $key;
+            if( $parameter[0] === "<" ){
+                $this->parameters[$i] = true;
             }
 
             $i++;
@@ -45,20 +43,14 @@ class Route {
     public function match($url){
 
 
-
-        $urlArray = explode( "/", $url );
-
-        if( $this->urlArray[0] !== $urlArray[0] ){
-            return false;
-        }
+        $urlArray = explode( "/", trim($url, "/") );
 
         $i=0;
         foreach ( $urlArray as $parameter ){
-            if($this->parameters[$i]){
-                $value = trim($parameter, ":");
-                $this->parameterValues[$key] = $value;
+            if( $this->parameters[$i] || !$this->parameters[$i+1] && !isset($this->urlArray[$i]) ){
+                $this->parameters[$i] = $parameter;
             }
-            elseif( $this->urlArray[$i] !== $urlArray[$i] ){
+            elseif( isset($this->urlArray[$i]) && $this->urlArray[$i] !== $urlArray[$i] ){
                 return false;
             }
             $i++;
@@ -70,7 +62,7 @@ class Route {
 
 
     public function execute(){
-        call_user_func_array( $this->method , $this->parameterValues );
+        call_user_func_array( $this->method , $this->parameters );
     }
 
 }
