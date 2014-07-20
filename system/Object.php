@@ -263,7 +263,7 @@ abstract class Object
                     return "site";
                 }
             case 'url':
-                return api::get('config')->urls->root . $this->location . "/" . $this->rootFolder . "/" . $this->name . "/";
+                return api::get('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
             case 'name':
                 return $this->{$name};

@@ -7,14 +7,15 @@ abstract class Fieldtype extends Extension
     protected $field;
     protected $value;
 
-    final public function __construct($file)
+    protected function setup()
     {
         $this->attribute('class', 'ui input ' . $this->className);
         if ($field instanceof Field) {
             $this->field = $field;
         }
-        parent::__construct($file);
     }
+
+
 
     /**
      * alias for the three available formatting methods,

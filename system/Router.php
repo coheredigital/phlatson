@@ -37,9 +37,6 @@ class Router {
         return $uri;
     }
 
-
-
-
     public static function execute( )
     {
 

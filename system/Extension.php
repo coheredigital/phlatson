@@ -6,9 +6,10 @@ abstract class Extension extends Object
 
     protected $rootFolder = "extensions";
 
-    public function __construct($file)
+    final public function __construct($file)
     {
         parent::__construct($file);
+        $this->name = get_class($this);
         if ( $this->autoload === true ){
             $this->setup();
         }
@@ -26,9 +27,8 @@ abstract class Extension extends Object
     public function get($name)
     {
         switch ($name) {
-            case 'name':
             case 'directory':
-                return $this->get("className");
+                return $this->name;
             case 'type':
                 return "Extension";
             default:

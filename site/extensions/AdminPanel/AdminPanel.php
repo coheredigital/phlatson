@@ -9,7 +9,7 @@
 
 class AdminPanel extends Extension {
 
-    public function __construct(){
+    protected function setup(){
 
         Router::add("/admin", function(){
                 $this->render();

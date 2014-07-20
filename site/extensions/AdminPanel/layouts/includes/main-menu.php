@@ -1,16 +1,8 @@
 <div class="container">
     <div class="ui menu">
-        <?php
 
-        $home = $pages->get($config->adminUrl);
-
-        foreach ($home->children as $p): ?>
-            <?php
-            $rootParent = $page->rootParent;
-            $state = $p->url == $rootParent->url ? "active" : "";
-            ?>
-            <a class="item <?php echo $state ?>"  href="<?php echo $p->url ?>"><?php echo $p->title ?></a>
-        <?php endforeach ?>
+        <a class="item"  href="/">Pages</a>
+        <a class="item"  href="/settings">Settings</a>
 
         <div class="right menu">
             <div class="ui dropdown item">
