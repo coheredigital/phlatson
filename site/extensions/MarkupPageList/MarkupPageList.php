@@ -4,6 +4,7 @@ class MarkupPageList extends Extension
 {
 
     public $rootPage;
+    public $adminPanel;
     public $postTypes = array(); // array representing posts types or "Page Tables" that will be offers at top of the page
 
     protected function setup()
@@ -21,7 +22,7 @@ class MarkupPageList extends Extension
 
         $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api::get('config')->urls->root . $this->adminPanel->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= "</div>";
         $output .= "</div>";

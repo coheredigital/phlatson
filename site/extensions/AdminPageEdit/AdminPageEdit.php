@@ -1,6 +1,6 @@
 <?php
 
-class AdminPageEdit extends AdminObjectEdit
+class AdminPageEdit extends Extension
 {
     protected $title;
     protected $form;
@@ -9,11 +9,39 @@ class AdminPageEdit extends AdminObjectEdit
     public function setup()
     {
 
-        $this->setupObject();
-        $this->setupForm();
+        Router::get( "/__/pages/(:any)" , function($url){
 
-        $this->processFiles();
-        $this->processSave();
+                $page = api("pages")->get($url);
+                $this->object = $page;
+                api("admin")->render($this,true);
+            });
+
+
+    }
+
+
+    protected function addDefaultFields()
+    {
+
+        $fieldset = api::get("extensions")->get("MarkupFormtab");
+        $fieldset->label = $this->get("title");
+
+        $template = $this->object->template;
+        $fields = $template->fields;
+        foreach ($fields as $field) {
+            $fieldtype = $field->type;
+//            $fieldtype->setObject($this->object);
+            $fieldtype->label = $field->label;
+
+            if (!is_null($this->object)) {
+                $name = $field->get("name");
+                $fieldtype->attribute("name", $name);
+                $fieldset->add($fieldtype);
+            }
+
+        }
+
+        $this->form->add($fieldset);
 
     }
 
@@ -60,7 +88,7 @@ class AdminPageEdit extends AdminObjectEdit
     {
 
         $fieldtype = api("extensions")->get("FieldtypePageFiles");
-        $fieldtype->setObject($this->object);
+//        $fieldtype->setObject($this->object);
         $fieldtype->label = "Files";
         $fieldtype->columns = 12;
         $fieldtype->attribute("name", "parent");
@@ -74,6 +102,9 @@ class AdminPageEdit extends AdminObjectEdit
     public function render()
     {
 
+        $this->form = api("extensions")->get("MarkupEditForm");
+
+
         $this->addDefaultFields();
         $this->addFilesFields();
 
@@ -81,5 +112,25 @@ class AdminPageEdit extends AdminObjectEdit
 
     }
 
+
+
+    public function processFiles(){
+        if (!empty($_FILES)) {
+            $uploader = new Upload($this->object);
+            $uploader->send($_FILES);
+        }
+    }
+
+    public function processSave(){
+        if (count(api::get("input")->post)) {
+
+            $this->object->save();
+
+            api::get("session")->redirect(
+                api::get("input")->query
+            );
+
+        }
+    }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for now because of how list of extensions is retrieved)
+class AdminObjectEdit extends Extension
 {
     protected $title;
     protected $form;
@@ -9,7 +9,7 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     public function setup()
     {
 
-        if( !api::get("input")->get->name && !api::get("input")->get->new ) return false;
+//        if( !api::get("input")->get->name && !api::get("input")->get->new ) return false;
 
         $this->setupObject();
         $this->setupForm();
@@ -22,8 +22,7 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
     }
 
     protected function setupForm(){
-        $this->form = api::get("extensions")->get("MarkupEditForm");
-        $this->form->object = $this->object;
+//        $this->form->object = $this->object;
     }
 
 
@@ -82,24 +81,6 @@ class AdminObjectEdit extends Extension // TODO :  make abstact (won't work for 
 
 
 
-    public function processFiles(){
-        if (!empty($_FILES)) {
-            $uploader = new Upload($this->object);
-            $uploader->send($_FILES);
-        }
-    }
-
-    public function processSave(){
-        if (count(api::get("input")->post)) {
-
-            $this->object->save();
-
-            api::get("session")->redirect(
-                api::get("input")->query
-            );
-
-        }
-    }
 
 
 }
