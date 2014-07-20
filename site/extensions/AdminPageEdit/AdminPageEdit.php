@@ -19,24 +19,24 @@ class AdminPageEdit extends AdminObjectEdit
 
     protected function setupObject(){
 
-        if(api::get("input")->get->new){
+        if(api("input")->get->new){
 
             $this->object = new Page();
 
             // set the template first so following value can be set properly
-            $templateName = api::get("input")->get->template;
+            $templateName = api("input")->get->template;
             $this->object->template = $templateName;
 
             // set parent from get parameter
-            $parentUrl = api::get("input")->get->parent;
+            $parentUrl = api("input")->get->parent;
             $this->object->parent = $parentUrl;
 
             $this->title = "New Page";
 
         }
         else{
-            $name = api::get("input")->get->name;
-            $this->object = api::get("pages")->get($name);
+            $name = api("input")->get->name;
+            $this->object = api("pages")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
 
@@ -48,7 +48,7 @@ class AdminPageEdit extends AdminObjectEdit
     protected function addFilesFields()
     {
 
-        $tab = api::get("extensions")->get("MarkupFormtab");
+        $tab = api("extensions")->get("MarkupFormtab");
         $tab->label = "Files";
         $tab->add($this->getFieldFiles());
 
@@ -59,7 +59,7 @@ class AdminPageEdit extends AdminObjectEdit
     protected function getFieldFiles()
     {
 
-        $fieldtype = api::get("extensions")->get("FieldtypePageFiles");
+        $fieldtype = api("extensions")->get("FieldtypePageFiles");
         $fieldtype->setObject($this->object);
         $fieldtype->label = "Files";
         $fieldtype->columns = 12;

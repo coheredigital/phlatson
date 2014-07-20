@@ -2,11 +2,10 @@
 
 if ($input->get->logout == 1) {
     $session->logout();
-    $session->redirect($config->urls->root . $this->route);
+    $session->redirect($config->urls->root . $this->location);
 }
 if ($user->isGuest() && $page->layout != "login") {
     $page->layout = "login";
-//    $session->redirect($config->urls->root . $config->adminUrl . "/login");
 }
 
 

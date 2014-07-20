@@ -12,7 +12,7 @@ class AdminPanel extends Extension {
     protected function setup()
     {
 
-        Router::add("/admin", function(){
+        Router::add($this->name, "/admin", function(){
                 $this->render();
             });
 

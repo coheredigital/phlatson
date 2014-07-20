@@ -13,10 +13,13 @@ class Router {
     private static $routes = array();
 
 
-    public static function add( $uri , $method )
+    public static function add( $name , $url , $method )
     {
-        $uri = self::normalizeRoute($uri);
-        self::$routes[$uri] = $method;
+
+        $route = new Route( $name, $url, $method );
+
+
+        self::$routes[] = $route;
     }
 
 
