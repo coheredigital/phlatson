@@ -12,43 +12,37 @@ class AdminPanel extends Extension {
     protected function setup()
     {
 
-        Router::add($this->name, "/admin", function(){
-                $this->render();
+        Router::add($this->name, "/admin/:name", function($name = null){
+                $this->render($name);
             });
 
     }
 
 
-    protected function getPage()
+    protected function getPage($name = null)
     {
         $input = api("input");
 
         $page = new Page();
 
-        switch ( $input->url ){
-
-            case "/admin":
-                $page->title = "Content";
-                $page->layout = "pagetree";
-                break;
-            case "/admin/login":
-                $page->title = "Login";
-                $page->layout = "login";
-                break;
-            case "/admin/settings":
-                $page->title = "Settings";
-                $page->layout = "settings";
-                break;
+        if(!is_null($name)){
+            $page->layoutFile = __DIR__ . DIRECTORY_SEPARATOR . "layouts" . DIRECTORY_SEPARATOR . $name . ".php";
+        }
+        else{
+            $page->layoutFile = __DIR__ . DIRECTORY_SEPARATOR . "layouts" . DIRECTORY_SEPARATOR . "pagetree" . ".php";
         }
 
         return $page;
 
     }
 
-    public function render()
+
+    public function render($name = null)
     {
         extract(api());
-        $page = $this->getPage();
+
+        $page = $this->getPage($name);
+
         include __DIR__ . "/layouts/index.php";
     }
 

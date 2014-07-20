@@ -22,12 +22,12 @@ $output = new SimpleArray();
 $markup = new MarkupFile("{$this->path}layouts/includes/main-menu.php");
 $output->header = $markup->render();
 
-if ($page->extension) {
-    $output->main = $page->render();
-}
-else {
-    include __DIR__ . DIRECTORY_SEPARATOR . $page->getUnformatted("layout") . ".php";
-}
+//if ($page->extension) {
+//    $output->main = $page->render();
+//}
+//else {
+    include $page->layoutFile;
+//}
 
 if( $user->isLoggedin() ){
     require_once 'main.php';

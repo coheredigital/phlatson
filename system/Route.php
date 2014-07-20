@@ -44,13 +44,16 @@ class Route {
 
     public function match($url){
 
+
+
         $urlArray = explode( "/", $url );
+
+        if( $this->urlArray[0] !== $urlArray[0] ){
+            return false;
+        }
 
         $i=0;
         foreach ( $urlArray as $parameter ){
-
-
-
             if($this->parameters[$i]){
                 $value = trim($parameter, ":");
                 $this->parameterValues[$key] = $value;
@@ -58,9 +61,6 @@ class Route {
             elseif( $this->urlArray[$i] !== $urlArray[$i] ){
                 return false;
             }
-
-
-
             $i++;
         }
 

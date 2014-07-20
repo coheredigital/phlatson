@@ -19,8 +19,13 @@ api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
 
-Router::add("fields", "/fields/:name", function($name){
+Router::add("fields", "/fields/:name", function($name = null){
         $field = api("fields")->get($name);
+        var_dump($field);
+    });
+
+Router::add("templates", "/templates/:name", function($name = null){
+        $field = api("templates")->get($name);
         var_dump($field);
     });
 
