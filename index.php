@@ -19,23 +19,31 @@ api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
 
-//Router::add("pages", "/:url", function($url = null){
-//        $page = api("pages")->get($url);
-//        if( $page instanceof Page ) {
-//            extract( api::get() ); // get access to api variables for rendered layout
-//            include $page->template->layout;
-//        }
-//    });
+Router::get("/", function($url = null){
+        $page = api("pages")->get("/");
+        if( $page instanceof Page ) {
+            extract( api::get() ); // get access to api variables for rendered layout
+            include $page->template->layout;
+        }
+    });
 
-Router::add("fields", "/fields/<name>", function($name = null){
+Router::get("/(:all)", function($url = null){
+        $page = api("pages")->get($url);
+        if( $page instanceof Page ) {
+            extract( api::get() ); // get access to api variables for rendered layout
+            include $page->template->layout;
+        }
+    });
+
+Router::get("/fields/(:any)", function($name = null){
         $field = api("fields")->get($name);
         var_dump($field);
     });
 
-Router::add("templates", "/templates/:name", function($name = null){
+Router::get("/templates/(:any)", function($name = null){
         $field = api("templates")->get($name);
         var_dump($field);
     });
 
 // execute the app
-Router::execute();
+Router::dispatch();
