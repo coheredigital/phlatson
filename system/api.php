@@ -17,7 +17,7 @@ final class Api
      * @param bool $lock
      * @throws Exception
      */
-    public static function register($key, $value, $lock = false)
+    public static function set($key, $value, $lock = false)
     {
 
 

@@ -2,7 +2,7 @@
 <body class="<?php echo "page-{$page->name}" ?>">
 
 <div id="header">
-    <?php echo $output->header ?>
+    <?php include "includes/main-menu.php" ?>
 </div>
 
 

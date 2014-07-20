@@ -10,7 +10,7 @@ class Users extends Objects
 
     public function setActiveUser(User $user)
     {
-        api::register('user', $user);
+        api('user', $user);
     }
 
 }

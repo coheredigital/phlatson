@@ -55,14 +55,12 @@ class Page extends Object
         // get all subfolder of current page path
         // TODO: improve validation of existing Object, unless new, a path being none existing should throw an exception
 
-        $subs = glob($this->path . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR);
+        $subs = glob($this->path . "*", GLOB_ONLYDIR);
 
         $children = array();
         foreach ($subs as $folder) {
 
             $url = $this->get("directory") . "/" . basename($folder);
-
-            // get an new of same class, useful for extending into AdminPage, etc
             $page = api::get("pages")->get($url);
             if( $page instanceof Page ){
                 // pass the Page to $children array, use url as key to avoid duplicates

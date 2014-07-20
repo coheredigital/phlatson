@@ -1,8 +1,13 @@
 <?php
 
-// shorthand for api::get()
-function api($name = null){
-    return api::get($name);
+// shorthand for api::get($name) and api::set($key, $value)
+function api($name = null , $value = null){
+    if ( is_null($value) ) {
+        return api::get($name);
+    }
+    else{
+        api::set($name, $value);
+    }
 }
 
 // Emulate register_globals off

@@ -48,7 +48,7 @@ class Router {
             call_user_func( $match );
         }
         else {
-            $page = api::get('pages')->get( $input->url );
+            $page = api('pages')->get( $input->url );
 
             if( $page instanceof Page ) {
                 include $page->template->layout;

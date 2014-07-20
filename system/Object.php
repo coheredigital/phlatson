@@ -63,7 +63,7 @@ abstract class Object
     protected function getRootRelativePath()
     {
 
-        $relativePath = str_replace( api::get("config")->paths->site . $this->rootFolder , "", $this->file ); // trim the root path to get root relative path
+        $relativePath = str_replace( api("config")->paths->site . $this->rootFolder , "", $this->file ); // trim the root path to get root relative path
         $relativePath = str_replace($this::DATA_FILE, "", $relativePath ); // trim of file name to isolote path
         $relativePath = rtrim($relativePath, '/'); // trim excess slashes
 
@@ -91,7 +91,7 @@ abstract class Object
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        $field = api::get("fields") ? api::get("fields")->get($name) : false ;
+        $field = api("fields") ? api("fields")->get($name) : false ;
         if ( $field ){
             $fieldtype = $field->type;
 
@@ -133,7 +133,7 @@ abstract class Object
 
     protected function processSaveInput(){
 
-        $post = api::get("input")->post;
+        $post = api("input")->post;
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
         $fields = $this->template->fields;
@@ -159,7 +159,7 @@ abstract class Object
 
     protected function processSaveName(){
 
-        $post = api::get("input")->post;
+        $post = api("input")->post;
 
         if ( !$this->isNew() ){
             $previousName = $this->name;
@@ -169,7 +169,7 @@ abstract class Object
 
         // set name value
         if($post->name){ // TODO : this is temp
-            $pageName = api::get("sanitizer")->name($post->name); // TODO add page name sanitizer
+            $pageName = api("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
         }
         else{ // generate page name from defined field
@@ -254,16 +254,8 @@ abstract class Object
 
             case 'directory':
                 return normalizeDirectory($this->name);
-            case 'location':
-                // we assume site location if system path not found because new Object can only be added to site and not system
-                if( strpos($this->file, api::get("config")->paths->system) !== false){
-                    return "system";
-                }
-                else{
-                    return "site";
-                }
             case 'url':
-                return api::get('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
+                return api('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
             case 'name':
                 return $this->{$name};
@@ -283,7 +275,7 @@ abstract class Object
     {
         switch ( $name ) {
             case "name":
-                $name = api::get("sanitizer")->name($value);
+                $name = api("sanitizer")->name($value);
                 $this->name = $name;
         }
         $this->data[$name] = $value;

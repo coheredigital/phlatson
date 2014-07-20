@@ -2,16 +2,13 @@
 
 if ($input->get->logout == 1) {
     $session->logout();
-    $session->redirect($config->urls->root . $config->adminUrl);
+    $session->redirect($config->urls->root . $this->route);
 }
-if ($user->isGuest() && $page->name != "login") {
-    $session->redirect($config->urls->root . $config->adminUrl . "/login");
+if ($user->isGuest() && $page->layout != "login") {
+    $page->layout = "login";
+//    $session->redirect($config->urls->root . $config->adminUrl . "/login");
 }
 
-// when user is logged in but does not define a page, go to page tree
-if(!$user->isGuest() && !$input->request[1]){
-    $session->redirect($config->urls->root . $config->adminUrl . "/pages");
-}
 
 // admin scripts and themes (default always needed)
 $config->styles->add("{$this->url}styles/adminTheme.css");
