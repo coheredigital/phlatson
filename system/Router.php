@@ -45,10 +45,16 @@ class Router {
 
         extract( api::get() ); // get access to api variables
 
-        $match = self::getMatch( $input->url );
+        foreach( self::$routes as $route){
+            $match = $route->match($input->url);
+            if( $match ) {
 
-        if( $match ){
-            call_user_func( $match );
+               break;
+            }
+        }
+
+        if( $route ){
+            $route->execute();
         }
         else {
             $page = api('pages')->get( $input->url );
@@ -56,9 +62,9 @@ class Router {
             if( $page instanceof Page ) {
                 include $page->template->layout;
             }
-            else{
-                throw new Exception("404");
-            }
+//            else{
+//                throw new Exception("404");
+//            }
 
         }
 

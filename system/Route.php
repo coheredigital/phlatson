@@ -10,8 +10,10 @@ class Route {
 
     protected $name;
     protected $url;
+    protected $urlArray;
     protected $method;
     protected $parameters = array();
+    protected $parameterValues = array();
 
     public function __construct( $name, $url , $method ){
         $this->name = $name;
@@ -24,10 +26,10 @@ class Route {
 
     protected function setParameters($url){
 
-        $parameters =  explode( "/", $url );
+        $this->urlArray =  explode( "/", $url );
 
         $i = 0;
-        foreach ( $parameters as $parameter ){
+        foreach ( $this->urlArray as $parameter ){
 
             if($parameter[0] == ":"){
                 $key = trim($parameter, ":");
@@ -40,12 +42,36 @@ class Route {
 
     }
 
-    public function isMatch($url){
+    public function match($url){
 
-        
+        $urlArray = explode( "/", $url );
+
+        $i=0;
+        foreach ( $urlArray as $parameter ){
+
+
+
+            if($this->parameters[$i]){
+                $value = trim($parameter, ":");
+                $this->parameterValues[$key] = $value;
+            }
+            elseif( $this->urlArray[$i] !== $urlArray[$i] ){
+                return false;
+            }
+
+
+
+            $i++;
+        }
+
+        return true;
 
     }
 
+
+    public function execute(){
+        call_user_func_array( $this->method , $this->parameterValues );
+    }
 
 }
 
