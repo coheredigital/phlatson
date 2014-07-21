@@ -19,7 +19,6 @@ class Admin extends Extension {
         api("admin", $this); // register api variable
     }
 
-
     public function render()
     {
         extract(api());
