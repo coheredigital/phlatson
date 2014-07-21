@@ -9,30 +9,41 @@ class AdminPageEdit extends Extension
     public function setup()
     {
 
+        Router::get( "/__/pages/edit/(:all)" , function($url){
+
+                $this->object = api("pages")->get($url);
+                $this->template = $this->object->template;
+                $this->title = $this->object->title;
+
+                api("admin")->render($this,true);
+            });
+
+        Router::get( "/__/pages/new/(:all)" , function( $url){
 
 
-        Router::get( "/__/pages/(:any)/(:all)" , function($action , $url){
+                $this->object = new Page();
 
-                if ( $action == "new") {
-                    $this->object = new Page();
+                // set the template first so following value can be set properly
+                $this->object->template = $url;
 
-                    // set the template first so following value can be set properly
-                    $this->object->template = $url;
+                // set parent from get parameter
+                $parentUrl = api("request")->get->parent;
+                $this->object->parent = $parentUrl;
 
-                    // set parent from get parameter
-                    $parentUrl = api("request")->get->parent;
-                    $this->object->parent = $parentUrl;
-
-                    $this->title = "New Page";
-
-                }
-                else{
-                    $page = api("pages")->get($url);
-                    $this->object = $page;
-                }
+                $this->title = "New Page";
 
 
                 api("admin")->render($this,true);
+            });
+
+        Router::post( "/__/pages/edit/(:all)" , function( $url){
+
+
+                $page = api("pages")->get($url);
+                $this->object = $page;
+
+                $this->processSave();
+
             });
 
 
@@ -64,32 +75,6 @@ class AdminPageEdit extends Extension
 
     }
 
-    protected function setupObject(){
-
-        if(api("input")->get->new){
-
-            $this->object = new Page();
-
-            // set the template first so following value can be set properly
-            $templateName = api("input")->get->template;
-            $this->object->template = $templateName;
-
-            // set parent from get parameter
-            $parentUrl = api("input")->get->parent;
-            $this->object->parent = $parentUrl;
-
-            $this->title = "New Page";
-
-        }
-        else{
-            $name = api("input")->get->name;
-            $this->object = api("pages")->get($name);
-            $this->template = $this->object->template;
-            $this->title = $this->object->title;
-
-        }
-
-    }
 
 
     protected function addFilesFields()
@@ -141,15 +126,12 @@ class AdminPageEdit extends Extension
     }
 
     public function processSave(){
-        if (count(api::get("input")->post)) {
 
-            $this->object->save();
+        $this->object->save();
+        api::get("session")->redirect(
+            api::get("input")->query
+        );
 
-            api::get("session")->redirect(
-                api::get("input")->query
-            );
-
-        }
     }
 
 }

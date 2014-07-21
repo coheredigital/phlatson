@@ -5,12 +5,14 @@ class MarkupEditForm extends Extension
     // array of field markup to be rendered
     public $object;
     public $formID;
+    public $api;
 
     public $tabs = array();
 
     public function add(MarkupFormtab $element)
     {
         $this->tabs[] = $element;
+        $this->api = extract(api());
     }
 
 
