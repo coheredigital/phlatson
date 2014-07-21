@@ -126,6 +126,7 @@ class AdminPageEdit extends Extension
         $this->addFilesFields();
 
         $admin = api("admin");
+        $admin->title = "Edit Page";
         $admin->output = $this->form->render();
         $admin->render();
 

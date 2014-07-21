@@ -70,6 +70,7 @@ class AdminExtensionsList extends Extension {
     {
 
         $admin = api("admin");
+        $admin->title = "Extensions";
         $admin->output = $this->renderFieldsList();
         $admin->render();
 

@@ -1,6 +1,6 @@
 <?php
 
-class AdminFieldEdit extends AdminObjectEdit
+class AdminFieldEdit extends Extension
 {
 
     public static function getInfo() {
@@ -87,6 +87,7 @@ class AdminFieldEdit extends AdminObjectEdit
         $this->addDefaultFields();
 
         $admin = api("admin");
+        $admin->title = "Edit Field";
         $admin->output = $this->form->render();
         $admin->render();
 

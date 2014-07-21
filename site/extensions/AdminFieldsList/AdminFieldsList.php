@@ -71,6 +71,7 @@ class AdminFieldsList extends Extension {
     {
 
         $admin = api("admin");
+        $admin->title = "Fields";
         $admin->output = $this->renderFieldsList();
         $admin->render();
 

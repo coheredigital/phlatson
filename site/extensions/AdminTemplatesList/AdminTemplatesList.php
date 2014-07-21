@@ -69,6 +69,7 @@ class AdminTemplatesList extends Extension {
     {
 
         $admin = api("admin");
+        $admin->title = "Templates";
         $admin->output = $this->renderTemplatesList();
         $admin->render();
 

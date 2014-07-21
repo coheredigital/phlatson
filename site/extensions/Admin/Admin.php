@@ -23,7 +23,7 @@ class Admin extends Extension {
     public function render()
     {
         extract(api());
-        include __DIR__ . "/layouts/index.php";
+        include "layout.php";
     }
 
 } 

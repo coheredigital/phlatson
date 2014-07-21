@@ -1,6 +1,6 @@
 <?php
 
-class AdminTemplateEdit extends AdminObjectEdit
+class AdminTemplateEdit extends Extension
 {
 
 
@@ -76,6 +76,7 @@ class AdminTemplateEdit extends AdminObjectEdit
         $this->addDefaultFields();
 
         $admin = api("admin");
+        $admin->title = "Edit Template";
         $admin->output = $this->form->render();
         $admin->render();
 
