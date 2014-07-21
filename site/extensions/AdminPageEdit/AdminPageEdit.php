@@ -10,29 +10,17 @@ class AdminPageEdit extends Extension
     {
 
         Router::get( "/__/pages/edit/(:all)" , function($url){
-
                 $this->object = api("pages")->get($url);
                 $this->template = $this->object->template;
                 $this->title = $this->object->title;
-
                 api("admin")->render($this,true);
             });
 
-        Router::get( "/__/pages/new/(:all)" , function( $url){
-
-
+        Router::get( "/__/pages/new/(:any)/(:all)" , function( $template, $parent){
                 $this->object = new Page();
-
-                // set the template first so following value can be set properly
-                $this->object->template = $url;
-
-                // set parent from get parameter
-                $parentUrl = api("request")->get->parent;
-                $this->object->parent = $parentUrl;
-
+                $this->object->template = $template;
+                $this->object->parent = $parent;
                 $this->title = "New Page";
-
-
                 api("admin")->render($this,true);
             });
 

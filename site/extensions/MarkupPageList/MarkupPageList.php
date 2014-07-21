@@ -9,7 +9,7 @@ class MarkupPageList extends Extension
 
     protected function setup()
     {
-        api::get('config')->scripts->add($this->url . "{$this->className}.js");
+        api('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
 
@@ -54,8 +54,6 @@ class MarkupPageList extends Extension
 
         $templates = api::get("templates")->all(); // TODO: change to list only supported child templates for this template
 
-
-
         if(count($templates) > 1){
 
             $output = '<div class="ui right pointing dropdown icon button">';
@@ -64,7 +62,7 @@ class MarkupPageList extends Extension
 
             foreach($templates as $t){
                 $output .= '<div class="item">';
-                $output .= "<a href='" . api::get('config')->urls->root . api("admin")->adminUrl . "/pages/new/{$t->name}/?parent=/" . $page->directory . "'>{$t->name}</a>";
+                $output .= "<a href='" . api::get('config')->urls->root . api("admin")->adminUrl . "/pages/new/{$t->name}/" . $page->directory . "'>{$t->name}</a>";
 
                 $output .= '</div>';
 
@@ -77,7 +75,7 @@ class MarkupPageList extends Extension
         }
         else if ( count($templates) ){
 
-            $output = "<a class='ui button' href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $templates[0]->name . "&new=1'><i class='icon plus'></i></a>";
+            $output = "<a class='ui button' href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon plus'></i></a>";
             return $output;
         }
 

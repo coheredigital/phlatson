@@ -14,6 +14,8 @@ class Request {
     public $query;
 
     public $http;
+    public $https;
+    public $ajax;
 
     public function __construct(){
 
@@ -43,6 +45,9 @@ class Request {
             $this->post->$key = $value;
         }
 
+        // HTTPS and AJAX
+        $this->https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+        $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
     }
 

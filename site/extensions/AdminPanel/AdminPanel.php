@@ -21,6 +21,9 @@ class AdminPanel extends Extension {
                 $this->render("pagetree");
             });
 
+        Router::get( "$adminUrl/(:any)" , function($name = null){
+                $this->render($name);
+            });
 
     }
 

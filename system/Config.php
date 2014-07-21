@@ -2,14 +2,9 @@
 
 class Config extends Object
 {
-//
-//    protected $urls;
-//    protected $paths;
 
     function __construct()
     {
-        // TODO : add support for proper root request without assuming a blank request is a root request, possibly turn requests into object where each level is retrieval and the original string etc.
-        // default to using the name when no url parameter passed
 
         $this->styles = new SimpleArray();
         $this->scripts = new SimpleArray();
@@ -61,35 +56,23 @@ class Config extends Object
 
     protected function setupDirectories(){
 
-        // start an array of directories
+        // store an array of directories
         $directories = array();
-        // site directories
-        $directories['site'] = 'site/';
         $directories['assets'] = 'assets/';
-        $directories['cache'] = $directories['assets'] . 'cache/';
+        $directories['site'] = 'site/';
         $directories['pages'] = $directories['site'] . 'pages/';
         $directories['fields'] = $directories['site'] . 'fields/';
         $directories['templates'] = $directories['site'] . 'templates/';
         $directories['extensions'] = $directories['site'] . 'extensions/';
         $directories['layouts'] = $directories['site'] . 'layouts/';
         $directories['users'] = $directories['site'] . 'users/';
-        $directories['system'] = 'system/';
-
-
-        if (isset($_SERVER['HTTP_HOST'])) {
-            $httpHost = strtolower($_SERVER['HTTP_HOST']);
-            $rootURL = rtrim(dirname($_SERVER['SCRIPT_NAME']), "/\\") . '/';
-        } else {
-            $httpHost = '';
-            $rootURL = '/';
-        }
 
 
         /*
          * Setup configuration data and default paths/urls
          */
 
-        $urls = new Paths($rootURL);
+        $urls = new Paths(ROOT_URL);
         // loop through directories and set key / value
         foreach ($directories as $key => $value) {
             $urls->{$key} = $value;
@@ -104,9 +87,7 @@ class Config extends Object
         $this->paths = $paths;
 
 
-        // HTTPS and AJAX
-        $this->https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
-        $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+
 
     }
 

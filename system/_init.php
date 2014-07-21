@@ -5,9 +5,10 @@ require_once ROOT_PATH . 'system/_autoload.php';
 
 /* instatiate api variables */
 
+api('config', new Config);
+
 api('request', new Request);
 api('router', new Router);
-api('config', new Config);
 api('extensions', new Extensions);
 api('sanitizer', new Sanitizer);
 api('pages', new Pages);
