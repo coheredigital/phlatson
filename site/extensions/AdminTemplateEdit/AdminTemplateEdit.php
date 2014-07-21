@@ -3,46 +3,81 @@
 class AdminTemplateEdit extends AdminObjectEdit
 {
 
-    protected function setupObject(){
 
-        if(api::get("input")->get->new){
+    public function setup()
+    {
 
-            $this->object = new Template();
-            $this->object->template = "template";
-            $this->title = "New Template";
+        $config = api("config");
 
-        }
-        else{
-            $name = api::get("input")->get->name;
-            $this->object = api::get("templates")->get($name);
+        Router::get( "/{$config->adminUrl}/templates/edit/(:any)" , function( $name ){
+            $this->object = api("templates")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
 
-        }
+            $this->render();
+
+        });
+
+        Router::get( "/{$config->adminUrl}/templates/new/" , function(){
+            $this->object = new Template();
+            $this->object->template = "template";
+            $this->object->parent = $parent;
+            $this->title = "New Page";
+
+            $this->render();
+        });
+
+
+        Router::post( "/{$config->adminUrl}/templates/edit/(:any)" , function( $name ){
+
+            $page = api("templates")->get($name);
+            $this->object = $page;
+
+            $this->processSave();
+
+        });
+
 
     }
 
 
-    private function addContentFieldset()
+    protected function addDefaultFields()
     {
+
         $fieldset = api::get("extensions")->get("MarkupFormtab");
-        $fieldset->label = "Content";
-        $fields = $this->object->template->fields;
+        $fieldset->label = $this->get("title");
+
+        $template = $this->object->get("template");
+        $fields = $template->fields;
         foreach ($fields as $field) {
             $fieldtype = $field->type;
-            $fieldtype->setObject($this->object);
             $fieldtype->label = $field->label;
-            $fieldtype->value = $this->object->{$field->name};
-            $fieldset->add($fieldtype);
+
+            if (!is_null($this->object)) {
+                $name = $field->name;
+                $fieldtype->setObject($this->object);
+                $fieldtype->attribute("name", $name);
+                $fieldset->add($fieldtype);
+            }
+
         }
+
         $this->form->add($fieldset);
+
     }
 
 
     public function render()
     {
-        $this->addContentFieldset();
-        return $this->form->render();
+
+        $this->form = api("extensions")->get("MarkupEditForm");
+        $this->form->object = $this->object;
+
+        $this->addDefaultFields();
+
+        $admin = api("admin");
+        $admin->output = $this->form->render();
+        $admin->render();
 
     }
 

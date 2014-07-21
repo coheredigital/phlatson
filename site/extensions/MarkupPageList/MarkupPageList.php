@@ -22,7 +22,7 @@ class MarkupPageList extends Extension
 
         $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api::get('config')->urls->root . $this->adminPanel->adminUrl . "/pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api('config')->urls->root . api('config')->adminUrl . "/pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= "</div>";
         $output .= "</div>";
@@ -52,7 +52,7 @@ class MarkupPageList extends Extension
 
     private function renderPageItemNew(Page $page){
 
-        $templates = api::get("templates")->all(); // TODO: change to list only supported child templates for this template
+        $templates = api("templates")->all(); // TODO: change to list only supported child templates for this template
 
         if(count($templates) > 1){
 
@@ -62,7 +62,7 @@ class MarkupPageList extends Extension
 
             foreach($templates as $t){
                 $output .= '<div class="item">';
-                $output .= "<a href='" . api::get('config')->urls->root . api("admin")->adminUrl . "/pages/new/{$t->name}/" . $page->directory . "'>{$t->name}</a>";
+                $output .= "<a href='" . api('config')->urls->root . api("admin")->adminUrl . "/pages/new/{$t->name}/" . $page->directory . "'>{$t->name}</a>";
 
                 $output .= '</div>';
 
@@ -75,7 +75,7 @@ class MarkupPageList extends Extension
         }
         else if ( count($templates) ){
 
-            $output = "<a class='ui button' href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon plus'></i></a>";
+            $output = "<a class='ui button' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon plus'></i></a>";
             return $output;
         }
 

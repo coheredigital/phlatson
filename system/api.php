@@ -20,7 +20,6 @@ final class Api
     public static function set($key, $value, $lock = false)
     {
 
-
         if (isset(self::$registry[$key]) && in_array($key, self::$lock)) {
             throw new Exception("There is already an API entry for '{$key}', value is locked.");
         }

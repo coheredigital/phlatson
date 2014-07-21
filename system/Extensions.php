@@ -13,6 +13,11 @@ class Extensions
         $this->data = $this->getList();
     }
 
+    public function all()
+    {
+        return $this->data;
+    }
+
     protected function getList()
     {
         $extensionList = [];

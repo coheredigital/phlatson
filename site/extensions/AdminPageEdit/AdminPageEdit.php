@@ -9,23 +9,28 @@ class AdminPageEdit extends Extension
     public function setup()
     {
 
-        Router::get( "/__/pages/edit/(:all)" , function($url){
+        $config = api("config");
+
+        Router::get( "/{$config->adminUrl}/pages/edit/(:all)" , function($url){
                 $this->object = api("pages")->get($url);
                 $this->template = $this->object->template;
                 $this->title = $this->object->title;
-                api("admin")->render($this,true);
+
+                $this->render();
+
             });
 
-        Router::get( "/__/pages/new/(:any)/(:all)" , function( $template, $parent){
+        Router::get( "/{$config->adminUrl}/pages/new/(:any)/(:all)" , function( $template, $parent){
                 $this->object = new Page();
                 $this->object->template = $template;
                 $this->object->parent = $parent;
                 $this->title = "New Page";
-                api("admin")->render($this,true);
-            });
 
-        Router::post( "/__/pages/edit/(:all)" , function( $url){
+                $this->render();
+        });
 
+
+        Router::post( "/{$config->adminUrl}/pages/edit/(:all)" , function( $url){
 
                 $page = api("pages")->get($url);
                 $this->object = $page;
@@ -91,19 +96,6 @@ class AdminPageEdit extends Extension
 
 
 
-    public function render()
-    {
-
-        $this->form = api("extensions")->get("MarkupEditForm");
-        $this->form->object = $this->object;
-
-        $this->addDefaultFields();
-        $this->addFilesFields();
-
-        return $this->form->render();
-
-    }
-
 
 
     public function processFiles(){
@@ -121,5 +113,24 @@ class AdminPageEdit extends Extension
         );
 
     }
+
+
+
+    public function render()
+    {
+
+        $this->form = api("extensions")->get("MarkupEditForm");
+        $this->form->object = $this->object;
+
+        $this->addDefaultFields();
+        $this->addFilesFields();
+
+        $admin = api("admin");
+        $admin->output = $this->form->render();
+        $admin->render();
+
+    }
+
+
 
 }

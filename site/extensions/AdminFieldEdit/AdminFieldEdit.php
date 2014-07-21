@@ -13,21 +13,40 @@ class AdminFieldEdit extends AdminObjectEdit
         );
     }
 
-    protected function setupObject(){
 
-        if( api::get("input")->get->new ){
-            $field = new Field();
-            $field->template = "field";
+    public function setup()
+    {
 
-            $this->object = $field;
-            $this->title = "New Field";
-        }
-        else{
-            $name = api::get("input")->get->name;
-            $this->object = api::get("fields")->get($name);
+        $config = api("config");
+
+        Router::get( "/{$config->adminUrl}/fields/edit/(:any)" , function( $name ){
+            $this->object = api("fields")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
-        }
+
+            $this->render();
+
+        });
+
+        Router::get( "/{$config->adminUrl}/fields/new/" , function(){
+            $this->object = new Field();
+            $this->object->template = "field";
+            $this->object->parent = $parent;
+            $this->title = "New Page";
+
+            $this->render();
+        });
+
+
+        Router::post( "/{$config->adminUrl}/fields/edit/(:any)" , function( $name ){
+
+            $page = api("fields")->get($name);
+            $this->object = $page;
+
+            $this->processSave();
+
+        });
+
 
     }
 
@@ -35,7 +54,7 @@ class AdminFieldEdit extends AdminObjectEdit
     protected function addDefaultFields()
     {
 
-        $fieldset = api::get("extensions")->get("MarkupFormtab");
+        $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->get("template");
@@ -61,8 +80,16 @@ class AdminFieldEdit extends AdminObjectEdit
 
     public function render()
     {
+
+        $this->form = api("extensions")->get("MarkupEditForm");
+        $this->form->object = $this->object;
+
         $this->addDefaultFields();
-        return $this->form->render();
+
+        $admin = api("admin");
+        $admin->output = $this->form->render();
+        $admin->render();
+
     }
 
 }
