@@ -30,7 +30,7 @@ class FieldtypeTemplate extends FieldtypeSelect
         $this->attribute("name", "template");
     }
 
-    public function setObject( $page ){
+    public function setObject( Object $page ){
         $this->object = $page;
         $this->setAllowedTemplates();
         $this->value = $this->object->template->name;

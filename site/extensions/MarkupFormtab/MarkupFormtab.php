@@ -19,12 +19,9 @@ class MarkupFormtab extends Extension
 
     public function render($active = false)
     {
-        $colCount = 0;
-        $rowOpen = false;
+
         $fields = "";
-
         $class = $active ? "active" : "";
-
         foreach ($this->fields as $field) {
 
             if (is_object($field)) {

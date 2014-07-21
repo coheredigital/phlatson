@@ -5,7 +5,8 @@ abstract class Fieldtype extends Extension
     protected $attributes = array();
 
     protected $field;
-    protected $value;
+    protected $object;
+//    public $value;
 
     protected function setup()
     {
@@ -15,7 +16,9 @@ abstract class Fieldtype extends Extension
         }
     }
 
-
+    public function setObject (Object $object) {
+        $this->object = $object;
+    }
 
     /**
      * alias for the three available formatting methods,

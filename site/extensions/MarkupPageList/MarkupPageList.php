@@ -22,7 +22,7 @@ class MarkupPageList extends Extension
 
         $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api::get('config')->urls->root . $this->adminPanel->adminUrl . "/pages/edit/?name=" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api::get('config')->urls->root . $this->adminPanel->adminUrl . "/pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= "</div>";
         $output .= "</div>";
@@ -64,7 +64,7 @@ class MarkupPageList extends Extension
 
             foreach($templates as $t){
                 $output .= '<div class="item">';
-                $output .= "<a href='" . api::get('config')->urls->root . api::get("config")->adminUrl . "/pages/new/?parent=/" . $page->directory . "&template=" . $t->name . "&new=1'>{$t->name}</a>";
+                $output .= "<a href='" . api::get('config')->urls->root . api("admin")->adminUrl . "/pages/new/{$t->name}/?parent=/" . $page->directory . "'>{$t->name}</a>";
 
                 $output .= '</div>';
 

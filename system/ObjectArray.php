@@ -19,7 +19,7 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
 
     }
 
-    public function add(Object $item) {
+    public function add($item) {
 
         $this->data[$item->name] = $item;
         return $this;

@@ -9,10 +9,29 @@ class AdminPageEdit extends Extension
     public function setup()
     {
 
-        Router::get( "/__/pages/(:any)" , function($url){
 
-                $page = api("pages")->get($url);
-                $this->object = $page;
+
+        Router::get( "/__/pages/(:any)/(:all)" , function($action , $url){
+
+                if ( $action == "new") {
+                    $this->object = new Page();
+
+                    // set the template first so following value can be set properly
+                    $this->object->template = $url;
+
+                    // set parent from get parameter
+                    $parentUrl = api("request")->get->parent;
+                    $this->object->parent = $parentUrl;
+
+                    $this->title = "New Page";
+
+                }
+                else{
+                    $page = api("pages")->get($url);
+                    $this->object = $page;
+                }
+
+
                 api("admin")->render($this,true);
             });
 
@@ -30,7 +49,7 @@ class AdminPageEdit extends Extension
         $fields = $template->fields;
         foreach ($fields as $field) {
             $fieldtype = $field->type;
-//            $fieldtype->setObject($this->object);
+            $fieldtype->setObject($this->object);
             $fieldtype->label = $field->label;
 
             if (!is_null($this->object)) {
@@ -88,7 +107,7 @@ class AdminPageEdit extends Extension
     {
 
         $fieldtype = api("extensions")->get("FieldtypePageFiles");
-//        $fieldtype->setObject($this->object);
+        $fieldtype->setObject($this->object);
         $fieldtype->label = "Files";
         $fieldtype->columns = 12;
         $fieldtype->attribute("name", "parent");
@@ -103,7 +122,7 @@ class AdminPageEdit extends Extension
     {
 
         $this->form = api("extensions")->get("MarkupEditForm");
-
+        $this->form->object = $this->object;
 
         $this->addDefaultFields();
         $this->addFilesFields();
