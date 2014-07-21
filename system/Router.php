@@ -57,7 +57,7 @@ class Router {
      */
     public static function dispatch()
     {
-        $uri =  rtrim(api('request')->url, "/");
+        $uri =  "/" . trim(api('request')->url, "/");
         $method = api('request')->method;
 
         $searches = array_keys(static::$patterns);
