@@ -63,7 +63,7 @@ function normalizeDirectory($directory){
     $directory = normalizeUrl($directory);
 
     if( strlen($directory) === 0 ){
-        $directory = "/";
+        $directory = "";
     }
 
     return $directory;

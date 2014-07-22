@@ -22,6 +22,7 @@ class AdminSettings extends Extension {
     {
 
         $admin = api("admin");
+        $admin->title = "Settings";
         $admin->output = "<div class='container'><h4>Settings</h4><div class='ui list'>{$output->main}</div></div>";
         $admin->render();
 

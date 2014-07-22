@@ -42,11 +42,14 @@ $config->scripts->add("{$this->url}scripts/init.js");
                     <i class="icon user"></i> <?php echo $user->name ?> <i class="icon dropdown"></i>
                     <div class="menu">
                         <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                        <a href="?logout=1" class="item"><i class="settings icon"></i> Logout</a>
+                        <a href="<?php echo $config->urls->root . $config->adminUrl ?>/logout" class="item"><i class="settings icon"></i> Logout</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container">
+        <h1><?php echo $this->title ?></h1>
     </div>
 </div>
 <div id="main">

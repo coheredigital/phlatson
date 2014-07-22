@@ -52,6 +52,7 @@ class MarkupPageList extends Extension
 
     private function renderPageItemNew(Page $page){
 
+        $config = api("config");
         $templates = api("templates")->all(); // TODO: change to list only supported child templates for this template
 
         if(count($templates) > 1){
@@ -62,10 +63,8 @@ class MarkupPageList extends Extension
 
             foreach($templates as $t){
                 $output .= '<div class="item">';
-                $output .= "<a href='" . api('config')->urls->root . api("admin")->adminUrl . "/pages/new/{$t->name}/" . $page->directory . "'>{$t->name}</a>";
-
+                $output .= "<a href='{$config->urls->root}{$config->adminUrl}/pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
                 $output .= '</div>';
-
             }
 
             $output .= '</div>';
