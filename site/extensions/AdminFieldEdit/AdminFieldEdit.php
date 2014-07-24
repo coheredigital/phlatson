@@ -19,7 +19,7 @@ class AdminFieldEdit extends Extension
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/fields/edit/(:any)" , function( $name ){
+        Router::get( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
             $this->object = api("fields")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
@@ -38,7 +38,7 @@ class AdminFieldEdit extends Extension
         });
 
 
-        Router::post( "/{$config->adminUrl}/fields/edit/(:any)" , function( $name ){
+        Router::post( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
 
             $page = api("fields")->get($name);
             $this->object = $page;

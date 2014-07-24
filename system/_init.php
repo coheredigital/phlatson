@@ -8,7 +8,6 @@ require_once ROOT_PATH . 'system/_autoload.php';
 api('config', new Config);
 
 api('request', new Request);
-api('router', new Router);
 api('extensions', new Extensions);
 api('sanitizer', new Sanitizer);
 api('pages', new Pages);
@@ -18,7 +17,7 @@ api('templates', new Templates);
 api('session', new Session);
 
 
-Router::get("/:all", function($url = null){
+Router::get(":all", function($url = null){
         $page = api("pages")->get($url);
         if( $page instanceof Page ) {
             extract( api::get() ); // get access to api variables for rendered layout
@@ -26,3 +25,4 @@ Router::get("/:all", function($url = null){
         }
     });
 
+Router::dispatch( api("request") );

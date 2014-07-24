@@ -30,7 +30,7 @@ class Router {
     public static function __callstatic($method, $params)
     {
 
-        $uri = $params[0];
+        $uri = "/" . trim($params[0], "/");
         $callback = $params[1];
 
         array_push(self::$routes, $uri);
@@ -55,10 +55,8 @@ class Router {
     /**
      * Runs the callback for the given request
      */
-    public function __destruct()
+    public static function dispatch($request)
     {
-
-        $request = api("request");
         $uri =  "/" . trim($request->url, "/");
         $method = $request->method;
 

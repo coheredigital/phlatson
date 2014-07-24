@@ -9,7 +9,7 @@ class AdminTemplateEdit extends Extension
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/templates/edit/(:any)" , function( $name ){
+        Router::get( "/{$config->adminUrl}/templates/edit/:any" , function( $name ){
             $this->object = api("templates")->get($name);
             $this->template = $this->object->template;
             $this->title = $this->object->title;
@@ -28,7 +28,7 @@ class AdminTemplateEdit extends Extension
         });
 
 
-        Router::post( "/{$config->adminUrl}/templates/edit/(:any)" , function( $name ){
+        Router::post( "/{$config->adminUrl}/templates/edit/:any" , function( $name ){
 
             $page = api("templates")->get($name);
             $this->object = $page;
