@@ -17,9 +17,9 @@ class Router {
     private static $callbacks = array();
 
     private static $patterns = array(
-        ':any' => '[^/]+',
-        ':num' => '[0-9]+',
-        ':all' => '.*'
+        ':any' => '([^/]+)',
+        ':num' => '([0-9]+)',
+        ':all' => '(.*)'
     );
 
     public static $error_callback;
@@ -55,10 +55,12 @@ class Router {
     /**
      * Runs the callback for the given request
      */
-    public static function dispatch()
+    public function __destruct()
     {
-        $uri =  "/" . trim(api('request')->url, "/");
-        $method = api('request')->method;
+
+        $request = api("request");
+        $uri =  "/" . trim($request->url, "/");
+        $method = $request->method;
 
         $searches = array_keys(static::$patterns);
         $replaces = array_values(static::$patterns);
@@ -67,7 +69,9 @@ class Router {
 
         // check if route is defined without regex
         if (in_array($uri, self::$routes)) {
+
             $route_pos = array_keys(self::$routes, $uri);
+
             foreach ($route_pos as $route) {
 
                 if (self::$methods[$route] == $method) {
@@ -128,11 +132,7 @@ class Router {
                             //grab the controller name and method call
                             $segments = explode('@',$last);
 
-                            //instanitate controller
-                            $controller = new $segments[0]();
-
-                            //call method and pass any extra parameters to the method
-                            $controller->$segments[1](implode(",", $matched));
+                            call_user_func_array( $segments , $matched );
 
                             if (self::$halts) return;
                         } else {

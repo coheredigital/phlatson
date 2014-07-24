@@ -17,7 +17,8 @@ api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
 
-Router::get("/(:all)", function($url = null){
+
+Router::get("/:all", function($url = null){
         $page = api("pages")->get($url);
         if( $page instanceof Page ) {
             extract( api::get() ); // get access to api variables for rendered layout
@@ -25,4 +26,3 @@ Router::get("/(:all)", function($url = null){
         }
     });
 
-Router::dispatch();
