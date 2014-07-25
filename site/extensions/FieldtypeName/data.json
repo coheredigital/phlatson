@@ -1,3 +1,5 @@
 {
-    // settings go here
+    "description": "Simple text Fieldtype for storing Page/Field/Template/User names",
+    "title": "Name",
+    "type": "Fieldtype"
 }

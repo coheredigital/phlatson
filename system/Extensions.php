@@ -40,51 +40,23 @@ class Extensions extends Objects
 
             if( $itemFile != "data.json" && $itemFile != "info.json" ) continue;
 
-            $className = str_replace($root, "", $itemPath);
-            $className = trim($className, DIRECTORY_SEPARATOR );
-            $className = normalizeDirectory($className);
+            $className = normalizeDirectory(str_replace($root, "", $itemPath));
 
             // add root items for pages to allow home selection
 
-            $info = $this->getExtensionInfo($itemPath);
-            $this->info["$className"] = $info;
+            $info = json_decode(file_get_contents($filePath));
 
             if( $info->autoload ){ // instatiate autoload extensions
                 $extension = new $className($filePath);
                 $this->data["$className"] = $extension;
             }
-//            else{ // otherwise store a reference to there file location
-//                $this->data["$className"] = $itemPath . $itemFile;
-//            }
 
         }
 
     }
 
 
-    protected function getExtensionInfo($path){
-        $file = $path . "info.json";
-        $data = json_decode(file_get_contents($file));
-        return $data;
-    }
-
-    protected function fieldtypes(){
-        $array = $this->all()->filter(array(
-                "type" => "Fieldtype"
-            ));
-        return $array;
-    }
-
-    public function get($name)
-    {
-        switch ($name){
-            case 'fieldtypes':
-                return $this->fieldtypes();
-            default:
-                return parent::get($name);
-        }
 
 
-    }
 
 }

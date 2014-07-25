@@ -1,3 +1,6 @@
 {
-    // settings go here
+    "description": "",
+    "title": "Admin Login View",
+    "type": "Admin",
+    "autoload": true
 }

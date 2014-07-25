@@ -1,3 +1,6 @@
 {
-    // settings go here
+    "description": "View and Manage Pages in a Pagetree interface",
+    "title": "Admin Settings View",
+    "type": "Admin",
+    "autoload": true
 }

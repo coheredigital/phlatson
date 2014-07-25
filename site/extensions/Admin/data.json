@@ -1,3 +1,6 @@
 {
-    // settings go here
+    "description": "Allows management of site using a GUI",
+    "title": "Admin Panel",
+    "type": "Admin",
+    "autoload": true
 }

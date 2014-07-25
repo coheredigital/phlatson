@@ -1,3 +1,4 @@
 {
-    // settings go here
+    "title": "Textarea",
+    "type": "Fieldtype"
 }

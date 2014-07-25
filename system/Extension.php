@@ -14,11 +14,7 @@ abstract class Extension extends Object
 
         $this->name = get_class($this);
 
-        // TODO : temp replace data.json with info.json, switch to using $path to get Objects
-        $infoFile = str_replace("data.json","info.json",$this->file);
-        $this->info = json_decode(file_get_contents($infoFile));
-
-        if ( $this->info->autoload === true ){
+        if ( $this->autoload === true ){
             $this->setup();
         }
 
