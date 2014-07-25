@@ -9,11 +9,12 @@ class MarkupEditForm extends Extension
 
     public $tabs = array();
 
-    public function add(MarkupFormtab $element)
+    public function add( MarkupFormtab $element )
     {
         $this->tabs[] = $element;
         $this->api = extract(api());
     }
+
 
 
     public function render()

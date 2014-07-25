@@ -24,16 +24,13 @@ class AdminPageEdit extends Extension
                 $this->object->parent = $parent;
                 $this->title = "New Page";
                 $this->render();
-        });
+            });
 
 
         Router::post( "/{$config->adminUrl}/pages/edit/:all" , function( $url){
-
                 $page = api("pages")->get($url);
                 $this->object = $page;
-
                 $this->processSave();
-
             });
 
 

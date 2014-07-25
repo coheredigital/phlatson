@@ -58,7 +58,15 @@ class Extensions
         switch ($name){
             default:
                 $key = normalizeDirectory($name);
-                if ( isset($this->data[$key]) ) return $this->data[$key];
+                if ( isset($this->data[$key]) ) {
+                    $extension = $this->data[$key];
+                    if ( $extension->singular ){
+                        return $extension;
+                    }
+                    else{
+                        return clone $extension; // TODO : better method, extension shouldn't be auto instantiated
+                    }
+                }
         }
     }
 

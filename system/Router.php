@@ -47,11 +47,6 @@ class Router {
         self::$error_callback = $callback;
     }
 
-    public static function haltOnMatch($flag = true)
-    {
-        self::$halts = $flag;
-    }
-
     /**
      * Runs the callback for the given request
      */
@@ -63,8 +58,6 @@ class Router {
         $searches = array_keys(static::$patterns);
         $replaces = array_values(static::$patterns);
 
-        $found_route = false;
-
         // check if route is defined without regex
         if (in_array($uri, self::$routes)) {
 
@@ -73,33 +66,26 @@ class Router {
             foreach ($route_pos as $route) {
 
                 if (self::$methods[$route] == $method) {
-                    $found_route = true;
-
                     //if route is not an object
                     if(!is_object(self::$callbacks[$route])){
 
                         //grab all parts based on a / separator
-                        $parts = explode('/',self::$callbacks[$route]);
+                        $parts = explode('/', self::$callbacks[$route] );
 
                         //collect the last index of the array
                         $last = end($parts);
 
                         //grab the controller name and method call
-                        $segments = explode('@',$last);
+                        $segments = explode('->',$last);
 
-                        //instanitate controller
-                        $controller = new $segments[0]();
+                        call_user_func_array($segments, $parameters);
 
-                        //call method
-                        $controller->$segments[1]();
-
-                        if (self::$halts) return;
+                        return; // end when match
 
                     } else {
                         //call closure
                         call_user_func(self::$callbacks[$route]);
-
-                        if (self::$halts) return;
+                        return; // end when match
                     }
                 }
             }
@@ -114,10 +100,8 @@ class Router {
 
                 if (preg_match('#^' . $route . '$#', $uri, $matched)) {
                     if (self::$methods[$pos] == $method) {
-                        $found_route = true;
 
                         array_shift($matched); //remove $matched[0] as [1] is the first parameter.
-
 
                         if(!is_object(self::$callbacks[$pos])){
 
@@ -132,11 +116,11 @@ class Router {
 
                             call_user_func_array( $segments , $matched );
 
-                            if (self::$halts) return;
+                            return;
                         } else {
                             call_user_func_array(self::$callbacks[$pos], $matched);
 
-                            if (self::$halts) return;
+                            return;
                         }
 
                     }
@@ -145,17 +129,15 @@ class Router {
             }
         }
 
-
         // run the error callback if the route was not found
-        if ($found_route == false) {
-            if (!self::$error_callback) {
-                self::$error_callback = function() {
-                    header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
-                    echo '404';
-                };
-            }
-            call_user_func(self::$error_callback);
+        if (!self::$error_callback) {
+            self::$error_callback = function() {
+                header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
+                echo '404';
+            };
         }
+        call_user_func(self::$error_callback);
+
 
     }
 

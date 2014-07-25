@@ -1,5 +1,4 @@
 {
-    "adminUrl" : "admin",
     "sessionName" : "xpages",
     "sessionExpireSeconds" : 3600,
     "timezone" : "America/New_York",
