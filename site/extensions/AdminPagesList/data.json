@@ -1,6 +1,3 @@
 {
-    "description": "View and Manage Pages in a Pagetree interface",
-    "title": "Admin PageTree View",
-    "type": "Admin",
-    "autoload": true
+    // settings go here
 }

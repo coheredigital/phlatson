@@ -1,6 +1,3 @@
 {
-    "version": "101",
-    "description": "Our HTML / WYSIWYG editor of choice, you'll love it!",
-    "title": "Redactor",
-    "type": "Fieldtype"
+    // settings go here
 }

@@ -3,6 +3,7 @@
 abstract class Objects
 {
 
+
     public $data = array();
     protected $count;
 
@@ -15,7 +16,7 @@ abstract class Objects
     // Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
     protected $singularName;
 
-    final public function __construct()
+    public function __construct()
     {
         // manually add the special case of the home page
         if ($this instanceof Pages) {
@@ -49,12 +50,12 @@ abstract class Objects
         $sitePathCheck = normalizePath( $sitePathCheck );
 
         if( $this->isValidPath($sitePathCheck) ){
-            $this->getListRecursive($siteRootPath, $sitePathCheck);
+            $this->getList($siteRootPath, $sitePathCheck);
         }
 
     }
 
-    protected function getListRecursive($root, $path, $depth = 1){
+    protected function getList($root, $path, $depth = 1){
 
         $iterator = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
         $iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::SELF_FIRST );
@@ -67,7 +68,7 @@ abstract class Objects
             $itemPath = normalizePath($itemPath);
             $itemFilename = $item->getFileName();
 
-            if( $itemFilename != "data.json" ) continue;
+            if( $itemFilename != "data.json" && $itemFilename != "info.json" ) continue;
 
             $directory = str_replace($root, "", $itemPath);
             $directory = str_replace($itemFilename,"",$directory);

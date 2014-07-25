@@ -3,7 +3,7 @@
 abstract class Object
 {
 
-    const DATA_FILE = "data.json";
+    const DEFAULT_SAVE_FILE = "data.json";
 
     protected $name;
     protected $path;
@@ -21,15 +21,12 @@ abstract class Object
     function __construct($file = null)
     {
 
-
         if ( is_file($file) ) {
-
             $this->file = $file;
             $this->path = $this->getPath();
             $this->route = $this->getRoute();
             $this->data = json_decode(file_get_contents($this->file), true);
             $this->name = $this->getName();
-
             $this->modified = filemtime($this->file);
         }
 
@@ -42,17 +39,15 @@ abstract class Object
         if ( $this->isNew() ){
             return $this->getNewName();
         }
-
         $lastRequestIndex = count($this->route) - 1;
         return $this->route[$lastRequestIndex];
-
     }
 
 
     protected function getPath()
     {
         if ( !$this->isNew() ){
-            return normalizePath(str_replace(Object::DATA_FILE,"",$this->file));
+            return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE,"",$this->file));
         }
         else {
 
@@ -64,7 +59,7 @@ abstract class Object
     {
 
         $relativePath = str_replace( api("config")->paths->site . $this->rootFolder , "", $this->file ); // trim the root path to get root relative path
-        $relativePath = str_replace($this::DATA_FILE, "", $relativePath ); // trim of file name to isolote path
+        $relativePath = str_replace($this::DEFAULT_SAVE_FILE, "", $relativePath ); // trim of file name to isolote path
         $relativePath = rtrim($relativePath, '/'); // trim excess slashes
 
         return $relativePath;
@@ -210,7 +205,7 @@ abstract class Object
             $saveFile = "$saveName.json";
         }
         else{
-//            $saveFile = self::DATA_FILE;
+//            $saveFile = self::DEFAULT_SAVE_FILE;
             $saveFile = "test.json";
         }
 

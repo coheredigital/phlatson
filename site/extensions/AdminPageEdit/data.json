@@ -1,6 +1,3 @@
 {
-    "description": "Creates the forms and enable the edit/saving of pages.",
-    "title": "Page Edit",
-    "type": "Admin",
-    "autoload": true
+    // settings go here
 }

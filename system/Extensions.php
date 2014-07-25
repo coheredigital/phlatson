@@ -1,73 +1,90 @@
 <?php
 
 
-class Extensions
+class Extensions extends Objects
 {
 
-    protected $path;
-    protected $data;
+    protected $rootFolder = "extensions";
+    protected $singularName = "extension";
 
-    public function __construct()
-    {
-        $this->path = api("config")->paths->extensions;
-        $this->data = $this->getList();
+    protected $info = [];
+
+    public function __construct(){
+
+        $this->getList(api("config")->paths->extensions, api("config")->paths->extensions );
+
     }
 
-    public function all()
-    {
-        return $this->data;
+
+    /**
+     * Handle preload of extension to find extensions that require autoloading /  or route definitions
+     */
+    protected function preload(){
+
     }
 
-    protected function getList()
-    {
-        $extensionList = [];
 
-        $iterator = new RecursiveDirectoryIterator( $this->path, RecursiveDirectoryIterator::SKIP_DOTS );
+    protected function getList($root, $path, $depth = 1){
+
+        $iterator = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
         $iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::SELF_FIRST );
 
-        $iterator->setMaxDepth(1);
+        $iterator->setMaxDepth($depth);
 
         foreach ($iterator as $item) {
 
-            $file = $item->getPathName();
-            $file = normalizePath($file);
+            $itemPath = normalizePath( $item->getPath() );
+            $itemFile = $item->getFileName();
 
-            $itemFilename = $item->getFileName();
+            $filePath = $itemPath . $itemFile;
 
-            if( $itemFilename != "data.json" ) continue;
+            if( $itemFile != "data.json" && $itemFile != "info.json" ) continue;
 
-            $extensionName = str_replace($this->path, "", $file);
-            $extensionName = str_replace($itemFilename,"",$extensionName);
-            $extensionName = trim($extensionName,DIRECTORY_SEPARATOR);
-            $extensionName = normalizeDirectory($extensionName);
+            $className = str_replace($root, "", $itemPath);
+            $className = trim($className, DIRECTORY_SEPARATOR );
+            $className = normalizeDirectory($className);
 
             // add root items for pages to allow home selection
 
-            $extension = new $extensionName($file);
+            $info = $this->getExtensionInfo($itemPath);
+            $this->info["$className"] = $info;
 
-            $extensionList["$extensionName"] = $extension;
+            if( $info->autoload ){ // instatiate autoload extensions
+                $extension = new $className($filePath);
+                $this->data["$className"] = $extension;
+            }
+//            else{ // otherwise store a reference to there file location
+//                $this->data["$className"] = $itemPath . $itemFile;
+//            }
 
         }
 
-        return $extensionList;
+    }
 
+
+    protected function getExtensionInfo($path){
+        $file = $path . "info.json";
+        $data = json_decode(file_get_contents($file));
+        return $data;
+    }
+
+    protected function fieldtypes(){
+        $array = $this->all()->filter(array(
+                "type" => "Fieldtype"
+            ));
+        return $array;
     }
 
     public function get($name)
     {
         switch ($name){
+            case 'fieldtypes':
+                return $this->fieldtypes();
             default:
-                $key = normalizeDirectory($name);
-                if ( isset($this->data[$key]) ) {
-                    $extension = $this->data[$key];
-                    if ( $extension->singular ){
-                        return $extension;
-                    }
-                    else{
-                        return clone $extension; // TODO : better method, extension shouldn't be auto instantiated
-                    }
-                }
+                return parent::get($name);
         }
+
+
     }
 
 }
