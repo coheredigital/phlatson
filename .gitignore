@@ -218,7 +218,7 @@ pip-log.txt
 #SUBLIME
 *.sublime-project
 *.sublime-workspace
-sftp-config.json
+sftp-Site.json
 
 #CMS Assets
 site/assets/sessions/*

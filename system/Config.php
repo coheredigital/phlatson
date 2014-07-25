@@ -13,7 +13,7 @@ class Config extends Object
         $this->setupDirectories();
 
         // load site config
-        $this->getData("{$this->paths->site}config.json");
+        $this->getData("{$this->paths->config}Site.json");
 
         // add admin url for convenience
         $this->urls->admin = $this->urls->root . $this->adminUrl;
@@ -60,6 +60,7 @@ class Config extends Object
         $directories = array();
         $directories['assets'] = 'assets/';
         $directories['site'] = 'site/';
+        $directories['config'] = $directories['site'] . 'config/';
         $directories['pages'] = $directories['site'] . 'pages/';
         $directories['fields'] = $directories['site'] . 'fields/';
         $directories['templates'] = $directories['site'] . 'templates/';

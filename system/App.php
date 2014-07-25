@@ -3,7 +3,7 @@
 class App
 {
 
-    protected $config = [];
+    protected $config;
 
     function __construct()
     {
@@ -15,7 +15,7 @@ class App
         $this->setupDirectories();
 
         // load site config
-        $this->getData("{$this->paths->site}config.json");
+        $this->getData("{$this->paths->config}Site.json");
 
         // add admin url for convenience
         $this->urls->admin = $this->urls->root . $this->adminUrl;
@@ -51,8 +51,8 @@ class App
     protected function getData($file)
     {
         if (is_file($file)) {
-            $this->path = normalizePath(str_replace(Object::DATA_FILE,"",$file));
-            $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
+            $this->path = normalizePath(str_replace(Object::DEFAULT_SAVE_FILE,"",$file));
+            $this->config = array_merge($this->config, json_decode(file_get_contents($file)));
         }
     }
 
@@ -62,6 +62,7 @@ class App
         $directories = array();
         $directories['assets'] = 'assets/';
         $directories['site'] = 'site/';
+        $directories['config'] = $directories['site'] . 'config/';
         $directories['pages'] = $directories['site'] . 'pages/';
         $directories['fields'] = $directories['site'] . 'fields/';
         $directories['templates'] = $directories['site'] . 'templates/';
@@ -94,15 +95,11 @@ class App
     }
 
 
-    public function get($name)
+    public function config($name)
     {
-        if($this->has($name)){
-            return $this->getUnformatted($name);
+        if( $this->config->{$name} ){
+            return $this->config->{$name};
         }
-        else{
-            return parent::get($name);
-        }
-
     }
 
 

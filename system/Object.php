@@ -7,13 +7,14 @@ abstract class Object
 
     protected $name;
     protected $path;
+    protected $configPath = null;
     protected $file;
     protected $modified;
-
     protected $rootFolder;
 
     // main data container, holds data loaded from JSON file
     protected $data = array();
+    protected $config = array();
 
     protected $defaultFields = array();
     protected $route = array();
@@ -193,28 +194,25 @@ abstract class Object
 
     }
 
+    protected function saveFile($path, $filename){
+
+        file_put_contents(
+            $path . $filename ,
+            json_encode($this->data, JSON_PRETTY_PRINT)
+        );
+
+    }
+
     public function save( $saveName = null )
     {
+
+//      $saveFile = self::DEFAULT_SAVE_FILE;
+        $saveFile = "test.json";
 
         $this->processSaveInput();
         $this->processSaveName();
         $this->processSavePath();
-
-        // save to file
-        if($saveName){
-            $saveFile = "$saveName.json";
-        }
-        else{
-//            $saveFile = self::DEFAULT_SAVE_FILE;
-            $saveFile = "test.json";
-        }
-
-
-
-        file_put_contents(
-            $this->path . $saveFile ,
-            json_encode($this->data, JSON_PRETTY_PRINT)
-        );
+        $this->saveFile($this->path, $saveFile);
 
     }
 
