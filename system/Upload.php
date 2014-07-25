@@ -13,7 +13,7 @@ class Upload extends Core
 
         if($this->page->isNew()){
             $tempFolderName = md5($this->page->url);
-            $this->path = api::get("config")->paths->assets . "uploads/{$tempFolderName}/";
+            $this->path = api("config")->paths->assets . "uploads/{$tempFolderName}/";
 
             // create the temp upload folder
             if (!file_exists($this->path)) {

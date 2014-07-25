@@ -5,7 +5,7 @@ class FieldtypeName extends Fieldtype
 
     public function getSave($value){
 
-        $value =  api::get("sanitizer")->name($value);
+        $value =  api("sanitizer")->name($value);
         return $value;
     }
 

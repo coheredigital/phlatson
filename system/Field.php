@@ -13,7 +13,7 @@ class Field extends Object
     {
         if ($this->getUnformatted("fieldtype")) {
             $name = $this->getUnformatted("fieldtype");
-            $fieldtype = api::get("extensions")->get($name);
+            $fieldtype = api("extensions")->get($name);
 
             if( $fieldtype instanceof Fieldtype ) {
                 $fieldtype->setField($this);
@@ -28,10 +28,10 @@ class Field extends Object
     {
         // set object name
         if ( $this->template->settings->nameFrom  && $this->template->fields->has( $this->settings->nameFrom ) ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api::get("sanitizer")->name( $this->settings->nameFrom );
+            return api("sanitizer")->name( $this->settings->nameFrom );
         }
         else {
-            return api::get("sanitizer")->name( $this->label );
+            return api("sanitizer")->name( $this->label );
         }
 
     }
@@ -42,7 +42,7 @@ class Field extends Object
         // handle new object creation
         if($this->isNew()){
 
-            $this->path = api::get("config")->paths->fields . $this->name . "/";
+            $this->path = api("config")->paths->fields . $this->name . "/";
             if (!file_exists($this->path)) {
                 mkdir($this->path, 0777, true);
             }
@@ -74,7 +74,7 @@ class Field extends Object
                 return $this->getType();
                 break;
             case 'template':
-                return api::get("templates")->get("field");
+                return api("templates")->get("field");
                 break;
             default:
                 return parent::get($name);

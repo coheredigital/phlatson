@@ -18,7 +18,7 @@ class MarkupFile {
 
         chdir(dirname($this->file));
 
-        extract(api::get()); // make api variables accessible
+        extract(api()); // make api variables accessible
 
         ob_start();
         require $this->file;

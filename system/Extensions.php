@@ -11,7 +11,9 @@ class Extensions extends Objects
 
     public function __construct(){
 
-        $this->getList(api("config")->paths->extensions, api("config")->paths->extensions );
+        $path = api("config")->paths->extensions;
+
+        $this->getList($path, api("config")->paths->extensions );
 
     }
 

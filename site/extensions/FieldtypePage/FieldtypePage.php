@@ -5,7 +5,7 @@ class FieldtypePage extends FieldtypeText
 
     public function getOutput($url)
     {
-        $page = api::get("pages")->get("$url");
+        $page = api("pages")->get("$url");
         return $page;
     }
 
@@ -15,7 +15,7 @@ class FieldtypePage extends FieldtypeText
             $value = $value->name;
         }
         else{
-            $page =  api::get("pages")->get("$url");
+            $page =  api("pages")->get("$url");
             $value = $page->url;
         }
         $value = "$value"; // stringify for certainty :)

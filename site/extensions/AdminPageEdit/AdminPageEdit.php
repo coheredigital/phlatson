@@ -40,7 +40,7 @@ class AdminPageEdit extends Extension
     protected function addDefaultFields()
     {
 
-        $fieldset = api::get("extensions")->get("MarkupFormtab");
+        $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
@@ -102,8 +102,8 @@ class AdminPageEdit extends Extension
     public function processSave(){
 
         $this->object->save();
-        api::get("session")->redirect(
-            api::get("input")->query
+        api("session")->redirect(
+            api("input")->query
         );
 
     }

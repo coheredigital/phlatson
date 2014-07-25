@@ -5,9 +5,9 @@ class FieldtypeDateTime extends Fieldtype
 
     protected function setup()
     {
-        api::get('config')->styles->add($this->url . "/datetimepicker/jquery.datetimepicker.css");
-        api::get('config')->scripts->add($this->url . "/datetimepicker/jquery.datetimepicker.js");
-        api::get('config')->scripts->add($this->url . "/$this->className.js");
+        api('config')->styles->add($this->url . "/datetimepicker/jquery.datetimepicker.css");
+        api('config')->scripts->add($this->url . "/datetimepicker/jquery.datetimepicker.js");
+        api('config')->scripts->add($this->url . "/$this->className.js");
     }
 
     public function getOutput($value)

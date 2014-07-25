@@ -4,10 +4,9 @@ require_once ROOT_PATH . 'system/_functions.php';
 require_once ROOT_PATH . 'system/_autoload.php';
 
 /* instatiate api variables */
-$api = new Api();
-$router = new Router();
 
-//api('config', new App);
+$api = new Api();
+
 api('config', new Config);
 api('request', new Request);
 api('extensions', new Extensions);
@@ -17,6 +16,7 @@ api('users', new Users);
 api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
+
 
 
 Router::get(":all", function($url = null){

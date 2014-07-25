@@ -14,9 +14,9 @@ class Template extends Object
     {
         switch ($name) {
             case 'template':
-                return api::get("templates")->get("template");
+                return api("templates")->get("template");
             case 'layout':
-                $layoutFile = api::get('config')->paths->layouts . $this->name . ".php";
+                $layoutFile = api('config')->paths->layouts . $this->name . ".php";
                 return $layoutFile;
             default:
                 return parent::get($name);

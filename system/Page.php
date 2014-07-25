@@ -30,10 +30,10 @@ class Page extends Object
     {
         // set object name
         if ( $this->template->settings->nameFrom  && $this->template->fields->has( $this->settings->nameFrom ) ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api::get("sanitizer")->name( $this->settings->nameFrom );
+            return api("sanitizer")->name( $this->settings->nameFrom );
         }
         else {
-            return api::get("sanitizer")->name( $this->title );
+            return api("sanitizer")->name( $this->title );
         }
 
     }
@@ -61,7 +61,7 @@ class Page extends Object
         foreach ($subs as $folder) {
 
             $url = $this->get("directory") . "/" . basename($folder);
-            $page = api::get("pages")->get($url);
+            $page = api("pages")->get($url);
             if( $page instanceof Page ){
                 // pass the Page to $children array, use url as key to avoid duplicates
                 // should be impossible for any to items to return the same url
@@ -86,7 +86,7 @@ class Page extends Object
         }
 
         foreach ($urls as $url) {
-            $page = api::get("pages")->get($url);
+            $page = api("pages")->get($url);
             $parents[] = $page;
         }
 
@@ -99,7 +99,7 @@ class Page extends Object
         if ($name == $this->get("url")) {
             return $this;
         }
-        return api::get("pages")->get($name);
+        return api("pages")->get($name);
     }
 
     protected function createUrl($array)
@@ -118,7 +118,7 @@ class Page extends Object
                 $directory = trim(implode("/", $this->route), "/");
                 return normalizeDirectory($directory);
             case 'url':
-                return api::get('config')->urls->root . ltrim($this->directory, "/");
+                return api('config')->urls->root . ltrim($this->directory, "/");
             case 'children':
                 return $this->children();
             case 'rootParent':
@@ -147,7 +147,7 @@ class Page extends Object
                 break;
             default:
                 if( $this->template && $this->template->fields->has($name) ) {
-                    $field = api::get("fields")->get("$name");
+                    $field = api("fields")->get("$name");
                     $fieldtype = $field->type;
                     $this->data[$name] = $fieldtype->getSave($value);
                 }

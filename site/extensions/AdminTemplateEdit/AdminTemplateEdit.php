@@ -44,7 +44,7 @@ class AdminTemplateEdit extends Extension
     protected function addDefaultFields()
     {
 
-        $fieldset = api::get("extensions")->get("MarkupFormtab");
+        $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->get("template");

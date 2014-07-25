@@ -4,9 +4,9 @@ class FieldtypePageFiles extends Fieldtype
 {
 
     protected function setup(){
-        api::get("config")->scripts->add( $this->url . "dropzone.js" );
-        api::get("config")->scripts->add( $this->url . $this->className . ".js" );
-        api::get("config")->styles->add( $this->url . $this->className . ".css" );
+        api("config")->scripts->add( $this->url . "dropzone.js" );
+        api("config")->scripts->add( $this->url . $this->className . ".js" );
+        api("config")->styles->add( $this->url . $this->className . ".css" );
     }
 
     public function render()
@@ -45,7 +45,7 @@ class FieldtypePageFiles extends Fieldtype
 
         }
         $output .= "</div>";
-        $output .= "<div action='./?name=" . api::get("input")->get->name . "' class='' id='files'></div>";
+        $output .= "<div action='./?name=" . api("input")->get->name . "' class='' id='files'></div>";
         $output .= "<div class='ui segment {$this->name}-dragndrop dz-clickable dropzone'>";
         $output .= "<span class='ui header'><i class='big cloud upload icon'></i> <span class='content'>Drag &amp; drop files here";
         $output .= '<div class="sub header">or click to choose files</div>';
