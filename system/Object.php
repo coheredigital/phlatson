@@ -264,6 +264,11 @@ abstract class Object
         return $this->get($name);
     }
 
+    public function __isset($name)
+    {
+        return isset($this->data[$name]);
+    }
+
     public function set($name, $value)
     {
         switch ( $name ) {
