@@ -33,7 +33,7 @@ class Router {
         $method = strtoupper($method);
 
         // check for a space, assume name defined
-        if( trim(strpos($params[0])) , " ") !== false){
+        if( strpos( trim($params[0]) , " ") !== false){
 
             $paramParts = explode(" ", $params[0]);
 
@@ -56,19 +56,27 @@ class Router {
         self::$callbacks[$key] = $callback;
     }
 
-    public static function generate($routeName, array $params = array()) {
+    public static function generate($routeName, array $params = []) {
 
         // Check if named route exists
         if(!isset(self::$routeNames[$routeName])) {
             throw new \Exception("Route '{$routeName}' does not exist.");
         }
 
-        // Replace named parameters
-        $route = self::$routeNames[$routeName];
+
+        $key = self::$routeNames[$routeName];
+        $route = self::$routes[$key];
+
 
         if (preg_match('#^' . $route . '$#', $route, $matched)) {
 
+            array_shift($matched); //remove $matched[0] as [1] is the first parameter.
+
+            if (!count($matched)) return $route; // route is static, return as is
+
             foreach($matched as $match) {
+
+
                 list($block, $pre, $type, $param, $optional) = $match;
 
                 if ($pre) {
@@ -84,6 +92,7 @@ class Router {
 
 
         }
+
 
         return $url;
     }

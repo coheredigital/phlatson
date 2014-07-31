@@ -27,6 +27,6 @@ Router::get(":all", function($url = null){
         }
     });
 
-var_dump(Router::generate("adminRoute", ["cat", "dog"] ));
+var_dump(Router::generate("adminPageList", ["cat", "dog"] ));
 
 Router::dispatch( api("request") );
