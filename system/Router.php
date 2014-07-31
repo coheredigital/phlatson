@@ -8,9 +8,10 @@
 
 class Router {
 
-    private static $halts = false;
 
     private static $routes = array();
+
+    private static $routeNames = array();
 
     private static $methods = array();
 
@@ -22,36 +23,80 @@ class Router {
         ':all' => '(.*)'
     );
 
-    public static $error_callback;
 
     /**
      * Defines a route w/ callback and method
      */
     public static function __callstatic($method, $params)
     {
+        $name = null;
+        $method = strtoupper($method);
 
-        $uri = "/" . trim($params[0], "/");
+        // check for a space, assume name defined
+        if( trim(strpos($params[0])) , " ") !== false){
+
+            $paramParts = explode(" ", $params[0]);
+
+            $name = trim($paramParts[0]);
+            $url = "/" . trim($paramParts[1], "/");
+
+        }
+        else{
+            $url = "/" . trim($params[0], "/");
+        }
+
         $callback = $params[1];
 
-        array_push(self::$routes, $uri);
-        array_push(self::$methods, strtoupper($method));
-        array_push(self::$callbacks, $callback);
+        // create a key for route from Method/Url Combo
+        $key = "{$method}{$url}";
+
+        if( $name ) self::$routeNames[$name] = $key; // set the name as the key for faster lookup
+        self::$routes[$key] = $url;
+        self::$methods[$key] = $method;
+        self::$callbacks[$key] = $callback;
     }
 
+    public static function generate($routeName, array $params = array()) {
 
-    /**
-     * Defines callback if route is not found
-     */
-    public static function error($callback)
-    {
-        self::$error_callback = $callback;
+        // Check if named route exists
+        if(!isset(self::$routeNames[$routeName])) {
+            throw new \Exception("Route '{$routeName}' does not exist.");
+        }
+
+        // Replace named parameters
+        $route = self::$routeNames[$routeName];
+
+        if (preg_match('#^' . $route . '$#', $route, $matched)) {
+
+            foreach($matched as $match) {
+                list($block, $pre, $type, $param, $optional) = $match;
+
+                if ($pre) {
+                    $block = substr($block, 1);
+                }
+
+                if(isset($params[$param])) {
+                    $url = str_replace($block, $params[$param], $url);
+                } elseif ($optional) {
+                    $url = str_replace($pre . $block, '', $url);
+                }
+            }
+
+
+        }
+
+        return $url;
     }
+
 
     /**
      * Runs the callback for the given request
      */
     public static function dispatch($request)
     {
+
+        $routeMatched = false;
+
         $uri =  "/" . trim($request->url, "/");
         $method = $request->method;
 
@@ -66,77 +111,60 @@ class Router {
             foreach ($route_pos as $route) {
 
                 if (self::$methods[$route] == $method) {
-                    //if route is not an object
+                    // if route not an object attempt Class:method call
                     if(!is_object(self::$callbacks[$route])){
 
-                        //grab all parts based on a / separator
-                        $parts = explode('/', self::$callbacks[$route] );
-
-                        //collect the last index of the array
-                        $last = end($parts);
-
-                        //grab the controller name and method call
-                        $segments = explode('->',$last);
-
+                        $routeParts = explode('/', self::$callbacks[$route] );
+                        $segments = explode('->', end($routeParts) );
                         call_user_func_array($segments, $parameters);
-
-                        return; // end when match
-
+                        $routeMatched = true;
                     } else {
-                        //call closure
                         call_user_func(self::$callbacks[$route]);
-                        return; // end when match
+                        $routeMatched = true;
                     }
                 }
             }
         } else {
             // check if defined with regex
-            $pos = 0;
-            foreach (self::$routes as $route) {
+            foreach (self::$routes as $key => $route) {
 
                 if (strpos($route, ':') !== false) {
                     $route = str_replace($searches, $replaces, $route);
                 }
 
                 if (preg_match('#^' . $route . '$#', $uri, $matched)) {
-                    if (self::$methods[$pos] == $method) {
+                    if (self::$methods[$key] == $method) {
 
                         array_shift($matched); //remove $matched[0] as [1] is the first parameter.
 
-                        if(!is_object(self::$callbacks[$pos])){
+                        if(!is_object(self::$callbacks[$key])){
 
                             //grab all parts based on a / separator
-                            $parts = explode('/',self::$callbacks[$pos]);
+                            $parts = explode('/',self::$callbacks[$key]);
 
                             //collect the last index of the array
                             $last = end($parts);
 
                             //grab the controller name and method call
                             $segments = explode('@',$last);
-
                             call_user_func_array( $segments , $matched );
+                            $routeMatched = true;
 
-                            return;
                         } else {
-                            call_user_func_array(self::$callbacks[$pos], $matched);
-
-                            return;
+                            call_user_func_array(self::$callbacks[$key], $matched);
+                            $routeMatched = true;
                         }
 
                     }
                 }
-                $pos++;
+
             }
         }
 
-        // run the error callback if the route was not found
-        if (!self::$error_callback) {
-            self::$error_callback = function() {
-                header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
-                echo '404';
-            };
+        // throw a Exception if no route was matched, there should be a default catch all route for pages in place so we should never arrive here
+        if (!$routeMatched) {
+            throw new Exception("No valid route found");
         }
-        call_user_func(self::$error_callback);
 
 
     }

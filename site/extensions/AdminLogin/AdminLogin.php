@@ -14,7 +14,7 @@ class AdminLogin extends Admin {
     protected function setup()
     {
         $config = api("config");
-        Router::get( "/{$config->adminUrl}/login" , function(){
+        Router::get("/{$config->adminUrl}/login" , function(){
                 $this->render();
             });
     }

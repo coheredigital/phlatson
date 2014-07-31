@@ -27,4 +27,6 @@ Router::get(":all", function($url = null){
         }
     });
 
+var_dump(Router::generate("adminRoute", ["cat", "dog"] ));
+
 Router::dispatch( api("request") );
