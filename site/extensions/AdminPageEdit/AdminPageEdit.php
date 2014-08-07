@@ -11,27 +11,36 @@ class AdminPageEdit extends Extension
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/pages/edit:all" , function($url){
+        api('router')->add(
+            new Route("/{$config->adminUrl}/pages/edit:all" , function($url){
                 $this->object = api("pages")->get($url);
                 $this->template = $this->object->template;
                 $this->title = $this->object->title;
                 $this->render();
-            });
+            })
+        );
 
-        Router::get( "/{$config->adminUrl}/pages/new/:any/:all" , function( $template, $parent){
+        api('router')->add(
+            new Route("/{$config->adminUrl}/pages/new/:any/:all" , function( $template, $parent){
                 $this->object = new Page();
                 $this->object->template = $template;
                 $this->object->parent = $parent;
                 $this->title = "New Page";
                 $this->render();
-            });
+            })
+        );
 
 
-        Router::post( "/{$config->adminUrl}/pages/edit/:all" , function( $url){
-                $page = api("pages")->get($url);
-                $this->object = $page;
-                $this->processSave();
-            });
+        $saveRoute = new Route();
+        $saveRoute->url("/{$config->adminUrl}/pages/edit/:all");
+        $saveRoute->callback(function( $url){
+            $page = api("pages")->get($url);
+            $this->object = $page;
+            $this->processSave();
+        });
+        $saveRoute->method("POST");
+
+        api('router')->add( $saveRoute );
 
 
     }

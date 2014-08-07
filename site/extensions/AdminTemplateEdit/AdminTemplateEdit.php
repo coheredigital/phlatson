@@ -9,33 +9,39 @@ class AdminTemplateEdit extends Extension
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/templates/edit/:any" , function( $name ){
-            $this->object = api("templates")->get($name);
-            $this->template = $this->object->template;
-            $this->title = $this->object->title;
+        api('router')->add(
+            new Route( "/{$config->adminUrl}/templates/edit/:any" , function( $name ){
+                $this->object = api("templates")->get($name);
+                $this->template = $this->object->template;
+                $this->title = $this->object->title;
 
-            $this->render();
+                $this->render();
 
-        });
+            })
+        );
 
-        Router::get( "/{$config->adminUrl}/templates/new/" , function(){
-            $this->object = new Template();
-            $this->object->template = "template";
-            $this->object->parent = $parent;
-            $this->title = "New Page";
+        api('router')->add(
+            new Route(  "/{$config->adminUrl}/templates/new/" , function(){
+                $this->object = new Template();
+                $this->object->template = "template";
+                $this->object->parent = $parent;
+                $this->title = "New Page";
 
-            $this->render();
-        });
+                $this->render();
+            })
+        );
 
 
-        Router::post( "/{$config->adminUrl}/templates/edit/:any" , function( $name ){
+        api('router')->add(
+            new Route( "POST /{$config->adminUrl}/templates/edit/:any" , function( $name ){
 
-            $page = api("templates")->get($name);
-            $this->object = $page;
+                $page = api("templates")->get($name);
+                $this->object = $page;
 
-            $this->processSave();
+                $this->processSave();
 
-        });
+            })
+        );
 
 
     }

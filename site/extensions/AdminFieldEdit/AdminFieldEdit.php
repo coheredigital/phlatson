@@ -22,33 +22,40 @@ class AdminFieldEdit extends Extension
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
-            $this->object = api("fields")->get($name);
-            $this->template = $this->object->template;
-            $this->title = $this->object->title;
 
-            $this->render();
+        api('router')->add(
+            new Route( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
+                $this->object = api("fields")->get($name);
+                $this->template = $this->object->template;
+                $this->title = $this->object->title;
 
-        });
+                $this->render();
 
-        Router::get( "/{$config->adminUrl}/fields/new/" , function(){
-            $this->object = new Field();
-            $this->object->template = "field";
-            $this->object->parent = $parent;
-            $this->title = "New Page";
+            })
+        );
 
-            $this->render();
-        });
+        api('router')->add(
+            new Route( "/{$config->adminUrl}/fields/new/" , function(){
+                $this->object = new Field();
+                $this->object->template = "field";
+                $this->object->parent = $parent;
+                $this->title = "New Page";
+
+                $this->render();
+            })
+        );
 
 
-        Router::post( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
+        api('router')->add(
+            new Route( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
 
-            $page = api("fields")->get($name);
-            $this->object = $page;
+                $page = api("fields")->get($name);
+                $this->object = $page;
 
-            $this->processSave();
+                $this->processSave();
 
-        });
+            })
+        );
 
 
     }

@@ -17,9 +17,11 @@ class AdminPagesList extends Extension {
 
         $config = api("config");
 
-        Router::get("adminPageList /{$config->adminUrl}" , function(){
+        api('router')->add(
+            new Route( "/{$config->adminUrl}" , function(){
                 $this->render();
-            });
+            })
+        );
 
     }
 

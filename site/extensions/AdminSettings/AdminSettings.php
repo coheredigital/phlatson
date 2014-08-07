@@ -12,9 +12,11 @@ class AdminSettings extends Extension {
     protected function setup()
     {
         $config = api("config");
-        Router::get( "/{$config->adminUrl}/settings" , function(){
+        api('router')->add(
+            new Route(  "/{$config->adminUrl}/settings" , function(){
                 $this->render();
-            });
+            })
+        );
     }
 
 

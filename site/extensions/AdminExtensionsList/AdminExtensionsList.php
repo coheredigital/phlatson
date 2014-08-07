@@ -17,9 +17,11 @@ class AdminExtensionsList extends Extension {
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/extensions" , function(){
+        api('router')->add(
+            new Route( "/{$config->adminUrl}/extensions" , function(){
                 $this->render();
-            });
+            })
+        );
 
     }
 

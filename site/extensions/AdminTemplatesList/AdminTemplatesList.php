@@ -15,9 +15,11 @@ class AdminTemplatesList extends Extension {
 
         $config = api("config");
 
-        Router::get( "/{$config->adminUrl}/templates" , function(){
+        api('router')->add(
+            new Route( "/{$config->adminUrl}/templates" , function(){
                 $this->render();
-            });
+            })
+        );
 
     }
 

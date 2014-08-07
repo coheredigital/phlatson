@@ -19,11 +19,14 @@ class Admin extends Extension {
         $config = api("config");
         api("admin", $this); // register api variable
 
-        Router::get("/$config->adminUrl/logout", function(){
-
+        api('router')->add(
+            new Route( "/$config->adminUrl/logout" , function(){
                 api("session")->logout();
                 api("session")->redirect("{$config->urls->root}{$config->adminUrl}");
-            });
+            })
+        );
+
+
     }
 
     public function render()
