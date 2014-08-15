@@ -10,6 +10,7 @@ class Admin extends Extension {
 
     public $title;
     public $output;
+    public $route;
 
     protected function setup()
     {
@@ -28,27 +29,30 @@ class Admin extends Extension {
 
 
 
-        $adminRoute = new Route;
-        $adminRoute->name("admin");
-        $adminRoute->url("/{$config->adminUrl}");
-        $adminRoute->prependCallback(function(){
+        $this->route = new Route;
+        $this->route->name("admin");
+        $this->route->url("/{$config->adminUrl}");
+        $this->route->prependCallback(function(){
                 if( api("user")->isGuest() ){
                     api("session")->redirect(  api("config")->urls->root . api("config")->adminUrl . "/login");
                 }
             });
 
-        api('router')->add( $adminRoute );
+        api('router')->add( $this->route );
+
 
 
 
         $logoutRoute = new Route;
-        $logoutRoute->url("/{$config->adminUrl}/logout");
+        $logoutRoute->url("logout");
         $logoutRoute->callback(function(){
                 api("session")->logout();
                 api("session")->redirect( api("config")->urls->admin );
             });
+        $logoutRoute->parent( $this->route );
 
-        
+
+
         api('router')->add( $logoutRoute );
 
     }

@@ -17,11 +17,14 @@ class AdminFieldsList extends Extension {
 
         $config = api("config");
 
-        api('router')->add(
-            new Route(  "/{$config->adminUrl}/fields" , function(){
+        $fieldsRoute = new Route;
+        $fieldsRoute->url("fields");
+        $fieldsRoute->parent( api("admin")->route );
+        $fieldsRoute->callback(  function(){
                 $this->render();
-            })
-        );
+            });
+
+        api('router')->add( $fieldsRoute );
 
     }
 

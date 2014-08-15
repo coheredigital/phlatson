@@ -17,6 +17,8 @@ class Route{
 
     private $name;
     private $url;
+    private $parent = false;
+    private $children = [];
 
     private $method = "GET";
     private $callbacks = [];
@@ -45,19 +47,46 @@ class Route{
      * if
      *
      */
-    public function url( $url ){
+    public function url( $url = null ){
 
-        if ( strpos( trim($url), " ") !== false){ // assume that a URL with a space defined an alternative method
-            $urlParts = explode(" ",$url);
-            $this->method( $urlParts[0] );
-            $this->url = trim($urlParts[1]);
+        if( is_null( $url )){
+
+            $url = $this->url;
+            if( $this->parent !== false ){
+                $pUrl = $this->parent->url();
+                $url = $pUrl . "/" . $url;
+            }
+            return $url;
         }
         else{
-            $this->url = $url;
+
+            if ( strpos( trim($url), " ") !== false){ // assume that a URL with a space defined an alternative method
+                $urlParts = explode(" ",$url);
+                $this->method( $urlParts[0] );
+                $this->url = trim($urlParts[1]);
+            }
+            else{
+                $this->url = $url;
+            }
+            return $this;
+
         }
 
+    }
+
+
+    public function parent( Route $route ){
+        $this->parent = $route;
+        $route->children[] = $this;
         return $this;
     }
+
+    public function addChild( Route $route ){
+        $this->children[] = $route;
+        $route->parent = $this;
+        return $this;
+    }
+
 
     public function method($name){
 
@@ -147,6 +176,11 @@ class Route{
     }
 
     public function execute(){
+
+        if( $this->parent ){
+            $this->parent->execute();
+        }
+
         foreach ( $this->callbacks as $callback ) {
 
             if(!is_object($callback)){
@@ -194,6 +228,7 @@ class Route{
     public function __get($name){
         switch ($name) {
             case "url":
+                return $this->url();
             case "name":
             case "method":
                 return $this->{$name};

@@ -17,11 +17,6 @@ class AdminPagesList extends Extension {
 
         $adminRoute = api("router")->get("admin");
         $adminRoute->appendCallback(function(){
-
-                if( api("user")->isGuest() ){
-                    api("session")->redirect(  api("config")->urls->root . api("config")->adminUrl . "/login");
-                }
-
                 $this->render();
             });
 

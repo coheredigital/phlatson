@@ -13,13 +13,13 @@ class AdminTemplatesList extends Extension {
     protected function setup()
     {
 
-        $config = api("config");
-
-        api('router')->add(
-            new Route( "/{$config->adminUrl}/templates" , function(){
+        $templateList = new Route;
+        $templateList->url("templates");
+        $templateList->parent( api("admin")->route );
+        $templateList->callback(function(){
                 $this->render();
-            })
-        );
+            });
+        api('router')->add( $templateList );
 
     }
 

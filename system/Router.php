@@ -91,12 +91,6 @@ class Router {
         return $this->routes[$key];
     }
 
-    /**
-     * Autorun the Router if $this->autorun is set to true
-     */
-//    function __destruct() {
-//        $this->run();
-//    }
 
 }
 

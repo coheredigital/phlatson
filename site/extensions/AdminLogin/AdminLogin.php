@@ -14,13 +14,18 @@ class AdminLogin extends Admin {
     protected function setup()
     {
         $config = api("config");
-        api('router')->add(
-            new Route( "/{$config->adminUrl}/login" , function(){
+
+        $login = new Route;
+        $login->url("/$config->adminUrl/login");
+        $login->callback(function(){
                 $this->render();
-            })
-        );
-        api('router')->add(
-            new Route( "POST /{$config->adminUrl}/login" , function(){
+            });
+        api('router')->add( $login );
+
+        $loginSubmit = new Route;
+        $loginSubmit->url("/{$config->adminUrl}/login");
+        $loginSubmit->method("POST");
+        $loginSubmit->callback(function(){
                 $api = api();
                 if (count(api("request")->post)) {
                     if( api("session")->login( api("request")->post->username, api("request")->post->password ) ){
@@ -30,13 +35,12 @@ class AdminLogin extends Admin {
                         // add error message
 
                     }
-
-
                 }
 
                 $this->render();
-            })
-        );
+            });
+
+        api('router')->add( $loginSubmit );
 
     }
 

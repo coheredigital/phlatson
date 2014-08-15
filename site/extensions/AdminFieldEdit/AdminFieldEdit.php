@@ -20,42 +20,43 @@ class AdminFieldEdit extends Extension
     public function setup()
     {
 
-        $config = api("config");
-
-
-        api('router')->add(
-            new Route( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
-                $this->object = api("fields")->get($name);
-                $this->template = $this->object->template;
-                $this->title = $this->object->title;
-
-                $this->render();
-
-            })
-        );
-
-        api('router')->add(
-            new Route( "/{$config->adminUrl}/fields/new/" , function(){
+        $fieldRoute = new Route;
+        $fieldRoute->url( "fields/edit/:any" );
+        $fieldRoute->parent( api("admin")->route );
+        $fieldRoute->callback( function(){
                 $this->object = new Field();
                 $this->object->template = "field";
                 $this->object->parent = $parent;
                 $this->title = "New Page";
 
                 $this->render();
-            })
-        );
+            });
 
+        $newFieldRoute = new Route;
+        $newFieldRoute->url("fields/new/");
+        $newFieldRoute->parent( api("admin")->route );
+        $newFieldRoute->callback( function(){
+                $this->object = new Field();
+                $this->object->template = "field";
+                $this->object->parent = $parent;
+                $this->title = "New Page";
 
-        api('router')->add(
-            new Route( "POST /{$config->adminUrl}/fields/edit/:any" , function( $name ){
+                $this->render();
+            });
 
+        $saveFieldRoute = new Route;
+        $saveFieldRoute->url( "fields/edit/:any" );
+        $saveFieldRoute->method("POST");
+        $saveFieldRoute->callback( function( $name ){
                 $page = api("fields")->get($name);
                 $this->object = $page;
-
                 $this->processSave();
+            });
+        $saveFieldRoute->parent( api("admin")->route );
 
-            })
-        );
+        api('router')->add( $fieldRoute );
+        api('router')->add( $newFieldRoute );
+        api('router')->add( $saveFieldRoute );
 
 
     }
