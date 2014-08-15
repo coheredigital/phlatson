@@ -25,9 +25,10 @@ class Router {
 
 
     public function add( Route $route ){
-        $this->routes["{$route->method}{$route->url}"] = $route;
+        $key = "{$route->method}{$route->url}";
+        $this->routes[$key] = $route;
         if( $route->name ){
-            $this->namedRoutes[$route->name] = $this->url;
+            $this->namedRoutes[$route->name] = $key;
         }
     }
 
@@ -74,6 +75,20 @@ class Router {
             call_user_func($this->errorCallback);
         }
 
+    }
+
+    /**
+     * @param $name name of route to find
+     * @return Route || bool
+     *
+     * return a named Route object if it exists
+     *
+     */
+    public function get($name){
+        if( !isset( $this->namedRoutes[$name] )) return false;
+
+        $key = $this->namedRoutes[$name];
+        return $this->routes[$key];
     }
 
     /**

@@ -15,19 +15,16 @@ class AdminPagesList extends Extension {
     protected function setup()
     {
 
-
-        $config = api("config");
-
-        api('router')->add(
-            new Route( "/" . api("config")->adminUrl , function(){
+        $adminRoute = api("router")->get("admin");
+        $adminRoute->appendCallback(function(){
 
                 if( api("user")->isGuest() ){
                     api("session")->redirect(  api("config")->urls->root . api("config")->adminUrl . "/login");
                 }
 
                 $this->render();
-            })
-        );
+            });
+
 
     }
 

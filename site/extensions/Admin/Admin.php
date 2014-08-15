@@ -26,6 +26,21 @@ class Admin extends Extension {
 
         api("admin", $this); // register api variable
 
+
+
+        $adminRoute = new Route;
+        $adminRoute->name("admin");
+        $adminRoute->url("/{$config->adminUrl}");
+        $adminRoute->prependCallback(function(){
+                if( api("user")->isGuest() ){
+                    api("session")->redirect(  api("config")->urls->root . api("config")->adminUrl . "/login");
+                }
+            });
+
+        api('router')->add( $adminRoute );
+
+
+
         $logoutRoute = new Route;
         $logoutRoute->url("/{$config->adminUrl}/logout");
         $logoutRoute->callback(function(){
