@@ -3,18 +3,7 @@
 class FieldtypeTextarea extends Fieldtype
 {
 
-    public function saveFormat($name, $value)
-    {
 
-        $dom = new DomDocument;
-        $root = $dom->createElement("$name");
-        $node = $dom->createCDATASection($value);
-        $root->appendChild($node);
-        $dom->appendChild($root);
-
-        return $dom->documentElement;
-
-    }
 
     protected function renderInput()
     {

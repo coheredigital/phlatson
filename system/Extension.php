@@ -8,13 +8,13 @@ abstract class Extension extends Object
 
     protected $rootFolder = "extensions";
 
-    final public function __construct($file)
+    final public function __construct($file = null)
     {
         parent::__construct($file);
 
         $this->name = get_class($this);
 
-        if ( $this->autoload === true ){
+        if ( $this->autoload === true || $this instanceof Fieldtype ){
             $this->setup();
         }
 

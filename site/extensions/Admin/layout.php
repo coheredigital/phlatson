@@ -8,14 +8,7 @@ if ($user->isGuest()) {
 //    $session->redirect($config->urls->root . $this->adminUrl . "/login");
 }
 
-// admin scripts and styles
-$config->styles->add("{$this->url}styles/adminTheme.css");
-$config->styles->add("{$this->url}styles/semantic.min.css");
-$config->styles->append("{$this->url}styles/font-awesome-4.1.0/css/font-awesome.css");
-$config->scripts->prepend("{$this->url}scripts/semantic.min.js");
-$config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
-$config->scripts->add("{$this->url}scripts/jquery-sortable.js");
-$config->scripts->add("{$this->url}scripts/init.js");
+
 
 ?>
 <!DOCTYPE html>

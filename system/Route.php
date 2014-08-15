@@ -125,7 +125,7 @@ class Route{
     public function match($request){
 
         // check method
-        if ( $this->method !== $request->method ) return false;
+        if ( $this->method && $this->method !== $request->method ) return false;
 
         $searches = array_keys( $this->patterns );
         $replaces = array_values( $this->patterns );

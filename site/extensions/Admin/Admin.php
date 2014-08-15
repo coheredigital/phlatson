@@ -6,26 +6,35 @@
  * Time: 7:36 PM
  */
 
-
 class Admin extends Extension {
-
 
     public $title;
     public $output;
 
-
     protected function setup()
     {
         $config = api("config");
+
+        // default admin scripts and styles
+        $config->styles->add("{$this->url}styles/adminTheme.css");
+        $config->styles->add("{$this->url}styles/semantic.min.css");
+        $config->styles->append("{$this->url}styles/font-awesome-4.1.0/css/font-awesome.css");
+        $config->scripts->prepend("{$this->url}scripts/semantic.min.js");
+        $config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
+        $config->scripts->add("{$this->url}scripts/jquery-sortable.js");
+        $config->scripts->add("{$this->url}scripts/init.js");
+
         api("admin", $this); // register api variable
 
-        api('router')->add(
-            new Route( "/$config->adminUrl/logout" , function(){
+        $logoutRoute = new Route;
+        $logoutRoute->url("/{$config->adminUrl}/logout");
+        $logoutRoute->callback(function(){
                 api("session")->logout();
-                api("session")->redirect("{$config->urls->root}{$config->adminUrl}");
-            })
-        );
+                api("session")->redirect( api("config")->urls->admin );
+            });
 
+        
+        api('router')->add( $logoutRoute );
 
     }
 

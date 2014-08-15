@@ -19,6 +19,25 @@ class AdminLogin extends Admin {
                 $this->render();
             })
         );
+        api('router')->add(
+            new Route( "POST /{$config->adminUrl}/login" , function(){
+                $api = api();
+                if (count(api("request")->post)) {
+                    if( api("session")->login( api("request")->post->username, api("request")->post->password ) ){
+                        api( "session")->redirect( api("config")->urls->admin );
+                    }
+                    else{
+                        // add error message
+
+                    }
+
+
+                }
+
+                $this->render();
+            })
+        );
+
     }
 
 

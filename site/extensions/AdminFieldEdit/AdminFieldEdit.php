@@ -47,7 +47,7 @@ class AdminFieldEdit extends Extension
 
 
         api('router')->add(
-            new Route( "/{$config->adminUrl}/fields/edit/:any" , function( $name ){
+            new Route( "POST /{$config->adminUrl}/fields/edit/:any" , function( $name ){
 
                 $page = api("fields")->get($name);
                 $this->object = $page;

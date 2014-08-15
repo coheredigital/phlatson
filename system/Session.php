@@ -222,15 +222,16 @@ class Session implements IteratorAggregate
     {
         // should sanitize name
         $user = api('users')->get("$name");
-        if (!$user instanceof User) {
+        if ( !$user instanceof User ) {
             throw new Exception("User {$name} not found!");
         }
 
-        if ($user->authenticate($password)) {
+        if ( $user->authenticate($password) ) {
             $this->regenerate(); // rebuild session data
             $this->set('_user_name', $user->name);
             $this->set('_user_time', time());
             api('user', $user);
+            return true;
         }
         return null;
     }
@@ -247,13 +248,14 @@ class Session implements IteratorAggregate
 
         // end the current session
         $this->destroy();
+
+        // set user to guest
+        $guest = api('users')->get("guest");
+        api('user', $guest);
+
         $this->name($sessionName);
         $this->start();
         $this->regenerate();
-
-        $this->clear();
-        $guest = api('users')->get("guest");
-        api('user', $guest);
 
         return $this;
     }
