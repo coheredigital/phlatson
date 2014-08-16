@@ -1,25 +1,27 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Adam
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-
-
-class AdminTemplatesList extends Extension {
+class AdminTemplatesList extends Extension
+{
 
 
     protected function setup()
     {
 
         $templateList = new Route;
-        $templateList->url("templates");
-        $templateList->parent( api("admin")->route );
-        $templateList->callback(function(){
+        $templateList->path("templates");
+        $templateList->parent(api("admin")->route);
+        $templateList->callback(
+            function () {
                 $this->render();
-            });
-        api('router')->add( $templateList );
+            }
+        );
+        api('router')->add($templateList);
 
     }
 
@@ -44,7 +46,8 @@ class AdminTemplatesList extends Extension {
                 array(
                     "name" => "<a href='{$config->urls->root}{$config->adminUrl}/templates/edit/{$item->name}' >{$item->name}</a>",
                     "label" => $item->label,
-                    "fieldtype" => $item->type // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
+                    "fieldtype" => $item->type
+                    // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
                 )
             );
         }

@@ -12,17 +12,17 @@ class Pages extends Objects
 
 
         // if first segment is equal to configured adminUrl we return an AdminPage object
-        if ( $this->isAdminRequest($query)) {
+        if ($this->isAdminRequest($query)) {
             $this->singularName = "AdminPage";
-        }
-        else{
+        } else {
             $this->singularName = "Page";
         }
 
         return parent::get($query);
     }
 
-    protected function isAdminRequest($query){
+    protected function isAdminRequest($query)
+    {
         $requests = explode("/", $query);
         $requestRoot = normalizeDirectory($requests[0]);
         $adminUrl = normalizeDirectory(api("config")->adminUrl);

@@ -1,10 +1,8 @@
 /*! xPages Admin Theme by Adam Spruijt = copyright 2013 */
 @import "_variables";
-
 /*******************************
       Import Semantic-ui
 *******************************/
-
 /* Elements */
 @import "semantic-ui/elements/button";
 // @import "semantic-ui/elements/container";
@@ -20,7 +18,6 @@
 // @import "semantic-ui/elements/reveal";
 @import "semantic-ui/elements/segment";
 @import "semantic-ui/elements/step";
-
 /* Collections */
 // @import "semantic-ui/collections/breadcrumb";
 @import "semantic-ui/collections/form";
@@ -28,7 +25,6 @@
 @import "semantic-ui/collections/menu";
 // @import "semantic-ui/collections/message";
 @import "semantic-ui/collections/table";
-
 /* Modules */
 // @import "semantic-ui/modules/accordion";
 // @import "semantic-ui/modules/chatroom";
@@ -45,16 +41,15 @@
 @import "semantic-ui/modules/tab";
 @import "semantic-ui/modules/transition";
 // @import "semantic-ui/modules/video";
-
 /* Views */
 // @import "semantic-ui/views/comment";
 // @import "semantic-ui/views/feed";
 @import "semantic-ui/views/item";
 @import "semantic-ui/views/list";
+
 // @import "semantic-ui/views/statistic";
 
-
-html,
+//html,
 body {
   min-height: 100%;
   font-size: 15px;
@@ -66,64 +61,68 @@ body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-a{
+//body{
+//
+//}
+
+a {
   color: #009FDA;
   text-decoration: none;
-  &:hover{
+  &:hover {
     color: #00bcff;
   }
 }
 
-#header{
+#header {
   padding: 1em 0 0 0;
 }
 
-#main{
-//  padding: 2em 0;
-  > .container{
+#main {
+  //  padding: 2em 0;
+  > .container {
     padding: 0 0 2em 0;
   }
 }
 
-.container{
+.container {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
 }
 
-.page-login{
-	height: 100%;
+.page-login {
+  height: 100%;
   background: #333;
 }
 
-.ui.segment.form.form-login{
-	width: 250px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin: -107px 0 0 -125px;
+.ui.segment.form.form-login {
+  width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -107px 0 0 -125px;
 }
 
 // page tree
 
-.page-tree-list{
+.page-tree-list {
   list-style: none;
-  &.page-tree-root{
+  &.page-tree-root {
     padding: 0;
 
   }
-  .page-tree-item.ui.segment{
+  .page-tree-item.ui.segment {
     padding: 0.3em;
     min-height: 2.5em;
     margin-bottom: 0.4em;
-    a.page-item-edit-link{
+    a.page-item-edit-link {
       margin-top: 0.37em;
       // float: left;
       display: inline-block;
       text-decoration: none;
       margin-left: 0.4em;
       color: #6c7aff !important;
-      &:hover{
+      &:hover {
         text-decoration: underline;
       }
     }
@@ -132,7 +131,7 @@ a{
 }
 
 // sortable placeholder arrow
-.sortable-placeholder{
+.sortable-placeholder {
   position: relative;
   background: #eee;
   &:before,
@@ -173,11 +172,11 @@ body.dragging, body.dragging * {
   z-index: 2000;
 }
 
-.MarkupFieldset{
+.MarkupFieldset {
   margin-bottom: 3em;
 }
 
-.MarkupFormTab.ui.segment{
+.MarkupFormTab.ui.segment {
   margin-top: 0;
   border-radius: 0;
   border-left: 0;
@@ -188,7 +187,7 @@ body.dragging, body.dragging * {
 
 // fixes
 
-.ui.list .item>.icon.button{
+.ui.list .item > .icon.button {
   padding: 0.5em;
   margin-right: 0;
 }

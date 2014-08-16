@@ -36,5 +36,4 @@ class MarkupFormtab extends Extension
     }
 
 
-
 }

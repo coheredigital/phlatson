@@ -13,14 +13,15 @@ class FieldtypeField extends FieldtypeObject
 
     public function getSave($value)
     {
-        if ( $value instanceof Field) {
+        if ($value instanceof Field) {
             $value = $value->name;
         }
         $value = "$value"; // stringify for certainty :)
         return $value;
     }
 
-    protected function setup(){
+    protected function setup()
+    {
         $this->label = "Field";
         $this->attribute("name", "template");
     }

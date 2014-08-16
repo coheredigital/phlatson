@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Adam
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-
-
-class AdminExtensionsList extends Extension {
+class AdminExtensionsList extends Extension
+{
 
 
     protected $output;
@@ -18,7 +18,7 @@ class AdminExtensionsList extends Extension {
         $config = api("config");
 
         api('router')->add(
-            new Route( "/{$config->adminUrl}/extensions" , function(){
+            new Route("/{$config->adminUrl}/extensions", function () {
                 $this->render();
             })
         );
@@ -46,7 +46,8 @@ class AdminExtensionsList extends Extension {
                 array(
                     "name" => "<a href='{$config->urls->root}{$config->adminUrl}/fields/edit/{$item->name}' >{$item->name}</a>",
                     "label" => $item->label,
-                    "type" => $item->type // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
+                    "type" => $item->type
+                    // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
                 )
             );
         }

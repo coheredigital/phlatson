@@ -22,7 +22,7 @@ abstract class Object
     function __construct($file = null)
     {
 
-        if ( is_file($file) ) {
+        if (is_file($file)) {
             $this->file = $file;
             $this->path = $this->getPath();
             $this->route = $this->getRoute();
@@ -37,7 +37,7 @@ abstract class Object
     protected function getName()
     {
         // set object name
-        if ( $this->isNew() ){
+        if ($this->isNew()) {
             return $this->getNewName();
         }
         $lastRequestIndex = count($this->route) - 1;
@@ -47,10 +47,9 @@ abstract class Object
 
     protected function getPath()
     {
-        if ( !$this->isNew() ){
-            return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE,"",$this->file));
-        }
-        else {
+        if (!$this->isNew()) {
+            return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
+        } else {
 
         }
     }
@@ -59,8 +58,12 @@ abstract class Object
     protected function getRootRelativePath()
     {
 
-        $relativePath = str_replace( api("config")->paths->site . $this->rootFolder , "", $this->file ); // trim the root path to get root relative path
-        $relativePath = str_replace($this::DEFAULT_SAVE_FILE, "", $relativePath ); // trim of file name to isolote path
+        $relativePath = str_replace(
+            api("config")->paths->site . $this->rootFolder,
+            "",
+            $this->file
+        ); // trim the root path to get root relative path
+        $relativePath = str_replace($this::DEFAULT_SAVE_FILE, "", $relativePath); // trim of file name to isolote path
         $relativePath = rtrim($relativePath, '/'); // trim excess slashes
 
         return $relativePath;
@@ -71,9 +74,9 @@ abstract class Object
     {
 
         $directory = $this->getRootRelativePath();
-        $pathArray = explode( "/", $directory );
+        $pathArray = explode("/", $directory);
 
-        if( !count( $pathArray ) ) {
+        if (!count($pathArray)) {
             $pathArray[] = "$directory";
         }
 
@@ -87,11 +90,11 @@ abstract class Object
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        $field = api("fields") ? api("fields")->get($name) : false ;
-        if ( $field ){
+        $field = api("fields") ? api("fields")->get($name) : false;
+        if ($field) {
             $fieldtype = $field->type;
 
-            if ( $fieldtype instanceof Fieldtype ) {
+            if ($fieldtype instanceof Fieldtype) {
                 $value = $fieldtype->getOutput($value);
             }
         }
@@ -127,7 +130,8 @@ abstract class Object
     }
 
 
-    protected function processSaveInput(){
+    protected function processSaveInput()
+    {
 
         $post = api("input")->post;
         // loop through the templates available fields so that we only set values
@@ -135,7 +139,9 @@ abstract class Object
         $fields = $this->template->fields;
 
         // add the default fields
-        if(count($this->defaultFields)) $fields->import($this->defaultFields);
+        if (count($this->defaultFields)) {
+            $fields->import($this->defaultFields);
+        }
 
 
         $saveData = array();
@@ -150,38 +156,37 @@ abstract class Object
         $this->data = $saveData;
 
 
-
     }
 
-    protected function processSaveName(){
+    protected function processSaveName()
+    {
 
         $post = api("input")->post;
 
-        if ( !$this->isNew() ){
+        if (!$this->isNew()) {
             $previousName = $this->name;
         }
 
 
-
         // set name value
-        if($post->name){ // TODO : this is temp
+        if ($post->name) { // TODO : this is temp
             $pageName = api("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
-        }
-        else{ // generate page name from defined field
+        } else { // generate page name from defined field
             $this->name = $this->getName();
         }
 
     }
 
 
-    protected function processSavePath(){
+    protected function processSavePath()
+    {
 
         // handle new object creation
-        if( $this->isNew() ){
+        if ($this->isNew()) {
             // TODO - validate parent
 
-            if(!$this->parent instanceof Page){
+            if (!$this->parent instanceof Page) {
                 throw new Exception("cannot create new page without valid parent");
             }
 
@@ -194,16 +199,17 @@ abstract class Object
 
     }
 
-    protected function saveFile($path, $filename){
+    protected function saveFile($path, $filename)
+    {
 
         file_put_contents(
-            $path . $filename ,
+            $path . $filename,
             json_encode($this->data, JSON_PRETTY_PRINT)
         );
 
     }
 
-    public function save( $saveName = null )
+    public function save($saveName = null)
     {
 
 //      $saveFile = self::DEFAULT_SAVE_FILE;
@@ -216,28 +222,35 @@ abstract class Object
 
     }
 
-    public function rename($name) {
+    public function rename($name)
+    {
 
-        if ( $name == $this->name ) return false;
+        if ($name == $this->name) {
+            return false;
+        }
 
         $current = $this->path;
         $destination = $this->parent->path . $name . "/";
 
-        rename( $current , $destination );
+        rename($current, $destination);
 
     }
 
 
-    public function isNew(){
+    public function isNew()
+    {
         // if the object does not have a matching existing directory it is assumed new
         // directory will be created when saved
-        if( !is_file($this->file) ) return true;
+        if (!is_file($this->file)) {
+            return true;
+        }
 
     }
 
 
-    public function has($key){
-        return array_key_exists( $key, $this->data );
+    public function has($key)
+    {
+        return array_key_exists($key, $this->data);
     }
 
 
@@ -271,7 +284,7 @@ abstract class Object
 
     public function set($name, $value)
     {
-        switch ( $name ) {
+        switch ($name) {
             case "name":
                 $name = api("sanitizer")->name($value);
                 $this->name = $name;

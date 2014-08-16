@@ -1,14 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Adam
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-
-
-class AdminLogin extends Admin {
-
+class AdminLogin extends Admin
+{
 
 
     protected function setup()
@@ -16,46 +15,42 @@ class AdminLogin extends Admin {
         $config = api("config");
 
         $login = new Route;
-        $login->url("/$config->adminUrl/login");
-        $login->callback(function(){
+        $login->path("/$config->adminUrl/login");
+        $login->callback(
+            function () {
                 $this->render();
-            });
-        api('router')->add( $login );
+            }
+        );
+
 
         $loginSubmit = new Route;
-        $loginSubmit->url("/{$config->adminUrl}/login");
+        $loginSubmit->path("/{$config->adminUrl}/login");
         $loginSubmit->method("POST");
-        $loginSubmit->callback(function(){
+        $loginSubmit->callback(
+            function () {
                 $api = api();
                 if (count(api("request")->post)) {
-                    if( api("session")->login( api("request")->post->username, api("request")->post->password ) ){
-                        api( "session")->redirect( api("config")->urls->admin );
-                    }
-                    else{
+                    if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
+                        api("session")->redirect(api("config")->urls->admin);
+                    } else {
                         // add error message
 
                     }
                 }
 
                 $this->render();
-            });
+            }
+        );
 
-        api('router')->add( $loginSubmit );
+        // add the routes
+        api('router')->add($login);
+        api('router')->add($loginSubmit);
 
     }
 
 
-    protected function renderForm(){
-
-//        if ($user->isLoggedin()) {
-//            $session->redirect($config->urls->root . $config->adminUrl);
-//        }
-//
-//        if (count($input->post)) {
-//            $session->login($input->post->username, $input->post->password);
-//            $session->redirect($config->urls->root . $config->adminUrl . "/login");
-//        }
-
+    protected function renderForm()
+    {
 
 
         $output .= "<div class='field'>
@@ -87,7 +82,7 @@ class AdminLogin extends Admin {
 
     public function render()
     {
-
+        api("config")->styles->add("{$this->url}login.css");
         $this->title = "Login";
         $this->output = $this->renderForm();
 

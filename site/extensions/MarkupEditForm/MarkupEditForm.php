@@ -9,12 +9,11 @@ class MarkupEditForm extends Extension
 
     public $tabs = array();
 
-    public function add( MarkupFormtab $element )
+    public function add(MarkupFormtab $element)
     {
         $this->tabs[] = $element;
         $this->api = extract(api());
     }
-
 
 
     public function render()
@@ -57,9 +56,9 @@ class MarkupEditForm extends Extension
         $formActions = $formActions->render();
 
         $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" .
-            "<div id='formTabs'><div class='container'>$formTabMenu</div></div>".
+            "<div id='formTabs'><div class='container'>$formTabMenu</div></div>" .
             $formTabContent .
-            $formActions.
+            $formActions .
             "</form>";
 
         return $output;

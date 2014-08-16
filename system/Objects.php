@@ -25,15 +25,18 @@ abstract class Objects
 
     }
 
-    protected function getItem($key){
+    protected function getItem($key)
+    {
 
-        if ( isset($this->data[$key]) ) return $this->data[$key];
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        }
 
-        $root = normalizePath( api('config')->paths->site . $this->rootFolder );
-        $path = normalizePath( $root . $key );
+        $root = normalizePath(api('config')->paths->site . $this->rootFolder);
+        $path = normalizePath($root . $key);
 
         $file = $path . "data.json";
-        if(is_file($file)){
+        if (is_file($file)) {
             $this->set($key, $file);
         }
 
@@ -41,24 +44,26 @@ abstract class Objects
 
 
     // return a key => value array of valid object locations
-    protected function getObjectList($directory = null){
+    protected function getObjectList($directory = null)
+    {
 
-        $siteRootPath =  api('config')->paths->site . $this->rootFolder;
-        $siteRootPath = normalizePath( $siteRootPath );
+        $siteRootPath = api('config')->paths->site . $this->rootFolder;
+        $siteRootPath = normalizePath($siteRootPath);
 
-        $sitePathCheck =  $siteRootPath . $directory;
-        $sitePathCheck = normalizePath( $sitePathCheck );
+        $sitePathCheck = $siteRootPath . $directory;
+        $sitePathCheck = normalizePath($sitePathCheck);
 
-        if( $this->isValidPath($sitePathCheck) ){
+        if ($this->isValidPath($sitePathCheck)) {
             $this->getList($siteRootPath, $sitePathCheck);
         }
 
     }
 
-    protected function getList($root, $path, $depth = 1){
+    protected function getList($root, $path, $depth = 1)
+    {
 
-        $iterator = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
-        $iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::SELF_FIRST );
+        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator->setMaxDepth($depth);
 
@@ -68,11 +73,13 @@ abstract class Objects
             $itemPath = normalizePath($itemPath);
             $itemFilename = $item->getFileName();
 
-            if( $itemFilename != "data.json" && $itemFilename != "info.json" ) continue;
+            if ($itemFilename != "data.json" && $itemFilename != "info.json") {
+                continue;
+            }
 
             $directory = str_replace($root, "", $itemPath);
-            $directory = str_replace($itemFilename,"",$directory);
-            $directory = trim($directory,DIRECTORY_SEPARATOR);
+            $directory = str_replace($itemFilename, "", $directory);
+            $directory = trim($directory, DIRECTORY_SEPARATOR);
             $directory = normalizeDirectory($directory);
 
             // add root items for pages to allow home selection
@@ -81,10 +88,6 @@ abstract class Objects
         }
 
     }
-
-
-
-
 
 
     public function __set($key, $value)
@@ -103,7 +106,7 @@ abstract class Objects
         $this->getObjectList();
         $objectArray = new ObjectArray();
 
-        foreach ($this->data as $key => $value){
+        foreach ($this->data as $key => $value) {
             $object = $this->getObject($key);
             $objectArray->add($object);
         }
@@ -111,26 +114,31 @@ abstract class Objects
         return $objectArray;
     }
 
-    protected function getObject($key){
-        if ( !$this->has($key) ){
+    protected function getObject($key)
+    {
+        if (!$this->has($key)) {
             $this->getItem($key);
-            if ( !$this->has($key) ) return false;
+            if (!$this->has($key)) {
+                return false;
+            }
         }
         $file = $this->data[$key];
 
-        if ( $this instanceof Extensions ) {
+        if ($this instanceof Extensions) {
             $object = new $key($file);
-        }
-        else {
+        } else {
             $object = new $this->singularName($file);
         }
         return $object;
     }
 
 
-    public function isValidPath( $path ){
+    public function isValidPath($path)
+    {
         $path = normalizePath($path);
-        if( strpos( $path,  api("config")->paths->root ) !== false ) return true;
+        if (strpos($path, api("config")->paths->root) !== false) {
+            return true;
+        }
         return false;
     }
 
@@ -150,8 +158,8 @@ abstract class Objects
     }
 
 
-
-    public function has($key){
+    public function has($key)
+    {
         $key = normalizeDirectory($key);
         return array_key_exists($key, $this->data);
     }

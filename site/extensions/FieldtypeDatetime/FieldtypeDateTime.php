@@ -12,7 +12,7 @@ class FieldtypeDateTime extends Fieldtype
 
     public function getOutput($value)
     {
-        $value = date( (string) $this->field->format, (int) $value);
+        $value = date((string)$this->field->format, (int)$value);
         return $value;
     }
 

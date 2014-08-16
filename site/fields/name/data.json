@@ -1,4 +1,4 @@
 {
-        "fieldtype": "FieldtypeName",
-        "label": "Name"
+    "fieldtype": "FieldtypeName",
+    "label": "Name"
 }

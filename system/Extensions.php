@@ -9,11 +9,12 @@ class Extensions extends Objects
 
     protected $info = [];
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $path = api("config")->paths->extensions;
 
-        $this->getList($path, api("config")->paths->extensions );
+        $this->getList($path, api("config")->paths->extensions);
 
     }
 
@@ -21,26 +22,30 @@ class Extensions extends Objects
     /**
      * Handle preload of extension to find extensions that require autoloading /  or route definitions
      */
-    protected function preload(){
+    protected function preload()
+    {
 
     }
 
 
-    protected function getList($root, $path, $depth = 1){
+    protected function getList($root, $path, $depth = 1)
+    {
 
-        $iterator = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
-        $iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::SELF_FIRST );
+        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator->setMaxDepth($depth);
 
         foreach ($iterator as $item) {
 
-            $itemPath = normalizePath( $item->getPath() );
+            $itemPath = normalizePath($item->getPath());
             $itemFile = $item->getFileName();
 
             $filePath = $itemPath . $itemFile;
 
-            if( $itemFile != "data.json" && $itemFile != "info.json" ) continue;
+            if ($itemFile != "data.json" && $itemFile != "info.json") {
+                continue;
+            }
 
             $className = normalizeDirectory(str_replace($root, "", $itemPath));
 
@@ -48,7 +53,7 @@ class Extensions extends Objects
 
             $info = json_decode(file_get_contents($filePath));
 
-            if( $info->autoload ){ // instatiate autoload extensions
+            if ($info->autoload) { // instatiate autoload extensions
                 $extension = new $className($filePath);
                 $this->data["$className"] = $extension;
             }
@@ -56,9 +61,6 @@ class Extensions extends Objects
         }
 
     }
-
-
-
 
 
 }

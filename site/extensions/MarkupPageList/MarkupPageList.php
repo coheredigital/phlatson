@@ -22,7 +22,9 @@ class MarkupPageList extends Extension
 
         $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api('config')->urls->root . api('config')->adminUrl . "/pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api(
+                'config'
+            )->urls->root . api('config')->adminUrl . "/pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= "</div>";
         $output .= "</div>";
@@ -50,18 +52,19 @@ class MarkupPageList extends Extension
         return $output;
     }
 
-    private function renderPageItemNew(Page $page){
+    private function renderPageItemNew(Page $page)
+    {
 
         $config = api("config");
         $templates = api("templates")->all(); // TODO: change to list only supported child templates for this template
 
-        if(count($templates) > 1){
+        if (count($templates) > 1) {
 
             $output = '<div class="ui right pointing dropdown icon button">';
             $output .= '<i class="plus icon"></i>';
             $output .= '<div class="menu">';
 
-            foreach($templates as $t){
+            foreach ($templates as $t) {
                 $output .= '<div class="item">';
                 $output .= "<a href='{$config->urls->root}{$config->adminUrl}/pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
                 $output .= '</div>';
@@ -71,11 +74,14 @@ class MarkupPageList extends Extension
             $output .= '</div>';
 
             return $output;
-        }
-        else if ( count($templates) ){
+        } else {
+            if (count($templates)) {
 
-            $output = "<a class='ui button' href='" . api('config')->urls->root . api("config")->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon plus'></i></a>";
-            return $output;
+                $output = "<a class='ui button' href='" . api('config')->urls->root . api(
+                        "config"
+                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon plus'></i></a>";
+                return $output;
+            }
         }
 
 

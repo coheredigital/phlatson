@@ -6,6 +6,7 @@ abstract class Fieldtype extends Extension
 
     protected $field;
     protected $object;
+
 //    public $value;
 
     protected function setup()
@@ -16,7 +17,8 @@ abstract class Fieldtype extends Extension
         }
     }
 
-    public function setObject (Object $object) {
+    public function setObject(Object $object)
+    {
         $this->object = $object;
     }
 
@@ -34,7 +36,7 @@ abstract class Fieldtype extends Extension
             case 'type':
                 return "Fieldtype";
             case 'value':
-                if($this->object instanceof Object){
+                if ($this->object instanceof Object) {
                     return $this->object->getUnformatted($this->field->name);
                 }
             default:
@@ -50,7 +52,7 @@ abstract class Fieldtype extends Extension
 
     public function getOutput($value)
     {
-        return (string) $value;
+        return (string)$value;
     }
 
 

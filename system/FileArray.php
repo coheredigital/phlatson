@@ -5,28 +5,30 @@ class FileArray extends ObjectArray
 
     protected $page;
 
-    public function __construct($page){
+    public function __construct($page)
+    {
 
         $this->page = $page;
 
         $fileList = $this->getFileList();
 
-        if($fileList){
+        if ($fileList) {
 
-            foreach($this->getFileList() as $filename){
+            foreach ($this->getFileList() as $filename) {
 
                 $file = $page->path . $filename;
 
-                if( !is_file( $file ) ) return false;
-
-                if(!getimagesize( $file )){
-                    $fileObject = new File( $this->page , $filename );
-                }
-                else{
-                    $fileObject = new Image( $this->page , $filename );
+                if (!is_file($file)) {
+                    return false;
                 }
 
-                if($fileObject){
+                if (!getimagesize($file)) {
+                    $fileObject = new File($this->page, $filename);
+                } else {
+                    $fileObject = new Image($this->page, $filename);
+                }
+
+                if ($fileObject) {
                     $this->add($fileObject);
                 }
 
@@ -35,25 +37,33 @@ class FileArray extends ObjectArray
         }
 
 
-
     }
 
 
-    protected function getFileList(){
+    protected function getFileList()
+    {
 
-        if( $this->page->isNew() ) return false;
+        if ($this->page->isNew()) {
+            return false;
+        }
 
         $files = scandir($this->page->path);
         // filter non files
-        $files = array_filter($files, function($item){
-            return !is_dir( $this->page->path . $item);
-        });
+        $files = array_filter(
+            $files,
+            function ($item) {
+                return !is_dir($this->page->path . $item);
+            }
+        );
 
         //filter JSON files
-        $files = array_filter($files, function($item){
-            $mime = pathinfo ($this->page->path . $item);
-            return $mime["extension"] != "json";
-        });
+        $files = array_filter(
+            $files,
+            function ($item) {
+                $mime = pathinfo($this->page->path . $item);
+                return $mime["extension"] != "json";
+            }
+        );
 
         return $files;
     }

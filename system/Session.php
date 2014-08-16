@@ -222,11 +222,11 @@ class Session implements IteratorAggregate
     {
         // should sanitize name
         $user = api('users')->get("$name");
-        if ( !$user instanceof User ) {
+        if (!$user instanceof User) {
             throw new Exception("User {$name} not found!");
         }
 
-        if ( $user->authenticate($password) ) {
+        if ($user->authenticate($password)) {
             $this->regenerate(); // rebuild session data
             $this->set('_user_name', $user->name);
             $this->set('_user_time', time());

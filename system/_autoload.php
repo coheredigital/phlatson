@@ -16,8 +16,7 @@ function classLoader($className)
 
     if (is_file($systemPath . $className . ".php")) {
         require_once $systemPath . $className . ".php";
-    }
-    else {
+    } else {
 
         $extensionsSitePath = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
 
@@ -25,9 +24,10 @@ function classLoader($className)
         $extensionSystem = $extensionsSystemPath . $className . ".php";
         if (is_file($extensionSite)) {
             require_once $extensionSite;
-        }
-        else if( is_file($extensionSystem) ) {
-            require_once $extensionSystem;
+        } else {
+            if (is_file($extensionSystem)) {
+                require_once $extensionSystem;
+            }
         }
     }
 

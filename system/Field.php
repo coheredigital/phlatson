@@ -15,9 +15,9 @@ class Field extends Object
             $name = $this->getUnformatted("fieldtype");
             $fieldtype = api("extensions")->get($name);
 
-            if( $fieldtype instanceof Fieldtype ) {
+            if ($fieldtype instanceof Fieldtype) {
                 $fieldtype->setField($this);
-                return  $fieldtype;
+                return $fieldtype;
             }
 
         }
@@ -27,20 +27,23 @@ class Field extends Object
     protected function getNewName()
     {
         // set object name
-        if ( $this->template->settings->nameFrom  && $this->template->fields->has( $this->settings->nameFrom ) ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api("sanitizer")->name( $this->settings->nameFrom );
-        }
-        else {
-            return api("sanitizer")->name( $this->label );
+        if ($this->template->settings->nameFrom && $this->template->fields->has(
+                $this->settings->nameFrom
+            )
+        ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
+            return api("sanitizer")->name($this->settings->nameFrom);
+        } else {
+            return api("sanitizer")->name($this->label);
         }
 
     }
 
 
-    protected function processSavePath(){
+    protected function processSavePath()
+    {
 
         // handle new object creation
-        if($this->isNew()){
+        if ($this->isNew()) {
 
             $this->path = api("config")->paths->fields . $this->name . "/";
             if (!file_exists($this->path)) {

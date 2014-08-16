@@ -4,9 +4,8 @@ class AdminFieldEdit extends Extension
 {
 
 
-
-
-    public static function getInfo() {
+    public static function getInfo()
+    {
         return array(
             'title' => 'ColorPicker',
             'version' => 104,
@@ -21,42 +20,48 @@ class AdminFieldEdit extends Extension
     {
 
         $fieldRoute = new Route;
-        $fieldRoute->url( "fields/edit/:any" );
-        $fieldRoute->parent( api("admin")->route );
-        $fieldRoute->callback( function(){
+        $fieldRoute->path("fields/edit/:any");
+        $fieldRoute->parent(api("admin")->route);
+        $fieldRoute->callback(
+            function () {
                 $this->object = new Field();
                 $this->object->template = "field";
                 $this->object->parent = $parent;
                 $this->title = "New Page";
 
                 $this->render();
-            });
+            }
+        );
 
         $newFieldRoute = new Route;
-        $newFieldRoute->url("fields/new/");
-        $newFieldRoute->parent( api("admin")->route );
-        $newFieldRoute->callback( function(){
+        $newFieldRoute->path("fields/new/");
+        $newFieldRoute->parent(api("admin")->route);
+        $newFieldRoute->callback(
+            function () {
                 $this->object = new Field();
                 $this->object->template = "field";
                 $this->object->parent = $parent;
                 $this->title = "New Page";
 
                 $this->render();
-            });
+            }
+        );
 
         $saveFieldRoute = new Route;
-        $saveFieldRoute->url( "fields/edit/:any" );
+        $saveFieldRoute->path("fields/edit/:any");
         $saveFieldRoute->method("POST");
-        $saveFieldRoute->callback( function( $name ){
+        $saveFieldRoute->callback(
+            function ($name) {
                 $page = api("fields")->get($name);
                 $this->object = $page;
                 $this->processSave();
-            });
-        $saveFieldRoute->parent( api("admin")->route );
+            }
+        );
+        $saveFieldRoute->parent(api("admin")->route);
 
-        api('router')->add( $fieldRoute );
-        api('router')->add( $newFieldRoute );
-        api('router')->add( $saveFieldRoute );
+        api('router')->add($fieldRoute);
+        api('router')->add($newFieldRoute);
+        api('router')->add($saveFieldRoute);
 
 
     }
@@ -86,7 +91,6 @@ class AdminFieldEdit extends Extension
         $this->form->add($fieldset);
 
     }
-
 
 
     public function render()

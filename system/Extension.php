@@ -14,7 +14,7 @@ abstract class Extension extends Object
 
         $this->name = get_class($this);
 
-        if ( $this->autoload === true || $this instanceof Fieldtype ){
+        if ($this->autoload === true || $this instanceof Fieldtype) {
             $this->setup();
         }
 
@@ -23,6 +23,7 @@ abstract class Extension extends Object
     protected function setup()
     {
     }
+
     public function init() //  TODO temp workaround remove
     {
         $this->setup();

@@ -12,7 +12,7 @@ class FieldtypeSelectFieldtype extends FieldtypeSelect
 
     public function getSave($value)
     {
-        if ( $value instanceof Field) {
+        if ($value instanceof Field) {
             $value = $value->name;
         }
         $value = "$value"; // stringify for certainty :)
@@ -25,8 +25,10 @@ class FieldtypeSelectFieldtype extends FieldtypeSelect
         $options = array();
 
         $fieldtypes = api("extensions")->fieldtypes;
-        if (!$fieldtypes) return false;
-        foreach ( $fieldtypes as $fieldtype ) {
+        if (!$fieldtypes) {
+            return false;
+        }
+        foreach ($fieldtypes as $fieldtype) {
 
             $title = str_replace("Fieldtype", "", $fieldtype->title);
             $options["$title"] = $fieldtype->name;

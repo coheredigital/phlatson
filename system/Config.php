@@ -49,12 +49,13 @@ class Config extends Object
     protected function getData($file)
     {
         if (is_file($file)) {
-            $this->path = normalizePath(str_replace(Object::DEFAULT_SAVE_FILE,"",$file));
+            $this->path = normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $file));
             $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
         }
     }
 
-    protected function setupDirectories(){
+    protected function setupDirectories()
+    {
 
         // store an array of directories
         $directories = array();
@@ -88,17 +89,14 @@ class Config extends Object
         $this->paths = $paths;
 
 
-
-
     }
 
 
     public function get($name)
     {
-        if($this->has($name)){
+        if ($this->has($name)) {
             return $this->getUnformatted($name);
-        }
-        else{
+        } else {
             return parent::get($name);
         }
 

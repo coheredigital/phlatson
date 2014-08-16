@@ -12,7 +12,7 @@ class AdminPageEdit extends Extension
         $config = api("config");
 
         api('router')->add(
-            new Route("/{$config->adminUrl}/pages/edit:all" , function($url){
+            new Route("/{$config->adminUrl}/pages/edit:all", function ($url) {
                 $this->object = api("pages")->get($url);
                 $this->template = $this->object->template;
                 $this->title = $this->object->title;
@@ -21,7 +21,7 @@ class AdminPageEdit extends Extension
         );
 
         api('router')->add(
-            new Route("/{$config->adminUrl}/pages/new/:any/:all" , function( $template, $parent){
+            new Route("/{$config->adminUrl}/pages/new/:any/:all", function ($template, $parent) {
                 $this->object = new Page();
                 $this->object->template = $template;
                 $this->object->parent = $parent;
@@ -32,15 +32,17 @@ class AdminPageEdit extends Extension
 
 
         $saveRoute = new Route();
-        $saveRoute->url("/{$config->adminUrl}/pages/edit/:all");
-        $saveRoute->callback(function( $url){
-            $page = api("pages")->get($url);
-            $this->object = $page;
-            $this->processSave();
-        });
+        $saveRoute->path("/{$config->adminUrl}/pages/edit/:all");
+        $saveRoute->callback(
+            function ($url) {
+                $page = api("pages")->get($url);
+                $this->object = $page;
+                $this->processSave();
+            }
+        );
         $saveRoute->method("POST");
 
-        api('router')->add( $saveRoute );
+        api('router')->add($saveRoute);
 
 
     }
@@ -72,7 +74,6 @@ class AdminPageEdit extends Extension
     }
 
 
-
     protected function addFilesFields()
     {
 
@@ -97,18 +98,16 @@ class AdminPageEdit extends Extension
     }
 
 
-
-
-
-
-    public function processFiles(){
+    public function processFiles()
+    {
         if (!empty($_FILES)) {
             $uploader = new Upload($this->object);
             $uploader->send($_FILES);
         }
     }
 
-    public function processSave(){
+    public function processSave()
+    {
 
         $this->object->save();
         api("session")->redirect(
@@ -116,7 +115,6 @@ class AdminPageEdit extends Extension
         );
 
     }
-
 
 
     public function render()
@@ -134,7 +132,6 @@ class AdminPageEdit extends Extension
         $admin->render();
 
     }
-
 
 
 }

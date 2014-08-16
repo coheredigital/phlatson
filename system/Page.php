@@ -14,7 +14,7 @@ class Page extends Object
 
 
         // set parent page value
-        if ( !$this->isNew() ) {
+        if (!$this->isNew()) {
             $requests = $this->route;
             array_pop($requests); // remove current (last) item to find parent
             $parentUrl = $this->createUrl($requests);
@@ -29,27 +29,33 @@ class Page extends Object
     protected function getNewName()
     {
         // set object name
-        if ( $this->template->settings->nameFrom  && $this->template->fields->has( $this->settings->nameFrom ) ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api("sanitizer")->name( $this->settings->nameFrom );
-        }
-        else {
-            return api("sanitizer")->name( $this->title );
+        if ($this->template->settings->nameFrom && $this->template->fields->has(
+                $this->settings->nameFrom
+            )
+        ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
+            return api("sanitizer")->name($this->settings->nameFrom);
+        } else {
+            return api("sanitizer")->name($this->title);
         }
 
     }
 
-    public function files(){
+    public function files()
+    {
         return new FileArray($this);
     }
 
-    protected function images(){
+    protected function images()
+    {
         return new ImageArray($this);
     }
 
     public function children()
     {
 
-        if ($this->path === null) return;
+        if ($this->path === null) {
+            return;
+        }
 
         // break out if no valid path
         // get all subfolder of current page path
@@ -62,7 +68,7 @@ class Page extends Object
 
             $url = $this->get("directory") . "/" . basename($folder);
             $page = api("pages")->get($url);
-            if( $page instanceof Page ){
+            if ($page instanceof Page) {
                 // pass the Page to $children array, use url as key to avoid duplicates
                 // should be impossible for any to items to return the same url
                 $children["$page->directory"] = $page;
@@ -141,21 +147,19 @@ class Page extends Object
     {
 
         // only allow values to be set for existing fields ??
-        switch ($name){
+        switch ($name) {
             case "template":
                 parent::set($name, $value);
                 break;
             default:
-                if( $this->template && $this->template->fields->has($name) ) {
+                if ($this->template && $this->template->fields->has($name)) {
                     $field = api("fields")->get("$name");
                     $fieldtype = $field->type;
                     $this->data[$name] = $fieldtype->getSave($value);
-                }
-                else {
+                } else {
                     parent::set($name, $value);
                 }
         }
-
 
 
     }

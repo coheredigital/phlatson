@@ -14,18 +14,24 @@ class FieldtypeFields extends Fieldtype
 
         $fields = new ObjectArray();
 
-        if( count($array) ) foreach ($array as $item){
+        if (count($array)) {
+            foreach ($array as $item) {
 
-            if (!isset($item['name'])) continue;
+                if (!isset($item['name'])) {
+                    continue;
+                }
 
-            $field = api("fields")->get($item['name']);
-            $fields->add($field);
+                $field = api("fields")->get($item['name']);
+                $fields->add($field);
+            }
         }
 
-        if( $this->object instanceof Object && count( $this->object->defaultFields ) ){
-            foreach ($this->object->defaultFields as $item){
+        if ($this->object instanceof Object && count($this->object->defaultFields)) {
+            foreach ($this->object->defaultFields as $item) {
                 $field = api("fields")->get($item);
-                if ( $field instanceof Field ) $fields->add($field);
+                if ($field instanceof Field) {
+                    $fields->add($field);
+                }
             }
         }
 
@@ -41,8 +47,9 @@ class FieldtypeFields extends Fieldtype
 
         // remove invalid fields
         foreach ($array as $key => $name) {
-            if (!api("fields")->get($key)) unset($array[$key]);
-            else{
+            if (!api("fields")->get($key)) {
+                unset($array[$key]);
+            } else {
                 $formattedArray[] = ["name" => $key];
             }
         }
@@ -63,18 +70,20 @@ class FieldtypeFields extends Fieldtype
 
         $fieldAdd = $fieldsSelect->render();
 
-        if($this->value) foreach ($this->value as $field) {
+        if ($this->value) {
+            foreach ($this->value as $field) {
 
-            // retrieve the field object because "$this->value" will return an unformatted value
-            $field = api("fields")->get($field["name"]);
+                // retrieve the field object because "$this->value" will return an unformatted value
+                $field = api("fields")->get($field["name"]);
 
-            $output .= "<div class='item' >
+                $output .= "<div class='item' >
                             <div class='header' >
                                 {$field->label}
                             </div>
                             <div>{$field->name}</div>
                             <input type='hidden' name='" . $this->field->name . "[{$field->name}]' value='{$columns}' >
 						</div>";
+            }
         }
 
         $output = "	$fieldAdd

@@ -1,18 +1,25 @@
 <?php
 
 
-class MarkupFile {
+class MarkupFile
+{
 
     protected $file;
     protected $savedDir;
 
-    public function __construct($file){
-        if ( is_file($file) ) $this->file = $file;
+    public function __construct($file)
+    {
+        if (is_file($file)) {
+            $this->file = $file;
+        }
     }
 
-    public function render() {
+    public function render()
+    {
 
-        if(!$this->file || !is_file($this->file)) return '';
+        if (!$this->file || !is_file($this->file)) {
+            return '';
+        }
 
         $this->savedDir = getcwd();
 
@@ -25,7 +32,9 @@ class MarkupFile {
         $output = "\n" . ob_get_contents() . "\n";
         ob_end_clean();
 
-        if($this->savedDir) chdir($this->savedDir);
+        if ($this->savedDir) {
+            chdir($this->savedDir);
+        }
 
         return trim($output);
     }

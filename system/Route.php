@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Adam
  * Date: 7/17/14
  * Time: 8:33 PM
  */
-
-class Route{
+class Route
+{
 
     private $methods = [
         "GET",
@@ -16,7 +17,7 @@ class Route{
     ];
 
     private $name;
-    private $url;
+    private $path;
     private $parent = false;
     private $children = [];
 
@@ -30,43 +31,43 @@ class Route{
         ':all' => '(.*)'
     );
 
-    public function __construct($url = null, $callback = null){
-        if ($url){
-            $this->url($url);
+    public function __construct($path = null, $callback = null)
+    {
+        if ($path) {
+            $this->path($path);
         }
-        if ( $callback ) {
+        if ($callback) {
             $this->callback($callback);
         }
     }
 
     /**
-     * @param $url
+     * @param $path
      * @return $this
      *
      * Used as a url getter/setter
      * if
      *
      */
-    public function url( $url = null ){
+    public function path($path = null)
+    {
 
-        if( is_null( $url )){
+        if (is_null($path)) {
 
-            $url = $this->url;
-            if( $this->parent !== false ){
-                $pUrl = $this->parent->url();
-                $url = $pUrl . "/" . $url;
+            $path = $this->path;
+            if ($this->parent !== false) {
+                $pUrl = $this->parent->path();
+                $path = $pUrl . "/" . $path;
             }
-            return $url;
-        }
-        else{
+            return $path;
+        } else {
 
-            if ( strpos( trim($url), " ") !== false){ // assume that a URL with a space defined an alternative method
-                $urlParts = explode(" ",$url);
-                $this->method( $urlParts[0] );
-                $this->url = trim($urlParts[1]);
-            }
-            else{
-                $this->url = $url;
+            if (strpos(trim($path), " ") !== false) { // assume that a URL with a space defined an alternative method
+                $pathParts = explode(" ", $path);
+                $this->method($pathParts[0]);
+                $this->path = trim($pathParts[1]);
+            } else {
+                $this->path = $path;
             }
             return $this;
 
@@ -75,25 +76,30 @@ class Route{
     }
 
 
-    public function parent( Route $route ){
+    public function parent(Route $route)
+    {
         $this->parent = $route;
         $route->children[] = $this;
         return $this;
     }
 
-    public function addChild( Route $route ){
+    public function addChild(Route $route)
+    {
         $this->children[] = $route;
         $route->parent = $this;
         return $this;
     }
 
 
-    public function method($name){
+    public function method($name)
+    {
 
-
-        $method = trim( strtoupper($name) );
-        if (!in_array( $method,$this->methods )) {
-            throw new Exception("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(", " , $this->methods) . " )." );
+        $method = trim(strtoupper($name));
+        if (!in_array($method, $this->methods)) {
+            throw new Exception("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(
+                    ", ",
+                    $this->methods
+                ) . " ).");
         }
 
         $this->method = $method;
@@ -108,7 +114,8 @@ class Route{
      * Cannot use generate method unless a Route has been given a name
      * Names must be set before being added to the Router object
      */
-    public function name($name){
+    public function name($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -120,8 +127,9 @@ class Route{
      * appends new callback to the end of the callbacks set
      *
      */
-    public function callback($callback){
-        array_push($this->callbacks , $callback);
+    public function callback($callback)
+    {
+        array_push($this->callbacks, $callback);
         return $this;
     }
 
@@ -133,7 +141,8 @@ class Route{
      * alias of callback() method for logical consistency
      *
      */
-    public function appendCallback($callback){
+    public function appendCallback($callback)
+    {
         $this->callback($callback);
         return $this;
     }
@@ -146,24 +155,28 @@ class Route{
      * alias of callback() method for logical consistency
      *
      */
-    public function prependCallback($callback){
-        array_unshift($this->callbacks , $callback);
+    public function prependCallback($callback)
+    {
+        array_unshift($this->callbacks, $callback);
         return $this;
     }
 
-    public function match($request){
+    public function match($request)
+    {
 
         // check method
-        if ( $this->method && $this->method !== $request->method ) return false;
-
-        $searches = array_keys( $this->patterns );
-        $replaces = array_values( $this->patterns );
-
-        if (strpos( $this->url  , ':') !== false) {
-            $this->url = str_replace($searches, $replaces, $this->url );
+        if ($this->method && $this->method !== $request->method) {
+            return false;
         }
 
-        if (preg_match('#^' . $this->url . '$#', $request->url , $matched)) {
+        $searches = array_keys($this->patterns);
+        $replaces = array_values($this->patterns);
+
+        if (strpos($this->path, ':') !== false) {
+            $this->path = str_replace($searches, $replaces, $this->path);
+        }
+
+        if (preg_match('#^' . $this->path . '$#', $request->path, $matched)) {
 
             array_shift($matched); //remove $matched[0] as [1] is the first parameter.
 
@@ -175,15 +188,16 @@ class Route{
         return false;
     }
 
-    public function execute(){
+    public function execute()
+    {
 
-        if( $this->parent ){
+        if ($this->parent) {
             $this->parent->execute();
         }
 
-        foreach ( $this->callbacks as $callback ) {
+        foreach ($this->callbacks as $callback) {
 
-            if(!is_object($callback)){
+            if (!is_object($callback)) {
 
                 //grab all parts based on a / separator
                 $parts = explode('/', $callback);
@@ -192,30 +206,27 @@ class Route{
                 $last = end($parts);
 
                 //grab the class name and method
-                if (strpos( $last, "@" ) !== false) { // check to see if a specifc method was defines
-                    $segments = explode( "@", $last );
+                if (strpos($last, "@") !== false) { // check to see if a specifc method was defines
+                    $segments = explode("@", $last);
                     $className = $segments[0];
                     $methodName = $segments[1];
-                }
-                else{ // else run a method that matches the METHOD type defined in this $route
+                } else { // else run a method that matches the METHOD type defined in this $route
                     $className = $last;
                     $methodName = strtolower($this->method);
                 }
 
                 //call method and pass any extra parameters to the method
-                if ( !is_callable([$className , $methodName])){
+                if (!is_callable([$className, $methodName])) {
                     throw new Exception("Method: $methodName does not exist in class: $className");
                 }
-                call_user_func_array( [$className , $methodName] , $this->parameters );
+                call_user_func_array([$className, $methodName], $this->parameters);
 
             } else {
-                call_user_func_array($callback, $this->parameters );
+                call_user_func_array($callback, $this->parameters);
             }
 
         }
     }
-
-
 
 
     /**
@@ -225,12 +236,14 @@ class Route{
      * use magic method to allow retrieval of select private properties
      *
      */
-    public function __get($name){
+    public function __get($name)
+    {
         switch ($name) {
-            case "url":
-                return $this->url();
+            case "path":
+                return $this->path();
             case "name":
             case "method":
+            case "url":
                 return $this->{$name};
         }
     }

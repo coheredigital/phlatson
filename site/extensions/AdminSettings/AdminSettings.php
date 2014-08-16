@@ -1,19 +1,19 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Adam
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-
-
-class AdminSettings extends Extension {
+class AdminSettings extends Extension
+{
 
     protected function setup()
     {
         $config = api("config");
         api('router')->add(
-            new Route(  "/{$config->adminUrl}/settings" , function(){
+            new Route("/{$config->adminUrl}/settings", function () {
                 $this->render();
             })
         );

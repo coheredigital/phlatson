@@ -11,11 +11,10 @@ class FieldtypePage extends FieldtypeText
 
     public function getSave($value)
     {
-        if ( $value instanceof Page) {
+        if ($value instanceof Page) {
             $value = $value->name;
-        }
-        else{
-            $page =  api("pages")->get("$url");
+        } else {
+            $page = api("pages")->get("$url");
             $value = $page->url;
         }
         $value = "$value"; // stringify for certainty :)

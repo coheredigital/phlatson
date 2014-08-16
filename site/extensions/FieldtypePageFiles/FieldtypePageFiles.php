@@ -3,10 +3,11 @@
 class FieldtypePageFiles extends Fieldtype
 {
 
-    protected function setup(){
-        api("config")->scripts->add( $this->url . "dropzone.js" );
-        api("config")->scripts->add( $this->url . $this->className . ".js" );
-        api("config")->styles->add( $this->url . $this->className . ".css" );
+    protected function setup()
+    {
+        api("config")->scripts->add($this->url . "dropzone.js");
+        api("config")->scripts->add($this->url . $this->className . ".js");
+        api("config")->styles->add($this->url . $this->className . ".css");
     }
 
     public function render()
@@ -28,12 +29,11 @@ class FieldtypePageFiles extends Fieldtype
 
         $output .= "<div class='ui divided list dropzone-previews' id='PageFilesList'>";
 
-        foreach ($this->object->files as $file){
+        foreach ($this->object->files as $file) {
             $output .= "<div class='item'>";
-            if($file instanceof Image){
+            if ($file instanceof Image) {
                 $output .= "<img  class='ui image' src='{$file->url}' height='32' width='32' data-dz-thumbnail>";
-            }
-            else{
+            } else {
                 $output .= "<div class='FiletypeIcon FiletypeIcon-{$file->extension}'><div class='FiletypeIcon-label'>{$file->extension}</div></div>";
             }
             $output .= "<div class='right floated red ui icon button'><i class='trash icon'></i></div>";
@@ -55,8 +55,6 @@ class FieldtypePageFiles extends Fieldtype
         $output .= "</div>";
         return $output;
     }
-
-
 
 
 }

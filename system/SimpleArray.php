@@ -21,13 +21,15 @@ class SimpleArray implements IteratorAggregate
         return $this;
     }
 
-    public function prepend($name){
+    public function prepend($name)
+    {
         $key = $this->getKey($name);
         $this->data = [$key => $name] + $this->data;
         return $this;
     }
 
-    public function append($name){
+    public function append($name)
+    {
         $key = $this->getKey($name);
         $this->data = $this->data + [$key => $name];
         return $this;
@@ -36,7 +38,7 @@ class SimpleArray implements IteratorAggregate
     public function import($array = null)
     {
 
-        if(is_array($array)) {
+        if (is_array($array)) {
             array_merge($this->data, $array);
         }
         return $this;

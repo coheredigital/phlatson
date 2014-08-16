@@ -1,15 +1,14 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Adam
  * Date: 7/17/14
  * Time: 8:33 PM
  */
+class Router
+{
 
-class Router {
-
-    private $request;
-    
     private $routes = [];
     private $namedRoutes = [];
 
@@ -24,10 +23,11 @@ class Router {
     }
 
 
-    public function add( Route $route ){
-        $key = "{$route->method}{$route->url}";
+    public function add(Route $route)
+    {
+        $key = "{$route->method}{$route->path}";
         $this->routes[$key] = $route;
-        if( $route->name ){
+        if ($route->name) {
             $this->namedRoutes[$route->name] = $key;
         }
     }
@@ -36,26 +36,24 @@ class Router {
      * Runs the callback for the given request
      * Called by __destruct()
      */
-    public function run()
+    public function run($request)
     {
 
-        $request = api('request');
 
-        $url =  "/" . trim( $request->url, "/");
-        $method = $request->method;
-        $routeKey = $method . $url;
+        $routeKey = $request->method . $request->path;
 
         $found = false;
 
         // check if route is defined without regex
-        if ( isset($this->routes[$routeKey] ) ) {
+        if (isset($this->routes[$routeKey])) {
             $found = true;
             $this->routes[$routeKey]->execute();
-        }
-        else {
-            foreach ( $this->routes as $route) {
-                if ( $route->definitionCount === 0 ) continue; // skip if $route not REGEX type
-                if ( $route->match($request) ) {
+        } else {
+            foreach ($this->routes as $route) {
+                if ($route->definitionCount === 0) {
+                    continue;
+                } // skip if $route not REGEX type
+                if ($route->match($request)) {
                     $found = true;
                     $route->execute();
                 }
@@ -67,8 +65,8 @@ class Router {
         // run the error callback if the route was not found
         if ($found == false) {
             if (!$this->errorCallback) {
-                $this->errorCallback = function() {
-                    header($_SERVER['SERVER_PROTOCOL']." 404 Not Found");
+                $this->errorCallback = function () {
+                    header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found");
                     echo '404';
                 };
             }
@@ -84,8 +82,11 @@ class Router {
      * return a named Route object if it exists
      *
      */
-    public function get($name){
-        if( !isset( $this->namedRoutes[$name] )) return false;
+    public function get($name)
+    {
+        if (!isset($this->namedRoutes[$name])) {
+            return false;
+        }
 
         $key = $this->namedRoutes[$name];
         return $this->routes[$key];

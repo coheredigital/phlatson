@@ -13,7 +13,7 @@ final class Api
 
     public static function __callStatic($name, $arguments)
     {
-        if( is_null($name) ){
+        if (is_null($name)) {
             return self::$registry;
         }
 
@@ -53,7 +53,7 @@ final class Api
     public static function __invoke($key = null, $value = null, $lock = false)
     {
 
-        if ( !is_null($key) && !is_null($value)) {
+        if (!is_null($key) && !is_null($value)) {
 
             if (isset(self::$registry[$key]) && in_array($key, self::$lock)) {
                 throw new Exception("There is already an API entry for '{$key}', value is locked.");
@@ -65,9 +65,8 @@ final class Api
 
             self::$registry[$key] = $value;
 
-        }
-        else{
-            if( is_null($key) ){
+        } else {
+            if (is_null($key)) {
                 return self::$registry;
             }
 

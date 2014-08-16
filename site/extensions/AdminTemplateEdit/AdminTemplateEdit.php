@@ -7,41 +7,48 @@ class AdminTemplateEdit extends Extension
     public function setup()
     {
 
-        $config = api("config");
-
-        api('router')->add(
-            new Route( "/{$config->adminUrl}/templates/edit/:any" , function( $name ){
+        $templateEdit = new Route;
+        $templateEdit->path("/templates/edit/:any");
+        $templateEdit->parent(api("admin")->route);
+        $templateEdit->callback(
+            function ($name) {
                 $this->object = api("templates")->get($name);
                 $this->template = $this->object->template;
                 $this->title = $this->object->title;
-
                 $this->render();
-
-            })
+            }
         );
 
-        api('router')->add(
-            new Route(  "/{$config->adminUrl}/templates/new/" , function(){
+        $templateNew = new Route;
+        $templateNew->path("/templates/new/");
+        $templateNew->parent(api("admin")->route);
+        $templateNew->callback(
+            function () {
                 $this->object = new Template();
                 $this->object->template = "template";
                 $this->object->parent = $parent;
                 $this->title = "New Page";
-
                 $this->render();
-            })
+            }
         );
 
 
-        api('router')->add(
-            new Route( "POST /{$config->adminUrl}/templates/edit/:any" , function( $name ){
-
+        $templateSave = new Route;
+        $templateSave->path("/templates/edit/:any");
+        $templateSave->method("POST");
+        $templateSave->parent(api("admin")->route);
+        $templateSave->callback(
+            function ($name) {
                 $page = api("templates")->get($name);
                 $this->object = $page;
-
                 $this->processSave();
-
-            })
+            }
         );
+
+
+        api('router')->add($templateEdit);
+        api('router')->add($templateNew);
+        api('router')->add($templateSave);
 
 
     }

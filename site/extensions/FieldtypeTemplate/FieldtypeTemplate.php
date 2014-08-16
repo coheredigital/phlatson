@@ -9,7 +9,7 @@ class FieldtypeTemplate extends FieldtypeSelect
     public function getOutput($name)
     {
         $template = api("templates")->get($name);
-        if ($this->object){
+        if ($this->object) {
             $template->setReference($this->object);
         }
         return $template;
@@ -17,26 +17,29 @@ class FieldtypeTemplate extends FieldtypeSelect
 
     public function getSave($value)
     {
-        if ( $value instanceof Template) {
+        if ($value instanceof Template) {
             $value = $value->name;
         }
         $value = "$value"; // stringify for certainty :)
         return $value;
     }
 
-    protected function setup(){
+    protected function setup()
+    {
         $this->label = "Template";
         $this->columns = 6;
         $this->attribute("name", "template");
     }
 
-    public function setObject( Object $page ){
+    public function setObject(Object $page)
+    {
         $this->object = $page;
         $this->setAllowedTemplates();
         $this->value = $this->object->template->name;
     }
 
-    protected function setAllowedTemplates(){
+    protected function setAllowedTemplates()
+    {
         $selectOptions = array();
 
         $templates = api("templates")->all();

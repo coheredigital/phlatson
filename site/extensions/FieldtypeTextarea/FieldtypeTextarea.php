@@ -4,7 +4,6 @@ class FieldtypeTextarea extends Fieldtype
 {
 
 
-
     protected function renderInput()
     {
         $attributes = $this->getAttributes();

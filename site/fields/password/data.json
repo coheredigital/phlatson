@@ -1,4 +1,4 @@
 {
-        "fieldtype": "FieldtypePassword",
-        "label": "Password"
+    "fieldtype": "FieldtypePassword",
+    "label": "Password"
 }

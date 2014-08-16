@@ -8,7 +8,7 @@ if ($user->isGuest()) {
 //    $session->redirect($config->urls->root . $this->adminUrl . "/login");
 }
 
-$admin  = api("admin");
+$admin = api("admin");
 
 // admin scripts and styles
 $config->styles->add("{$admin->url}styles/adminTheme.css");

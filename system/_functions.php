@@ -2,8 +2,9 @@
 
 // shorthand for api($name) and api::set($key, $value)
 
-function api($name = null , $value = null, $lock = false){
-   return api::__invoke($name , $value, $lock);
+function api($name = null, $value = null, $lock = false)
+{
+    return api::__invoke($name, $value, $lock);
 }
 
 // Emulate register_globals off
@@ -48,24 +49,27 @@ function unregister_GLOBALS()
 }
 
 
-function normalizeUrl($url){
+function normalizeUrl($url)
+{
     $url = str_replace("\\", "/", $url);
     $url = trim($url, "/");
     return $url;
 }
 
-function normalizeDirectory($directory){
+function normalizeDirectory($directory)
+{
 
     $directory = normalizeUrl($directory);
 
-    if( strlen($directory) === 0 ){
+    if (strlen($directory) === 0) {
         $directory = "";
     }
 
     return $directory;
 }
 
-function normalizePath($path){
+function normalizePath($path)
+{
     $path = realpath($path);
     $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
     $path = is_file($path) ? $path : $path . "/";
