@@ -15,7 +15,7 @@
         {
             "name": "pages",
             "domain": "xpages.dev",
-            "path": ":all",
+            "path": "/:all",
             "callback": "Pages:render"
         }
 

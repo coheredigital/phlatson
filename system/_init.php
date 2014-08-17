@@ -13,10 +13,8 @@ api('config', new Config);
 
 // setup config routes
 foreach (api("config")->routes as $r){
-
     $route = new Route($r);
     api("router")->add($route);
-
 }
 
 api('extensions', new Extensions);
@@ -27,22 +25,5 @@ api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
 
-
-
-
-$pagesRoute = new Route;
-$pagesRoute->path(":all");
-$pagesRoute->callback(
-    function ($url = null) {
-        $api = api();
-        $page = api("pages")->get($url);
-        if ($page instanceof Page) {
-            extract(api()); // get access to api variables for rendered layout
-            include $page->template->layout;
-        }
-    }
-);
-
-
-api('router')->add($pagesRoute);
+// execute the app
 api('router')->run(api('request'));
