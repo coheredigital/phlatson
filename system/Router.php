@@ -38,26 +38,12 @@ class Router
      */
     public function run($request)
     {
-
-
-        $routeKey = $request->method . $request->path;
-
         $found = false;
 
-        // check if route is defined without regex
-        if (isset($this->routes[$routeKey])) {
-            $found = true;
-            $this->routes[$routeKey]->execute();
-        } else {
-            foreach ($this->routes as $route) {
-                if ($route->definitionCount === 0) {
-                    continue;
-                } // skip if $route not REGEX type
-                if ($route->match($request)) {
-                    $found = true;
-                    $route->execute();
-                }
-
+        foreach ($this->routes as $route) {
+            if ($route->match($request)) {
+                $found = true;
+                $route->execute();
             }
         }
 

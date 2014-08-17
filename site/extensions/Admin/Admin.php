@@ -44,13 +44,14 @@ class Admin extends Extension
 
         $logoutRoute = new Route;
         $logoutRoute->path("logout");
+        $logoutRoute->parent($this->route);
         $logoutRoute->callback(
             function () {
                 api("session")->logout();
                 api("session")->redirect(api("config")->urls->admin);
             }
         );
-        $logoutRoute->parent($this->route);
+
 
 
         api('router')->add($logoutRoute);

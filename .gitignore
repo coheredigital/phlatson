@@ -1,7 +1,6 @@
 #PHPSTORM
 .idea/*
 
-
 #SUBLIME
 *.sublime-project
 *.sublime-workspace

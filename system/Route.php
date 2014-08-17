@@ -18,6 +18,8 @@ class Route
 
     private $name;
     private $path;
+    private $domain;
+
     private $parent = false;
     private $children = [];
 
@@ -33,6 +35,8 @@ class Route
 
     public function __construct($path = null, $callback = null)
     {
+
+
         if ($path) {
             $this->path($path);
         }
@@ -55,23 +59,32 @@ class Route
         if (is_null($path)) {
 
             $path = $this->path;
-            if ($this->parent !== false) {
+            if ($this->parent instanceof Route) {
                 $pUrl = $this->parent->path();
-                $path = $pUrl . "/" . $path;
+                $path = $pUrl . $path;
             }
             return $path;
+
         } else {
 
             if (strpos(trim($path), " ") !== false) { // assume that a URL with a space defined an alternative method
                 $pathParts = explode(" ", $path);
                 $this->method($pathParts[0]);
-                $this->path = trim($pathParts[1]);
+                $this->path = '/' . trim( $pathParts[1], '/' );
             } else {
-                $this->path = $path;
+                $this->path = '/' . trim( $path, '/' );
             }
             return $this;
 
         }
+
+    }
+
+
+    public function url()
+    {
+
+
 
     }
 
@@ -164,19 +177,22 @@ class Route
     public function match($request)
     {
 
+        $path = $this->path();
+        $requestPath = $request->path;
+
         // check method
-        if ($this->method && $this->method !== $request->method) {
+        if ($this->method !== $request->method) {
             return false;
         }
 
         $searches = array_keys($this->patterns);
         $replaces = array_values($this->patterns);
 
-        if (strpos($this->path, ':') !== false) {
-            $this->path = str_replace($searches, $replaces, $this->path);
+        if (strpos($this->path(), ':') !== false) {
+            $path = str_replace($searches, $replaces, $this->path());
         }
 
-        if (preg_match('#^' . $this->path . '$#', $request->path, $matched)) {
+        if (preg_match('#^' . $path . '$#', $request->path, $matched)) {
 
             array_shift($matched); //remove $matched[0] as [1] is the first parameter.
 
@@ -243,8 +259,9 @@ class Route
                 return $this->path();
             case "name":
             case "method":
-            case "url":
                 return $this->{$name};
+            case "url":
+                return $this->url();
         }
     }
 
