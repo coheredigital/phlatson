@@ -17,44 +17,56 @@ class AdminExtensionsList extends Extension
 
         $config = api("config");
 
-        api('router')->add(
-            new Route("/{$config->adminUrl}/extensions", function () {
-                $this->render();
-            })
-        );
+//        $extensionRoute = new Route;
+//        $extensionRoute
+//            ->path("extensions")
+//            ->parent(api("admin")->route)
+//            ->callback(
+//                function () {
+//                    $this->render();
+//                }
+//            );
 
+        api('router')->add(
+            new Route([
+                "url" => "/{$config->adminUrl}/extensions",
+                "callback" => function () {
+                        $this->render();
+                    }
+            ])
+        );
     }
 
 
-    protected function renderFieldsList()
-    {
+        protected function renderFieldsList()
+        {
 
-        $config = api("config");
+            $config = api("config");
 
-        $fieldsList = api("extensions")->all();
-        $table = api("extensions")->get("MarkupTable");
-        $table->setColumns(
-            array(
-                "Name" => "name",
-                "Label" => "label",
-                "Type" => "type",
-            )
-        );
-
-        foreach ($fieldsList as $item) {
-            $table->addRow(
+            $fieldsList = api("extensions")->all();
+            $table = api("extensions")->get("MarkupTable");
+            $table->setColumns(
                 array(
-                    "name" => "<a href='{$config->urls->root}{$config->adminUrl}/fields/edit/{$item->name}' >{$item->name}</a>",
-                    "label" => $item->label,
-                    "type" => $item->type
-                    // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
+                    "Name" => "name",
+                    "Label" => "label",
+                    "Type" => "type",
                 )
             );
-        }
 
-        $output = $table->render();
+            foreach ($fieldsList as $item) {
+                $table->addRow(
+                    array(
+                        "name" => "<a href='{$config->urls->root}{$config->adminUrl}/fields/edit/{$item->name}' >{$item->name}</a>",
+                        "label" => $item->label,
+                        "type" => $item->type
+                        // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
+                    )
+                );
+            }
 
-        $controls = "<div class='ui secondary pointing menu'>
+            $output = $table->render();
+
+            $controls = "<div class='ui secondary pointing menu'>
                 <div class='right menu'>
                     <div class='item'>
                         <div class='ui icon input'>
@@ -65,18 +77,19 @@ class AdminExtensionsList extends Extension
                 </div>
             </div>";
 
-        return "<div class='container'>{$controls}{$output}</div>";
+            return "<div class='container'>{$controls}{$output}</div>";
+
+        }
+
+        public
+        function render()
+        {
+
+            $admin = api("admin");
+            $admin->title = "Extensions";
+            $admin->output = $this->renderFieldsList();
+            $admin->render();
+
+        }
 
     }
-
-    public function render()
-    {
-
-        $admin = api("admin");
-        $admin->title = "Extensions";
-        $admin->output = $this->renderFieldsList();
-        $admin->render();
-
-    }
-
-} 

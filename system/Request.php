@@ -11,8 +11,8 @@ class Request
 
     public $url;
     public $path;
+    public $uri;
 
-    public $subdomain;
     public $domain;
     public $method;
 
@@ -20,10 +20,6 @@ class Request
 
     public $scheme;
     public $hostname;
-    public $username;
-    public $password;
-    public $fragment;
-    public $query;
 
     public $http;
     public $https;
@@ -31,22 +27,21 @@ class Request
 
     public function __construct()
     {
-
-        $url = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-        $this->url = $url;
-
         $this->method = $_SERVER["REQUEST_METHOD"];
+        $this->scheme =  $_SERVER["REQUEST_SCHEME"];
+        $this->hostname =  $_SERVER["HTTP_HOST"];
+        $this->domain = $this->hostname;
+        $this->uri =  $_SERVER["REQUEST_URI"];
+
+        $this->url = $this->scheme . "://" . $this->hostname . $this->uri;
 
         // get url path from root of request
         $this->path = isset($_GET['_uri']) ? "/" . $_GET['_uri'] : "/";
         unset($_GET['_uri']); // unset URI so it doesn't get included in $input->get array and can't be accessed later
 
-        // http vars
-        $this->http = new stdClass();
-        $this->http->host = $_SERVER["HTTP_HOST"];
 
-
-        $this->query = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
+        $this->ssl = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+        $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
 
         // setup GET & POST variables
@@ -60,9 +55,7 @@ class Request
             $this->post->$key = $value;
         }
 
-        // HTTPS and AJAX
-        $this->https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
-        $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+
 
     }
 

@@ -30,11 +30,14 @@ class Admin extends Extension
 
         $this->route = new Route;
         $this->route->name("admin");
-        $this->route->path("/" . api("config")->adminUrl);
+//        $this->route->path("/" . api("config")->adminUrl);
+        $this->route->path("/");
+        $this->route->domain(api("config")->adminUrl .".xpages.dev");
         $this->route->prependCallback(
             function () {
                 if (api("user")->isGuest()) {
-                    api("session")->redirect(api("config")->urls->root . api("config")->adminUrl . "/login");
+//                    api("session")->redirect(api("config")->urls->root . api("config")->adminUrl . "/login");
+                    api("session")->redirect("http://admin.xpages.dev/login");
                 }
             }
         );

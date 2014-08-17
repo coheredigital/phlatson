@@ -17,8 +17,11 @@ class Route
     ];
 
     private $name;
+    private $scheme = "http";
     private $path;
-    private $domain;
+    private $domain = false;
+
+    public $ssl = false;
 
     private $parent = false;
     private $children = [];
@@ -33,16 +36,31 @@ class Route
         ':all' => '(.*)'
     );
 
-    public function __construct($path = null, $callback = null)
+    public function __construct($parameters = [])
     {
+        if ($parameters["method"]) {
+            $this->method($parameters["method"]);
+        }
+        if ($parameters["path"]) {
+            $this->path($parameters["path"]);
+        }
+        if ($parameters["callback"]) {
+            $this->callback($parameters["callback"]);
+        }
+        if ($parameters["parent"]) {
+            $this->parent($parameters["parent"]);
+        }
+        if ($parameters["name"]) {
+            $this->name($parameters["name"]);
+        }
+
+    }
 
 
-        if ($path) {
-            $this->path($path);
-        }
-        if ($callback) {
-            $this->callback($callback);
-        }
+    public function domain($domain = null)
+    {
+        $this->domain = $domain;
+        return $this;
     }
 
     /**
@@ -70,24 +88,15 @@ class Route
             if (strpos(trim($path), " ") !== false) { // assume that a URL with a space defined an alternative method
                 $pathParts = explode(" ", $path);
                 $this->method($pathParts[0]);
-                $this->path = '/' . trim( $pathParts[1], '/' );
+                $this->path = '/' . trim($pathParts[1], '/');
             } else {
-                $this->path = '/' . trim( $path, '/' );
+                $this->path = '/' . trim($path, '/');
             }
             return $this;
 
         }
 
     }
-
-
-    public function url()
-    {
-
-
-
-    }
-
 
     public function parent(Route $route)
     {
@@ -116,7 +125,7 @@ class Route
         }
 
         $this->method = $method;
-
+        return $this;
     }
 
     /**
@@ -132,6 +141,23 @@ class Route
         $this->name = $name;
         return $this;
     }
+
+    private function url()
+    {
+
+        $url = $this->path;
+        if ($this->parent instanceof Route) {
+            $pUrl = $this->parent->path();
+            $url = $pUrl . $url;
+        }
+
+        if( $this->domain ){
+            $url = $this->scheme . "://" . $this->domain . $url;
+        }
+
+        return $url;
+    }
+
 
     /**
      * @param $callback
@@ -178,7 +204,13 @@ class Route
     {
 
         $path = $this->path();
-        $requestPath = $request->path;
+        $url = $this->key;
+
+
+        // check exact match to url
+        if($url == $request->url){
+            return true;
+        }
 
         // check method
         if ($this->method !== $request->method) {
@@ -188,17 +220,19 @@ class Route
         $searches = array_keys($this->patterns);
         $replaces = array_values($this->patterns);
 
-        if (strpos($this->path(), ':') !== false) {
-            $path = str_replace($searches, $replaces, $this->path());
+
+
+        if (strpos($path, ':') !== false) {
+            $path = str_replace($searches, $replaces, $path);
         }
 
-        if (preg_match('#^' . $path . '$#', $request->path, $matched)) {
-
+        if (preg_match("#^" . $path . "$#", $request->path, $matched)) {
             array_shift($matched); //remove $matched[0] as [1] is the first parameter.
-
             $this->parameters = $matched;
             return true;
         }
+
+
 
 
         return false;
@@ -262,8 +296,12 @@ class Route
                 return $this->{$name};
             case "url":
                 return $this->url();
+
         }
     }
+
+
+
 
 }
 

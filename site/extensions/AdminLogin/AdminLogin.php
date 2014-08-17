@@ -12,35 +12,34 @@ class AdminLogin extends Admin
 
     protected function setup()
     {
-        $config = api("config");
 
         $login = new Route;
-        $login->path("/$config->adminUrl/login");
-        $login->callback(
-            function () {
-                $this->render();
-            }
-        );
+        $login
+            ->path("login")
+            ->parent(api("admin")->route)
+            ->callback(
+                function () {
+                    $this->render();
+                }
+            );
 
 
         $loginSubmit = new Route;
-        $loginSubmit->path("/{$config->adminUrl}/login");
-        $loginSubmit->method("POST");
-        $loginSubmit->callback(
-            function () {
-                $api = api();
-                if (count(api("request")->post)) {
+        $loginSubmit
+            ->path("login")
+            ->method("POST")
+            ->parent(api("admin")->route)
+            ->callback(
+                function () {
                     if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
-                        api("session")->redirect(api("config")->urls->admin);
+//                            api("session")->redirect(api("config")->urls->admin);
                     } else {
                         // add error message
 
                     }
+                    $this->render();
                 }
-
-                $this->render();
-            }
-        );
+            );
 
         // add the routes
         api('router')->add($login);

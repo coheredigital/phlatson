@@ -25,7 +25,7 @@ class Router
 
     public function add(Route $route)
     {
-        $key = "{$route->method}{$route->path}";
+        $key = "{$route->method}{$route->url}";
         $this->routes[$key] = $route;
         if ($route->name) {
             $this->namedRoutes[$route->name] = $key;

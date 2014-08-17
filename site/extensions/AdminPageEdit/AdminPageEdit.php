@@ -9,50 +9,49 @@ class AdminPageEdit extends Extension
     public function setup()
     {
 
-        $config = api("config");
-
         $pageEdit = new Route;
-        $pageEdit->path("/pages/edit:all");
-        $pageEdit->parent(api('admin')->route);
-        $pageEdit->callback(
-            function ($url) {
-                $this->object = api("pages")->get($url);
-                $this->template = $this->object->template;
-                $this->title = $this->object->title;
-                $this->render();
-            }
-        );
+        $pageEdit->path("/pages/edit:all")
+            ->parent(api('admin')->route)
+            ->callback(
+                function ($url) {
+                    $this->object = api("pages")->get($url);
+                    $this->template = $this->object->template;
+                    $this->title = $this->object->title;
+                    $this->render();
+                }
+            );
 
         $pageNew = new Route;
-        $pageNew->path("/pages/new/:any/:all");
-        $pageNew->parent(api('admin')->route);
-        $pageNew->callback(
-            function ($template, $parent) {
-                $this->object = new Page();
-                $this->object->template = $template;
-                $this->object->parent = $parent;
-                $this->title = "New Page";
-                $this->render();
-            }
-        );
+        $pageNew->path("/pages/new/:any/:all")
+            ->parent(api('admin')->route)
+            ->callback(
+                function ($template, $parent) {
+                    $this->object = new Page();
+                    $this->object->template = $template;
+                    $this->object->parent = $parent;
+                    $this->title = "New Page";
+                    $this->render();
+                }
+            );
 
 
         $saveRoute = new Route();
-        $saveRoute->path("/pages/edit/:all");
-        $saveRoute->parent(api('admin')->route);
-        $saveRoute->callback(
-            function ($url) {
-                $page = api("pages")->get($url);
-                $this->object = $page;
-                $this->processSave();
-            }
-        );
-        $saveRoute->method("POST");
+        $saveRoute
+            ->path("/pages/edit/:all")
+            ->method("POST")
+            ->parent(api('admin')->route)
+            ->callback(
+                function ($url) {
+                    $page = api("pages")->get($url);
+                    $this->object = $page;
+                    $this->processSave();
+                }
+            );
+
 
         api('router')->add($pageEdit);
         api('router')->add($pageNew);
         api('router')->add($saveRoute);
-
 
     }
 

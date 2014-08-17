@@ -13,9 +13,13 @@ class AdminSettings extends Extension
     {
         $config = api("config");
         api('router')->add(
-            new Route("/{$config->adminUrl}/settings", function () {
-                $this->render();
-            })
+            new Route([
+                "path" => "settings",
+                "parent" => api("admin")->route,
+                "callback" => function () {
+                        $this->render();
+                    }
+            ])
         );
     }
 
