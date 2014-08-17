@@ -21,6 +21,18 @@ class Pages extends Objects
         return parent::get($query);
     }
 
+    public function render($path)
+    {
+        $page = $this->get($path);
+        if ($page instanceof Page) {
+            extract(api()); // get access to api variables for rendered layout
+            include $page->template->layout;
+        }
+        else{
+            echo "404?";
+        }
+    }
+
     protected function isAdminRequest($query)
     {
         $requests = explode("/", $query);
@@ -29,5 +41,7 @@ class Pages extends Objects
 
         return $requestRoot == $adminUrl;
     }
+
+
 
 }

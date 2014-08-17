@@ -3,5 +3,21 @@
     "sessionExpireSeconds": 3600,
     "timezone": "America/New_York",
     "debug": true,
-    "adminUrl": "admin"
+    "adminUrl": "admin",
+
+    "routes" : [
+        {
+            "name": "admin",
+            "domain": "admin.xpages.dev",
+            "path": "/",
+            "callback": "Admin:render"
+        },
+        {
+            "name": "pages",
+            "domain": "xpages.dev",
+            "path": ":all",
+            "callback": "Pages:render"
+        }
+
+    ]
 }

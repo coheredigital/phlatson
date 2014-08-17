@@ -30,6 +30,8 @@ class Route
     private $callbacks = [];
     private $parameters = [];
 
+    public $halt = false;
+
     private $patterns = array(
         ':any' => '([^/]+)',
         ':num' => '([0-9]+)',
@@ -40,6 +42,9 @@ class Route
     {
         if ($parameters["method"]) {
             $this->method($parameters["method"]);
+        }
+        if ($parameters["domain"]) {
+            $this->domain($parameters["domain"]);
         }
         if ($parameters["path"]) {
             $this->path($parameters["path"]);
@@ -60,6 +65,12 @@ class Route
     public function domain($domain = null)
     {
         $this->domain = $domain;
+        return $this;
+    }
+
+    public function halt($halt = true)
+    {
+        $this->halt = $bool;
         return $this;
     }
 
@@ -147,17 +158,23 @@ class Route
 
         $url = $this->path;
         if ($this->parent instanceof Route) {
-            $pUrl = $this->parent->path();
+            $pUrl = $this->parent->url();
             $url = $pUrl . $url;
         }
 
-        if( $this->domain ){
-            $url = $this->scheme . "://" . $this->domain . $url;
+        if ($this->domain) {
+            $url = $this->scheme . "://" . $this->domain . ltrim($url, "/");
         }
 
         return $url;
     }
 
+
+    public function generate($parameters=[])
+    {
+        $url = $this->url();
+        return $url;
+    }
 
     /**
      * @param $callback
@@ -204,11 +221,11 @@ class Route
     {
 
         $path = $this->path();
-        $url = $this->key;
+        $url = $this->url();
 
 
         // check exact match to url
-        if($url == $request->url){
+        if ($url == $request->url) {
             return true;
         }
 
@@ -221,7 +238,6 @@ class Route
         $replaces = array_values($this->patterns);
 
 
-
         if (strpos($path, ':') !== false) {
             $path = str_replace($searches, $replaces, $path);
         }
@@ -231,8 +247,6 @@ class Route
             $this->parameters = $matched;
             return true;
         }
-
-
 
 
         return false;
@@ -256,8 +270,8 @@ class Route
                 $last = end($parts);
 
                 //grab the class name and method
-                if (strpos($last, "@") !== false) { // check to see if a specifc method was defines
-                    $segments = explode("@", $last);
+                if (strpos($last, ":") !== false) { // check to see if a specific method was defines
+                    $segments = explode(":", $last);
                     $className = $segments[0];
                     $methodName = $segments[1];
                 } else { // else run a method that matches the METHOD type defined in this $route
@@ -265,15 +279,19 @@ class Route
                     $methodName = strtolower($this->method);
                 }
 
+                $class = new $className;
+
                 //call method and pass any extra parameters to the method
-                if (!is_callable([$className, $methodName])) {
+                if (!is_callable([$class, $methodName])) {
                     throw new Exception("Method: $methodName does not exist in class: $className");
                 }
-                call_user_func_array([$className, $methodName], $this->parameters);
+                call_user_func_array([$class, $methodName], $this->parameters);
 
             } else {
                 call_user_func_array($callback, $this->parameters);
             }
+
+            if ( $this->halt) break;
 
         }
     }
@@ -299,8 +317,6 @@ class Route
 
         }
     }
-
-
 
 
 }

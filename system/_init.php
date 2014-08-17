@@ -7,9 +7,18 @@ require_once ROOT_PATH . 'system/_autoload.php';
 
 $api = new Api();
 
-api('config', new Config);
 api('request', new Request);
 api('router', new Router);
+api('config', new Config);
+
+// setup config routes
+foreach (api("config")->routes as $r){
+
+    $route = new Route($r);
+    api("router")->add($route);
+
+}
+
 api('extensions', new Extensions);
 api('sanitizer', new Sanitizer);
 api('pages', new Pages);
@@ -17,6 +26,8 @@ api('users', new Users);
 api('fields', new Fields);
 api('templates', new Templates);
 api('session', new Session);
+
+
 
 
 $pagesRoute = new Route;
@@ -34,5 +45,4 @@ $pagesRoute->callback(
 
 
 api('router')->add($pagesRoute);
-
 api('router')->run(api('request'));
