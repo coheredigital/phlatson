@@ -76,6 +76,18 @@ function normalizePath($path)
     return $path;
 }
 
+/**
+ * @param $array
+ * @return Object
+ *
+ * Simple function to convert array into StdObject
+ *
+ */
+function objectify($array)
+{
+    return json_decode(json_encode($array));
+}
+
 
 /**
  * A Compatibility library with PHP 5.5's simplified password hashing API.

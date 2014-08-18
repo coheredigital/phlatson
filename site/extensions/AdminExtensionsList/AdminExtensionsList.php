@@ -17,24 +17,28 @@ class AdminExtensionsList extends Extension
 
         $config = api("config");
 
-//        $extensionRoute = new Route;
-//        $extensionRoute
-//            ->path("extensions")
-//            ->parent(api("admin")->route)
-//            ->callback(
-//                function () {
-//                    $this->render();
-//                }
-//            );
+        $extensionRoute = new Route;
+        $extensionRoute
+            ->path("extensions")
+            ->parent(api("admin")->route)
+            ->callback(
+                function () {
+                    $this->render();
+                }
+            );
 
-        api('router')->add(
-            new Route([
-                "url" => "/{$config->adminUrl}/extensions",
-                "callback" => function () {
-                        $this->render();
-                    }
-            ])
-        );
+
+        api('router')->add($extensionRoute);
+
+//        api('router')->add(
+//            new Route([
+//                "url" => "extensions",
+//                "parent" => api("router")->admin,
+//                "callback" => function () {
+//                        $this->render();
+//                    }
+//            ])
+//        );
     }
 
 

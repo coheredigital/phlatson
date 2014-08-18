@@ -11,7 +11,7 @@ class User extends Object
      */
     public function isGuest()
     {
-        return $this->get("name") == "guest";
+        return $this->name == "guest";
     }
 
     /**

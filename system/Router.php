@@ -38,17 +38,19 @@ class Router
         $method = $route->method;
         $path = $route->path;
 
-        $key = [
-            "domain" => $domain,
-            "method" => $method,
-            "path" => $path
-        ];
 
-
-        $key = serialize($key);
 
         $this->routes[$domain][$method][$path] = $route;
         if ($route->name) {
+
+            $key = [
+                "domain" => $domain,
+                "method" => $method,
+                "path" => $path
+            ];
+
+            $key = serialize($key);
+
             $this->namedRoutes[$route->name] = $key;
         }
     }
@@ -86,6 +88,19 @@ class Router
 
     }
 
+
+    /**
+     * @param $name
+     * @return mixed
+     *
+     * use magic method to allow retrieval of named routes
+     *
+     */
+    public function __get($name)
+    {
+        return $this->get($name);
+    }
+
     /**
      * @param $name name of route to find
      * @return Route || bool
@@ -96,16 +111,13 @@ class Router
     public function get($name)
     {
 
-
-
-
-
         if (!isset($this->namedRoutes[$name])) {
             return false;
         }
 
         $key = $this->namedRoutes[$name];
-        $key = json_decode(json_encode(unserialize($key)));
+        $key = unserialize($key);
+        $key = objectify($key);
         $route = $this->routes[$key->domain][$key->method][$key->path];
         return $route;
     }

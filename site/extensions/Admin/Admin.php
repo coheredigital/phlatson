@@ -50,6 +50,7 @@ class Admin extends Extension
 
         $logoutRoute = new Route;
         $logoutRoute->path("logout");
+        $logoutRoute->name("logout");
         $logoutRoute->parent($this->route);
         $logoutRoute->callback(
             function () {
@@ -59,6 +60,7 @@ class Admin extends Extension
         );
         api('router')->add($logoutRoute);
 
+
         $login = new Route;
         $login
             ->path("login")
@@ -66,10 +68,11 @@ class Admin extends Extension
             ->halt()
             ->callback(
                 function () {
-                    $this->renderLogin();
+                    $this->renderLoginForm();
                 }
             );
         api('router')->add($login);
+
 
         $loginSubmit = new Route;
         $loginSubmit
@@ -77,6 +80,7 @@ class Admin extends Extension
             ->name("login")
             ->method("POST")
             ->parent($this->route)
+            ->halt()
             ->callback(
                 function () {
                     if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
@@ -85,50 +89,38 @@ class Admin extends Extension
                         // add error message
 
                     }
-                    $this->renderLogin();
+                    $this->renderLoginForm();
                 }
             );
         api('router')->add($loginSubmit);
 
-
-
-
-
-
-
     }
 
-    public function run()
-    {
-//        extract(api());
-//        include "layout.php";
-
-//
-//            $adminLogin = "http://admin.xpages.dev/login";
-//            if (api("user")->isGuest() && api("request")->url != $adminLogin) {
-//                api("session")->redirect($adminLogin);
-//            }
-
-    }
 
     public function render()
     {
-        $loginRoute = api("router")->get("login");
-        $adminLogin = $loginRoute->generate();
-        if (api("user")->isGuest() && api("request")->url != $adminLogin) {
-            api("session")->redirect($adminLogin);
-        }
 
         extract(api());
-        include "layout.php";
+
+        $adminLogin = $router->login->generate();
+
+        if ($user->isGuest()) {
+            if($request->url != $adminLogin) $session->redirect($adminLogin);
+            $this->output = $this->renderLoginForm();
+            include "login.php";
+        }
+        else if($user->isLoggedIn()){
+            if($request->url == $adminLogin) $session->redirect($router->admin->generate());
+            if ($this->output) include "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
+        }
+
     }
 
 
-    public function renderLogin()
+    public function renderLoginForm()
     {
         api("config")->styles->add("{$this->url}login.css");
         $this->title = "Login";
-
 
         $output .= "<div class='field'>
                     <label>Username</label>
@@ -153,10 +145,7 @@ class Admin extends Extension
                   </div>";
 
         $output .= "<button type='submit' class='ui button green fluid'>Login</button>";
-        $this->output = "<form class='ui form segment form-login' method='POST'>{$output}</form>";
-
-        extract(api());
-        include "login.php";
+        return "<form class='ui form segment form-login' method='POST'>{$output}</form>";
 
     }
 

@@ -125,19 +125,25 @@ class Route
 
     }
 
-    public function parent(Route $route)
+    public function parent($route)
     {
+        if( is_string($route)){
+            $route = api("router")->get($route);
+        }
+
+        if(!$route instanceof Route) throw new Exception("Invalid route ($route) cannot be added as parent");
+
         $this->parent = $route;
         $route->children[] = $this;
         return $this;
     }
 
-    public function addChild(Route $route)
-    {
-        $this->children[] = $route;
-        $route->parent = $this;
-        return $this;
-    }
+//    public function addChild(Route $route)
+//    {
+//        $this->children[] = $route;
+//        $route->parent = $this;
+//        return $this;
+//    }
 
 
     public function method($name)

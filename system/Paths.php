@@ -32,7 +32,7 @@ class Paths extends SimpleArray
         if (!is_null($value)) {
             if ($value[0] == '/' || (DIRECTORY_SEPARATOR != '/' && $value[1] == ':')) {
                 return $value;
-            } else {
+            } else if(substr( $value, 0, 4 ) !== "http"){
                 $value = $this->root . $value;
             }
         }
