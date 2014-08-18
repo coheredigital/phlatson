@@ -27,20 +27,25 @@ class Admin extends Extension
 
         api("admin", $this); // register api variable
 
+        // determine the admin route to use
+        // check for a route named admin, then a config variable 'adminUrl' then default
+        if (api("router")->get("admin")) {
+            $this->route = api("router")->get("admin");
+        }
+        else {
 
-        $this->route = api("router")->get("admin");
-//        $this->route->name("admin");
-////        $this->route->path("/" . api("config")->adminUrl);
-//        $this->route->path("/");
-//        $this->route->domain(api("config")->adminUrl .".xpages.dev");
-//        $this->route->prependCallback(
-//            function () {
-//                $adminLogin = "http://admin.xpages.dev/login";
-//                if (api("user")->isGuest() && api("request")->url != $adminLogin) {
-//                    api("session")->redirect($adminLogin);
-//                }
-//            }
-//        );
+            $adminUrl = api("config")->adminUrl ? api("config")->adminUrl : "admin";
+            $adminUrl = "/" . trim( $adminUrl , "/");
+
+            $this->route->name("admin");
+            $this->route->path($adminUrl);
+            $this->route->callback("Admin:render");
+
+            api('router')->add($this->route);
+        }
+
+        // add the admin URL to the config urls variable for easy access/reference
+        api("config")->urls->admin = $this->route->generate();
 
 
         $logoutRoute = new Route;
@@ -52,7 +57,7 @@ class Admin extends Extension
                 api("session")->redirect(api("config")->urls->admin);
             }
         );
-
+        api('router')->add($logoutRoute);
 
         $login = new Route;
         $login
@@ -64,7 +69,7 @@ class Admin extends Extension
                     $this->renderLogin();
                 }
             );
-
+        api('router')->add($login);
 
         $loginSubmit = new Route;
         $loginSubmit
@@ -75,7 +80,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
-                        api("session")->redirect( api("router")->get("admin")->generate() );
+                        api("session")->redirect(api("router")->get("admin")->generate());
                     } else {
                         // add error message
 
@@ -83,12 +88,11 @@ class Admin extends Extension
                     $this->renderLogin();
                 }
             );
-
-        // add the routes
-        api('router')->add($this->route);
-        api('router')->add($login);
         api('router')->add($loginSubmit);
-        api('router')->add($logoutRoute);
+
+
+
+
 
 
 
@@ -109,7 +113,8 @@ class Admin extends Extension
 
     public function render()
     {
-        $adminLogin = "http://admin.xpages.dev/login";
+        $loginRoute = api("router")->get("login");
+        $adminLogin = $loginRoute->generate();
         if (api("user")->isGuest() && api("request")->url != $adminLogin) {
             api("session")->redirect($adminLogin);
         }
@@ -117,8 +122,6 @@ class Admin extends Extension
         extract(api());
         include "layout.php";
     }
-
-
 
 
     public function renderLogin()

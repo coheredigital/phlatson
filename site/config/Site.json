@@ -4,7 +4,7 @@
     "timezone": "America/New_York",
     "debug": true,
     "adminUrl": "admin",
-
+    "hostname": "xpages.dev",
     "routes" : [
         {
             "name": "admin",

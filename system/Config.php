@@ -13,10 +13,10 @@ class Config extends Object
         $this->setupDirectories();
 
         // load site config
-        $this->getData("{$this->paths->config}Site.json");
+        $this->getData("{$this->paths->config}site.json");
 
         // add admin url for convenience
-        $this->urls->admin = $this->urls->root . $this->adminUrl;
+//        $this->urls->admin = $this->urls->root . $this->adminUrl;
 
         /*
          * Output errors if debug true, else disable error reporting

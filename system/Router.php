@@ -9,10 +9,18 @@
 class Router
 {
 
+    private $hostname;
+
+    // routes organize in multidimensional array
+    // $routes['hostname']['method']['path']
     private $routes = [];
     private $namedRoutes = [];
 
     public $errorCallback;
+
+    public function __construct($hostname){
+        $this->hostname = $hostname;
+    }
 
     /**
      * Defines callback if route is not found
@@ -25,8 +33,21 @@ class Router
 
     public function add(Route $route)
     {
-        $key = "{$route->method}{$route->url}";
-        $this->routes[$key] = $route;
+
+        $domain = $route->domain ? $route->domain : api("config")->hostname;
+        $method = $route->method;
+        $path = $route->path;
+
+        $key = [
+            "domain" => $domain,
+            "method" => $method,
+            "path" => $path
+        ];
+
+
+        $key = serialize($key);
+
+        $this->routes[$domain][$method][$path] = $route;
         if ($route->name) {
             $this->namedRoutes[$route->name] = $key;
         }
@@ -40,7 +61,11 @@ class Router
     {
         $found = false;
 
-        foreach ($this->routes as $route) {
+        // get the set to iterate based on the current request
+        $routeArray = $this->routes[$request->hostname][$request->method];
+
+
+        foreach ($routeArray as $route) {
             if ($route->match($request)) {
                 $found = true;
                 $route->execute();
@@ -70,12 +95,19 @@ class Router
      */
     public function get($name)
     {
+
+
+
+
+
         if (!isset($this->namedRoutes[$name])) {
             return false;
         }
 
         $key = $this->namedRoutes[$name];
-        return $this->routes[$key];
+        $key = json_decode(json_encode(unserialize($key)));
+        $route = $this->routes[$key->domain][$key->method][$key->path];
+        return $route;
     }
 
 

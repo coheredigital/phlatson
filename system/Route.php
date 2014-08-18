@@ -64,8 +64,24 @@ class Route
 
     public function domain($domain = null)
     {
-        $this->domain = $domain;
-        return $this;
+
+        if($domain){
+            $this->domain = $domain;
+            return $this;
+        }
+        else{
+
+            if ($this->domain) return $this->domain;
+            else if($this->parent){
+                return $this->parent->domain();
+            }
+            else{
+                return api("config")->hostname;
+            }
+
+        }
+
+
     }
 
     public function halt($halt = true)
@@ -161,10 +177,11 @@ class Route
             $pUrl = $this->parent->url();
             $url = $pUrl . $url;
         }
-
-        if ($this->domain) {
-            $url = $this->scheme . "://" . $this->domain . ltrim($url, "/");
+        else {
+            $url = $this->scheme . "://" . $this->domain() . ltrim($url, "/");
         }
+
+
 
         return $url;
     }
@@ -312,6 +329,8 @@ class Route
             case "name":
             case "method":
                 return $this->{$name};
+            case "domain":
+                return $this->domain();
             case "url":
                 return $this->url();
 

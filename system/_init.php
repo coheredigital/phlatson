@@ -7,9 +7,10 @@ require_once ROOT_PATH . 'system/_autoload.php';
 
 $api = new Api();
 
-api('request', new Request);
-api('router', new Router);
 api('config', new Config);
+
+api('request', new Request);
+api('router', new Router(api("config")->hostname) );
 
 // setup config routes
 foreach (api("config")->routes as $r){

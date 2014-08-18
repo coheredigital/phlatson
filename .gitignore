@@ -4,7 +4,7 @@
 #SUBLIME
 *.sublime-project
 *.sublime-workspace
-sftp-Site.json
+sftp-site.json
 
 #CMS Assets
 site/assets/sessions/*
