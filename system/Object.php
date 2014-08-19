@@ -133,7 +133,7 @@ abstract class Object
     protected function processSaveInput()
     {
 
-        $post = api("input")->post;
+        $post = api("request")->post;
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
         $fields = $this->template->fields;
@@ -161,7 +161,7 @@ abstract class Object
     protected function processSaveName()
     {
 
-        $post = api("input")->post;
+        $post = api("request")->post;
 
         if (!$this->isNew()) {
             $previousName = $this->name;

@@ -121,7 +121,7 @@ class AdminPageEdit extends Extension
 
         $this->object->save();
         api("session")->redirect(
-            api("input")->query
+            api("request")->url
         );
 
     }
