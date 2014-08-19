@@ -23,7 +23,7 @@ class AdminPagesList extends Extension
                 $this->render();
             }
         );
-        api("router")->add($pagesList);
+//        api("router")->add($pagesList);
 
     }
 

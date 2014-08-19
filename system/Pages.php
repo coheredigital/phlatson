@@ -29,7 +29,7 @@ class Pages extends Objects
             include $page->template->layout;
         }
         else{
-            echo "404?";
+            echo "Page not found! ($path)";
         }
     }
 

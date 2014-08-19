@@ -65,7 +65,7 @@ class Admin extends Extension
         $login
             ->path("login")
             ->parent($this->route)
-            ->halt()
+            ->halt(true)
             ->callback(
                 function () {
                     $this->renderLoginForm();
@@ -80,7 +80,7 @@ class Admin extends Extension
             ->name("login")
             ->method("POST")
             ->parent($this->route)
-            ->halt()
+            ->halt(true)
             ->callback(
                 function () {
                     if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
@@ -100,6 +100,8 @@ class Admin extends Extension
     public function render()
     {
 
+        $api = api();
+
         extract(api());
 
 
@@ -109,8 +111,13 @@ class Admin extends Extension
             include "login.php";
         }
         else if($user->isLoggedIn()){
-            if($request->url == $router->login->url) $session->redirect($router->admin->url . "pages");
-            if($request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
+
+            $adminUrl = $router->admin->url;
+
+            $loginUrl = $router->login->url;
+
+
+            if($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
             if ($this->output) include "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
         }
 

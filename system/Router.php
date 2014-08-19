@@ -18,7 +18,8 @@ class Router
 
     public $errorCallback;
 
-    public function __construct($hostname){
+    public function __construct($hostname)
+    {
         $this->hostname = $hostname;
     }
 
@@ -34,17 +35,16 @@ class Router
     public function add(Route $route)
     {
 
-        $domain = $route->domain ? $route->domain : api("config")->hostname;
+        $hostname = $route->hostname ? $route->hostname : api("config")->hostname;
         $method = $route->method;
         $path = $route->path;
 
 
-
-        $this->routes[$domain][$method][$path] = $route;
+        $this->routes[$hostname][$method][$path] = $route;
         if ($route->name) {
 
             $key = [
-                "domain" => $domain,
+                "hostname" => $hostname,
                 "method" => $method,
                 "path" => $path
             ];
@@ -62,21 +62,35 @@ class Router
     public function run($request)
     {
         $found = false;
+        $halt = false;
 
         // get the set to iterate based on the current request
         $routeArray = $this->routes[$request->hostname][$request->method];
 
 
         foreach ($routeArray as $route) {
+
             if ($route->match($request)) {
                 $found = true;
                 $route->execute();
+                if ($route->halt()) $halt = $route->halt();
             }
+            else if (count($route->children)) {
+                foreach ($route->children as $r) {
+                    if ($r->match($request)) {
+                        $found = true;
+                        $r->execute();
+                        if ($r->halt()) $halt = $r->halt();
+                    }
+                }
+            }
+
+            if($halt) break;
         }
 
 
         // run the error callback if the route was not found
-        if ($found == false) {
+        if ($found === false) {
             if (!$this->errorCallback) {
                 $this->errorCallback = function () {
                     header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found");
@@ -118,7 +132,7 @@ class Router
         $key = $this->namedRoutes[$name];
         $key = unserialize($key);
         $key = objectify($key);
-        $route = $this->routes[$key->domain][$key->method][$key->path];
+        $route = $this->routes[$key->hostname][$key->method][$key->path];
         return $route;
     }
 

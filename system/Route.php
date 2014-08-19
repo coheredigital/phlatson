@@ -19,7 +19,7 @@ class Route
     private $name;
     private $scheme = "http";
     private $path;
-    private $domain = false;
+    private $hostname = false;
 
     public $ssl = false;
 
@@ -43,8 +43,8 @@ class Route
         if ($parameters["method"]) {
             $this->method($parameters["method"]);
         }
-        if ($parameters["domain"]) {
-            $this->domain($parameters["domain"]);
+        if ($parameters["hostname"]) {
+            $this->hostname($parameters["hostname"]);
         }
         if ($parameters["path"]) {
             $this->path($parameters["path"]);
@@ -58,23 +58,26 @@ class Route
         if ($parameters["name"]) {
             $this->name($parameters["name"]);
         }
+        if ($parameters["halt"]) {
+            $this->halt($parameters["halt"]);
+        }
 
     }
 
 
-    public function domain($domain = null)
+    public function hostname($domain = null)
     {
 
         if ($domain) {
-            $this->domain = $domain;
+            $this->hostname = $domain;
             return $this;
         } else {
 
-            if ($this->domain) {
-                return $this->domain;
+            if ($this->hostname) {
+                return $this->hostname;
             } else {
                 if ($this->parent) {
-                    return $this->parent->domain();
+                    return $this->parent->hostname();
                 } else {
                     return api("config")->hostname;
                 }
@@ -85,10 +88,26 @@ class Route
 
     }
 
-    public function halt($halt = true)
+    public function halt($bool = null)
     {
-        $this->halt = $bool;
-        return $this;
+
+        if(!is_null($bool)){
+            $this->halt = $bool;
+            return $this;
+        }
+        else{
+
+            if($this->parent){
+                return $this->parent->halt();
+            }
+            else{
+                return $this->halt;
+            }
+
+
+        }
+
+
     }
 
     /**
@@ -124,6 +143,26 @@ class Route
         }
 
     }
+
+
+    private function url(array $parameters = [])
+    {
+
+        if (count($parameters)) {
+            // generate url, replace regex with parameters
+        } else { // return url without using parameters
+            $url = $this->path;
+            if ($this->parent instanceof Route) {
+                $url = trim($this->parent->url, "/") . "/" . trim($url, "/");
+            } else {
+                $path = trim($url, "/") ? "/" .  trim($url, "/") . "/" : "/";
+                $url = $this->scheme . "://" . trim($this->hostname(), "/") .$path;
+            }
+            return $url;
+        }
+
+    }
+
 
     public function parent($route)
     {
@@ -177,23 +216,6 @@ class Route
         return $this;
     }
 
-    private function url(array $parameters = [])
-    {
-
-        if (count($parameters)) {
-            // generate url, replace regex with parameters
-        } else { // return url without using parameters
-            $url = $this->path;
-            if ($this->parent instanceof Route) {
-                $url = trim($this->parent->url, "/") . "/" . trim($url, "/");
-            } else {
-                $url = $this->scheme . "://" . trim($this->domain(), "/") . "/" .  trim($url, "/") . "/";
-            }
-
-            return $url;
-        }
-
-    }
 
 
     /**
@@ -331,16 +353,21 @@ class Route
         switch ($name) {
             case "path":
                 return $this->path();
-            case "name":
-            case "method":
-                return $this->{$name};
-            case "domain":
-                return $this->domain();
+            case "hostname":
+                return $this->hostname();
             case "url":
                 return $this->url();
-
+            case "name":
+            case "method":
+            case "children":
+                return $this->{$name};
+            default:
+                return false;
         }
     }
+
+
+
 
 
 }

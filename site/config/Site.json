@@ -8,13 +8,13 @@
     "routes" : [
         {
             "name": "admin",
-            "domain": "admin.xpages.dev",
-            "path": "/",
-            "callback": "Admin:render"
+            "path": "/admin/",
+            "callback": "Admin:render",
+            "halt": true
         },
         {
             "name": "pages",
-            "domain": "xpages.dev",
+            "hostname": "xpages.dev",
             "path": ":all",
             "callback": "Pages:render"
         }
