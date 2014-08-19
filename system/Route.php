@@ -65,18 +65,19 @@ class Route
     public function domain($domain = null)
     {
 
-        if($domain){
+        if ($domain) {
             $this->domain = $domain;
             return $this;
-        }
-        else{
+        } else {
 
-            if ($this->domain) return $this->domain;
-            else if($this->parent){
-                return $this->parent->domain();
-            }
-            else{
-                return api("config")->hostname;
+            if ($this->domain) {
+                return $this->domain;
+            } else {
+                if ($this->parent) {
+                    return $this->parent->domain();
+                } else {
+                    return api("config")->hostname;
+                }
             }
 
         }
@@ -105,8 +106,7 @@ class Route
 
             $path = $this->path;
             if ($this->parent instanceof Route) {
-                $pUrl = $this->parent->path();
-                $path = $pUrl . $path;
+                $path = trim($this->parent->path, "/") . "/" . trim($path, "/");
             }
             return $path;
 
@@ -127,11 +127,13 @@ class Route
 
     public function parent($route)
     {
-        if( is_string($route)){
+        if (is_string($route)) {
             $route = api("router")->get($route);
         }
 
-        if(!$route instanceof Route) throw new Exception("Invalid route ($route) cannot be added as parent");
+        if (!$route instanceof Route) {
+            throw new Exception("Invalid route ($route) cannot be added as parent");
+        }
 
         $this->parent = $route;
         $route->children[] = $this;
@@ -175,29 +177,24 @@ class Route
         return $this;
     }
 
-    private function url()
+    private function url(array $parameters = [])
     {
 
-        $url = $this->path;
-        if ($this->parent instanceof Route) {
-            $pUrl = $this->parent->url();
-            $url = $pUrl . $url;
+        if (count($parameters)) {
+            // generate url, replace regex with parameters
+        } else { // return url without using parameters
+            $url = $this->path;
+            if ($this->parent instanceof Route) {
+                $url = trim($this->parent->url, "/") . "/" . trim($url, "/");
+            } else {
+                $url = $this->scheme . "://" . $this->domain() . trim($url, "/") . "/";
+            }
+
+            return $url;
         }
-        else {
-            $url = $this->scheme . "://" . $this->domain() . ltrim($url, "/");
-        }
 
-
-
-        return $url;
     }
 
-
-    public function generate($parameters=[])
-    {
-        $url = $this->url();
-        return $url;
-    }
 
     /**
      * @param $callback
@@ -314,7 +311,9 @@ class Route
                 call_user_func_array($callback, $this->parameters);
             }
 
-            if ( $this->halt) break;
+            if ($this->halt) {
+                break;
+            }
 
         }
     }

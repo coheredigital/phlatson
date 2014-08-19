@@ -45,7 +45,7 @@ class Admin extends Extension
         }
 
         // add the admin URL to the config urls variable for easy access/reference
-        api("config")->urls->admin = $this->route->generate();
+        api("config")->urls->admin = $this->route->url;
 
 
         $logoutRoute = new Route;
@@ -84,7 +84,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
-                        api("session")->redirect(api("router")->get("admin")->generate());
+                        api("session")->redirect(api("router")->get("admin")->url);
                     } else {
                         // add error message
 
@@ -102,15 +102,15 @@ class Admin extends Extension
 
         extract(api());
 
-        $adminLogin = $router->login->generate();
 
         if ($user->isGuest()) {
-            if($request->url != $adminLogin) $session->redirect($adminLogin);
+            if($request->url != $router->login->url) $session->redirect($adminLogin);
             $this->output = $this->renderLoginForm();
             include "login.php";
         }
         else if($user->isLoggedIn()){
-            if($request->url == $adminLogin) $session->redirect($router->admin->generate());
+            if($request->url == $router->login->url) $session->redirect($router->admin->url . "pages");
+            if($request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
             if ($this->output) include "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
         }
 

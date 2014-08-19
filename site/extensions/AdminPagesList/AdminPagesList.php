@@ -25,9 +25,6 @@ class AdminPagesList extends Extension
         );
         api("router")->add($pagesList);
 
-//        api("admin")->route->appendCallback();
-
-
     }
 
 

@@ -20,11 +20,9 @@ class MarkupPageList extends Extension
 
         $output .= $this->renderPageItemNew($page);
 
-        $output .= "<a class='ui button' target='_blank' href='{$page->url}'><i class='icon unhide'></i></a>";
+        $output .= "<a class='ui button' target='_blank' href='http://" . api("config")->hostname . "{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api(
-                'config'
-            )->urls->root . api('config')->adminUrl . "/pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api('config')->urls->admin . "pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= "</div>";
         $output .= "</div>";

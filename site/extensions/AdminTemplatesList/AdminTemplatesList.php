@@ -44,7 +44,7 @@ class AdminTemplatesList extends Extension
         foreach ($fieldsList as $item) {
             $table->addRow(
                 array(
-                    "name" => "<a href='{$config->urls->root}{$config->adminUrl}/templates/edit/{$item->name}' >{$item->name}</a>",
+                    "name" => "<a href='{$config->urls->admin}/templates/edit/{$item->name}' >{$item->name}</a>",
                     "label" => $item->label,
                     "fieldtype" => $item->type
                     // TODO : getting the formatted version of this causes an Exception to be thrown, look into this

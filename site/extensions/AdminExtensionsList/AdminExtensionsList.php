@@ -15,8 +15,6 @@ class AdminExtensionsList extends Extension
     protected function setup()
     {
 
-        $config = api("config");
-
         $extensionRoute = new Route;
         $extensionRoute
             ->path("extensions")
@@ -27,18 +25,8 @@ class AdminExtensionsList extends Extension
                 }
             );
 
-
         api('router')->add($extensionRoute);
 
-//        api('router')->add(
-//            new Route([
-//                "url" => "extensions",
-//                "parent" => api("router")->admin,
-//                "callback" => function () {
-//                        $this->render();
-//                    }
-//            ])
-//        );
     }
 
 
@@ -60,7 +48,7 @@ class AdminExtensionsList extends Extension
             foreach ($fieldsList as $item) {
                 $table->addRow(
                     array(
-                        "name" => "<a href='{$config->urls->root}{$config->adminUrl}/fields/edit/{$item->name}' >{$item->name}</a>",
+                        "name" => "<a href='{$config->urls->admin}/fields/edit/{$item->name}' >{$item->name}</a>",
                         "label" => $item->label,
                         "type" => $item->type
                         // TODO : getting the formatted version of this causes an Exception to be thrown, look into this

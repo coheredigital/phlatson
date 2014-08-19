@@ -9,9 +9,11 @@ class AdminPageEdit extends Extension
     public function setup()
     {
 
+        $adminRoute = api('admin')->route;
+
         $pageEdit = new Route;
         $pageEdit->path("/pages/edit:all")
-            ->parent(api('admin')->route)
+            ->parent($adminRoute)
             ->callback(
                 function ($url) {
                     $this->object = api("pages")->get($url);
@@ -23,7 +25,7 @@ class AdminPageEdit extends Extension
 
         $pageNew = new Route;
         $pageNew->path("/pages/new/:any/:all")
-            ->parent(api('admin')->route)
+            ->parent($adminRoute)
             ->callback(
                 function ($template, $parent) {
                     $this->object = new Page();
@@ -39,7 +41,7 @@ class AdminPageEdit extends Extension
         $saveRoute
             ->path("/pages/edit/:all")
             ->method("POST")
-            ->parent(api('admin')->route)
+            ->parent($adminRoute)
             ->callback(
                 function ($url) {
                     $page = api("pages")->get($url);
