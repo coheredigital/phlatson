@@ -104,7 +104,7 @@ class Admin extends Extension
 
 
         if ($user->isGuest()) {
-            if($request->url != $router->login->url) $session->redirect($adminLogin);
+            if($request->url != $router->login->url) $session->redirect($router->login->url);
             $this->output = $this->renderLoginForm();
             include "login.php";
         }
