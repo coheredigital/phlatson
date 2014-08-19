@@ -187,7 +187,7 @@ class Route
             if ($this->parent instanceof Route) {
                 $url = trim($this->parent->url, "/") . "/" . trim($url, "/");
             } else {
-                $url = $this->scheme . "://" . $this->domain() . trim($url, "/") . "/";
+                $url = $this->scheme . "://" . trim($this->domain(), "/") . "/" .  trim($url, "/") . "/";
             }
 
             return $url;
