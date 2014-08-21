@@ -1,0 +1,455 @@
+{
+  "id": "793a63c5",
+  "cfgVersion": 1,
+  "name": "Flatbed",
+  "files": {
+    "f8092a1b": {
+      "id": "f8092a1b",
+      "pid": "793a63c5",
+      "name": "jquery-sortable.js",
+      "input": "site\\extensions\\Admin\\scripts\\jquery-sortable.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "24a709b5": {
+      "id": "24a709b5",
+      "pid": "793a63c5",
+      "name": "main.js",
+      "input": "site\\extensions\\Admin\\scripts\\main.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "574017a7": {
+      "id": "574017a7",
+      "pid": "793a63c5",
+      "name": "admin.less",
+      "input": "site\\extensions\\Admin\\styles\\admin.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    },
+    "a332659c": {
+      "id": "a332659c",
+      "pid": "793a63c5",
+      "name": "jquery.datetimepicker.js",
+      "input": "site\\extensions\\FieldtypeDatetime\\datetimepicker\\jquery.datetimepicker.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "976941f8": {
+      "id": "976941f8",
+      "pid": "793a63c5",
+      "name": "README.md",
+      "input": "site\\extensions\\FieldtypeDatetime\\datetimepicker\\README.md",
+      "customOutput": false,
+      "type": "Md",
+      "config": {
+        "autoCompile": true,
+        "sanitize": false,
+        "gfm": true
+      }
+    },
+    "c85e3f58": {
+      "id": "c85e3f58",
+      "pid": "793a63c5",
+      "name": "FieldtypeDateTime.js",
+      "input": "site\\extensions\\FieldtypeDatetime\\FieldtypeDateTime.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "b3fedba7": {
+      "id": "b3fedba7",
+      "pid": "793a63c5",
+      "name": "FieldtypeFields.js",
+      "input": "site\\extensions\\FieldtypeFields\\FieldtypeFields.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4e1f56fe": {
+      "id": "4e1f56fe",
+      "pid": "793a63c5",
+      "name": "epiceditor.js",
+      "input": "site\\extensions\\FieldtypeMarkdown\\epiceditor\\js\\epiceditor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "92fc733f": {
+      "id": "92fc733f",
+      "pid": "793a63c5",
+      "name": "FieldtypeMarkdown.js",
+      "input": "site\\extensions\\FieldtypeMarkdown\\FieldtypeMarkdown.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "3270d73b": {
+      "id": "3270d73b",
+      "pid": "793a63c5",
+      "name": "dropzone.js",
+      "input": "site\\extensions\\FieldtypePageFiles\\dropzone.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "9f45fc9f": {
+      "id": "9f45fc9f",
+      "pid": "793a63c5",
+      "name": "FieldtypePageFiles.js",
+      "input": "site\\extensions\\FieldtypePageFiles\\FieldtypePageFiles.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "288e0ac5": {
+      "id": "288e0ac5",
+      "pid": "793a63c5",
+      "name": "FieldtypeRedactor.js",
+      "input": "site\\extensions\\FieldtypeRedactor\\FieldtypeRedactor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "fbbf37df": {
+      "id": "fbbf37df",
+      "pid": "793a63c5",
+      "name": "redactor.js",
+      "input": "site\\extensions\\FieldtypeRedactor\\redactor\\redactor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4fdfe0d2": {
+      "id": "4fdfe0d2",
+      "pid": "793a63c5",
+      "name": "FieldtypeSelect.js",
+      "input": "site\\extensions\\FieldtypeSelect\\FieldtypeSelect.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "700c609c": {
+      "id": "700c609c",
+      "pid": "793a63c5",
+      "name": "MarkupPageList.js",
+      "input": "site\\extensions\\MarkupPageList\\MarkupPageList.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "2e03cbd6": {
+      "id": "2e03cbd6",
+      "pid": "793a63c5",
+      "name": "login.less",
+      "input": "site\\extensions\\Admin\\styles\\login.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    }
+  },
+  "imports": {
+    "56357651": {
+      "id": "56357651",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\path.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "72cfdc52": {
+      "id": "72cfdc52",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\_variables.less",
+      "parents": [
+        "574017a7",
+        "2e03cbd6"
+      ]
+    },
+    "e2274c86": {
+      "id": "e2274c86",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\_normalize.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "32a2bce0": {
+      "id": "32a2bce0",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\font-awesome.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "a07fbd7b": {
+      "id": "a07fbd7b",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\variables.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "98f430a0": {
+      "id": "98f430a0",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\mixins.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "4a1bcaed": {
+      "id": "4a1bcaed",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\core.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "0bd3285b": {
+      "id": "0bd3285b",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\larger.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "3ba5c0ee": {
+      "id": "3ba5c0ee",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\fixed-width.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "5b6231ba": {
+      "id": "5b6231ba",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\list.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "e2f43869": {
+      "id": "e2f43869",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\bordered-pulled.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "8ddc705e": {
+      "id": "8ddc705e",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\spinning.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "286a98fb": {
+      "id": "286a98fb",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\rotated-flipped.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "4d1a8aec": {
+      "id": "4d1a8aec",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\stacked.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
+    "d3c221e8": {
+      "id": "d3c221e8",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\font-awesome\\icons.less",
+      "parents": [
+        "574017a7"
+      ]
+    }
+  },
+  "images": {
+    "279d440c": {
+      "id": "279d440c",
+      "pid": "793a63c5",
+      "path": "site\\pages\\03367_switzerlandvastness_1920x1080.jpg",
+      "size": 2255271,
+      "name": "03367_switzerlandvastness_1920x1080.jpg",
+      "type": "Jpg",
+      "initialSize": 2255271,
+      "status": "NOT_OPTIMIZED"
+    },
+    "b705fbf6": {
+      "id": "b705fbf6",
+      "pid": "793a63c5",
+      "path": "site\\pages\\03374_mthoodpainted_1920x1080.jpg",
+      "size": 1457734,
+      "name": "03374_mthoodpainted_1920x1080.jpg",
+      "type": "Jpg",
+      "initialSize": 1457734,
+      "status": "NOT_OPTIMIZED"
+    },
+    "b1060c04": {
+      "id": "b1060c04",
+      "pid": "793a63c5",
+      "path": "site\\pages\\03382_lakegeneva_1920x1080.jpg",
+      "size": 1228700,
+      "name": "03382_lakegeneva_1920x1080.jpg",
+      "type": "Jpg",
+      "initialSize": 1228700,
+      "status": "NOT_OPTIMIZED"
+    },
+    "011af716": {
+      "id": "011af716",
+      "pid": "793a63c5",
+      "path": "site\\pages\\03385_ibexatmtpilatus_1920x1080.jpg",
+      "size": 2534810,
+      "name": "03385_ibexatmtpilatus_1920x1080.jpg",
+      "type": "Jpg",
+      "initialSize": 2534810,
+      "status": "NOT_OPTIMIZED"
+    },
+    "fed3f352": {
+      "id": "fed3f352",
+      "pid": "793a63c5",
+      "path": "site\\pages\\1362028b-d313-4cfa-94c6-1ce4169b9ca3_6.jpg",
+      "size": 839347,
+      "name": "1362028b-d313-4cfa-94c6-1ce4169b9ca3_6.jpg",
+      "type": "Jpg",
+      "initialSize": 839347,
+      "status": "NOT_OPTIMIZED"
+    },
+    "80d1f34d": {
+      "id": "80d1f34d",
+      "pid": "793a63c5",
+      "path": "site\\pages\\zbKKh6a.jpg",
+      "size": 369483,
+      "name": "zbKKh6a.jpg",
+      "type": "Jpg",
+      "initialSize": 369483,
+      "status": "NOT_OPTIMIZED"
+    }
+  },
+  "config": {
+    "watch": true,
+    "liveRefresh": true,
+    "liveRefreshDelay": 0,
+    "filterPatterns": "",
+    "useCustomServer": true,
+    "customServerUrl": "http://xpages.dev/",
+    "cssPath": "",
+    "jsPath": "",
+    "htmlPath": "html/",
+    "minJsPath": "",
+    "htmlExtension": ".html",
+    "cssPathType": "SIDE_BY_FILE",
+    "htmlPathType": "REPLACE_TYPE",
+    "jsPathType": "SIDE_BY_FILE",
+    "minJsPathType": "RELATIVE_FILEDIR",
+    "htmlTypes": "jade, haml, slim, markdown, md",
+    "cssTypes": "less, sass, stylus, scss, styl",
+    "jsTypes": "coffee, coffeescript, coffeescripts, ls, livescript, livescripts",
+    "cssPreprocessorPath": "",
+    "htmlPreprocessorPath": "",
+    "jsPreprocessorPath": "",
+    "minJsPreprocessorPath": "",
+    "autoprefixerBrowsers": "",
+    "ftpHost": "",
+    "ftpPort": "21",
+    "ftpRemotePath": "",
+    "ftpIgnorePreprocessorFiles": true,
+    "ftpType": "FTP",
+    "ftpExcludePatterns": "",
+    "ftpSecure": false,
+    "ftpPassword": "",
+    "ftpUsername": ""
+  }
+}

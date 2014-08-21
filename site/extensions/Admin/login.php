@@ -28,7 +28,25 @@ $config->styles->append("{$admin->url}styles/font-awesome-4.1.0/css/font-awesome
 </head>
 <body>
 <div id="main">
-    <?php echo $this->output ?>
+    <form class='ui form segment form-login' method='POST'>
+        <div class='field'>
+            <label><i class='icon icon-user '></i></label>
+            <div class='ui left labeled icon input'>
+                <input name='username' type='text' autocomplete='off' placeholder='Username'>
+
+            </div>
+        </div>
+
+        <div class='field'>
+            <label><i class='icon icon-lock '></i></label>
+            <div class='ui left labeled icon input'>
+                <input name='password' type='password' placeholder='Password'>
+            </div>
+        </div>
+        <button type='submit' class='ui button green fluid'>Login</button>
+    </form>
+
+
 </div>
 <?php foreach ($config->scripts as $file) {
     echo "<script src='{$file}'></script>";

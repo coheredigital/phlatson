@@ -1,18 +1,65 @@
+
+# Prevent file browsing
+Options -Indexes
+Options +FollowSymLinks
+# Options +SymLinksifOwnerMatch
+
+# Flatbed will handle 404s
+ErrorDocument 404 /index.php
+
+<Files favicon.ico>
+  ErrorDocument 404 "The requested file favicon.ico was not found.
+</Files>
+
+<Files robots.txt>
+  ErrorDocument 404 "The requested file robots.txt was not found.
+</Files>
+
+# Default directory index
+DirectoryIndex index.php index.html index.htm
+
+# mod_rewrite is required
 <IfModule mod_rewrite.c>
+
 	RewriteEngine On
-	#RewriteBase /
+	AddDefaultCharset UTF-8
+
+	# RewriteBase /
+
+
+    # Access Restrictions
+
+    # Block access to any htaccess files
+    RewriteCond %{REQUEST_URI} (^|/)\.htaccess$ [NC,OR]
+    # Block access to data directories
+    RewriteCond %{REQUEST_URI} (^|/)site/(pages|fields|templates|config|users)($|/.*$) [OR]
+    # Block access to any PHP files in /site/layouts/
+    RewriteCond %{REQUEST_URI} (^|/)site/layouts($|/|/.*\.php)$ [OR]
+    # Block access to any PHP files in site
+    RewriteCond %{REQUEST_URI} (^|/)site/.*\.(php|inc|html|html|tpl|module)$ [OR]
+    # Block access to system directory
+    RewriteCond %{REQUEST_URI} (^|/)system($|/.*$) [OR]
+    # Block access to any software identifying txt files
+    RewriteCond %{REQUEST_URI} (^|/)(COPYRIGHT|README|htaccess)\.(txt|md)$
+    # If any conditions above match, isssue a 403 forbidden
+    RewriteRule ^.*$ - [F,L]
+
+    RewriteCond %{REQUEST_URI} "^/~?[-_.a-zA-Z0-9/]*$"
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !(favicon\.ico|robots\.txt)
 
-    #RewriteRule [^/]$ %{REQUEST_URI}/ [L,R]
-	RewriteRule ^(.+)$ index.php?_uri=$1 [L,QSA]
+    # don't send missing image request through Flatbed
+    RewriteCond %{REQUEST_URI} !\.(gif|jpg|png|ico)$ [NC]
+
+    # pass request to Flatbed (use the seconf rule here instead if using VirtualDocumentRoot)
+	# RewriteRule ^(.*)$ index.php?_uri=$1 [L,QSA]
+    RewriteRule ^(.*)$ /index.php?_uri=$1 [L,QSA]
 
 </IfModule>
 
-# Prevent file browsing
-Options -Indexes +FollowSymLinks
+
 
 # file handling
 php_value upload_max_filesize 10M

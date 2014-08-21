@@ -61,33 +61,24 @@ class Admin extends Extension
 
         $login = new Route;
         $login
+            ->name("login")
             ->path("login")
-            ->parent($this->route)
-            ->halt(true)
-            ->callback(
-                function () {
-                    $this->renderLoginForm();
-                }
-            );
+            ->parent($this->route);
         api('router')->add($login);
 
 
         $loginSubmit = new Route;
         $loginSubmit
             ->path("login")
-            ->name("login")
             ->method("POST")
             ->parent($this->route)
-            ->halt(true)
             ->callback(
                 function () {
                     if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
                         api("session")->redirect(api("router")->get("admin")->url);
                     } else {
                         // add error message
-
                     }
-                    $this->renderLoginForm();
                 }
             );
         api('router')->add($loginSubmit);
@@ -98,23 +89,16 @@ class Admin extends Extension
     public function render()
     {
 
-        $api = api();
-
         extract(api());
 
-
         if ($user->isGuest()) {
+
             if($request->url != $router->login->url) $session->redirect($router->login->url);
-            $this->output = $this->renderLoginForm();
-            include "login.php";
+            // add the login stylesheet and load the login layout
+            api("config")->styles->add("{$this->url}styles/login.css");
+            include "login.php"; // TODO : include_once used because this was also getting called twice
         }
         else if($user->isLoggedIn()){
-
-            $adminUrl = $router->admin->url;
-
-            $loginUrl = $router->login->url;
-
-
             if($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
             if ($this->output) include "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
         }
@@ -122,36 +106,6 @@ class Admin extends Extension
     }
 
 
-    public function renderLoginForm()
-    {
-        api("config")->styles->add("{$this->url}login.css");
-        $this->title = "Login";
 
-        $output .= "<div class='field'>
-                    <label>Username</label>
-                    <div class='ui left labeled icon input'>
-                      <input name='username' type='text' placeholder='Username'>
-                      <i class='user icon'></i>
-                      <div class='ui corner label'>
-                        <i class='icon asterisk'></i>
-                      </div>
-                    </div>
-                  </div>";
-
-        $output .= "<div class='field'>
-                    <label>Password</label>
-                    <div class='ui left labeled icon input'>
-                      <input name='password' type='password' placeholder='Password'>
-                      <i class='user icon'></i>
-                      <div class='ui corner label'>
-                        <i class='icon asterisk'></i>
-                      </div>
-                    </div>
-                  </div>";
-
-        $output .= "<button type='submit' class='ui button green fluid'>Login</button>";
-        return "<form class='ui form segment form-login' method='POST'>{$output}</form>";
-
-    }
 
 } 

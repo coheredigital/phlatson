@@ -27,4 +27,12 @@ api('templates', new Templates);
 api('session', new Session);
 
 // execute the app
-api('router')->run(api('request'));
+
+try {
+    api('router')->run(api('request'));
+} catch(Exception $e) {
+
+    $message = "Exception: " . $e->getMessage() . " (in " . $e->getFile() . " line " . $e->getLine() . ")";
+    if( api("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
+    echo $message;
+}
