@@ -80,7 +80,7 @@ abstract class Fieldtype extends Extension
         $input = $this->renderInput();
 
         $output = "<div class='column wide'>";
-        $output .= "<div class='field'>";
+        $output .= "<div class='field field-" . $this->attribute("name") . " $this->name'>";
         if ($this->label) {
 
             $output .= "<label for='" . $this->attribute("name") . "'>";
