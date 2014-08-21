@@ -34,7 +34,6 @@ class Route
 
     private $patterns = array(
         ':any' => '([^/]+)',
-        ':num' => '([0-9]+)',
         ':all' => '(.*)'
     );
 
@@ -153,7 +152,7 @@ class Route
         } else { // return url without using parameters
             $url = $this->path;
             if ($this->parent instanceof Route) {
-                $url = trim($this->parent->url, "/") . "/" . trim($url, "/");
+                $url = trim($this->parent->url, "/") . "/" . trim($url, "/") . "/" ;
             } else {
                 $path = trim($url, "/") ? "/" .  trim($url, "/") . "/" : "/";
                 $url = $this->scheme . "://" . trim($this->hostname(), "/") .$path;
@@ -262,9 +261,7 @@ class Route
     public function match($request)
     {
 
-        $path = $this->path();
         $url = $this->url();
-
 
         // check exact match to url
         if ($url == $request->url) {
@@ -276,15 +273,14 @@ class Route
             return false;
         }
 
-        $searches = array_keys($this->patterns);
-        $replaces = array_values($this->patterns);
 
-
-        if (strpos($path, ':') !== false) {
-            $path = str_replace($searches, $replaces, $path);
+        if (strpos($url, ':') !== false) {
+            $searches = array_keys($this->patterns);
+            $replaces = array_values($this->patterns);
+            $url = str_replace($searches, $replaces, $url);
         }
 
-        if (preg_match("#^" . $path . "$#", $request->path, $matched)) {
+        if (preg_match("#^" . $url . "$#", $request->url, $matched)) {
             array_shift($matched); //remove $matched[0] as [1] is the first parameter.
             $this->parameters = $matched;
             return true;

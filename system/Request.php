@@ -31,12 +31,12 @@ class Request
         $this->scheme =  $_SERVER["REQUEST_SCHEME"];
         $this->hostname =  $_SERVER["HTTP_HOST"];
         $this->domain = $this->hostname;
-        $this->uri =  $_SERVER["REQUEST_URI"];
+        $this->uri =  "/" . trim($_SERVER["REQUEST_URI"], "/") . "/";
 
         $this->url = $this->scheme . "://" . $this->hostname . $this->uri;
 
         // get url path from root of request
-        $this->path = isset($_GET['_uri']) ? "/" . $_GET['_uri'] : "/";
+        $this->path = isset($_GET['_uri']) ? "/" . trim($_GET['_uri'], "/") . "/" : "/";
         unset($_GET['_uri']); // unset URI so it doesn't get included in $input->get array and can't be accessed later
 
 

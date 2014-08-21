@@ -15,16 +15,16 @@ class MarkupPageList extends Extension
 
     public function renderPageTitle(Page $page)
     {
-        $output .= "<div class='page-tree-item ui segment'>";
-        $output .= "<div class='tiny icon ui buttons right floated'>";
+        $output .= "<div class='page-tree-item'>";
+        $output .= "<div class='float-right'>";
 
         $output .= $this->renderPageItemNew($page);
+        $output .= "<i class='icon icon-circle'></i> <a class='page-tree-item-edit' href='" . api('config')->urls->admin . "pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
 
-        $output .= "<a class='ui button' target='_blank' href='http://" . api("config")->hostname . "{$page->url}'><i class='icon unhide'></i></a>";
         $output .= "</div>";
-        $output .= "<i class='icon reorder'></i><a class='page-item-edit-link' href='" . api('config')->urls->admin . "pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
-        $output .= "<div class='page-tree-item-buttons'>";
-        $output .= "</div>";
+//        $output .= "<div class='page-tree-item-buttons'>";
+//        $output .= "<a class='button' target='_blank' href='http://" . api("config")->hostname . "{$page->url}'><i class='icon icon-unhide'></i></a>";
+//        $output .= "</div>";
         $output .= "</div>";
         return $output;
     }
@@ -58,7 +58,7 @@ class MarkupPageList extends Extension
 
         if (count($templates) > 1) {
 
-            $output = '<div class="ui right pointing dropdown icon button">';
+            $output = '<div class="right pointing dropdown icon icon-button">';
             $output .= '<i class="plus icon"></i>';
             $output .= '<div class="menu">';
 
@@ -75,9 +75,9 @@ class MarkupPageList extends Extension
         } else {
             if (count($templates)) {
 
-                $output = "<a class='ui button' href='" . api('config')->urls->root . api(
+                $output = "<a class='button' href='" . api('config')->urls->root . api(
                         "config"
-                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon plus'></i></a>";
+                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon icon-plus'></i></a>";
                 return $output;
             }
         }

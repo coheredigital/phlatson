@@ -64,11 +64,14 @@ class FieldtypeFields extends Fieldtype
         api('config')->scripts->add($this->url . "{$this->className}.js");
 
         $fields = api("fields")->all();
-        $fieldsSelect = api("extensions")->get("FieldtypeSelect");
 
-        $fieldsSelect->setOptions($fields);
+        $fieldsSelect = "";
+        foreach ($fields as $f) {
+            $fieldsSelect .= "<option value='$f->name'>$f->name</option>";
+        }
 
-        $fieldAdd = $fieldsSelect->render();
+
+        $fieldAdd = "<select>{$fieldsSelect}</select>";
 
         if ($this->value) {
             foreach ($this->value as $field) {

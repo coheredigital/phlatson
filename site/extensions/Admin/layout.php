@@ -24,24 +24,24 @@ if ($user->isGuest()) {
 <body>
 <div id="header">
     <div class="container">
-        <div class="ui menu">
+        <div class="ui menu main-menu">
             <a class="item" href="<?php echo $config->urls->admin ?>pages">Pages</a>
             <a class="item" href="<?php echo $config->urls->admin ?>fields">Fields</a>
             <a class="item" href="<?php echo $config->urls->admin ?>templates">Templates</a>
             <a class="item" href="<?php echo $config->urls->admin ?>extensions">Extensions</a>
             <a class="item" href="<?php echo $config->urls->admin ?>settings">Settings</a>
 
-            <div class="right menu">
-                <div class="ui dropdown item">
-                    <i class="icon user"></i> <?php echo $user->name ?> <i class="icon dropdown"></i>
-
-                    <div class="menu">
-                        <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                        <a href="<?php echo $router->logout->url ?>" class="item"><i
-                                class="settings icon"></i> Logout</a>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="right menu">-->
+<!--                <div class="ui dropdown item">-->
+<!--                    <i class="icon user"></i> --><?php //echo $user->name ?><!-- <i class="icon dropdown"></i>-->
+<!---->
+<!--                    <div class="menu">-->
+<!--                        <a class="item"><i class="edit icon"></i> Edit Profile</a>-->
+<!--                        <a href="--><?php //echo $router->logout->url ?><!--" class="item"><i-->
+<!--                                class="settings icon"></i> Logout</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
     <div class="container">

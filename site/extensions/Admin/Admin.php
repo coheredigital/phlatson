@@ -17,13 +17,11 @@ class Admin extends Extension
     {
 
         // default admin scripts and styles
-        api("config")->styles->add("{$this->url}styles/adminTheme.css");
-        api("config")->styles->add("{$this->url}styles/semantic.min.css");
-        api("config")->styles->append("{$this->url}styles/font-awesome-4.1.0/css/font-awesome.css");
-        api("config")->scripts->prepend("{$this->url}scripts/semantic.min.js");
-        api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
+
+        api("config")->styles->add("{$this->url}styles/admin.css");
         api("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
-        api("config")->scripts->add("{$this->url}scripts/init.js");
+        api("config")->scripts->add("{$this->url}scripts/main.js");
+        api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
         api("admin", $this); // register api variable
 

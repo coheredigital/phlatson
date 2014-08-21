@@ -1,12 +1,12 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-
-	RewriteBase /
+	#RewriteBase /
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !(favicon\.ico|robots\.txt)
 
+    #RewriteRule [^/]$ %{REQUEST_URI}/ [L,R]
 	RewriteRule ^(.+)$ index.php?_uri=$1 [L,QSA]
 
 </IfModule>

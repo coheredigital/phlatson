@@ -2,6 +2,18 @@
     position: relative;
 }
 
+.FieldtypePageFiles-dragndrop{
+    padding: 1em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.FieldtypePageFiles-dragndrop .sub.header{
+    font-size : 0.8em;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: normal;
+}
 .ui.progress.dz-progress {
     border: none;
     padding: 0;

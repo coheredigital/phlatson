@@ -83,7 +83,7 @@ abstract class Fieldtype extends Extension
         $output .= "<div class='field'>";
         if ($this->label) {
 
-            $output .= "<label for=''>";
+            $output .= "<label for='" . $this->attribute("name") . "'>";
             $output .= $this->label ? $this->label : $this->attribute("name");
             $output .= "</label>";
 
@@ -100,7 +100,7 @@ abstract class Fieldtype extends Extension
     {
         $value = $this->value;
         $attributes = $this->getAttributes();
-        $output = "<input {$attributes} type='text' name='{$this->name}' value='{$value}'>";
+        $output = "<input {$attributes} type='text' value='{$value}'>";
         return $output;
     }
 

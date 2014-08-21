@@ -1,14 +1,24 @@
 .redactor_box {
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: .3125em;
+    border: none;
+    border-radius: 0;
     overflow: hidden;
 }
 
+.redactor_toolbar {
+    box-shadow: none;
+    border-bottom: 1px dashed #ddd;
+}
 .redactor_toolbar li a {
     padding: 0.85em;
+}.redactor_toolbar li a:hover {
+     background: #738ed3;
+}
+.redactor_editor{
+    border: none;
 }
 
 .redactor_input {
     width: 100%;
     box-sizing: border-box;
 }
+
