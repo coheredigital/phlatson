@@ -121,7 +121,7 @@ class Page extends Object
     {
         switch ($name) {
             case 'directory':
-                $directory = trim(implode("/", $this->route), "/");
+                $directory = implode("/", $this->route);
                 return normalizeDirectory($directory);
             case 'url':
                 return api('config')->urls->root . ltrim($this->directory, "/");
