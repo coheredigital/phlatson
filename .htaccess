@@ -32,7 +32,9 @@ DirectoryIndex index.php index.html index.htm
     # Block access to any htaccess files
     RewriteCond %{REQUEST_URI} (^|/)\.htaccess$ [NC,OR]
     # Block access to data directories
-    RewriteCond %{REQUEST_URI} (^|/)site/(pages|fields|templates|config|users)($|/.*$) [OR]
+    RewriteCond %{REQUEST_URI} (^|/)site/(fields|templates|config|users)($|/.*$) [OR]
+    # Block access to page JSON data files
+    RewriteCond %{REQUEST_URI} (^|/)site/.*\.(json)$ [OR]
     # Block access to any PHP files in /site/layouts/
     RewriteCond %{REQUEST_URI} (^|/)site/layouts($|/|/.*\.php)$ [OR]
     # Block access to any PHP files in site
