@@ -379,6 +379,40 @@
         "mangle": true,
         "sourcemaps": false
       }
+    },
+    "60a302d7": {
+      "id": "60a302d7",
+      "pid": "793a63c5",
+      "name": "lesshat-prefixed.less",
+      "input": "site\\extensions\\Admin\\styles\\lesshat-prefixed.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    },
+    "d90b6970": {
+      "id": "d90b6970",
+      "pid": "793a63c5",
+      "name": "lesshat.less",
+      "input": "site\\extensions\\Admin\\styles\\lesshat.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
     }
   },
   "imports": {

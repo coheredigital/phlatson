@@ -13,12 +13,12 @@ class FieldtypePageFiles extends Fieldtype
     protected function renderInput()
     {
 
-        $output .= "<div class='ui divided list dropzone-previews' id='PageFilesList'>";
+        $output .= "<div class='file-list dropzone-previews' id='PageFilesList'>";
 
         foreach ($this->object->files as $file) {
             $output .= "<div class='item'>";
             if ($file instanceof Image) {
-                $output .= "<img  class='ui image' src='{$file->url}' height='32' width='32' data-dz-thumbnail>";
+                $output .= "<img  class='thumbnail' src='{$file->url}' height='64' width='64' data-dz-thumbnail>";
             } else {
                 $output .= "<div class='FiletypeIcon FiletypeIcon-{$file->extension}'><div class='FiletypeIcon-label'>{$file->extension}</div></div>";
             }
@@ -32,12 +32,9 @@ class FieldtypePageFiles extends Fieldtype
         }
         $output .= "</div>";
         $output .= "<div action='./?name=" . api("input")->get->name . "' class='' id='files'></div>";
-        $output .= "<div class='ui segment {$this->name}-dragndrop dz-clickable dropzone'>";
-        $output .= "<span class='ui header'><i class='big cloud upload icon'></i> <span class='content'>Drag &amp; drop files here";
+        $output .= "<div class='{$this->name}-dragndrop dz-clickable dropzone'>";
+        $output .= "<i class='big cloud upload icon'></i>Drag &amp; drop files here";
         $output .= '<div class="sub header">or click to choose files</div>';
-        $output .= "</span>";
-        $output .= "</span>";
-
         $output .= "</div>";
         return $output;
     }
