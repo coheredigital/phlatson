@@ -1,7 +1,7 @@
 $(function () {
 
     var $field = $(".field");
-    var $fieldInput = $field.children("input,select,textarea");
+    var $fieldInput = $field.find("input,select,textarea");
 
     $fieldInput.focus(function(){
 
@@ -16,3 +16,13 @@ $(function () {
     });
 
 });
+
+var tabber = new HashTabber(options = {
+    classActive: 'active',
+    classData: 'tabs',
+    classNav: 'menu-tabs',
+    dataDefault: 'data-tabs-default',
+    dataId: 'data-tabs-id',
+    dataPair: 'data-tabs-pair',
+});
+tabber.run();

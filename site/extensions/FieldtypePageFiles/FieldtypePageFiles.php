@@ -10,20 +10,6 @@ class FieldtypePageFiles extends Fieldtype
         api("config")->styles->add($this->url . $this->className . ".css");
     }
 
-    public function render()
-    {
-
-        $input = $this->renderInput();
-
-        $output = "<div class='column $this->columns wide'>";
-        $output .= "<div class='field'>";
-        $output .= $input;
-        $output .= "</div>";
-        $output .= "</div>";
-        return $output;
-
-    }
-
     protected function renderInput()
     {
 
@@ -36,7 +22,7 @@ class FieldtypePageFiles extends Fieldtype
             } else {
                 $output .= "<div class='FiletypeIcon FiletypeIcon-{$file->extension}'><div class='FiletypeIcon-label'>{$file->extension}</div></div>";
             }
-            $output .= "<div class='right floated red ui icon button'><i class='trash icon'></i></div>";
+//            $output .= "<div class='right floated red ui icon button'><i class='trash icon'></i></div>";
             $output .= "<div class='content'>";
             $output .= "<div class='header'>{$file->name}</div>";
             $output .= "<div class='description'>{$file->filesizeFormatted}</div>";

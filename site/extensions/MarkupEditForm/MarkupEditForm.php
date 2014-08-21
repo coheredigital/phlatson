@@ -28,11 +28,11 @@ class MarkupEditForm extends Extension
             if (is_object($element)) {
                 $class = $tabCount == 1 ? "active" : "";
                 $colCount += $element->columns;
-                $formTabMenu .= "<a class='item tab-item {$class}' data-tab='{$element->id}'>$element->label</a>";
+                $formTabMenu .= "<li class='item'><a class='{$class}' data-tab='{$element->id}'>$element->label</a></li>";
 
             }
         }
-        $formTabMenu = "<div class='ui top attached tabular menu'>{$formTabMenu}</div>";
+        $formTabMenu = "<ol data-tabs-id='section' class='menu menu-tabs'>{$formTabMenu}</ol>";
 
         $tabCount = 0;
         foreach ($this->tabs as $element) {
@@ -47,7 +47,7 @@ class MarkupEditForm extends Extension
 
             }
         }
-        $formTabContent = "<div class='ui segment MarkupFormTab'><div class='container'>{$formTabContent}</div></div>";
+        $formTabContent = "<div class='container'><ol data-tabs-id='section' class='tabs'>{$formTabContent}</ol></div>";
 
 
         // add the form controls

@@ -15,8 +15,8 @@ body {
 
 h1{
   color: #fff;
-  padding: 0;
-
+  padding: 1em 0;
+  margin: 0;
   line-height: 1em;
 }
 
@@ -29,17 +29,18 @@ a{
   }
 }
 
+button,
 select,
 textarea,
 input{
+  outline: none;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   padding: 0.6em;
   box-sizing: border-box;
   font-size: 1em;
   background: #fff;
   border: 1px solid @light-gray;
-  width: 100%;
-  margin-bottom: -1px;
+  resize: none;
   &:focus{
     border-bottom-color: @green;
   }
@@ -47,7 +48,7 @@ input{
 
 
 .container{
-  padding: 1em;
+  padding: 0 1em;
   box-sizing: border-box;
   max-width: 100%;
   width: 700px;
@@ -55,28 +56,22 @@ input{
 }
 
 .menu{
-  a{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  .item{
     display: inline-block;
     cursor: pointer;
-    padding: 1em;
+    padding: 0.8em 1em;
     text-transform: uppercase;
     text-decoration: none;
   }
-}
-
-.tab{
-  display: none;
-  &.active{
-    display: block;
-  }
-}
-
-
-.menu.tabular{
   a{
-    color: #fff;
+    text-decoration: none !important;
   }
 }
+
+
 
 .dropdown{
   display: none !important;
@@ -96,6 +91,106 @@ input{
   }
 }
 
+
+
+/**
+
+Buttons
+
+**/
+
+.button{
+  border-radius: 2em;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  padding: 0.6em 1.5em;
+  background: @green;
+  font-weight: normal;
+  color: #fff !important;
+  text-decoration: none;
+  line-height: 1em;
+  display: inline-block;
+  font-size: 1em;
+  &:hover{
+    background: darken(@green, 20%);
+
+  }
+  .icon{
+    color: #fff;
+  }
+}
+
+
+/**
+
+Tabs
+
+**/
+
+
+
+.menu-tabs{
+  a{
+    color: #fff;
+  }
+  .item{
+    &.active{
+      background: @soft-gray;
+      a{
+        color: @gray;
+      }
+    }
+  }
+}
+
+.tabs{
+  padding: 0;
+  list-style: none;
+}
+
+.tab{
+  display: none;
+  &.active{
+    display: block;
+  }
+}
+
+/**
+
+Tables
+
+**/
+
+.table{
+  width: 100%;
+  border: 1px solid @light-gray;
+  background: #fff;
+  margin-top: 1em;
+  tr{
+
+  }
+  th,
+  td{
+    padding: 0.4em;
+    text-align: left;
+    border-bottom: 1px solid @light-gray;
+    border-left: 1px solid @soft-gray;
+    &:first-child{
+      border-left: none !important;
+    }
+  }
+  th{
+    color: @gray;
+    font-weight: normal;
+  }
+  td{
+    border-bottom: 1px solid @soft-gray;
+
+
+  }
+}
+
 /**
 
 Fields
@@ -105,15 +200,19 @@ Fields
 .field{
   border: 1px solid #ddd;
   position: relative;
-  margin-top: 1em;
+  margin-top: 2em;
   background: #fff;
 
   label{
     display: block;
     position: absolute;
-    padding: 0.7em;
+//    padding: 0;
     z-index: 1000;
-    right: 0;
+    right: 0.7em;
+    top: 0.7em;
+
+    //    left: 0;
+//    top: -1.4em;
     line-height: 1em;
     font-weight: bold;
     color: #aaa;
@@ -123,20 +222,21 @@ Fields
     color: @gray;
   }
   select,
+  textarea,
   input{
     padding: 1em;
     margin: 0;
     box-sizing: border-box;
     display: block;
     border: none;
-    outline: none;
+
 
     font-size: 1em;
     background: transparent;
     border-bottom: 1px solid transparent;
     width: 100%;
     margin-bottom: -1px;
-    opacity: 0.2;
+//    opacity: 0.2;
     &:focus{
       border-bottom-color: @green;
     }
@@ -146,8 +246,9 @@ Fields
       opacity: .2;
     }
     select,
+    textarea,
     input{
-      opacity: 1;
+//      opacity: 1;
       border-bottom-color: @green;
 
     }
@@ -203,69 +304,3 @@ PageTree
   text-decoration: none;
 }
 
-
-
-/**
-
-Buttons
-
-**/
-
-
-.button{
-  border-radius: 2em;
-  cursor: pointer;
-  border: none;
-  text-transform: uppercase;
-  padding: 0.6em 1.5em;
-  background: @green;
-  font-weight: normal;
-  color: #fff !important;
-  text-decoration: none;
-  line-height: 1em;
-  display: inline-block;
-  font-size: 1em;
-  &:hover{
-    background: darken(@green, 20%);
-
-  }
-  .icon{
-    color: #fff;
-  }
-}
-
-
-/**
-
-Tables
-
-**/
-
-.table{
-  width: 100%;
-  border: 1px solid @light-gray;
-  background: #fff;
-  margin-top: 1em;
-  tr{
-
-  }
-  th,
-  td{
-    padding: 0.4em;
-    text-align: left;
-    border-bottom: 1px solid @light-gray;
-    border-left: 1px solid @soft-gray;
-    &:first-child{
-      border-left: none !important;
-    }
-  }
-  th{
-    color: @gray;
-    font-weight: normal;
-  }
-  td{
-    border-bottom: 1px solid @soft-gray;
-
-
-  }
-}

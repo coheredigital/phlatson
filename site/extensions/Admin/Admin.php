@@ -20,6 +20,7 @@ class Admin extends Extension
 
         api("config")->styles->add("{$this->url}styles/admin.css");
         api("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
+        api("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
         api("config")->scripts->add("{$this->url}scripts/main.js");
         api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
@@ -96,11 +97,11 @@ class Admin extends Extension
             if($request->url != $router->login->url) $session->redirect($router->login->url);
             // add the login stylesheet and load the login layout
             api("config")->styles->add("{$this->url}styles/login.css");
-            include "login.php"; // TODO : include_once used because this was also getting called twice
+            include_once "login.php"; // TODO : include_once used because this was also getting called twice
         }
         else if($user->isLoggedIn()){
             if($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
-            if ($this->output) include "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
+            if ($this->output) include_once "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
         }
 
     }

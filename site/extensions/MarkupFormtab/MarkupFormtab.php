@@ -21,15 +21,13 @@ class MarkupFormtab extends Extension
     {
 
         $fields = "";
-        $class = $active ? "active" : "";
         foreach ($this->fields as $field) {
-
             if (is_object($field)) {
                 $fields .= $field->render();
             }
         }
 
-        $output = "<div class='{$this->className} ui tab {$class}' data-tab='{$this->id}'>{$label}{$fields}{$submit}</div>";
+        $output = "<li class='{$this->className} tab' data-tab='{$this->id}'>{$label}{$fields}{$submit}</li>";
         return $output;
 
 

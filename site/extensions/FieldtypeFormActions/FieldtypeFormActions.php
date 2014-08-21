@@ -7,6 +7,9 @@ class FieldtypeFormActions extends Fieldtype
 
     public function render()
     {
+
+        api("config")->styles->append("{$this->url}{$this->name}.css");
+
         $output = "<div class='container'>";
         $output .= "<div class='$this->className'>";
         $output .= "<button type='submit' class='button'><i class='icon icon-save'></i> Save </button> ";

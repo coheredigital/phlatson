@@ -231,6 +231,154 @@
         "strictUnits": false,
         "autoprefixer": true
       }
+    },
+    "2f675d92": {
+      "id": "2f675d92",
+      "pid": "793a63c5",
+      "name": "README.md",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\README.md",
+      "customOutput": false,
+      "type": "Md",
+      "config": {
+        "autoCompile": true,
+        "sanitize": false,
+        "gfm": true
+      }
+    },
+    "cfb548b8": {
+      "id": "cfb548b8",
+      "pid": "793a63c5",
+      "name": "script.js",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\js\\script.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4b390bb3": {
+      "id": "4b390bb3",
+      "pid": "793a63c5",
+      "name": "hashTabber.js",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\js\\libraries\\hashTabber.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "770b8028": {
+      "id": "770b8028",
+      "pid": "793a63c5",
+      "name": "main.scss",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\main.scss",
+      "customOutput": false,
+      "type": "Scss",
+      "config": {
+        "autoCompile": true,
+        "lineNumbers": false,
+        "unixNewlines": false,
+        "sourcemaps": false,
+        "debug": false,
+        "compass": false,
+        "fullCompass": false,
+        "outputStyle": "compressed",
+        "autoprefixer": true
+      }
+    },
+    "61171c2e": {
+      "id": "61171c2e",
+      "pid": "793a63c5",
+      "name": "README.md",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber\\README.md",
+      "customOutput": false,
+      "type": "Md",
+      "config": {
+        "autoCompile": true,
+        "sanitize": false,
+        "gfm": true
+      }
+    },
+    "33997b6d": {
+      "id": "33997b6d",
+      "pid": "793a63c5",
+      "name": "script.js",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\js\\script.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "54ba33ad": {
+      "id": "54ba33ad",
+      "pid": "793a63c5",
+      "name": "hashTabber.js",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\js\\libraries\\hashTabber.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "cb08e340": {
+      "id": "cb08e340",
+      "pid": "793a63c5",
+      "name": "main.scss",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\main.scss",
+      "customOutput": false,
+      "type": "Scss",
+      "config": {
+        "autoCompile": true,
+        "lineNumbers": false,
+        "unixNewlines": false,
+        "sourcemaps": false,
+        "debug": false,
+        "compass": false,
+        "fullCompass": false,
+        "outputStyle": "compressed",
+        "autoprefixer": true
+      }
+    },
+    "2e6407b5": {
+      "id": "2e6407b5",
+      "pid": "793a63c5",
+      "name": "hashTabber.js",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\hashTabber.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "30d937d4": {
+      "id": "30d937d4",
+      "pid": "793a63c5",
+      "name": "hashTabber.js",
+      "input": "site\\extensions\\Admin\\scripts\\hashtabber\\hashTabber.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
     }
   },
   "imports": {
@@ -353,6 +501,230 @@
       "path": "site\\extensions\\Admin\\styles\\font-awesome\\icons.less",
       "parents": [
         "574017a7"
+      ]
+    },
+    "2def533d": {
+      "id": "2def533d",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\_config.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "1331983f": {
+      "id": "1331983f",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\libraries\\_hashTabber.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "12c2b3a9": {
+      "id": "12c2b3a9",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\base\\_normalize.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "a937be80": {
+      "id": "a937be80",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\base\\_print.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "afe592b2": {
+      "id": "afe592b2",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\base\\_typography.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "0d911567": {
+      "id": "0d911567",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\helpers\\_columns.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "3efd9f79": {
+      "id": "3efd9f79",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\helpers\\_functions.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "df075ee2": {
+      "id": "df075ee2",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\helpers\\_mixins.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "696a1b18": {
+      "id": "696a1b18",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\layout\\_header.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "a0fb17ee": {
+      "id": "a0fb17ee",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\layout\\_content.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "af2a1c74": {
+      "id": "af2a1c74",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\layout\\_footer.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "fe5735f2": {
+      "id": "fe5735f2",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\modules\\_buttons.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "6e0814e3": {
+      "id": "6e0814e3",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\modules\\_page-navigation.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "17f9c796": {
+      "id": "17f9c796",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber-2.1\\assets\\scss\\themes\\_hashTabber-sandstone.scss",
+      "parents": [
+        "770b8028"
+      ]
+    },
+    "9385f4f3": {
+      "id": "9385f4f3",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\_config.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "16e10a85": {
+      "id": "16e10a85",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\libraries\\_hashTabber.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "9eebe22b": {
+      "id": "9eebe22b",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\base\\_normalize.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "6ced1e0f": {
+      "id": "6ced1e0f",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\base\\_print.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "22a07631": {
+      "id": "22a07631",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\base\\_typography.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "73fdfc36": {
+      "id": "73fdfc36",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\helpers\\_columns.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "da82f2c7": {
+      "id": "da82f2c7",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\helpers\\_functions.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "2d3f97d5": {
+      "id": "2d3f97d5",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\helpers\\_mixins.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "46d3dd07": {
+      "id": "46d3dd07",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\layout\\_header.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "d9c76299": {
+      "id": "d9c76299",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\layout\\_content.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "c439c247": {
+      "id": "c439c247",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\layout\\_footer.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "cee6eff5": {
+      "id": "cee6eff5",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\modules\\_buttons.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "f507df69": {
+      "id": "f507df69",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\modules\\_page-navigation.scss",
+      "parents": [
+        "cb08e340"
+      ]
+    },
+    "6796289a": {
+      "id": "6796289a",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\scripts\\hashtabber\\assets\\scss\\themes\\_hashTabber-sandstone.scss",
+      "parents": [
+        "cb08e340"
       ]
     }
   },
