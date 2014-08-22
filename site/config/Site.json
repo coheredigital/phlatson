@@ -5,6 +5,12 @@
     "debug": true,
     "adminUrl": "admin",
     "hostname": "xpages.dev",
+
+    "disabledExtensions" : [
+        "FieldtypeMarkdown",
+        "AdminSettings"
+    ],
+
     "routes" : [
         {
             "name": "admin",
@@ -18,6 +24,5 @@
             "path": ":all",
             "callback": "Pages:render"
         }
-
     ]
 }
