@@ -36,7 +36,8 @@ class AdminFieldsList extends Extension
 
         $config = api("config");
 
-        $fieldsList = api("fields")->all();
+        $fields = api("fields")->all();
+        $fields->sort("type");
         $table = api("extensions")->get("MarkupTable");
         $table->setColumns(
             array(
@@ -46,7 +47,7 @@ class AdminFieldsList extends Extension
             )
         );
 
-        foreach ($fieldsList as $item) {
+        foreach ($fields as $item) {
             $table->addRow(
                 array(
                     "name" => "<a href='{$config->urls->admin}fields/edit/{$item->name}' >{$item->name}</a>",
