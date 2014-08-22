@@ -72,27 +72,16 @@ abstract class Fieldtype extends Extension
         return $this;
     }
 
-    // we will default to rendering a basic text field since it will be the most common inout type for most field types
-    public function render()
+    // we will default to rendering a basic text field since it will be the most common input type for most field types
+    final public function render( )
     {
 
+        $input = new InputText();
+        $input->label = $this->field->label;
+        $input->value = $this->value;
 
-        $input = $this->renderInput();
+        $output = $input->render();
 
-        $output = "<div class='column wide'>";
-        $output .= "<div class='field field-" . $this->attribute("name") . " $this->name'>";
-        if ($this->label) {
-
-            $output .= "<label for='" . $this->attribute("name") . "'>";
-            $output .= $this->label ? $this->label : $this->attribute("name");
-            $output .= "</label>";
-
-        }
-
-        $output .= $input;
-
-        $output .= "</div>";
-        $output .= "</div>";
         return $output;
     }
 
@@ -122,7 +111,7 @@ abstract class Fieldtype extends Extension
             return $this->attributes["$key"];
         } else {
             $this->attributes["{$key}"] = (string)$value;
-        } // only string values accepted for attributes
+        }
 
     }
 

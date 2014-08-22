@@ -277,11 +277,6 @@ abstract class Object
         return $this->get($name);
     }
 
-    public function __isset($name)
-    {
-        return isset($this->data[$name]);
-    }
-
     public function set($name, $value)
     {
         switch ($name) {
@@ -298,6 +293,11 @@ abstract class Object
         $this->set($name, $value);
     }
 
+
+    public function __isset($name)
+    {
+        return isset($this->data[$name]);
+    }
 
     public function __toString()
     {

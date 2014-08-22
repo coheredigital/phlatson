@@ -2,7 +2,10 @@
     "label": "Field",
     "fields": [
         {
-            "name": "label"
+            "name": "title",
+            "settings" : {
+                "label" : "Label"
+            }
         },
         {
             "name": "fieldtype"

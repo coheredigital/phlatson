@@ -33,9 +33,7 @@ class AdminExtensionsList extends Extension
         protected function renderFieldsList()
         {
 
-            $config = api("config");
-
-            $fieldsList = api("extensions")->all();
+            $extensions = api("extensions")->all();
             $table = api("extensions")->get("MarkupTable");
             $table->setColumns(
                 array(
@@ -45,13 +43,12 @@ class AdminExtensionsList extends Extension
                 )
             );
 
-            foreach ($fieldsList as $item) {
+            foreach ($extensions as $item) {
                 $table->addRow(
                     array(
-                        "name" => "<a href='{$config->urls->admin}/fields/edit/{$item->name}' >{$item->name}</a>",
+                        "name" => $item->name,
                         "label" => $item->label,
                         "type" => $item->type
-                        // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
                     )
                 );
             }

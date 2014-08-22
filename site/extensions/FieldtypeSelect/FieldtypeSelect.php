@@ -22,21 +22,13 @@ class FieldtypeSelect extends Fieldtype
 
     }
 
-    public function render()
+    public function renderInput()
     {
 
-        $attributes = $this->getAttributes();
-        $options = $this->getOptions();
+        $input = new InputSelect();
+        $input->options = [];
 
-        $output = "<div class='column $this->columns wide'>";
-        $output .= "<div class='field'>";
-        $output .= "<label for=''>";
-        $output .= "{$this->label}";
-        $output .= "</label>";
-        $output .= "<select {$attributes} >{$options}</select>";
-        $output .= "</div>";
-        $output .= "</div>";
-
+        $output = $input->render();
         return $output;
 
     }

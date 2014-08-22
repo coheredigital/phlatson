@@ -19,21 +19,33 @@ class FieldtypeSelectFieldtype extends FieldtypeSelect
         return $value;
     }
 
+    public function getOptions(){
 
-    protected function setup()
-    {
-        $options = array();
 
-        $fieldtypes = api("extensions")->fieldtypes;
-        if (!$fieldtypes) {
-            return false;
+        $this->selectOptions = api("extensions")->all();
+        $this->selectOptions->filter([
+            "type" => "Fieldtype"
+        ]);
+
+        $output = "";
+
+        if ($this->selectOptions instanceof ObjectArray) {
+            foreach ($this->selectOptions as $object) {
+                $selected = $this->value == $object->name ? "selected='selected'" : null;
+                $output .= "<option {$selected} value='{$value->name}'>{$object->name}</option>";
+            }
+            return $output;
+        } else {
+
+            foreach ($this->selectOptions as $key => $value) {
+                $selected = $this->value == $value ? "selected='selected'" : null;
+                $output .= "<option {$selected} value='{$value}'>{$key}</option>";
+            }
         }
-        foreach ($fieldtypes as $fieldtype) {
 
-            $title = str_replace("Fieldtype", "", $fieldtype->title);
-            $options["$title"] = $fieldtype->name;
-        }
-        $this->selectOptions = $options;
+        return $output;
+
     }
+
 
 }

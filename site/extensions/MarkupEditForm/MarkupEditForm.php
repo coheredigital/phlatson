@@ -15,6 +15,18 @@ class MarkupEditForm extends Extension
         $this->api = extract(api());
     }
 
+    protected function renderActions(){
+
+        $output = "<div class='container'>";
+        $output .= "<div class='$this->className'>";
+        $output .= "<button type='submit' class='button'><i class='icon icon-save'></i> Save </button> ";
+        $output .= "<button type='submit' class='button'> <i class='icon icon-times'></i> Delete </button> ";
+        $output .= "<a href='{$this->dataObject->url}' target='_external' class='button'><i class='icon icon-share'></i> View</a>";
+        $output .= "</div>";
+        $output .= "</div>";
+        return $output;
+
+    }
 
     public function render()
     {
@@ -51,9 +63,7 @@ class MarkupEditForm extends Extension
 
 
         // add the form controls
-        $formActions = api("extensions")->get("FieldtypeFormActions");
-        $formActions->object = $this->object;
-        $formActions = $formActions->render();
+        $formActions = $this->renderActions();
 
         $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" .
             "<div id='formTabs'><div class='container'>$formTabMenu</div></div>" .

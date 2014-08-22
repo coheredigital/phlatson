@@ -15,8 +15,6 @@ class AdminFieldsList extends Extension
     protected function setup()
     {
 
-        $config = api("config");
-
         $fieldsRoute = new Route;
         $fieldsRoute->path("fields");
         $fieldsRoute->parent(api("admin")->route);
@@ -51,7 +49,7 @@ class AdminFieldsList extends Extension
             $table->addRow(
                 array(
                     "name" => "<a href='{$config->urls->admin}fields/edit/{$item->name}' >{$item->name}</a>",
-                    "label" => $item->label,
+                    "label" => $item->title,
                     "fieldtype" => $item->type
                     // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
                 )

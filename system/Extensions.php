@@ -57,6 +57,10 @@ class Extensions extends Objects
                 $extension = new $className($filePath);
                 $this->data["$className"] = $extension;
             }
+            else{
+                $extension = new Extension($filePath);
+                $this->data["$className"] = $extension;
+            }
 
         }
 

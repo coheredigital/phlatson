@@ -23,11 +23,10 @@ class AdminFieldEdit extends Extension
         $fieldRoute->path("fields/edit/:any");
         $fieldRoute->parent(api("admin")->route);
         $fieldRoute->callback(
-            function () {
-                $this->object = new Field();
-                $this->object->template = "field";
-                $this->object->parent = $parent;
-                $this->title = "New Page";
+            function ($name) {
+                $this->object = api("fields")->get($name);
+
+                $this->title = "Edit Field";
 
                 $this->render();
             }
@@ -73,11 +72,21 @@ class AdminFieldEdit extends Extension
         $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = "Main";
 
+
+
         $template = $this->object->get("template");
         $fields = $template->fields;
         foreach ($fields as $field) {
             $fieldtype = $field->type;
             $fieldtype->label = $field->label;
+
+            if($field->input){
+                $input = new $field->input;
+            }
+            else{
+                $input = new InputText();
+            }
+            $input->value = "";
 
             if (!is_null($this->object)) {
                 $name = $field->name;

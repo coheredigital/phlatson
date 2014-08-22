@@ -153,6 +153,21 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
         return array_values($this->data)[$x];
     }
 
+    public function getArray($key, $value){
+
+        $array = [];
+
+        foreach ($this as $object) {
+            $key = $object->get($key);
+            $value = $object->get($value);
+
+            $array[$key] = $value;
+        }
+        return $array;
+
+    }
+
+
     /* Interface requirements */
     public function getIterator()
     {

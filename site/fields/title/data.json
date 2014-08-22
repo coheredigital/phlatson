@@ -1,1 +1,5 @@
-{"label": "Title", "name": "title", "fieldtype": "FieldtypeText"}
+{
+    "title": "Title",
+    "fieldtype": "FieldtypeText",
+    "input": "InputText"
+}

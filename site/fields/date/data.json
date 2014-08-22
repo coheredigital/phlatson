@@ -1,6 +1,5 @@
 {
     "format": "Y/m/d",
-    "label": "Published Date",
-    "name": "date",
+    "title": "Published Date",
     "fieldtype": "FieldtypeDatetime"
 }

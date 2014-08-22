@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class Extension extends Object
+class Extension extends Object
 {
 
     protected $info; // like a data array in a regular object but holds the default info for the module
@@ -14,7 +14,7 @@ abstract class Extension extends Object
 
         $this->name = get_class($this);
 
-        if ($this->autoload === true || $this instanceof Fieldtype) {
+        if ($this->autoload === true) {
             $this->setup();
         }
 
