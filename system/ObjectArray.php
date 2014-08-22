@@ -85,10 +85,27 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
 
     public function sort($property, $direction = "ASC")
     {
+
+        $value = $this->first()->get($property);
+        $type = gettype( $value );
+
+
         usort(
             $this->data,
-            function ($a, $b) use($property) {
-                return strcmp($a->{$property}, $b->{$property});
+            function ($a, $b) use($property, $type) {
+                $v1 = $a->get($property);
+                $v2 = $b->get($property);
+
+                switch ($type) {
+                    case "integer":
+                        if ($v1 == $v2) {
+                            return 0;
+                        }
+                        return ($v1 < $v2) ? -1 : 1;
+                    default:
+                        return strcmp($v1, $v2);
+                }
+
             }
         );
 
@@ -117,7 +134,15 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
      */
     public function first()
     {
-        return $this->data[0];
+        return $this->index(0);
+    }
+
+    /**
+     * return first item in data array
+     */
+    public function last()
+    {
+        return $this->index(-1);
     }
 
     /**
@@ -125,7 +150,7 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
      */
     public function index($x)
     {
-        return $this->data[$x];
+        return array_values($this->data)[$x];
     }
 
     /* Interface requirements */

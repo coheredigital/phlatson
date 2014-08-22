@@ -17,7 +17,7 @@ class FieldtypePageFiles extends Fieldtype
         $output .= "<div class='file-list dropzone-previews' id='PageFilesList'>";
 
         $files = $this->object->files;
-        $files->sort("filesize", "DESC");
+        if( count($files) ) $files->sort("extension");
 
         foreach ($files as $file) {
             $output .= "<div class='item'>";
