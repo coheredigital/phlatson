@@ -15,10 +15,12 @@ class InputSelect extends Input{
     protected function getOptions()
     {
 
+        $this->value = $this->fieldtype->value ? $this->fieldtype->value : $this->value;
+
         $output = "";
-        foreach ($this->selectOptions as $value => $text) {
+        foreach ($this->options as $value => $text) {
             $selected = $this->value == $value ? "selected='selected'" : null;
-            $output .= "<option {$selected} value='$value'>$text</option>";
+            $output .= "<option $selected value='$value'>$text</option>";
         }
         return $output;
     }

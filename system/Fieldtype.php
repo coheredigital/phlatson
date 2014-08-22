@@ -66,32 +66,16 @@ abstract class Fieldtype extends Extension
         $this->field = $field;
     }
 
-    public function getInput()
-    {
-        // $input =  $this->api("extensions")->get("InputtypeText");
-        return $this;
-    }
 
     // we will default to rendering a basic text field since it will be the most common input type for most field types
     final public function render( )
     {
-
         $input = new InputText();
         $input->label = $this->field->label;
         $input->value = $this->value;
-
-        $output = $input->render();
-
-        return $output;
+        return $input->render();
     }
 
-    protected function renderInput()
-    {
-        $value = $this->value;
-        $attributes = $this->getAttributes();
-        $output = "<input {$attributes} type='text' value='{$value}'>";
-        return $output;
-    }
 
     protected function getAttributes()
     {

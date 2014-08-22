@@ -3,6 +3,20 @@
   "cfgVersion": 1,
   "name": "Flatbed",
   "files": {
+    "56137164": {
+      "id": "56137164",
+      "pid": "793a63c5",
+      "name": "redactor.js",
+      "input": "site\\extensions\\InputRedactor\\redactor\\redactor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
     "f8092a1b": {
       "id": "f8092a1b",
       "pid": "793a63c5",
@@ -288,6 +302,62 @@
         "strictMath": false,
         "strictUnits": false,
         "autoprefixer": true
+      }
+    },
+    "674f7150": {
+      "id": "674f7150",
+      "pid": "793a63c5",
+      "name": "FieldtypeFields.js",
+      "input": "site\\extensions\\InputFields\\FieldtypeFields.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "e647400c": {
+      "id": "e647400c",
+      "pid": "793a63c5",
+      "name": "InputFields.js",
+      "input": "site\\extensions\\InputFields\\InputFields.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "cea03168": {
+      "id": "cea03168",
+      "pid": "793a63c5",
+      "name": "FieldtypeRedactor.js",
+      "input": "site\\extensions\\InputRedactor\\FieldtypeRedactor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "8c22ed93": {
+      "id": "8c22ed93",
+      "pid": "793a63c5",
+      "name": "InputRedactor.js",
+      "input": "site\\extensions\\InputRedactor\\InputRedactor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
       }
     }
   },

@@ -2,52 +2,24 @@
 
 abstract class Input extends Extension
 {
-
+    public $value;
+    public $label;
+    public $wrap = true;
     protected $fieldtype;
 
     protected $attributes = array(
         "type" => "text"
     );
 
-    public $value;
-    public $label;
-
-    final public function fieldtype(Fieldtype $fieldtype)
+    final public function fieldtype(Fieldtype $fieldtype = null)
     {
-        $this->fieldtype = $fieldtype;
-    }
+        if(!is_null($fieldtype)){
+            $this->fieldtype = $fieldtype;
+        }
+        else{
+            return $this->fieldtype;
+        }
 
-
-    // we will default to rendering a basic text field since it will be the most common inout type for most field types
-    final public function render()
-    {
-        $input = $this->renderInput();
-        $output = $this->renderWrapper($input);
-        return $output;
-    }
-
-
-    // we will default to rendering a basic text field since it will be the most common inout type for most field types
-    final protected function renderWrapper($input)
-    {
-
-        $output = "<div class='field field-{$this->name}'>";
-
-        $output .= "<label for='{$this->name}'>";
-        $output .= $this->label ? $this->label : $this->name;
-        $output .= "</label>";
-
-        $output .= $input;
-        $output .= "</div>";
-
-        return $output;
-    }
-
-    protected function renderInput()
-    {
-        $attributes = $this->getAttributes();
-        $output = "<input {$attributes} type='text' value='$this->value'>";
-        return $output;
     }
 
     protected function getAttributes()
@@ -76,18 +48,8 @@ abstract class Input extends Extension
     public function get($name)
     {
         switch ($name) {
-
-            case 'directory':
-                return normalizeDirectory($this->name);
-            case 'url':
-                return api('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
-            case 'path':
             case 'name':
                 return $this->attribute($name);
-            case 'className':
-                return get_class($this);
-            default:
-                return $this->getFormatted($name);
         }
     }
 
@@ -110,6 +72,42 @@ abstract class Input extends Extension
     {
         $this->set($name, $value);
     }
+
+
+    // we will default to rendering a basic text field since it will be the most common inout type for most field types
+    final protected function renderWrapper($input)
+    {
+
+        $output = "<div class='field field-{$this->name}'>";
+
+        $output .= "<label for='{$this->name}'>";
+        $output .= $this->label ? $this->label : $this->name;
+        $output .= "</label>";
+
+        $output .= $input;
+        $output .= "</div>";
+
+        return $output;
+    }
+
+    protected function renderInput()
+    {
+        $attributes = $this->getAttributes();
+        $output = "<input {$attributes} type='text' value='$this->value'>";
+        return $output;
+    }
+
+
+    // we will default to rendering a basic text field since it will be the most common inout type for most field types
+    final public function render()
+    {
+        $output = $this->renderInput();
+        if($this->wrap){
+            $output = $this->renderWrapper($output);
+        }
+        return $output;
+    }
+
 
     public function __toString(){
         return $this->render();
