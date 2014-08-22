@@ -1,19 +1,18 @@
 <?php
 
-class Upload extends Core
+class Upload
 {
 
-    protected $page;
+    protected $object;
     protected $path;
 
-    public function __construct($page)
+    public function __construct($object)
     {
 
-        $this->page = $page;
+        $this->object = $object;
 
-
-        if ($this->page->isNew()) {
-            $tempFolderName = md5($this->page->url);
+        if ($this->object->isNew()) {
+            $tempFolderName = md5($this->object->url);
             $this->path = api("config")->paths->assets . "uploads/{$tempFolderName}/";
 
             // create the temp upload folder
@@ -22,7 +21,7 @@ class Upload extends Core
             }
 
         } else {
-            $this->path = $this->page->path;
+            $this->path = $this->object->path;
         }
 
     }
@@ -30,15 +29,9 @@ class Upload extends Core
 
     public function send($files)
     {
-
-        if (!empty($files)) {
-
-            $tempFile = $files['file']['tmp_name'];
-            $file = $this->path . $files['file']['name'];
-            move_uploaded_file($tempFile, $file);
-
-        }
-
+        $tempFile = $files['file']['tmp_name'];
+        $file = $this->path . $files['file']['name'];
+        move_uploaded_file($tempFile, $file);
     }
 
 

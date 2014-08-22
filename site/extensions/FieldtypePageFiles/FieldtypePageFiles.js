@@ -9,13 +9,13 @@ var myDropzone = new Dropzone("div#files", {
     thumbnailWidth: 32,
     thumbnailHeight: 32,
     previewTemplate: '<div class="item dz-file-preview">' +
-        '<img class="ui image" height="32" width="32" data-dz-thumbnail >' +
-        "<div class='right floated red ui icon button'><i class='trash icon'></i></div>" +
+        '<img class="thumbnial" height="64" width="64" data-dz-thumbnail >' +
+//        "<div class='right floated button'><i class='icon icon-times'></i></div>" +
         '<div class="content dz-details">' +
         '<div class="header dz-filename" data-dz-name></div>' +
         '<div class="description dz-size" data-dz-size></div>' +
         '</div>' +
-        '<div class="ui progress blue dz-progress"><div class="bar dz-upload" data-dz-uploadprogress></div></div>' +
+        '<div class="dz-progress"><div class="dz-upload" data-dz-uploadprogress></div></div>' +
         '</div>'
 });
 

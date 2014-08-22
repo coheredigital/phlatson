@@ -46,6 +46,10 @@ input{
   }
 }
 
+.description{
+  color: @gray;
+  font-size: 0.8em;
+}
 
 .container{
   padding: 0 1em;
@@ -77,9 +81,12 @@ input{
   display: none !important;
 }
 
-#header,
-#formTabs{
+#header{
   background: @blue;
+}
+
+#formTabs{
+  background: @dark-blue;
 }
 
 .main-menu{
@@ -198,15 +205,6 @@ Filelist
 
 */
 
-.file-list{
-  .item{
-    border-bottom: 1px solid @light-gray;
-    .thumbnail{
-      float: left;
-    }
-  }
-}
-
 /**
 
 Fields
@@ -218,6 +216,12 @@ Fields
   position: relative;
   margin-top: 2em;
   background: #fff;
+
+  &:after{
+    content: "";
+    display: table;
+    clear: both;
+  }
 
   label{
     display: block;
@@ -245,19 +249,12 @@ Fields
     box-sizing: border-box;
     display: block;
     border: none;
-
-
     font-size: 1em;
     background: transparent;
-    border-bottom: 1px solid transparent;
     width: 100%;
-    margin-bottom: -1px;
-//    opacity: 0.2;
-    &:focus{
-      border-bottom-color: @green;
-    }
   }
   &.focus{
+    border-color: @blue;
     label{
       opacity: .2;
     }

@@ -9,6 +9,8 @@ class AdminPageEdit extends Extension
     public function setup()
     {
 
+        $api = api();
+
         $adminRoute = api('admin')->route;
 
         $pageEdit = new Route;
@@ -50,10 +52,24 @@ class AdminPageEdit extends Extension
                 }
             );
 
+        $uploadRoute = new Route();
+        $uploadRoute
+            ->path("/pages/upload:all")
+            ->method("POST")
+            ->parent($adminRoute)
+            ->callback(
+                function ($url) {
+                    $page = api("pages")->get($url);
+                    $this->processFiles($page);
+                }
+            );
+
+
 
         api('router')->add($pageEdit);
         api('router')->add($pageNew);
         api('router')->add($saveRoute);
+        api('router')->add($uploadRoute);
 
     }
 
@@ -108,10 +124,10 @@ class AdminPageEdit extends Extension
     }
 
 
-    public function processFiles()
+    public function processFiles($object)
     {
         if (!empty($_FILES)) {
-            $uploader = new Upload($this->object);
+            $uploader = new Upload($object);
             $uploader->send($_FILES);
         }
     }

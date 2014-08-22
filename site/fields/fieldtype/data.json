@@ -1,4 +1,4 @@
 {
-    "fieldtype": "FieldtypeSelectFieldtype",
+    "fieldtype": "FieldtypeText",
     "label": "Field Type"
 }
