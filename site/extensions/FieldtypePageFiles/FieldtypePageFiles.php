@@ -16,7 +16,10 @@ class FieldtypePageFiles extends Fieldtype
 
         $output .= "<div class='file-list dropzone-previews' id='PageFilesList'>";
 
-        foreach ($this->object->files as $file) {
+        $files = $this->object->files;
+        $files->sort("filesize", "DESC");
+
+        foreach ($files as $file) {
             $output .= "<div class='item'>";
             if ($file instanceof Image) {
                 $output .= "<img  class='thumbnail' src='{$file->url}' height='64' width='64' data-dz-thumbnail>";

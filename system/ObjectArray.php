@@ -4,7 +4,7 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
 {
 
     protected $object;
-    protected $data = array();
+    protected $data = [];
 
     public function setObject($object)
     {
@@ -82,6 +82,21 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
         $this->data = $objects;
         return $this;
     }
+
+    public function sort($property, $direction = "ASC")
+    {
+        usort(
+            $this->data,
+            function ($a, $b) use($property) {
+                return strcmp($a->{$property}, $b->{$property});
+            }
+        );
+
+        if($direction=="DESC"){
+            $this->data = array_reverse($this->data);
+        }
+    }
+
 
 
     public function get($name)

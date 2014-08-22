@@ -13,8 +13,8 @@ class AdminPageEdit extends Extension
 
         $adminRoute = api('admin')->route;
 
-        $pageEdit = new Route;
-        $pageEdit->path("/pages/edit:all")
+        $edit = new Route;
+        $edit->path("/pages/edit:all")
             ->parent($adminRoute)
             ->callback(
                 function ($url) {
@@ -25,8 +25,8 @@ class AdminPageEdit extends Extension
                 }
             );
 
-        $pageNew = new Route;
-        $pageNew->path("/pages/new/:any/:all")
+        $new = new Route;
+        $new->path("/pages/new/:any/:all")
             ->parent($adminRoute)
             ->callback(
                 function ($template, $parent) {
@@ -39,37 +39,33 @@ class AdminPageEdit extends Extension
             );
 
 
-        $saveRoute = new Route();
-        $saveRoute
-            ->path("/pages/edit/:all")
+        $actions = new Route();
+        $actions
+            ->path("/pages/:any:all")
             ->method("POST")
             ->parent($adminRoute)
             ->callback(
-                function ($url) {
-                    $page = api("pages")->get($url);
-                    $this->object = $page;
-                    $this->processSave();
+                function ($action, $url) {
+                    switch ($action) {
+                        case "save":
+                            $page = api("pages")->get($url);
+                            $this->object = $page;
+                            $this->processSave();
+                            break;
+                        case "upload":
+                            $page = api("pages")->get($url);
+                            $this->processFiles($page);
+                            break;
+                    }
+
                 }
             );
 
-        $uploadRoute = new Route();
-        $uploadRoute
-            ->path("/pages/upload:all")
-            ->method("POST")
-            ->parent($adminRoute)
-            ->callback(
-                function ($url) {
-                    $page = api("pages")->get($url);
-                    $this->processFiles($page);
-                }
-            );
 
 
-
-        api('router')->add($pageEdit);
-        api('router')->add($pageNew);
-        api('router')->add($saveRoute);
-        api('router')->add($uploadRoute);
+        api('router')->add($edit);
+        api('router')->add($new);
+        api('router')->add($actions);
 
     }
 
