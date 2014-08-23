@@ -50,6 +50,8 @@ abstract class Input extends Extension
         switch ($name) {
             case 'name':
                 return $this->attribute($name);
+            default:
+                return parent::get($name);
         }
     }
 

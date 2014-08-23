@@ -8,9 +8,6 @@ class AdminPageEdit extends Extension
 
     public function setup()
     {
-
-        $api = api();
-
         $adminRoute = api('admin')->route;
 
         $edit = new Route;
@@ -78,9 +75,12 @@ class AdminPageEdit extends Extension
         $fields = $template->fields;
         foreach ($fields as $field) {
 
+            $name = $field->name;
             $input = $field->input ? new $field->input : new InputText;
             if($field->type) $input->fieldtype($field->type);
-            $input->value = $this->object->get($field->name);
+            $input->value = $this->object->get($name);
+            $input->label = $field->title;
+            $input->attribute("name", $name);
 
             $fieldset->add($input);
 

@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypePage extends FieldtypeText
+class FieldtypePage extends Fieldtype
 {
 
     public function getOutput($url)
