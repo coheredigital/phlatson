@@ -80,11 +80,12 @@ abstract class Input extends Extension
 
         $output = "<div class='field field-{$this->name}'>";
 
-        $output .= "<label for='{$this->name}'>";
+        $output .= "<label class='field-label' for='{$this->name}'>";
         $output .= $this->label ? $this->label : $this->name;
         $output .= "</label>";
 
-        $output .= $input;
+        $output .= "<div class='field-input' for='{$this->name}'>{$input}</div>";
+
         $output .= "</div>";
 
         return $output;

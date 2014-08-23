@@ -216,34 +216,11 @@ Fields
 **/
 
 .field{
-  border: 1px solid #ddd;
-  position: relative;
-  margin-top: 2em;
-  background: #fff;
-
+  margin-top: 1em;
   &:after{
     content: "";
     display: table;
     clear: both;
-  }
-
-  label{
-    display: block;
-    position: absolute;
-//    padding: 0;
-    z-index: 1000;
-    right: 0.7em;
-    top: 0.7em;
-
-    //    left: 0;
-//    top: -1.4em;
-    line-height: 1em;
-    font-weight: bold;
-    color: #aaa;
-    float: right;
-    font-size: 0.78em;
-    text-transform: uppercase;
-    color: @gray;
   }
   select,
   textarea,
@@ -257,21 +234,27 @@ Fields
     background: transparent;
     width: 100%;
   }
-  &.focus{
-    border-color: @blue;
-    label{
-      opacity: .2;
-    }
-    select,
-    textarea,
-    input{
-//      opacity: 1;
-      border-bottom-color: @green;
-
-    }
-  }
+}
+.field-label{
+  display: block;
+  padding: 0.6em 0;
+  font-weight: bold;
+  font-size: 0.78em;
+  color: @gray;
 }
 
+.field-input{
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.field.focus{
+  .field-label{
+    color: @dark-gray;
+  }
+  .field-input{
+    border-color: @blue;
+  }
+}
 
 .FieldtypeFields{
   .item{
