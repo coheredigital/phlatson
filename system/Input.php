@@ -8,9 +8,7 @@ abstract class Input extends Extension
     protected $fieldtype;
     protected $object;
 
-    protected $attributes = array(
-        "type" => "text"
-    );
+    protected $attributes = [];
 
     final public function fieldtype(Fieldtype $fieldtype)
     {
@@ -82,9 +80,12 @@ abstract class Input extends Extension
 
         $output = "<div class='field field-{$this->name}'>";
 
-        $output .= "<label class='field-label' for='{$this->name}'>";
-        $output .= $this->label ? $this->label : $this->name;
-        $output .= "</label>";
+        if ($this->label !== false) {
+            $output .= "<label class='field-label' for='{$this->name}'>";
+            $output .= $this->label ? $this->label : $this->name;
+            $output .= "</label>";
+        }
+
 
         $output .= "<div class='field-input' for='{$this->name}'>{$input}</div>";
 
@@ -95,9 +96,7 @@ abstract class Input extends Extension
 
     protected function renderInput()
     {
-        $attributes = $this->getAttributes();
-        $output = "<input {$attributes} type='text' value='$this->value'>";
-        return $output;
+        return null;
     }
 
 

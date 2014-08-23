@@ -19,15 +19,6 @@ class Extensions extends Objects
     }
 
 
-    /**
-     * Handle preload of extension to find extensions that require autoloading /  or route definitions
-     */
-    protected function preload()
-    {
-
-    }
-
-
     protected function getList($root, $path, $depth = 1)
     {
 

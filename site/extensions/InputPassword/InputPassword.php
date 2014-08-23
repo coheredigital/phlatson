@@ -8,7 +8,7 @@
 
 
 
-class InputText extends Input{
+class InputPassword extends Input{
 
     protected function renderInput()
     {
@@ -19,7 +19,7 @@ class InputText extends Input{
             $this->attribute("name",$this->name);
         }
         $attributes = $this->getAttributes();
-        $output = "<input {$attributes} type='text'>";
+        $output = "<input {$attributes} type='password'>";
         return $output;
     }
 

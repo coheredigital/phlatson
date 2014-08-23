@@ -4,22 +4,32 @@
     <meta charset="UTF-8">
     <title><?php echo $this->title ?> | Admin</title>
 <?php
-    foreach ($config->styles as $file) {
-        echo "    <link rel='stylesheet' href='{$file}' type='text/css'>\n";
-    }
+
+foreach ($config->styles as $file) {
+    echo "    <link rel='stylesheet' href='{$file}' type='text/css'>\n";
+}
+
+$usernameInput = $extensions->get("InputText");
+$usernameInput->name = "username";
+$usernameInput->label = false;
+$usernameInput->attribute("autocomplete","off");
+$usernameInput->attribute("placeholder","Username");
+
+$passwordInput = $extensions->get("InputPassword");
+$passwordInput->name = "password";
+$passwordInput->label = false;
+$passwordInput->attribute("autocomplete","off");
+$passwordInput->attribute("placeholder","Password");
+
 ?>
 </head>
 <body>
     <div id="main">
         <form class='ui form segment form-login' method='POST'>
-            <div class='field'>
-                <label><i class='icon icon-user '></i></label>
-                <input name='username' type='text' autocomplete='off' placeholder='Username'>
-            </div>
-            <div class='field'>
-                <label><i class='icon icon-lock '></i></label>
-                <input name='password' type='password' placeholder='Password'>
-            </div>
+            <?php
+            echo $usernameInput->render();
+            echo $passwordInput->render();
+            ?>
             <button type='submit' class='ui button green fluid'>Login</button>
         </form>
     </div>
