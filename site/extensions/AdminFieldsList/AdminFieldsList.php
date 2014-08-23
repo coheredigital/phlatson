@@ -51,7 +51,6 @@ class AdminFieldsList extends Extension
                     "name" => "<a href='{$config->urls->admin}fields/edit/{$item->name}' >{$item->name}</a>",
                     "label" => $item->title,
                     "fieldtype" => $item->type
-                    // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
                 )
             );
         }

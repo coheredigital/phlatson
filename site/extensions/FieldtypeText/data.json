@@ -1,5 +1,5 @@
 {
     "description": "Simple text Fieldtype for storing string data.",
-    "title": "Fieldtype Text",
+    "title": "Fieldtype String",
     "type": "Fieldtype"
 }

@@ -1,5 +1,6 @@
 {
     "name": "content",
     "fieldtype": "FieldtypeRedactor",
+    "input": "InputTextarea",
     "title": "Content"
 }

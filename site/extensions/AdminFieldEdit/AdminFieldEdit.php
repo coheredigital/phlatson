@@ -77,19 +77,14 @@ class AdminFieldEdit extends Extension
         $template = $this->object->get("template");
         $fields = $template->fields;
         foreach ($fields as $field) {
-
-            if($field->input){
-                $input = new $field->input;
-            }
-            else{
-                $input = new InputText;
-            }
-            $input->fieldtype($field->type);
-
-
             $name = $field->name;
-//            $fieldtype->setObject($this->object);
-//            $fieldtype->attribute("name", $name);
+            $input = $field->input ? new $field->input : new InputText;
+            if($field->type) $input->fieldtype($field->type);
+            $input->value = $this->object->get($name);
+            $input->label = $field->title;
+            $input->attribute("name", $name);
+
+
             $fieldset->add($input);
 
 

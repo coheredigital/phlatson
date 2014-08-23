@@ -1,24 +1,27 @@
 <?php
 
-class FieldtypePageFiles extends Fieldtype
+class InputPageFiles extends Input
 {
 
     protected function setup()
     {
-        api("config")->scripts->add($this->url . "dropzone.js");
-        api("config")->scripts->add($this->url . $this->className . ".js");
-        api("config")->styles->add($this->url . $this->className . ".css");
+
     }
 
     protected function renderInput()
     {
         $config = api("config");
 
-        $output .= "<div class='file-list dropzone-previews' id='PageFilesList'>";
+        $config->scripts->add($this->url . "dropzone.js");
+        $config->scripts->add($this->url . $this->className . ".js");
+        $config->styles->add($this->url . $this->className . ".css");
+
+
 
         $files = $this->object->files;
         if( count($files) ) $files->sort("extension");
 
+        $output = "<div class='file-list dropzone-previews' id='PageFilesList'>";
         foreach ($files as $file) {
             $output .= "<div class='item'>";
             if ($file instanceof Image) {

@@ -8,4 +8,15 @@
 
 class InputTextarea extends Input{
 
+    protected $attributes = [
+        "rows" => 10
+    ];
+
+    protected function renderInput()
+    {
+        $attributes = $this->getAttributes();
+        $output = "<textarea $attributes >$this->value</textarea>";
+        return $output;
+    }
+
 } 

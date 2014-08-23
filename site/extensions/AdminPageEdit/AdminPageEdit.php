@@ -61,8 +61,6 @@ class AdminPageEdit extends Extension
                 }
             );
 
-
-
         api('router')->add($edit);
         api('router')->add($new);
         api('router')->add($actions);
@@ -79,15 +77,12 @@ class AdminPageEdit extends Extension
         $template = $this->object->template;
         $fields = $template->fields;
         foreach ($fields as $field) {
-            $fieldtype = $field->type;
-            $fieldtype->setObject($this->object);
-            $fieldtype->label = $field->label;
 
-            if (!is_null($this->object)) {
-                $name = $field->get("name");
-                $fieldtype->attribute("name", $name);
-                $fieldset->add($fieldtype);
-            }
+            $input = $field->input ? new $field->input : new InputText;
+            if($field->type) $input->fieldtype($field->type);
+            $input->value = $this->object->get($field->name);
+
+            $fieldset->add($input);
 
         }
 
@@ -110,13 +105,12 @@ class AdminPageEdit extends Extension
     protected function getFieldFiles()
     {
 
-        $fieldtype = api("extensions")->get("FieldtypePageFiles");
-        $fieldtype->setObject($this->object);
-        $fieldtype->label = "Files";
-        $fieldtype->columns = 12;
-        $fieldtype->attribute("name", "parent");
+        $input = api("extensions")->get("InputPageFiles");
+        $input->setObject($this->object);
+        $input->label = "Files";
+        $input->attribute("name", "parent");
 
-        return $fieldtype;
+        return $input;
     }
 
 

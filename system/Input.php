@@ -6,20 +6,20 @@ abstract class Input extends Extension
     public $label;
     public $wrap = true;
     protected $fieldtype;
+    protected $object;
 
     protected $attributes = array(
         "type" => "text"
     );
 
-    final public function fieldtype(Fieldtype $fieldtype = null)
+    final public function fieldtype(Fieldtype $fieldtype)
     {
-        if(!is_null($fieldtype)){
-            $this->fieldtype = $fieldtype;
-        }
-        else{
-            return $this->fieldtype;
-        }
+        $this->fieldtype = $fieldtype;
+    }
 
+    final public function setObject($object)
+    {
+        $this->object = $object;
     }
 
     protected function getAttributes()
