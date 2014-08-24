@@ -44,14 +44,18 @@ class Extensions extends Objects
 
             $info = json_decode(file_get_contents($filePath));
 
-            if ($info->autoload) { // instatiate autoload extensions
-                $extension = new $className($filePath);
-                $this->data["$className"] = $extension;
+            if ($info) {
+                if ($info->autoload) { // instatiate autoload extensions
+                    $extension = new $className($filePath);
+                    $this->data["$className"] = $extension;
+                }
+                else{
+                    $extension = new Extension($filePath);
+                    $this->data["$className"] = $extension;
+                }
             }
-            else{
-                $extension = new Extension($filePath);
-                $this->data["$className"] = $extension;
-            }
+
+
 
         }
 
