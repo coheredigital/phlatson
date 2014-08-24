@@ -24,6 +24,25 @@ class Field extends Object
         return null;
     }
 
+    /**
+     * retrieves the input object associated with "$this" field
+     * @return Input
+     */
+    public function getInput()
+    {
+        if ($this->getUnformatted("input")) {
+            $name = $this->getUnformatted("input");
+            $input = api("extensions")->get($name);
+
+            if ($input instanceof Input) {
+//                $input->setField($this);
+                return $input;
+            }
+
+        }
+        return null;
+    }
+
     protected function getNewName()
     {
         // set object name
@@ -76,6 +95,9 @@ class Field extends Object
             case 'type':
                 return $this->getType();
                 break;
+            case 'input':
+                return $this->getInput();
+                break;
             case 'template':
                 return api("templates")->get("field");
                 break;
@@ -84,6 +106,5 @@ class Field extends Object
                 break;
         }
     }
-
 
 }

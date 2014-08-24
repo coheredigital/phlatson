@@ -9,7 +9,6 @@
 class InputSelect extends Input{
 
     public $options = [];
-    public $attributes = [];
 
 
     protected function getOptions()

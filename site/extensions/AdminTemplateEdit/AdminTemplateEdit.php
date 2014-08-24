@@ -58,7 +58,7 @@ class AdminTemplateEdit extends Extension
     {
 
         $fieldset = api("extensions")->get("MarkupFormtab");
-        $fieldset->label = $this->get("title");
+        $fieldset->label = "Main";
 
         $template = $this->object->get("template");
         $fields = $template->fields;

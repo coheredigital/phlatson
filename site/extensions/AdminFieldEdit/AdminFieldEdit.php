@@ -72,21 +72,19 @@ class AdminFieldEdit extends Extension
         $fieldset = api("extensions")->get("MarkupFormtab");
         $fieldset->label = "Main";
 
-
-
         $template = $this->object->get("template");
         $fields = $template->fields;
         foreach ($fields as $field) {
             $name = $field->name;
-            $input = $field->input ? new $field->input : new InputText;
-            if($field->type) $input->fieldtype($field->type);
+            $input = $field->input;
+            $input->fieldtype($field->type);
             $input->value = $this->object->get($name);
             $input->label = $field->title;
             $input->attribute("name", $name);
 
 
-            $fieldset->add($input);
 
+            $fieldset->add($input);
 
         }
 

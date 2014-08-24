@@ -1,5 +1,5 @@
 {
-    "fieldtype": "FieldtypeSelect",
+    "fieldtype": "FieldtypeFieldtype",
     "input": "InputSelect",
     "title": "Field Type"
 }
