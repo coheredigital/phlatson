@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeMarkdown extends FieldtypeTextarea
+class FieldtypeMarkdown extends Fieldtype
 {
 
     protected function setup()

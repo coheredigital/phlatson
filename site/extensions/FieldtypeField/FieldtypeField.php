@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeField extends FieldtypeObject
+class FieldtypeField extends Fieldtype
 {
     protected $page;
     protected $objectType = "field";
