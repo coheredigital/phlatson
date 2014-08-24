@@ -20,9 +20,6 @@
                 <a class="item" href="<?php echo $config->urls->admin ?>settings">Settings</a>
             </div>
         </div>
-        <div class="container">
-            <h1><?php echo $this->title ?></h1>
-        </div>
     </div>
     <div id="main">
         <?php echo $this->output ?>

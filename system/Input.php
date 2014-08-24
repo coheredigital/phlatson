@@ -10,16 +10,6 @@ abstract class Input extends Extension
 
     protected $attributes = [];
 
-    final public function fieldtype(Fieldtype $fieldtype)
-    {
-        $this->fieldtype = $fieldtype;
-    }
-
-    final public function setObject($object)
-    {
-        $this->object = $object;
-    }
-
     protected function getAttributes()
     {
         $string = "";
@@ -34,7 +24,7 @@ abstract class Input extends Extension
 
     public function attribute($key, $value = false)
     {
-        if (!$value && isset($this->attributes[$key])) {
+        if (!$value && $this->hasAttribute($key)) {
             return $this->attributes[$key];
         } else {
             $this->attributes[$key] = (string)$value;
@@ -42,6 +32,9 @@ abstract class Input extends Extension
 
     }
 
+    public function hasAttribute($key){
+        return isset($this->attributes[$key]);
+    }
 
     public function get($name)
     {
@@ -78,7 +71,7 @@ abstract class Input extends Extension
     final protected function renderWrapper($input)
     {
 
-        $output = "<div class='field field-{$this->name}'>";
+        $output = "<div class='field field-{$this->name} {$this->name}'>";
 
         if ($this->label !== false) {
             $output .= "<label class='field-label' for='{$this->name}'>";

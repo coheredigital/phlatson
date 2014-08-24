@@ -1,6 +1,6 @@
 <?php
 
-class AdminFieldEdit extends Extension
+class AdminEditField extends AdminEdit
 {
 
 
@@ -65,47 +65,5 @@ class AdminFieldEdit extends Extension
 
     }
 
-
-    protected function addDefaultFields()
-    {
-
-        $fieldset = api("extensions")->get("MarkupFormtab");
-        $fieldset->label = "Main";
-
-        $template = $this->object->get("template");
-        $fields = $template->fields;
-        foreach ($fields as $field) {
-            $name = $field->name;
-            $input = $field->input;
-            $input->fieldtype($field->type);
-            $input->value = $this->object->get($name);
-            $input->label = $field->title;
-            $input->attribute("name", $name);
-
-
-
-            $fieldset->add($input);
-
-        }
-
-        $this->form->add($fieldset);
-
-    }
-
-
-    public function render()
-    {
-
-        $this->form = api("extensions")->get("MarkupEditForm");
-        $this->form->object = $this->object;
-
-        $this->addDefaultFields();
-
-        $admin = api("admin");
-        $admin->title = "Edit Field";
-        $admin->output = $this->form->render();
-        $admin->render();
-
-    }
 
 }

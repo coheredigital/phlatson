@@ -11,7 +11,7 @@ class InputFields extends Input
 
         $fields = api("fields")->all();
 
-        $fieldsSelect = "";
+        $fieldsSelect = "<option value=''>Choose a field to add...</option>";
         foreach ($fields as $f) {
             $fieldsSelect .= "<option value='$f->name'>$f->name</option>";
         }
@@ -23,8 +23,6 @@ class InputFields extends Input
             foreach ($this->value as $field) {
 
                 // retrieve the field object because "$this->value" will return an unformatted value
-                $field = api("fields")->get($field["name"]);
-
                 $output .= "<div class='item' >
                             <div class='header' >
                                 {$field->label}
@@ -36,7 +34,7 @@ class InputFields extends Input
         }
 
         $output = "	$fieldAdd
-	                <div class='{$this->className} ui list selection animated segment'>
+	                <div class='field-list'>
 						{$output}
 					</div>
 					<div class='inputs'></div>";

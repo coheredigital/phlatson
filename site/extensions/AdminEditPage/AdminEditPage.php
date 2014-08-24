@@ -1,10 +1,7 @@
 <?php
 
-class AdminPageEdit extends Extension
+class AdminEditPage extends AdminEdit
 {
-    protected $title;
-    protected $form;
-    protected $object;
 
     public function setup()
     {
@@ -65,30 +62,6 @@ class AdminPageEdit extends Extension
     }
 
 
-    protected function addDefaultFields()
-    {
-
-        $fieldset = api("extensions")->get("MarkupFormtab");
-        $fieldset->label = $this->get("title");
-
-        $template = $this->object->template;
-        $fields = $template->fields;
-        foreach ($fields as $field) {
-
-            $name = $field->name;
-            $input = $field->input ? new $field->input : new InputText;
-            if($field->type) $input->fieldtype($field->type);
-            $input->value = $this->object->get($name);
-            $input->label = $field->title;
-            $input->attribute("name", $name);
-
-            $fieldset->add($input);
-
-        }
-
-        $this->form->add($fieldset);
-
-    }
 
 
     protected function addFilesFields()
@@ -106,9 +79,9 @@ class AdminPageEdit extends Extension
     {
 
         $input = api("extensions")->get("InputPageFiles");
-        $input->setObject($this->object);
         $input->label = "Files";
         $input->attribute("name", "parent");
+        $input->files = $this->object->files;
 
         return $input;
     }
@@ -132,22 +105,13 @@ class AdminPageEdit extends Extension
 
     }
 
-
-    public function render()
+    protected function addFields()
     {
-
-        $this->form = api("extensions")->get("MarkupEditForm");
-        $this->form->object = $this->object;
-
         $this->addDefaultFields();
         $this->addFilesFields();
 
-        $admin = api("admin");
-        $admin->title = "Edit Page";
-        $admin->output = $this->form->render();
-        $admin->render();
-
     }
+
 
 
 }

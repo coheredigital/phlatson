@@ -3,10 +3,7 @@
 class InputPageFiles extends Input
 {
 
-    protected function setup()
-    {
-
-    }
+    public $files; // FilesArray
 
     protected function renderInput()
     {
@@ -17,12 +14,10 @@ class InputPageFiles extends Input
         $config->styles->add($this->url . $this->className . ".css");
 
 
-
-        $files = $this->object->files;
-        if( count($files) ) $files->sort("extension");
+        if( count($this->files) ) $this->files->sort("extension");
 
         $output = "<div class='file-list dropzone-previews' id='PageFilesList'>";
-        foreach ($files as $file) {
+        foreach ($this->files as $file) {
             $output .= "<div class='item'>";
             if ($file instanceof Image) {
                 $output .= "<img  class='thumbnail' src='{$file->url}' height='64' width='64' data-dz-thumbnail>";

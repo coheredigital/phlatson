@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-class AdminTemplatesList extends Extension
+class AdminListTemplates extends Extension
 {
 
 

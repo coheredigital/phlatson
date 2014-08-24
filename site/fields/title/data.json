@@ -1,5 +1,8 @@
 {
     "title": "Title",
     "fieldtype": "FieldtypeText",
-    "input": "InputText"
+    "input": "InputText",
+    "settings" : {
+        "required" : true
+    }
 }

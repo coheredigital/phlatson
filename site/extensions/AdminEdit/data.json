@@ -1,0 +1,6 @@
+{
+    "description": "Base extension that Page/Field/Extension editing are derived from",
+    "title": "Object Edit",
+    "type": "Admin",
+    "autoload": true
+}

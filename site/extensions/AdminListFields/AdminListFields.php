@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-class AdminFieldsList extends Extension
+class AdminListFields extends Extension
 {
 
 
