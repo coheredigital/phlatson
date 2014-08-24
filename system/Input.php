@@ -9,6 +9,7 @@ abstract class Input extends Extension
     protected $object;
 
     protected $attributes = [];
+    protected $settings = [];
 
     protected function getAttributes()
     {
@@ -27,13 +28,46 @@ abstract class Input extends Extension
         if (!$value && $this->hasAttribute($key)) {
             return $this->attributes[$key];
         } else {
-            $this->attributes[$key] = (string)$value;
+            if ($value) {
+                $this->attributes[$key] = (string)$value;
+                return $this;
+            }
         }
+        return false;
+    }
+
+
+    public function hasAttribute($key)
+    {
+        return isset($this->attributes[$key]);
+    }
+
+
+    public function setting($key, $value = false)
+    {
+        if (!$value && $this->hasSetting($key)) {
+            return $this->settings[$key];
+        } else {
+            if ($value) {
+                $this->settings[$key] = $value;
+                return $this;
+            }
+        }
+        return false;
+
+    }
+    public function settings($array)
+    {
+        if (count($array)) {
+            $this->settings = array_merge($this->settings, $array);
+        }
+        return $this;
 
     }
 
-    public function hasAttribute($key){
-        return isset($this->attributes[$key]);
+    public function hasSetting($key)
+    {
+        return isset($this->settings[$key]);
     }
 
     public function get($name)
@@ -73,6 +107,8 @@ abstract class Input extends Extension
 
         $output = "<div class='field field-{$this->name} {$this->name}'>";
 
+
+
         if ($this->label !== false) {
             $output .= "<label class='field-label' for='{$this->name}'>";
             $output .= $this->label ? $this->label : $this->name;
@@ -80,7 +116,12 @@ abstract class Input extends Extension
         }
 
 
-        $output .= "<div class='field-input' for='{$this->name}'>{$input}</div>";
+        $output .= "<div class='field-input' for='{$this->name}'>";
+        if ($this->setting('required')) {
+            $output .= "<div class='field-required''></div>";
+        }
+        $output .= "$input";
+        $output .= "</div>";
 
         $output .= "</div>";
 
@@ -97,14 +138,15 @@ abstract class Input extends Extension
     final public function render()
     {
         $output = $this->renderInput();
-        if($this->wrap){
+        if ($this->wrap) {
             $output = $this->renderWrapper($output);
         }
         return $output;
     }
 
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->render();
     }
 

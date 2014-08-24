@@ -31,13 +31,12 @@ class Field extends Object
     public function getInput()
     {
         if ($this->getUnformatted("input")) {
+
             $name = $this->getUnformatted("input");
             $input = api("extensions")->get($name);
+            $input->settings($this->settings);
+            return $input;
 
-            if ($input instanceof Input) {
-//                $input->setField($this);
-                return $input;
-            }
 
         }
         return null;
@@ -70,21 +69,6 @@ class Field extends Object
             }
         }
 
-    }
-
-    /**
-     * get/set field attributes
-     * @param  string $key
-     * @param  mixed $value optional
-     * @return mixed
-     */
-    public function attributes($key, $value = null)
-    {
-        if (isset($value)) {
-            $this->attributes["$key"] = $value;
-        } else {
-            return $this->attributes["$key"];
-        }
     }
 
     public function get($name)

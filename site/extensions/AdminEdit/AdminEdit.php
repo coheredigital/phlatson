@@ -29,7 +29,7 @@ class AdminEdit extends Extension
     protected function getInput($field)
     {
         $name = $field->name;
-        $input = $field->input ? new $field->input : new InputText;
+        $input = $field->input;
         $input->value = $this->object->get($name);
         $input->label = $field->title;
         $input->attribute("name", $name);

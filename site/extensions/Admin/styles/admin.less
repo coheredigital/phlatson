@@ -219,6 +219,7 @@ Fields
 
 .field{
   margin-top: 1em;
+  position: relative;
   &:after{
     content: "";
     display: table;
@@ -244,11 +245,22 @@ Fields
   font-size: 0.78em;
   color: @gray;
 }
-
 .field-input{
+  position: relative;
   border: 1px solid #ddd;
   background: #fff;
 }
+.field-required{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 1em 1em 0;
+  border-color: transparent @red transparent transparent;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+}
+
 .field.focus{
   .field-label{
     color: @dark-gray;

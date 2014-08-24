@@ -1,5 +1,8 @@
 {
+    "title": "Field Type",
     "fieldtype": "FieldtypeFieldtype",
     "input": "InputSelect",
-    "title": "Field Type"
+    "settings": {
+        "required": true
+    }
 }

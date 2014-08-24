@@ -36,8 +36,7 @@ class InputFields extends Input
         $output = "	$fieldAdd
 	                <div class='field-list'>
 						{$output}
-					</div>
-					<div class='inputs'></div>";
+					</div>";
         return $output;
     }
 

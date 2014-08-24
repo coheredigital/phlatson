@@ -1,7 +1,7 @@
 {
     "fields": [
         {
-            "name": "label"
+            "name": "title"
         },
         {
             "name": "fields"
