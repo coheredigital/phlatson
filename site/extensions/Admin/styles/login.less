@@ -1,21 +1,50 @@
 @import "_variables";
 
 body {
-    background: @blue;
+    background: @darker-gray;
 }
 
 .form-login{
-  background: @soft-gray;
-  padding: 1em;
+  background: @header-background;
+//  padding: 1em;
   padding-top: 0;
   width: 200px;
   position: absolute;
   left: 50%;
   top: 50%;
   margin: -100px 0 0 -100px;
+  .field{
+    padding: 0 1em;
+    .field-input{
+      border: none !important;
+    }
+    input{
+      background-color: transparent !important;
+
+    }
+
+  }
   .button{
     border-radius: 0;
     margin-top: 1em;
     width: 100%;
+    &:hover{
+      background: #fff;
+      color: @header-background !important;
+    }
+  }
+}
+
+.logo{
+//  background-color: transparent;
+  height: auto;
+  width: auto;
+  text-align: center;
+  img{
+    max-width: 100%;
+
+    margin: 0;
+    position: static;
+    margin: 1.3em 0 1em;
   }
 }

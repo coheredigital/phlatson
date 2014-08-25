@@ -53,7 +53,6 @@ class AdminEdit extends Extension
     public function render()
     {
         $admin = api("admin");
-        $admin->title = $this->title;
         $admin->output = $this->renderForm();
         $admin->render();
     }

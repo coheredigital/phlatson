@@ -15,8 +15,12 @@ class InputPageFiles extends Input
 
 
         if( count($this->files) ) $this->files->sort("extension");
-
-        $output = "<div class='file-list dropzone-previews' id='PageFilesList'>";
+        $output .= "<div action='{$config->urls->admin}pages/upload/{$this->object->directory}' class='' id='files'></div>";
+        $output .= "<div class='{$this->name}-dragndrop dz-clickable dropzone'>";
+        $output .= "<i class='big cloud upload icon'></i>Drag &amp; drop files here";
+        $output .= '<div class="sub header">or click to choose files</div>';
+        $output .= "</div>";
+        $output .= "<div class='file-list dropzone-previews' id='PageFilesList'>";
         foreach ($this->files as $file) {
             $output .= "<div class='item'>";
             if ($file instanceof Image) {
@@ -33,11 +37,7 @@ class InputPageFiles extends Input
 
         }
         $output .= "</div>";
-        $output .= "<div action='{$config->urls->admin}pages/upload/{$this->object->directory}' class='' id='files'></div>";
-        $output .= "<div class='{$this->name}-dragndrop dz-clickable dropzone'>";
-        $output .= "<i class='big cloud upload icon'></i>Drag &amp; drop files here";
-        $output .= '<div class="sub header">or click to choose files</div>';
-        $output .= "</div>";
+
         return $output;
     }
 

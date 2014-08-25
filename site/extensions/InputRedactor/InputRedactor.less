@@ -3,7 +3,6 @@
 .redactor_box {
     border: none;
     border-radius: 0;
-    overflow: hidden;
 }
 
 .redactor_toolbar {
@@ -11,7 +10,7 @@
     border-bottom: 1px dashed #ddd;
 }
 .redactor_toolbar li a {
-    padding: 0.85em;
+    padding: 0.85em 1em;
 }.redactor_toolbar li a:hover {
      background: @blue;
 }
@@ -26,4 +25,13 @@
 
 .redactor_box_fullscreen{
   z-index: 1000 !important;
+  width: 100% !important;
+  .redactor_editor{
+    padding-bottom: 2em;
+  }
+}
+
+.re-fullscreen{
+  position: absolute;
+  right: 0;
 }
