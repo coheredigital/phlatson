@@ -10,16 +10,34 @@
     ?>
 </head>
 <body>
+    <div id="header">
+        <div class="logo">
+            <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
+        </div>
+    </div>
     <div id="sidebar">
-<!--        <div class="container">-->
-            <div class="ui menu vertical main-menu">
-                <a class="item" href="<?php echo $config->urls->admin ?>pages">Pages</a>
-                <a class="item" href="<?php echo $config->urls->admin ?>fields">Fields</a>
-                <a class="item" href="<?php echo $config->urls->admin ?>templates">Templates</a>
-                <a class="item" href="<?php echo $config->urls->admin ?>extensions">Extensions</a>
-                <a class="item" href="<?php echo $config->urls->admin ?>settings">Settings</a>
-            </div>
-<!--        </div>-->
+        <div class="ui menu vertical main-menu">
+            <a class="item" href="<?php echo $config->urls->admin ?>pages">
+                <i class="icon icon-file"></i>
+                Pages
+            </a>
+            <a class="item" href="<?php echo $config->urls->admin ?>fields">
+                <i class="icon icon-edit"></i>
+                Fields
+            </a>
+            <a class="item" href="<?php echo $config->urls->admin ?>templates">
+                <i class="icon icon-code"></i>
+                Templates
+            </a>
+            <a class="item" href="<?php echo $config->urls->admin ?>extensions">
+                <i class="icon icon-cubes"></i>
+                Extensions
+            </a>
+            <a class="item" href="<?php echo $config->urls->admin ?>settings">
+                <i class="icon icon-cog"></i>
+                Settings
+            </a>
+        </div>
     </div>
     <div id="main">
         <?php echo $this->output ?>

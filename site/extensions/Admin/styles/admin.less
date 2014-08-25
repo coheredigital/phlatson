@@ -73,7 +73,9 @@ input{
     text-decoration: none !important;
 
   }
-
+  a{
+    text-decoration: none !important;
+  }
   &.vertical{
     .item{
       display: block;
@@ -87,38 +89,81 @@ input{
   display: none !important;
 }
 
-#header,
-#sidebar{
-  background: @blue;
-  background: @darker-gray;
+#header{
+  height: @header-height;
+  background: @header-background;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 200;
+}
+.logo{
+  width: @sidebar-width;
+  height: 100%;
+  background: darken(@header-background, 5%);
+  position: relative;
+  img{
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -15px 0 0 -50px;
+  }
 }
 
 #sidebar{
-  width: 20%;
+
+  background: @sidebar-background;
+  width: @sidebar-width;
+  top: @header-height;
   height: 100%;
   position: fixed;
-  top: 0;
 }
 
 #main{
   padding-bottom: 2em;
-  margin-left: 20%;
+  margin-top: @header-height;
+  margin-left: @sidebar-width;
 }
 
-#formTabs{
-  background: @dark-blue;
-  background: @dark-gray;
-}
+/**
+
+Menus
+
+**/
 
 .main-menu{
-  a{
-    color: #fff;
+  padding-top: 1em;
+  .item{
+    color: lighten(@sidebar-background, 40%);
+    border-bottom: 1px solid lighten(@sidebar-background, 5%);
+    margin: 0 1em;
+    padding: 1em 0;
+    font-weight: bold;
+    .icon{
+      font-size: 1.1em;
+      margin-right: 0.2em;
+//      color: #fff;
+      width: 1.6em;
+//      text-align: center;
+    }
     &:hover{
-      background: darken(@blue, 20%);
+      color: lighten(@sidebar-background, 80%);
+//      background: darken(@sidebar-background, 4%);
     }
   }
 }
 
+.menu-actions{
+  float: right;
+  position: fixed;
+  top: 0.48em;
+  right: 2em;
+  z-index: 201;
+  .button{
+    background: darken(@header-background, 10%);
+  }
+}
 
 
 /**
@@ -128,12 +173,12 @@ Buttons
 **/
 
 .button{
-//  border-radius: 2em;
+  border-radius: 2em;
   cursor: pointer;
   border: none;
   text-transform: uppercase;
   padding: 0.6em 1.5em;
-  background: @green;
+  background: @dark-gray;
   font-weight: normal;
   color: #fff !important;
   text-decoration: none !important;
@@ -142,7 +187,7 @@ Buttons
   display: inline-block;
   font-size: 1em;
   &:hover{
-    background: darken(@green, 20%);
+    background: @darker-gray;
 
   }
   .icon{
@@ -157,17 +202,18 @@ Tabs
 
 **/
 
-
-
 .menu-tabs{
   a{
-    color: #fff;
+    color: @dark-gray;
   }
   .item{
+    margin-bottom: -1px;
     &.active{
       background: @soft-gray;
+      border: 1px solid darken(@light-gray, 8%);
+      border-bottom: none;
       a{
-        color: @gray;
+        color: @dark-gray;
       }
     }
   }
@@ -194,7 +240,7 @@ Tables
 .table{
   width: 100%;
   border-collapse: collapse;
-//  border: 1px solid @light-gray;
+  border: 1px solid @light-gray;
 
   margin-top: 1em;
 
@@ -212,11 +258,11 @@ Tables
     }
   }
   th{
-    color: #fff;
-    font-weight: normal;
+    color: @gray;
+    font-weight: bold;
 //    border-top: 1px solid @light-gray;
 //    border-bottom: 1px solid @light-gray;
-    background: @dark-gray;
+//    background: @dark-gray;
 
   }
 
@@ -304,7 +350,7 @@ PageTree
 **/
 
 .page-tree{
-
+  padding-top: 1em;
 }
 
 .page-tree-list{
@@ -334,5 +380,18 @@ PageTree
 }
 .page-tree-item-edit{
   text-decoration: none;
+}
+
+/**
+
+Edit Forms
+
+**/
+
+
+#formTabs{
+  background: @light-gray;
+  padding-top: 0.5em;
+  border-bottom: 1px solid darken(@light-gray, 8%);
 }
 

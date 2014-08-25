@@ -359,6 +359,340 @@
         "mangle": true,
         "sourcemaps": false
       }
+    },
+    "fdbc4135": {
+      "id": "fdbc4135",
+      "pid": "793a63c5",
+      "name": "InputFields.less",
+      "input": "site\\extensions\\InputFields\\InputFields.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    },
+    "e0c032c5": {
+      "id": "e0c032c5",
+      "pid": "793a63c5",
+      "name": "InputRedactor.less",
+      "input": "site\\extensions\\InputRedactor\\InputRedactor.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    },
+    "eebefd5b": {
+      "id": "eebefd5b",
+      "pid": "793a63c5",
+      "name": "InputPageFiles.js",
+      "input": "site\\extensions\\InputPageFiles\\InputPageFiles.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "3c9c33f4": {
+      "id": "3c9c33f4",
+      "pid": "793a63c5",
+      "name": "InputPageFiles.less",
+      "input": "site\\extensions\\InputPageFiles\\InputPageFiles.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    },
+    "7e8a11f4": {
+      "id": "7e8a11f4",
+      "pid": "793a63c5",
+      "name": "dropzone.js",
+      "input": "site\\extensions\\InputPageFiles\\dropzone.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "6b26a1cb": {
+      "id": "6b26a1cb",
+      "pid": "793a63c5",
+      "name": "InputTrumbowyg.less",
+      "input": "site\\extensions\\InputTrumbowyg\\InputTrumbowyg.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
+    },
+    "af7a7142": {
+      "id": "af7a7142",
+      "pid": "793a63c5",
+      "name": "InputTrumbowyg.js",
+      "input": "site\\extensions\\InputTrumbowyg\\InputTrumbowyg.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "3ccb9f56": {
+      "id": "3ccb9f56",
+      "pid": "793a63c5",
+      "name": "InputEpicEditor.js",
+      "input": "site\\extensions\\InputEpicEditor\\InputEpicEditor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "d22db6a3": {
+      "id": "d22db6a3",
+      "pid": "793a63c5",
+      "name": "trumbowyg.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\trumbowyg.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "fffbe6e3": {
+      "id": "fffbe6e3",
+      "pid": "793a63c5",
+      "name": "ca.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\ca.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "12eb5458": {
+      "id": "12eb5458",
+      "pid": "793a63c5",
+      "name": "de.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\de.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "c483d078": {
+      "id": "c483d078",
+      "pid": "793a63c5",
+      "name": "en.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\en.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "cc96b17a": {
+      "id": "cc96b17a",
+      "pid": "793a63c5",
+      "name": "es_ar.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\es_ar.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "0569c7d5": {
+      "id": "0569c7d5",
+      "pid": "793a63c5",
+      "name": "fa.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\fa.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "833c3377": {
+      "id": "833c3377",
+      "pid": "793a63c5",
+      "name": "fi.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\fi.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "5c734a58": {
+      "id": "5c734a58",
+      "pid": "793a63c5",
+      "name": "fr.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\fr.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "e7ffe7e4": {
+      "id": "e7ffe7e4",
+      "pid": "793a63c5",
+      "name": "ko.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\ko.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "f8ff1386": {
+      "id": "f8ff1386",
+      "pid": "793a63c5",
+      "name": "pt.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\pt.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "93bc7fec": {
+      "id": "93bc7fec",
+      "pid": "793a63c5",
+      "name": "ru.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\ru.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "ebef961e": {
+      "id": "ebef961e",
+      "pid": "793a63c5",
+      "name": "zh_cn.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\zh_cn.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "af572d0a": {
+      "id": "af572d0a",
+      "pid": "793a63c5",
+      "name": "epiceditor.js",
+      "input": "site\\extensions\\InputEpicEditor\\epiceditor\\js\\epiceditor.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "66932a48": {
+      "id": "66932a48",
+      "pid": "793a63c5",
+      "name": "trumbowyg.base64.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\plugins\\base64\\trumbowyg.base64.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "2159f64f": {
+      "id": "2159f64f",
+      "pid": "793a63c5",
+      "name": "trumbowyg.upload.js",
+      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\plugins\\upload\\trumbowyg.upload.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
     }
   },
   "imports": {
@@ -377,7 +711,8 @@
       "parents": [
         "574017a7",
         "2e03cbd6",
-        "bbdcafc6"
+        "e0c032c5",
+        "3c9c33f4"
       ]
     },
     "e2274c86": {
