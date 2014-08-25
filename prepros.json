@@ -693,6 +693,20 @@
         "mangle": true,
         "sourcemaps": false
       }
+    },
+    "6dc7448c": {
+      "id": "6dc7448c",
+      "pid": "793a63c5",
+      "name": "fullscreen.js",
+      "input": "site\\extensions\\InputRedactor\\redactor\\fullscreen.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
     }
   },
   "imports": {

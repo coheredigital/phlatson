@@ -57,7 +57,7 @@ class AdminListFields extends Extension
         $output = $table->render();
 
         $controls = "<div class='menu-actions'>";
-        $controls .= "<a class='button' href='{$config->urls->root}{$config->adminUrl}/new'>New</a>";
+        $controls .= "<a class='button' href='{$config->urls->admin}fields/new'>New</a>";
         $controls .= "</div>";
 
 
