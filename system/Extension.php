@@ -34,8 +34,6 @@ class Extension extends Object
         switch ($name) {
             case 'directory':
                 return $this->name;
-            case 'type':
-                return "Extension";
             default:
                 return parent::get($name);
                 break;

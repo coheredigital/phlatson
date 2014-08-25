@@ -38,8 +38,7 @@ class AdminListExtensions extends Extension
             $table->setColumns(
                 array(
                     "Name" => "name",
-                    "Label" => "label",
-                    "Type" => "type",
+                    "Type" => "type"
                 )
             );
 
@@ -47,7 +46,6 @@ class AdminListExtensions extends Extension
                 $table->addRow(
                     array(
                         "name" => $item->name,
-                        "label" => $item->label,
                         "type" => $item->type
                     )
                 );
@@ -55,18 +53,7 @@ class AdminListExtensions extends Extension
 
             $output = $table->render();
 
-            $controls = "<div class='ui secondary pointing menu'>
-                <div class='right menu'>
-                    <div class='item'>
-                        <div class='ui icon input'>
-                            <input type='text' placeholder='Filter...'>
-                            <i class='search link icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>";
-
-            return "<div class='container'>{$controls}{$output}</div>";
+            return "<div class='container'>{$output}</div>";
 
         }
 

@@ -34,17 +34,16 @@ class AdminListFields extends Extension
 
         $config = api("config");
 
-        $fields = api("fields")->all();
-        $fields->sort("type");
         $table = api("extensions")->get("MarkupTable");
         $table->setColumns(
             array(
                 "Name" => "name",
                 "Label" => "label",
-                "fieldtype" => "fieldtype",
+                "Type" => "fieldtype",
             )
         );
 
+        $fields = api("fields")->all();
         foreach ($fields as $item) {
             $table->addRow(
                 array(
@@ -57,19 +56,9 @@ class AdminListFields extends Extension
 
         $output = $table->render();
 
-        $controls = "<div class='ui secondary pointing menu'>
-                <a class='item' href='{$config->urls->admin}fields/new'>New</a>
-                <div class='right menu'>
-                    <div class='item'>
-                        <div class='ui icon input'>
-                            <input type='text' placeholder='Filter...'>
-                            <i class='search link icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>";
+        $controls = "<a class='button' href='{$config->urls->root}{$config->adminUrl}/new'>New</a>";
 
-        return "<div class='container'>{$controls}{$output}</div>";
+        return "<div class='container'>{$output}{$controls}</div>";
 
     }
 

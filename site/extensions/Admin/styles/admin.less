@@ -52,10 +52,10 @@ input{
 }
 
 .container{
-  padding: 0 1em;
+  padding: 0 2em;
   box-sizing: border-box;
   max-width: 100%;
-  width: 700px;
+//  width: 700px;
   margin: 0 auto;
 }
 
@@ -68,12 +68,16 @@ input{
     cursor: pointer;
     text-transform: uppercase;
     text-decoration: none;
-  }
-  a,
-  span{
+
     padding: 0.8em 1em;
-    display: block;
     text-decoration: none !important;
+
+  }
+
+  &.vertical{
+    .item{
+      display: block;
+    }
   }
 }
 
@@ -83,16 +87,27 @@ input{
   display: none !important;
 }
 
-#header{
+#header,
+#sidebar{
   background: @blue;
+  background: @darker-gray;
+}
+
+#sidebar{
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 0;
 }
 
 #main{
   padding-bottom: 2em;
+  margin-left: 20%;
 }
 
 #formTabs{
   background: @dark-blue;
+  background: @dark-gray;
 }
 
 .main-menu{
@@ -113,7 +128,7 @@ Buttons
 **/
 
 .button{
-  border-radius: 2em;
+//  border-radius: 2em;
   cursor: pointer;
   border: none;
   text-transform: uppercase;
@@ -121,7 +136,8 @@ Buttons
   background: @green;
   font-weight: normal;
   color: #fff !important;
-  text-decoration: none;
+  text-decoration: none !important;
+  font-weight: bold;
   line-height: 1em;
   display: inline-block;
   font-size: 1em;
@@ -177,31 +193,33 @@ Tables
 
 .table{
   width: 100%;
-  border: 1px solid @light-gray;
-  background: #fff;
-  margin-top: 1em;
-  tr{
+  border-collapse: collapse;
+//  border: 1px solid @light-gray;
 
-  }
+  margin-top: 1em;
+
+
+
   th,
   td{
-    padding: 0.4em;
+    padding: 0.8em;
+    background: #fff;
     text-align: left;
-    border-bottom: 1px solid @light-gray;
-    border-left: 1px solid @soft-gray;
+//    border-left: 1px solid @soft-gray;
+//    border-top: 1px solid @soft-gray;
     &:first-child{
       border-left: none !important;
     }
   }
   th{
-    color: @gray;
+    color: #fff;
     font-weight: normal;
-  }
-  td{
-    border-bottom: 1px solid @soft-gray;
+//    border-top: 1px solid @light-gray;
+//    border-bottom: 1px solid @light-gray;
+    background: @dark-gray;
 
-
   }
+
 }
 
 
@@ -304,14 +322,14 @@ PageTree
 }
 
 .page-tree-item{
-  padding: 0.4em 0.6em;
+  padding: .7em .9em;
   background: #fff;
   margin-bottom: 0.5em;
-  border: 1px solid @light-gray;
+//  border: 1px solid @light-gray;
   border-radius: 2em;
   .icon{
     color: @green;
-    margin-right: 0.3em;
+    margin-right: 0.6em;
   }
 }
 .page-tree-item-edit{

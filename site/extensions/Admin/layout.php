@@ -10,16 +10,16 @@
     ?>
 </head>
 <body>
-    <div id="header">
-        <div class="container">
-            <div class="ui menu main-menu">
+    <div id="sidebar">
+<!--        <div class="container">-->
+            <div class="ui menu vertical main-menu">
                 <a class="item" href="<?php echo $config->urls->admin ?>pages">Pages</a>
                 <a class="item" href="<?php echo $config->urls->admin ?>fields">Fields</a>
                 <a class="item" href="<?php echo $config->urls->admin ?>templates">Templates</a>
                 <a class="item" href="<?php echo $config->urls->admin ?>extensions">Extensions</a>
                 <a class="item" href="<?php echo $config->urls->admin ?>settings">Settings</a>
             </div>
-        </div>
+<!--        </div>-->
     </div>
     <div id="main">
         <?php echo $this->output ?>

@@ -1,0 +1,5 @@
+{
+    "description": "Simple text Fieldtype for storing string data.",
+    "title": "Password",
+    "type": "Fieldtype"
+}

@@ -5,7 +5,7 @@ abstract class Object
 
     const DEFAULT_SAVE_FILE = "data.json";
 
-    protected $name;
+    public $name;
     protected $path;
     protected $configPath = null;
     protected $file;

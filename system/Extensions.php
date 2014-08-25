@@ -51,6 +51,7 @@ class Extensions extends Objects
                 }
                 else{
                     $extension = new Extension($filePath);
+                    $extension->name = $className;
                     $this->data["$className"] = $extension;
                 }
             }
@@ -59,6 +60,18 @@ class Extensions extends Objects
 
         }
 
+    }
+
+    public function all()
+    {
+        $this->getObjectList();
+        $objectArray = new ObjectArray();
+
+        foreach ($this->data as $object) {
+            $objectArray->add($object);
+        }
+
+        return $objectArray;
     }
 
 

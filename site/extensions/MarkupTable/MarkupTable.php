@@ -21,7 +21,6 @@ class MarkupTable extends Extension
     public function render()
     {
 
-        $output = "";
 
         // return false if columns or rows data missing, not much of a table without them
         if (!$this->columns || !$this->rows) {
@@ -46,10 +45,10 @@ class MarkupTable extends Extension
             }
             $rowsOutput .= "<tr>{$rowOutput}</tr>";
         }
-        $tbody = "<tbody><tr>{$rowsOutput}<tr></tbody>";
+        $tbody = "<tbody>{$rowsOutput}</tbody>";
 
         // wrap $output in "table" markup
-        $output = "<table class='ui table segment'>{$thead}{$tbody}</table>";
+        $output = "<table class='table'>{$thead}{$tbody}</table>";
 
         return $output;
 

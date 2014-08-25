@@ -37,7 +37,7 @@ class AdminListTemplates extends Extension
             array(
                 "Name" => "name",
                 "Label" => "label",
-                "fieldtype" => "fieldtype",
+                "Field Count" => "count",
             )
         );
 
@@ -46,7 +46,7 @@ class AdminListTemplates extends Extension
                 array(
                     "name" => "<a href='{$config->urls->admin}templates/edit/{$item->name}' >{$item->name}</a>",
                     "label" => $item->label,
-                    "fieldtype" => $item->type
+                    "count" => count($item->fields)
                     // TODO : getting the formatted version of this causes an Exception to be thrown, look into this
                 )
             );
@@ -54,19 +54,9 @@ class AdminListTemplates extends Extension
 
         $output = $table->render();
 
-        $controls = "<div class='ui secondary pointing menu'>
-                <a class='item' href='{$config->urls->root}{$config->adminUrl}/new'>New</a>
-                <div class='right menu'>
-                    <div class='item'>
-                        <div class='ui icon input'>
-                            <input type='text' placeholder='Filter...'>
-                            <i class='search link icon'></i>
-                        </div>
-                    </div>
-                </div>
-            </div>";
+        $controls = "<a class='button' href='{$config->urls->root}{$config->adminUrl}/new'>New</a>";
 
-        return "<div class='container'>{$controls}{$output}</div>";
+        return "<div class='container'>{$output}{$controls}</div>";
 
     }
 
