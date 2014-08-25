@@ -20,9 +20,9 @@ class MarkupEditForm extends Extension
 
         $output .= "<div class='form-actions'>";
         $output .= "<div class='container'>";
-        $output .= "<button type='submit' class='button'><i class='icon icon-save'></i> Save </button> ";
-        $output .= "<button type='submit' class='button'> <i class='icon icon-times'></i> Delete </button> ";
-        $output .= "<a href='{$this->object->url}' target='_external' class='button'><i class='icon icon-share'></i> View</a>";
+        $output .= "<a href='{$this->object->url}' target='_external' class='button'><i class='icon icon-share'></i></a> ";
+        $output .= "<button type='submit' class='button button-red'> <i class='icon icon-times'></i></button> ";
+        $output .= "<button type='submit' class='button button-green'><i class='icon icon-save'></i> Save </button> ";
         $output .= "</div>";
         $output .= "</div>";
         return $output;

@@ -15,26 +15,40 @@
             <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
         </div>
         <div class="ui menu vertical main-menu">
-            <a class="item" href="<?php echo $config->urls->admin ?>pages">
-                <i class="icon icon-file"></i>
-                Pages
-            </a>
-            <a class="item" href="<?php echo $config->urls->admin ?>fields">
-                <i class="icon icon-edit"></i>
-                Fields
-            </a>
-            <a class="item" href="<?php echo $config->urls->admin ?>templates">
-                <i class="icon icon-code"></i>
-                Templates
-            </a>
-            <a class="item" href="<?php echo $config->urls->admin ?>extensions">
-                <i class="icon icon-cubes"></i>
-                Extensions
-            </a>
-            <a class="item" href="<?php echo $config->urls->admin ?>settings">
-                <i class="icon icon-cog"></i>
-                Settings
-            </a>
+
+            <?php
+            $menuLinks = [
+              "Pages" => [
+                  "icon" => "file",
+                  "url" => $config->urls->admin . "pages/"
+              ],
+              "Fields" => [
+                  "icon" => "edit",
+                  "url" => $config->urls->admin . "fields/"
+              ],
+              "Templates" => [
+                  "icon" => "code",
+                  "url" => $config->urls->admin . "templates/"
+              ],
+              "Extensions" => [
+                  "icon" => "cubes",
+                  "url" => $config->urls->admin . "extensions/"
+              ],
+              "Settings" => [
+                  "icon" => "cog",
+                  "url" => $config->urls->admin . "settings/"
+              ]
+            ];
+
+            ?>
+
+            <?php foreach ($menuLinks as $key => $value): ?>
+                <?php $class = $value['url'] == $request->url ? "active" : "" ?>
+                <a class="item <?php echo $class ?>" href="<?php echo $value['url'] ?>">
+                    <i class="icon icon-<?php echo $value['icon'] ?>"></i>
+                    <?php echo $key ?>
+                </a>
+            <?php endforeach; ?>
         </div>
         <div class="user-menu">
             <div class="user-menu-content">
