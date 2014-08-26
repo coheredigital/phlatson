@@ -45,23 +45,6 @@
         "sourcemaps": false
       }
     },
-    "574017a7": {
-      "id": "574017a7",
-      "pid": "793a63c5",
-      "name": "admin.less",
-      "input": "site\\extensions\\Admin\\styles\\admin.less",
-      "customOutput": false,
-      "type": "Less",
-      "config": {
-        "autoCompile": true,
-        "compress": true,
-        "sourcemaps": false,
-        "cleancss": false,
-        "strictMath": false,
-        "strictUnits": false,
-        "autoprefixer": true
-      }
-    },
     "a332659c": {
       "id": "a332659c",
       "pid": "793a63c5",
@@ -94,118 +77,6 @@
       "pid": "793a63c5",
       "name": "FieldtypeDateTime.js",
       "input": "site\\extensions\\FieldtypeDatetime\\FieldtypeDateTime.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "b3fedba7": {
-      "id": "b3fedba7",
-      "pid": "793a63c5",
-      "name": "FieldtypeFields.js",
-      "input": "site\\extensions\\FieldtypeFields\\FieldtypeFields.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "4e1f56fe": {
-      "id": "4e1f56fe",
-      "pid": "793a63c5",
-      "name": "epiceditor.js",
-      "input": "site\\extensions\\FieldtypeMarkdown\\epiceditor\\js\\epiceditor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "92fc733f": {
-      "id": "92fc733f",
-      "pid": "793a63c5",
-      "name": "FieldtypeMarkdown.js",
-      "input": "site\\extensions\\FieldtypeMarkdown\\FieldtypeMarkdown.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "3270d73b": {
-      "id": "3270d73b",
-      "pid": "793a63c5",
-      "name": "dropzone.js",
-      "input": "site\\extensions\\FieldtypePageFiles\\dropzone.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "9f45fc9f": {
-      "id": "9f45fc9f",
-      "pid": "793a63c5",
-      "name": "FieldtypePageFiles.js",
-      "input": "site\\extensions\\FieldtypePageFiles\\FieldtypePageFiles.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "288e0ac5": {
-      "id": "288e0ac5",
-      "pid": "793a63c5",
-      "name": "FieldtypeRedactor.js",
-      "input": "site\\extensions\\FieldtypeRedactor\\FieldtypeRedactor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "fbbf37df": {
-      "id": "fbbf37df",
-      "pid": "793a63c5",
-      "name": "redactor.js",
-      "input": "site\\extensions\\FieldtypeRedactor\\redactor\\redactor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "4fdfe0d2": {
-      "id": "4fdfe0d2",
-      "pid": "793a63c5",
-      "name": "FieldtypeSelect.js",
-      "input": "site\\extensions\\FieldtypeSelect\\FieldtypeSelect.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -287,56 +158,11 @@
         "sourcemaps": false
       }
     },
-    "bbdcafc6": {
-      "id": "bbdcafc6",
-      "pid": "793a63c5",
-      "name": "FieldtypePageFiles.less",
-      "input": "site\\extensions\\FieldtypePageFiles\\FieldtypePageFiles.less",
-      "customOutput": false,
-      "type": "Less",
-      "config": {
-        "autoCompile": true,
-        "compress": true,
-        "sourcemaps": false,
-        "cleancss": false,
-        "strictMath": false,
-        "strictUnits": false,
-        "autoprefixer": true
-      }
-    },
-    "674f7150": {
-      "id": "674f7150",
-      "pid": "793a63c5",
-      "name": "FieldtypeFields.js",
-      "input": "site\\extensions\\InputFields\\FieldtypeFields.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
     "e647400c": {
       "id": "e647400c",
       "pid": "793a63c5",
       "name": "InputFields.js",
       "input": "site\\extensions\\InputFields\\InputFields.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "cea03168": {
-      "id": "cea03168",
-      "pid": "793a63c5",
-      "name": "FieldtypeRedactor.js",
-      "input": "site\\extensions\\InputRedactor\\FieldtypeRedactor.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -707,6 +533,23 @@
         "mangle": true,
         "sourcemaps": false
       }
+    },
+    "574017a7": {
+      "id": "574017a7",
+      "pid": "793a63c5",
+      "name": "admin.less",
+      "input": "site\\extensions\\Admin\\styles\\admin.less",
+      "customOutput": false,
+      "type": "Less",
+      "config": {
+        "autoCompile": true,
+        "compress": true,
+        "sourcemaps": false,
+        "cleancss": false,
+        "strictMath": false,
+        "strictUnits": false,
+        "autoprefixer": true
+      }
     }
   },
   "imports": {
@@ -723,10 +566,10 @@
       "pid": "793a63c5",
       "path": "site\\extensions\\Admin\\styles\\_variables.less",
       "parents": [
-        "574017a7",
         "2e03cbd6",
         "e0c032c5",
-        "3c9c33f4"
+        "3c9c33f4",
+        "574017a7"
       ]
     },
     "e2274c86": {

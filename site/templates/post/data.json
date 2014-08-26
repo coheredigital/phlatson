@@ -1,0 +1,17 @@
+{
+    "label": "Page (default)",
+    "fields": [
+        {
+            "name": "title",
+            "label": "Title",
+            "fieldtype": "FieldtypeText",
+            "input": "InputText"
+        },
+        {
+            "name": "content"
+        },
+        {
+            "name": "notes"
+        }
+    ]
+}

@@ -3,6 +3,13 @@
     "fieldtype": "FieldtypeFieldtype",
     "input": "InputSelect",
     "settings": {
-        "required": true
+        "required": true,
+        "options": {
+            "type" : "dynamic",
+            "source": "extensions",
+            "filter": {
+                "type": "fieldtype"
+            }
+        }
     }
 }
