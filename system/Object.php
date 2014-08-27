@@ -8,7 +8,7 @@ abstract class Object implements JsonSerializable
     public $name;
     protected $path;
     protected $configPath = null;
-    protected $file;
+    protected $_file;
     protected $modified;
     protected $rootFolder;
 
@@ -23,12 +23,12 @@ abstract class Object implements JsonSerializable
     {
 
         if (is_file($file)) {
-            $this->file = $file;
+            $this->_file = $file;
             $this->path = $this->getPath();
             $this->route = $this->getRoute();
-            $this->data = json_decode(file_get_contents($this->file), true);
+            $this->data = json_decode(file_get_contents($this->_file), true);
             $this->name = $this->getName();
-            $this->modified = filemtime($this->file);
+            $this->modified = filemtime($this->_file);
         }
 
     }
@@ -48,7 +48,7 @@ abstract class Object implements JsonSerializable
     protected function getPath()
     {
         if (!$this->isNew()) {
-            return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
+            return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->_file));
         } else {
 
         }
@@ -61,7 +61,7 @@ abstract class Object implements JsonSerializable
         $relativePath = str_replace(
             api("config")->paths->site . $this->rootFolder,
             "",
-            $this->file
+            $this->_file
         ); // trim the root path to get root relative path
         $relativePath = str_replace($this::DEFAULT_SAVE_FILE, "", $relativePath); // trim of file name to isolote path
         $relativePath = rtrim($relativePath, '/'); // trim excess slashes
@@ -241,7 +241,7 @@ abstract class Object implements JsonSerializable
     {
         // if the object does not have a matching existing directory it is assumed new
         // directory will be created when saved
-        if (!is_file($this->file)) {
+        if (!is_file($this->_file)) {
             return true;
         }
 

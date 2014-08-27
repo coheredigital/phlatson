@@ -33,31 +33,35 @@ class AdminEditPage extends AdminEdit
             );
 
 
-        $actions = new Route();
-        $actions
-            ->path("/pages/:any:all")
+        $save = new Route();
+        $save
+            ->path("/pages/edit/:all")
             ->method("POST")
             ->parent($adminRoute)
             ->callback(
-                function ($action, $url) {
-                    switch ($action) {
-                        case "save":
-                            $page = api("pages")->get($url);
-                            $this->object = $page;
-                            $this->processSave();
-                            break;
-                        case "upload":
-                            $page = api("pages")->get($url);
-                            $this->processFiles($page);
-                            break;
-                    }
+                function ($url) {
+                    $page = api("pages")->get($url);
+                    $this->object = $page;
+                    $this->processSave();
+                }
+            );
 
+        $upload = new Route();
+        $upload
+            ->path("/pages/upload:all")
+            ->method("POST")
+            ->parent($adminRoute)
+            ->callback(
+                function ($url) {
+                    $page = api("pages")->get($url);
+                    $this->processFiles($page);
                 }
             );
 
         api('router')->add($edit);
         api('router')->add($new);
-        api('router')->add($actions);
+        api('router')->add($save);
+        api('router')->add($upload);
 
     }
 

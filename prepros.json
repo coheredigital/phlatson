@@ -11,7 +11,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -25,7 +25,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -39,7 +39,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -53,23 +53,9 @@
       "customOutput": false,
       "type": "Md",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "sanitize": false,
         "gfm": true
-      }
-    },
-    "c85e3f58": {
-      "id": "c85e3f58",
-      "pid": "793a63c5",
-      "name": "FieldtypeDateTime.js",
-      "input": "site\\extensions\\FieldtypeDatetime\\FieldtypeDateTime.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
       }
     },
     "700c609c": {
@@ -80,7 +66,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -111,7 +97,7 @@
       "customOutput": false,
       "type": "Md",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "sanitize": false,
         "gfm": true
       }
@@ -124,7 +110,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -138,7 +124,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -152,7 +138,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -200,7 +186,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -214,7 +200,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -245,7 +231,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -259,7 +245,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -273,7 +259,7 @@
       "customOutput": false,
       "type": "Js",
       "config": {
-        "autoCompile": true,
+        "autoCompile": false,
         "uglify": true,
         "mangle": true,
         "sourcemaps": false
@@ -294,6 +280,20 @@
         "strictMath": false,
         "strictUnits": false,
         "autoprefixer": true
+      }
+    },
+    "c85e3f58": {
+      "id": "c85e3f58",
+      "pid": "793a63c5",
+      "name": "FieldtypeDateTime.js",
+      "input": "site\\extensions\\FieldtypeDatetime\\FieldtypeDateTime.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
       }
     }
   },
