@@ -19,4 +19,19 @@ class FieldtypeFieldtype extends Fieldtype
         return null;
     }
 
+    protected function renderInput()
+    {
+
+        $fieldtypes = api("extensions")->all();
+        $fieldtypes->filter(["type"=>"Fieldtype"]);
+
+        foreach($fieldtypes as $fieldtype) {
+            $options .= "<option value='$fieldtype->name'>$fieldtype->name</option>";
+        }
+
+        $attributes = $this->getAttributes();
+        $output = "<select {$attributes}>$options</select>";
+        return $output;
+    }
+
 }

@@ -9,13 +9,13 @@ foreach ($config->styles as $file) {
     echo "    <link rel='stylesheet' href='{$file}' type='text/css'>\n";
 }
 
-$usernameInput = $extensions->get("InputText");
+$usernameInput = $extensions->get("FieldtypeText");
 $usernameInput->name = "username";
 $usernameInput->label = false;
 $usernameInput->attribute("autocomplete","off");
 $usernameInput->attribute("placeholder","Username");
 
-$passwordInput = $extensions->get("InputPassword");
+$passwordInput = $extensions->get("FieldtypePassword");
 $passwordInput->name = "password";
 $passwordInput->label = false;
 $passwordInput->attribute("autocomplete","off");

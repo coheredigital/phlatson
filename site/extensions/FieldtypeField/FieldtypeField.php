@@ -5,6 +5,14 @@ class FieldtypeField extends Fieldtype
     protected $page;
     protected $objectType = "field";
 
+
+    protected function setup()
+    {
+        $this->label = "Field";
+        $this->attribute("name", "template");
+    }
+
+
     public function getOutput($name)
     {
         $field = api("fields")->get("$name");
@@ -20,10 +28,6 @@ class FieldtypeField extends Fieldtype
         return $value;
     }
 
-    protected function setup()
-    {
-        $this->label = "Field";
-        $this->attribute("name", "template");
-    }
+
 
 }

@@ -1,6 +1,6 @@
 {
     "name": "content",
-    "fieldtype": "FieldtypeHTML",
+    "fieldtype": "FieldtypeRichtext",
     "input": "InputRedactor",
     "title": "Content"
 }

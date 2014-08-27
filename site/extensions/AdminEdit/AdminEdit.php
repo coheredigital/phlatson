@@ -16,8 +16,8 @@ class AdminEdit extends Extension
         $template = $this->object->template;
 
         foreach ($template->fields as $field) {
-            $input = $this->getInput($field);
-            $fieldset->add($input);
+            $fieldtype = $this->getFieldInterface($field);
+            $fieldset->add($fieldtype);
         }
 
         $this->form->add($fieldset);
@@ -26,22 +26,21 @@ class AdminEdit extends Extension
 
 
 
-    protected function getInput($field)
+    protected function getFieldInterface(Field $field)
     {
-        $name = $field->name;
-        $input = $field->input;
-        $input->value = $this->object->get($name);
-        $input->label = $field->title;
-        $input->attribute("name", $name);
 
-        return $input;
+        $fieldtype = $field->type;
+        $fieldtype->label = $field->title;
+        $fieldtype->value = $this->object->get($field->name);
+        $fieldtype->attribute("name", $field->name);
+
+        return $fieldtype;
     }
 
     protected function addFields()
     {
         $this->addDefaultFields();
     }
-
 
     private function renderForm(){
         $this->form = api("extensions")->get("MarkupEditForm");

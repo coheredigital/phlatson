@@ -78,7 +78,7 @@ class AdminEditPage extends AdminEdit
     protected function getFieldFiles()
     {
 
-        $input = api("extensions")->get("InputPageFiles");
+        $input = api("extensions")->get("FieldtypePageFiles");
         $input->label = "Files";
         $input->attribute("name", "parent");
         $input->files = $this->object->files;
