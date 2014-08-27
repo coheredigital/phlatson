@@ -20,9 +20,9 @@ class MarkupFormtab extends Extension
     {
 
         $fields = "";
-        foreach ($this->fields as $field) {
-            if (is_object($field)) {
-                $fields .= $field->render();
+        foreach ($this->fields as $fieldtype) {
+            if (is_object($fieldtype)) {
+                $fields .= $fieldtype->render();
             }
         }
 

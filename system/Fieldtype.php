@@ -4,7 +4,7 @@ abstract class Fieldtype extends Extension
 {
 
     public $wrap = true;
-    protected $fieldtype;
+    protected $field;
     protected $object;
 
     public $value;
@@ -12,7 +12,6 @@ abstract class Fieldtype extends Extension
     public $label;
 
     protected $attributes = [];
-    protected $settings = [];
 
     protected function setup()
     {
@@ -27,33 +26,7 @@ abstract class Fieldtype extends Extension
         $this->object = $object;
     }
 
-    /**
-     * alias for the three available formatting methods,
-     * allows passing of type, can auto determing required method
-     * @param  mixed $name raw value from SimpleXML object
-     * @param  string $type
-     * @return mixed        determined by fieldtype object
-     */
-    final public function get($name, $type = null)
-    {
 
-        switch ($name) {
-            case 'type':
-                return "Fieldtype";
-//            case 'value':
-//                if ($this->object instanceof Object) {
-//                    return $this->object->getUnformatted($this->field->name);
-//                }
-            default:
-                switch ($type) {
-                    case 'output':
-                        return $this->getOutput($name);
-                    case 'save':
-                        return $this->getSave($name);
-                }
-                return parent::get($name);
-        }
-    }
 
     public function getOutput($value)
     {
@@ -105,40 +78,13 @@ abstract class Fieldtype extends Extension
     }
 
 
-    public function setting($key, $value = false)
-    {
-        if (!$value && $this->hasSetting($key)) {
-            return $this->settings[$key];
-        } else {
-            if ($value) {
-                $this->settings[$key] = $value;
-                return $this;
-            }
-        }
-        return false;
-
-    }
-    public function settings($array)
-    {
-        if (count($array)) {
-            $this->settings = array_merge($this->settings, $array);
-        }
-        return $this;
-
-    }
-
-    public function hasSetting($key)
-    {
-        return isset($this->settings[$key]);
-    }
-
-
-
     // we will default to rendering a basic text field since it will be the most common inout type for most field types
     final protected function renderWrapper($input)
     {
 
-        $output = "<div class='field field-{$this->name} {$this->name}'>";
+        $columns = $this->settings->columns ? $this->settings->columns : 12;
+
+        $output = "<div class='field field-{$this->name} {$this->name} column column-{$columns}'>";
 
         if ($this->label !== false) {
             $output .= "<label class='field-label' for='{$this->name}'>";
@@ -174,6 +120,20 @@ abstract class Fieldtype extends Extension
         }
         return $output;
     }
+
+
+    public function get($name)
+    {
+        switch ($name) {
+            case 'layout':
+                // alias for $page->template->layout (required by AdminPage class)
+                return $this->template->layout;
+            default:
+                return parent::get($name);
+        }
+
+    }
+
 
 
 }

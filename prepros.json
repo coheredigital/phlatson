@@ -3,20 +3,6 @@
   "cfgVersion": 1,
   "name": "Flatbed",
   "files": {
-    "56137164": {
-      "id": "56137164",
-      "pid": "793a63c5",
-      "name": "redactor.js",
-      "input": "site\\extensions\\InputRedactor\\redactor\\redactor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
     "f8092a1b": {
       "id": "f8092a1b",
       "pid": "793a63c5",
@@ -158,11 +144,11 @@
         "sourcemaps": false
       }
     },
-    "e647400c": {
-      "id": "e647400c",
+    "b3fedba7": {
+      "id": "b3fedba7",
       "pid": "793a63c5",
-      "name": "InputFields.js",
-      "input": "site\\extensions\\InputFields\\InputFields.js",
+      "name": "FieldtypeFields.js",
+      "input": "site\\extensions\\FieldtypeFields\\FieldtypeFields.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -172,25 +158,11 @@
         "sourcemaps": false
       }
     },
-    "8c22ed93": {
-      "id": "8c22ed93",
+    "fac826e5": {
+      "id": "fac826e5",
       "pid": "793a63c5",
-      "name": "InputRedactor.js",
-      "input": "site\\extensions\\InputRedactor\\InputRedactor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "fdbc4135": {
-      "id": "fdbc4135",
-      "pid": "793a63c5",
-      "name": "InputFields.less",
-      "input": "site\\extensions\\InputFields\\InputFields.less",
+      "name": "FieldtypeFields.less",
+      "input": "site\\extensions\\FieldtypeFields\\FieldtypeFields.less",
       "customOutput": false,
       "type": "Less",
       "config": {
@@ -203,11 +175,11 @@
         "autoprefixer": true
       }
     },
-    "e0c032c5": {
-      "id": "e0c032c5",
+    "bbdcafc6": {
+      "id": "bbdcafc6",
       "pid": "793a63c5",
-      "name": "InputRedactor.less",
-      "input": "site\\extensions\\InputRedactor\\InputRedactor.less",
+      "name": "FieldtypePageFiles.less",
+      "input": "site\\extensions\\FieldtypePageFiles\\FieldtypePageFiles.less",
       "customOutput": false,
       "type": "Less",
       "config": {
@@ -220,11 +192,11 @@
         "autoprefixer": true
       }
     },
-    "eebefd5b": {
-      "id": "eebefd5b",
+    "9f45fc9f": {
+      "id": "9f45fc9f",
       "pid": "793a63c5",
-      "name": "InputPageFiles.js",
-      "input": "site\\extensions\\InputPageFiles\\InputPageFiles.js",
+      "name": "FieldtypePageFiles.js",
+      "input": "site\\extensions\\FieldtypePageFiles\\FieldtypePageFiles.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -234,28 +206,11 @@
         "sourcemaps": false
       }
     },
-    "3c9c33f4": {
-      "id": "3c9c33f4",
-      "pid": "793a63c5",
-      "name": "InputPageFiles.less",
-      "input": "site\\extensions\\InputPageFiles\\InputPageFiles.less",
-      "customOutput": false,
-      "type": "Less",
-      "config": {
-        "autoCompile": true,
-        "compress": true,
-        "sourcemaps": false,
-        "cleancss": false,
-        "strictMath": false,
-        "strictUnits": false,
-        "autoprefixer": true
-      }
-    },
-    "7e8a11f4": {
-      "id": "7e8a11f4",
+    "3270d73b": {
+      "id": "3270d73b",
       "pid": "793a63c5",
       "name": "dropzone.js",
-      "input": "site\\extensions\\InputPageFiles\\dropzone.js",
+      "input": "site\\extensions\\FieldtypePageFiles\\dropzone.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -265,11 +220,11 @@
         "sourcemaps": false
       }
     },
-    "6b26a1cb": {
-      "id": "6b26a1cb",
+    "f1ae9f84": {
+      "id": "f1ae9f84",
       "pid": "793a63c5",
-      "name": "InputTrumbowyg.less",
-      "input": "site\\extensions\\InputTrumbowyg\\InputTrumbowyg.less",
+      "name": "FieldtypeRichtext.less",
+      "input": "site\\extensions\\FieldtypeRichtext\\FieldtypeRichtext.less",
       "customOutput": false,
       "type": "Less",
       "config": {
@@ -282,11 +237,11 @@
         "autoprefixer": true
       }
     },
-    "af7a7142": {
-      "id": "af7a7142",
+    "1d76193f": {
+      "id": "1d76193f",
       "pid": "793a63c5",
-      "name": "InputTrumbowyg.js",
-      "input": "site\\extensions\\InputTrumbowyg\\InputTrumbowyg.js",
+      "name": "FieldtypeRichtext.js",
+      "input": "site\\extensions\\FieldtypeRichtext\\FieldtypeRichtext.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -296,235 +251,25 @@
         "sourcemaps": false
       }
     },
-    "3ccb9f56": {
-      "id": "3ccb9f56",
-      "pid": "793a63c5",
-      "name": "InputEpicEditor.js",
-      "input": "site\\extensions\\InputEpicEditor\\InputEpicEditor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "d22db6a3": {
-      "id": "d22db6a3",
-      "pid": "793a63c5",
-      "name": "trumbowyg.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\trumbowyg.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "fffbe6e3": {
-      "id": "fffbe6e3",
-      "pid": "793a63c5",
-      "name": "ca.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\ca.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "12eb5458": {
-      "id": "12eb5458",
-      "pid": "793a63c5",
-      "name": "de.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\de.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "c483d078": {
-      "id": "c483d078",
-      "pid": "793a63c5",
-      "name": "en.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\en.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "cc96b17a": {
-      "id": "cc96b17a",
-      "pid": "793a63c5",
-      "name": "es_ar.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\es_ar.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "0569c7d5": {
-      "id": "0569c7d5",
-      "pid": "793a63c5",
-      "name": "fa.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\fa.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "833c3377": {
-      "id": "833c3377",
-      "pid": "793a63c5",
-      "name": "fi.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\fi.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "5c734a58": {
-      "id": "5c734a58",
-      "pid": "793a63c5",
-      "name": "fr.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\fr.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "e7ffe7e4": {
-      "id": "e7ffe7e4",
-      "pid": "793a63c5",
-      "name": "ko.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\ko.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "f8ff1386": {
-      "id": "f8ff1386",
-      "pid": "793a63c5",
-      "name": "pt.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\pt.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "93bc7fec": {
-      "id": "93bc7fec",
-      "pid": "793a63c5",
-      "name": "ru.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\ru.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "ebef961e": {
-      "id": "ebef961e",
-      "pid": "793a63c5",
-      "name": "zh_cn.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\langs\\zh_cn.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "af572d0a": {
-      "id": "af572d0a",
-      "pid": "793a63c5",
-      "name": "epiceditor.js",
-      "input": "site\\extensions\\InputEpicEditor\\epiceditor\\js\\epiceditor.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "66932a48": {
-      "id": "66932a48",
-      "pid": "793a63c5",
-      "name": "trumbowyg.base64.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\plugins\\base64\\trumbowyg.base64.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "2159f64f": {
-      "id": "2159f64f",
-      "pid": "793a63c5",
-      "name": "trumbowyg.upload.js",
-      "input": "site\\extensions\\InputTrumbowyg\\trumbowyg\\plugins\\upload\\trumbowyg.upload.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": true,
-        "uglify": true,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "6dc7448c": {
-      "id": "6dc7448c",
+    "335c0d99": {
+      "id": "335c0d99",
       "pid": "793a63c5",
       "name": "fullscreen.js",
-      "input": "site\\extensions\\InputRedactor\\redactor\\fullscreen.js",
+      "input": "site\\extensions\\FieldtypeRichtext\\redactor\\fullscreen.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": true,
+        "uglify": true,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "8e904b74": {
+      "id": "8e904b74",
+      "pid": "793a63c5",
+      "name": "redactor.js",
+      "input": "site\\extensions\\FieldtypeRichtext\\redactor\\redactor.js",
       "customOutput": false,
       "type": "Js",
       "config": {
@@ -553,6 +298,14 @@
     }
   },
   "imports": {
+    "21599294": {
+      "id": "21599294",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\_grid.less",
+      "parents": [
+        "574017a7"
+      ]
+    },
     "56357651": {
       "id": "56357651",
       "pid": "793a63c5",
@@ -567,8 +320,8 @@
       "path": "site\\extensions\\Admin\\styles\\_variables.less",
       "parents": [
         "2e03cbd6",
-        "e0c032c5",
-        "3c9c33f4",
+        "bbdcafc6",
+        "f1ae9f84",
         "574017a7"
       ]
     },
@@ -736,6 +489,26 @@
       "name": "zbKKh6a.jpg",
       "type": "Jpg",
       "initialSize": 369483,
+      "status": "NOT_OPTIMIZED"
+    },
+    "82cee44f": {
+      "id": "82cee44f",
+      "pid": "793a63c5",
+      "path": "site\\extensions\\Admin\\styles\\images\\logo.png",
+      "size": 5782,
+      "name": "logo.png",
+      "type": "Png",
+      "initialSize": 5782,
+      "status": "NOT_OPTIMIZED"
+    },
+    "0ad7261c": {
+      "id": "0ad7261c",
+      "pid": "793a63c5",
+      "path": "site\\pages\\nft-mynfcontest.jpg",
+      "size": 11436,
+      "name": "nft-mynfcontest.jpg",
+      "type": "Jpg",
+      "initialSize": 11436,
       "status": "NOT_OPTIMIZED"
     }
   },

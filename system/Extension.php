@@ -24,21 +24,4 @@ class Extension extends Object
     {
     }
 
-    public function init() //  TODO temp workaround remove
-    {
-        $this->setup();
-    }
-
-    public function get($name)
-    {
-        switch ($name) {
-            case 'directory':
-                return $this->name;
-            default:
-                return parent::get($name);
-                break;
-        }
-    }
-
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object
+abstract class Object implements JsonSerializable
 {
 
     const DEFAULT_SAVE_FILE = "data.json";
@@ -14,7 +14,7 @@ abstract class Object
 
     // main data container, holds data loaded from JSON file
     protected $data = array();
-    protected $config = array();
+    protected $_settings = array();
 
     protected $defaultFields = array();
     protected $route = array();
@@ -254,6 +254,42 @@ abstract class Object
     }
 
 
+    public function settings($array = null){
+
+        if (is_null($array)){
+            $settings = objectify($this->_settings);
+            return $settings;
+        }
+        else if(count($array)){
+            $this->_settings = array_merge($this->_settings, $array);
+            return $this;
+        }
+
+    }
+
+
+    public function setting($key, $value = false)
+    {
+        if (!$value && $this->hasSetting($key)) {
+            return $this->_settings[$key];
+        } else {
+            if ($value) {
+                $this->_settings[$key] = $value;
+                return $this;
+            }
+        }
+        return false;
+
+    }
+
+
+    public function hasSetting($key)
+    {
+        return isset($this->_settings[$key]);
+    }
+
+
+
     public function get($name)
     {
         switch ($name) {
@@ -267,6 +303,8 @@ abstract class Object
                 return $this->{$name};
             case 'className':
                 return get_class($this);
+            case 'settings':
+                return $this->settings(null);
             default:
                 return $this->getFormatted($name);
         }
@@ -302,6 +340,10 @@ abstract class Object
     public function __toString()
     {
         return $this->className;
+    }
+
+    public function jsonSerialize() {
+        return $this->data;
     }
 
 }

@@ -29,11 +29,11 @@ class Page extends Object
     protected function getNewName()
     {
         // set object name
-        if ($this->template->settings->nameFrom && $this->template->fields->has(
-                $this->settings->nameFrom
+        if ($this->template->_settings->nameFrom && $this->template->fields->has(
+                $this->_settings->nameFrom
             )
         ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api("sanitizer")->name($this->settings->nameFrom);
+            return api("sanitizer")->name($this->_settings->nameFrom);
         } else {
             return api("sanitizer")->name($this->title);
         }

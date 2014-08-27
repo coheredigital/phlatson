@@ -1,5 +1,8 @@
 {
     "fieldtype": "FieldtypeText",
     "input": "InputTextarea",
-    "title": "Notes"
+    "title": "Notes",
+    "settings": {
+        "rows": 5
+    }
 }

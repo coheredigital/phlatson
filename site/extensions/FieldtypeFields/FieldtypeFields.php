@@ -16,8 +16,12 @@ class FieldtypeFields extends Fieldtype
                     continue;
                 }
 
-                $field = api("fields")->get($item['name']);
-                $fields->add($field);
+
+                if($field = api("fields")->get($item['name'])) {
+                    $field->settings($item['settings']);
+                    $fields->add($field);
+                } // TODO : this will skip missing / invalid fields, reevaluate validation here
+
             }
         }
 
