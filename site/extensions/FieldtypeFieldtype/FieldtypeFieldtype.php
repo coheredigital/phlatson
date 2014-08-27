@@ -23,10 +23,12 @@ class FieldtypeFieldtype extends Fieldtype
     {
 
         $fieldtypes = api("extensions")->all();
-        $fieldtypes->filter(["type"=>"Fieldtype"]);
+        $fieldtypes
+            ->filter(["type"=>"Fieldtype"])
+            ->sort("title");
 
         foreach($fieldtypes as $fieldtype) {
-            $options .= "<option value='$fieldtype->name'>$fieldtype->name</option>";
+            $options .= "<option value='$fieldtype->name'>$fieldtype->title</option>";
         }
 
         $attributes = $this->getAttributes();
