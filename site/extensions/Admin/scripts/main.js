@@ -15,6 +15,11 @@ $(function () {
 
     });
 
+
+    var $dropdown = $(".dropdown");
+    $dropdown.click(function(){
+        $(this).toggleClass("open");
+    });
 });
 
 var tabber = new HashTabber(options = {

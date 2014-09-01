@@ -16,15 +16,12 @@ class MarkupPageList extends Extension
     public function renderPageTitle(Page $page)
     {
         $output .= "<div class='page-tree-item'>";
-        $output .= "<div class='float-right'>";
-
-        $output .= $this->renderPageItemNew($page);
         $output .= "<i class='icon icon-circle'></i> <a class='page-tree-item-edit' href='" . api('config')->urls->admin . "pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<div class='page-tree-item-buttons'>";
+        $output .= $this->renderDropdown($page);
 
+        $output .= "<a class='button' target='_blank' href='http://" . api("config")->hostname . "{$page->url}'><i class='icon icon-eye'></i></a>";
         $output .= "</div>";
-//        $output .= "<div class='page-tree-item-buttons'>";
-//        $output .= "<a class='button' target='_blank' href='http://" . api("config")->hostname . "{$page->url}'><i class='icon icon-unhide'></i></a>";
-//        $output .= "</div>";
         $output .= "</div>";
         return $output;
     }
@@ -50,7 +47,7 @@ class MarkupPageList extends Extension
         return $output;
     }
 
-    private function renderPageItemNew(Page $page)
+    private function renderDropdown(Page $page)
     {
 
         $config = api("config");
@@ -58,14 +55,12 @@ class MarkupPageList extends Extension
 
         if (count($templates) > 1) {
 
-            $output = '<div class="right pointing dropdown icon icon-button">';
-            $output .= '<i class="plus icon"></i>';
+            $output = '<div class="dropdown">';
+            $output .= '<div class="button dropdown-button"><i class="icon icon-plus "></i></div>';
             $output .= '<div class="menu">';
 
             foreach ($templates as $t) {
-                $output .= '<div class="item">';
-                $output .= "<a href='{$config->urls->root}{$config->adminUrl}/pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
-                $output .= '</div>';
+                $output .= "<a class='item' href='{$config->urls->root}{$config->adminUrl}/pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
             }
 
             $output .= '</div>';
