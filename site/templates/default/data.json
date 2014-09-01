@@ -4,14 +4,14 @@
         {
             "name": "title",
             "settings": {
-                "columns": 1
+                "columns": 12
             }
 
         },
         {
             "name": "content",
             "settings":{
-                "columns": 11
+                "columns": 12
             }
         },
         {
