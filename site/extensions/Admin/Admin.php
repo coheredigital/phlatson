@@ -108,5 +108,26 @@ class Admin extends Extension
 
 
 
+    public function getSettings(){
+
+
+
+        $form = api("extensions")->get("MarkupEditForm");
+
+        $fieldset = api("extensions")->get("MarkupFormtab");
+        $fieldset->label = $this->get("title");
+
+        $field = new FieldtypeText();
+        $field->name = "color";
+
+        $fieldset->add($field);
+
+
+        $form->add($fieldset);
+
+        return $form->render();
+
+    }
+
 
 } 

@@ -60,21 +60,16 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
     public function filter($array)
     {
 
-        $objects = $this->data;
-
         foreach ($array as $key => $value) {
 
             $objects = array_filter(
-                $objects,
+                $this->data,
                 function ($object) use ($key, $value) {
 
-                    // TODO : this should actually fail / throwException
-                    if (!$object->{$key}) {
-                        return true;
+                    if (!isset($object->{$key})) {
+                        return false;
                     }
-
-                    $what = $object->{$key};
-                    return $what == $value;
+                    return $object->{$key} == $value;
                 }
             );
 
