@@ -11,7 +11,7 @@ class AdminSettings extends Extension
 
     protected function setup()
     {
-        $config = api("config");
+
         api('router')->add(
             new Route([
                 "path" => "settings",
@@ -27,6 +27,12 @@ class AdminSettings extends Extension
     public function render()
     {
 
+        $tabNames = [];
+        $tabs = [];
+
+
+
+
         $extensions = api("extensions")->all();
         $extensions->filter([
                 "configurable" => true
@@ -34,11 +40,37 @@ class AdminSettings extends Extension
 
         $admin = api("admin");
         $admin->title = "Settings";
-        $admin->output = "<div class='container'><h4>Settings</h4><div class='ui list'>{$output->main}</div></div>";
 
         foreach($extensions as $extension) {
-            $admin->output .= $extension->getSettings();
+
+            if(!count($extension->fields)) continue;
+
+            $form = api("extensions")->get("MarkupEditForm");
+
+            $tabNames["$extension->name"] = $extension->title;
+            foreach ( $extension->fields as $field ) {
+
+                $fieldtypeName = $field["fieldtype"];
+                $fieldtype = api("extensions")->get($fieldtypeName);
+                $fieldtype->settings($field["settings"]);
+                $fieldtype->label = $field["label"];
+                $fieldtype->value = $field["default"];
+                $fieldtype->attribute("name", $field["name"]);
+
+                $form->add($fieldtype);
+            }
+
+            $tabs["$extension->name"] = $form;
+
         }
+
+
+        foreach($tabs as $tab) {
+
+            $admin->output .= $tab->render();
+
+        }
+
 
         $admin->render();
 

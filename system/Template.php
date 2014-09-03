@@ -23,4 +23,8 @@ class Template extends Object
         }
     }
 
+    public function hasField($name){
+        return isset($this->data["fields"][$name]);
+    }
+
 }

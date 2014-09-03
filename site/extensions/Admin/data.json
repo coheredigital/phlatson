@@ -3,5 +3,13 @@
     "title": "Admin Panel",
     "type": "Admin",
     "autoload": true,
-    "configurable": true
+    "configurable": true,
+    "fields": [
+        {
+            "name": "color",
+            "label": "Main Color",
+            "default": "#f90",
+            "fieldtype": "FieldtypeText"
+        }
+    ]
 }

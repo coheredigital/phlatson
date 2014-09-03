@@ -118,6 +118,7 @@ class Admin extends Extension
         $fieldset->label = $this->get("title");
 
         $field = new FieldtypeText();
+        $field->label = "Main Color";
         $field->name = "color";
 
         $fieldset->add($field);

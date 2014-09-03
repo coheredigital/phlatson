@@ -90,14 +90,17 @@ abstract class Object implements JsonSerializable
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        $field = api("fields") ? api("fields")->get($name) : false;
-        if ($field) {
-            $fieldtype = $field->type;
+//        if( is_object($this->template) && $this->template->hasField($name)){
+            $field = api("fields") ? api("fields")->get($name) : false;
+            if ($field) {
+                $fieldtype = $field->type;
 
-            if ($fieldtype instanceof Fieldtype) {
-                $value = $fieldtype->getOutput($value);
+                if ($fieldtype instanceof Fieldtype) {
+                    $value = $fieldtype->getOutput($value);
+                }
             }
-        }
+
+//        }
 
         return $value;
     }

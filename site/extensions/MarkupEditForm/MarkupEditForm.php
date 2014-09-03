@@ -7,12 +7,11 @@ class MarkupEditForm extends Extension
     public $formID;
     public $api;
 
-    public $tabs = array();
+    public $items = array();
 
-    public function add(MarkupFormtab $element)
+    public function add($element)
     {
-        $this->tabs[] = $element;
-        $this->api = extract(api());
+        $this->items[] = $element;
     }
 
     protected function renderActions(){
@@ -36,7 +35,9 @@ class MarkupEditForm extends Extension
         $formTabContent = "";
 
         $tabCount = 0;
-        foreach ($this->tabs as $element) {
+        foreach ($this->items as $element) {
+            if(!$element instanceof MarkupFormtab) continue;
+
             $tabCount++;
             if (is_object($element)) {
                 $class = $tabCount == 1 ? "active" : "";
@@ -45,10 +46,11 @@ class MarkupEditForm extends Extension
 
             }
         }
-        $formTabMenu = "<ol data-tabs-id='section' class='menu menu-tabs'>{$formTabMenu}</ol>";
+        if($tabCount) $formTabMenu = "<ol data-tabs-id='section' class='menu menu-tabs'>{$formTabMenu}</ol>";
+
 
         $tabCount = 0;
-        foreach ($this->tabs as $element) {
+        foreach ($this->items as $element) {
 
             if (is_object($element)) {
 
@@ -66,16 +68,18 @@ class MarkupEditForm extends Extension
         // add the form controls
         $formActions = $this->renderActions();
 
-        $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>" .
-            "<div id='formTabs'><div class='container'>$formTabMenu</div></div>" .
-            $formTabContent .
-            $formActions .
-            "</form>";
+        $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>";
+        if($formTabMenu) $output .= "<div id='formTabs'><div class='container'>$formTabMenu</div></div>";
+        $output .= $formTabContent;
+        $output .= $formActions;
+        $output .= "</form>";
 
         return $output;
 
 
     }
+
+
 
 
 }
