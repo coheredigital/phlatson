@@ -67,7 +67,6 @@ class Router
         // get the set to iterate based on the current request
         $routeArray = $this->routes[$request->hostname][$request->method];
 
-
         foreach ($routeArray as $route) {
 
             if ($route->match($request)) {

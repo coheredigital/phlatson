@@ -237,33 +237,6 @@ class Image extends File
     }
 
 
-
-    /**
-     *    Apply sketch effect
-     * @return object
-     * @param $selective bool
-     *
-     *  requires PHP 5.5+
-     **/
-//    function flip($direction) {
-//
-//        switch($direction){
-//            case "horizontal":
-//                imageflip( $this->imageData, IMG_FLIP_HORIZONTAL);
-//                break;
-//            case "vertical":
-//                imageflip( $this->imageData, IMG_FLIP_VERTICAL);
-//                break;
-//            case "both":
-//                imageflip( $this->imageData, IMG_FLIP_BOTH);
-//                break;
-//        }
-//
-//        $this->trackFilter( __FUNCTION__ , ucfirst( $direction ) );
-//        return $this;
-//    }
-
-
     // gets an image based on a predefined size and set of parameters
     public function getAlternate($name)
     {

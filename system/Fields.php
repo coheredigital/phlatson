@@ -1,6 +1,4 @@
 <?php
-
-
 class Fields extends Objects
 {
 

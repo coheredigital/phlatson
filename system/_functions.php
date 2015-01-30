@@ -1,7 +1,6 @@
 <?php
 
 // shorthand for api($name) and api::set($key, $value)
-
 function api($name = null, $value = null, $lock = false)
 {
     return api::__invoke($name, $value, $lock);

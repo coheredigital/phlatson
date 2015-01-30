@@ -263,15 +263,17 @@ class Route
 
         $url = $this->url();
 
-        // check exact match to url
+
+        // first check method, and fail if no match
+        if ($this->method !== $request->method) {
+            return false;
+        }
+
+        // check exact match to url & method
         if ($url == $request->url) {
             return true;
         }
 
-        // check method
-        if ($this->method !== $request->method) {
-            return false;
-        }
 
 
         if (strpos($url, ':') !== false) {
