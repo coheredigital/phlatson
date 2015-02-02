@@ -14,13 +14,12 @@
     "routes" : [
         {
             "name": "admin",
-            "path": "/admin/",
+            "path": "admin/",
             "callback": "Admin:render",
             "halt": true
         },
         {
             "name": "pages",
-            "hostname": "xpages.dev",
             "path": ":all",
             "callback": "Pages:render"
         }

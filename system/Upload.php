@@ -13,7 +13,7 @@ class Upload
 
         if ($this->object->isNew()) {
             $tempFolderName = md5($this->object->url);
-            $this->path = api("config")->paths->assets . "uploads/{$tempFolderName}/";
+            $this->path = app("config")->paths->assets . "uploads/{$tempFolderName}/";
 
             // create the temp upload folder
             if (!file_exists($this->path)) {

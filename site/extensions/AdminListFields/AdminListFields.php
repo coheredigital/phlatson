@@ -17,14 +17,14 @@ class AdminListFields extends Extension
 
         $fieldsRoute = new Route;
         $fieldsRoute->path("fields");
-        $fieldsRoute->parent(api("admin")->route);
+        $fieldsRoute->parent(app("admin")->route);
         $fieldsRoute->callback(
             function () {
                 $this->render();
             }
         );
 
-        api('router')->add($fieldsRoute);
+        app('router')->add($fieldsRoute);
 
     }
 
@@ -32,9 +32,9 @@ class AdminListFields extends Extension
     protected function renderFieldsList()
     {
 
-        $config = api("config");
+        $config = app("config");
 
-        $table = api("extensions")->get("MarkupTable");
+        $table = app("extensions")->get("MarkupTable");
         $table->setColumns(
             array(
                 "Name" => "name",
@@ -43,7 +43,7 @@ class AdminListFields extends Extension
             )
         );
 
-        $fields = api("fields")->all();
+        $fields = app("fields")->all();
         foreach ($fields as $item) {
             $table->addRow(
                 array(
@@ -69,7 +69,7 @@ class AdminListFields extends Extension
     public function render()
     {
 
-        $admin = api("admin");
+        $admin = app("admin");
         $admin->title = "Fields";
         $admin->output = $this->renderFieldsList();
         $admin->render();

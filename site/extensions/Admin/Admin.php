@@ -18,33 +18,34 @@ class Admin extends Extension
 
         // default admin scripts and styles
 
-        api("config")->styles->add("{$this->url}styles/admin.css");
-        api("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
-        api("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
-        api("config")->scripts->add("{$this->url}scripts/main.js");
-        api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
+        app("config")->styles->add("{$this->url}styles/admin.css");
+        app("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
+        app("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
+        app("config")->scripts->add("{$this->url}scripts/main.js");
+        app("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
-        api("admin", $this); // register api variable
+        app("admin", $this); // register api variable
 
         // determine the admin route to use
         // check for a route named admin, then a config variable 'adminUrl' then default
-        if (api("router")->get("admin")) {
-            $this->route = api("router")->get("admin");
+        if (app("router")->get("admin")) {
+            $this->route = app("router")->get("admin");
         }
         else {
 
-            $adminUrl = api("config")->adminUrl ? api("config")->adminUrl : "admin";
+            $adminUrl = app("config")->adminUrl ? app("config")->adminUrl : "admin";
             $adminUrl = "/" . trim( $adminUrl , "/");
 
+            $this->route = new Route();
             $this->route->name("admin");
             $this->route->path($adminUrl);
             $this->route->callback("Admin:render");
 
-            api('router')->add($this->route);
+            app('router')->add($this->route);
         }
 
         // add the admin URL to the config urls variable for easy access/reference
-        api("config")->urls->admin = $this->route->url;
+        app("config")->urls->admin = $this->route->url;
 
 
         $logoutRoute = new Route;
@@ -53,11 +54,11 @@ class Admin extends Extension
         $logoutRoute->parent($this->route);
         $logoutRoute->callback(
             function () {
-                api("session")->logout();
-                api("session")->redirect(api("config")->urls->admin);
+                app("session")->logout();
+                app("session")->redirect(app("config")->urls->admin);
             }
         );
-        api('router')->add($logoutRoute);
+        app('router')->add($logoutRoute);
 
 
         $login = new Route;
@@ -65,7 +66,7 @@ class Admin extends Extension
             ->name("login")
             ->path("login")
             ->parent($this->route);
-        api('router')->add($login);
+        app('router')->add($login);
 
 
         $loginSubmit = new Route;
@@ -75,14 +76,14 @@ class Admin extends Extension
             ->parent($this->route)
             ->callback(
                 function () {
-                    if (api("session")->login(api("request")->post->username, api("request")->post->password)) {
-                        api("session")->redirect(api("router")->get("admin")->url);
+                    if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
+                        app("session")->redirect(app("router")->get("admin")->url);
                     } else {
                         // add error message
                     }
                 }
             );
-        api('router')->add($loginSubmit);
+        app('router')->add($loginSubmit);
 
     }
 
@@ -90,13 +91,13 @@ class Admin extends Extension
     public function render()
     {
 
-        extract(api());
+        extract(app());
 
         if ($user->isGuest()) {
 
             if($request->url != $router->login->url) $session->redirect($router->login->url);
             // add the login stylesheet and load the login layout
-            api("config")->styles->add("{$this->url}styles/login.css");
+            app("config")->styles->add("{$this->url}styles/login.css");
             include_once "login.php"; // TODO : include_once used because this was also getting called twice
         }
         else if($user->isLoggedIn()){
@@ -112,9 +113,9 @@ class Admin extends Extension
 
 
 
-        $form = api("extensions")->get("MarkupEditForm");
+        $form = app("extensions")->get("MarkupEditForm");
 
-        $fieldset = api("extensions")->get("MarkupFormtab");
+        $fieldset = app("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $field = new FieldtypeText();

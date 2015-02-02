@@ -10,10 +10,10 @@ class AdminEditTemplate extends AdminEdit
         $templateEdit = new Route;
         $templateEdit
             ->path("/templates/edit/:any")
-            ->parent(api("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function ($name) {
-                    $this->object = api("templates")->get($name);
+                    $this->object = app("templates")->get($name);
                     $this->template = $this->object->template;
                     $this->title = $this->object->title;
                     $this->render();
@@ -23,7 +23,7 @@ class AdminEditTemplate extends AdminEdit
         $templateNew = new Route;
         $templateNew
             ->path("/templates/new/")
-            ->parent(api("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function () {
                     $this->object = new Template();
@@ -38,18 +38,18 @@ class AdminEditTemplate extends AdminEdit
         $templateSave
             ->path("/templates/edit/:any")
             ->method("POST")
-            ->parent(api("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function ($name) {
-                    $page = api("templates")->get($name);
+                    $page = app("templates")->get($name);
                     $this->object = $page;
                     $this->processSave();
                 }
             );
 
-        api('router')->add($templateEdit);
-        api('router')->add($templateNew);
-        api('router')->add($templateSave);
+        app('router')->add($templateEdit);
+        app('router')->add($templateNew);
+        app('router')->add($templateSave);
 
     }
 

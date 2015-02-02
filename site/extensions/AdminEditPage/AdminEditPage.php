@@ -5,20 +5,21 @@ class AdminEditPage extends AdminEdit
 
     public function setup()
     {
-        $adminRoute = api('admin')->route;
+        $adminRoute = app('admin')->route;
 
         $edit = new Route;
         $edit->path("/pages/edit:all")
             ->parent($adminRoute)
             ->callback(
                 function ($url) {
-                    $this->object = api("pages")->get($url);
+                    $this->object = app("pages")->get($url);
                     $this->template = $this->object->template;
                     $this->title = $this->object->title;
                     $this->render();
                 }
             );
 
+        // TODO: this method still doesn't properly support adding new pages under the root page
         $new = new Route;
         $new->path("/pages/new/:any/:all")
             ->parent($adminRoute)
@@ -32,6 +33,47 @@ class AdminEditPage extends AdminEdit
                 }
             );
 
+        $newSave = new Route;
+        $newSave->path("/pages/new/:any/:all")
+            ->parent($adminRoute)
+            ->method("POST")
+            ->callback(
+                function ($template, $parent) {
+//                    $page = api("pages")->get($url);
+//                    $this->object = $page;
+                    $this->processSave();
+                }
+            );
+
+        // temp solution to the above issue
+        $newRootChild = new Route;
+        $newRootChild->path("/pages/new/:any/")
+            ->parent($adminRoute)
+            ->callback(
+                function ($template) {
+
+                    $this->object = new Page();
+                    $this->object->template = $template;
+                    $this->object->parent = "/";
+
+                    $this->title = "New Page";
+                    $this->render();
+                }
+            );
+
+//
+//        $saveNew = new Route();
+//        $saveNew
+//            ->path("/pages/new/:any/")
+//            ->method("POST")
+//            ->parent($adminRoute)
+//            ->callback(
+//                function ($url) {
+//                    $page = api("pages")->get($url);
+//                    $this->object = $page;
+//                    $this->processSave();
+//                }
+//            );
 
         $save = new Route();
         $save
@@ -40,7 +82,7 @@ class AdminEditPage extends AdminEdit
             ->parent($adminRoute)
             ->callback(
                 function ($url) {
-                    $page = api("pages")->get($url);
+                    $page = app("pages")->get($url);
                     $this->object = $page;
                     $this->processSave();
                 }
@@ -53,15 +95,16 @@ class AdminEditPage extends AdminEdit
             ->parent($adminRoute)
             ->callback(
                 function ($url) {
-                    $page = api("pages")->get($url);
+                    $page = app("pages")->get($url);
                     $this->processFiles($page);
                 }
             );
 
-        api('router')->add($edit);
-        api('router')->add($new);
-        api('router')->add($save);
-        api('router')->add($upload);
+        app("router")->add($edit);
+        app("router")->add($new);
+        app("router")->add($save);
+        app("router")->add($newSave);
+        app("router")->add($upload);
 
     }
 
@@ -71,7 +114,7 @@ class AdminEditPage extends AdminEdit
     protected function addFilesFields()
     {
 
-        $tab = api("extensions")->get("MarkupFormtab");
+        $tab = app("extensions")->get("MarkupFormtab");
         $tab->label = "Files";
         $tab->add($this->getFieldFiles());
 
@@ -82,7 +125,7 @@ class AdminEditPage extends AdminEdit
     protected function getFieldFiles()
     {
 
-        $input = api("extensions")->get("FieldtypePageFiles");
+        $input = app("extensions")->get("FieldtypePageFiles");
         $input->label = "Files";
         $input->attribute("name", "parent");
         $input->files = $this->object->files;
@@ -103,8 +146,8 @@ class AdminEditPage extends AdminEdit
     {
 
         $this->object->save();
-        api("session")->redirect(
-            api("request")->url
+        app("session")->redirect(
+            app("request")->url
         );
 
     }

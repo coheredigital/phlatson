@@ -10,34 +10,40 @@ require_once ROOT_PATH . 'system/_autoload.php';
 
 /* instatiate api variables */
 
-$api = new Api();
+$api = new App();
 
-api('config', new Config);
+app('config', new Config);
+app('request', new Request);
 
-api('request', new Request);
-api('router', new Router(api("config")->hostname) );
+$rootRoute = new Route();
+$rootRoute
+    ->name("root")
+    ->hostname(app("config")->hostname)
+    ->path("/");
+
+app('router', new Router($rootRoute) );
 
 // setup config routes
-foreach (api("config")->routes as $r){
+foreach (app("config")->routes as $r){
     $route = new Route($r);
-    api("router")->add($route);
+    app("router")->add($route);
 }
 
-api('extensions', new Extensions);
-api('sanitizer', new Sanitizer);
-api('pages', new Pages);
-api('users', new Users);
-api('fields', new Fields);
-api('templates', new Templates);
-api('session', new Session);
+app('extensions', new Extensions);
+app('sanitizer', new Sanitizer);
+app('pages', new Pages);
+app('users', new Users);
+app('fields', new Fields);
+app('templates', new Templates);
+app('session', new Session);
 
 // execute the app
 
 try {
-    api('router')->run(api('request'));
+    app('router')->run(app('request'));
 } catch(Exception $e) {
 
     $message = "Exception: " . $e->getMessage() . " (in " . $e->getFile() . " line " . $e->getLine() . ")";
-    if( api("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
+    if( app("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
     var_dump($message) ;
 }

@@ -7,7 +7,7 @@ class FieldtypeFieldtype extends Fieldtype
 
     public function getOutput($name)
     {
-        $field = api("extensions")->get("$name");
+        $field = app("extensions")->get("$name");
         return $field;
     }
 
@@ -22,7 +22,7 @@ class FieldtypeFieldtype extends Fieldtype
     protected function renderInput()
     {
 
-        $fieldtypes = api("extensions")->all();
+        $fieldtypes = app("extensions")->all();
         $fieldtypes
             ->filter(["type"=>"Fieldtype"])
             ->sort("title");

@@ -31,7 +31,7 @@ class ObjectArray implements IteratorAggregate, ArrayAccess, Countable
 
     public function import($items)
     {
-        if (!is_array($items)) {
+        if (!$items instanceof ObjectArray) {
             return $this;
         }
 

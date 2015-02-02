@@ -8,7 +8,7 @@ class FieldtypeTemplate extends Fieldtype
 
     public function getOutput($name)
     {
-        $template = api("templates")->get($name);
+        $template = app("templates")->get($name);
         if ($this->object) {
             $template->setReference($this->object);
         }
@@ -42,7 +42,7 @@ class FieldtypeTemplate extends Fieldtype
     {
         $selectOptions = array();
 
-        $templates = api("templates")->all();
+        $templates = app("templates")->all();
         foreach ($templates as $t) {
             $selectOptions["$t->label"] = "$t->name";
         }

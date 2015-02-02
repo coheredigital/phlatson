@@ -9,8 +9,6 @@
 class Router
 {
 
-    private $hostname;
-
     // routes organize in multidimensional array
     // $routes['hostname']['method']['path']
     private $routes = [];
@@ -18,10 +16,6 @@ class Router
 
     public $errorCallback;
 
-    public function __construct($hostname)
-    {
-        $this->hostname = $hostname;
-    }
 
     /**
      * Defines callback if route is not found
@@ -35,7 +29,8 @@ class Router
     public function add(Route $route)
     {
 
-        $hostname = $route->hostname ? $route->hostname : api("config")->hostname;
+
+        $hostname = $route->hostname ? $route->hostname : app("config")->hostname;
         $method = $route->method;
         $path = $route->path;
 

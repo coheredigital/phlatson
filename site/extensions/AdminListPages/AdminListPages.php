@@ -17,7 +17,7 @@ class AdminListPages extends Extension
 
         $pagesList = new Route;
         $pagesList->path("pages");
-        $pagesList->parent(api("admin")->route);
+        $pagesList->parent(app("admin")->route);
         $pagesList->callback(
             function () {
                 $this->render();
@@ -31,9 +31,9 @@ class AdminListPages extends Extension
     protected function renderPagetree()
     {
 
-        $markupPageList = api("extensions")->get("MarkupPageList");
+        $markupPageList = app("extensions")->get("MarkupPageList");
 
-        $home = api("pages")->get("/");
+        $home = app("pages")->get("/");
         $markupPageList->rootPage = $home;
         $markupPageList->adminPanel = $this;
 
@@ -44,7 +44,7 @@ class AdminListPages extends Extension
     public function render()
     {
 
-        $admin = api("admin");
+        $admin = app("admin");
         $admin->title = "Pages";
         $admin->output = $this->renderPagetree();
         $admin->render();

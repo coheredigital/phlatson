@@ -15,13 +15,13 @@ class AdminListTemplates extends Extension
 
         $templateList = new Route;
         $templateList->path("templates");
-        $templateList->parent(api("admin")->route);
+        $templateList->parent(app("admin")->route);
         $templateList->callback(
             function () {
                 $this->render();
             }
         );
-        api('router')->add($templateList);
+        app('router')->add($templateList);
 
     }
 
@@ -29,10 +29,10 @@ class AdminListTemplates extends Extension
     protected function renderTemplatesList()
     {
 
-        $config = api("config");
+        $config = app("config");
 
-        $fieldsList = api("templates")->all();
-        $table = api("extensions")->get("MarkupTable");
+        $fieldsList = app("templates")->all();
+        $table = app("extensions")->get("MarkupTable");
         $table->setColumns(
             array(
                 "Name" => "name",
@@ -66,7 +66,7 @@ class AdminListTemplates extends Extension
     public function render()
     {
 
-        $admin = api("admin");
+        $admin = app("admin");
         $admin->title = "Templates";
         $admin->output = $this->renderTemplatesList();
         $admin->render();

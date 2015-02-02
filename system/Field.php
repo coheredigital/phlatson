@@ -13,7 +13,7 @@ class Field extends Object
     {
         if ($this->getUnformatted("fieldtype")) {
             $name = $this->getUnformatted("fieldtype");
-            $fieldtype = api("extensions")->get($name);
+            $fieldtype = app("extensions")->get($name);
 
             if ($fieldtype instanceof Fieldtype) {
                 $fieldtype->setField($this);
@@ -33,7 +33,7 @@ class Field extends Object
         if ($this->getUnformatted("input")) {
 
             $name = $this->getUnformatted("input");
-            $input = api("extensions")->get($name);
+            $input = app("extensions")->get($name);
             $input->settings($this->_settings);
             return $input;
 
@@ -49,9 +49,9 @@ class Field extends Object
                 $this->_settings->nameFrom
             )
         ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api("sanitizer")->name($this->_settings->nameFrom);
+            return app("sanitizer")->name($this->_settings->nameFrom);
         } else {
-            return api("sanitizer")->name($this->label);
+            return app("sanitizer")->name($this->label);
         }
 
     }
@@ -63,7 +63,7 @@ class Field extends Object
         // handle new object creation
         if ($this->isNew()) {
 
-            $this->path = api("config")->paths->fields . $this->name . "/";
+            $this->path = app("config")->paths->fields . $this->name . "/";
             if (!file_exists($this->path)) {
                 mkdir($this->path, 0777, true);
             }
@@ -83,7 +83,7 @@ class Field extends Object
                 return $this->getInput();
                 break;
             case 'template':
-                return api("templates")->get("field");
+                return app("templates")->get("field");
                 break;
             default:
                 return parent::get($name);

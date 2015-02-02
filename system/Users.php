@@ -9,7 +9,7 @@ class Users extends Objects
 
     public function setActiveUser(User $user)
     {
-        api('user', $user);
+        app('user', $user);
     }
 
 }

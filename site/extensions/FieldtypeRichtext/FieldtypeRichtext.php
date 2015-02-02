@@ -8,12 +8,12 @@ class FieldtypeRichtext extends Fieldtype
 
         $this->attribute('class', 'ui input ' . $this->className);
 
-        api('config')->styles->add($this->url . "redactor/redactor.css");
-        api('config')->styles->add($this->url . "{$this->name}.css");
+        app('config')->styles->add($this->url . "redactor/redactor.css");
+        app('config')->styles->add($this->url . "{$this->name}.css");
 
-        api('config')->scripts->add($this->url . "redactor/redactor.js");
-        api('config')->scripts->add($this->url . "redactor/fullscreen.js");
-        api('config')->scripts->add($this->url . "{$this->name}.js");
+        app('config')->scripts->add($this->url . "redactor/redactor.js");
+        app('config')->scripts->add($this->url . "redactor/fullscreen.js");
+        app('config')->scripts->add($this->url . "{$this->name}.js");
 
         $attributes = $this->getAttributes();
         $output = "<textarea $attributes >$this->value</textarea>";

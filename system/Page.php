@@ -5,7 +5,8 @@ class Page extends Object
 {
 
     protected $rootFolder = "pages";
-    public $defaultFields = array("template");
+    protected $objectType = "pages"; // used for api references
+    public $defaultFields = array("template", "parent");
 
     function __construct($file = null)
     {
@@ -23,7 +24,6 @@ class Page extends Object
 
         }
 
-
     }
 
     protected function getNewName()
@@ -33,9 +33,9 @@ class Page extends Object
                 $this->_settings->nameFrom
             )
         ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return api("sanitizer")->name($this->_settings->nameFrom);
+            return app("sanitizer")->name($this->_settings->nameFrom);
         } else {
-            return api("sanitizer")->name($this->title);
+            return app("sanitizer")->name($this->title);
         }
 
     }
@@ -67,7 +67,7 @@ class Page extends Object
         foreach ($subs as $folder) {
 
             $url = $this->get("directory") . "/" . basename($folder);
-            $page = api("pages")->get($url);
+            $page = app("pages")->get($url);
             if ($page instanceof Page) {
                 // pass the Page to $children array, use url as key to avoid duplicates
                 // should be impossible for any to items to return the same url
@@ -92,7 +92,7 @@ class Page extends Object
         }
 
         foreach ($urls as $url) {
-            $page = api("pages")->get($url);
+            $page = app("pages")->get($url);
             $parents[] = $page;
         }
 
@@ -105,7 +105,7 @@ class Page extends Object
         if ($name == $this->get("url")) {
             return $this;
         }
-        return api("pages")->get($name);
+        return app("pages")->get($name);
     }
 
     protected function createUrl($array)
@@ -124,7 +124,7 @@ class Page extends Object
                 $directory = implode("/", $this->route);
                 return normalizeDirectory($directory);
             case 'url':
-                return api('config')->urls->root . ltrim($this->directory, "/");
+                return app('config')->urls->root . ltrim($this->directory, "/");
             case 'children':
                 return $this->children();
             case 'rootParent':
@@ -136,6 +136,8 @@ class Page extends Object
             case 'layout':
                 // alias for $page->template->layout (required by AdminPage class)
                 return $this->template->layout;
+            case 'objectType': // protected / private variable that should have public get
+                return $this->{$name};
             default:
                 return parent::get($name);
         }
@@ -153,7 +155,7 @@ class Page extends Object
                 break;
             default:
                 if ($this->template && $this->template->fields->has($name)) {
-                    $field = api("fields")->get("$name");
+                    $field = app("fields")->get("$name");
                     $fieldtype = $field->type;
                     $this->data[$name] = $fieldtype->getSave($value);
                 } else {

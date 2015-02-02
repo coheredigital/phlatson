@@ -21,10 +21,10 @@ class AdminEditField extends AdminEdit
 
         $fieldRoute = new Route;
         $fieldRoute->path("fields/edit/:any");
-        $fieldRoute->parent(api("admin")->route);
+        $fieldRoute->parent(app("admin")->route);
         $fieldRoute->callback(
             function ($name) {
-                $this->object = api("fields")->get($name);
+                $this->object = app("fields")->get($name);
 
                 $this->title = "Edit Field";
 
@@ -34,7 +34,7 @@ class AdminEditField extends AdminEdit
 
         $newFieldRoute = new Route;
         $newFieldRoute->path("fields/new/");
-        $newFieldRoute->parent(api("admin")->route);
+        $newFieldRoute->parent(app("admin")->route);
         $newFieldRoute->callback(
             function () {
                 $this->object = new Field();
@@ -47,20 +47,19 @@ class AdminEditField extends AdminEdit
         );
 
         $saveFieldRoute = new Route;
-        $saveFieldRoute->path("fields/edit/:any");
-        $saveFieldRoute->method("POST");
-        $saveFieldRoute->callback(
+        $saveFieldRoute
+            ->path("fields/edit/:any")
+            ->method("POST")
+            ->parent(app("admin")->route)
+            ->callback(
             function ($name) {
-                $page = api("fields")->get($name);
+                $page = app("fields")->get($name);
                 $this->object = $page;
                 $this->processSave();
             }
         );
-        $saveFieldRoute->parent(api("admin")->route);
 
-        api('router')->add($fieldRoute);
-        api('router')->add($newFieldRoute);
-        api('router')->add($saveFieldRoute);
+
 
 
     }

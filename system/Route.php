@@ -51,9 +51,13 @@ class Route
         if ($parameters["callback"]) {
             $this->callback($parameters["callback"]);
         }
+
+        // add route as child of parent or child of root if no parent defined. Unless this is the root route
         if ($parameters["parent"]) {
             $this->parent($parameters["parent"]);
         }
+
+
         if ($parameters["name"]) {
             $this->name($parameters["name"]);
         }
@@ -78,7 +82,7 @@ class Route
                 if ($this->parent) {
                     return $this->parent->hostname();
                 } else {
-                    return api("config")->hostname;
+                    return app("config")->hostname;
                 }
             }
 
@@ -166,7 +170,7 @@ class Route
     public function parent($route)
     {
         if (is_string($route)) {
-            $route = api("router")->get($route);
+            $route = app("router")->get($route);
         }
 
         if (!$route instanceof Route) {
@@ -274,8 +278,7 @@ class Route
             return true;
         }
 
-
-
+        // check for pattern match potential
         if (strpos($url, ':') !== false) {
             $searches = array_keys($this->patterns);
             $replaces = array_values($this->patterns);
@@ -358,6 +361,7 @@ class Route
             case "name":
             case "method":
             case "children":
+            case "parent":
                 return $this->{$name};
             default:
                 return false;

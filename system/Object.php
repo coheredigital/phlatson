@@ -59,7 +59,7 @@ abstract class Object implements JsonSerializable
     {
 
         $relativePath = str_replace(
-            api("config")->paths->site . $this->rootFolder,
+            app("config")->paths->site . $this->rootFolder,
             "",
             $this->_file
         ); // trim the root path to get root relative path
@@ -91,7 +91,7 @@ abstract class Object implements JsonSerializable
 
         // get the field object matching the passed "$name"
 //        if( is_object($this->template) && $this->template->hasField($name)){
-            $field = api("fields") ? api("fields")->get($name) : false;
+            $field = app("fields") ? app("fields")->get($name) : false;
             if ($field) {
                 $fieldtype = $field->type;
 
@@ -103,6 +103,18 @@ abstract class Object implements JsonSerializable
 //        }
 
         return $value;
+    }
+
+
+    protected function getDefaultFields(){
+
+        $fieldArray = new ObjectArray();
+
+        foreach($this->defaultFields as $fieldName){
+            $field = app("fields")->get($fieldName);
+            if($field instanceof Field) $fieldArray->add($field);
+        }
+        return $fieldArray;
     }
 
     /**
@@ -136,14 +148,15 @@ abstract class Object implements JsonSerializable
     protected function processSaveInput()
     {
 
-        $post = api("request")->post;
+        $post = app("request")->post;
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
         $fields = $this->template->fields;
 
         // add the default fields
         if (count($this->defaultFields)) {
-            $fields->import($this->defaultFields);
+            $defaultFields = $this->getDefaultFields();
+            $fields->import($defaultFields);
         }
 
 
@@ -151,7 +164,6 @@ abstract class Object implements JsonSerializable
 
         foreach ($fields as $field) {
             $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
-
             $value = $field->type->getSave($value);
             $saveData[$field->name] = $value;
         }
@@ -164,16 +176,11 @@ abstract class Object implements JsonSerializable
     protected function processSaveName()
     {
 
-        $post = api("request")->post;
-
-        if (!$this->isNew()) {
-            $previousName = $this->name;
-        }
-
+        $post = app("request")->post;
 
         // set name value
         if ($post->name) { // TODO : this is temp
-            $pageName = api("sanitizer")->name($post->name); // TODO add page name sanitizer
+            $pageName = app("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
         } else { // generate page name from defined field
             $this->name = $this->getName();
@@ -300,7 +307,7 @@ abstract class Object implements JsonSerializable
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'url':
-                return api('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
+                return app('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
             case 'name':
                 return $this->{$name};
@@ -322,7 +329,7 @@ abstract class Object implements JsonSerializable
     {
         switch ($name) {
             case "name":
-                $name = api("sanitizer")->name($value);
+                $name = app("sanitizer")->name($value);
                 $this->name = $name;
         }
         $this->data[$name] = $value;

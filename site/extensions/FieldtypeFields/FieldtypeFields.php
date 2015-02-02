@@ -17,7 +17,7 @@ class FieldtypeFields extends Fieldtype
                 }
 
 
-                if($field = api("fields")->get($item['name'])) {
+                if($field = app("fields")->get($item['name'])) {
                     $field->settings($item['settings']);
                     $fields->add($field);
                 } // TODO : this will skip missing / invalid fields, reevaluate validation here
@@ -27,7 +27,7 @@ class FieldtypeFields extends Fieldtype
 
         if ($this->object instanceof Object && count($this->object->defaultFields)) {
             foreach ($this->object->defaultFields as $item) {
-                $field = api("fields")->get($item);
+                $field = app("fields")->get($item);
                 if ($field instanceof Field) {
                     $fields->add($field);
                 }
@@ -46,7 +46,7 @@ class FieldtypeFields extends Fieldtype
 
         // remove invalid fields
         foreach ($array as $key => $name) {
-            if (!api("fields")->get($key)) {
+            if (!app("fields")->get($key)) {
                 unset($array[$key]);
             } else {
                 $formattedArray[] = ["name" => $key];
@@ -58,10 +58,10 @@ class FieldtypeFields extends Fieldtype
 
     protected function renderInput()
     {
-        api('config')->styles->add($this->url . "{$this->className}.css");
-        api('config')->scripts->add($this->url . "{$this->className}.js");
+        app('config')->styles->add($this->url . "{$this->className}.css");
+        app('config')->scripts->add($this->url . "{$this->className}.js");
 
-        $fields = api("fields")->all();
+        $fields = app("fields")->all();
 
         $fieldsSelect = "<option value=''>Choose a field to add...</option>";
         foreach ($fields as $f) {

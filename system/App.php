@@ -4,7 +4,7 @@
  * API Registry class contains all core api classes to be accessed by any
  * class extending the core. or any class via the api() function defined in _functions.php
  */
-final class Api
+final class App
 {
 
     private static $registry = array();

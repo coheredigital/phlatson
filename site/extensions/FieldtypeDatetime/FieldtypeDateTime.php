@@ -19,9 +19,9 @@ class FieldtypeDateTime extends Fieldtype
     protected function renderInput()
     {
 
-        api('config')->styles->add($this->url . "/datetimepicker/jquery.datetimepicker.css");
-        api('config')->scripts->add($this->url . "/datetimepicker/jquery.datetimepicker.js");
-        api('config')->scripts->add($this->url . "/$this->className.js");
+        app('config')->styles->add($this->url . "/datetimepicker/jquery.datetimepicker.css");
+        app('config')->scripts->add($this->url . "/datetimepicker/jquery.datetimepicker.js");
+        app('config')->scripts->add($this->url . "/$this->className.js");
 
         $this->attribute("type", "text");
 

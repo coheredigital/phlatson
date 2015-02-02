@@ -20,7 +20,7 @@ abstract class Objects
     {
         // manually add the special case of the home page
         if ($this instanceof Pages) {
-            $this->data['/'] = api("config")->paths->pages . "data.json";
+            $this->data['/'] = app("config")->paths->pages . "data.json";
         }
 
     }
@@ -32,7 +32,7 @@ abstract class Objects
             return $this->data[$key];
         }
 
-        $root = normalizePath(api('config')->paths->site . $this->rootFolder);
+        $root = normalizePath(app('config')->paths->site . $this->rootFolder);
         $path = normalizePath($root . $key);
 
         $file = $path . "data.json";
@@ -47,7 +47,7 @@ abstract class Objects
     protected function getObjectList($directory = null)
     {
 
-        $siteRootPath = api('config')->paths->site . $this->rootFolder;
+        $siteRootPath = app('config')->paths->site . $this->rootFolder;
         $siteRootPath = normalizePath($siteRootPath);
 
         $sitePathCheck = $siteRootPath . $directory;
@@ -136,7 +136,7 @@ abstract class Objects
     public function isValidPath($path)
     {
         $path = normalizePath($path);
-        if (strpos($path, api("config")->paths->root) !== false) {
+        if (strpos($path, app("config")->paths->root) !== false) {
             return true;
         }
         return false;

@@ -7,7 +7,7 @@ class FieldtypePageFiles extends Fieldtype
 
     protected function renderInput()
     {
-        $config = api("config");
+        $config = app("config");
 
         $config->scripts->add($this->url . "dropzone.js");
         $config->scripts->add($this->url . $this->className . ".js");

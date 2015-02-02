@@ -46,7 +46,7 @@ class User extends Object
     {
         switch ($name) {
             case 'template':
-                return api("templates")->get("user");
+                return app("templates")->get("user");
                 break;
             default:
                 return parent::get($name);
