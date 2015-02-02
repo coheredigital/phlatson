@@ -33,6 +33,11 @@ abstract class Fieldtype extends Extension
         return (string)$value;
     }
 
+    public function getEdit($value)
+    {
+        return $this->getOutput($value);
+    }
+
 
     public function getSave($value)
     {
@@ -107,8 +112,20 @@ abstract class Fieldtype extends Extension
 
     protected function renderInput()
     {
-        return "";
+        $this->attribute("type", "text");
+
+        if ($this->value) {
+            $this->attribute("value", $this->value);
+        }
+
+        if ($this->name) {
+            $this->attribute("name", $this->name);
+        }
+        $attributes = $this->getAttributes();
+        $output = "<input {$attributes}>";
+        return $output;
     }
+
 
 
     // we will default to rendering a basic text field since it will be the most common inout type for most field types

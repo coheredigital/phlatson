@@ -1,6 +1,9 @@
 {
     "title": "sdsdsd",
     "content": "<p>sdsdsd<\/p>",
-    "notes": null,
-    "date": false
+    "template": "default",
+    "name": "sdsdsd",
+    "parent": "\/",
+    "date": false,
+    "notes": null
 }

@@ -5,7 +5,6 @@ class Page extends Object
 {
 
     protected $rootFolder = "pages";
-    protected $objectType = "pages"; // used for api references
     public $defaultFields = array("template", "parent");
 
     function __construct($file = null)

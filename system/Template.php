@@ -3,11 +3,13 @@
 class Template extends Object
 {
 
+    public $master; // the object this template belongs to
     protected $rootFolder = "templates";
+    public $defaultFields = array("parent");
 
     public function setReference($object)
     {
-        $this->referenceObject = $object;
+        $this->master = $object;
     }
 
     public function get($name)

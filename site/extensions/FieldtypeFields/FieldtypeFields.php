@@ -25,8 +25,10 @@ class FieldtypeFields extends Fieldtype
             }
         }
 
-        if ($this->object instanceof Object && count($this->object->defaultFields)) {
-            foreach ($this->object->defaultFields as $item) {
+        if($this->object instanceof Object) $defaultFields = $this->object->master->defaultFields;
+
+        if (count($defaultFields)) {
+            foreach ($defaultFields as $item) {
                 $field = app("fields")->get($item);
                 if ($field instanceof Field) {
                     $fields->add($field);

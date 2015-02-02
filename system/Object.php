@@ -6,6 +6,7 @@ abstract class Object implements JsonSerializable
     const DEFAULT_SAVE_FILE = "data.json";
 
     public $name;
+
     protected $path;
     protected $configPath = null;
     protected $_file;
@@ -91,10 +92,11 @@ abstract class Object implements JsonSerializable
 
         // get the field object matching the passed "$name"
 //        if( is_object($this->template) && $this->template->hasField($name)){
-            $field = app("fields") ? app("fields")->get($name) : false;
-            if ($field) {
-                $fieldtype = $field->type;
+            $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
 
+            if ($field instanceof Field ) {
+                $fieldtype = $field->type;
+                $fieldtype->object = $this;
                 if ($fieldtype instanceof Fieldtype) {
                     $value = $fieldtype->getOutput($value);
                 }
@@ -103,6 +105,26 @@ abstract class Object implements JsonSerializable
 //        }
 
         return $value;
+    }
+
+
+    protected function setFormatted($name, $value)
+    {
+
+        // get the field object matching the passed "$name"
+
+        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
+
+        if ($field instanceof Field ) {
+            $fieldtype = $field->type;
+            $fieldtype->object = $this;
+
+            if ($fieldtype instanceof Fieldtype) {
+                $value = $fieldtype->getSave($value);
+            }
+        }
+
+        $this->setUnformatted($name, $value);
     }
 
 
@@ -128,7 +150,7 @@ abstract class Object implements JsonSerializable
      */
     public function setUnformatted($name, $value)
     {
-        return $this->data[$name] = $value;
+        $this->data[$name] = $value;
     }
 
     /**
@@ -149,27 +171,17 @@ abstract class Object implements JsonSerializable
     {
 
         $post = app("request")->post;
+
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
+
         $fields = $this->template->fields;
-
-        // add the default fields
-        if (count($this->defaultFields)) {
-            $defaultFields = $this->getDefaultFields();
-            $fields->import($defaultFields);
-        }
-
-
-        $saveData = array();
 
         foreach ($fields as $field) {
             $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
             $value = $field->type->getSave($value);
-            $saveData[$field->name] = $value;
+            $this->data[$field->name] = $value;
         }
-
-        $this->data = $saveData;
-
 
     }
 
@@ -332,7 +344,8 @@ abstract class Object implements JsonSerializable
                 $name = app("sanitizer")->name($value);
                 $this->name = $name;
         }
-        $this->data[$name] = $value;
+//        $this->data[$name] = $value;
+        $this->setFormatted($name, $value);
         return $this;
     }
 
