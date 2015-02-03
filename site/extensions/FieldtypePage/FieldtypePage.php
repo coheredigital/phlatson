@@ -12,7 +12,7 @@ class FieldtypePage extends Fieldtype
     public function getSave($value)
     {
         if ($value instanceof Page) {
-            $value = $value->name;
+            $value = $value->url;
         } else {
             $page = app("pages")->get("$url");
             $value = $page->url;
@@ -21,5 +21,22 @@ class FieldtypePage extends Fieldtype
         return $value;
     }
 
+
+
+    protected function renderInput()
+    {
+        $this->attribute("type", "text");
+
+        if ($this->value) {
+            $this->attribute("value", $this->value->url);
+        }
+
+        if ($this->name) {
+            $this->attribute("name", $this->name);
+        }
+        $attributes = $this->getAttributes();
+        $output = "<input {$attributes}>";
+        return $output;
+    }
 
 }

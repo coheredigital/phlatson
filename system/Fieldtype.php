@@ -7,7 +7,7 @@ abstract class Fieldtype extends Extension
     protected $field;
     protected $object;
 
-    public $value;
+    public $value = null;
     public $name;
     public $label;
 
@@ -16,6 +16,7 @@ abstract class Fieldtype extends Extension
     protected function setup()
     {
         $this->attribute('class', 'input ' . $this->className);
+        $this->attribute("name", $this->field->name);
         if ($field instanceof Field) {
             $this->field = $field;
         }
@@ -118,9 +119,6 @@ abstract class Fieldtype extends Extension
             $this->attribute("value", $this->value);
         }
 
-        if ($this->name) {
-            $this->attribute("name", $this->name);
-        }
         $attributes = $this->getAttributes();
         $output = "<input {$attributes}>";
         return $output;
@@ -128,27 +126,13 @@ abstract class Fieldtype extends Extension
 
 
 
-    // we will default to rendering a basic text field since it will be the most common inout type for most field types
+    // we will default to rendering a basic text field since it will be the most common input type for most field types
     final public function render()
     {
         $output = $this->renderInput();
-        if ($this->wrap) {
-            $output = $this->renderWrapper($output);
-        }
+        $output = $this->renderWrapper($output);
+
         return $output;
-    }
-
-
-    public function get($name)
-    {
-        switch ($name) {
-            case 'layout':
-                // alias for $page->template->layout (required by AdminPage class)
-                return $this->template->layout;
-            default:
-                return parent::get($name);
-        }
-
     }
 
 

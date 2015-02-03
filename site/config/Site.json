@@ -3,6 +3,7 @@
     "sessionExpireSeconds": 3600,
     "timezone": "America/New_York",
     "debug": true,
+    "simulate": true,
     "adminUrl": "admin",
     "hostname": "xpages.dev",
 

@@ -18,25 +18,22 @@ class FieldtypeTemplate extends Fieldtype
     public function getSave($value)
     {
         if ($value instanceof Template) {
-            $value = $value->name;
+            return $value->name;
         }
-        $value = "$value"; // stringify for certainty :)
-        return $value;
+        else{
+            $template = app("templates")->get($value);
+            if ($value instanceof Template) return $value->name;
+        }
+        return null;
     }
 
     protected function setup()
     {
         $this->label = "Template";
         $this->columns = 6;
-        $this->attribute("name", "template");
+        $this->attribute("name", $this->field->name);
     }
 
-    public function setObject(Object $page)
-    {
-        $this->object = $page;
-        $this->setAllowedTemplates();
-        $this->value = $this->object->template->name;
-    }
 
     protected function setAllowedTemplates()
     {
@@ -47,6 +44,23 @@ class FieldtypeTemplate extends Fieldtype
             $selectOptions["$t->label"] = "$t->name";
         }
         $this->setOptions($selectOptions);
+    }
+
+
+    protected function renderInput()
+    {
+        $this->attribute("type", "text");
+
+        if ($this->value) {
+            $this->attribute("value", $this->value->name);
+        }
+
+
+
+
+        $attributes = $this->getAttributes();
+        $output = "<input {$attributes}>";
+        return $output;
     }
 
 }

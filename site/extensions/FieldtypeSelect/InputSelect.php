@@ -6,7 +6,7 @@
  * Time: 12:48 PM
  */
 
-class InputSelect extends Input{
+class FieldtypeSelect extends Input{
 
     public $options = [];
 

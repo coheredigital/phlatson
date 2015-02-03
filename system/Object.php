@@ -234,8 +234,12 @@ abstract class Object implements JsonSerializable
     public function save($saveName = null)
     {
 
-//      $saveFile = self::DEFAULT_SAVE_FILE;
-        $saveFile = "test.json";
+        if(app("config")->simulate){
+            $saveFile = "test.json";
+        }
+        else{
+            $saveFile = self::DEFAULT_SAVE_FILE;
+        }
 
         $this->processSaveInput();
         $this->processSaveName();
