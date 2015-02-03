@@ -1,8 +1,5 @@
 {
-    "template": "default",
+    "template": null,
     "title": "default",
-    "parent": "\/",
-    "content": null,
-    "notes": null,
-    "date": false
+    "parent": "\/"
 }

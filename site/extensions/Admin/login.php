@@ -10,14 +10,14 @@ foreach ($config->styles as $file) {
 }
 
 $usernameInput = $extensions->get("FieldtypeText");
-$usernameInput->name = "username";
 $usernameInput->label = false;
+$usernameInput->attribute("name","username");
 $usernameInput->attribute("autocomplete","off");
 $usernameInput->attribute("placeholder","Username");
 
 $passwordInput = $extensions->get("FieldtypePassword");
-$passwordInput->name = "password";
 $passwordInput->label = false;
+$passwordInput->attribute("name","password");
 $passwordInput->attribute("autocomplete","off");
 $passwordInput->attribute("placeholder","Password");
 
