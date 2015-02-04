@@ -18,7 +18,6 @@ class FieldtypeFields extends Fieldtype
 
 
                 if($field = app("fields")->get($item['name'])) {
-                    $field->settings($item['settings']);
                     $fields->add($field);
                 } // TODO : this will skip missing / invalid fields, reevaluate validation here
 

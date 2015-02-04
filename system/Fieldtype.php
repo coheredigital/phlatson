@@ -99,9 +99,9 @@ abstract class Fieldtype extends Extension
         }
 
         $output .= "<div class='field-input' for='{$this->name}'>";
-        if ($this->setting('required')) {
-            $output .= "<div class='field-required''></div>";
-        }
+//        if ($this->setting('required')) {
+//            $output .= "<div class='field-required''></div>";
+//        }
         $output .= "$input";
         $output .= "</div>";
 

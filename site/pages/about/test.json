@@ -1,8 +1,8 @@
 {
-    "title": "sdsdsdsd",
+    "title": "About",
     "content": "<p>Ut leo. Quisque rutrum. Sed hendrerit.<\/p><p>Praesent egestas neque eu enim. Sed fringilla mauris sit amet nibh. Fusce vel dui.<\/p><p>Nullam cursus lacinia erat. Curabitur ullamcorper ultricies nisi. Nulla facilisi.<\/p><p>Sed a libero. Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris ac eros. Suspendisse eu ligula.<\/p>",
     "date": false,
-    "template": null,
+    "template": "default",
     "parent": "\/",
     "notes": ""
 }

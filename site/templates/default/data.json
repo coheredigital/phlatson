@@ -6,7 +6,6 @@
             "settings": {
                 "columns": 12
             }
-
         },
         {
             "name": "content",
@@ -26,5 +25,9 @@
                 "columns": 6
             }
         }
-    ]
+
+    ],
+    "settings": {
+        "nameFrom": "title"
+    }
 }

@@ -15,6 +15,7 @@ abstract class Object implements JsonSerializable
 
     // main data container, holds data loaded from JSON file
     protected $data = array();
+    protected $previousData = array();
     protected $_settings = array();
 
     protected $defaultFields = array();
@@ -38,9 +39,6 @@ abstract class Object implements JsonSerializable
     protected function getName()
     {
         // set object name
-        if ($this->isNew()) {
-            return $this->getNewName();
-        }
         $lastRequestIndex = count($this->route) - 1;
         return $this->route[$lastRequestIndex];
     }
@@ -91,18 +89,17 @@ abstract class Object implements JsonSerializable
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-//        if( is_object($this->template) && $this->template->hasField($name)){
-            $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
 
-            if ($field instanceof Field ) {
-                $fieldtype = $field->type;
-                $fieldtype->object = $this;
-                if ($fieldtype instanceof Fieldtype) {
-                    $value = $fieldtype->getOutput($value);
-                }
+        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
+
+        if ($field instanceof Field ) {
+            $fieldtype = $field->type;
+            $fieldtype->object = $this;
+            if ($fieldtype instanceof Fieldtype) {
+                $value = $fieldtype->getOutput($value);
             }
+        }
 
-//        }
 
         return $value;
     }
@@ -163,7 +160,8 @@ abstract class Object implements JsonSerializable
      */
     protected function getUnformatted($name)
     {
-        return $this->data[$name];
+        $value = $this->data[$name];
+        return $value;
     }
 
 
@@ -183,6 +181,7 @@ abstract class Object implements JsonSerializable
             $this->data[$field->name] = $value;
         }
 
+
     }
 
     protected function processSaveName()
@@ -191,11 +190,16 @@ abstract class Object implements JsonSerializable
         $post = app("request")->post;
 
         // set name value
-        if ($post->name) { // TODO : this is temp
+        if ($post->name && $this->previousData["name"]) { // TODO : this is temp
             $pageName = app("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
         } else { // generate page name from defined field
-            $this->name = $this->getName();
+            $template = $this->template;
+            $nameFieldReference = $template->settings['nameFrom'];
+            $name = $this->get($nameFieldReference);
+
+            $this->name = $name;
+            $name = $this->name;
         }
 
     }
@@ -233,6 +237,9 @@ abstract class Object implements JsonSerializable
 
     public function save($saveName = null)
     {
+
+        // store objects existing data for reference
+        $this->previousData = $this->data;
 
         if(app("config")->simulate){
             $saveFile = "test.json";
@@ -280,39 +287,39 @@ abstract class Object implements JsonSerializable
     }
 
 
-    public function settings($array = null){
-
-        if (is_null($array)){
-            $settings = objectify($this->_settings);
-            return $settings;
-        }
-        else if(count($array)){
-            $this->_settings = array_merge($this->_settings, $array);
-            return $this;
-        }
-
-    }
-
-
-    public function setting($key, $value = false)
-    {
-        if (!$value && $this->hasSetting($key)) {
-            return $this->_settings[$key];
-        } else {
-            if ($value) {
-                $this->_settings[$key] = $value;
-                return $this;
-            }
-        }
-        return false;
-
-    }
-
-
-    public function hasSetting($key)
-    {
-        return isset($this->_settings[$key]);
-    }
+//    public function settings($array = null){
+//
+//        if (is_null($array)){
+//            $settings = objectify($this->_settings);
+//            return $settings;
+//        }
+//        else if(count($array)){
+//            $this->_settings = array_merge($this->_settings, $array);
+//            return $this;
+//        }
+//
+//    }
+//
+//
+//    public function setting($key, $value = false)
+//    {
+//        if (!$value && $this->hasSetting($key)) {
+//            return $this->_settings[$key];
+//        } else {
+//            if ($value) {
+//                $this->_settings[$key] = $value;
+//                return $this;
+//            }
+//        }
+//        return false;
+//
+//    }
+//
+//
+//    public function hasSetting($key)
+//    {
+//        return isset($this->_settings[$key]);
+//    }
 
 
 
@@ -329,8 +336,8 @@ abstract class Object implements JsonSerializable
                 return $this->{$name};
             case 'className':
                 return get_class($this);
-            case 'settings':
-                return $this->settings(null);
+//            case 'settings':
+//                return $this->settings(null);
             default:
                 return $this->getFormatted($name);
         }
@@ -348,7 +355,6 @@ abstract class Object implements JsonSerializable
                 $name = app("sanitizer")->name($value);
                 $this->name = $name;
         }
-//        $this->data[$name] = $value;
         $this->setFormatted($name, $value);
         return $this;
     }

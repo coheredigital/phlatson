@@ -15,8 +15,6 @@ class Config extends Object
         // load site config
         $this->getData("{$this->paths->config}site.json");
 
-        // add admin url for convenience
-//        $this->urls->admin = $this->urls->root . $this->adminUrl;
 
         /*
          * Output errors if debug true, else disable error reporting
@@ -50,6 +48,7 @@ class Config extends Object
     {
         if (is_file($file)) {
             $this->path = normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $file));
+            // merge config file data with directories
             $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
         }
     }
@@ -83,6 +82,7 @@ class Config extends Object
         // clone the urls object and change the root
         $paths = clone $urls;
         $paths->root = ROOT_PATH;
+
 
         // add the urls anc paths to config
         $this->urls = $urls;

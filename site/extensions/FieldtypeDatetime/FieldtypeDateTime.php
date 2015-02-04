@@ -6,8 +6,8 @@ class FieldtypeDateTime extends Fieldtype
 
     public function getOutput($value)
     {
-        $value = date((string)$this->settings->format, (int)$value);
-        return $value;
+//        $value = date((string)$this->settings->format, (int)$value);
+//        return $value;
     }
 
     public function getSave($value)
