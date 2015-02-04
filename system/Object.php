@@ -190,16 +190,15 @@ abstract class Object implements JsonSerializable
         $post = app("request")->post;
 
         // set name value
-        if ($post->name && $this->previousData["name"]) { // TODO : this is temp
+        if ($post->name && !$this->isNew()) { // TODO : this is temp
             $pageName = app("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
         } else { // generate page name from defined field
             $template = $this->template;
             $nameFieldReference = $template->settings['nameFrom'];
             $name = $this->get($nameFieldReference);
-
-            $this->name = $name;
-            $name = $this->name;
+            $name = app("sanitizer")->name($name);
+            $this->name = $name;// TODO:  refactor code to allow name setting and getting to be handled the same way as other fields (by the Fieldtype class associated with it)
         }
 
     }
