@@ -5,11 +5,10 @@ class AdminEditPage extends AdminEdit
 
     public function setup()
     {
-        $adminRoute = app('admin')->route;
 
         $edit = new Route;
         $edit->path("/pages/edit:all")
-            ->parent($adminRoute)
+            ->parent("admin")
             ->callback(
                 function ($url) {
                     $this->object = app("pages")->get($url);
@@ -22,7 +21,7 @@ class AdminEditPage extends AdminEdit
         // TODO: this method still doesn't properly support adding new pages under the root page
         $new = new Route;
         $new->path("/pages/new/:any/:all")
-            ->parent($adminRoute)
+            ->parent("admin")
             ->callback(
                 function ($template, $parent) {
                     $this->object = new Page();
@@ -35,7 +34,7 @@ class AdminEditPage extends AdminEdit
 
         $newSave = new Route;
         $newSave->path("/pages/new/:any/:all")
-            ->parent($adminRoute)
+            ->parent("admin")
             ->method("POST")
             ->callback(
                 function ($template, $parent) {
@@ -51,7 +50,7 @@ class AdminEditPage extends AdminEdit
         // temp solution to the above issue
         $newRootChild = new Route;
         $newRootChild->path("/pages/new/:any/")
-            ->parent($adminRoute)
+            ->parent("admin")
             ->callback(
                 function ($template) {
 
@@ -69,7 +68,7 @@ class AdminEditPage extends AdminEdit
         $save
             ->path("/pages/edit/:all")
             ->method("POST")
-            ->parent($adminRoute)
+            ->parent("admin")
             ->callback(
                 function ($url) {
                     $page = app("pages")->get($url);
@@ -82,7 +81,7 @@ class AdminEditPage extends AdminEdit
         $upload
             ->path("/pages/upload:all")
             ->method("POST")
-            ->parent($adminRoute)
+            ->parent("admin")
             ->callback(
                 function ($url) {
                     $page = app("pages")->get($url);
