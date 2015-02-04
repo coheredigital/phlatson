@@ -56,7 +56,7 @@ class AdminListTemplates extends Extension
 
         $controls .= "<div class='form-actions'>";
         $controls .= "<div class='container'>";
-        $controls .= "<a class='button' href='{$config->urls->admin}fields/new'>New</a>";
+        $controls .= "<a class='button' href='{$config->urls->admin}templates/new'>New</a>";
         $controls .= "</div>";
 
         return "<div class='container'>{$output}{$controls}</div>";

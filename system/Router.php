@@ -14,7 +14,7 @@ class Router
     private $routes = [];
     private $namedRoutes = [];
 
-    public $errorCallback;
+    public $defaultRoute = false;
 
 
     /**
@@ -22,7 +22,7 @@ class Router
      */
     public function error($callback)
     {
-        $this->errorCallback = $callback;
+        $this->defaultRoute = $callback;
     }
 
 
@@ -30,12 +30,13 @@ class Router
     {
 
 
-        $hostname = $route->hostname ? $route->hostname : app("config")->hostname;
+        $hostname = $route->hostname ? $route->hostname : app("config")->hostname; // by default routes are children of the default hostname
         $method = $route->method;
         $path = $route->path;
 
 
         $this->routes[$hostname][$method][$path] = $route;
+//        $this->routes[$hostname][$path] = $route; // removed method requirement
         if ($route->name) {
 
             $key = [
@@ -48,6 +49,9 @@ class Router
 
             $this->namedRoutes[$route->name] = $key;
         }
+
+
+
     }
 
     /**
@@ -57,43 +61,27 @@ class Router
     public function run($request)
     {
         $found = false;
-        $halt = false;
 
         // get the set to iterate based on the current request
-        $routeArray = $this->routes[$request->hostname][$request->method];
+        $routes = $this->routes[$request->hostname][$request->method];
 
-        foreach ($routeArray as $route) {
-
-            if ($route->match($request)) {
-                $found = true;
-                $route->execute();
-                if ($route->halt()) $halt = $route->halt();
-            }
-            else if (count($route->children)) {
-                foreach ($route->children as $r) {
-                    if ($r->match($request)) {
-                        $found = true;
-                        $r->execute();
-                        if ($r->halt()) $halt = $r->halt();
-                    }
-                }
-            }
-
-            if($halt) break;
+        foreach ($routes as $route) {
+            if (!$route->match($request)) continue;
+            $route->execute();
+            $found = true;
+            break;
         }
 
 
-        // run the error callback if the route was not found
-        if ($found === false) {
-            if (!$this->errorCallback) {
-                $this->errorCallback = function () {
-                    header($_SERVER['SERVER_PROTOCOL'] . " 404 Not Found");
-                    echo '404';
-                };
+        // default route if nothing matched
+        if ($found === false && $this->defaultRoute !== false) {
+            if($this->defaultRoute->match($request)){
+                $this->defaultRoute->execute();
             }
-            call_user_func($this->errorCallback);
         }
 
+
+        if ($found === false) new Exception("Invalid request, app cannot run");
     }
 
 

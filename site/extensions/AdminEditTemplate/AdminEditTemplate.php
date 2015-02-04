@@ -28,12 +28,21 @@ class AdminEditTemplate extends AdminEdit
                 function () {
                     $this->object = new Template();
                     $this->object->template = "template";
-                    $this->object->parent = $parent;
-                    $this->title = "New Page";
+                    $this->title = "New Template";
                     $this->render();
                 }
             );
 
+        $templateNewSave = new Route;
+        $templateNewSave
+            ->path("/templates/new/")
+            ->method("POST")
+            ->parent(app("admin")->route)
+            ->callback(
+                function () {
+                    $this->processSave();
+                }
+            );
         $templateSave = new Route;
         $templateSave
             ->path("/templates/edit/:any")
@@ -49,6 +58,7 @@ class AdminEditTemplate extends AdminEdit
 
         app('router')->add($templateEdit);
         app('router')->add($templateNew);
+        app('router')->add($templateNewSave);
         app('router')->add($templateSave);
 
     }

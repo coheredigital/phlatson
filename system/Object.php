@@ -253,7 +253,6 @@ abstract class Object implements JsonSerializable
             $saveFile = self::DEFAULT_SAVE_FILE;
         }
 
-//        $this->processInputData();
         $this->processSaveName();
         $this->processSavePath();
         $this->saveFile($this->path, $saveFile);
@@ -272,6 +271,24 @@ abstract class Object implements JsonSerializable
 
         rename($current, $destination);
 
+    }
+
+
+    public function delete()
+    {
+
+        // recursively remove all child file and folders before removing self
+        $it = new RecursiveDirectoryIterator($this->path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it,
+            RecursiveIteratorIterator::CHILD_FIRST);
+        foreach($files as $file) {
+            if ($file->isDir()){
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getRealPath());
+            }
+        }
+        rmdir($this->path);
     }
 
 

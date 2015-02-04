@@ -15,19 +15,17 @@ $api = new App();
 app('config', new Config);
 app('request', new Request);
 
-$rootRoute = new Route();
-$rootRoute
-    ->name("root")
-    ->hostname(app("config")->hostname)
-    ->path("/");
 
-app('router', new Router($rootRoute) );
+app('router', new Router());
+
 
 // setup config routes
 foreach (app("config")->routes as $r){
     $route = new Route($r);
     app("router")->add($route);
 }
+
+
 
 app('extensions', new Extensions);
 app('sanitizer', new Sanitizer);
@@ -37,8 +35,14 @@ app('fields', new Fields);
 app('templates', new Templates);
 app('session', new Session);
 
-// execute the app
+// set default request behaviour
+$pagesRoute = new Route();
+$pagesRoute
+    ->path(":all")
+    ->callback("Pages:render");
+app('router')->defaultRoute = $pagesRoute;
 
+// execute the app
 try {
     app('router')->run(app('request'));
 } catch(Exception $e) {

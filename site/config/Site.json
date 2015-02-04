@@ -3,7 +3,7 @@
     "sessionExpireSeconds": 3600,
     "timezone": "America/New_York",
     "debug": true,
-    "simulate": false,
+    "simulate": true,
     "adminUrl": "admin",
     "hostname": "xpages.dev",
 
@@ -16,13 +16,7 @@
         {
             "name": "admin",
             "path": "admin/",
-            "callback": "Admin:render",
-            "halt": true
-        },
-        {
-            "name": "pages",
-            "path": ":all",
-            "callback": "Pages:render"
+            "callback": "Admin:render"
         }
     ]
 }

@@ -39,8 +39,11 @@ class AdminEditPage extends AdminEdit
             ->method("POST")
             ->callback(
                 function ($template, $parent) {
-//                    $page = api("pages")->get($url);
-//                    $this->object = $page;
+                    // TODO: the duplication of code here doesn't seem natural, reevaluate
+
+                    $this->object = new Page();
+                    $this->object->template = $template;
+                    $this->object->parent = $parent;
                     $this->processSave();
                 }
             );
@@ -61,19 +64,6 @@ class AdminEditPage extends AdminEdit
                 }
             );
 
-//
-//        $saveNew = new Route();
-//        $saveNew
-//            ->path("/pages/new/:any/")
-//            ->method("POST")
-//            ->parent($adminRoute)
-//            ->callback(
-//                function ($url) {
-//                    $page = api("pages")->get($url);
-//                    $this->object = $page;
-//                    $this->processSave();
-//                }
-//            );
 
         $save = new Route();
         $save

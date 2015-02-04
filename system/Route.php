@@ -24,13 +24,10 @@ class Route
     public $ssl = false;
 
     private $parent = false;
-    private $children = [];
 
     private $method = "GET";
     private $callbacks = [];
     private $parameters = [];
-
-    public $halt = false;
 
     private $patterns = array(
         ':any' => '([^/]+)',
@@ -61,9 +58,6 @@ class Route
         if ($parameters["name"]) {
             $this->name($parameters["name"]);
         }
-        if ($parameters["halt"]) {
-            $this->halt($parameters["halt"]);
-        }
 
     }
 
@@ -91,27 +85,6 @@ class Route
 
     }
 
-    public function halt($bool = null)
-    {
-
-        if(!is_null($bool)){
-            $this->halt = $bool;
-            return $this;
-        }
-        else{
-
-            if($this->parent){
-                return $this->parent->halt();
-            }
-            else{
-                return $this->halt;
-            }
-
-
-        }
-
-
-    }
 
     /**
      * @param $path
@@ -178,16 +151,9 @@ class Route
         }
 
         $this->parent = $route;
-        $route->children[] = $this;
+//        $route->children[] = $this;
         return $this;
     }
-
-//    public function addChild(Route $route)
-//    {
-//        $this->children[] = $route;
-//        $route->parent = $this;
-//        return $this;
-//    }
 
 
     public function method($name)
@@ -218,7 +184,6 @@ class Route
         $this->name = $name;
         return $this;
     }
-
 
 
     /**
@@ -297,7 +262,7 @@ class Route
 
     public function execute()
     {
-
+        // first execute parent routes in order
         if ($this->parent) {
             $this->parent->execute();
         }
@@ -332,10 +297,6 @@ class Route
 
             } else {
                 call_user_func_array($callback, $this->parameters);
-            }
-
-            if ($this->halt) {
-                break;
             }
 
         }
