@@ -43,6 +43,18 @@ class AdminEdit extends Extension
         $this->addDefaultFields();
     }
 
+    public function processSave()
+    {
+
+        $this->object->processInputData();
+        $this->object->save();
+        app("session")->redirect(
+            app("request")->url
+        );
+
+    }
+
+
     private function renderForm(){
         $this->form = app("extensions")->get("MarkupEditForm");
         $this->form->object = $this->object;

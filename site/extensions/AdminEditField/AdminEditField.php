@@ -22,15 +22,16 @@ class AdminEditField extends AdminEdit
         $fieldRoute = new Route;
         $fieldRoute->path("fields/edit/:any");
         $fieldRoute->parent(app("admin")->route);
+        $fieldRoute->halt(true);
         $fieldRoute->callback(
             function ($name) {
                 $this->object = app("fields")->get($name);
-
                 $this->title = "Edit Field";
-
                 $this->render();
             }
         );
+        app("router")->add($fieldRoute);
+
 
         $newFieldRoute = new Route;
         $newFieldRoute->path("fields/new/");
@@ -45,6 +46,7 @@ class AdminEditField extends AdminEdit
                 $this->render();
             }
         );
+        app("router")->add($newFieldRoute);
 
         $saveFieldRoute = new Route;
         $saveFieldRoute
@@ -58,7 +60,7 @@ class AdminEditField extends AdminEdit
                 $this->processSave();
             }
         );
-
+        app("router")->add($saveFieldRoute);
 
 
 

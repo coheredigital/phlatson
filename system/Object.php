@@ -165,7 +165,7 @@ abstract class Object implements JsonSerializable
     }
 
 
-    protected function processSaveInput()
+    protected function processInputData()
     {
 
         $post = app("request")->post;
@@ -175,12 +175,16 @@ abstract class Object implements JsonSerializable
 
         $fields = $this->template->fields;
 
+        // create new array for save data, this will inherently remove data values that do not have matching fields
+        $data = [];
+
         foreach ($fields as $field) {
             $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
             $value = $field->type->getSave($value);
-            $this->data[$field->name] = $value;
+            $data[$field->name] = $value;
         }
 
+        $this->data = $data;
 
     }
 
@@ -221,6 +225,8 @@ abstract class Object implements JsonSerializable
                 mkdir($this->path, 0777, true);
             }
         }
+        // unset parent value in data container
+        unset($this->data["parent"]);
 
     }
 
@@ -247,7 +253,7 @@ abstract class Object implements JsonSerializable
             $saveFile = self::DEFAULT_SAVE_FILE;
         }
 
-        $this->processSaveInput();
+//        $this->processInputData();
         $this->processSaveName();
         $this->processSavePath();
         $this->saveFile($this->path, $saveFile);

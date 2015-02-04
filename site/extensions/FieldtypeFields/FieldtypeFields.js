@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     var $fieldlist = $(".FieldtypeFields .field-list");
     var $fieldselect = $(".FieldtypeFields select");
+
     $fieldlist.sortable({
         containerSelector: '.FieldtypeFields',
         itemSelector: '.item',
@@ -10,10 +11,12 @@ $(document).ready(function () {
     });
     $fieldselect.change( function() {
         var $this = $(this);
-        var fieldName = $(this).val();
-        var item = "<div class='item'>" + fieldName + "</div>"
+        var field = $this.closest(".field").attr("data-fieldname");
+        var name = $(this).val();
+        var input = "<input type='hidden' name='" + field + "[" + name + "]' value='1' >";
+        var item = "<div class='item'>" + name + input + "</div>"
         $fieldlist.append(item);
-        $this.children("[value='" + fieldName + "']").remove();
+        $this.children("[value='" + name + "']").remove();
     });
 
 });

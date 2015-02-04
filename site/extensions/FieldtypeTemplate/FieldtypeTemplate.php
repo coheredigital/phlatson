@@ -22,7 +22,7 @@ class FieldtypeTemplate extends Fieldtype
         }
         else{
             $template = app("templates")->get($value);
-            if ($value instanceof Template) return $value->name;
+            if ($template instanceof Template) return $template->name;
         }
         return null;
     }

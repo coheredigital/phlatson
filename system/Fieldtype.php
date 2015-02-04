@@ -90,7 +90,8 @@ abstract class Fieldtype extends Extension
 
         $columns = $this->settings->columns ? $this->settings->columns : 12;
 
-        $output = "<div class='field field-{$this->name} {$this->name} column column-{$columns}'>";
+        $fieldName = $this->attribute("name");
+        $output = "<div data-fieldname='$fieldName' class='field field-{$this->name} {$this->name} column column-{$columns}'>";
 
         if ($this->label !== false) {
             $output .= "<label class='field-label' for='{$this->name}'>";

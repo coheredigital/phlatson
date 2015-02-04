@@ -16,6 +16,10 @@ class FieldtypeFieldtype extends Fieldtype
         if ($value instanceof Fieldtype) {
             return $value->name;
         }
+        else{
+            $fieldtype = app("extensions")->get($value);
+            if ($fieldtype instanceof Fieldtype) return $fieldtype->name;
+        }
         return null;
     }
 
@@ -28,7 +32,9 @@ class FieldtypeFieldtype extends Fieldtype
             ->sort("title");
 
         foreach($fieldtypes as $fieldtype) {
-            $options .= "<option value='$fieldtype->name'>$fieldtype->title</option>";
+            if ($fieldtype->name == $this->value->name) $selected = "selected";
+            else $selected = "";
+            $options .= "<option $selected value='$fieldtype->name'>$fieldtype->title</option>";
         }
 
         $attributes = $this->getAttributes();

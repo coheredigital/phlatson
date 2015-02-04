@@ -142,16 +142,6 @@ class AdminEditPage extends AdminEdit
         }
     }
 
-    public function processSave()
-    {
-
-        $this->object->save();
-        app("session")->redirect(
-            app("request")->url
-        );
-
-    }
-
     protected function addFields()
     {
         $this->addDefaultFields();
