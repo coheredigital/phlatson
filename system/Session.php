@@ -3,10 +3,13 @@
 class Session implements IteratorAggregate
 {
 
+    private $name;
 
     function __construct()
     {
-        $this->start();
+        if($this->exists()){
+            $this->start();
+        }
         unregister_GLOBALS();
 
         // check for a logged in user
@@ -20,12 +23,25 @@ class Session implements IteratorAggregate
         } else {
             $user = app('users')->get("guest");
         }
-        app('users')->setActiveUser($user);
 
+//        app('users')->setActiveUser($user);
+
+        app('user', $user);
+
+    }
+
+
+    public function exists(){
+        if( isset($_SESSION) || $_COOKIE[app('config')->sessionName] ){
+            return true;
+        }
+        return false;
     }
 
     public function set($key, $value)
     {
+
+        if(!$this->exists()) $this->start();
 
         $_SESSION["$this->className"][$key] = $value;
         return $this;
@@ -54,7 +70,7 @@ class Session implements IteratorAggregate
      */
     public function all()
     {
-        return $_SESSION[$this->className()];
+        return $_SESSION["$this->className"];
     }
 
     /**
@@ -178,6 +194,7 @@ class Session implements IteratorAggregate
      */
     protected function start()
     {
+        session_name(app('config')->sessionName);
         @session_start();
     }
 
@@ -241,28 +258,25 @@ class Session implements IteratorAggregate
         $sessionName = $this->name();
         $this->clear();
 
+
         if (isset($_COOKIE[$sessionName])) {
-            setcookie($sessionName, '', time() - 42000, '/');
+
+            $sessionTime = time() - 42000;
+
+            setcookie($sessionName, '', $sessionTime, '/');
         }
 
 
         // end the current session
         $this->destroy();
 
-        // set user to guest
-        $guest = app('users')->get("guest");
-        app('user', $guest);
-
-        $this->name($sessionName);
-        $this->start();
-        $this->regenerate();
 
         return $this;
     }
 
     public function getIterator()
     {
-        return new ArrayObject($_SESSION[$this->className()]);
+        return new ArrayObject($_SESSION["$this->className"]);
     }
 
     /**

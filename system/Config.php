@@ -32,12 +32,12 @@ class Config extends Object
          * Prepare any PHP ini_set options
          *
          */
-        session_name($this->sessionName);
+
 
         ini_set('session.use_cookies', true);
         ini_set('session.use_only_cookies', 1);
-        ini_set("session.gc_maxlifetime", $this->sessionExpireSeconds);
-        ini_set("session.save_path", rtrim($this->paths->assets . DIRECTORY_SEPARATOR . "sessions", '/'));
+        ini_set("session.gc_maxlifetime", "$this->sessionExpireSeconds");
+        ini_set("session.save_path", $this->paths->assets . "/sessions");
         ini_set("date.timezone", $this->timezone);
         ini_set('default_charset', 'utf-8');
 

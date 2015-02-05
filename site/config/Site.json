@@ -1,6 +1,6 @@
 {
     "sessionName": "xpages",
-    "sessionExpireSeconds": 3600,
+    "sessionExpireSeconds": 0,
     "timezone": "America/New_York",
     "debug": true,
     "simulate": true,

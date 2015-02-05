@@ -31,7 +31,7 @@ class User extends Object
             a possible brute force string match to the hash
         */
         $passGet = $this->get("password");
-        $hash = password_hash($passGet, PASSWORD_BCRYPT);
+        $hash = password_hash($passGet, PASSWORD_DEFAULT);
         if (password_verify($pass, $hash)) {
             $this->password = $hash;
             $this->save();
