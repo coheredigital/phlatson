@@ -18,8 +18,3 @@
 
 include 'includes/foot.inc';
 
-$session->flash("test", "awesome");
-var_dump($session->test);
-var_dump($session->test);
-var_dump($session->test);
-var_dump($session->test);
