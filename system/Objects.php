@@ -19,6 +19,7 @@ abstract class Objects
     public function __construct()
     {
         // manually add the special case of the home page
+        // TODO : refactor this, should be so hard coded
         if ($this instanceof Pages) {
             $this->data['/'] = app("config")->paths->pages . "data.json";
         }

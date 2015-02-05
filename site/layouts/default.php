@@ -18,10 +18,4 @@
 
 include 'includes/foot.inc';
 
-//$new = new Page();
-//$new->template = "default";
-//$new->title = "default";
-//$new->parent = $page;
-//$new->save();
-//$new->delete();
-
+$logger->add("error", "Wow, something broke! Yo!");

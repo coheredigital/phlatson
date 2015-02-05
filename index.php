@@ -34,6 +34,7 @@ app('users', new Users);
 app('fields', new Fields);
 app('templates', new Templates);
 app('session', new Session);
+app('logger', new Logger);
 
 // set default request behaviour
 $pagesRoute = new Route();
