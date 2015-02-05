@@ -246,7 +246,7 @@ abstract class Object implements JsonSerializable, PublisherInterface
     public function save($saveName = null)
     {
 
-        app("events")->dispatch("{$this->className}Saved", $this);
+        app("events")->dispatch($this->className . "." . __FUNCTION__, $this);
 
         // store objects existing data for reference
         $this->previousData = $this->data;

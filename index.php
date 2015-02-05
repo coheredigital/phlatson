@@ -38,7 +38,7 @@ app('session', new Session);
 app('logger', new Logger);
 app('events', new Events);
 
-app('events')->listen('PageSaved', function(Page $page) {
+app('events')->listen('Page.save', function(Page $page) {
     app('logger')->add("notice", "page saved: {$page->url}");
 });
 
