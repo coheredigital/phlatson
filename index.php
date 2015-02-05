@@ -7,6 +7,7 @@ define('ROOT_URL', "/");
 
 require_once ROOT_PATH . 'system/_functions.php';
 require_once ROOT_PATH . 'system/_autoload.php';
+require_once ROOT_PATH . 'system/_interfaces.php';
 
 /* instatiate api variables */
 
@@ -35,6 +36,11 @@ app('fields', new Fields);
 app('templates', new Templates);
 app('session', new Session);
 app('logger', new Logger);
+app('events', new Events);
+
+app('events')->listen('PageSaved', function(Page $page) {
+    app('logger')->add("notice", "page saved: {$page->url}");
+});
 
 // set default request behaviour
 $pagesRoute = new Route();

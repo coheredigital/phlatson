@@ -17,5 +17,3 @@
 <?php
 
 include 'includes/foot.inc';
-
-$logger->add("error", "Wow, something broke! Yo!");

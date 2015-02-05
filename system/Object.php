@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object implements JsonSerializable
+abstract class Object implements JsonSerializable, PublisherInterface
 {
 
     const DEFAULT_SAVE_FILE = "data.json";
@@ -12,6 +12,9 @@ abstract class Object implements JsonSerializable
     protected $_file;
     protected $modified;
     protected $rootFolder;
+
+    // dispatcher components
+    protected $event;
 
     // main data container, holds data loaded from JSON file
     protected $data = array();
@@ -242,6 +245,8 @@ abstract class Object implements JsonSerializable
 
     public function save($saveName = null)
     {
+
+        app("events")->dispatch("{$this->className}Saved", $this);
 
         // store objects existing data for reference
         $this->previousData = $this->data;
