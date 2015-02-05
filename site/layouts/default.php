@@ -18,10 +18,8 @@
 
 include 'includes/foot.inc';
 
-//$new = new Page();
-//$new->template = "default";
-//$new->title = "default";
-//$new->parent = $page;
-//$new->save();
-//$new->delete();
-
+$session->flash("test", "awesome");
+var_dump($session->test);
+var_dump($session->test);
+var_dump($session->test);
+var_dump($session->test);

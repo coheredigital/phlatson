@@ -85,30 +85,28 @@ class Session implements IteratorAggregate
 
     /**
      *
-     * Sets a read-once flash value on the segment.
+     * Sets a read-once flash value on the segment or convert an existing session variable into a flash variable if no value supplied
      * @param string $key The key for the flash value.
      * @param mixed $value The value for the flash.
-     */
-    public function flash($key, $value)
-    {
-        // set the value in session
-        $this->set($key, $value);
+     *
 
-        // the flash bool in _flash array
-        $this->setFlash($key);
-    }
-
-    /**
-     * convert an existing session variable into a flash varaible
-     * will be removed on next access
-     * @param [type] $key [description]
      */
-    public function setFlash($key)
+    public function flash($key, $value = null)
     {
-        if ($this->has($key)) {
+
+        if($value){
+            // set the value in session
+            $this->set($key, $value);
+        }
+
+        if($this->has($key)){
             $_SESSION["$this->className"]["_flash"][$key] = 1;
         }
+
     }
+
+
+
 
 
     /**
