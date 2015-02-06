@@ -9,3 +9,4 @@ sftp-site.json
 #CMS Assets
 site/assets/sessions/*
 assets/*
+prepros.cfg
