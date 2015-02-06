@@ -3,23 +3,22 @@
 abstract class Object implements JsonSerializable
 {
 
+    use hookable;
+
+
     const DEFAULT_SAVE_FILE = "data.json";
 
     public $name;
 
     protected $path;
-    protected $configPath = null;
-    protected $_file;
+    protected $file;
     protected $modified;
     protected $rootFolder;
-
-    // dispatcher components
-    protected $event;
 
     // main data container, holds data loaded from JSON file
     protected $data = array();
     protected $previousData = array();
-    protected $_settings = array();
+    protected $settings = array();
 
     protected $defaultFields = array();
     protected $route = array();
@@ -28,12 +27,12 @@ abstract class Object implements JsonSerializable
     {
 
         if (is_file($file)) {
-            $this->_file = $file;
+            $this->file = $file;
             $this->path = $this->getPath();
             $this->route = $this->getRoute();
-            $this->data = json_decode(file_get_contents($this->_file), true);
+            $this->data = json_decode(file_get_contents($this->file), true);
             $this->name = $this->getName();
-            $this->modified = filemtime($this->_file);
+            $this->modified = filemtime($this->file);
         }
 
     }
@@ -41,48 +40,30 @@ abstract class Object implements JsonSerializable
 
     protected function getName()
     {
-        // set object name
-        $lastRequestIndex = count($this->route) - 1;
-        return $this->route[$lastRequestIndex];
+        return basename($this->path);
     }
 
 
     protected function getPath()
     {
-        if (!$this->isNew()) {
-            return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->_file));
-        } else {
-
-        }
-    }
-
-
-    protected function getRootRelativePath()
-    {
-
-        $relativePath = str_replace(
-            app("config")->paths->site . $this->rootFolder,
-            "",
-            $this->_file
-        ); // trim the root path to get root relative path
-        $relativePath = str_replace($this::DEFAULT_SAVE_FILE, "", $relativePath); // trim of file name to isolote path
-        $relativePath = rtrim($relativePath, '/'); // trim excess slashes
-
-        return $relativePath;
+        return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
     }
 
 
     protected function getRoute()
     {
 
-        $directory = $this->getRootRelativePath();
-        $pathArray = explode("/", $directory);
+        // first get roo relative path
+        $path = str_replace(
+            app("config")->paths->site . $this->rootFolder,
+            "",
+            $this->file
+        ); // trim the root path to get root relative path
+        $path = str_replace($this::DEFAULT_SAVE_FILE, "", $path); // trim of file name to isolote path
+        $path = rtrim($path, '/'); // trim excess slashes
 
-        if (!count($pathArray)) {
-            $pathArray[] = "$directory";
-        }
-
-        return $pathArray;
+        // break the path into it's parts an return the resulting array
+        return explode("/", $path);
     }
 
     protected function getFormatted($name)
@@ -243,10 +224,8 @@ abstract class Object implements JsonSerializable
 
     }
 
-    public function save($saveName = null)
+    public function _save()
     {
-
-        app("events")->dispatch($this->className . "." . __FUNCTION__, $this);
 
         // store objects existing data for reference
         $this->previousData = $this->data;
@@ -264,7 +243,7 @@ abstract class Object implements JsonSerializable
 
     }
 
-    public function rename($name)
+    public function _rename($name)
     {
 
         if ($name == $this->name) {
@@ -279,7 +258,7 @@ abstract class Object implements JsonSerializable
     }
 
 
-    public function delete()
+    public function _delete()
     {
 
         // recursively remove all child file and folders before removing self
@@ -301,7 +280,7 @@ abstract class Object implements JsonSerializable
     {
         // if the object does not have a matching existing directory it is assumed new
         // directory will be created when saved
-        if (!is_file($this->_file)) {
+        if (!is_file($this->file)) {
             return true;
         }
 
@@ -389,39 +368,6 @@ abstract class Object implements JsonSerializable
     public function __set($name, $value)
     {
         $this->set($name, $value);
-    }
-
-    /**
-     * @param $method
-     * @param $arguments
-     * @throws Exception
-     *
-     * Used as a simple hook method, automatically executes events before and after any mother prefixed with and underscore
-     *
-     */
-    public function __call($method, $arguments)
-    {
-
-        if (!is_callable([$this, "_$method"])) {
-            throw new Exception("Method: $method does not exist in class: $this->className");
-        }
-
-        // create the Event object to store and pass all the good stuff we want to have available to our listeners
-        $event = new Event;
-
-        $event->method = $method;
-        $event->arguments = $arguments;
-        $event->object = $this;
-
-        app("events")->execute("$this->className.$method", $event);
-        // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
-        call_user_func_array([$this, "_$method"], $event->arguments);
-        app("events")->execute("after.$this->className.$method", $event);
-    }
-
-
-    public function _fake($string){
-        var_dump("This is a test:  $string");
     }
 
 
