@@ -106,9 +106,6 @@ class Session implements IteratorAggregate
     }
 
 
-
-
-
     /**
      * determine if $key exists in flash session settings
      * @param  string $key
