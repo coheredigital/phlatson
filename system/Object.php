@@ -73,11 +73,11 @@ abstract class Object implements JsonSerializable
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-
         $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
 
         if ($field instanceof Field ) {
-            $fieldtype = $field->type;
+            $fieldtypeName = $field->getUnformatted("fieldtype");
+            $fieldtype = app("extensions")->get($fieldtypeName);
             $fieldtype->object = $this;
             if ($fieldtype instanceof Fieldtype) {
                 $value = $fieldtype->getOutput($value);
@@ -332,7 +332,6 @@ abstract class Object implements JsonSerializable
     public function get($name)
     {
         switch ($name) {
-
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'url':

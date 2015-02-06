@@ -31,7 +31,7 @@ class AdminEdit extends Extension
 
         $fieldtype = $field->type;
         $fieldtype->label = $field->title;
-        $fieldtype->value = $this->object->get($field->name);
+        $fieldtype->value = $this->object->get("$field->name");
         $fieldtype->attribute("name", $field->name);
 
         return $fieldtype;

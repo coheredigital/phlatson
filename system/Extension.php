@@ -12,12 +12,14 @@ class Extension extends Object
     {
         parent::__construct($file);
 
-        $this->name = get_class($this);
-
-        if ($this->autoload === true) {
+//        if ($this->autoload === true) {
             $this->setup();
-        }
+//        }
+        $this->setupListeners();
+    }
 
+    final protected function setupListeners(){
+        $listeners = $this->listeners;
     }
 
     protected function setup()

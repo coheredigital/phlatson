@@ -24,10 +24,15 @@ trait hookable {
         $event->method = $method;
         $event->arguments = $arguments;
         $event->object = $this;
+        $event->return = null;
 
-        app("events")->execute("$className.$method", $event);
+
+        // TODO :  work on function return handling logic
+        $event->return = app("events")->execute("before.$className.$method", $event);
         // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
-        call_user_func_array([$this, "_$method"], $event->arguments);
+        $event->return = call_user_func_array([$this, "_$method"], $event->arguments);
         app("events")->execute("after.$className.$method", $event);
+
+        return $event->return;
     }
 }

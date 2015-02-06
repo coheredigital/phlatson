@@ -17,9 +17,6 @@ abstract class Fieldtype extends Extension
     {
         $this->attribute('class', 'input ' . $this->className);
         $this->attribute("name", $this->field->name);
-        if ($field instanceof Field) {
-            $this->field = $field;
-        }
     }
 
     public function setObject(Object $object)
@@ -128,14 +125,13 @@ abstract class Fieldtype extends Extension
 
 
     // we will default to rendering a basic text field since it will be the most common input type for most field types
-    final public function render()
+    final public function _render()
     {
         $output = $this->renderInput();
         $output = $this->renderWrapper($output);
 
         return $output;
     }
-
 
 
 }

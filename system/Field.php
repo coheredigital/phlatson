@@ -6,25 +6,6 @@ class Field extends Object
     protected $attributes = null;
 
     /**
-     * retrieves the filedtype object associated with "$this" field
-     * @return Fieldtype
-     */
-    public function getType()
-    {
-        if ($this->getUnformatted("fieldtype")) {
-            $name = $this->getUnformatted("fieldtype");
-            $fieldtype = app("extensions")->get($name);
-
-            if ($fieldtype instanceof Fieldtype) {
-                $fieldtype->setField($this);
-                return $fieldtype;
-            }
-
-        }
-        return null;
-    }
-
-    /**
      * retrieves the input object associated with "$this" field
      * @return Input
      */
@@ -75,19 +56,17 @@ class Field extends Object
     {
         switch ($name) {
 
-            case 'fieldtype':
+//            case 'fieldtype':
+//            case 'type':
+//                return $this->getType();
             case 'type':
-                return $this->getType();
-                break;
+                return $this->fieldtype;
             case 'input':
                 return $this->getInput();
-                break;
             case 'template':
                 return app("templates")->get("field");
-                break;
             default:
                 return parent::get($name);
-                break;
         }
     }
 

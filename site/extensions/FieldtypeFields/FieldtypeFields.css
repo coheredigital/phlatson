@@ -1,1 +1,21 @@
-.FieldtypeFields .sortable-placeholder{border-top:1px dashed #ddd}body.dragging,body.dragging *{cursor:move!important}.dragged{position:absolute;opacity:.5;z-index:2000}.FieldtypeFields .field-list .item{padding:1em;cursor:move;background:#333;border-top:1px solid #222;color:#aaa}
+.FieldtypeFields .sortable-placeholder {
+  border: 1px dashed #ddd;
+  height: 1em;
+}
+body.dragging,
+body.dragging * {
+  cursor: move !important;
+}
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+.FieldtypeFields .field-list .item {
+  padding: 1em;
+  margin: 1em;
+  cursor: move;
+  background: #333;
+  border-top: 1px solid #222;
+  color: #aaa;
+}
