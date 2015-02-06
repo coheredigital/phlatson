@@ -3,6 +3,7 @@
 abstract class Objects
 {
 
+    use hookable;
 
     public $data = array();
     protected $count;
@@ -164,6 +165,7 @@ abstract class Objects
         $key = normalizeDirectory($key);
         return array_key_exists($key, $this->data);
     }
+
 
 
 }

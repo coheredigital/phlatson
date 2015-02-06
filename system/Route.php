@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 8:33 PM
  */
-class Route
+class Route extends Object // TODO : should not be saveabe need to seperate the parts of Object class we need here into something like a DataObject or DataContainer
 {
 
     private $methods = [
@@ -16,9 +16,7 @@ class Route
         "DELETE"
     ];
 
-    private $name;
     private $scheme = "http";
-    private $path;
     private $hostname = false;
 
     public $ssl = false;
@@ -260,7 +258,7 @@ class Route
         return false;
     }
 
-    public function execute()
+    public function _execute()
     {
         // first execute parent routes in order
         if ($this->parent) {

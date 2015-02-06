@@ -15,8 +15,11 @@ class Events {
         $this->listeners[$event][] = $callback;
     }
 
-    public function dispatch($event, PublisherInterface $param)
+    public function execute($event, Event $param)
     {
+
+        if(!isset($this->listeners[$event])) return false;
+
         foreach ($this->listeners[$event] as $listener)
         {
             call_user_func_array($listener, array($param));

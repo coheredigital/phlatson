@@ -34,7 +34,7 @@ class Field extends Object
 
             $name = $this->getUnformatted("input");
             $input = app("extensions")->get($name);
-            $input->settings($this->_settings);
+            $input->settings($this->settings);
             return $input;
 
 
@@ -46,10 +46,10 @@ class Field extends Object
     {
         // set object name
         if ($this->template->_settings->nameFrom && $this->template->fields->has(
-                $this->_settings->nameFrom
+                $this->settings->nameFrom
             )
         ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return app("sanitizer")->name($this->_settings->nameFrom);
+            return app("sanitizer")->name($this->settings->nameFrom);
         } else {
             return app("sanitizer")->name($this->label);
         }

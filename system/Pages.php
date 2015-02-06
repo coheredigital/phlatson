@@ -4,6 +4,8 @@
 class Pages extends Objects
 {
 
+
+
     protected $rootFolder = "pages/";
     protected $singularName = "Page";
 
