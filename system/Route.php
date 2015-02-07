@@ -6,8 +6,10 @@
  * Date: 7/17/14
  * Time: 8:33 PM
  */
-class Route extends Object // TODO : should not be saveabe need to seperate the parts of Object class we need here into something like a DataObject or DataContainer
+class Route
 {
+
+    use hookable;
 
     private $methods = [
         "GET",
@@ -16,6 +18,8 @@ class Route extends Object // TODO : should not be saveabe need to seperate the 
         "DELETE"
     ];
 
+    private $name = null;
+    private $path = null;
     private $scheme = "http";
     private $hostname = false;
 
@@ -34,26 +38,27 @@ class Route extends Object // TODO : should not be saveabe need to seperate the 
 
     public function __construct($parameters = [])
     {
-        if ($parameters["method"]) {
+        if (isset($parameters["method"])) {
             $this->method($parameters["method"]);
         }
-        if ($parameters["hostname"]) {
+
+        if (isset($parameters["hostname"])) {
             $this->hostname($parameters["hostname"]);
         }
-        if ($parameters["path"]) {
+
+        if (isset($parameters["path"])) {
             $this->path($parameters["path"]);
         }
-        if ($parameters["callback"]) {
+
+        if (isset($parameters["callback"])) {
             $this->callback($parameters["callback"]);
         }
 
-        // add route as child of parent or child of root if no parent defined. Unless this is the root route
-        if ($parameters["parent"]) {
+        if (isset($parameters["parent"])) {
             $this->parent($parameters["parent"]);
         }
 
-
-        if ($parameters["name"]) {
+        if (isset($parameters["name"])) {
             $this->name($parameters["name"]);
         }
 
@@ -276,8 +281,8 @@ class Route extends Object // TODO : should not be saveabe need to seperate the 
                 $last = end($parts);
 
                 //grab the class name and method
-                if (strpos($last, ":") !== false) { // check to see if a specific method was defines
-                    $segments = explode(":", $last);
+                if (strpos($last, ".") !== false) { // check to see if a specific method was defines
+                    $segments = explode(".", $last);
                     $className = $segments[0];
                     $methodName = $segments[1];
                 } else { // else run a method that matches the METHOD type defined in this $route
@@ -312,11 +317,9 @@ class Route extends Object // TODO : should not be saveabe need to seperate the 
     {
         switch ($name) {
             case "path":
-                return $this->path();
             case "hostname":
-                return $this->hostname();
             case "url":
-                return $this->url();
+                return $this->{$name}();
             case "name":
             case "method":
             case "children":

@@ -39,7 +39,7 @@ class Admin extends Extension
             $this->route = new Route();
             $this->route->name("admin");
             $this->route->path($adminUrl);
-            $this->route->callback("Admin:render");
+            $this->route->callback("Admin.render");
 
             app('router')->add($this->route);
         }

@@ -58,7 +58,7 @@ class Router
      * Runs the callback for the given request
      * Called by __destruct()
      */
-    public function run($request)
+    public function run(Request $request)
     {
         $found = false;
 
@@ -77,11 +77,13 @@ class Router
         if ($found === false && $this->defaultRoute !== false) {
             if($this->defaultRoute->match($request)){
                 $this->defaultRoute->execute();
+                $found = true;
+
             }
         }
 
 
-        if ($found === false) new Exception("Invalid request, app cannot run");
+        if ($found === false) throw new Exception("Invalid request, app cannot run");
     }
 
 

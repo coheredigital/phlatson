@@ -28,12 +28,7 @@ class Config extends Object
             ini_set('display_errors', 0);
         }
 
-        /*
-         * Prepare any PHP ini_set options
-         *
-         */
-
-
+        // Prepare any PHP ini_set options
         ini_set('session.use_cookies', true);
         ini_set('session.use_only_cookies', 1);
         ini_set("session.gc_maxlifetime", "$this->sessionExpireSeconds");

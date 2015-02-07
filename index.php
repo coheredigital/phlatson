@@ -38,7 +38,7 @@ $app = app();
 $pagesRoute = new Route();
 $pagesRoute
     ->path(":all")
-    ->callback("Pages:render");
+    ->callback("Pages.render");
 app('router')->defaultRoute = $pagesRoute;
 
 // execute the app

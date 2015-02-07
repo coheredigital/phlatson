@@ -4,7 +4,6 @@
     "timezone": "America/New_York",
     "debug": true,
     "simulate": true,
-    "adminUrl": "admin",
     "hostname": "xpages.dev",
 
     "disabledExtensions" : [
@@ -16,7 +15,7 @@
         {
             "name": "admin",
             "path": "admin/",
-            "callback": "Admin:render"
+            "callback": "Admin.render"
         }
     ]
 }

@@ -8,9 +8,6 @@ abstract class Object implements JsonSerializable
 
     const DEFAULT_SAVE_FILE = "data.json";
 
-    public $name;
-
-    protected $path;
     protected $file;
     protected $modified;
     protected $rootFolder;
@@ -28,26 +25,13 @@ abstract class Object implements JsonSerializable
 
         if (is_file($file)) {
             $this->file = $file;
-            $this->path = $this->getPath();
-            $this->route = $this->getRoute();
             $this->data = json_decode(file_get_contents($this->file), true);
-            $this->name = $this->getName();
-            $this->modified = filemtime($this->file);
+            $this->route = $this->getRoute();
+
         }
 
     }
 
-
-    protected function getName()
-    {
-        return basename($this->path);
-    }
-
-
-    protected function getPath()
-    {
-        return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
-    }
 
 
     protected function getRoute()
@@ -93,7 +77,6 @@ abstract class Object implements JsonSerializable
     {
 
         // get the field object matching the passed "$name"
-
         $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field ) {
@@ -293,42 +276,6 @@ abstract class Object implements JsonSerializable
     }
 
 
-//    public function settings($array = null){
-//
-//        if (is_null($array)){
-//            $settings = objectify($this->_settings);
-//            return $settings;
-//        }
-//        else if(count($array)){
-//            $this->_settings = array_merge($this->_settings, $array);
-//            return $this;
-//        }
-//
-//    }
-//
-//
-//    public function setting($key, $value = false)
-//    {
-//        if (!$value && $this->hasSetting($key)) {
-//            return $this->_settings[$key];
-//        } else {
-//            if ($value) {
-//                $this->_settings[$key] = $value;
-//                return $this;
-//            }
-//        }
-//        return false;
-//
-//    }
-//
-//
-//    public function hasSetting($key)
-//    {
-//        return isset($this->_settings[$key]);
-//    }
-
-
-
     public function get($name)
     {
         switch ($name) {
@@ -337,12 +284,13 @@ abstract class Object implements JsonSerializable
             case 'url':
                 return app('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
+                return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
             case 'name':
-                return $this->{$name};
+                return basename($this->path);
+            case 'modified':
+                return filemtime($this->file);
             case 'className':
                 return get_class($this);
-//            case 'settings':
-//                return $this->settings(null);
             default:
                 return $this->getFormatted($name);
         }
@@ -355,11 +303,6 @@ abstract class Object implements JsonSerializable
 
     public function set($name, $value)
     {
-        switch ($name) {
-            case "name":
-                $name = app("sanitizer")->name($value);
-                $this->name = $name;
-        }
         $this->setFormatted($name, $value);
         return $this;
     }
