@@ -33,13 +33,11 @@ class Admin extends Extension
         }
         else {
 
-            $adminUrl = app("config")->adminUrl ? app("config")->adminUrl : "admin";
-            $adminUrl = "/" . trim( $adminUrl , "/");
-
             $this->route = new Route();
-            $this->route->name("admin");
-            $this->route->path($adminUrl);
-            $this->route->callback("Admin.render");
+            $this->route
+                ->name("admin")
+                ->path("/admin")
+                ->callback("Admin.render");
 
             app('router')->add($this->route);
         }
@@ -49,15 +47,15 @@ class Admin extends Extension
 
 
         $logoutRoute = new Route;
-        $logoutRoute->path("logout");
-        $logoutRoute->name("logout");
-        $logoutRoute->parent($this->route);
-        $logoutRoute->callback(
-            function () {
-                app("session")->logout();
-                app("session")->redirect(app("config")->urls->admin);
-            }
-        );
+        $logoutRoute->path("logout")
+            ->name("logout")
+            ->parent($this->route)
+            ->callback(
+                function () {
+                    app("session")->logout();
+                    app("session")->redirect($this->route->url);
+                }
+            );
         app('router')->add($logoutRoute);
 
 
