@@ -4,13 +4,11 @@
 class Pages extends Objects
 {
 
-
-
     protected $rootFolder = "pages/";
     protected $singularName = "Page";
 
 
-    public function render($path)
+    public function _render($path)
     {
         $page = $this->get($path);
         if ($page instanceof Page) {

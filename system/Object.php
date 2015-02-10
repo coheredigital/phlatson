@@ -8,19 +8,19 @@ abstract class Object implements JsonSerializable
 
     const DEFAULT_SAVE_FILE = "data.json";
 
-    public $name;
+//    public $name;
 
     protected $file;
     protected $modified;
     protected $rootFolder;
 
     // main data container, holds data loaded from JSON file
-    protected $data = array();
-    protected $previousData = array();
-    protected $settings = array();
+    protected $data = [];
+    protected $previousData = [];
+    protected $settings = [];
 
-    protected $defaultFields = array();
-    protected $route = array();
+    protected $defaultFields = [];
+    protected $route = [];
 
     function __construct($file = null)
     {
@@ -28,7 +28,7 @@ abstract class Object implements JsonSerializable
         if (is_file($file)) {
             $this->file = $file;
             $this->data = json_decode(file_get_contents($this->file), true);
-            $this->name = basename($this->path);
+//            $this->name = basename($this->path);
 
             $this->route = $this->getRoute();
         }
@@ -283,11 +283,15 @@ abstract class Object implements JsonSerializable
             case 'directory':
                 return normalizeDirectory($this->name);
             case 'url':
-                return app('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
+                $url = app('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
+                return $url;
             case 'path':
                 return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
-//            case 'name':
-//                return basename($this->path);
+            case 'name':
+//                if (!$this->getUnformatted("name"))
+                    return basename($this->path);
+//                else
+//                    $this->get("name");
             case 'modified':
                 return filemtime($this->file);
             case 'className':

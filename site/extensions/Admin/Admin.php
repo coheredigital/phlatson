@@ -76,9 +76,10 @@ class Admin extends Extension
                 function () {
                     if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
                         app("session")->redirect(app("router")->get("admin")->url);
-                    } else {
-                        // add error message
                     }
+
+
+
                 }
             );
         app('router')->add($loginSubmit);
@@ -96,11 +97,11 @@ class Admin extends Extension
             if($request->url != $router->login->url) $session->redirect($router->login->url);
             // add the login stylesheet and load the login layout
             app("config")->styles->add("{$this->url}styles/login.css");
-            include_once "login.php"; // TODO : include_once used because this was also getting called twice
+            include "login.php";
         }
         else if($user->isLoggedIn()){
             if($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
-            if ($this->output) include_once "layout.php"; // TODO : this was added because render was getting called twice, look for better solution
+            if ($this->output) include "layout.php";
         }
 
     }

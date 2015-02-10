@@ -42,6 +42,7 @@ abstract class Fieldtype extends Extension
     }
 
 
+
     protected function getAttributes()
     {
         $string = "";
