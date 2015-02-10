@@ -1,7 +1,8 @@
 <?php
 
-class AdminEditField extends AdminEdit
+class AdminEditUser extends AdminEdit
 {
+
 
 
     public function setup()
@@ -9,12 +10,12 @@ class AdminEditField extends AdminEdit
 
         $fieldRoute = new Route;
         $fieldRoute
-            ->path("fields/edit/:any")
+            ->path("users/edit/:any")
             ->parent("admin")
             ->callback(
             function ($name) {
-                $this->object = app("fields")->get($name);
-                $this->title = "Edit Field";
+                $this->object = app("users")->get($name);
+                $this->title = "Edit User";
                 $this->render();
             }
         );
@@ -23,14 +24,14 @@ class AdminEditField extends AdminEdit
 
         $newFieldRoute = new Route;
         $newFieldRoute
-            ->path("fields/new/")
+            ->path("users/new/")
             ->parent("admin")
             ->callback(
             function () {
                 $this->object = new Field();
                 $this->object->template = "field";
                 $this->object->parent = $parent;
-                $this->title = "New Page";
+                $this->title = "New User";
 
                 $this->render();
             }
@@ -39,7 +40,7 @@ class AdminEditField extends AdminEdit
 
         $saveFieldRoute = new Route;
         $saveFieldRoute
-            ->path("fields/edit/:any")
+            ->path("users/edit/:any")
             ->method("POST")
             ->parent("admin")
             ->callback(

@@ -32,6 +32,8 @@ class FieldtypeFieldtype extends Fieldtype
             ->sort("title");
 
         foreach($fieldtypes as $fieldtype) {
+            $name = $this->value->name;
+            $fname = $fieldtype->name;
             if ($fieldtype->name == $this->value->name) $selected = "selected";
             else $selected = "";
             $options .= "<option $selected value='$fieldtype->name'>$fieldtype->title</option>";

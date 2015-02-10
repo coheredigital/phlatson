@@ -16,14 +16,16 @@ class AdminListPages extends Extension
     {
 
         $pagesList = new Route;
-        $pagesList->path("pages");
-        $pagesList->parent(app("admin")->route);
-        $pagesList->callback(
-            function () {
-                $this->render();
-            }
-        );
-        app("router")->add($pagesList);
+        $pagesList
+            ->name("pages")
+            ->path("pages")
+            ->parent(app("admin")->route)
+            ->callback(
+                function () {
+                    $this->render();
+                }
+            );
+            app("router")->add($pagesList);
 
     }
 

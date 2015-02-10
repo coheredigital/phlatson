@@ -20,23 +20,23 @@
             $menuLinks = [
               "Pages" => [
                   "icon" => "file",
-                  "url" => $config->urls->admin . "pages/"
+                  "url" => $router->pages->url
               ],
               "Fields" => [
                   "icon" => "edit",
-                  "url" => $config->urls->admin . "fields/"
+                  "url" => $router->fields->url
               ],
               "Templates" => [
                   "icon" => "code",
-                  "url" => $config->urls->admin . "templates/"
+                  "url" => $router->templates->url
               ],
               "Extensions" => [
                   "icon" => "cubes",
-                  "url" => $config->urls->admin . "extensions/"
+                  "url" => $router->extensions->url
               ],
-              "Settings" => [
-                  "icon" => "cog",
-                  "url" => $config->urls->admin . "settings/"
+              "Users" => [
+                  "icon" => "users",
+                  "url" => $router->users->url
               ]
             ];
 

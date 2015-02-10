@@ -8,6 +8,8 @@ abstract class Object implements JsonSerializable
 
     const DEFAULT_SAVE_FILE = "data.json";
 
+    public $name;
+
     protected $file;
     protected $modified;
     protected $rootFolder;
@@ -26,8 +28,9 @@ abstract class Object implements JsonSerializable
         if (is_file($file)) {
             $this->file = $file;
             $this->data = json_decode(file_get_contents($this->file), true);
-            $this->route = $this->getRoute();
+            $this->name = basename($this->path);
 
+            $this->route = $this->getRoute();
         }
 
     }
@@ -263,9 +266,7 @@ abstract class Object implements JsonSerializable
     {
         // if the object does not have a matching existing directory it is assumed new
         // directory will be created when saved
-        if (!is_file($this->file)) {
-            return true;
-        }
+        return is_file($this->file);
 
     }
 
@@ -285,12 +286,14 @@ abstract class Object implements JsonSerializable
                 return app('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
             case 'path':
                 return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
-            case 'name':
-                return basename($this->path);
+//            case 'name':
+//                return basename($this->path);
             case 'modified':
                 return filemtime($this->file);
             case 'className':
                 return get_class($this);
+            case 'defaultFields':
+                return $this->defaultFields;
             default:
                 return $this->getFormatted($name);
         }

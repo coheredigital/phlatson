@@ -17,6 +17,7 @@ class AdminListExtensions extends Extension
 
         $extensionRoute = new Route;
         $extensionRoute
+            ->name("extensions")
             ->path("extensions")
             ->parent(app("admin")->route)
             ->callback(

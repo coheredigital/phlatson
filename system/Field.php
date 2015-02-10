@@ -64,7 +64,8 @@ class Field extends Object
             case 'input':
                 return $this->getInput();
             case 'template':
-                return app("templates")->get("field");
+                $template = app("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
+                $template->master = $this;
             default:
                 return parent::get($name);
         }

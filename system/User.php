@@ -4,6 +4,7 @@ class User extends Object
 {
 
     protected $rootFolder = "users";
+    public $defaultFields = array("name", "password");
 
     /**
      * is this the guest user?
@@ -46,11 +47,11 @@ class User extends Object
     {
         switch ($name) {
             case 'template':
-                return app("templates")->get("user");
-                break;
+                $template = app("templates")->get("user"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
+                $template->master = $this;
+                return $template;
             default:
                 return parent::get($name);
-                break;
         }
     }
 

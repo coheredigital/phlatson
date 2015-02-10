@@ -14,8 +14,10 @@ class AdminEdit extends Extension
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
+        $fields = $template->fields;
 
-        foreach ($template->fields as $field) {
+
+        foreach ($fields as $field) {
             $fieldtype = $this->getFieldInterface($field);
             $fieldset->add($fieldtype);
         }

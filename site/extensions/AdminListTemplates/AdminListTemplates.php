@@ -14,14 +14,16 @@ class AdminListTemplates extends Extension
     {
 
         $templateList = new Route;
-        $templateList->path("templates");
-        $templateList->parent(app("admin")->route);
-        $templateList->callback(
-            function () {
-                $this->render();
-            }
-        );
-        app('router')->add($templateList);
+        $templateList
+            ->name("templates")
+            ->path("templates")
+            ->parent(app("admin")->route)
+            ->callback(
+                function () {
+                    $this->render();
+                }
+            );
+            app('router')->add($templateList);
 
     }
 

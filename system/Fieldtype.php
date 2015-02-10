@@ -8,7 +8,6 @@ abstract class Fieldtype extends Extension
     protected $object;
 
     public $value = null;
-    public $name;
     public $label;
 
     protected $attributes = [];
@@ -41,12 +40,6 @@ abstract class Fieldtype extends Extension
     {
         return $value;
     }
-
-    final public function setField(Field $field)
-    {
-        $this->field = $field;
-    }
-
 
 
     protected function getAttributes()
@@ -123,6 +116,10 @@ abstract class Fieldtype extends Extension
     }
 
 
+    protected function getConfigFields(){
+        return false;
+    }
+
 
     // we will default to rendering a basic text field since it will be the most common input type for most field types
     final public function _render()
@@ -132,6 +129,8 @@ abstract class Fieldtype extends Extension
 
         return $output;
     }
+
+
 
 
 }

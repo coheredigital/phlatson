@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-class AdminListFields extends Extension
+class AdminListUsers extends Extension
 {
 
 
@@ -15,10 +15,10 @@ class AdminListFields extends Extension
     protected function setup()
     {
 
-        $fieldsRoute = new Route;
-        $fieldsRoute
-            ->name("fields")
-            ->path("fields")
+        $usersRoute = new Route;
+        $usersRoute
+            ->name("users")
+            ->path("users")
             ->parent(app("admin")->route)
             ->callback(
                 function () {
@@ -26,12 +26,12 @@ class AdminListFields extends Extension
                 }
             );
 
-        app('router')->add($fieldsRoute);
+        app('router')->add($usersRoute);
 
     }
 
 
-    protected function renderFieldsList()
+    protected function renderUsersList()
     {
 
         $config = app("config");
@@ -39,19 +39,15 @@ class AdminListFields extends Extension
         $table = app("extensions")->get("MarkupTable");
         $table->setColumns(
             array(
-                "Name" => "name",
-                "Label" => "label",
-                "Type" => "fieldtype",
+                "Username" => "username"
             )
         );
 
-        $fields = app("fields")->all();
-        foreach ($fields as $item) {
+        $users = app("users")->all();
+        foreach ($users as $item) {
             $table->addRow(
                 array(
-                    "name" => "<a href='{$config->urls->admin}fields/edit/{$item->name}' >{$item->name}</a>",
-                    "label" => $item->title,
-                    "fieldtype" => $item->type
+                    "username" => "<a href='{$config->urls->admin}users/edit/{$item->name}' >{$item->name}</a>"
                 )
             );
         }
@@ -73,7 +69,7 @@ class AdminListFields extends Extension
 
         $admin = app("admin");
         $admin->title = "Fields";
-        $admin->output = $this->renderFieldsList();
+        $admin->output = $this->renderUsersList();
         $admin->render();
 
     }
