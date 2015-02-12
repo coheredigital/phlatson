@@ -4,12 +4,7 @@
     "timezone": "America/New_York",
     "debug": true,
     "simulate": true,
-    "hostname": "xpages.dev",
-
-    "disabledExtensions" : [
-        "FieldtypeMarkdown",
-        "AdminSettings"
-    ],
+    "hostname": "flatbed.dev",
 
     "routes" : [
         {

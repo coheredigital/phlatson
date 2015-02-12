@@ -65,7 +65,7 @@ class Extensions extends Objects
     public function all()
     {
         $this->getObjectList();
-        $objectArray = new ObjectArray();
+        $objectArray = new ObjectCollection();
 
         foreach ($this->data as $object) {
             $objectArray->add($object);

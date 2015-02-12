@@ -8,8 +8,6 @@ abstract class Object implements JsonSerializable
 
     const DEFAULT_SAVE_FILE = "data.json";
 
-//    public $name;
-
     protected $file;
     protected $modified;
     protected $rootFolder;
@@ -24,28 +22,24 @@ abstract class Object implements JsonSerializable
 
     function __construct($file = null)
     {
-
         if (is_file($file)) {
             $this->file = $file;
             $this->data = json_decode(file_get_contents($this->file), true);
-//            $this->name = basename($this->path);
-
             $this->route = $this->getRoute();
         }
-
     }
 
 
-
+    /**
+     * @return array
+     */
     protected function getRoute()
     {
 
         // first get roo relative path
-        $path = str_replace(
-            app("config")->paths->site . $this->rootFolder,
-            "",
-            $this->file
-        ); // trim the root path to get root relative path
+        $path = str_replace(app("config")->paths->site . $this->rootFolder, "", $this->file);
+
+        // trim the root path to get root relative path
         $path = str_replace($this::DEFAULT_SAVE_FILE, "", $path); // trim of file name to isolote path
         $path = rtrim($path, '/'); // trim excess slashes
 
@@ -62,15 +56,13 @@ abstract class Object implements JsonSerializable
         // get the field object matching the passed "$name"
         $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
 
-        if ($field instanceof Field ) {
-            $fieldtypeName = $field->getUnformatted("fieldtype");
-            $fieldtype = app("extensions")->get($fieldtypeName);
-            $fieldtype->object = $this;
-            if ($fieldtype instanceof Fieldtype) {
-                $value = $fieldtype->getOutput($value);
-            }
-        }
+        if ($field instanceof Field) {
 
+            $fieldtype = app("extensions")->get($field->getFieldtypeName());
+            $fieldtype->object = $this;
+            $value = $fieldtype->getOutput($value);
+
+        }
 
         return $value;
     }
@@ -78,30 +70,35 @@ abstract class Object implements JsonSerializable
 
     protected function setFormatted($name, $value)
     {
-
         // get the field object matching the passed "$name"
         $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
 
-        if ($field instanceof Field ) {
+        if ($field instanceof Field) {
+
             $fieldtype = $field->type;
             $fieldtype->object = $this;
 
             if ($fieldtype instanceof Fieldtype) {
                 $value = $fieldtype->getSave($value);
             }
+
         }
 
         $this->setUnformatted($name, $value);
+
     }
 
 
-    protected function getDefaultFields(){
+    protected function getDefaultFields()
+    {
 
-        $fieldArray = new ObjectArray();
+        $fieldArray = new ObjectCollection();
 
-        foreach($this->defaultFields as $fieldName){
+        foreach ($this->defaultFields as $fieldName) {
             $field = app("fields")->get($fieldName);
-            if($field instanceof Field) $fieldArray->add($field);
+            if ($field instanceof Field) {
+                $fieldArray->add($field);
+            }
         }
         return $fieldArray;
     }
@@ -123,7 +120,6 @@ abstract class Object implements JsonSerializable
     /**
      * get value directly to $this->data[$name]
      * skips formatting of passed value
-     * should not generally be used on public facing API
      *
      * @param  string $name
      * @return mixed
@@ -216,10 +212,9 @@ abstract class Object implements JsonSerializable
         // store objects existing data for reference
         $this->previousData = $this->data;
 
-        if(app("config")->simulate){
+        if (app("config")->simulate) {
             $saveFile = "test.json";
-        }
-        else{
+        } else {
             $saveFile = self::DEFAULT_SAVE_FILE;
         }
 
@@ -251,8 +246,8 @@ abstract class Object implements JsonSerializable
         $it = new RecursiveDirectoryIterator($this->path, RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it,
             RecursiveIteratorIterator::CHILD_FIRST);
-        foreach($files as $file) {
-            if ($file->isDir()){
+        foreach ($files as $file) {
+            if ($file->isDir()) {
                 rmdir($file->getRealPath());
             } else {
                 unlink($file->getRealPath());
@@ -289,7 +284,7 @@ abstract class Object implements JsonSerializable
                 return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
             case 'name':
 //                if (!$this->getUnformatted("name"))
-                    return basename($this->path);
+                return basename($this->path);
 //                else
 //                    $this->get("name");
             case 'modified':
@@ -330,7 +325,8 @@ abstract class Object implements JsonSerializable
         return $this->className;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return $this->data;
     }
 

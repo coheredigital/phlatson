@@ -1,6 +1,6 @@
 <?php
 
-class ImageArray extends FileArray
+class ImageArray extends FileCollection
 {
 
 

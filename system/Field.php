@@ -37,6 +37,15 @@ class Field extends Object
 
     }
 
+    /**
+     *
+     * Get raw fieldtype name without applied formatting
+     *
+     * @return String
+     */
+    public function getFieldtypeName(){
+        return $this->getUnformatted("fieldtype");
+    }
 
     protected function processSavePath()
     {

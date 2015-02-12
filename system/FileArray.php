@@ -1,6 +1,6 @@
 <?php
 
-class FileArray extends ObjectArray
+class FileCollection extends ObjectCollection
 {
 
     protected $page;

@@ -5,7 +5,7 @@ body {
   background: #333333;
 }
 .form-login {
-  background: #ffbe68;
+  background: #f46b4b;
   padding-top: 0;
   width: 200px;
   position: absolute;
@@ -31,7 +31,7 @@ body {
   color: #aaaaaa !important;
 }
 .form-login .button:hover {
-  color: #ffbe68 !important;
+  color: #f46b4b !important;
 }
 .logo {
   height: auto;

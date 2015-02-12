@@ -7,7 +7,7 @@ class FieldtypeFields extends Fieldtype
     public function getOutput($array)
     {
 
-        $fields = new ObjectArray();
+        $fields = new ObjectCollection();
 
         if (count($array)) {
             foreach ($array as $item) {

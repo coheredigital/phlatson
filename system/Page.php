@@ -40,7 +40,7 @@ class Page extends Object
 
     public function files()
     {
-        return new FileArray($this);
+        return new FileCollection($this);
     }
 
     protected function images()

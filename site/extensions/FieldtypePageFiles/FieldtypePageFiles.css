@@ -1,1 +1,116 @@
-.FieldtypePageFiles{margin-top:2em;padding-bottom:3em}.FieldtypePageFiles .field-label{display:none}.FieldtypePageFiles .field-input{background:transparent;border:none}#PageFilesList .item{position:relative}.FieldtypePageFiles-dragndrop{padding:2em;margin-bottom:2em;text-align:center;text-transform:uppercase;font-weight:bold;left:180px;border:3px dashed #ddd;z-index:1}.FieldtypePageFiles-dragndrop .sub.header{font-size:0.8em;text-transform:uppercase;color:#888;font-weight:normal}.dz-progress{border:none;padding:0;height:5px;clear:both;margin-top:-5px;background:#28b967;-webkit-transition:all .6s ease-in-out;transition:all .6s ease-in-out}.dz-success .dz-progress{opacity:0 !important;height:0 !important}.FiletypeIcon{height:56px;width:40px;background:#333;float:left;margin:4px 12px;vertical-align:middle;position:relative}.FiletypeIcon:before{height:14px;width:14px;content:"";position:absolute;top:0;right:0;background:#fff;opacity:0.4}.FiletypeIcon:after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 14px 14px 0;border-color:transparent #ffffff transparent transparent}.FiletypeIcon-label{color:#fff;text-transform:uppercase;font-size:11px;line-height:1em;position:absolute;bottom:3px;font-weight:900;width:100%;text-align:center;opacity:0.7}.FiletypeIcon-pdf{background:#B40808}.FiletypeIcon-zip{background:#ee9021}.FiletypeIcon-exe{background:#9d73d3}.file-list .item{border:1px solid #ddd;background:#fff;margin-bottom:1em}.file-list .item:after{content:"";display:table;clear:both}.file-list .item .thumbnail{float:left}.file-list .item .content{padding:1em;margin-left:64px}
+/* Colors */
+/* ELEMENT COLORS */
+/* SIZES */
+.FieldtypePageFiles {
+  margin-top: 2em;
+  padding-bottom: 3em;
+}
+.FieldtypePageFiles .field-label {
+  display: none;
+}
+.FieldtypePageFiles .field-input {
+  background: transparent;
+  border: none;
+}
+#PageFilesList .item {
+  position: relative;
+}
+.FieldtypePageFiles-dragndrop {
+  padding: 2em;
+  margin-bottom: 2em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  left: 180px;
+  border: 3px dashed #dddddd;
+  z-index: 1;
+}
+.FieldtypePageFiles-dragndrop .sub.header {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: normal;
+}
+.dz-progress {
+  border: none;
+  padding: 0;
+  height: 5px;
+  clear: both;
+  margin-top: -5px;
+  background: #28b967;
+  transition: all 0.6s ease-in-out;
+}
+.dz-success .dz-progress {
+  opacity: 0 !important;
+  height: 0 !important;
+}
+/* FILETYPE ICONS */
+.FiletypeIcon {
+  height: 56px;
+  width: 40px;
+  background: #333;
+  float: left;
+  margin: 4px 12px;
+  vertical-align: middle;
+  position: relative;
+}
+.FiletypeIcon:before {
+  height: 14px;
+  width: 14px;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #fff;
+  opacity: 0.4;
+}
+.FiletypeIcon:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 14px 14px 0;
+  border-color: transparent #ffffff transparent transparent;
+}
+.FiletypeIcon-label {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 1em;
+  position: absolute;
+  bottom: 3px;
+  font-weight: 900;
+  width: 100%;
+  text-align: center;
+  opacity: 0.7;
+}
+/* FILETYPE ICON COLORS */
+.FiletypeIcon-pdf {
+  background: #B40808;
+}
+.FiletypeIcon-zip {
+  background: #ee9021;
+}
+.FiletypeIcon-exe {
+  background: #9d73d3;
+}
+.file-list .item {
+  border: 1px solid #dddddd;
+  background: #fff;
+  margin-bottom: 1em;
+}
+.file-list .item:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.file-list .item .thumbnail {
+  float: left;
+}
+.file-list .item .content {
+  padding: 1em;
+  margin-left: 64px;
+}

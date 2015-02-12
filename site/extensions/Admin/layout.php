@@ -14,6 +14,12 @@
         <div class="logo">
             <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
         </div>
+        <div class="user-menu">
+            <div class="user-menu-content">
+                <div class="user-name"><?php echo $user->name ?></div><a href="<?php echo $config->urls->admin ?>logout" class="user-logout"><i class="icon icon-lock"></i> Logout</a>
+            </div>
+        </div>
+
         <div class="ui menu vertical main-menu">
 
             <?php
@@ -50,15 +56,8 @@
                 </a>
             <?php endforeach; ?>
         </div>
-        <div class="user-menu">
 
-            <div class="user-menu-content">
-                <div class="user-name"><?php echo $user->name ?></div>
-                <a href="<?php echo $config->urls->admin ?>logout" class="user-logout"><i class="icon icon-lock"></i> Logout</a>
-            </div>
-        </div>
-    </div>
-    <div id="main">
+    </div><div id="main">
         <?php if ($this->title): ?>
             <div class="main-title">
                 <?php echo $this->title ?>

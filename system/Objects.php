@@ -106,7 +106,7 @@ abstract class Objects
     public function all()
     {
         $this->getObjectList();
-        $objectArray = new ObjectArray();
+        $objectArray = new ObjectCollection();
 
         foreach ($this->data as $key => $value) {
             $object = $this->getObject($key);

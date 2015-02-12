@@ -13,7 +13,7 @@ class FieldtypeSelect extends Fieldtype{
 
     protected function getConfigFields(){
 
-        $fields = new ObjectArray();
+        $fields = new ObjectCollection();
 
         $field = api("extensions")->get("FieldtypeTextarea");
         $field->label = "Options";
