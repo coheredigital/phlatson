@@ -30,11 +30,15 @@ abstract class Object implements JsonSerializable
 
 
     public function getName(){
-        $name = basename($this->getPath());
+        $path = $this->getPath();
+        $name = basename($path);
         return $name;
     }
 
     public function getPath(){
+        if(!$this->file)
+            throw new Exception("Invalid: can not get path from Object with no file!");
+
         $path =  normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
         return $path;
     }
@@ -292,7 +296,7 @@ abstract class Object implements JsonSerializable
             case 'path':
                 return $this->getPath();
             case 'name':
-                return $this->getPath();
+                return $this->getName();
             case 'modified':
                 return filemtime($this->file);
             case 'className':

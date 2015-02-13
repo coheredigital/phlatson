@@ -13,9 +13,9 @@ class Extension extends Object
     {
         parent::__construct($file);
 
-//        if ($this->autoload === true) {
+        if ($this->autoload === true) {
             $this->setup();
-//        }
+        }
         $this->setupListeners();
     }
 
