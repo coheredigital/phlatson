@@ -14,7 +14,14 @@ require_once ROOT_PATH . 'system/_traits.php';
 /* instatiate api variables */
 app('config', new Config);
 app('request', new Request);
-app('router', new Router());
+
+// set default request behaviour
+$pagesRoute = new Route();
+$pagesRoute
+    ->path(":all")
+    ->callback("Pages.render");
+
+app('router', new Router($pagesRoute));
 
 // setup config routes
 foreach (app("config")->routes as $r){
@@ -34,12 +41,7 @@ app('events', new Events);
 
 $app = app();
 
-// set default request behaviour
-$pagesRoute = new Route();
-$pagesRoute
-    ->path(":all")
-    ->callback("Pages.render");
-app('router')->defaultRoute = $pagesRoute;
+
 
 // execute the app
 try {

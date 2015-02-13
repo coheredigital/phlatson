@@ -10,12 +10,15 @@ class Router
 {
 
     // routes organize in multidimensional array
-    // $routes['hostname']['method']['path']
     private $routes = [];
     private $namedRoutes = [];
+    private $defaultRoute;
 
-    public $defaultRoute = false;
 
+    public function __construct(Route $defaultRoute){
+
+        $this->defaultRoute = $defaultRoute;
+    }
 
     /**
      * Defines callback if route is not found

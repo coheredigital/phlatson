@@ -5,7 +5,6 @@ abstract class Object implements JsonSerializable
 
     use hookable;
 
-
     const DEFAULT_SAVE_FILE = "data.json";
 
     protected $file;
@@ -29,6 +28,16 @@ abstract class Object implements JsonSerializable
         }
     }
 
+
+    public function getName(){
+        $name = basename($this->getPath());
+        return $name;
+    }
+
+    public function getPath(){
+        $path =  normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
+        return $path;
+    }
 
     /**
      * @return array
@@ -276,17 +285,14 @@ abstract class Object implements JsonSerializable
     {
         switch ($name) {
             case 'directory':
-                return normalizeDirectory($this->name);
+                return normalizeDirectory($this->getName());
             case 'url':
-                $url = app('config')->urls->site . $this->rootFolder . "/" . $this->name . "/";
+                $url = app('config')->urls->site . $this->rootFolder . "/" . $this->getName() . "/";
                 return $url;
             case 'path':
-                return normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
+                return $this->getPath();
             case 'name':
-//                if (!$this->getUnformatted("name"))
-                return basename($this->path);
-//                else
-//                    $this->get("name");
+                return $this->getPath();
             case 'modified':
                 return filemtime($this->file);
             case 'className':
