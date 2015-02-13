@@ -28,7 +28,7 @@ final class App
      * @param bool $lock
      * @throws Exception
      */
-    public static function set($key, $value, $lock = false)
+    public static function set($key, $value, $lock = true)
     {
 
         if (isset(self::$registry[$key]) && in_array($key, self::$lock)) {
