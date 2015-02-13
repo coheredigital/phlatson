@@ -3,7 +3,8 @@
 class Config extends Object
 {
 
-    function __construct()
+
+    public function __construct()
     {
 
         $this->styles = new SimpleArray();
@@ -68,7 +69,8 @@ class Config extends Object
          * Setup configuration data and default paths/urls
          */
 
-        $urls = new Paths(ROOT_URL);
+        $urls = new Paths;
+        $urls->root = ROOT_URL;
         // loop through directories and set key / value
         foreach ($directories as $key => $value) {
             $urls->{$key} = $value;

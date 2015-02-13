@@ -3,11 +3,7 @@
 class Paths extends SimpleArray
 {
 
-    public function __construct($root)
-    {
-        $this->root = $root;
-    }
-
+//    public $root;
 
     public static function normalizeSeparators($path)
     {
@@ -46,13 +42,13 @@ class Paths extends SimpleArray
 
     public function set($name, $value)
     {
-        if ($name && $value && is_array($this->data)) {
-            if (isset($this->data["$name"]) && $name != "root") {
-                return false;
-            } // only allow root value to be overwritten when already set
-            $value = $this->normalizeSeparators($value);
-            $this->data[$name] = $value;
-        }
+
+        if (isset($this->data["$name"]) && $name != "root") {
+            return false;
+        } // only allow root value to be overwritten when already set
+        $value = $this->normalizeSeparators($value);
+        $this->data[$name] = $value;
+
 
     }
 
