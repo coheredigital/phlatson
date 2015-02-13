@@ -14,7 +14,7 @@ class Field extends Object
         if ($this->getUnformatted("input")) {
 
             $name = $this->getUnformatted("input");
-            $input = app("extensions")->get($name);
+            $input = registry("extensions")->get($name);
             $input->settings($this->settings);
             return $input;
 
@@ -30,9 +30,9 @@ class Field extends Object
                 $this->settings->nameFrom
             )
         ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return app("sanitizer")->name($this->settings->nameFrom);
+            return registry("sanitizer")->name($this->settings->nameFrom);
         } else {
-            return app("sanitizer")->name($this->label);
+            return registry("sanitizer")->name($this->label);
         }
 
     }
@@ -53,7 +53,7 @@ class Field extends Object
         // handle new object creation
         if ($this->isNew()) {
 
-            $this->path = app("config")->paths->fields . $this->name . "/";
+            $this->path = registry("config")->paths->fields . $this->name . "/";
             if (!file_exists($this->path)) {
                 mkdir($this->path, 0777, true);
             }
@@ -73,7 +73,7 @@ class Field extends Object
             case 'input':
                 return $this->getInput();
             case 'template':
-                $template = app("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
+                $template = registry("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
                 $template->master = $this;
             default:
                 return parent::get($name);

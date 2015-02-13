@@ -47,7 +47,7 @@ class User extends Object
     {
         switch ($name) {
             case 'template':
-                $template = app("templates")->get("user"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
+                $template = registry("templates")->get("user"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
                 $template->master = $this;
                 return $template;
             default:

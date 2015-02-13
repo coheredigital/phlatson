@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object implements JsonSerializable
+abstract class Object extends App implements JsonSerializable
 {
 
     use hookable;
@@ -36,9 +36,6 @@ abstract class Object implements JsonSerializable
     }
 
     public function getPath(){
-        if(!$this->file)
-            throw new Exception("Invalid: can not get path from Object with no file!");
-
         $path =  normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
         return $path;
     }
@@ -50,7 +47,7 @@ abstract class Object implements JsonSerializable
     {
 
         // first get roo relative path
-        $path = str_replace(app("config")->paths->site . $this->rootFolder, "", $this->file);
+        $path = str_replace($this->registry->config->paths->site . $this->rootFolder, "", $this->file);
 
         // trim the root path to get root relative path
         $path = str_replace($this::DEFAULT_SAVE_FILE, "", $path); // trim of file name to isolote path
@@ -67,11 +64,11 @@ abstract class Object implements JsonSerializable
         $value = $this->getUnformatted($name);
 
         // get the field object matching the passed "$name"
-        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
+        $field = $this->registry->fields ? $this->registry->fields->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
 
         if ($field instanceof Field) {
 
-            $fieldtype = app("extensions")->get($field->getFieldtypeName());
+            $fieldtype = $this->registry->extensions->get($field->getFieldtypeName());
             $fieldtype->object = $this;
             $value = $fieldtype->getOutput($value);
 
@@ -84,7 +81,7 @@ abstract class Object implements JsonSerializable
     protected function setFormatted($name, $value)
     {
         // get the field object matching the passed "$name"
-        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
+        $field = $this->service('fields') ? $this->service('fields')->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field) {
 
@@ -108,7 +105,7 @@ abstract class Object implements JsonSerializable
         $fieldArray = new ObjectCollection();
 
         foreach ($this->defaultFields as $fieldName) {
-            $field = app("fields")->get($fieldName);
+            $field = $this->service("fields")->get($fieldName);
             if ($field instanceof Field) {
                 $fieldArray->add($field);
             }
@@ -147,7 +144,7 @@ abstract class Object implements JsonSerializable
     protected function processInputData()
     {
 
-        $post = app("request")->post;
+        $post = $this->service("request")->post;
 
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
@@ -170,17 +167,17 @@ abstract class Object implements JsonSerializable
     protected function processSaveName()
     {
 
-        $post = app("request")->post;
+        $post = $this->service("request")->post;
 
         // set name value
         if ($post->name && !$this->isNew()) { // TODO : this is temp
-            $pageName = app("sanitizer")->name($post->name); // TODO add page name sanitizer
+            $pageName = $this->service("sanitizer")->name($post->name); // TODO add page name sanitizer
             $this->name = $pageName;
         } else { // generate page name from defined field
             $template = $this->template;
             $nameFieldReference = $template->settings['nameFrom'];
             $name = $this->get($nameFieldReference);
-            $name = app("sanitizer")->name($name);
+            $name = $this->service("sanitizer")->name($name);
             $this->name = $name;// TODO:  refactor code to allow name setting and getting to be handled the same way as other fields (by the Fieldtype class associated with it)
         }
 
@@ -225,7 +222,7 @@ abstract class Object implements JsonSerializable
         // store objects existing data for reference
         $this->previousData = $this->data;
 
-        if (app("config")->simulate) {
+        if ($this->service("config")->simulate) {
             $saveFile = "test.json";
         } else {
             $saveFile = self::DEFAULT_SAVE_FILE;
@@ -291,7 +288,7 @@ abstract class Object implements JsonSerializable
             case 'directory':
                 return normalizeDirectory($this->getName());
             case 'url':
-                $url = app('config')->urls->site . $this->rootFolder . "/" . $this->getName() . "/";
+                $url = $this->service('config')->urls->site . $this->rootFolder . "/" . $this->getName() . "/";
                 return $url;
             case 'path':
                 return $this->getPath();

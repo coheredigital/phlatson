@@ -33,7 +33,7 @@ class Router
     {
 
 
-        $hostname = $route->hostname ? $route->hostname : app("config")->hostname; // by default routes are children of the default hostname
+        $hostname = $route->hostname ? $route->hostname : registry("config")->hostname; // by default routes are children of the default hostname
         $method = $route->method;
         $path = $route->path;
 

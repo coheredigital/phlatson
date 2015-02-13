@@ -12,10 +12,10 @@ class AdminSettings extends Extension
     protected function setup()
     {
 
-        app('router')->add(
+        registry('router')->add(
             new Route([
                 "path" => "settings",
-                "parent" => app("admin")->route,
+                "parent" => registry("admin")->route,
                 "callback" => function () {
                         $this->render();
                     }
@@ -33,25 +33,25 @@ class AdminSettings extends Extension
 
 
 
-        $extensions = app("extensions")->all();
+        $extensions = registry("extensions")->all();
         $extensions->filter([
                 "configurable" => true
             ]);
 
-        $admin = app("admin");
+        $admin = registry("admin");
         $admin->title = "Settings";
 
         foreach($extensions as $extension) {
 
             if(!count($extension->fields)) continue;
 
-            $form = app("extensions")->get("MarkupEditForm");
+            $form = registry("extensions")->get("MarkupEditForm");
 
             $tabNames["$extension->name"] = $extension->title;
             foreach ( $extension->fields as $field ) {
 
                 $fieldtypeName = $field["fieldtype"];
-                $fieldtype = app("extensions")->get($fieldtypeName);
+                $fieldtype = registry("extensions")->get($fieldtypeName);
                 $fieldtype->settings($field["settings"]);
                 $fieldtype->label = $field["label"];
                 $fieldtype->value = $field["default"];

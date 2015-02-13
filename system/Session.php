@@ -14,25 +14,25 @@ class Session implements IteratorAggregate
 
         // check for a logged in user
         if ($username = $this->get('_user_name')) {
-            $user = app('users')->get($username);
+            $user = registry('users')->get($username);
             // update timestamp to extend session life
             if ($user) {
                 $this->set('_user_ts', time());
             }
             // set current user to the logged in user
         } else {
-            $user = app('users')->get("guest");
+            $user = registry('users')->get("guest");
         }
 
 //        app('users')->setActiveUser($user);
 
-        app('user', $user);
+        registry('user', $user);
 
     }
 
 
     public function exists(){
-        if( isset($_SESSION) || $_COOKIE[app('config')->sessionName] ){
+        if( isset($_SESSION) || $_COOKIE[registry('config')->sessionName] ){
             return true;
         }
         return false;
@@ -189,7 +189,7 @@ class Session implements IteratorAggregate
      */
     protected function start()
     {
-        session_name(app('config')->sessionName);
+        session_name(registry('config')->sessionName);
         @session_start();
     }
 
@@ -233,7 +233,7 @@ class Session implements IteratorAggregate
     public function login($name, $password)
     {
         // should sanitize name
-        $user = app('users')->get("$name");
+        $user = registry('users')->get("$name");
         if (!$user instanceof User) {
             throw new Exception("User {$name} not found!");
         }
@@ -242,7 +242,7 @@ class Session implements IteratorAggregate
             $this->regenerate(); // rebuild session data
             $this->set('_user_name', $user->name);
             $this->set('_user_time', time());
-            app('user', $user);
+            registry('user', $user);
             return true;
         }
         return null;

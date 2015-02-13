@@ -5,7 +5,7 @@ class FieldtypeName extends Fieldtype
 
     public function getSave($value)
     {
-        $value = app("sanitizer")->name($value);
+        $value = registry("sanitizer")->name($value);
         return $value;
     }
 

@@ -9,18 +9,18 @@ class MarkupPageList extends Extension
 
     protected function setup()
     {
-        app('config')->scripts->add($this->url . "{$this->className}.js");
+        registry('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
 
     public function renderPageTitle(Page $page)
     {
         $output .= "<div class='page-tree-item'>";
-        $output .= "<i class='icon icon-circle'></i> <a class='page-tree-item-edit' href='" . app('config')->urls->admin . "pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
+        $output .= "<i class='icon icon-circle'></i> <a class='page-tree-item-edit' href='" . registry('config')->urls->admin . "pages/edit/" . $page->directory . "'>{$page->title}</i></a>";
         $output .= "<div class='page-tree-item-buttons'>";
         $output .= $this->renderDropdown($page);
 
-        $output .= "<a class='button' target='_blank' href='http://" . app("config")->hostname . "{$page->url}'><i class='icon icon-eye'></i></a>";
+        $output .= "<a class='button' target='_blank' href='http://" . registry("config")->hostname . "{$page->url}'><i class='icon icon-eye'></i></a>";
         $output .= "</div>";
         $output .= "</div>";
         return $output;
@@ -50,8 +50,8 @@ class MarkupPageList extends Extension
     private function renderDropdown(Page $page)
     {
 
-        $config = app("config");
-        $templates = app("templates")->all(); // TODO: change to list only supported child templates for this template
+        $config = registry("config");
+        $templates = registry("templates")->all(); // TODO: change to list only supported child templates for this template
 
         if (count($templates) > 1) {
 
@@ -70,7 +70,7 @@ class MarkupPageList extends Extension
         } else {
             if (count($templates)) {
 
-                $output = "<a class='button' href='" . app('config')->urls->root . app(
+                $output = "<a class='button' href='" . registry('config')->urls->root . registry(
                         "config"
                     )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon icon-plus'></i></a>";
                 return $output;

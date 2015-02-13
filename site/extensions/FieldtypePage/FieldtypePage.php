@@ -5,7 +5,7 @@ class FieldtypePage extends Fieldtype
 
     public function getOutput($url)
     {
-        $page = app("pages")->get("$url");
+        $page = registry("pages")->get("$url");
         return $page;
     }
 
@@ -14,7 +14,7 @@ class FieldtypePage extends Fieldtype
         if ($value instanceof Page) {
             $value = $value->url;
         } else {
-            $page = app("pages")->get("$url");
+            $page = registry("pages")->get("$url");
             $value = $page->url;
         }
         $value = "$value"; // stringify for certainty :)

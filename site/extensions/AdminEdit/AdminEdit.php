@@ -10,7 +10,7 @@ class AdminEdit extends Extension
     protected function addDefaultFields()
     {
 
-        $fieldset = app("extensions")->get("MarkupFormtab");
+        $fieldset = registry("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
@@ -53,13 +53,13 @@ class AdminEdit extends Extension
 
         $this->object->processInputData();
         $this->object->save();
-        app("session")->redirect( app("request")->url );
+        registry("session")->redirect( registry("request")->url );
 
     }
 
 
     private function renderForm(){
-        $this->form = app("extensions")->get("MarkupEditForm");
+        $this->form = registry("extensions")->get("MarkupEditForm");
         $this->form->object = $this->object;
         $this->addFields();
         return $this->form->render();
@@ -67,7 +67,7 @@ class AdminEdit extends Extension
 
     public function render()
     {
-        $admin = app("admin");
+        $admin = registry("admin");
         $admin->output = $this->renderForm();
         $admin->render();
     }

@@ -15,7 +15,7 @@ class FieldtypeField extends Fieldtype
 
     public function getOutput($name)
     {
-        $field = app("fields")->get("$name");
+        $field = registry("fields")->get("$name");
         return $field;
     }
 

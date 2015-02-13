@@ -14,12 +14,12 @@ class AdminEditUser extends AdminEdit
             ->parent("admin")
             ->callback(
             function ($name) {
-                $this->object = app("users")->get($name);
+                $this->object = registry("users")->get($name);
                 $this->title = "Edit User";
                 $this->render();
             }
         );
-        app("router")->add($fieldRoute);
+        registry("router")->add($fieldRoute);
 
 
         $newFieldRoute = new Route;
@@ -36,7 +36,7 @@ class AdminEditUser extends AdminEdit
                 $this->render();
             }
         );
-        app("router")->add($newFieldRoute);
+        registry("router")->add($newFieldRoute);
 
         $saveFieldRoute = new Route;
         $saveFieldRoute
@@ -45,12 +45,12 @@ class AdminEditUser extends AdminEdit
             ->parent("admin")
             ->callback(
             function ($name) {
-                $page = app("fields")->get($name);
+                $page = registry("fields")->get($name);
                 $this->object = $page;
                 $this->processSave();
             }
         );
-        app("router")->add($saveFieldRoute);
+        registry("router")->add($saveFieldRoute);
 
 
 

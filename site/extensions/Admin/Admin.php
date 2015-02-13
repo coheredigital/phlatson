@@ -18,18 +18,18 @@ class Admin extends Extension
 
         // default admin scripts and styles
 
-        app("config")->styles->add("{$this->url}styles/admin.css");
-        app("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
-        app("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
-        app("config")->scripts->add("{$this->url}scripts/main.js");
-        app("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
+        registry("config")->styles->add("{$this->url}styles/admin.css");
+        registry("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
+        registry("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
+        registry("config")->scripts->add("{$this->url}scripts/main.js");
+        registry("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
-        app("admin", $this); // register api variable
+        registry("admin", $this); // register api variable
 
         // determine the admin route to use
         // check for a route named admin, then a config variable 'adminUrl' then default
-        if (app("router")->get("admin")) {
-            $this->route = app("router")->get("admin");
+        if (registry("router")->get("admin")) {
+            $this->route = registry("router")->get("admin");
         }
         else {
 
@@ -39,11 +39,11 @@ class Admin extends Extension
                 ->path("/admin")
                 ->callback("Admin.render");
 
-            app('router')->add($this->route);
+            registry('router')->add($this->route);
         }
 
         // add the admin URL to the config urls variable for easy access/reference
-        app("config")->urls->admin = $this->route->url;
+        registry("config")->urls->admin = $this->route->url;
 
 
         $logoutRoute = new Route;
@@ -52,11 +52,11 @@ class Admin extends Extension
             ->parent($this->route)
             ->callback(
                 function () {
-                    app("session")->logout();
-                    app("session")->redirect($this->route->url);
+                    registry("session")->logout();
+                    registry("session")->redirect($this->route->url);
                 }
             );
-        app('router')->add($logoutRoute);
+        registry('router')->add($logoutRoute);
 
 
         $login = new Route;
@@ -64,7 +64,7 @@ class Admin extends Extension
             ->name("login")
             ->path("login")
             ->parent($this->route);
-        app('router')->add($login);
+        registry('router')->add($login);
 
 
         $loginSubmit = new Route;
@@ -74,15 +74,15 @@ class Admin extends Extension
             ->parent($this->route)
             ->callback(
                 function () {
-                    if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
-                        app("session")->redirect(app("router")->get("admin")->url);
+                    if (registry("session")->login(registry("request")->post->username, registry("request")->post->password)) {
+                        registry("session")->redirect(registry("router")->get("admin")->url);
                     }
 
 
 
                 }
             );
-        app('router')->add($loginSubmit);
+        registry('router')->add($loginSubmit);
 
     }
 
@@ -90,13 +90,13 @@ class Admin extends Extension
     public function render()
     {
 
-        extract(app());
+        extract(registry());
 
         if ($user->isGuest()) {
 
             if($request->url != $router->login->url) $session->redirect($router->login->url);
             // add the login stylesheet and load the login layout
-            app("config")->styles->add("{$this->url}styles/login.css");
+            registry("config")->styles->add("{$this->url}styles/login.css");
             include "login.php";
         }
         else if($user->isLoggedIn()){
@@ -112,9 +112,9 @@ class Admin extends Extension
 
 
 
-        $form = app("extensions")->get("MarkupEditForm");
+        $form = registry("extensions")->get("MarkupEditForm");
 
-        $fieldset = app("extensions")->get("MarkupFormtab");
+        $fieldset = registry("extensions")->get("MarkupFormtab");
         $fieldset->label = $this->get("title");
 
         $field = new FieldtypeText();
