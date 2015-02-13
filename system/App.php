@@ -13,12 +13,10 @@ final class App
 
     public static function __callStatic($name, $arguments)
     {
-        if (is_null($name)) {
-            return self::$registry;
-        }
+        if (is_null($name)) static::fetchAll();
 
         if (isset(self::$registry[$name])) {
-            return self::$registry[$name];
+            return self::get($name);
         }
 
         return false;
@@ -67,11 +65,11 @@ final class App
 
         } else {
             if (is_null($key)) {
-                return self::$registry;
+                return static::fetchAll();
             }
 
             if (isset(self::$registry[$key])) {
-                return self::$registry[$key];
+                return self::get($key);
             }
         }
 
@@ -80,5 +78,30 @@ final class App
 
     }
 
+
+    public static function fetchAll(){
+        // instantiate an objects passed as string value
+        foreach(self::$registry as $key => $value){
+            if(is_object($value)) continue;
+            self::instantiate($key);
+        }
+        return self::$registry;
+    }
+
+    public static function instantiate($name)
+    {
+        self::$registry[$name] = new self::$registry[$name];
+    }
+
+    public static function get($name)
+    {
+        if(!isset(self::$registry[$name])){
+            return false;
+        }
+        if(!is_object(self::$registry[$name])) {
+            self::instantiate($name);
+        }
+        return self::$registry[$name];
+    }
 
 }

@@ -30,24 +30,20 @@ foreach (app("config")->routes as $r){
 }
 
 app('extensions', new Extensions);
-app('sanitizer', new Sanitizer);
-app('pages', new Pages);
-app('users', new Users);
-app('fields', new Fields);
-app('templates', new Templates);
-app('session', new Session);
-app('logger', new Logger);
+app('sanitizer', 'Sanitizer');
+app('pages', 'Pages');
+app('users', 'Users');
+app('fields', 'Fields');
+app('templates', 'Templates');
+app('session', 'Session');
+app('logger', 'Logger');
 app('events', new Events);
 
-$app = app();
+//$app = app();
 
-
-
-// execute the app
 try {
     app('router')->run(app('request'));
 } catch(Exception $e) {
-
     $message = "Exception: " . $e->getMessage() . " (in " . $e->getFile() . " line " . $e->getLine() . ")";
     if( app("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
     var_dump($message) ;

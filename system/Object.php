@@ -36,9 +36,6 @@ abstract class Object implements JsonSerializable
     }
 
     public function getPath(){
-        if(!$this->file)
-            throw new Exception("Invalid: can not get path from Object with no file!");
-
         $path =  normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
         return $path;
     }
