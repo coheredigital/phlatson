@@ -19,14 +19,14 @@ class AdminListUsers extends Extension
         $usersRoute
             ->name("users")
             ->path("users")
-            ->parent(registry("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function () {
                     $this->render();
                 }
             );
 
-        registry('router')->add($usersRoute);
+        app('router')->add($usersRoute);
 
     }
 
@@ -34,16 +34,16 @@ class AdminListUsers extends Extension
     protected function renderUsersList()
     {
 
-        $config = registry("config");
+        $config = app("config");
 
-        $table = registry("extensions")->get("MarkupTable");
+        $table = app("extensions")->get("MarkupTable");
         $table->setColumns(
             array(
                 "Username" => "username"
             )
         );
 
-        $users = registry("users")->all();
+        $users = app("users")->all();
         foreach ($users as $item) {
             $table->addRow(
                 array(
@@ -67,7 +67,7 @@ class AdminListUsers extends Extension
     public function render()
     {
 
-        $admin = registry("admin");
+        $admin = app("admin");
         $admin->title = "Fields";
         $admin->output = $this->renderUsersList();
         $admin->render();

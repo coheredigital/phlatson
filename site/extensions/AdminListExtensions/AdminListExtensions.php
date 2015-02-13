@@ -19,14 +19,14 @@ class AdminListExtensions extends Extension
         $extensionRoute
             ->name("extensions")
             ->path("extensions")
-            ->parent(registry("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function () {
                     $this->render();
                 }
             );
 
-        registry('router')->add($extensionRoute);
+        app('router')->add($extensionRoute);
 
     }
 
@@ -34,8 +34,8 @@ class AdminListExtensions extends Extension
         protected function renderFieldsList()
         {
 
-            $extensions = registry("extensions")->all();
-            $table = registry("extensions")->get("MarkupTable");
+            $extensions = app("extensions")->all();
+            $table = app("extensions")->get("MarkupTable");
             $table->setColumns(
                 array(
                     "Name" => "name",
@@ -62,7 +62,7 @@ class AdminListExtensions extends Extension
         function render()
         {
 
-            $admin = registry("admin");
+            $admin = app("admin");
             $admin->title = "Extensions";
             $admin->output = $this->renderFieldsList();
             $admin->render();

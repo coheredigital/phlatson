@@ -1,10 +1,10 @@
 <?php
 
 // shorthand for api($name) and api::set($key, $value)
-//function registry($name = null, $value = null, $lock = false)
-//{
-//    return $app::__invoke($name, $value, $lock);
-//}
+function app($name = null, $value = null, $lock = false)
+{
+    return App::__invoke($name, $value, $lock);
+}
 
 // Emulate register_globals off
 function unregister_GLOBALS()

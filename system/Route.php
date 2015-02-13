@@ -79,7 +79,7 @@ class Route
                 if ($this->parent) {
                     return $this->parent->hostname();
                 } else {
-                    return registry("config")->hostname;
+                    return app("config")->hostname;
                 }
             }
 
@@ -146,7 +146,7 @@ class Route
     public function parent($route)
     {
         if (is_string($route)) {
-            $route = registry("router")->get($route);
+            $route = app("router")->get($route);
         }
 
         if (!$route instanceof Route) {

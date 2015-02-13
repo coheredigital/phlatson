@@ -11,7 +11,7 @@ class AdminEditPage extends AdminEdit
             ->parent("admin")
             ->callback(
                 function ($url) {
-                    $this->object = registry("pages")->get($url);
+                    $this->object = app("pages")->get($url);
                     $this->template = $this->object->template;
                     $this->title = $this->object->title;
                     $this->render();
@@ -71,7 +71,7 @@ class AdminEditPage extends AdminEdit
             ->parent("admin")
             ->callback(
                 function ($url) {
-                    $page = registry("pages")->get($url);
+                    $page = app("pages")->get($url);
                     $this->object = $page;
                     $this->processSave();
                 }
@@ -84,16 +84,16 @@ class AdminEditPage extends AdminEdit
             ->parent("admin")
             ->callback(
                 function ($url) {
-                    $page = registry("pages")->get($url);
+                    $page = app("pages")->get($url);
                     $this->processFiles($page);
                 }
             );
 
-        registry("router")->add($edit);
-        registry("router")->add($new);
-        registry("router")->add($save);
-        registry("router")->add($newSave);
-        registry("router")->add($upload);
+        app("router")->add($edit);
+        app("router")->add($new);
+        app("router")->add($save);
+        app("router")->add($newSave);
+        app("router")->add($upload);
 
     }
 
@@ -103,7 +103,7 @@ class AdminEditPage extends AdminEdit
     protected function addFilesFields()
     {
 
-        $tab = registry("extensions")->get("MarkupFormtab");
+        $tab = app("extensions")->get("MarkupFormtab");
         $tab->label = "Files";
         $tab->add($this->getFieldFiles());
 
@@ -114,7 +114,7 @@ class AdminEditPage extends AdminEdit
     protected function getFieldFiles()
     {
 
-        $input = registry("extensions")->get("FieldtypePageFiles");
+        $input = app("extensions")->get("FieldtypePageFiles");
         $input->label = "Files";
         $input->attribute("name", "parent");
         $input->files = $this->object->files;

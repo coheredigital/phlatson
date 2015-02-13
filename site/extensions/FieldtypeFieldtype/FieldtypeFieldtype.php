@@ -7,7 +7,7 @@ class FieldtypeFieldtype extends Fieldtype
 
     public function getOutput($name)
     {
-        $field = registry("extensions")->get("$name");
+        $field = app("extensions")->get("$name");
         return $field;
     }
 
@@ -17,7 +17,7 @@ class FieldtypeFieldtype extends Fieldtype
             return $value->name;
         }
         else{
-            $fieldtype = registry("extensions")->get($value);
+            $fieldtype = app("extensions")->get($value);
             if ($fieldtype instanceof Fieldtype) return $fieldtype->name;
         }
         return null;
@@ -26,7 +26,7 @@ class FieldtypeFieldtype extends Fieldtype
     protected function renderInput()
     {
 
-        $fieldtypes = registry("extensions")->all();
+        $fieldtypes = app("extensions")->all();
         $fieldtypes
             ->filter(["type"=>"Fieldtype"])
             ->sort("title");

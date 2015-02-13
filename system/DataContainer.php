@@ -29,7 +29,7 @@ abstract class DataContainer implements JsonSerializable
 
         // get the field object matching the passed "$name"
 
-        $field = registry("fields") ? registry("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
+        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
 
         if ($field instanceof Field ) {
             $fieldtype = $field->type;
@@ -49,7 +49,7 @@ abstract class DataContainer implements JsonSerializable
 
         // get the field object matching the passed "$name"
 
-        $field = registry("fields") ? registry("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
+        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field ) {
             $fieldtype = $field->type;
@@ -118,7 +118,7 @@ abstract class DataContainer implements JsonSerializable
     {
         switch ($name) {
             case "name":
-                $name = registry("sanitizer")->name($value);
+                $name = app("sanitizer")->name($value);
                 $this->name = $name;
         }
         $this->setFormatted($name, $value);

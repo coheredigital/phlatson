@@ -12,7 +12,7 @@ class Pages extends Objects
     {
         $page = $this->get($path);
         if ($page instanceof Page) {
-            extract(registry()); // get access to api variables for rendered layout
+            extract(app()); // get access to api variables for rendered layout
             include $page->template->layout;
         }
         else{
@@ -24,7 +24,7 @@ class Pages extends Objects
     {
         $requests = explode("/", $query);
         $requestRoot = normalizeDirectory($requests[0]);
-        $adminUrl = normalizeDirectory(registry("config")->adminUrl);
+        $adminUrl = normalizeDirectory(app("config")->adminUrl);
 
         return $requestRoot == $adminUrl;
     }

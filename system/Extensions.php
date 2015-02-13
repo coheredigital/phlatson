@@ -12,9 +12,9 @@ class Extensions extends Objects
     public function __construct()
     {
 
-        $path = registry("config")->paths->extensions;
+        $path = app("config")->paths->extensions;
 
-        $this->getList($path, registry("config")->paths->extensions);
+        $this->getList($path, app("config")->paths->extensions);
 
     }
 

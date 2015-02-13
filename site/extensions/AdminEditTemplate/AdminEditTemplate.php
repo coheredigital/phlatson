@@ -10,10 +10,10 @@ class AdminEditTemplate extends AdminEdit
         $templateEdit = new Route;
         $templateEdit
             ->path("/templates/edit/:any")
-            ->parent(registry("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function ($name) {
-                    $this->object = registry("templates")->get($name);
+                    $this->object = app("templates")->get($name);
                     $this->template = $this->object->template;
                     $this->title = $this->object->title;
                     $this->render();
@@ -23,7 +23,7 @@ class AdminEditTemplate extends AdminEdit
         $templateNew = new Route;
         $templateNew
             ->path("/templates/new/")
-            ->parent(registry("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function () {
                     $this->object = new Template();
@@ -37,7 +37,7 @@ class AdminEditTemplate extends AdminEdit
         $templateNewSave
             ->path("/templates/new/")
             ->method("POST")
-            ->parent(registry("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function () {
                     $this->processSave();
@@ -47,19 +47,19 @@ class AdminEditTemplate extends AdminEdit
         $templateSave
             ->path("/templates/edit/:any")
             ->method("POST")
-            ->parent(registry("admin")->route)
+            ->parent(app("admin")->route)
             ->callback(
                 function ($name) {
-                    $page = registry("templates")->get($name);
+                    $page = app("templates")->get($name);
                     $this->object = $page;
                     $this->processSave();
                 }
             );
 
-        registry('router')->add($templateEdit);
-        registry('router')->add($templateNew);
-        registry('router')->add($templateNewSave);
-        registry('router')->add($templateSave);
+        app('router')->add($templateEdit);
+        app('router')->add($templateNew);
+        app('router')->add($templateNewSave);
+        app('router')->add($templateSave);
 
     }
 

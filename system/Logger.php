@@ -14,7 +14,7 @@ class Logger{
 
     function __construct()
     {
-        $this->rootPath = registry("config")->paths->assets . "logs/";
+        $this->rootPath = app("config")->paths->assets . "logs/";
     }
 
     protected function getFile($type)

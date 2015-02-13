@@ -11,11 +11,9 @@ require_once ROOT_PATH . 'system/_traits.php';
 
 
 
-$app = new App(new Registry);
-
 /* instatiate api variables */
-$app->service('config', new Config);
-$app->service('request', new Request);
+app('config', new Config);
+app('request', new Request);
 
 // set default request behaviour
 $pagesRoute = new Route();
@@ -23,31 +21,34 @@ $pagesRoute
     ->path(":all")
     ->callback("Pages.render");
 
-$app->service('router', new Router($pagesRoute));
+app('router', new Router($pagesRoute));
 
 // setup config routes
-foreach (registry("config")->routes as $r){
+foreach (app("config")->routes as $r){
     $route = new Route($r);
-    registry("router")->add($route);
+    app("router")->add($route);
 }
 
-$app->service('extensions', new Extensions);
-$app->service('sanitizer', new Sanitizer);
-$app->service('pages', new Pages);
-$app->service('users', new Users);
-$app->service('fields', new Fields);
-$app->service('templates', new Templates);
-$app->service('session', new Session);
-$app->service('logger', new Logger);
-$app->service('events', new Events);
+app('extensions', new Extensions);
+app('sanitizer', new Sanitizer);
+app('pages', new Pages);
+app('users', new Users);
+app('fields', new Fields);
+app('templates', new Templates);
+app('session', new Session);
+app('logger', new Logger);
+app('events', new Events);
+
+$app = app();
+
 
 
 // execute the app
 try {
-    registry('router')->run($registry->request);
+    app('router')->run(app('request'));
 } catch(Exception $e) {
 
     $message = "Exception: " . $e->getMessage() . " (in " . $e->getFile() . " line " . $e->getLine() . ")";
-    if( registry("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
+    if( app("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
     var_dump($message) ;
 }
