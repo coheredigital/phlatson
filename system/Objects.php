@@ -12,10 +12,7 @@ abstract class Objects
     protected $rootFolder;
     protected $rootPath;
 
-    protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
-
-    // used to identify the singular version of the represent an array
-    // Ex: Fields = Field | Templates = Template , fairly straight forward, used primarily to make code reusable
+    // used to identify the singular version $this relates to
     protected $singularName;
 
     public function __construct()
@@ -29,23 +26,31 @@ abstract class Objects
 
     }
 
-    protected function getItem($key)
+    /**
+     * @param $name
+     * @return mixed
+     *
+     * Get the raw file address on the Flatbed object
+     *
+     */
+    protected function getItem($name)
     {
 
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
+        if (!$this->has($name)) {
+            $this->getDataFile($name);
         }
 
-        $root = normalizePath(app('config')->paths->site . $this->rootFolder);
-        $path = normalizePath($root . $key);
-
-        $file = $path . "data.json";
-        if (is_file($file)) {
-            $this->set($key, $file);
-        }
+        return $this->data[$name];
 
     }
 
+    protected function getDataFile($name){
+        $path = normalizePath(app('config')->paths->site . $this->rootFolder . $name);
+        $file = "{$path}data.json";
+        if (is_file($file)) {
+            $this->set($name, $file);
+        }
+    }
 
     // return a key => value array of valid object locations
     protected function getObjectList($directory = null)
@@ -58,12 +63,12 @@ abstract class Objects
         $sitePathCheck = normalizePath($sitePathCheck);
 
         if ($this->isValidPath($sitePathCheck)) {
-            $this->getList($siteRootPath, $sitePathCheck);
+            $this->getFileList();
         }
 
     }
 
-    protected function getList($depth = 1)
+    protected function getFileList($depth = 1)
     {
 
         $iterator = new RecursiveDirectoryIterator($this->rootPath, RecursiveDirectoryIterator::SKIP_DOTS);
@@ -115,20 +120,12 @@ abstract class Objects
 
     protected function getObject($key)
     {
-        if (!$this->has($key)) {
-            $this->getItem($key);
-            if (!$this->has($key)) {
-                return false;
-            }
+        // get the file if it exists
+        if (!$file =  $this->getItem($key)) {
+            return false;
         }
-        $file = $this->data[$key];
 
-        if ($this instanceof Extensions) {
-            $object = new $key($file);
-        } else {
-            $object = new $this->singularName($file);
-        }
-        return $object;
+        return  new $this->singularName($file);
     }
 
     protected function getItemDirectory(SplFileInfo $item){
@@ -141,7 +138,7 @@ abstract class Objects
         return normalizeDirectory($directory);
     }
 
-    public function isValidPath($path)
+    protected function isValidPath($path)
     {
         $path = normalizePath($path);
         if (strpos($path, app("config")->paths->root) !== false) {
@@ -150,6 +147,13 @@ abstract class Objects
         return false;
     }
 
+    /**
+     * @param SplFileInfo $item
+     * @return bool
+     *
+     * Determine if the current Iterator is a valid Flatbed Object (contains a data.json file)
+     *
+     */
     protected function isValidObject(SplFileInfo $item){
         return ($item->getFileName() == "data.json");
     }
@@ -161,8 +165,7 @@ abstract class Objects
 
     public function get($key)
     {
-        // normalize the query to avoid error in the case of a page request that might get passed as ( /about-us/staff ) but should be ( about-us/staff )
-
+        // normalize the query to avoid error
         $key = normalizeDirectory($key);
 
         $object = $this->getObject($key);

@@ -12,12 +12,12 @@ class Extensions extends Objects
     public function __construct()
     {
         parent::__construct();
-        $this->getList(); // for now this need to be fired on every request TODO: remove this requirement
+        $this->getFileList(); // for now this need to be fired on every request TODO: remove this requirement
 
     }
 
 
-    protected function getList($depth = 1)
+    protected function getFileList($depth = 1)
     {
 
         $iterator = new RecursiveDirectoryIterator($this->rootPath, RecursiveDirectoryIterator::SKIP_DOTS);
@@ -43,6 +43,17 @@ class Extensions extends Objects
         }
 
     }
+
+
+    protected function getObject($key)
+    {
+        // get the file if it exists
+        if (!$file =  $this->getItem($key)) {
+            return false;
+        }
+        return  new $key($file);
+    }
+
 
     public function all()
     {
