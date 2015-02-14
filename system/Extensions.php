@@ -11,18 +11,16 @@ class Extensions extends Objects
 
     public function __construct()
     {
-
-        $path = app("config")->paths->extensions;
-
-        $this->getList($path, app("config")->paths->extensions);
+        parent::__construct();
+        $this->getList(); // for now this need to be fired on every request TODO: remove this requirement
 
     }
 
 
-    protected function getList($root, $path, $depth = 1)
+    protected function getList($depth = 1)
     {
 
-        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveDirectoryIterator($this->rootPath, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator->setMaxDepth($depth);
@@ -34,29 +32,13 @@ class Extensions extends Objects
 
             $filePath = $itemPath . $itemFile;
 
-            if ($itemFile != "data.json" && $itemFile != "info.json") {
-                continue;
-            }
+            if (!$this->isValidObject($item)) continue;
 
-            $className = normalizeDirectory(str_replace($root, "", $itemPath));
+            $className = normalizeDirectory(str_replace($this->rootPath, "", $itemPath));
 
             // add root items for pages to allow home selection
-
-            $info = json_decode(file_get_contents($filePath));
-
-            if ($info) {
-                if ($info->autoload) { // instatiate autoload extensions
-                    $extension = new $className($filePath);
-                    $this->data["$className"] = $extension;
-                }
-                else{
-                    $extension = new Extension($filePath);
-//                    $extension->name = $className;
-                    $this->data["$className"] = $extension;
-                }
-            }
-
-
+            $extension = new $className($filePath);
+            $this->data["$className"] = $extension;
 
         }
 

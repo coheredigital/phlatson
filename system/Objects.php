@@ -10,6 +10,7 @@ abstract class Objects
 
     // the folder within the site and system paths to check for items ex: fields, templates, etc
     protected $rootFolder;
+    protected $rootPath;
 
     protected $recursiveList = false; // flag indicates whether root data should containrecursive results or just top level
 
@@ -19,8 +20,9 @@ abstract class Objects
 
     public function __construct()
     {
-        // manually add the special case of the home page
-        // TODO : refactor this, should be so hard coded
+
+        $this->rootPath = normalizePath(app('config')->paths->site . $this->rootFolder);
+
         if ($this instanceof Pages) {
             $this->data['/'] = app("config")->paths->pages . "data.json";
         }
@@ -61,28 +63,21 @@ abstract class Objects
 
     }
 
-    protected function getList($root, $path, $depth = 1)
+    protected function getList($depth = 1)
     {
 
-        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveDirectoryIterator($this->rootPath, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator->setMaxDepth($depth);
 
         foreach ($iterator as $item) {
 
-            $itemPath = $item->getPathName();
-            $itemPath = normalizePath($itemPath);
-            $itemFilename = $item->getFileName();
+            $itemPath = normalizePath($item->getPathName());
 
-            if ($itemFilename != "data.json" && $itemFilename != "info.json") {
-                continue;
-            }
+            if(!$this->isValidObject($item)) continue;
 
-            $directory = str_replace($root, "", $itemPath);
-            $directory = str_replace($itemFilename, "", $directory);
-            $directory = trim($directory, DIRECTORY_SEPARATOR);
-            $directory = normalizeDirectory($directory);
+            $directory = $this->getItemDirectory($item);
 
             // add root items for pages to allow home selection
             $this->data["$directory"] = $itemPath;
@@ -90,6 +85,8 @@ abstract class Objects
         }
 
     }
+
+
 
 
     public function __set($key, $value)
@@ -134,6 +131,15 @@ abstract class Objects
         return $object;
     }
 
+    protected function getItemDirectory(SplFileInfo $item){
+        $path = $item->getPath();
+        $filename = $item->getPath();
+
+        $directory = str_replace($this->rootPath, "", $path);
+        $directory = str_replace($filename, "", $directory);
+        $directory = trim($directory, DIRECTORY_SEPARATOR);
+        return normalizeDirectory($directory);
+    }
 
     public function isValidPath($path)
     {
@@ -142,6 +148,10 @@ abstract class Objects
             return true;
         }
         return false;
+    }
+
+    protected function isValidObject(SplFileInfo $item){
+        return ($item->getFileName() == "data.json");
     }
 
     public function __get($key)

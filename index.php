@@ -37,9 +37,7 @@ app('fields', 'Fields');
 app('templates', 'Templates');
 app('session', 'Session');
 app('logger', 'Logger');
-app('events', new Events);
-
-//$app = app();
+app('events', 'Events');
 
 try {
     app('router')->run(app('request'));
