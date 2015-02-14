@@ -48,10 +48,10 @@ class Extensions extends Objects
     protected function getObject($key)
     {
         // get the file if it exists
-        if (!$file =  $this->getItem($key)) {
+        if (!$object = $this->getItem($key)) {
             return false;
         }
-        return  new $key($file);
+        return $object;
     }
 
 

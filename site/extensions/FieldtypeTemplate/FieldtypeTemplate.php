@@ -32,7 +32,6 @@ class FieldtypeTemplate extends Fieldtype
         $this->attribute("name", $this->field->name);
     }
 
-
     protected function setAllowedTemplates()
     {
         $selectOptions = array();
@@ -52,9 +51,6 @@ class FieldtypeTemplate extends Fieldtype
         if ($this->value) {
             $this->attribute("value", $this->value->name);
         }
-
-
-
 
         $attributes = $this->getAttributes();
         $output = "<input {$attributes}>";

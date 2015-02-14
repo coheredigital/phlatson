@@ -45,27 +45,23 @@ abstract class Objects
     }
 
     protected function getDataFile($name){
-        $path = normalizePath(app('config')->paths->site . $this->rootFolder . $name);
+
+        $path = normalizePath( $this->rootPath . $name);
         $file = "{$path}data.json";
         if (is_file($file)) {
             $this->set($name, $file);
         }
     }
 
-    // return a key => value array of valid object locations
-    protected function getObjectList($directory = null)
+    /**
+     * @param null $directory
+     *
+     * Combined function, get file list and instantiate all for use
+     *
+     */
+    protected function getObjectList()
     {
-
-        $siteRootPath = app('config')->paths->site . $this->rootFolder;
-        $siteRootPath = normalizePath($siteRootPath);
-
-        $sitePathCheck = $siteRootPath . $directory;
-        $sitePathCheck = normalizePath($sitePathCheck);
-
-        if ($this->isValidPath($sitePathCheck)) {
-            $this->getFileList();
-        }
-
+        $this->getFileList();
     }
 
     protected function getFileList($depth = 1)
@@ -91,8 +87,14 @@ abstract class Objects
 
     }
 
+    protected function instantiateFileList(){
 
+        foreach ($this->data as $key => $value) {
+            $object = $this->getObject($key);
+            $this->data[$key] = $object;
+        }
 
+    }
 
     public function __set($key, $value)
     {
@@ -105,32 +107,37 @@ abstract class Objects
         return $this;
     }
 
+    /**
+     * @return ObjectCollection
+     *
+     * Get all valid objects from $this rootPath
+     *
+     */
     public function all()
     {
         $this->getObjectList();
-        $objectArray = new ObjectCollection();
+        $collection = new ObjectCollection();
 
         foreach ($this->data as $key => $value) {
             $object = $this->getObject($key);
-            $objectArray->add($object);
+            $collection->add($object);
         }
 
-        return $objectArray;
+        return $collection;
     }
 
     protected function getObject($key)
     {
         // get the file if it exists
-        if (!$file =  $this->getItem($key)) {
+        if (!$file = $this->getItem($key)) {
             return false;
         }
-
         return  new $this->singularName($file);
     }
 
     protected function getItemDirectory(SplFileInfo $item){
         $path = $item->getPath();
-        $filename = $item->getPath();
+        $filename = $item->getFilename();
 
         $directory = str_replace($this->rootPath, "", $path);
         $directory = str_replace($filename, "", $directory);
@@ -138,10 +145,17 @@ abstract class Objects
         return normalizeDirectory($directory);
     }
 
+    /**
+     * @param $path
+     * @return bool
+     *
+     * Checks that path is withing Objects root path
+     *
+     */
     protected function isValidPath($path)
     {
-        $path = normalizePath($path);
-        if (strpos($path, app("config")->paths->root) !== false) {
+
+        if (strpos($path, $this->rootPath) !== false) {
             return true;
         }
         return false;
@@ -165,11 +179,9 @@ abstract class Objects
 
     public function get($key)
     {
-        // normalize the query to avoid error
+        // normalize the query to avoid errors
         $key = normalizeDirectory($key);
-
-        $object = $this->getObject($key);
-        return $object;
+        return $this->getObject($key);
     }
 
 
