@@ -21,13 +21,13 @@ class Parsedown
 
     static function instance($name = 'default')
     {
-        if (isset(self::$instances[$name])) {
-            return self::$instances[$name];
+        if (isset(static::$instances[$name])) {
+            return static::$instances[$name];
         }
 
         $instance = new Parsedown();
 
-        self::$instances[$name] = $instance;
+        static::$instances[$name] = $instance;
 
         return $instance;
     }

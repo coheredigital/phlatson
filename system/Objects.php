@@ -18,7 +18,7 @@ abstract class Objects
     public function __construct()
     {
 
-        $this->rootPath = normalizePath(app('config')->paths->site . $this->rootFolder);
+        $this->rootPath = Filter::path(app('config')->paths->site . $this->rootFolder);
 
         if ($this instanceof Pages) {
             $this->data['/'] = app("config")->paths->pages . "data.json";
@@ -46,7 +46,7 @@ abstract class Objects
 
     protected function getDataFile($name){
 
-        $path = normalizePath( $this->rootPath . $name);
+        $path = Filter::path( $this->rootPath . $name);
         $file = "{$path}data.json";
         if (is_file($file)) {
             $this->set($name, $file);
@@ -74,11 +74,11 @@ abstract class Objects
 
         foreach ($iterator as $item) {
 
-            $itemPath = normalizePath($item->getPathName());
+            $itemPath = Filter::path($item->getPathName());
 
             if(!$this->isValidObject($item)) continue;
 
-            $directory = $this->getItemDirectory($item);
+            $directory = $this->getItemUri($item);
 
             // add root items for pages to allow home selection
             $this->data["$directory"] = $itemPath;
@@ -132,17 +132,17 @@ abstract class Objects
         if (!$file = $this->getItem($key)) {
             return false;
         }
-        return  new $this->singularName($file);
+        return new $this->singularName($file);
     }
 
-    protected function getItemDirectory(SplFileInfo $item){
+    protected function getItemUri(SplFileInfo $item){
         $path = $item->getPath();
         $filename = $item->getFilename();
 
-        $directory = str_replace($this->rootPath, "", $path);
-        $directory = str_replace($filename, "", $directory);
-        $directory = trim($directory, DIRECTORY_SEPARATOR);
-        return normalizeDirectory($directory);
+        $uri = str_replace($this->rootPath, "", $path);
+        $uri = str_replace($filename, "", $uri);
+        $uri = trim($uri, DIRECTORY_SEPARATOR);
+        return Filter::uri($uri);
     }
 
     /**
@@ -180,14 +180,14 @@ abstract class Objects
     public function get($key)
     {
         // normalize the query to avoid errors
-        $key = normalizeDirectory($key);
+        $key = Filter::uri($key);
         return $this->getObject($key);
     }
 
 
     public function has($key)
     {
-        $key = normalizeDirectory($key);
+        $key = Filter::uri($key);
         return array_key_exists($key, $this->data);
     }
 

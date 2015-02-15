@@ -3,7 +3,6 @@
 class FieldtypeDateTime extends Fieldtype
 {
 
-
     public function getOutput($value)
     {
 //        $value = date((string)$this->settings->format, (int)$value);
@@ -19,16 +18,15 @@ class FieldtypeDateTime extends Fieldtype
     protected function renderInput()
     {
 
-        app('config')->styles->add($this->url . "/datetimepicker/jquery.datetimepicker.css");
-        app('config')->scripts->add($this->url . "/datetimepicker/jquery.datetimepicker.js");
-        app('config')->scripts->add($this->url . "/$this->className.js");
+        app('config')->styles->add($this->url . "datetimepicker/jquery.datetimepicker.css");
+        app('config')->scripts->add($this->url . "datetimepicker/jquery.datetimepicker.js");
+        app('config')->scripts->add($this->url . "$this->className.js");
 
         $this->attribute("type", "text");
 
         if ($this->value) {
             $this->attribute("value", $this->value);
         }
-
 
         $attributes = $this->getAttributes();
         $output = "<input {$attributes}>";

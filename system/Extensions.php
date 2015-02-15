@@ -27,14 +27,14 @@ class Extensions extends Objects
 
         foreach ($iterator as $item) {
 
-            $itemPath = normalizePath($item->getPath());
+            $itemPath = Filter::path($item->getPath());
             $itemFile = $item->getFileName();
 
             $filePath = $itemPath . $itemFile;
 
             if (!$this->isValidObject($item)) continue;
 
-            $className = normalizeDirectory(str_replace($this->rootPath, "", $itemPath));
+            $className = Filter::uri(str_replace($this->rootPath, "", $itemPath));
 
             // add root items for pages to allow home selection
             $extension = new $className($filePath);

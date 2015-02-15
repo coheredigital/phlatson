@@ -12,7 +12,7 @@ class MarkupFormtab extends Extension
     {
         $this->fields[] = $field;
         // create a unique id;
-        $this->id = app("sanitizer")->name($this->label);
+        $this->id = md5($this->label);
     }
 
 

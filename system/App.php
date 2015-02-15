@@ -13,13 +13,7 @@ final class App
 
     public static function __callStatic($name, $arguments)
     {
-        if (is_null($name)) static::fetchAll();
-
-        if (isset(self::$registry[$name])) {
-            return self::get($name);
-        }
-
-        return false;
+        return static::get($name);
     }
 
     /**
@@ -31,77 +25,65 @@ final class App
     public static function set($key, $value, $lock = true)
     {
 
-        if (isset(self::$registry[$key]) && in_array($key, self::$lock)) {
+        if (isset(static::$registry[$key]) && in_array($key, static::$lock)) {
             throw new Exception("There is already an API entry for '{$key}', value is locked.");
         }
         // set $key and $value the same to avoid duplicates
-        if ($lock) {
-            self::$lock[$key] = $key;
-        }
-
-        self::$registry[$key] = $value;
+        if ($lock) static::$lock[$key] = $key;
+        static::$registry[$key] = $value;
 
     }
 
     /**
-     * @param null $key
+     * @param null $name
      * @return array
      * @throws Exception
      */
-    public static function __invoke($key = null, $value = null, $lock = false)
+    public static function __invoke($name = null, $object = null, $lock = true)
     {
 
-        if (!is_null($key) && !is_null($value)) {
-
-            if (isset(self::$registry[$key]) && in_array($key, self::$lock)) {
-                throw new Exception("There is already an API entry for '{$key}', value is locked.");
-            }
-            // set $key and $value the same to avoid duplicates
-            if ($lock) {
-                self::$lock[$key] = $key;
-            }
-
-            self::$registry[$key] = $value;
-
+        if (!is_null($name) && !is_null($object)) {
+            static::set($name, $object, $lock);
         } else {
-            if (is_null($key)) {
-                return static::fetchAll();
-            }
-
-            if (isset(self::$registry[$key])) {
-                return self::get($key);
-            }
+            return static::get($name);
         }
-
 
         return false;
 
     }
 
 
-    public static function fetchAll(){
+    public static function fetchAll()
+    {
         // instantiate an objects passed as string value
-        foreach(self::$registry as $key => $value){
-            if(is_object($value)) continue;
-            self::instantiate($key);
+        foreach (static::$registry as $key => $value) {
+            if (is_object($value)) continue;
+            static::instantiate($key);
         }
-        return self::$registry;
+        return static::$registry;
     }
 
     public static function instantiate($name)
     {
-        self::$registry[$name] = new self::$registry[$name];
+        static::$registry[$name] = new static::$registry[$name];
+    }
+
+    protected static function has($name)
+    {
+        return isset(static::$registry[$name]);
     }
 
     public static function get($name)
     {
-        if(!isset(self::$registry[$name])){
+        if (is_null($name))
+            return static::fetchAll();
+        if (!static::has($name)) {
             return false;
         }
-        if(!is_object(self::$registry[$name])) {
-            self::instantiate($name);
+        if (!is_object(static::$registry[$name])) {
+            static::instantiate($name);
         }
-        return self::$registry[$name];
+        return static::$registry[$name];
     }
 
 }

@@ -9,8 +9,6 @@ require_once ROOT_PATH . 'system/_autoload.php';
 require_once ROOT_PATH . 'system/_interfaces.php';
 require_once ROOT_PATH . 'system/_traits.php';
 
-
-
 /* instatiate api variables */
 app('config', new Config);
 app('request', new Request);
@@ -28,16 +26,16 @@ foreach (app("config")->routes as $r){
     $route = new Route($r);
     app("router")->add($route);
 }
-
+app('events', 'Events');
 app('extensions', new Extensions);
-app('sanitizer', 'Sanitizer');
+//app('sanitizer', 'Sanitizer');
 app('pages', 'Pages');
 app('users', 'Users');
 app('fields', 'Fields');
 app('templates', 'Templates');
 app('session', 'Session');
 app('logger', 'Logger');
-app('events', 'Events');
+
 
 try {
     app('router')->run(app('request'));

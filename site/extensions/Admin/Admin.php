@@ -17,7 +17,6 @@ class Admin extends Extension
     {
 
         // default admin scripts and styles
-
         app("config")->styles->add("{$this->url}styles/admin.css");
         app("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
         app("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
@@ -122,7 +121,6 @@ class Admin extends Extension
         $field->name = "color";
 
         $fieldset->add($field);
-
 
         $form->add($fieldset);
 

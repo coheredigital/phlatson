@@ -263,7 +263,7 @@ class Route
         return false;
     }
 
-    public function _execute()
+    public function execute()
     {
         // first execute parent routes in order
         if ($this->parent) {

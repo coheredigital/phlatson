@@ -10,6 +10,7 @@ abstract class Object implements JsonSerializable
     protected $file;
     protected $modified;
     protected $rootFolder;
+    protected $rootPath;
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
@@ -21,6 +22,9 @@ abstract class Object implements JsonSerializable
 
     function __construct($file = null)
     {
+
+        $this->rootPath = Filter::path(app('config')->paths->site . $this->rootFolder);
+
         if (is_file($file)) {
             $this->file = $file;
             $this->data = json_decode(file_get_contents($this->file), true);
@@ -36,7 +40,27 @@ abstract class Object implements JsonSerializable
     }
 
     public function getPath(){
-        $path =  normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $this->file));
+        $path = Filter::path(str_replace(static::DEFAULT_SAVE_FILE, "", $this->file));
+        return $path;
+    }
+
+
+    /**
+     * @return mixed|string
+     *
+     * Directory refers to the rootPath relative folder
+     *
+     */
+    public function getDirectory(){
+
+        $remove = [
+            $this->rootPath,
+            static::DEFAULT_SAVE_FILE
+        ];
+
+        $path = str_replace($remove, "", $this->file);
+        $path = Filter::uri($path);
+
         return $path;
     }
 
@@ -46,15 +70,11 @@ abstract class Object implements JsonSerializable
     protected function getRoute()
     {
 
-        // first get roo relative path
-        $path = str_replace(app("config")->paths->site . $this->rootFolder, "", $this->file);
-
-        // trim the root path to get root relative path
-        $path = str_replace($this::DEFAULT_SAVE_FILE, "", $path); // trim of file name to isolote path
-        $path = rtrim($path, '/'); // trim excess slashes
+        // first get root relative path
+        $directory = $this->getDirectory();
 
         // break the path into it's parts an return the resulting array
-        return explode("/", $path);
+        return explode("/", $directory);
     }
 
     protected function getFormatted($name)
@@ -98,20 +118,6 @@ abstract class Object implements JsonSerializable
 
     }
 
-
-    protected function getDefaultFields()
-    {
-
-        $fieldArray = new ObjectCollection();
-
-        foreach ($this->defaultFields as $fieldName) {
-            $field = app("fields")->get($fieldName);
-            if ($field instanceof Field) {
-                $fieldArray->add($field);
-            }
-        }
-        return $fieldArray;
-    }
 
     /**
      * set value directly to $this->data[$name]
@@ -225,7 +231,7 @@ abstract class Object implements JsonSerializable
         if (app("config")->simulate) {
             $saveFile = "test.json";
         } else {
-            $saveFile = self::DEFAULT_SAVE_FILE;
+            $saveFile = static::DEFAULT_SAVE_FILE;
         }
 
         $this->processSaveName();

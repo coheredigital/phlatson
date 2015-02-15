@@ -5,14 +5,13 @@ class FieldtypeRichtext extends Fieldtype
 
     protected function setup(){
 
-        app('events')->listen("FieldtypeRichtext.render", function(){
-            app('config')->styles->add($this->url . "redactor/redactor.css");
-            app('config')->styles->add($this->url . "{$this->name}.css");
 
-            app('config')->scripts->add($this->url . "redactor/redactor.js");
-            app('config')->scripts->add($this->url . "redactor/fullscreen.js");
-            app('config')->scripts->add($this->url . "{$this->name}.js");
-        });
+        app('config')->styles->add($this->url . "redactor/redactor.css");
+        app('config')->styles->add($this->url . "{$this->name}.css");
+        app('config')->scripts->add($this->url . "redactor/redactor.js");
+        app('config')->scripts->add($this->url . "redactor/fullscreen.js");
+        app('config')->scripts->add($this->url . "{$this->name}.js");
+
     }
 
     protected function renderInput()

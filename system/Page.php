@@ -118,9 +118,10 @@ class Page extends Object
     public function get($name)
     {
         switch ($name) {
+            case 'uri':
             case 'directory':
                 $directory = implode("/", $this->route);
-                return normalizeDirectory($directory);
+                return Filter::uri($directory);
             case 'url':
                 return app('config')->urls->root . ltrim($this->directory, "/");
             case 'children':

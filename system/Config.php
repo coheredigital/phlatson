@@ -43,7 +43,7 @@ class Config extends Object
     protected function getData($file)
     {
         if (is_file($file)) {
-            $this->path = normalizePath(str_replace(Object::DEFAULT_SAVE_FILE, "", $file));
+            $this->path = Filter::path(str_replace(Object::DEFAULT_SAVE_FILE, "", $file));
             // merge config file data with directories
             $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
         }
