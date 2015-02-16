@@ -64,10 +64,6 @@ class Field extends Object
     public function get($name)
     {
         switch ($name) {
-
-//            case 'fieldtype':
-//            case 'type':
-//                return $this->getType();
             case 'type':
                 return $this->fieldtype;
             case 'input':
@@ -75,6 +71,7 @@ class Field extends Object
             case 'template':
                 $template = app("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
                 $template->master = $this;
+                return $template;
             default:
                 return parent::get($name);
         }

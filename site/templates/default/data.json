@@ -2,28 +2,16 @@
     "label": "Page (default)",
     "fields": [
         {
-            "name": "title",
-            "settings": {
-                "columns": 12
-            }
+            "name": "title"
         },
         {
-            "name": "content",
-            "settings":{
-                "columns": 12
-            }
+            "name": "content"
         },
         {
-            "name": "notes",
-            "settings": {
-                "columns": 6
-            }
+            "name": "notes"
         },
         {
-            "name": "date",
-            "settings": {
-                "columns": 6
-            }
+            "name": "date"
         }
 
     ],

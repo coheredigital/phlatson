@@ -20,6 +20,7 @@ class Template extends Object
                 // maybe I can automate this like with pages
                 $template = app("templates")->get("template");
                 $template->master = $this;
+                return $template;
             case 'layout':
                 $layoutFile = app('config')->paths->layouts . $this->name . ".php";
                 return $layoutFile;

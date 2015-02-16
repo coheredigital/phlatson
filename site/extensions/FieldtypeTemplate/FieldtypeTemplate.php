@@ -5,7 +5,6 @@ class FieldtypeTemplate extends Fieldtype
 
     protected $objectType = "template";
 
-
     public function getOutput($name)
     {
         $template = app("templates")->get($name);
