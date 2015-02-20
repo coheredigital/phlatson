@@ -9,7 +9,6 @@
 class AdminListPages extends Extension
 {
 
-
     protected $output;
 
     protected function setup()

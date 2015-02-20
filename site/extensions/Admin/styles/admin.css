@@ -2318,7 +2318,12 @@ input:focus {
 }
 .page-tree-item > .icon {
   color: #28b967;
-  margin-right: 0.6em;
+  margin-right: .6em;
+}
+.page-tree-item > .icon:before {
+  padding: .25em;
+  font-size: .8em;
+  display: inline-block !important;
 }
 .page-tree-item:before {
   border-bottom: 1px solid #dddddd;
