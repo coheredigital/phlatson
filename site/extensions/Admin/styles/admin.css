@@ -2230,8 +2230,8 @@ input:focus {
 .field-label {
   display: block;
   padding: 0.6em 0;
-  font-weight: bold;
-  font-size: 0.78em;
+  font-size: 0.8em;
+  text-transform: uppercase;
   color: #aaaaaa;
 }
 .field-input {
@@ -2349,7 +2349,7 @@ input:focus {
   margin-left: 0.3em;
   vertical-align: middle;
   padding: 0.2em 0.6em;
-  background: #8ba3d8;
+  background: transparent;
   color: #666666;
   display: inline-block;
 }
