@@ -2336,7 +2336,10 @@ input:focus {
   right: -0.3em;
 }
 .page-tree-item-edit {
-  text-decoration: none;
+  color: #aaaaaa;
+}
+.page-tree-item-edit:hover {
+  color: #f46b4b;
 }
 .page-tree-item-buttons {
   display: none;
@@ -2351,16 +2354,15 @@ input:focus {
   vertical-align: middle;
 }
 .page-tree-item-buttons .button {
-  margin-left: 0.3em;
+  margin-right: 0.6em;
   vertical-align: middle;
-  padding: 0.2em 0.6em;
+  padding: 0.2em;
   background: transparent;
-  color: #666666;
+  color: #aaaaaa;
   display: inline-block;
 }
 .page-tree-item-buttons .button:hover {
-  background: #8ba3d8;
-  color: #fff;
+  color: #f46b4b;
 }
 /**
 User Menu

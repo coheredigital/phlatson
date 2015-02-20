@@ -74,7 +74,11 @@
   
 }
 .page-tree-item-edit{
-  text-decoration: none;
+
+  color: @gray;
+  &:hover{
+    color: @brand
+  }
 }
 
 .page-tree-item-buttons{
@@ -89,15 +93,15 @@
     vertical-align: middle;
   }
   .button{
-    margin-left: 0.3em;
+    margin-right: 0.6em;
     vertical-align: middle;
-    padding: 0.2em 0.6em;
+    padding: 0.2em;
     background: transparent;
-    color: @dark-gray;
+    color: @gray;
     display: inline-block;
     &:hover{
-      background: @blue;
-      color: #fff;
+//      background: @blue;
+      color: @brand;
     }
 
   }
