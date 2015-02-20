@@ -2,7 +2,6 @@
 @import "_normalize";
 @import "font-awesome/font-awesome";
 
-
 body {
   min-height: 100%;
   font-size: 15px;
@@ -31,32 +30,14 @@ a{
   }
 }
 
-button,
-select,
-textarea,
-textarea,
-input{
-  outline: none;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  padding: 0.6em;
-  box-sizing: border-box;
-  font-size: 1em;
-  background: #fff;
-  border: 1px solid @light-gray;
-  resize: none;
-  &:focus{
-    border-bottom-color: @green;
-  }
+form{
+  margin: 0;
 }
-
-//@import "_grid";
 
 .description{
   color: @gray;
   font-size: 0.8em;
 }
-
-
 .container{
   padding: 0 2%;
   box-sizing: border-box;
@@ -65,77 +46,8 @@ input{
   width: 1100px;
 }
 
-.menu{
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  .item{
-    display: inline-block;
-    cursor: pointer;
-    text-transform: uppercase;
-    padding: 0.8em 1em;
-    text-decoration: none !important;
-    .icon{
-      font-size: 14px !important;
-    }
-  }
-  a:hover{
-    text-decoration: none !important;
-  }
-  &.vertical{
-    .item{
-      display: block;
-    }
-  }
-}
-
-
-
-.dropdown{
-  position: relative;
-  .menu{
-    position: absolute;
-    display: none;
-    right: 0;
-    background: @darker-gray;
-//    box-shadow: 0 0 1em @light-gray;
-    z-index: 5;
-    top: 1.4em;
-    :after{
-      content: "";
-      height: 0;
-      width: 0;
-      position: absolute;
-      right: 0;
-      bottom: 100%;
-      border-style: solid;
-      border-width: 0 0 0.6em 0.6em;
-      border-color: transparent transparent @darker-gray transparent;
-
-    }
-    .item{
-      display: block;
-      color: @soft-gray;
-      &:hover{
-        background: @blue;
-        color: #fff;
-      }
-    }
-  }
-  &.open{
-    .menu{
-      display: block;
-    }
-    .button{
-      background: @darker-gray;
-      border-radius: 0.8em 0.8em 0 0;
-    }
-  }
-}
-
-
 .logo{
-//  width: 100%;
+  //  width: 100%;
   display: inline-block;
   vertical-align: middle;
   max-width: 20%;
@@ -148,6 +60,10 @@ input{
     display: block;
   }
 }
+
+
+
+
 
 #header{
 
@@ -180,388 +96,13 @@ input{
   display: none;
 }
 
-/**
-
-Menus
-
-**/
-
-.main-menu{
-  display: inline-block;
-  max-width: 80%;
-  .item{
-    color: darken(@header-background, 25%);
-    margin: 0;
-    padding: 1em;
-    display: inline-block;
-    text-decoration: none !important;
-    .icon{
-      margin-right: 0.2em;
-    }
-    &:hover{
-      color: @blue;
-    }
-    &.active{
-      color: @brand;
-    }
-  }
-}
+@import "partials/menus";
+@import "partials/buttons";
+@import "partials/tabs";
+@import "partials/tables";
+@import "partials/fields";
+@import "partials/pagetree";
+@import "partials/usermenu";
 
 
 
-
-/**
-
-Buttons
-
-**/
-
-.button{
-  border-radius: 2em;
-  cursor: pointer;
-  border: none;
-  text-transform: uppercase;
-  padding: 0.6em 1.2em;
-  background: @darker-gray;
-  font-weight: normal;
-  color: #fff;
-  text-decoration: none !important;
-  line-height: 1em;
-  display: inline-block;
-  font-size: 1em;
-  &:hover{
-    background: @dark-gray;
-
-  }
-  .icon{
-//    color: #fff;
-  }
-}
-
-.button-green{
-  background: @green;
-  &:hover{
-    background: @dark-green;
-  }
-}
-
-.button-red{
-  background: @red;
-  &:hover{
-    background: @dark-red;
-  }
-}
-
-/**
-
-Tabs
-
-**/
-
-
-#formTabs{
-
-  background: @header-background;
-  padding-top: 0.6em;
-}
-
-.menu-tabs{
-  a{
-    color: darken(@header-background, 25%);
-    padding: 0.8em 1em;
-    margin: 0 0.4em;
-    display: block;
-  }
-  .item{
-    position: relative;
-    padding: 0;
-    margin: 0 .2em;
-    &.active{
-      background: @main-background;
-      border-bottom: none;
-      border-radius: 4px 4px 0 0;
-      &:after,
-      &:before{
-        content: "";
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 40px 0 0 8px;
-        right: -8px;
-        position: absolute;
-        top: 4px ;
-        border-color: transparent transparent transparent @main-background;
-      }
-      &:before{
-        border-color: transparent @main-background transparent transparent ;
-        border-width: 40px 8px 0 0;
-        left: -8px;
-        right: 100%;
-      }
-      a{
-        color: @gray;
-      }
-    }
-  }
-}
-
-.tabs{
-  padding: 0;
-  list-style: none;
-}
-
-.tab{
-  display: none;
-  &.active{
-    display: block;
-  }
-}
-
-/**
-
-Tables
-
-**/
-
-.table{
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2em;
-//  background: #fff;
-//  border: 1px solid @light-gray;
-  th,
-  td{
-    padding: .6em 1em;
-    text-align: left;
-    &:first-child{
-      border-left: none !important;
-    }
-  }
-  th{
-    color: @gray;
-    text-transform: uppercase;
-    font-weight: 100;
-    border-bottom: 1px solid darken(@main-background, 10%);
-
-  }
-  td{
-//    padding-bottom: 0;
-    border-bottom: 1px dashed transparent;
-  }
-
-  tbody {
-    tr:first-child{
-      margin-top: 1em!important;
-    }
-
-    tr:hover{
-      td{
-//        border-color: darken(@main-background, 10%);
-        background: #fff;
-      }
-    }
-  }
-}
-
-
-/*
-
-Filelist
-
-*/
-
-/**
-
-Fields
-
-**/
-
-form{
-  margin: 0;
-}
-
-.field{
-  margin-top: 1em;
-  position: relative;
-  &:after{
-    content: "";
-    display: table;
-    clear: both;
-  }
-  select,
-  textarea,
-  input{
-    padding: 1em;
-    margin: 0;
-    box-sizing: border-box;
-    display: block;
-    border: none;
-    font-size: 1em;
-    background: transparent;
-    width: 100%;
-  }
-}
-.field-label{
-  display: block;
-  padding: 0.6em 0;
-  font-weight: bold;
-  font-size: 0.78em;
-  color: @gray;
-}
-.field-input{
-  position: relative;
-  border: 1px solid #ddd;
-  background: #fff;
-}
-.field-required{
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 1em 1em 0;
-  border-color: transparent @red transparent transparent;
-  position: absolute;
-  top: -1px;
-  right: -1px;
-}
-
-.field.focus{
-  .field-label{
-    color: @dark-gray;
-  }
-  .field-input{
-    border-color: @blue;
-  }
-}
-
-.FieldtypeFields{
-  .item{
-    padding: 1em;
-    border: 1px solid @light-gray;
-    margin: -1px;
-    background: #fff;
-  }
-}
-
-/**
-
-PageTree
-
-**/
-
-.page-tree{
-  padding-top: 1em;
-}
-
-.page-tree-list{
-  list-style: none;
-}
-.page-tree-root{
-  padding: 0 !important;
-}
-
-
-.page-tree-list{
-  list-style: none;
-}
-
-.page-tree-item{
-//  padding: .7em .9em;
-  padding: .3em 0;
-//  background: #fff;
-  position: relative;
-  margin-bottom: 0.5em;
-  border-radius: 2em;
-//  border: 1px solid @light-gray;
-//  box-shadow: .02em .02em .3em rgba(0,0,0,.1);
-  > .icon{
-    color: @green;
-    margin-right: 0.6em;
-  }
-}
-.page-tree-item-edit{
-  text-decoration: none;
-}
-
-.page-tree-item-buttons{
-  position: absolute;
-  right: 0.75em;
-  top: 50%;
-  margin-top: -0.73em;
-  .dropdown{
-    display: inline-block;
-    margin-left: 0.3em;
-    vertical-align: middle;
-  }
-  .button{
-    margin-left: 0.3em;
-    vertical-align: middle;
-    padding: 0.2em 0.6em;
-    background: @light-gray;
-    background: #fff;
-    color: @dark-gray;
-    display: inline-block;
-    &:hover{
-      background: @blue;
-      color: #fff;
-    }
-
-  }
-}
-
-/**
-
-Edit Forms
-
-**/
-
-.form-actions{
-  background: #fff;
-  position: fixed;
-  bottom: 0;
-  padding: 1em 0;
-  margin-top: 2em;
-  box-sizing: border-box;
-  right: 0;
-  height: @footer-height;
-  left: 0;
-  text-align: right;
-  z-index: 200;
-  box-shadow: 0 0 .3em rgba(0,0,0,0.2);
-}
-
-
-/**
-
-User Menu
-
-**/
-
-.user-menu{
-//  background: darken(@sidebar-background, 5%);
-}
-.user-menu-content{
-//  padding: 1em;
-}
-
-.user-name{
-  line-height: 1em;
-  color: @soft-gray;
-  display: inline-block;
-  width: 60%;
-  vertical-align: middle;
-
-}
-.user-logout{
-  text-transform: uppercase;
-  color: @gray;
-  font-size: 0.8em;
-  font-weight: bold;
-  text-decoration: none !important;
-  width: 40%;
-  text-align: right;
-  display: inline-block;
-  vertical-align: middle;
-  &:hover{
-    color: @header-background;
-  }
-}

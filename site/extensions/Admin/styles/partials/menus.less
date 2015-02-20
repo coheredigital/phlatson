@@ -1,0 +1,88 @@
+
+.menu{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  .item{
+    display: inline-block;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 0.8em 1em;
+    text-decoration: none !important;
+    .icon{
+      font-size: 14px !important;
+    }
+  }
+  a:hover{
+    text-decoration: none !important;
+  }
+  &.vertical{
+    .item{
+      display: block;
+    }
+  }
+}
+
+.main-menu{
+  display: inline-block;
+  max-width: 80%;
+  .item{
+    color: darken(@header-background, 25%);
+    margin: 0;
+    padding: 1em;
+    display: inline-block;
+    text-decoration: none !important;
+    .icon{
+      margin-right: 0.2em;
+    }
+    &:hover{
+      color: @blue;
+    }
+    &.active{
+      color: @brand;
+    }
+  }
+}
+
+
+.dropdown{
+  position: relative;
+  .menu{
+    position: absolute;
+    display: none;
+    right: 0;
+    background: @darker-gray;
+    //    box-shadow: 0 0 1em @light-gray;
+    z-index: 5;
+    top: 1.4em;
+    :after{
+      content: "";
+      height: 0;
+      width: 0;
+      position: absolute;
+      right: 0;
+      bottom: 100%;
+      border-style: solid;
+      border-width: 0 0 0.6em 0.6em;
+      border-color: transparent transparent @darker-gray transparent;
+
+    }
+    .item{
+      display: block;
+      color: @soft-gray;
+      &:hover{
+        background: @blue;
+        color: #fff;
+      }
+    }
+  }
+  &.open{
+    .menu{
+      display: block;
+    }
+    .button{
+      background: @darker-gray;
+      border-radius: 0.8em 0.8em 0 0;
+    }
+  }
+}

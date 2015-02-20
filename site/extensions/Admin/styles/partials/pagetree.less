@@ -1,0 +1,100 @@
+
+.page-tree{
+  position: relative;
+  z-index: 5;
+  padding-top: 1em;
+}
+
+.page-tree-list{
+  list-style: none;
+}
+.page-tree-root{
+  padding: 0 !important;
+  > .page-tree-group{
+    > .page-tree-item{
+      &:before{
+        display: none !important;
+      }
+    }
+  }
+}
+
+.page-tree-group{
+  position: relative;
+  &:before{
+    border-left: 1px solid @light-gray;
+//    border-bottom: 1px solid @light-gray;
+    content: "";
+    position: absolute;
+    top: 1em;
+    bottom: .8em;
+    left: .87em;
+    right: 50%;
+  }
+
+}
+
+.page-tree-list{
+  list-style: none;
+}
+
+.page-tree-item{
+  padding: .3em .5em;
+  position: relative;
+  margin-bottom: 0.5em;
+  border-radius: 2em;
+  background: @main-background;
+  &:hover{
+    background: #fff;
+    .page-tree-item-buttons{
+      display: block !important;
+    }
+  }
+  
+  > .icon{
+    color: @green;
+    margin-right: 0.6em;
+  }
+  &:before{
+//    border-left: 1px solid @light-gray;
+    border-bottom: 1px solid @light-gray;
+    content: "";
+    position: absolute;
+    top: .8em;
+    z-index: -1;
+    bottom: .8em;
+    left: -1.7em;
+    right: -.3em;
+  }
+
+  
+}
+.page-tree-item-edit{
+  text-decoration: none;
+}
+
+.page-tree-item-buttons{
+  display: none;
+  position: absolute;
+  right: 0.25em;
+  top: 50%;
+  margin-top: -0.7em;
+  .dropdown{
+    display: inline-block;
+    margin-left: 0.3em;
+    vertical-align: middle;
+  }
+  .button{
+    margin-left: 0.3em;
+    vertical-align: middle;
+    padding: 0.2em 0.6em;
+    background: @blue;
+    color: @dark-gray;
+    display: inline-block;
+    &:hover{
+      background: @blue;
+      color: #fff;
+    }
+
+  }
+}
