@@ -1,7 +1,7 @@
 @import "_variables";
 
 body {
-    background: @darker-gray;
+    background: @brand;
 }
 
 .form-login{
@@ -17,7 +17,7 @@ body {
     padding: 0 1em;
     box-sizing: border-box;
     .field-input{
-      border: none !important;
+//      border: none !important;
     }
     input{
       background-color: transparent !important;
@@ -29,22 +29,26 @@ body {
     border-radius: 0;
     margin-top: 1em;
     width: 100%;
-    background: #fff;
+    background: @main-background;
     color: @gray !important;
     &:hover{
-      color: @header-background !important;
+      background: @blue;
+      color: #fff !important;
     }
   }
 }
 
 .logo{
+  max-width: 100%;
 //  background-color: transparent;
   height: auto;
+  padding: 0;
+  margin: 0;
   width: auto;
   text-align: center;
   img{
-    max-width: 100%;
-
+    max-width: 80%;
+    display: inline-block;
     margin: 0;
     position: static;
     margin: 1.3em 0 1em;

@@ -2,10 +2,10 @@
 /* ELEMENT COLORS */
 /* SIZES */
 body {
-  background: #333333;
+  background: #f46b4b;
 }
 .form-login {
-  background: #f46b4b;
+  background: #ffffff;
   padding-top: 0;
   width: 200px;
   position: absolute;
@@ -17,9 +17,6 @@ body {
   padding: 0 1em;
   box-sizing: border-box;
 }
-.form-login .field .field-input {
-  border: none !important;
-}
 .form-login .field input {
   background-color: transparent !important;
 }
@@ -27,19 +24,24 @@ body {
   border-radius: 0;
   margin-top: 1em;
   width: 100%;
-  background: #fff;
+  background: #f4f4f4;
   color: #aaaaaa !important;
 }
 .form-login .button:hover {
-  color: #f46b4b !important;
+  background: #8ba3d8;
+  color: #fff !important;
 }
 .logo {
+  max-width: 100%;
   height: auto;
+  padding: 0;
+  margin: 0;
   width: auto;
   text-align: center;
 }
 .logo img {
-  max-width: 100%;
+  max-width: 80%;
+  display: inline-block;
   margin: 0;
   position: static;
   margin: 1.3em 0 1em;

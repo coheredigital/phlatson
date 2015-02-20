@@ -10,7 +10,6 @@ body {
   padding: 0px;
   color: @dark-gray;
   background: @main-background;
-  background: @sidebar-background;
   min-width: 320px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
@@ -35,6 +34,7 @@ a{
 button,
 select,
 textarea,
+textarea,
 input{
   outline: none;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -49,7 +49,7 @@ input{
   }
 }
 
-@import "_grid";
+//@import "_grid";
 
 .description{
   color: @gray;
@@ -58,10 +58,11 @@ input{
 
 
 .container{
-  padding: 0 2em;
+  padding: 0 2%;
   box-sizing: border-box;
   max-width: 100%;
   margin: 0 auto;
+  width: 1100px;
 }
 
 .menu{
@@ -72,13 +73,13 @@ input{
     display: inline-block;
     cursor: pointer;
     text-transform: uppercase;
-    text-decoration: none;
-
     padding: 0.8em 1em;
     text-decoration: none !important;
-
+    .icon{
+      font-size: 14px !important;
+    }
   }
-  a{
+  a:hover{
     text-decoration: none !important;
   }
   &.vertical{
@@ -134,34 +135,33 @@ input{
 
 
 .logo{
-  width: 100%;
-  height: @header-height;
-  background: darken(@header-background, 5%);
-  position: relative;
+//  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 20%;
+  width: 120px;
+  padding: 1em;
+  padding-left: 0;
+  margin-right: 1em;
   img{
-    width: 100px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -15px 0 0 -50px;
+    max-width: 100%;
+    display: block;
   }
 }
 
-#sidebar{
+#header{
 
-  background: @sidebar-background;
-  width: @sidebar-width;
-  width: 15%;
+  background: @header-background;
+//  width: @sidebar-width;
+//  width: 15%;
   top: 0;
   height: 100%;
   z-index: 5;
-  display: inline-block;
+//  display: inline-block;
   vertical-align: top;
 }
 
 #main{
-  width: 85%;
-  display: inline-block;
   background: @main-background;
   vertical-align: top;
 }
@@ -170,12 +170,14 @@ input{
 .main-title{
   height: @header-height;
   background: @header-background;
-  color: #fff;
+  color: #ccc;
+  color: darken(@header-background, 20%);
   font-size: 1.75em;
-  padding: 0.45em 1.2em;
+  padding: 0.45em 0;
   line-height: 1em;
   text-transform: uppercase;
   box-sizing: border-box;
+  display: none;
 }
 
 /**
@@ -185,24 +187,22 @@ Menus
 **/
 
 .main-menu{
+  display: inline-block;
+  max-width: 80%;
   .item{
-    color: lighten(@sidebar-background, 40%);
-    border-bottom: 1px solid lighten(@sidebar-background, 3%);
+    color: darken(@header-background, 25%);
     margin: 0;
     padding: 1em;
-//    font-weight: bold;
+    display: inline-block;
+    text-decoration: none !important;
     .icon{
-      font-size: 1.1em;
       margin-right: 0.2em;
-      width: 1.6em;
     }
     &:hover{
-      color: lighten(@sidebar-background, 80%);
+      color: @blue;
     }
     &.active{
-//      background: @main-background;
-
-      color: @header-background;
+      color: @brand;
     }
   }
 }
@@ -224,9 +224,8 @@ Buttons
   padding: 0.6em 1.2em;
   background: @darker-gray;
   font-weight: normal;
-  color: #fff !important;
+  color: #fff;
   text-decoration: none !important;
-  font-weight: bold;
   line-height: 1em;
   display: inline-block;
   font-size: 1em;
@@ -235,7 +234,7 @@ Buttons
 
   }
   .icon{
-    color: #fff;
+//    color: #fff;
   }
 }
 
@@ -268,7 +267,7 @@ Tabs
 
 .menu-tabs{
   a{
-    color: #fff;
+    color: darken(@header-background, 25%);
     padding: 0.8em 1em;
     margin: 0 0.4em;
     display: block;
@@ -328,11 +327,11 @@ Tables
   width: 100%;
   border-collapse: collapse;
   margin-top: 2em;
-  background: #fff;
-  border: 1px solid @light-gray;
+//  background: #fff;
+//  border: 1px solid @light-gray;
   th,
   td{
-    padding: 0.8em 1em;
+    padding: .6em 1em;
     text-align: left;
     &:first-child{
       border-left: none !important;
@@ -341,15 +340,24 @@ Tables
   th{
     color: @gray;
     text-transform: uppercase;
-    font-size: 1.1em;
-    border-bottom: 1px solid @soft-gray;
+    font-weight: 100;
+    border-bottom: 1px solid darken(@main-background, 10%);
 
+  }
+  td{
+//    padding-bottom: 0;
+    border-bottom: 1px dashed transparent;
   }
 
   tbody {
+    tr:first-child{
+      margin-top: 1em!important;
+    }
+
     tr:hover{
       td{
-        background: @soft-gray;
+//        border-color: darken(@main-background, 10%);
+        background: #fff;
       }
     }
   }
@@ -457,13 +465,15 @@ PageTree
 }
 
 .page-tree-item{
-  padding: .7em .9em;
-  background: #fff;
+//  padding: .7em .9em;
+  padding: .3em 0;
+//  background: #fff;
   position: relative;
   margin-bottom: 0.5em;
   border-radius: 2em;
-  border: 1px solid @light-gray;
-  .icon{
+//  border: 1px solid @light-gray;
+//  box-shadow: .02em .02em .3em rgba(0,0,0,.1);
+  > .icon{
     color: @green;
     margin-right: 0.6em;
   }
@@ -487,11 +497,14 @@ PageTree
     vertical-align: middle;
     padding: 0.2em 0.6em;
     background: @light-gray;
+    background: #fff;
+    color: @dark-gray;
     display: inline-block;
-    .icon{
-      color: @dark-gray;
-      margin: 0;
+    &:hover{
+      background: @blue;
+      color: #fff;
     }
+
   }
 }
 
@@ -503,16 +516,17 @@ Edit Forms
 
 .form-actions{
   background: #fff;
-//  position: fixed;
+  position: fixed;
   bottom: 0;
   padding: 1em 0;
   margin-top: 2em;
   box-sizing: border-box;
   right: 0;
   height: @footer-height;
-  left: @sidebar-width;
+  left: 0;
   text-align: right;
   z-index: 200;
+  box-shadow: 0 0 .3em rgba(0,0,0,0.2);
 }
 
 
@@ -523,10 +537,10 @@ User Menu
 **/
 
 .user-menu{
-  background: darken(@sidebar-background, 5%);
+//  background: darken(@sidebar-background, 5%);
 }
 .user-menu-content{
-  padding: 1em;
+//  padding: 1em;
 }
 
 .user-name{
