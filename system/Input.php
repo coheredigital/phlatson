@@ -5,9 +5,9 @@
  *
  * Responsible for creation and rendering of Inputs
  */
-abstract class Input  extends Extension implements RenderInterface
+abstract class Input  extends Extension
 {
-    
+
     public $value;
     protected $name;
     protected $attributes = [];
@@ -81,14 +81,13 @@ abstract class Input  extends Extension implements RenderInterface
     abstract protected function renderInput();
 
 
-
     /**
      * @return String
      *
      * Returns the final output, primarily used by admin editing pages
      *
      */
-    final public function _render()
+    final public function render()
     {
         $output = $this->renderInput();
         $output = $this->renderWrapper($output);
@@ -101,7 +100,7 @@ abstract class Input  extends Extension implements RenderInterface
      */
     public function __toString()
     {
-        return $this->_render();
+        return $this->render();
     }
 
 
