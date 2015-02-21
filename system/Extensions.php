@@ -7,7 +7,7 @@ class Extensions extends Objects
     protected $rootFolder = "extensions";
     protected $singularName = "extension";
 
-    protected $info = [];
+//    protected $info = [];
 
     public function __construct()
     {

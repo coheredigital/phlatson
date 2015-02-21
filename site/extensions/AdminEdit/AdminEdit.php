@@ -10,7 +10,7 @@ class AdminEdit extends Extension
     protected function addDefaultFields()
     {
 
-        $fieldset = app("extensions")->get("MarkupFormtab");
+        $fieldset = app("extensions")->get("MarkupFormTab");
         $fieldset->label = $this->get("title");
 
         $template = $this->object->template;
@@ -18,7 +18,7 @@ class AdminEdit extends Extension
 
 
         foreach ($fields as $field) {
-            $fieldtype = $this->getFieldInterface($field);
+            $fieldtype = $this->getFieldInput($field);
             $fieldset->add($fieldtype);
         }
 
@@ -28,15 +28,19 @@ class AdminEdit extends Extension
 
 
 
-    protected function getFieldInterface(Field $field)
+    protected function getFieldInput(Field $field)
     {
 
-        $fieldtype = $field->type;
-        $fieldtype->label = $field->title;
-        $fieldtype->value = $this->object->get("$field->name");
-        $fieldtype->attribute("name", $field->name);
+        $input = $field->input;
+        $input->field = $field;
+        $input->object = $this->object;
 
-        return $fieldtype;
+//        $input->label = $field->title;
+
+        $input->value = $this->object->get("$field->name");
+        $input->attribute("name", $field->name);
+
+        return $input;
     }
 
     protected function addFields()

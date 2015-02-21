@@ -181,6 +181,9 @@ abstract class Objects
     {
         // normalize the query to avoid errors
         $key = Filter::uri($key);
+
+
+
         return $this->getObject($key);
     }
 

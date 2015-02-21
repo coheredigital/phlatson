@@ -1,7 +1,0 @@
-{
-    "title": "Published Date",
-    "fieldtype": "FieldtypeDatetime",
-    "settings": {
-        "format": "Y/m/d"
-    }
-}

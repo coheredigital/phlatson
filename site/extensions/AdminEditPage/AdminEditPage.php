@@ -103,7 +103,7 @@ class AdminEditPage extends AdminEdit
     protected function addFilesFields()
     {
 
-        $tab = app("extensions")->get("MarkupFormtab");
+        $tab = app("extensions")->get("MarkupFormTab");
         $tab->label = "Files";
         $tab->add($this->getFieldFiles());
 
@@ -114,7 +114,7 @@ class AdminEditPage extends AdminEdit
     protected function getFieldFiles()
     {
 
-        $input = app("extensions")->get("FieldtypePageFiles");
+        $input = app("extensions")->get("InputPageFiles");
         $input->label = "Files";
         $input->attribute("name", "parent");
         $input->files = $this->object->files;

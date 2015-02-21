@@ -20,6 +20,8 @@ abstract class Object implements JsonSerializable
     protected $defaultFields = [];
     protected $route = [];
 
+    protected $requiredElements = [];
+
     function __construct($file = null)
     {
 
@@ -30,16 +32,21 @@ abstract class Object implements JsonSerializable
             $this->data = json_decode(file_get_contents($this->file), true);
             $this->route = $this->getRoute();
         }
+
+        $this->checkDataIntegrity();
+
     }
 
 
-    public function getName(){
+    public function getName()
+    {
         $path = $this->getPath();
         $name = basename($path);
         return $name;
     }
 
-    public function getPath(){
+    public function getPath()
+    {
         $path = Filter::path(str_replace(static::DEFAULT_SAVE_FILE, "", $this->file));
         return $path;
     }
@@ -51,7 +58,8 @@ abstract class Object implements JsonSerializable
      * Directory refers to the rootPath relative folder
      *
      */
-    public function getDirectory(){
+    public function getDirectory()
+    {
 
         $remove = [
             $this->rootPath,
@@ -285,6 +293,20 @@ abstract class Object implements JsonSerializable
     public function has($key)
     {
         return array_key_exists($key, $this->data);
+    }
+
+
+    protected function checkDataIntegrity()
+    {
+
+        foreach ($this->requiredElements as $name) {
+
+            if (!$this->has($name)) {
+                throw new Exception(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ", $this->requiredElements) . ").");
+            }
+
+        }
+
     }
 
 

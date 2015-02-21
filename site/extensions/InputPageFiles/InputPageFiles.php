@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypePageFiles extends Fieldtype
+class InputPageFiles extends Input
 {
 
     public $files; // FilesArray

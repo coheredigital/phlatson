@@ -4,10 +4,12 @@ class Field extends Object
 {
     protected $rootFolder = "fields";
     protected $attributes = null;
+    protected $requiredElements = ["fieldtype","input"];
 
     /**
      * retrieves the input object associated with "$this" field
      * @return Input
+     * @throws Exception
      */
     public function getInput()
     {
@@ -15,6 +17,9 @@ class Field extends Object
 
         $name = $this->getUnformatted("input");
         $input = app("extensions")->get($name);
+
+        if(!$input instanceof Input) throw new Exception("Failed to retrieve Input ('$name'). Requested by $this ('$this->name'). Make sure this is a valid Input or that the Input is installed.");
+
         $input->field = $this;
         return $input;
 
@@ -32,9 +37,7 @@ class Field extends Object
     }
 
     /**
-     *
      * Get raw fieldtype name without applied formatting
-     *
      * @return String
      */
     public function getFieldtypeName()

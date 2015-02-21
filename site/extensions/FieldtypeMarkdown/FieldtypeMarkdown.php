@@ -8,7 +8,6 @@ class FieldtypeMarkdown extends Fieldtype
         require_once "Parsedown.php";
     }
 
-
     public function getOutput($value)
     {
         return Parsedown::instance()->parse($value);

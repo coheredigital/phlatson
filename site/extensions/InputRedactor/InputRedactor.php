@@ -14,7 +14,7 @@ class InputRedactor extends Input
 
     }
 
-    protected function render()
+    protected function renderInput()
     {
 
         $this->attribute('class', 'ui input ' . $this->className);

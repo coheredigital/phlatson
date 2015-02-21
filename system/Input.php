@@ -5,13 +5,15 @@
  *
  * Responsible for creation and rendering of Inputs
  */
-abstract class Input
+abstract class Input  extends Extension implements RenderInterface
 {
-
+    
     public $value;
     protected $name;
     protected $attributes = [];
-    protected $field;
+
+    public $field; // field this input belongs to
+    public $object; // object (page/field/template) that the above field belongs to
 
 
     /**
@@ -76,7 +78,7 @@ abstract class Input
      * should return a raw Input field to be placed inside an Input Wrapper
      *
      */
-    abstract protected function render();
+    abstract protected function renderInput();
 
 
 
@@ -88,7 +90,7 @@ abstract class Input
      */
     final public function _render()
     {
-        $output = $this->render();
+        $output = $this->renderInput();
         $output = $this->renderWrapper($output);
 
         return $output;
@@ -101,5 +103,17 @@ abstract class Input
     {
         return $this->_render();
     }
+
+
+
+    public function __get($name){
+        switch($name){
+            case "attributes":
+                return $this->getAttributes();
+            default:
+                return parent::__get($name);
+        }
+    }
+
 
 }

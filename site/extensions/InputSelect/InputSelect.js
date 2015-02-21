@@ -1,0 +1,1 @@
+$('.FieldtypeSelect select').select2();

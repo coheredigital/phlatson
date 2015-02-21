@@ -1,14 +1,11 @@
 {
-    "label": "Article",
+    "label": "Blog Post",
     "fields": [
         {
             "name": "title"
         },
         {
             "name": "content"
-        },
-        {
-            "name": "notes"
         }
     ]
 }

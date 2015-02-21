@@ -6,16 +6,6 @@
         },
         {
             "name": "content"
-        },
-        {
-            "name": "notes"
-        },
-        {
-            "name": "date"
         }
-
-    ],
-    "settings": {
-        "nameFrom": "title"
-    }
+    ]
 }

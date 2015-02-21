@@ -40,7 +40,9 @@ app('logger', 'Logger');
 try {
     app('router')->run(app('request'));
 } catch(Exception $e) {
-    $message = "Exception: " . $e->getMessage() . " (in " . $e->getFile() . " line " . $e->getLine() . ")";
-    if( app("config")->debug ) $message .= "\n\n" . $e->getTraceAsString();
-    var_dump($message) ;
+    $message = "Exception: " . $e->getMessage() . "\n(in " . $e->getFile() . " line " . $e->getLine() . ")";
+    if( app("config")->debug )
+        $message .= "\n\n" . $e->getTraceAsString();
+    echo "<pre style='background: #922c3a; color: #fff; padding: 2em; font-size: 12px;'>$message</pre>";
+
 }

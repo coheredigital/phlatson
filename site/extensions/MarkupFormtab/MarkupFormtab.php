@@ -1,16 +1,16 @@
 <?php
 
-class MarkupFormtab extends Extension
+class MarkupFormTab extends Extension
 {
     // array of field markup to be rendered
 
     public $id;
-    public $fields = array();
+    public $inputs = array();
     public $label;
 
     public function add($field)
     {
-        $this->fields[] = $field;
+        $this->inputs[] = $field;
         // create a unique id;
         $this->id = md5($this->label);
     }
@@ -19,14 +19,14 @@ class MarkupFormtab extends Extension
     public function render()
     {
 
-        $fields = "";
-        foreach ($this->fields as $fieldtype) {
-            if (is_object($fieldtype)) {
-                $fields .= $fieldtype->render();
+        $output = "";
+        foreach ($this->inputs as $input) {
+            if ($input instanceof RenderInterface) {
+                $output .= $input->render();
             }
         }
 
-        $output = "<li class='{$this->className} tab' data-tab='{$this->id}'>{$label}{$fields}{$submit}</li>";
+        $output = "<li class='{$this->className} tab' data-tab='{$this->id}'>{$label}{$output}{$submit}</li>";
         return $output;
 
 

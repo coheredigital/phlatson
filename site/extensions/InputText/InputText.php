@@ -1,8 +1,8 @@
 <?php
 
-class InputText {
+class InputText extends Input {
 
-    protected function render()
+    protected function renderInput()
     {
         $this->attribute("type", "text");
 
