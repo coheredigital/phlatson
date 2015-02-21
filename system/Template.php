@@ -5,7 +5,7 @@ class Template extends Object
 
     public $master; // the object this template belongs to
     protected $rootFolder = "templates";
-    public $defaultFields = array("parent");
+    public $defaultFields = ['title','fields'];
 
     public function setReference($object)
     {

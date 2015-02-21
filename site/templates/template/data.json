@@ -1,11 +1,4 @@
 {
-    "fields": [
-        {
-            "name": "title"
-        },
-        {
-            "name": "fields"
-        }
-    ],
-    "label": "Template"
+    "fields": [],
+    "title": "Template"
 }

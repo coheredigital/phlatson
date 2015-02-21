@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeFieldtype extends Fieldtype
+class FieldtypeFieldtype extends Fieldtype implements OptionsProvider
 {
     protected $page;
     protected $objectType = "field";

@@ -1,5 +1,5 @@
 {
-    "label": "Blog Post",
+    "title": "Blog Post",
     "fields": [
         {
             "name": "title"
