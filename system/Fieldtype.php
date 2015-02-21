@@ -39,16 +39,6 @@ abstract class Fieldtype extends Extension
         return $value;
     }
 
-    protected function getAttributes()
-    {
-        $string = "";
-
-        foreach ($this->attributes as $key => $value) {
-            $string .= "{$key}='$value' ";
-        }
-        return trim($string);
-
-    }
 
 
     public function attribute($key, $value = false)

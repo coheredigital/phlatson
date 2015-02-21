@@ -4,7 +4,7 @@ Dropzone.autoDiscover = false;
 
 
 var myDropzone = new Dropzone("div#files", {
-    clickable: ".FieldtypePageFiles-dragndrop",
+    clickable: ".InputPageFiles-dragndrop",
     previewsContainer: "#PageFilesList",
     thumbnailWidth: 32,
     thumbnailHeight: 32,

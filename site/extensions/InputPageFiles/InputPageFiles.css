@@ -1,21 +1,21 @@
 /* Colors */
 /* ELEMENT COLORS */
 /* SIZES */
-.FieldtypePageFiles {
+.InputPageFiles {
   margin-top: 2em;
   padding-bottom: 3em;
 }
-.FieldtypePageFiles .field-label {
+.InputPageFiles .field-label {
   display: none;
 }
-.FieldtypePageFiles .field-input {
+.InputPageFiles .field-input {
   background: transparent;
   border: none;
 }
 #PageFilesList .item {
   position: relative;
 }
-.FieldtypePageFiles-dragndrop {
+.InputPageFiles-dragndrop {
   padding: 2em;
   margin-bottom: 2em;
   text-align: center;
@@ -25,7 +25,7 @@
   border: 3px dashed #dddddd;
   z-index: 1;
 }
-.FieldtypePageFiles-dragndrop .sub.header {
+.InputPageFiles-dragndrop .sub.header {
   font-size: 0.8em;
   text-transform: uppercase;
   color: #888;

@@ -49,8 +49,15 @@ class Extensions extends Objects
     {
         // get the file if it exists
         if (!$object = $this->getItem($key)) {
+
+
             return false;
         }
+
+        if($object instanceof Fieldtype || $object instanceof Input){
+            $object = clone $object; // TODO I don't know if I want to use clone here
+        }
+
         return $object;
     }
 

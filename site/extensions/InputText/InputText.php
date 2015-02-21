@@ -10,8 +10,7 @@ class InputText extends Input {
             $this->attribute("value", $this->value);
         }
 
-        $attributes = $this->getAttributes();
-        $output = "<input {$attributes}>";
+        $output = "<input {$this->attributes}>";
         return $output;
     }
 

@@ -21,7 +21,7 @@ class MarkupFormTab extends Extension
 
         $output = "";
         foreach ($this->inputs as $input) {
-            if ($input instanceof RenderInterface) {
+            if ($input instanceof Input) {
                 $output .= $input->render();
             }
         }

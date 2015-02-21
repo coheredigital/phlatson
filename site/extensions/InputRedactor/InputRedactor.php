@@ -5,7 +5,6 @@ class InputRedactor extends Input
 
     protected function setup(){
 
-
         app('config')->styles->add($this->url . "redactor/redactor.css");
         app('config')->styles->add($this->url . "{$this->name}.css");
         app('config')->scripts->add($this->url . "redactor/redactor.js");

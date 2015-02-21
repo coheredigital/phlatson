@@ -11,7 +11,7 @@ class InputDateTimePicker extends Input {
         }
 
         $attributes = $this->getAttributes();
-        $output = "<input {$attributes}>";
+        $output = "<input $attributes>";
         return $output;
     }
 
