@@ -40,10 +40,7 @@ class AdminEdit extends Extension
         if($input instanceof InputSelect){
             $fieldtype = $field->type;
             $array = $fieldtype->options();
-            foreach($array as $name => $value){
-                $input->addOption($name,$value);
-            }
-
+            $input->addOptions($array);
         }
 
 

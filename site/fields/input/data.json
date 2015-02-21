@@ -1,0 +1,15 @@
+{
+    "title": "Input",
+    "fieldtype": "FieldtypeInput",
+    "input": "InputSelect",
+    "settings": {
+        "required": true,
+        "options": {
+            "type" : "dynamic",
+            "source": "extensions",
+            "filter": {
+                "type": "fieldtype"
+            }
+        }
+    }
+}
