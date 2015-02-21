@@ -14,7 +14,7 @@ class InputSelect extends Input{
 
     protected function renderOptions()
     {
-        
+
         $output = "";
         foreach ($this->options as $value => $text) {
             $selected = $this->value == $value ? "selected='selected'" : null;

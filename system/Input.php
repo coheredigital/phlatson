@@ -144,7 +144,7 @@ abstract class Input extends Extension implements RenderInterface
 
     }
 
-    public function __get($name){
+    public function get($name){
         switch($name){
 //            case "label":
 //                return $this->getLabel();
@@ -153,7 +153,7 @@ abstract class Input extends Extension implements RenderInterface
             case "attributes":
                 return $this->getAttributes();
             default:
-                return parent::__get($name);
+                return parent::get($name);
         }
     }
 
