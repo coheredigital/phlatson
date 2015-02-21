@@ -63,8 +63,8 @@ class FlatbedException extends Exception
         $styles = "<style>
                     *{font-family: 'Courier New', monospace; margin: 0;}
                     body{background: #222;}
-                    #title{background: #e55550; color: #fff; padding: 20px; font-size: 24px; }
-                    #message{ background: #fff; color: #e55550; padding: 13px 20px; font-size: 16px; white-space: normal;}
+                    #title{background: #e55550; color: #fff; padding: 20px; font-size: 26px; }
+                    #message{ background: #fff; color: #999; padding: 13px 20px; font-size: 16px; white-space: normal;}
                     #file{ color: #fff; padding: 30px 20px; font-size: 14px;}
                     #trace{ padding: 0 20px;}
                     #trace table{ width: 100%; color: #aaa; font-size: 14px; text-align: left; border-collapse: collapse;}
