@@ -1,7 +1,8 @@
 {
-    "description": "Creates the forms and enable the edit/saving of fields.",
-    "title": "Field Edit",
-    "type": "Admin",
-    "autoload": true
+  "description": "Creates the forms and enable the edit/saving of fields.",
+  "title": "Field Edit",
+  "type": "Admin",
+  "singleton": true,
+  "autoload": true
 }
 
