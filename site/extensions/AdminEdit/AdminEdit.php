@@ -35,9 +35,19 @@ class AdminEdit extends Extension
         $input->field = $field;
         $input->object = $this->object;
 
-//        $input->label = $field->title;
+        $input->label = $field->title;
+        // todo: improve select value handling
+        if($input instanceof InputSelect){
+            $fieldtype = $field->type;
+            $array = $fieldtype->options();
+            foreach($array as $name => $value){
+                $input->addOption($name,$value);
+            }
 
-        $input->value = $this->object->get("$field->name");
+        }
+
+
+        $input->value = $this->object->getUnformatted("$field->name");
         $input->attribute("name", $field->name);
 
         return $input;

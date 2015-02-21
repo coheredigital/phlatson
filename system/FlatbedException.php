@@ -30,15 +30,8 @@ class FlatbedException extends Exception
         $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
         $message .= "<pre id='file'>" . $this->getFile() . "</pre>";
         if (app("config")->debug) {
-
-            if(!app('user')->isGuest()) {
-                $message .= $this->renderCodeSnippet();
-            }
-
+            $message .= $this->renderCodeSnippet();
             $message .= $this->renderTraceTable();
-
-
-
         }
         $output = $this->renderPage($message);
         return $output;
@@ -105,6 +98,8 @@ class FlatbedException extends Exception
     protected function log()
     {
 
+        if(!app("logger")) return false;
+
         $message = trim($this->getMessage());
         $file = $this->getFile();
         $trace = $this->getTrace();
@@ -146,7 +141,6 @@ class FlatbedException extends Exception
     {
         $output = "<html>";
         $output .= "<head>";
-        $output .= '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">';
         $output .= '<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>';
         $output .= '<script>hljs.initHighlightingOnLoad();</script>';
 

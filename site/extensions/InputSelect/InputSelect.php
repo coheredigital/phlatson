@@ -8,15 +8,13 @@
 
 class InputSelect extends Input{
 
-    public $options = [];
+    protected $options = [];
+    protected $selected = [];
 
 
-
-    protected function getOptions()
+    protected function renderOptions()
     {
-
-        $this->value = $this->fieldtype->value ? $this->fieldtype->value : $this->value;
-
+        
         $output = "";
         foreach ($this->options as $value => $text) {
             $selected = $this->value == $value ? "selected='selected'" : null;
@@ -26,12 +24,37 @@ class InputSelect extends Input{
     }
 
 
+    /**
+     * @param $name
+     * @param $value
+     * @param bool $selected
+     *
+     * Add options for select input
+     */
+    public function addOption($name, $value, $selected = false){
+
+        $this->options[$value] = $name;
+        if($selected) $this->selected[$value] = $name;
+    }
+
+
+
+    /**
+     * @param $array
+     *
+     * Add an array of options for select input
+     */
+    public function addOptions($array){
+
+        foreach($array as $name => $value){
+            $this->addOption($name, $value);
+        }
+    }
 
     protected function renderInput()
     {
-        $attributes = $this->getAttributes();
-        $options = $this->getOptions();
-        $output = "<select {$attributes}>$options</select>";
+        $options = $this->renderOptions();
+        $output = "<select {$this->attributes}>$options</select>";
         return $output;
     }
 

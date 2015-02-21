@@ -23,7 +23,7 @@ class FieldtypeFieldtype extends Fieldtype
         return null;
     }
 
-    protected function renderInput()
+    public function options()
     {
 
         $fieldtypes = app("extensions")->all();
@@ -31,17 +31,12 @@ class FieldtypeFieldtype extends Fieldtype
             ->filter(["type"=>"Fieldtype"])
             ->sort("title");
 
+        $options = [];
         foreach($fieldtypes as $fieldtype) {
-            $name = $this->value->name;
-            $fname = $fieldtype->name;
-            if ($fieldtype->name == $this->value->name) $selected = "selected";
-            else $selected = "";
-            $options .= "<option $selected value='$fieldtype->name'>$fieldtype->title</option>";
+            $options[$fieldtype->title] = $fieldtype->name;
         }
 
-        $attributes = $this->getAttributes();
-        $output = "<select {$attributes}>$options</select>";
-        return $output;
+        return $options;
     }
 
 }

@@ -26,18 +26,21 @@ foreach (app("config")->routes as $r){
     $route = new Route($r);
     app("router")->add($route);
 }
-app('events', 'Events');
-app('extensions', new Extensions);
-//app('sanitizer', 'Sanitizer');
-app('pages', 'Pages');
-app('users', 'Users');
-app('fields', 'Fields');
-app('templates', 'Templates');
-app('session', 'Session');
-app('logger', 'Logger');
+
 
 
 try {
+
+    // wrapped in try while extensions requires instantiation
+    app('events', 'Events');
+    app('extensions', new Extensions);
+    app('pages', 'Pages');
+    app('users', 'Users');
+    app('fields', 'Fields');
+    app('templates', 'Templates');
+    app('session', 'Session');
+    app('logger', 'Logger');
+
     app('router')->run(app('request'));
 } catch(FlatbedException $exception) {
 //    $message = "Exception: " . $exception->getMessage() . "\n(in " . $exception->getFile() . " line " . $exception->getLine() . ")";

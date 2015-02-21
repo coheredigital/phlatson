@@ -19,27 +19,17 @@ class FieldtypeSelect extends Fieldtype{
         $field->label = "Options";
     }
 
-
-    protected function getOptions()
-    {
-
-        $this->value = $this->fieldtype->value ? $this->fieldtype->value : $this->value;
-
-        $output = "";
-        foreach ($this->options as $value => $text) {
-            $selected = $this->value == $value ? "selected='selected'" : null;
-            $output .= "<option $selected value='$value'>$text</option>";
+    public function get($name){
+        switch ($name) {
+            case "options":
+                return $this->getOptions();
+            default:
+                return parent::get($name);
         }
-        return $output;
     }
 
-
-    protected function renderInput()
-    {
-        $attributes = $this->getAttributes();
-        $options = $this->getOptions();
-        $output = "<select {$attributes}>$options</select>";
-        return $output;
+    protected function getOptions(){
+        return [];
     }
 
 } 
