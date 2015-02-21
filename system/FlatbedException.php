@@ -54,13 +54,13 @@ class FlatbedException extends Exception
             $table .= "<tr>";
             $table .= "<td>" . $trace['line'] . "</td>";
             $table .= "<td>" . $trace['file'] . "</td>";
-            $table .= "<td>"
+            $table .= "<td><pre class='php'>"
                 . $trace['class']
                 . $trace['type']
                 . $trace['function']
                 . "("
 //                . implode(",", $trace['args'] )
-                . ")</td>";
+                . ")</pre></td>";
             $table .= "</tr>";
 
         }
@@ -78,9 +78,8 @@ class FlatbedException extends Exception
         $trace = $trace[0];
 
         $file = $trace["file"];
-        $line = $trace["line"] - 1;
+        $line = $trace["line"];
 
-//        $code = file_get_contents($file);
         $code = file($file);
 
         $lineStart = $line - 5;
@@ -93,12 +92,13 @@ class FlatbedException extends Exception
             $class = "";
             if($line == $position) $class = "class='highlight'";
 
-            $lineNumber = $position+1;
-            $output .= "<code $class><span>$lineNumber</span>" . $code[$position] . "</code>";
+            $lineNumber = $position;
+            $codeline = $code[$position];
+            $output .= "<code $class>$lineNumber$codeline</code>";
             $position++;
         }
 
-        $output = "<pre id='code'>$output</pre>";
+        $output = "<pre id='code' class='php'>$output</pre>";
         return $output;
     }
 
@@ -119,7 +119,7 @@ class FlatbedException extends Exception
     {
         $styles = "<style>
                     *{font-family: 'Courier New', monospace; margin: 0;}
-                    body{background: #222;}
+                    body{background: #222; width: 100%; overflow: hidden;}
                     #title{background: #e55550; color: #fff; padding: 20px; font-size: 26px; }
                     #message{ background: #fff; color: #999; padding: 13px 20px; font-size: 16px; white-space: normal;}
                     #file{ color: #fff; padding: 20px; font-size: 14px;}
@@ -128,10 +128,15 @@ class FlatbedException extends Exception
                     #trace th{ font-weight: bold; border-bottom: 1px solid #444 !important; padding: 4px;}
                     #trace td{ padding: 4px;}
                     #code{ padding: 10px 0; color: #909090; background: #111; font-size: 14px; line-height: 1.6em;}
-                    #code code{ padding: 2px 20px; display: block; white-space: pre-wrap}
-                    #code span{ color: #444;}
-                    #code .highlight{ background: #151515; color: #fff;}
-                    #code .highlight span{ color: #ff5853;}
+                    #code > code{ padding: 2px 20px; display: block !important; white-space: pre-wrap; width: 100%;}
+                    #code > code > span{ color: #444;}
+                    #code .highlight{ background: #151515 !important;}
+                    #code .hljs{ background: #111; color: #888;}
+                    #code .hljs-number{ color: #444;}
+                    #code .highlight .hljs-number{ color: #ccc;}
+                    #code .hljs-variable{ color: #ff5853;}
+                    #code .hljs-keyword{ color: #eee;}
+                    #code .hljs-function .hljs-title{ color: #8ba3d8;}
 
         </style>";
         return $styles;
@@ -140,6 +145,14 @@ class FlatbedException extends Exception
     protected function renderPage($message)
     {
         $output = "<html>";
+        $output .= "<head>";
+        $output .= '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">';
+        $output .= '<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>';
+        $output .= '<script>hljs.initHighlightingOnLoad();</script>';
+
+        $output .= "<head>";
+        $output .= "</head>";
+        $output .= "</head>";
         $output .= $this->renderPageStyles();
         $output .= "<body>$message</body>";
         $output .= "<html>";
