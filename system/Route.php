@@ -150,7 +150,7 @@ class Route
         }
 
         if (!$route instanceof Route) {
-            throw new Exception("Invalid route ($route) cannot be added as parent");
+            throw new FlatbedException("Invalid route ($route) cannot be added as parent");
         }
 
         $this->parent = $route;
@@ -164,7 +164,7 @@ class Route
 
         $method = trim(strtoupper($name));
         if (!in_array($method, $this->methods)) {
-            throw new Exception("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(
+            throw new FlatbedException("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(
                     ", ",
                     $this->methods
                 ) . " ).");
@@ -294,7 +294,7 @@ class Route
 
                 //call method and pass any extra parameters to the method
                 if (!is_callable([$class, $methodName])) {
-                    throw new Exception("Method: $methodName does not exist in class: $className");
+                    throw new FlatbedException("Method: $methodName does not exist in class: $className");
                 }
                 call_user_func_array([$class, $methodName], $this->parameters);
 

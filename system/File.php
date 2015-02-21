@@ -9,7 +9,7 @@ class File
     public function __construct($page, $name)
     {
 
-        // TODO : throw exception if not valid file
+        // TODO : throw FlatbedException if not valid file
 
         $this->page = $page;
         $this->path = $page->path;

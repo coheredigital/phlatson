@@ -52,7 +52,7 @@ class AdminEdit extends Extension
     {
 
         if(!is_object($this->object)){
-            throw new Exception("Fatal Error, no object defined, cannot save");
+            throw new FlatbedException("Fatal Error, no object defined, cannot save");
         }
 
         $this->object->processInputData();

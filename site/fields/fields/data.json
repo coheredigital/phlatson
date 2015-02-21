@@ -1,6 +1,6 @@
 {
     "fieldtype": "FieldtypeFields",
-    "input": "InputFields",
+    "inputs": "InputFields",
     "title": "Fields",
     "settings": {
         "required": true

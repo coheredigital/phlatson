@@ -86,7 +86,7 @@ class Router
         }
 
 
-        if ($found === false) throw new Exception("Invalid request, app cannot run");
+        if ($found === false) throw new FlatbedException("Invalid request, app cannot run");
     }
 
 

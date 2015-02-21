@@ -206,7 +206,7 @@ abstract class Object implements JsonSerializable
             // TODO - validate parent
 
             if (!$this->parent instanceof Page) {
-                throw new Exception("cannot create new page without valid parent");
+                throw new FlatbedException("cannot create new page without valid parent");
             }
 
             $this->path = $this->parent->path . $this->name . "/";
@@ -302,7 +302,7 @@ abstract class Object implements JsonSerializable
         foreach ($this->requiredElements as $name) {
 
             if (!$this->has($name)) {
-                throw new Exception(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ", $this->requiredElements) . ").");
+                throw new FlatbedException(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ", $this->requiredElements) . ").");
             }
 
         }
