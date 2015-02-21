@@ -11,25 +11,19 @@ class Field extends Object
      */
     public function getInput()
     {
-        if ($this->getUnformatted("input")) {
+        if (!$this->getUnformatted("input")) return null;
 
-            $name = $this->getUnformatted("input");
-            $input = app("extensions")->get($name);
-            $input->settings($this->settings);
-            return $input;
+        $name = $this->getUnformatted("input");
+        $input = app("extensions")->get($name);
+        $input->field = $this;
+        return $input;
 
-
-        }
-        return null;
     }
 
     protected function getNewName()
     {
-        // set object name
-        if ($this->template->_settings->nameFrom && $this->template->fields->has(
-                $this->settings->nameFrom
-            )
-        ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
+        // TODO : this is not in yet, we need support for creating the name from referencing another field
+        if ($this->template->_settings->nameFrom && $this->template->fields->has($this->settings->nameFrom)) {
             return app("sanitizer")->name($this->settings->nameFrom);
         } else {
             return app("sanitizer")->name($this->label);
@@ -43,7 +37,8 @@ class Field extends Object
      *
      * @return String
      */
-    public function getFieldtypeName(){
+    public function getFieldtypeName()
+    {
         return $this->getUnformatted("fieldtype");
     }
 

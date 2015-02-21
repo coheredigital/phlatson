@@ -23,11 +23,9 @@ abstract class Fieldtype extends Extension
         $this->object = $object;
     }
 
-
-
     public function getOutput($value)
     {
-        return (string)$value;
+        return $value;
     }
 
     public function getEdit($value)
@@ -40,8 +38,6 @@ abstract class Fieldtype extends Extension
     {
         return $value;
     }
-
-
 
     protected function getAttributes()
     {

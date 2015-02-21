@@ -1,0 +1,10 @@
+{
+    "title": "HTML",
+    "type": "Input",
+    "listeners": [
+        {
+            "name": "before.InputRedactor.render",
+            "methods": ["addStyles"]
+        }
+    ]
+}
