@@ -4,6 +4,7 @@
 class FlatbedException extends Exception
 {
 
+
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 0, Exception $previous = null)
     {
@@ -21,6 +22,9 @@ class FlatbedException extends Exception
 
     public function render()
     {
+
+        $this->log();
+
         $message = "<pre id='title'>Exception</pre>";
         $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
         $message .= "<pre id='file'>" . $this->getFile() . "</pre>";
@@ -55,6 +59,18 @@ class FlatbedException extends Exception
         $table .= "</table></div>";
 
         return $table;
+
+    }
+
+    protected function log(){
+
+        $message =  trim($this->getMessage());
+        $file = $this->getFile();
+        $trace = $this->getTrace();
+        $trace = $trace[0];
+        $line = "#" . $trace['line'] . " (" . $trace['class'] . $trace['type'] . $trace['function'] . ")";
+        $log = "Exception: $message in ($file) on $line";
+        app("logger")->add("error", $log);
 
     }
 
