@@ -3,14 +3,11 @@
 class Template extends Object
 {
 
-    public $master; // the object this template belongs to
+    public $parent; // the object this template belongs to
     protected $rootFolder = "templates";
     public $defaultFields = ['title','fields'];
 
-    public function setReference($object)
-    {
-        $this->master = $object;
-    }
+
 
     public function get($name)
     {
@@ -19,7 +16,7 @@ class Template extends Object
                 //  TODO : refactor - the method for defining the master to this template is done manually here
                 // maybe I can automate this like with pages
                 $template = app("templates")->get("template");
-                $template->master = $this;
+                $template->parent = $this;
                 return $template;
             case 'layout':
                 $layoutFile = app('config')->paths->layouts . $this->name . ".php";

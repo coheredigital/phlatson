@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeFields extends Fieldtype
+class FieldtypeFields extends Fieldtype implements ProvidesOptions
 {
 
 
@@ -9,22 +9,18 @@ class FieldtypeFields extends Fieldtype
 
         $fields = new ObjectCollection();
 
-        if (count($array)) {
-            foreach ($array as $item) {
-
-                if (!isset($item['name'])) {
-                    continue;
-                }
 
 
-                if($field = app("fields")->get($item['name'])) {
-                    $fields->add($field);
-                } // TODO : this will skip missing / invalid fields, reevaluate validation here
+        if(count($array)) foreach ($array as $item) {
 
+            if(isset($item['name']) && $field = app("fields")->get($item['name'])) {
+                $fields->add($field);
             }
+
         }
 
-        if($this->object instanceof Object) $defaultFields = $this->object->master->defaultFields;
+
+        if($this->object instanceof Object) $defaultFields = $this->object->parent->defaultFields;
 
         if (count($defaultFields)) {
             foreach ($defaultFields as $item) {
@@ -57,6 +53,19 @@ class FieldtypeFields extends Fieldtype
         return $formattedArray;
     }
 
+    public function options(){
 
+        $options = [];
+        $fields = app("fields")->all();
+
+        foreach($fields as $field){
+            $options["$field->title"] = $field->name;
+
+
+        }
+
+        return $options;
+
+    }
 
 }

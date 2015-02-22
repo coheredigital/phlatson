@@ -6,7 +6,7 @@
  * Date: 22/08/14
  * Time: 12:48 PM
  */
-class FieldtypeSelect extends Fieldtype implements OptionsProvider
+class FieldtypeSelect extends Fieldtype implements ProvidesOptions
 {
 
     public $options = [];

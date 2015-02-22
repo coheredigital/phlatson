@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: aspruijt
  * Date: 22/08/14
  * Time: 12:48 PM
  */
-
-class InputSelect extends Input{
+class InputSelect extends Input implements ReceivesOptions
+{
 
     protected $options = [];
     protected $selected = [];
@@ -31,12 +32,12 @@ class InputSelect extends Input{
      *
      * Add options for select input
      */
-    public function addOption($name, $value, $selected = false){
+    public function addOption($name, $value, $selected = false)
+    {
 
         $this->options[$value] = $name;
-        if($selected) $this->selected[$value] = $name;
+        if ($selected) $this->selected[$value] = $name;
     }
-
 
 
     /**
@@ -44,9 +45,10 @@ class InputSelect extends Input{
      *
      * Add an array of options for select input
      */
-    public function addOptions($array){
+    public function addOptions($array)
+    {
 
-        foreach($array as $name => $value){
+        foreach ($array as $name => $value) {
             $this->addOption($name, $value);
         }
     }

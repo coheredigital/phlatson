@@ -9,27 +9,26 @@ require_once ROOT_PATH . 'system/_autoload.php';
 require_once ROOT_PATH . 'system/_interfaces.php';
 require_once ROOT_PATH . 'system/_traits.php';
 
-/* instatiate api variables */
-app('config', new Config);
-app('request', new Request);
-
-// set default request behaviour
-$pagesRoute = new Route();
-$pagesRoute
-    ->path(":all")
-    ->callback("Pages.render");
-
-app('router', new Router($pagesRoute));
-
-// setup config routes
-foreach (app("config")->routes as $r){
-    $route = new Route($r);
-    app("router")->add($route);
-}
-
-
-
 try {
+
+    /* instatiate app variables */
+    app('config', new Config);
+    app('request', new Request);
+
+    /* set default request behaviour */
+    $pagesRoute = new Route();
+    $pagesRoute
+        ->path(":all")
+        ->callback("Pages.render");
+
+    app('router', new Router($pagesRoute));
+
+    /* setup config routes */
+    foreach (app("config")->routes as $r){
+        $route = new Route($r);
+        app("router")->add($route);
+    }
+
 
     // wrapped in try while extensions requires instantiation
     app('events', 'Events');
@@ -43,9 +42,5 @@ try {
 
     app('router')->run(app('request'));
 } catch(FlatbedException $exception) {
-//    $message = "Exception: " . $exception->getMessage() . "\n(in " . $exception->getFile() . " line " . $exception->getLine() . ")";
-//    if( app("config")->debug )
-//        $message .= "\n\n" . $exception->getTraceAsString();
     echo $exception->render();
-
 }

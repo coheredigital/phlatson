@@ -37,7 +37,7 @@ class AdminEdit extends Extension
 
         $input->label = $field->title;
         // todo: improve select value handling
-        if($input instanceof InputSelect){
+        if($input instanceof ReceivesOptions){
             $fieldtype = $field->type;
             $array = $fieldtype->options();
             $input->addOptions($array);
