@@ -23,7 +23,7 @@ class Extensions extends Objects
     protected function getFileList($path = null, $depth = 1)
     {
 
-        if(is_null($path)) $path = $this->rootPath;
+        if(is_null($path)) $path = $this->siteRoot;
 
         $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);

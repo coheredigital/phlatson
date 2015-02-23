@@ -10,7 +10,8 @@ abstract class Objects
 
     // the folder within the site and system paths to check for items ex: fields, templates, etc
     protected $rootFolder;
-    protected $rootPath;
+    protected $siteRoot;
+    protected $systemRoot;
 
     // used to identify the singular version $this relates to
     protected $singularName;
@@ -18,7 +19,8 @@ abstract class Objects
     public function __construct()
     {
 
-        $this->rootPath = Filter::path(app('config')->paths->site . $this->rootFolder);
+        $this->siteRoot = Filter::path(ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
+        $this->systemRoot = Filter::path(ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
 
         if ($this instanceof Pages) {
             $this->data['/'] = app("config")->paths->pages . "data.json";
@@ -46,10 +48,18 @@ abstract class Objects
 
     protected function getDataFile($name){
 
-        $path = Filter::path( $this->rootPath . $name);
-        $file = "{$path}data.json";
-        if (is_file($file)) {
-            $this->set($name, $file);
+        $sitePath = Filter::path($this->siteRoot . $name);
+        $systemPath = Filter::path($this->systemRoot . $name);
+
+        $siteFile = "{$sitePath}data.json";
+        $systemFile = "{$systemPath}data.json";
+
+        if (is_file($systemFile)) {
+            $this->set($name, $systemFile);
+        }
+
+        if (is_file($siteFile)) {
+            $this->set($name, $siteFile);
         }
     }
 
@@ -67,7 +77,7 @@ abstract class Objects
     protected function getFileList($path = null, $depth = 1)
     {
 
-        if(is_null($path)) $path = $this->rootPath;
+        if(is_null($path)) $path = $this->siteRoot;
 
         $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
@@ -141,7 +151,7 @@ abstract class Objects
         $path = $item->getPath();
         $filename = $item->getFilename();
 
-        $uri = str_replace($this->rootPath, "", $path);
+        $uri = str_replace($this->siteRoot, "", $path);
         $uri = str_replace($filename, "", $uri);
         $uri = trim($uri, DIRECTORY_SEPARATOR);
         $uri = Filter::uri($uri);
@@ -158,7 +168,7 @@ abstract class Objects
     protected function isValidPath($path)
     {
 
-        if (strpos($path, $this->rootPath) !== false) {
+        if (strpos($path, $this->siteRoot) !== false) {
             return true;
         }
         return false;
