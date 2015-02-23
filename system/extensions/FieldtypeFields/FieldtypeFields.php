@@ -9,8 +9,6 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
 
         $fields = new ObjectCollection();
 
-
-
         if(count($array)) foreach ($array as $item) {
 
             if(isset($item['name']) && $field = app("fields")->get($item['name'])) {

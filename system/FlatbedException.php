@@ -26,13 +26,18 @@ class FlatbedException extends Exception
 
         $code = $this->getCode();
 
+
+
         $message = "<pre id='title'>Exception</pre>";
         $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
-        $message .= "<pre id='file'>" . $this->getFile() . "</pre>";
         if (app("config")->debug) {
             $message .= $this->renderCodeSnippet();
             $message .= $this->renderTraceTable();
         }
+
+        $message .= "<pre id='file'>Thrown from <span>" . $this->getFile() . "</span></pre>";
+
+
         $output = $this->renderPage($message);
         return $output;
     }
@@ -41,7 +46,7 @@ class FlatbedException extends Exception
     {
 
         $table = "<div id='trace'><table>";
-        $table .= "<tr><th>line</th><th>file</th><th>class@method('args')</th></tr>";
+        $table .= "<thead><tr><th>line</th><th>file</th><th>class@method('args')</th></tr></thead><tbody>";
 
         foreach ($this->getTrace() as $trace) {
             $table .= "<tr>";
@@ -58,7 +63,7 @@ class FlatbedException extends Exception
 
         }
 
-        $table .= "</table></div>";
+        $table .= "</tbody></table></div>";
 
         return $table;
 
@@ -119,11 +124,13 @@ class FlatbedException extends Exception
                     body{background: #222; width: 100%; overflow: hidden;}
                     #title{background: #e55550; color: #fff; padding: 20px; font-size: 26px; }
                     #message{ background: #fff; color: #999; padding: 13px 20px; font-size: 16px; white-space: normal;}
-                    #file{ color: #fff; padding: 20px; font-size: 14px;}
+                    #file{ color: #888; padding: 20px; font-size: 14px;}
+                    #file span{ color: #8ba3d8;}
                     #trace{ padding:20px;}
                     #trace table{ width: 100%; color: #aaa; font-size: 14px; text-align: left; border-collapse: collapse;}
-                    #trace th{ font-weight: bold; border-bottom: 1px solid #444 !important; padding: 4px;}
+                    #trace th{ font-weight: bold; border-bottom: 1px solid #333 !important; padding: 8px 4px; color: #ddd;}
                     #trace td{ padding: 4px;}
+                    #trace tbody tr:first-child td{ padding: 12px 4px 4px 4px;}
                     #code{ padding: 10px 0; color: #909090; background: #111; font-size: 14px; line-height: 1.6em;}
                     #code > code{ padding: 2px 20px; display: block !important; white-space: pre-wrap; width: 100%;}
                     #code > code > span{ color: #444;}

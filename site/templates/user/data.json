@@ -1,8 +1,4 @@
 {
-    "label": "User",
-    "fields": [
-        {
-            "name": "fullname"
-        }
-    ]
+  "label": "User",
+  "fields": []
 }

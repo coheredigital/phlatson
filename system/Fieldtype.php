@@ -18,10 +18,10 @@ abstract class Fieldtype extends Extension
         $this->attribute("name", $this->field->name);
     }
 
-    public function setObject(Object $object)
-    {
-        $this->object = $object;
-    }
+//    public function setObject(Object $object)
+//    {
+//        $this->object = $object;
+//    }
 
     public function getOutput($value)
     {

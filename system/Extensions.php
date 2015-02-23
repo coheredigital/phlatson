@@ -41,14 +41,12 @@ class Extensions extends Objects
 
             $className = $this->getNameFromPath($itemPath);
 
-            $extensionData = json_decode(file_get_contents($filePath));
-            // add data file path for lazy instantiation
-            $extensionData->file = $filePath;
+            $extension = new ObjectStub($filePath);
+            $extension->creator = $this;
 
+            $this->data["$className"] = $extension;
 
-            $this->data["$className"] = $extensionData;
-
-            if($extensionData->autoload){
+            if($extension->autoload){
                 $extension = new $className($filePath);
                 $this->data["$className"] = $extension;
             }
@@ -66,17 +64,15 @@ class Extensions extends Objects
         return $className;
     }
 
-    protected function getObject($key)
+    protected function getObject($name)
     {
         // get the file if it exists
-        if (!$extension = $this->getItem($key)) {
+        if (!$extension = $this->getItem($name)) {
             return false;
         }
 
-        if(!$extension instanceof Extension){
-            $extension = new $key($extension->file);
-            $this->data["$key"] = $extension;
-        }
+        $extension = $this->instantiateExtension($name, $extension);
+
 
         if(!$extension->singluar){
             $extension = clone $extension; // TODO I don't know if I want to use clone here
@@ -85,14 +81,22 @@ class Extensions extends Objects
         return $extension;
     }
 
+    protected function instantiateExtension($name, $extension){
+        if(!$extension instanceof Extension){
+            $extension = new $name($extension->file);
+        }
+        return $extension;
+    }
 
     public function all()
     {
         $this->getObjectList();
         $collection = new ObjectCollection();
 
-        foreach ($this->data as $object) {
-            $collection->add($object);
+        foreach ($this->data as $name => $extension) {
+            // todo: all extensions are being instatiate, all the time, this need to improved, maybe a ExtensionStub class?
+//            $extension = $this->instantiateExtension($name, $extension);
+            $collection->add($extension);
         }
 
         return $collection;

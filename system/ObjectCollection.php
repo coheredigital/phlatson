@@ -195,22 +195,20 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
         return $this->has($key);
     }
 
-
-
     public function get($name)
+    {
+        return $this->data[$name];
+    }
+
+    public function __get($name)
     {
         switch ($name) {
             case 'className':
                 return get_class($this);
             default:
-                return $this->data[$name];
+                return null;
 
         }
-    }
-
-    public function __get($name)
-    {
-        return $this->get($name);
     }
 
 

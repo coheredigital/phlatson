@@ -4,7 +4,8 @@ class User extends Object
 {
 
     protected $rootFolder = "users";
-    public $defaultFields = array("name", "password");
+    public $defaultFields = ["password"];
+    protected $requiredElements = ["password","role"];
 
     /**
      * is this the guest user?

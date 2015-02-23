@@ -5,6 +5,7 @@ class Field extends Object
     protected $rootFolder = "fields";
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
+    protected $defaultFields = ["fieldtype","input"];
 
     /**
      * retrieves the input object associated with "$this" field
@@ -68,7 +69,7 @@ class Field extends Object
                 return $this->getInput();
             case 'template':
                 $template = app("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
-                $template->master = $this;
+                $template->parent = $this;
                 return $template;
             default:
                 return parent::get($name);

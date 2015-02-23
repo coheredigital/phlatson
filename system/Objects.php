@@ -128,10 +128,10 @@ abstract class Objects
         return $collection;
     }
 
-    protected function getObject($key)
+    protected function getObject($name)
     {
         // get the file if it exists
-        if (!$file = $this->getItem($key)) {
+        if (!$file = $this->getItem($name)) {
             return false;
         }
         return new $this->singularName($file);
