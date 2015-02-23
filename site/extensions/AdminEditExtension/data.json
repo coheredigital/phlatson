@@ -1,0 +1,8 @@
+{
+    "description": "Creates the forms and enable the edit/saving of extension settings.",
+    "title": "Configure Extension",
+    "type": "Admin",
+    "singleton": true,
+    "autoload": true
+}
+

@@ -35,12 +35,10 @@ DirectoryIndex index.php index.html index.htm
     RewriteCond %{REQUEST_URI} (^|/)site/(fields|templates|config|users)($|/.*$) [OR]
     # Block access to page JSON data files
     RewriteCond %{REQUEST_URI} (^|/)site/.*\.(json)$ [OR]
-    # Block access to any PHP files in /site/layouts/
-    RewriteCond %{REQUEST_URI} (^|/)site/layouts($|/|/.*\.php)$ [OR]
     # Block access to any PHP files in site
     RewriteCond %{REQUEST_URI} (^|/)site/.*\.(php|inc|html|html|tpl|module)$ [OR]
-    # Block access to system directory
-    RewriteCond %{REQUEST_URI} (^|/)system($|/.*$) [OR]
+    # Block access to any PHP files in site
+    RewriteCond %{REQUEST_URI} (^|/)system/.*\.(php|inc|html|html|tpl|module)$ [OR]
     # Block access to any software identifying txt files
     RewriteCond %{REQUEST_URI} (^|/)(COPYRIGHT|README|htaccess)\.(txt|md)$
     # If any conditions above match, isssue a 403 forbidden

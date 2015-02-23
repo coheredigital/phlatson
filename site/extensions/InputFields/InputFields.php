@@ -62,7 +62,16 @@ class InputFields extends Input implements ReceivesOptions
         $fieldAdd = "<select>$fieldAdd</select>";
 
         if (count($this->value)) {
-            foreach ($this->value as $field) {
+
+            $fields = new ObjectCollection();
+            foreach ($this->value as $item) {
+                $field = app("fields")->get($item['name']);
+                $fields->add($field);
+            }
+
+
+
+            foreach ($fields as $field) {
 
                 // retrieve the field object because "$this->value" will return an unformatted value
                 $output .= "<div class='item' >

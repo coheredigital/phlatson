@@ -1,5 +1,14 @@
 <?php
 
+
+function flatbedErrorHandler($errno, $errstr, $errfile, $errline) {
+    if ( E_RECOVERABLE_ERROR===$errno ) {
+        throw new FlatbedException($errstr, $errno);
+    }
+    return false;
+}
+set_error_handler('flatbedErrorHandler');
+
 // shorthand for api($name) and api::set($key, $value)
 function app($name = null, $value = null, $lock = false)
 {

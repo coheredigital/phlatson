@@ -21,7 +21,7 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
 
     }
 
-    public function add($item)
+    public function add(Object $item)
     {
 
         $this->data[$item->name] = $item;
@@ -81,7 +81,8 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
     public function sort($property, $direction = "ASC")
     {
 
-        $value = $this->first()->get($property);
+        $object = $this->first();
+        $value = $object->get($property);
         $type = gettype($value);
 
 
@@ -110,12 +111,7 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
     }
 
 
-    public function get($name)
-    {
-        if ($this->has($name)) {
-            return $this->data[$name];
-        }
-    }
+
 
 
     public function has($name)
@@ -144,6 +140,11 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
      */
     public function index($x)
     {
+
+        if(!count($this->data)){
+            throw new FlatbedException("$this->className is empty, cannot retrieve index($x)");
+        }
+
         return array_values($this->data)[$x];
     }
 
@@ -193,4 +194,24 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
     {
         return $this->has($key);
     }
+
+
+
+    public function get($name)
+    {
+        switch ($name) {
+            case 'className':
+                return get_class($this);
+            default:
+                return $this->data[$name];
+
+        }
+    }
+
+    public function __get($name)
+    {
+        return $this->get($name);
+    }
+
+
 }

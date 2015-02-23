@@ -27,9 +27,9 @@ abstract class Object implements JsonSerializable
 
         $this->rootPath = Filter::path(app('config')->paths->site . $this->rootFolder);
 
-        if (is_file($file)) {
+        if (!is_null($file)) {
             $this->file = $file;
-            $this->data = json_decode(file_get_contents($this->file), true);
+            $this->data = $this->getData($this->file);
             $this->route = $this->getRoute();
         }
 
@@ -37,6 +37,26 @@ abstract class Object implements JsonSerializable
 
     }
 
+    /**
+     * @param $file
+     * @return mixed
+     * @throws FlatbedException
+     *
+     * return array of data from the passed in JSON file (ie: data.json)
+     *
+     */
+    protected function getData($file){
+
+        $this->validateDataFile($file);
+        return json_decode(file_get_contents($file), true);
+    }
+
+    protected function validateDataFile($file){
+        if(!is_file($file)){
+            throw new FlatbedException("Ivalid file ($file) passed for $this->className");
+        }
+
+    }
 
     public function getName()
     {
@@ -83,6 +103,20 @@ abstract class Object implements JsonSerializable
 
         // break the path into it's parts an return the resulting array
         return explode("/", $directory);
+    }
+
+    protected function getUrl(){
+
+
+        $rootPath = app("config")->paths->root;
+
+        $replace = [ROOT_PATH,$rootPath, "data.json"];
+
+        $url = trim(str_replace($replace, "", $this->file), "/");
+        $url = Filter::url($url);
+        $url = "/$url";
+
+        return $url;
     }
 
     protected function getFormatted($name)
@@ -316,8 +350,7 @@ abstract class Object implements JsonSerializable
             case 'directory':
                 return normalizeDirectory($this->getName());
             case 'url':
-                $url = app('config')->urls->site . $this->rootFolder . "/" . $this->getName() . "/";
-                return $url;
+                return $this->getUrl();
             case 'path':
                 return $this->getPath();
             case 'name':

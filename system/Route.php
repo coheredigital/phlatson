@@ -123,7 +123,12 @@ class Route
 
     }
 
-
+    /**
+     * @param array $parameters
+     * @return null|string
+     *
+     * return a url for the route
+     */
     private function url(array $parameters = [])
     {
 
@@ -150,11 +155,10 @@ class Route
         }
 
         if (!$route instanceof Route) {
-            throw new FlatbedException("Invalid route ($route) cannot be added as parent");
+            throw new FlatbedException("Invalid route: cannot be added as parent");
         }
 
         $this->parent = $route;
-//        $route->children[] = $this;
         return $this;
     }
 

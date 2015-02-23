@@ -13,15 +13,19 @@ class Extensions extends Objects
     public function __construct()
     {
         parent::__construct();
+
+        $systemExtensions = __DIR__ . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR;
+        $this->getFileList($systemExtensions);
         $this->getFileList(); // for now this need to be fired on every request TODO: remove this requirement
 
     }
 
-
-    protected function getFileList($depth = 1)
+    protected function getFileList($path = null, $depth = 1)
     {
 
-        $iterator = new RecursiveDirectoryIterator($this->rootPath, RecursiveDirectoryIterator::SKIP_DOTS);
+        if(is_null($path)) $path = $this->rootPath;
+
+        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator->setMaxDepth($depth);
@@ -35,24 +39,43 @@ class Extensions extends Objects
 
             if (!$this->isValidObject($item)) continue;
 
-            $className = Filter::uri(str_replace($this->rootPath, "", $itemPath));
+            $className = $this->getNameFromPath($itemPath);
 
-            // add root items for pages to allow home selection
-            $extension = new $className($filePath);
-            $this->data["$className"] = $extension;
+            $extensionData = json_decode(file_get_contents($filePath));
+            // add data file path for lazy instantiation
+            $extensionData->file = $filePath;
+
+
+            $this->data["$className"] = $extensionData;
+
+            if($extensionData->autoload){
+                $extension = new $className($filePath);
+                $this->data["$className"] = $extension;
+            }
 
         }
 
     }
 
+    protected function getNameFromPath($path){
+
+        $path = trim($path, "/");
+
+        $className = substr($path, strrpos($path, '/') + 1);
+        $className = Filter::uri($className);
+        return $className;
+    }
 
     protected function getObject($key)
     {
         // get the file if it exists
         if (!$extension = $this->getItem($key)) {
-
-
             return false;
+        }
+
+        if(!$extension instanceof Extension){
+            $extension = new $key($extension->file);
+            $this->data["$key"] = $extension;
         }
 
         if(!$extension->singluar){
@@ -66,13 +89,13 @@ class Extensions extends Objects
     public function all()
     {
         $this->getObjectList();
-        $objectArray = new ObjectCollection();
+        $collection = new ObjectCollection();
 
         foreach ($this->data as $object) {
-            $objectArray->add($object);
+            $collection->add($object);
         }
 
-        return $objectArray;
+        return $collection;
     }
 
 

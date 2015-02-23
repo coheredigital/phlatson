@@ -27,7 +27,7 @@ class Filter
     public static function url($url)
     {
         $url = str_replace("\\", "/", $url);
-        $url = trim($url, "/");
+        $url = trim($url, "/") . "/";
 
         return $url;
     }
@@ -35,6 +35,7 @@ class Filter
     public static function uri($string)
     {
         $string = static::url($string);
+        $string = trim($string, "/");
         if (strlen($string) === 0) {
             $string = "";
         }

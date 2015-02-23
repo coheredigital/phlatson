@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    var $fieldlist = $(".FieldtypeFields .field-list");
-    var $fieldselect = $(".FieldtypeFields select");
+    var $fieldlist = $(".InputFields .field-list");
+    var $fieldselect = $(".InputFields select");
 
     $fieldlist.sortable({
         containerSelector: '.FieldtypeFields',

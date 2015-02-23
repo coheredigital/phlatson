@@ -26,7 +26,7 @@ class FlatbedException extends Exception
 
         $code = $this->getCode();
 
-        $message = "<pre id='title'>Exception:$code</pre>";
+        $message = "<pre id='title'>Exception</pre>";
         $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
         $message .= "<pre id='file'>" . $this->getFile() . "</pre>";
         if (app("config")->debug) {
@@ -72,6 +72,8 @@ class FlatbedException extends Exception
 
         $file = $trace["file"];
         $line = $trace["line"];
+
+        if(!isset($trace["file"])) return false;
 
         $code = file($file);
 

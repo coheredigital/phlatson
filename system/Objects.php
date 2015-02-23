@@ -64,10 +64,12 @@ abstract class Objects
         $this->getFileList();
     }
 
-    protected function getFileList($depth = 1)
+    protected function getFileList($path = null, $depth = 1)
     {
 
-        $iterator = new RecursiveDirectoryIterator($this->rootPath, RecursiveDirectoryIterator::SKIP_DOTS);
+        if(is_null($path)) $path = $this->rootPath;
+
+        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
         $iterator->setMaxDepth($depth);
@@ -142,7 +144,8 @@ abstract class Objects
         $uri = str_replace($this->rootPath, "", $path);
         $uri = str_replace($filename, "", $uri);
         $uri = trim($uri, DIRECTORY_SEPARATOR);
-        return Filter::uri($uri);
+        $uri = Filter::uri($uri);
+        return $uri;
     }
 
     /**

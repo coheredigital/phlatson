@@ -15,15 +15,17 @@ class Extension extends Object
         // forced file location
         // TODO: this is require because of the way router handles Class.method route callbacks
         // File is not being passed so not enough can be determined about the extension (path/file)
-        $file = app("config")->paths->extensions . $this->className . '/' . static::DEFAULT_SAVE_FILE;
+//        $file = app("config")->paths->extensions . $this->className . '/' . static::DEFAULT_SAVE_FILE;
+
+        if(is_null($file)){
+            $reflection = new ReflectionClass($this);
+            $directory = dirname($reflection->getFileName()) . DIRECTORY_SEPARATOR;
+            $file = $directory . "data.json";
+        }
 
         parent::__construct($file);
 
-
-
-//        if ($this->autoload === true) {
-            $this->setup();
-//        }
+        $this->setup();
         $this->setupListeners();
     }
 
