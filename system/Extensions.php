@@ -47,7 +47,7 @@ class Extensions extends Objects
             $this->data["$className"] = $extension;
 
             if($extension->autoload){
-                $extension = new $className($filePath);
+                $extension = new $className();
                 $this->data["$className"] = $extension;
             }
 

@@ -60,7 +60,10 @@ class MarkupPageList extends Extension
             $output .= '<div class="menu">';
 
             foreach ($templates as $t) {
-                $output .= "<a class='item' href='{$config->urls->root}{$config->adminUrl}/pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
+
+                $rootUrl = app("admin")->route->url;
+
+                $output .= "<a class='item' href='{$rootUrl}pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
             }
 
             $output .= '</div>';

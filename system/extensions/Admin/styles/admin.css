@@ -1986,16 +1986,14 @@ form {
   vertical-align: top;
 }
 .main-title {
-  height: 50px;
   background: #ffffff;
   color: #ccc;
   color: #cccccc;
-  font-size: 1.75em;
-  padding: 0.45em 0;
+  font-size: 1.5em;
+  padding: 0.6em 0 .8em;
   line-height: 1em;
   text-transform: uppercase;
   box-sizing: border-box;
-  display: none;
 }
 .menu {
   padding: 0;
@@ -2045,35 +2043,37 @@ form {
   position: absolute;
   display: none;
   right: 0;
-  background: #333333;
+  background: #666666;
   z-index: 5;
-  top: 1.4em;
+  top: 1.7em;
+  padding: .3em 0;
 }
-.dropdown .menu :after {
+.dropdown .menu :before {
   content: "";
   height: 0;
   width: 0;
   position: absolute;
-  right: 0;
+  right: .9em;
   bottom: 100%;
   border-style: solid;
-  border-width: 0 0 0.6em 0.6em;
-  border-color: transparent transparent #333333 transparent;
+  border-width: 0 0.4em 0.4em 0.4em;
+  border-color: transparent transparent #666666 transparent;
 }
 .dropdown .menu .item {
   display: block;
-  color: #f5f5f5;
+  text-transform: none;
+  padding: .3em .6em;
+  color: #dddddd;
 }
 .dropdown .menu .item:hover {
-  background: #8ba3d8;
   color: #fff;
+  background: #f46b4b;
 }
 .dropdown.open .menu {
   display: block;
 }
 .dropdown.open .button {
-  background: #333333;
-  border-radius: 0.8em 0.8em 0 0;
+  color: #f46b4b;
 }
 /**
 Buttons
@@ -2317,9 +2317,6 @@ input:focus {
 .page-tree-item:hover {
   background: #fff;
 }
-.page-tree-item:hover .page-tree-item-buttons {
-  display: block !important;
-}
 .page-tree-item > .icon {
   color: #28b967;
   margin-right: .6em;
@@ -2337,7 +2334,7 @@ input:focus {
   z-index: -1;
   bottom: .8em;
   left: -1.7em;
-  right: -0.3em;
+  right: 50%;
 }
 .page-tree-item-edit {
   color: #aaaaaa;
@@ -2346,11 +2343,11 @@ input:focus {
   color: #f46b4b;
 }
 .page-tree-item-buttons {
-  display: none;
-  position: absolute;
-  right: 0.25em;
+  display: inline-block;
+  vertical-align: bottom;
+  left: 0.25em;
   top: 50%;
-  margin-top: -0.7em;
+  margin-top: -0.5em;
 }
 .page-tree-item-buttons .dropdown {
   display: inline-block;
@@ -2358,9 +2355,9 @@ input:focus {
   vertical-align: middle;
 }
 .page-tree-item-buttons .button {
-  margin-right: 0.6em;
+  margin-right: 0.4em;
   vertical-align: middle;
-  padding: 0.2em;
+  padding: 0.2em .5em;
   background: transparent;
   color: #aaaaaa;
   display: inline-block;

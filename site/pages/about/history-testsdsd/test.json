@@ -1,7 +1,7 @@
 {
     "title": "Our Team",
     "content": "<p>sdsdsd<\/p>",
+    "name": "history",
     "template": "default",
-    "notes": "",
-    "date": false
+    "parent": "\/"
 }

@@ -5,7 +5,7 @@ class Page extends Object
 {
 
     protected $rootFolder = "pages";
-    public $defaultFields = array("name","template", "parent");
+    public $defaultFields = array("name", "template", "parent");
 
     function __construct($file = null)
     {
@@ -14,14 +14,17 @@ class Page extends Object
 
         // set parent page value
         if (!$this->isNew()) {
-            $requests = $this->route;
-            array_pop($requests); // remove current (last) item to find parent
-            $parentUrl = $this->createUrl($requests);
-
+            $parentUrl = $this->getParentUrl();
             $this->setUnformatted("parent", $parentUrl);
-
         }
 
+    }
+
+    protected function getParentUrl()
+    {
+        $requests = $this->route; // make a copy as to not alter route
+        array_pop($requests); // remove current (last) item to find parent
+        return $this->createUrl($requests);
     }
 
     protected function getNewName()

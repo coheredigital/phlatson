@@ -32,8 +32,6 @@ class AdminEdit extends Extension
     {
 
         $input = $field->input;
-        $input->field = $field;
-        $input->object = $this->object;
 
         $input->label = $field->title;
         // todo: improve select value handling
@@ -58,13 +56,9 @@ class AdminEdit extends Extension
     public function processSave()
     {
 
-        if(!is_object($this->object)){
-            throw new FlatbedException("Fatal Error, no object defined, cannot save");
-        }
 
-        $this->object->processInputData();
         $this->object->save();
-        app("session")->redirect( app("request")->url );
+        app("session")->redirect( $this->object->urlEdit );
 
     }
 

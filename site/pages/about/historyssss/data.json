@@ -1,7 +1,7 @@
 {
     "title": "History",
     "content": "<p>sdsdsd<\/p>",
+    "name": "historyssss",
     "template": "default",
-    "notes": "",
-    "date": false
+    "parent": "\/"
 }

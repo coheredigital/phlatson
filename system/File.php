@@ -1,6 +1,6 @@
 <?php
 
-class File
+class File extends Object
 {
 
     protected $page;

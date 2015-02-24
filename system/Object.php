@@ -8,6 +8,7 @@ abstract class Object implements JsonSerializable
     const DEFAULT_SAVE_FILE = "data.json";
 
     protected $file;
+    protected $path;
     protected $modified;
     protected $rootFolder;
     protected $rootPath;
@@ -29,7 +30,9 @@ abstract class Object implements JsonSerializable
 
         if (!is_null($file)) {
             $this->file = $file;
+            $this->path = $this->getPath();
             $this->data = $this->getData($this->file);
+            $this->setUnformatted("name", $this->getName());
             $this->route = $this->getRoute();
         }
 
@@ -73,7 +76,7 @@ abstract class Object implements JsonSerializable
 
 
     /**
-     * @return mixed|string
+     * @return string
      *
      * Directory refers to the rootPath relative folder
      *
@@ -105,6 +108,12 @@ abstract class Object implements JsonSerializable
         return explode("/", $directory);
     }
 
+    /**
+     * @return string
+     *
+     * Get the public accessible url for this Object
+     *
+     */
     protected function getUrl(){
 
 
@@ -112,7 +121,7 @@ abstract class Object implements JsonSerializable
 
         $replace = [ROOT_PATH,$rootPath, "data.json"];
 
-        $url = trim(str_replace($replace, "", $this->file), "/");
+        $url = trim(str_replace($replace, "", $this->path), "/");
         $url = Filter::url($url);
         $url = "/$url";
 
@@ -219,8 +228,16 @@ abstract class Object implements JsonSerializable
 
         // set name value
         if ($post->name && !$this->isNew()) { // TODO : this is temp
-            $pageName = app("sanitizer")->name($post->name); // TODO add page name sanitizer
-            $this->name = $pageName;
+            $currentName = $this->name;
+            $newName = Filter::name($post->name); // TODO add page name sanitizer
+            if($currentName != $newName){
+                app("logger")->add("notice","Page '$this->name' renamed to '$newName'");
+                unset($this->data["name"]);
+                $this->rename($newName);
+            }
+
+
+
         } else { // generate page name from defined field
             $template = $this->template;
             $nameFieldReference = $template->settings['nameFrom'];
@@ -278,7 +295,10 @@ abstract class Object implements JsonSerializable
 
         $this->processSaveName();
         $this->processSavePath();
+        $this->processInputData();
         $this->saveFile($this->path, $saveFile);
+
+        return $this;
 
     }
 
@@ -293,6 +313,11 @@ abstract class Object implements JsonSerializable
         $destination = $this->parent->path . $name . "/";
 
         rename($current, $destination);
+
+        $this->path = $destination;
+        $this->file = $this->path . static::DEFAULT_SAVE_FILE;
+
+        return $this;
 
     }
 
@@ -314,13 +339,15 @@ abstract class Object implements JsonSerializable
         rmdir($this->path);
     }
 
-
+    /**
+     * @return bool
+     *
+     * Used to check if the page exist in the filesystem yet
+     *
+     */
     public function isNew()
     {
-        // if the object does not have a matching existing directory it is assumed new
-        // directory will be created when saved
-        return is_file($this->file);
-
+        return !is_file($this->file);
     }
 
 
@@ -348,13 +375,19 @@ abstract class Object implements JsonSerializable
     {
         switch ($name) {
             case 'directory':
-                return normalizeDirectory($this->getName());
+                return Filter::uri($this->getName());
             case 'url':
                 return $this->getUrl();
+            case 'urlEdit':
+                // TODO: temp solution for save redirect
+                $url = app('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
+                return $url;
             case 'path':
-                return $this->getPath();
-            case 'name':
-                return $this->getName();
+                return $this->{$name};
+//            case 'path':
+//                return $this->getPath();
+//            case 'name':
+//                return $this->getName();
             case 'modified':
                 return filemtime($this->file);
             case 'className':

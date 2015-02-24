@@ -3,7 +3,6 @@
     "sessionExpireSeconds": 0,
     "timezone": "America/New_York",
     "debug": true,
-    "simulate": true,
     "hostname": "flatbed.dev",
 
     "routes" : [

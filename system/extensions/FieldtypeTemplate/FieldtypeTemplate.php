@@ -8,7 +8,7 @@ class FieldtypeTemplate extends Fieldtype
     public function getOutput($name)
     {
         $template = app("templates")->get($name);
-        $template->master = $this->object;
+        $template->parent = $this->object;
         return $template;
     }
 

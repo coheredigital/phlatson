@@ -51,28 +51,31 @@
     position: absolute;
     display: none;
     right: 0;
-    background: @darker-gray;
+    background: @dark-gray;
     //    box-shadow: 0 0 1em @light-gray;
     z-index: 5;
-    top: 1.4em;
-    :after{
+    top: 1.7em;
+    padding: .3em 0;
+    :before{
       content: "";
       height: 0;
       width: 0;
       position: absolute;
-      right: 0;
+      right: .9em;
       bottom: 100%;
       border-style: solid;
-      border-width: 0 0 0.6em 0.6em;
-      border-color: transparent transparent @darker-gray transparent;
+      border-width: 0 0.4em 0.4em 0.4em;
+      border-color:  transparent transparent @dark-gray transparent;
 
     }
     .item{
       display: block;
-      color: @soft-gray;
+      text-transform: none;
+      padding: .3em .6em;
+      color: @light-gray;
       &:hover{
-        background: @blue;
         color: #fff;
+        background: @brand;
       }
     }
   }
@@ -81,8 +84,7 @@
       display: block;
     }
     .button{
-      background: @darker-gray;
-      border-radius: 0.8em 0.8em 0 0;
+      color: @brand;
     }
   }
 }
