@@ -31,9 +31,13 @@ class MarkupPageList extends Extension
         $output = $this->renderPageTitle($page);
         if (count($page->children)) {
             $output .= $this->renderPageList($page->children);
+            $class = "page-tree-group";
+        }
+        else{
+            $class = "page-tree-single";
         }
 
-        $output = "<li class='page-tree-group'> {$output}</li>";
+        $output = "<li class='$class page-tree-group'> {$output}</li>";
         return $output;
     }
 

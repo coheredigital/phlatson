@@ -1933,6 +1933,10 @@ body {
   min-width: 320px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
+body.dragging,
+body.dragging * {
+  cursor: move !important;
+}
 h1 {
   color: #fff;
   padding: 1em 0;
@@ -2285,6 +2289,7 @@ input:focus {
 }
 .page-tree-list {
   list-style: none;
+  position: relative;
 }
 .page-tree-root {
   padding: 0 !important;
@@ -2292,20 +2297,25 @@ input:focus {
 .page-tree-root > .page-tree-group > .page-tree-item:before {
   display: none !important;
 }
+.page-tree-list {
+  list-style: none;
+}
 .page-tree-group {
   position: relative;
 }
 .page-tree-group:before {
-  border-left: 1px solid #dddddd;
+  border-left: 1px dashed #dddddd;
   content: "";
+  display: block;
   position: absolute;
-  top: 1em;
-  bottom: .8em;
-  left: .87em;
+  top: 0;
+  bottom: -0.2em;
+  left: -1.7em;
   right: 50%;
+  z-index: -1;
 }
-.page-tree-list {
-  list-style: none;
+.page-tree-group:last-child:before {
+  display: none !important;
 }
 .page-tree-item {
   padding: .3em .5em;
@@ -2313,6 +2323,7 @@ input:focus {
   margin-bottom: 0.5em;
   border-radius: 2em;
   background: #f4f4f4;
+  display: inline-block;
 }
 .page-tree-item:hover {
   background: #fff;
@@ -2327,10 +2338,11 @@ input:focus {
   display: inline-block !important;
 }
 .page-tree-item:before {
+  border-left: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   content: "";
   position: absolute;
-  top: .8em;
+  top: -1.5em;
   z-index: -1;
   bottom: .8em;
   left: -1.7em;
@@ -2364,6 +2376,35 @@ input:focus {
 }
 .page-tree-item-buttons .button:hover {
   color: #f46b4b;
+}
+/* Sorting Styles*/
+.page-tree .placeholder {
+  position: relative;
+  height: 0;
+}
+.page-tree .placeholder:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: .5em 0 .5em .6em;
+  margin-bottom: -0.25em;
+  bottom: 100%;
+  border-color: transparent transparent transparent #f46b4b;
+  z-index: 100;
+}
+.page-tree .dragged {
+  z-index: 50;
+  position: absolute;
+}
+.page-tree .dragged.page-tree-item,
+.page-tree .dragged .page-tree-item {
+  background: #fff;
+}
+.page-tree .dragged.page-tree-group:before,
+.page-tree .dragged > .page-tree-item:before {
+  display: none;
 }
 /**
 User Menu

@@ -7,6 +7,7 @@
 
 .page-tree-list{
   list-style: none;
+  position: relative;
 }
 .page-tree-root{
   padding: 0 !important;
@@ -19,22 +20,32 @@
   }
 }
 
-.page-tree-group{
-  position: relative;
-  &:before{
-    border-left: 1px solid @light-gray;
-    content: "";
-    position: absolute;
-    top: 1em;
-    bottom: .8em;
-    left: .87em;
-    right: 50%;
-  }
 
-}
+
 
 .page-tree-list{
   list-style: none;
+}
+.page-tree-group{
+//  outline: 1px solid red;
+  position: relative;
+  &:before{
+    border-left: 1px dashed @light-gray;
+//    border-left: 1px dashed green;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -.2em;
+    left: -1.7em;
+    right: 50%;
+    z-index: -1;
+  }
+}
+.page-tree-group:last-child{
+  &:before{
+    display: none !important;
+  }
 }
 
 .page-tree-item{
@@ -43,6 +54,7 @@
   margin-bottom: 0.5em;
   border-radius: 2em;
   background: @main-background;
+  display: inline-block;
   &:hover{
     background: #fff;
     .page-tree-item-buttons{
@@ -60,17 +72,20 @@
     }
   }
   &:before{
-//    border-left: 1px solid @light-gray;
+    border-left: 1px solid @light-gray;
     border-bottom: 1px solid @light-gray;
     content: "";
     position: absolute;
-    top: .8em;
+    top: -1.5em;
     z-index: -1;
     bottom: .8em;
     left: -1.7em;
     right: 50%;
   }
+
 }
+
+
 .page-tree-item-edit{
   color: @gray;
   &:hover{
@@ -104,5 +119,45 @@
       color: @brand;
     }
 
+  }
+}
+
+/* Sorting Styles*/
+.page-tree{
+  .placeholder{
+    position: relative;
+    height: 0;
+//    height: 2em;
+//    border-radius: 2em;
+//    background: #fff;
+//    border: 1px dashed #ddd;
+    &:before {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: .5em 0 .5em .6em;
+//      margin-top: -.5em;
+      margin-bottom: -.25em;
+      bottom: 100%;
+      border-color: transparent transparent transparent @brand;
+      z-index: 100;
+    }
+  }
+
+  .dragged{
+    z-index: 50;
+    position: absolute;
+    &.page-tree-item,
+    .page-tree-item{
+      background: #fff;
+    }
+    &.page-tree-group,
+    > .page-tree-item{
+      &:before{
+        display: none;
+      }
+    }
   }
 }
