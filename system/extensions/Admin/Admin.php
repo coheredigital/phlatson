@@ -16,6 +16,7 @@ class Admin extends Extension
     protected function setup()
     {
 
+
         // default admin scripts and styles
         app("config")->styles->add("{$this->url}styles/admin.css");
         app("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
@@ -100,7 +101,7 @@ class Admin extends Extension
         }
         else if($user->isLoggedIn()){
             if($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
-            if ($this->output) include "layout.php";
+            if ($this->output) include_once "layout.php";
         }
 
     }

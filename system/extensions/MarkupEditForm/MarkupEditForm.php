@@ -19,9 +19,9 @@ class MarkupEditForm extends Extension
 
         $output .= "<div class='form-actions'>";
         $output .= "<div class='container'>";
-        $output .= "<a href='{$this->object->url}' target='_external' class='button'><i class='icon icon-share'></i></a> ";
-        $output .= "<button type='submit' class='button button-red'> <i class='icon icon-times'></i></button> ";
-        $output .= "<button type='submit' class='button button-green'><i class='icon icon-save'></i> Save </button> ";
+        $output .= "<a href='{$this->object->url}' target='_external' class='button button-view'><i class='icon icon-share'></i></a> ";
+        $output .= "<button type='submit' class='button button-delete'> <i class='icon icon-times'></i></button> ";
+        $output .= "<button type='submit' class='button button-save'><i class='icon icon-save'></i> Save </button> ";
         $output .= "</div>";
         $output .= "</div>";
         return $output;
@@ -68,11 +68,13 @@ class MarkupEditForm extends Extension
         // add the form controls
         $formActions = $this->renderActions();
 
+        // wrap form tabs
+        if($formTabMenu) $formTabMenu = "<div id='formTabs'><div class='container'>$formTabMenu</div></div>";
+
         $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>";
-        if($formTabMenu) $output .= "<div id='formTabs'><div class='container'>$formTabMenu</div></div>";
-        $output .= $formTabContent;
-        $output .= $formActions;
+        $output .= "{$formActions}{$formTabMenu}{$formTabContent}";
         $output .= "</form>";
+
 
         return $output;
 

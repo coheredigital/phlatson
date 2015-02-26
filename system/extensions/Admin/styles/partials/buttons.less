@@ -2,21 +2,23 @@
 Buttons
 **/
 
-.button{
+.button,
+a.button{
   border-radius: 2em;
   cursor: pointer;
   border: none;
+  outline: none !important;
   text-transform: uppercase;
   padding: 0.6em 1.2em;
-  background: @darker-gray;
+  background: @dark-gray;
   font-weight: normal;
-  color: #fff;
+  color:#fff;
   text-decoration: none !important;
   line-height: 1em;
   display: inline-block;
   font-size: 1em;
   &:hover{
-    background: @dark-gray;
+    background: @darker-gray;
 
   }
   .icon{
@@ -24,16 +26,18 @@ Buttons
   }
 }
 
-.button-green{
-  background: @green;
+.button-save{
+  color: #fff;
+  background: @dark-green;
   &:hover{
-    background: @dark-green;
+    background: @green;
   }
 }
 
-.button-red{
-  background: @red;
+.button-delete{
+
   &:hover{
-    background: @dark-red;
+    color: #fff;
+    background: @red;
   }
 }

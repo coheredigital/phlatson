@@ -57,16 +57,6 @@
 
     </div>
     <div id="main">
-
-        <?php if ($this->title): ?>
-            <div class="main-title">
-                <div class="container">
-                    <?php echo $this->title ?>
-                </div>
-            </div>
-        <?php endif; ?>
-
-
         <?php echo $this->output ?>
     </div>
     <div class="user-menu">

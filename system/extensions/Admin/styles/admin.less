@@ -19,7 +19,6 @@ body.dragging * {
   cursor: move !important;
 }
 
-
 h1{
   color: #fff;
   padding: 1em 0;
@@ -50,6 +49,7 @@ form{
   max-width: 100%;
   margin: 0 auto;
   width: 1100px;
+  position: relative;
 }
 
 .logo{
@@ -80,9 +80,10 @@ form{
   vertical-align: top;
 }
 
+#title{   background: @header-background; }
 
 .main-title{
-  background: @header-background;
+
   color: #ccc;
   color: darken(@header-background, 20%);
   font-size: 1.5em;

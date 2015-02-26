@@ -9,6 +9,7 @@
 class AdminListTemplates extends Extension
 {
 
+    protected $title = "Templates";
 
     protected function setup()
     {
@@ -23,12 +24,12 @@ class AdminListTemplates extends Extension
                     $this->render();
                 }
             );
-            app('router')->add($templateList);
+        app('router')->add($templateList);
 
     }
 
 
-    protected function renderTemplatesList()
+    protected function renderList()
     {
 
         $config = app("config");
@@ -56,23 +57,42 @@ class AdminListTemplates extends Extension
 
         $output = $table->render();
 
-        $controls .= "<div class='form-actions'>";
-        $controls .= "<div class='container'>";
-        $controls .= "<a class='button' href='{$config->urls->admin}templates/new'>New</a>";
-        $controls .= "</div>";
+        return "<div class='container'>{$output}</div>";
 
-        return "<div class='container'>{$output}{$controls}</div>";
+    }
 
+    protected function renderControls()
+    {
+        $output = "<div class='form-actions'>";
+        $output .= "<a class='button' href='{$config->urls->admin}templates/new'>New</a>";
+        $output .= "</div>";
+
+        return $output;
+    }
+
+    protected function renderHeading()
+    {
+
+
+        $output = "<div id='title'>";
+        $output .= "<div class='container'>";
+        $output .= "<div class='main-title'>{$this->title}</div>";
+        $output .= $this->renderControls();
+        $output .= "</div>";
+        $output .= "</div>";
+
+        return $output;
     }
 
     public function render()
     {
 
         $admin = app("admin");
-        $admin->title = "Templates";
-        $admin->output = $this->renderTemplatesList();
+        $admin->title = $this->title;
+        $heading = $this->renderHeading();
+        $list = $this->renderList();
+        $admin->output = "{$heading}{$list}";
         $admin->render();
-
     }
 
 } 

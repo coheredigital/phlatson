@@ -1964,6 +1964,7 @@ form {
   max-width: 100%;
   margin: 0 auto;
   width: 1100px;
+  position: relative;
 }
 .logo {
   display: inline-block;
@@ -1989,8 +1990,10 @@ form {
   background: #f4f4f4;
   vertical-align: top;
 }
-.main-title {
+#title {
   background: #ffffff;
+}
+.main-title {
   color: #ccc;
   color: #cccccc;
   font-size: 1.5em;
@@ -2082,13 +2085,15 @@ form {
 /**
 Buttons
 **/
-.button {
+.button,
+a.button {
   border-radius: 2em;
   cursor: pointer;
   border: none;
+  outline: none !important;
   text-transform: uppercase;
   padding: 0.6em 1.2em;
-  background: #333333;
+  background: #666666;
   font-weight: normal;
   color: #fff;
   text-decoration: none !important;
@@ -2096,20 +2101,20 @@ Buttons
   display: inline-block;
   font-size: 1em;
 }
-.button:hover {
-  background: #666666;
+.button:hover,
+a.button:hover {
+  background: #333333;
 }
-.button-green {
-  background: #28b967;
+.button-save {
+  color: #fff;
+  background: #55c570;
 }
-.button-green:hover {
-  background: #1f8f50;
+.button-save:hover {
+  background: #7bd290;
 }
-.button-red {
-  background: #e8464e;
-}
-.button-red:hover {
-  background: #df1c25;
+.button-delete:hover {
+  color: #fff;
+  background: #c8655a;
 }
 #formTabs {
   background: #ffffff;
@@ -2212,7 +2217,10 @@ select:focus,
 textarea:focus,
 textarea:focus,
 input:focus {
-  border-bottom-color: #28b967;
+  border-bottom-color: #7bd290;
+}
+.form {
+  position: relative;
 }
 .field {
   margin-top: 1em;
@@ -2252,7 +2260,7 @@ input:focus {
   height: 0;
   border-style: solid;
   border-width: 0 1em 1em 0;
-  border-color: transparent #e8464e transparent transparent;
+  border-color: transparent #c8655a transparent transparent;
   position: absolute;
   top: -1px;
   right: -1px;
@@ -2270,17 +2278,13 @@ input:focus {
   background: #fff;
 }
 .form-actions {
-  background: #fff;
-  position: fixed;
-  bottom: 0;
-  padding: 1em 0;
-  margin-top: 2em;
+  position: absolute;
+  top: .5em;
   box-sizing: border-box;
   right: 0;
   left: 0;
   text-align: right;
   z-index: 200;
-  box-shadow: 0 0 0.3em rgba(0, 0, 0, 0.2);
 }
 .page-tree {
   position: relative;
@@ -2329,7 +2333,7 @@ input:focus {
   background: #fff;
 }
 .page-tree-item > .icon {
-  color: #28b967;
+  color: #7bd290;
   margin-right: .6em;
 }
 .page-tree-item > .icon:before {
