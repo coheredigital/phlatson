@@ -2092,8 +2092,8 @@ a.button {
   border: none;
   outline: none !important;
   text-transform: uppercase;
-  padding: 0.6em 1.2em;
-  background: #666666;
+  padding: 0.5em 1.2em;
+  background: #aaaaaa;
   font-weight: normal;
   color: #fff;
   text-decoration: none !important;
@@ -2279,7 +2279,7 @@ input:focus {
 }
 .form-actions {
   position: absolute;
-  top: .5em;
+  top: .8em;
   box-sizing: border-box;
   right: 0;
   left: 0;
