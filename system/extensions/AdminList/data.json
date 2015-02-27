@@ -1,0 +1,7 @@
+{
+    "title": "Admin Object List Base Extension",
+    "description": "",
+    "type": "Admin",
+    "singleton": true,
+    "autoload": false
+}

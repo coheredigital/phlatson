@@ -1,16 +1,17 @@
 <?php
 
-class AdminListExtensions extends Extension
+class AdminListExtensions extends AdminList
 {
 
+    public $title = "Extensions";
+    protected $objectName = "extensions";
 
-    protected $output;
 
     protected function setup()
     {
 
-        $extensionRoute = new Route;
-        $extensionRoute
+        $this->route = new Route;
+        $this->route
             ->name("extensions")
             ->path("extensions")
             ->parent(app("admin")->route)
@@ -20,47 +21,9 @@ class AdminListExtensions extends Extension
                 }
             );
 
-        app('router')->add($extensionRoute);
+        app('router')->add($this->route);
 
     }
 
 
-        protected function renderFieldsList()
-        {
-
-            $extensions = app("extensions")->all();
-            $table = app("extensions")->get("MarkupTable");
-            $table->setColumns(
-                array(
-                    "Name" => "name",
-                    "Type" => "type"
-                )
-            );
-
-            foreach ($extensions as $item) {
-                $table->addRow(
-                    array(
-                        "name" => $item->name,
-                        "type" => $item->type
-                    )
-                );
-            }
-
-            $output = $table->render();
-
-            return "<div class='container'>{$output}</div>";
-
-        }
-
-        public
-        function render()
-        {
-
-            $admin = app("admin");
-            $admin->title = "Extensions";
-            $admin->output = $this->renderFieldsList();
-            $admin->render();
-
-        }
-
-    }
+}

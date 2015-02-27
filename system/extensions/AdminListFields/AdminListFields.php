@@ -6,17 +6,17 @@
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-class AdminListFields extends Extension
+class AdminListFields extends AdminList
 {
 
-
-    protected $output;
+    public $title = "Fields";
+    protected $objectName = "fields";
 
     protected function setup()
     {
 
-        $fieldsRoute = new Route;
-        $fieldsRoute
+        $this->route = new Route;
+        $this->route
             ->name("fields")
             ->path("fields")
             ->parent(app("admin")->route)
@@ -26,56 +26,11 @@ class AdminListFields extends Extension
                 }
             );
 
-        app('router')->add($fieldsRoute);
+        app('router')->add($this->route);
 
     }
 
 
-    protected function renderFieldsList()
-    {
 
-        $config = app("config");
-
-        $table = app("extensions")->get("MarkupTable");
-        $table->setColumns(
-            array(
-                "Name" => "name",
-                "Label" => "label",
-                "Type" => "fieldtype",
-            )
-        );
-
-        $fields = app("fields")->all();
-        foreach ($fields as $item) {
-            $table->addRow(
-                array(
-                    "name" => "<a href='{$config->urls->admin}fields/edit/{$item->name}' >{$item->name}</a>",
-                    "label" => $item->title,
-                    "fieldtype" => $item->type
-                )
-            );
-        }
-
-        $output = $table->render();
-
-
-        $controls .= "<div class='form-actions'>";
-        $controls .= "<div class='container'>";
-        $controls .= "<a class='button' href='{$config->urls->admin}fields/new'>New</a>";
-        $controls .= "</div>";
-
-        return "<div class='container'>{$output}{$controls}</div>";
-
-    }
-
-    public function render()
-    {
-
-        $admin = app("admin");
-        $admin->title = "Fields";
-        $admin->output = $this->renderFieldsList();
-        $admin->render();
-
-    }
 
 } 

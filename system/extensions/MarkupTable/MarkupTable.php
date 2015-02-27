@@ -23,7 +23,7 @@ class MarkupTable extends Extension
 
 
         // return false if columns or rows data missing, not much of a table without them
-        if (!$this->columns || !$this->rows) {
+        if (!count($this->columns) || !count($this->rows)) {
             return false;
         }
 
