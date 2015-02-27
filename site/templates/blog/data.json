@@ -1,11 +1,17 @@
 {
-    "title": "Blog",
-    "fields": [
-        {
-            "name": "title"
-        },
-        {
-            "name": "content"
-        }
+  "title": "Blog",
+  "fields": [
+    {
+      "name": "title"
+    },
+    {
+      "name": "content"
+    }
+  ],
+  "view" : {
+    "type": "list",
+    "columns": [
+      "title"
     ]
+  }
 }

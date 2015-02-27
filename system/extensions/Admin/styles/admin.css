@@ -2355,6 +2355,10 @@ input:focus {
   left: -1.7em;
   right: 50%;
 }
+.page-tree-item-title {
+  color: #aaaaaa;
+  display: inline-block;
+}
 .page-tree-item-edit {
   color: #aaaaaa;
 }
@@ -2364,25 +2368,17 @@ input:focus {
 .page-tree-item-buttons {
   visibility: hidden;
   display: inline-block;
-  vertical-align: bottom;
-  left: 0.25em;
-  top: 50%;
-  margin-top: -0.5em;
+  padding-right: .5em;
 }
-.page-tree-item-buttons .dropdown {
+.page-tree-item-button {
+  margin-left: 0.6em;
   display: inline-block;
-  margin-left: 0.3em;
-  vertical-align: middle;
-}
-.page-tree-item-buttons .button {
-  margin-right: 0.4em;
-  vertical-align: middle;
-  padding: 0.2em .5em;
-  background: transparent;
+  cursor: pointer;
+  text-decoration: none !important;
+  text-transform: uppercase;
   color: #aaaaaa;
-  display: inline-block;
 }
-.page-tree-item-buttons .button:hover {
+.page-tree-item-button:hover {
   color: #f46b4b;
 }
 /* Sorting Styles*/

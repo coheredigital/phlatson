@@ -54,6 +54,7 @@
   border-radius: 2em;
   background: @main-background;
   display: inline-block;
+
   &:hover{
     background: #fff;
     .page-tree-item-buttons{
@@ -64,6 +65,7 @@
   > .icon{
     color: @dark-green;
     margin-right: .6em;
+//    vertical-align: middle;
     &:before{
       padding: .25em;
       font-size: .8em;
@@ -85,6 +87,12 @@
 }
 
 
+.page-tree-item-title{
+  color: @gray;
+//  vertical-align: middle;
+  display: inline-block;
+}
+
 .page-tree-item-edit{
   color: @gray;
   &:hover{
@@ -95,27 +103,18 @@
 .page-tree-item-buttons{
   visibility: hidden;
   display: inline-block;
-  vertical-align: bottom;
-  left: 0.25em;
-  top: 50%;
-  margin-top: -0.5em;
-  .dropdown{
-
-    display: inline-block;
-    margin-left: 0.3em;
-    vertical-align: middle;
-  }
-  .button{
-    margin-right: 0.4em;
-    vertical-align: middle;
-    padding: 0.2em .5em;
-    background: transparent;
-    color: @gray;
-    display: inline-block;
-    &:hover{
-      color: @brand;
-    }
-
+//  vertical-align: middle;
+  padding-right: .5em;
+}
+.page-tree-item-button{
+  margin-left: 0.6em;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  color: @gray;
+  &:hover{
+    color: @brand;
   }
 }
 
