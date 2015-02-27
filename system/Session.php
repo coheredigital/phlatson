@@ -75,6 +75,8 @@ class Session implements IteratorAggregate
 
     /**
      * Checks for the existence of a session variable
+     * Particularly useful for flash variables, where calling get will unset them
+     *
      * @param  string $key the session key to check for
      * @return boolean      isset() result
      */

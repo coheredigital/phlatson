@@ -58,6 +58,7 @@ class AdminEdit extends Extension
 
 
         $this->object->save();
+        app("admin")->addMessage("Page '{$this->object->url} saved successfully'  ");
         app("session")->redirect( $this->object->urlEdit );
 
     }

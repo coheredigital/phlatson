@@ -12,6 +12,7 @@ class Admin extends Extension
     public $title;
     public $output;
     public $route;
+    public $messages = [];
 
     protected function setup()
     {
@@ -30,8 +31,7 @@ class Admin extends Extension
         // check for a route named admin, then a config variable 'adminUrl' then default
         if (app("router")->get("admin")) {
             $this->route = app("router")->get("admin");
-        }
-        else {
+        } else {
 
             $this->route = new Route();
             $this->route
@@ -79,7 +79,6 @@ class Admin extends Extension
                     }
 
 
-
                 }
             );
         app('router')->add($loginSubmit);
@@ -91,25 +90,25 @@ class Admin extends Extension
     {
 
         extract(app());
+        if ($session->has("adminMessages")) $this->messages = unserialize($session->get("adminMessages"));
+
 
         if ($user->isGuest()) {
 
-            if($request->url != $router->login->url) $session->redirect($router->login->url);
+            if ($request->url != $router->login->url) $session->redirect($router->login->url);
             // add the login stylesheet and load the login layout
             app("config")->styles->add("{$this->url}styles/login.css");
             include "login.php";
-        }
-        else if($user->isLoggedIn()){
-            if($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
+        } else if ($user->isLoggedIn()) {
+            if ($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
             if ($this->output) include_once "layout.php";
         }
 
     }
 
 
-
-    public function getSettings(){
-
+    public function getSettings()
+    {
 
 
         $form = app("extensions")->get("MarkupEditForm");
@@ -130,4 +129,20 @@ class Admin extends Extension
     }
 
 
-} 
+    public function addMessage($string)
+    {
+
+        // retrieve messages and unserialize
+        $messages = app("session")->get("adminMessages");
+        $messages = unserialize($messages);
+
+        // add message to array
+        $messages[] = $string;
+
+        // serialize and store
+        $messages = serialize($messages);
+        app("session")->flash("adminMessages", $messages);
+    }
+
+
+}

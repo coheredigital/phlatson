@@ -31,7 +31,6 @@
   position: relative;
   &:before{
     border-left: 1px dashed @light-gray;
-//    border-left: 1px dashed green;
     content: "";
     display: block;
     position: absolute;
@@ -58,12 +57,12 @@
   &:hover{
     background: #fff;
     .page-tree-item-buttons{
-//      display: block !important;
+      visibility: visible;
     }
   }
   
   > .icon{
-    color: @green;
+    color: @dark-green;
     margin-right: .6em;
     &:before{
       padding: .25em;
@@ -94,8 +93,7 @@
 }
 
 .page-tree-item-buttons{
-//  display: none;
-//  position: absolute;
+  visibility: hidden;
   display: inline-block;
   vertical-align: bottom;
   left: 0.25em;
@@ -115,7 +113,6 @@
     color: @gray;
     display: inline-block;
     &:hover{
-//      background: @blue;
       color: @brand;
     }
 
@@ -127,10 +124,6 @@
   .placeholder{
     position: relative;
     height: 0;
-//    height: 2em;
-//    border-radius: 2em;
-//    background: #fff;
-//    border: 1px dashed #ddd;
     &:before {
       position: absolute;
       content: "";
@@ -138,7 +131,6 @@
       height: 0;
       border-style: solid;
       border-width: .5em 0 .5em .6em;
-//      margin-top: -.5em;
       margin-bottom: -.25em;
       bottom: 100%;
       border-color: transparent transparent transparent @brand;

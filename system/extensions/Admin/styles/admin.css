@@ -2332,8 +2332,11 @@ input:focus {
 .page-tree-item:hover {
   background: #fff;
 }
+.page-tree-item:hover .page-tree-item-buttons {
+  visibility: visible;
+}
 .page-tree-item > .icon {
-  color: #7bd290;
+  color: #55c570;
   margin-right: .6em;
 }
 .page-tree-item > .icon:before {
@@ -2359,6 +2362,7 @@ input:focus {
   color: #f46b4b;
 }
 .page-tree-item-buttons {
+  visibility: hidden;
   display: inline-block;
   vertical-align: bottom;
   left: 0.25em;
@@ -2436,4 +2440,14 @@ User Menu
 }
 .user-logout:hover {
   color: #f46b4b;
+}
+.messages {
+  background: #7bd290;
+  color: #2e8643;
+  padding: .2em 0;
+}
+.messages .container div {
+  padding: .3em 0;
+  text-transform: uppercase;
+  font-size: .9em;
 }

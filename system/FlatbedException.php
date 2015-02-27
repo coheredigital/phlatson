@@ -24,18 +24,16 @@ class FlatbedException extends Exception
 
         $this->log();
 
-        $code = $this->getCode();
 
+        $message = "<pre id='title'>Exception<pre id='file'>" . $this->getFile() . "</pre></pre>";
 
-
-        $message = "<pre id='title'>Exception</pre>";
         $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
         if (app("config")->debug) {
             $message .= $this->renderCodeSnippet();
             $message .= $this->renderTraceTable();
         }
 
-        $message .= "<pre id='file'>Thrown from <span>" . $this->getFile() . "</span></pre>";
+
 
 
         $output = $this->renderPage($message);
@@ -90,11 +88,13 @@ class FlatbedException extends Exception
         $position = $lineStart;
         while($position < $lineEnd){
             $class = "";
-            if($line == $position) $class = "class='highlight'";
+            // highlight line before as well as this is often the offending line
+            if($position == $line || $position == ($line - 1)) $class = "class='highlight'";
+
 
             $lineNumber = $position;
-            $codeline = $code[$position];
-            $output .= "<code $class>$lineNumber$codeline</code>";
+            $codeline = htmlspecialchars($code[$position]);
+            $output .= "<code $class>{$lineNumber}{$codeline}</code>";
             $position++;
         }
 
@@ -120,23 +120,22 @@ class FlatbedException extends Exception
     protected function renderPageStyles()
     {
         $styles = "<style>
-                    *{font-family: 'Courier New', monospace; margin: 0;}
-                    body{background: #222; width: 100%; overflow: hidden;}
+                    *{font-family: 'Courier New', monospace !important; margin: 0;}
+                    body{background: #222; width: 100%; overflow: hidden; font-size: 16px;}
                     #title{background: #e55550; color: #fff; padding: 20px; font-size: 26px; }
-                    #message{ background: #fff; color: #999; padding: 13px 20px; font-size: 16px; white-space: normal;}
-                    #file{ color: #888; padding: 20px; font-size: 14px;}
-                    #file span{ color: #8ba3d8;}
+                    #message{ background: #fff; color: #999; padding: 13px 20px; white-space: normal;}
+                    #file{ color: #894343; padding: 0; font-size: 16px;}
                     #trace{ padding:20px;}
-                    #trace table{ width: 100%; color: #aaa; font-size: 14px; text-align: left; border-collapse: collapse;}
+                    #trace table{ width: 100%; color: #aaa; text-align: left; border-collapse: collapse;}
                     #trace th{ font-weight: bold; border-bottom: 1px solid #333 !important; padding: 8px 4px; color: #ddd;}
                     #trace td{ padding: 4px;}
                     #trace tbody tr:first-child td{ padding: 12px 4px 4px 4px;}
-                    #code{ padding: 10px 0; color: #909090; background: #111; font-size: 14px; line-height: 1.6em;}
+                    #code{ padding: 10px 0; color: #909090; background: #111; line-height: 1.6em; width: 100%; overflow: hidden;}
                     #code > code{ padding: 2px 20px; display: block !important; white-space: pre-wrap; width: 100%;}
                     #code > code > span{ color: #444;}
-                    #code .highlight{ background: #151515 !important;}
+                    #code .highlight{ background: #000 !important;}
                     #code .hljs{ background: #111; color: #888;}
-                    #code .hljs-number{ color: #444;}
+                    #code .hljs-number{ color: #444; margin-right: 1em;}
                     #code .highlight .hljs-number{ color: #ccc;}
                     #code .hljs-variable{ color: #ff5853;}
                     #code .hljs-keyword{ color: #eee;}

@@ -1,6 +1,7 @@
 <?php
 
-trait hookable {
+trait hookable
+{
     /**
      * @param $method
      * @param $arguments
@@ -11,10 +12,8 @@ trait hookable {
      */
     public function __call($method, $arguments)
     {
-
-        if (!is_callable([$this, "_$method"])) {
-            throw new Exception("Method: $method does not exist in class: $this->className");
-        }
+        $methodName = "_$method";
+        if (!method_exists($this, "$methodName")) throw new FlatbedException("Method: $methodName does not exist in class: $this->className");
 
         $className = get_class($this);
 
@@ -35,4 +34,20 @@ trait hookable {
 
         return $event->return;
     }
+}
+
+trait Configurable
+{
+
+    public function saveConfiguration()
+    {
+
+    }
+
+    public function getConfiguration()
+    {
+
+    }
+
+
 }
