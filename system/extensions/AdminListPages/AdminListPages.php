@@ -59,9 +59,7 @@ class AdminListPages extends Extension
     {
 
         $markupPageList = app("extensions")->get("MarkupPageList");
-
-        $home = app("pages")->get("/");
-        $markupPageList->rootPage = $home;
+        $markupPageList->rootPage = $this->pageListPage;
         $markupPageList->adminPanel = $this;
 
         return "<div class='container'>" . $markupPageList->render() . "</div>";
