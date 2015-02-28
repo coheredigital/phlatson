@@ -1,5 +1,5 @@
 {
+    "title": "Name",
     "fieldtype": "FieldtypeName",
-    "input": "InputText",
-    "title": "Name"
+    "input": "InputText"
 }

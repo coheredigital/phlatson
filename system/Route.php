@@ -26,6 +26,7 @@ class Route
     public $ssl = false;
 
     private $parent = false;
+    private $children;
 
     private $method = "GET";
     private $callbacks = [];
@@ -38,6 +39,10 @@ class Route
 
     public function __construct($parameters = [])
     {
+
+        /* init children collection*/
+        $this->children = new RouteCollection();
+
         if (isset($parameters["method"])) {
             $this->method($parameters["method"]);
         }
@@ -94,7 +99,6 @@ class Route
      * @return $this
      *
      * Used as a url getter/setter
-     * if
      *
      */
     public function path($path = null)
@@ -159,9 +163,14 @@ class Route
         }
 
         $this->parent = $route;
+        $route->addChild($this);
         return $this;
     }
 
+    public function addChild(Route $route){
+        $route->parent = $this;
+        $this->children->add($route);
+    }
 
     public function method($name)
     {

@@ -14,9 +14,15 @@ class Admin extends Extension
     public $route;
     public $messages = [];
 
+    /* ObjectCollection used to create menus */
+    public $children;
+
     protected function setup()
     {
 
+        app("admin", $this); // register api variable
+
+        $this->children = new ObjectCollection();
 
         // default admin scripts and styles
         app("config")->styles->add("{$this->url}styles/admin.css");
@@ -25,10 +31,10 @@ class Admin extends Extension
         app("config")->scripts->add("{$this->url}scripts/main.js");
         app("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
-        app("admin", $this); // register api variable
+
 
         // determine the admin route to use
-        // check for a route named admin, then a config variable 'adminUrl' then default
+        // check for a route named admin otherwise default to '/admin'
         if (app("router")->get("admin")) {
             $this->route = app("router")->get("admin");
         } else {

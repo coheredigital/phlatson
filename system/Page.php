@@ -137,7 +137,8 @@ class Page extends Object
                 return $this->images();
             case 'layout':
                 // alias for $page->template->layout (required by AdminPage class)
-                return $this->template->layout;
+                $layout = $this->template->layout;
+                return $layout;
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:

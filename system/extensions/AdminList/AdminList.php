@@ -26,13 +26,16 @@ abstract class AdminList extends Admin
 
         $objectCollection = app($this->objectName)->all();
         $table = app("extensions")->get("MarkupTable");
+
+        $this->columns["controls"] = "controls";
         $table->setColumns($this->columns);
 
         foreach ($objectCollection as $object) {
             $table->addRow(
                 array(
-                    "name" => "<a href='{$this->route->url}edit/{$object->name}' >{$object->name}</a>",
-                    "title" => "<a href='{$this->route->url}edit/{$object->name}' >{$object->title}</a>"
+                    "title" => $object->title,
+                    "name" => $object->name,
+                    "controls" => $this->renderPageControls($object)
                 )
             );
         }
@@ -41,6 +44,19 @@ abstract class AdminList extends Admin
 
         return "<div class='container'>{$output}</div>";
 
+    }
+
+
+
+    protected function renderPageControls(Object $object){
+
+        $admin = app("admin");
+
+        $output = "<div class='page-tree-item-buttons' style='visibility: visible;'>";
+        if($object->isEditable()) $output .= "<a class='page-tree-item-button' href='{$object->urlEdit}'><i class='icon icon-pencil'></i></a>";
+        if($object->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$object->url}'><i class='icon icon-eye'></i></a>";
+        $output .= "</div>";
+        return $output;
     }
 
     protected function renderControls()

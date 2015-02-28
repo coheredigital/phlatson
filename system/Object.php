@@ -26,14 +26,16 @@ abstract class Object implements JsonSerializable
     function __construct($file = null)
     {
 
-        $this->rootPath = Filter::path(app('config')->paths->site . $this->rootFolder);
+        $this->file = $file;
 
-        if (!is_null($file)) {
-            $this->file = $file;
+        if (!is_null($this->file)) {
+
+            $this->rootPath = $this->getRootPath();
             $this->path = $this->getPath();
-            $this->data = $this->getData($this->file);
+            $this->data = $this->getData();
             $this->setUnformatted("name", $this->getName());
             $this->route = $this->getRoute();
+
         }
 
         $this->checkDataIntegrity();
@@ -48,10 +50,9 @@ abstract class Object implements JsonSerializable
      * return array of data from the passed in JSON file (ie: data.json)
      *
      */
-    protected function getData($file){
-
-        $this->validateDataFile($file);
-        return json_decode(file_get_contents($file), true);
+    protected function getData(){
+        $this->validateDataFile($this->file);
+        return json_decode(file_get_contents($this->file), true);
     }
 
     protected function validateDataFile($file){
@@ -66,6 +67,44 @@ abstract class Object implements JsonSerializable
         $path = $this->getPath();
         $name = basename($path);
         return $name;
+    }
+
+    /**
+     * @return string full system path (ie: C:/root/site/etc/)
+     *
+     * Determine rootPAth of this Object type from the Objects $file
+     *
+     */
+    public function getRootPath()
+    {
+
+        $rootDirectory = "site/";
+        if($this->isSystem()){
+            $rootDirectory = "system/";
+        }
+
+        $path = app('config')->paths->root . $rootDirectory . $this->rootFolder;
+        $path = Filter::path($path);
+        return $path;
+    }
+
+    /**
+     * @return bool
+     *
+     * Determine if Object is a system object
+     *
+     */
+    public function isSystem()
+    {
+        // remove site root from path
+        $path = str_replace(app('config')->paths->root, "", $this->file);
+        $path = Filter::uri($path);
+
+        // get first part of path
+        $pathParts = explode("/", $path);
+
+        if($pathParts[0] == "system") return true;
+        return false;
     }
 
     public function getPath()
@@ -221,6 +260,9 @@ abstract class Object implements JsonSerializable
 
     }
 
+    /**
+     * Determine if Object name has changed or needs to be created for the first time
+     */
     protected function processSaveName()
     {
 
@@ -238,11 +280,11 @@ abstract class Object implements JsonSerializable
 
 
 
-        } else { // generate page name from defined field
+        } else if($this->isNew()) { // generate page name from defined field
             $template = $this->template;
             $nameFieldReference = $template->settings['nameFrom'];
             $name = $this->get($nameFieldReference);
-            $name = app("sanitizer")->name($name);
+            $name = Filter::name($name);
             $this->name = $name;// TODO:  refactor code to allow name setting and getting to be handled the same way as other fields (by the Fieldtype class associated with it)
         }
 
@@ -283,6 +325,13 @@ abstract class Object implements JsonSerializable
 
     public function _save()
     {
+
+        // block editing of any system Objects
+        if($this->isSystem()) throw new FlatbedException("Cannot edit system $this->className ($this->name), duplicate in site folder to makes changes");
+
+
+        // can't edit system objects
+        if($this->isEditable())
 
         // store objects existing data for reference
         $this->previousData = $this->data;
@@ -348,6 +397,35 @@ abstract class Object implements JsonSerializable
     public function isNew()
     {
         return !is_file($this->file);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isEditable()
+    {
+        if($this->isSystem()) return false;
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isViewable()
+    {
+        if($this->isSystem()) return false;
+        if(!$this instanceof Page) return false;
+        if(!is_file($this->layout)) return false;
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeletable()
+    {
+        return true;
     }
 
 

@@ -37,8 +37,8 @@ class MarkupPageList extends Extension
         $admin = app("admin");
 
         $output = "<div class='page-tree-item-buttons' style='visibility: visible;'>";
-        $output .= "<a class='page-tree-item-button' href='{$admin->route->url}" . "pages/edit/" . $page->directory . "'><i class='icon icon-pencil'></i></a>";
-        $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
+        if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
+        if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
         $output .= "</div>";
         return $output;
     }

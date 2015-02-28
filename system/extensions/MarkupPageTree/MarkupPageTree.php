@@ -28,12 +28,16 @@ class MarkupPageTree extends Extension
 
         $output = "<div class='page-tree-item-buttons'>";
 
-        if($view){
-            $output .= "<a class='page-tree-item-button' href='{$this->admin->route->url}pages{$page->url}'><i class='icon icon-list'></i> List</a>";
+        if(is_array($view) && $view['type'] == "list"){
+            if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
+            $output .= "<a class='page-tree-item-button' href='{$this->admin->route->url}pages{$page->url}'><i class='icon icon-list'></i></a>";
+            if($this->admin) $this->admin->subnav->add($page);
+
+
         }
         else{
-            $output .= "<a class='page-tree-item-button' href='{$this->admin->route->url}" . "pages/edit/" . $page->directory . "'><i class='icon icon-pencil'></i></a>";
-            $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
+            if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
+            if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
             $output .= $this->renderDropdown($page);
 
         }
@@ -51,13 +55,8 @@ class MarkupPageTree extends Extension
 
         } else {
             if (count($page->children())) {
-
-
-
                 $output .= $this->renderPageList($page->children);
                 $class = "page-tree-group";
-
-
             }
         }
 

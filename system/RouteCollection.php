@@ -1,28 +1,27 @@
 <?php
 
-class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
+class RouteCollection implements IteratorAggregate, ArrayAccess, Countable
 {
 
-    protected $object;
-//    public $children;
+//    protected $object;
     protected $data = [];
 
-    public function setObject($object)
-    {
-        $this->object = $object;
-    }
+//    public function setObject($object)
+//    {
+//        $this->object = $object;
+//    }
 
     protected function isValidItem($item)
     {
 
-        if ($item instanceof Object) {
+        if ($item instanceof Route) {
             return true;
         }
         return false;
 
     }
 
-    public function add(Object $item)
+    public function add(Route $item)
     {
 
         $this->data[$item->name] = $item;
@@ -32,7 +31,7 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
 
     public function import($items)
     {
-        if (!$items instanceof ObjectCollection) {
+        if (!$items instanceof RouteCollection) {
             return $this;
         }
 

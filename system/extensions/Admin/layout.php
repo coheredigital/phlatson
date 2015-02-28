@@ -32,6 +32,8 @@
             </div><div class="main-menu menu">
 
                 <?php
+
+
                 $menuLinks = [
                   "Pages" => [
                       "icon" => "file",

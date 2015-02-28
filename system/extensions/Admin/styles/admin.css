@@ -2410,6 +2410,9 @@ input:focus {
 .page-tree .dragged > .page-tree-item:before {
   display: none;
 }
+.page-tree-subnav {
+  background: #fff;
+}
 /**
 User Menu
 **/
