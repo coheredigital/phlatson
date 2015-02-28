@@ -44,7 +44,9 @@ class Admin extends Extension
             $this->route
                 ->name("admin")
                 ->path("/admin")
-                ->callback("Admin.render");
+                ->callback(function(){
+                    app("admin")->render();
+                });
 
             app('router')->add($this->route);
         }
@@ -93,7 +95,7 @@ class Admin extends Extension
     }
 
 
-    public function render()
+    public function _render()
     {
 
         extract(app());

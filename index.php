@@ -24,7 +24,8 @@ try {
     app('router', new Router($pagesRoute));
 
     /* setup config routes */
-    foreach (app("config")->routes as $r){
+
+    if(count(app("config")->routes)) foreach (app("config")->routes as $r){
         $route = new Route($r);
         app("router")->add($route);
     }

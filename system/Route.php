@@ -18,6 +18,13 @@ class Route
         "DELETE"
     ];
 
+    // different idea for callback structure
+    private $mock = [
+        "before" => [],
+        "during" => [],
+        "after" => []
+    ];
+
     private $name = null;
     private $path = null;
     private $scheme = "http";
@@ -29,7 +36,12 @@ class Route
     private $children;
 
     private $method = "GET";
+
+    private $before = [];
     private $callbacks = [];
+    private $after = [];
+
+    private $filters = [];
     private $parameters = [];
 
     private $patterns = array(
@@ -141,10 +153,10 @@ class Route
         } else { // return url without using parameters
             $url = $this->path;
             if ($this->parent instanceof Route) {
-                $url = trim($this->parent->url, "/") . "/" . trim($url, "/") . "/" ;
+                $url = trim($this->parent->url, "/") . "/" . trim($url, "/") . "/";
             } else {
-                $path = trim($url, "/") ? "/" .  trim($url, "/") . "/" : "/";
-                $url = $this->scheme . "://" . trim($this->hostname(), "/") .$path;
+                $path = trim($url, "/") ? "/" . trim($url, "/") . "/" : "/";
+                $url = $this->scheme . "://" . trim($this->hostname(), "/") . $path;
             }
             return $url;
         }
@@ -167,7 +179,8 @@ class Route
         return $this;
     }
 
-    public function addChild(Route $route){
+    public function addChild(Route $route)
+    {
         $route->parent = $this;
         $this->children->add($route);
     }
@@ -199,6 +212,18 @@ class Route
     {
         $this->name = $name;
         return $this;
+    }
+
+
+    public function filter($callback)
+    {
+        if (is_callable($callback)) {
+            array_push($this->filters, $callback);
+            return $this;
+        } else {
+            // run filters
+        }
+
     }
 
 
@@ -284,6 +309,11 @@ class Route
 
     public function execute()
     {
+
+        if (count($this->before)) {
+
+        }
+
         // first execute parent routes in order
         if ($this->parent) {
             $this->parent->execute();
@@ -348,9 +378,6 @@ class Route
                 return false;
         }
     }
-
-
-
 
 
 }

@@ -19,19 +19,20 @@ class AdminListPages extends Extension implements AdminPage
 
         $this->subnav = new ObjectCollection();
 
+
+
+
         $this->route = new Route;
         $this->route
             ->name("pages")
             ->path("pages")
-            ->parent(app("admin")->route)
+            ->parent("admin")
             ->callback(
                 function () {
-                    $admin =  app("admin");
                     $this->rootPage = app("pages")->get("/");
-
-                    $admin->title = "Pages";
-                    $admin->page = $this;
-                    $admin->render();
+                    app("admin")->title = "Pages";
+                    app("admin")->page = $this;
+                    app("admin")->render();
                 }
             );
 
