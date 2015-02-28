@@ -13,7 +13,7 @@ trait hookable
     public function __call($method, $arguments)
     {
         $methodName = "_$method";
-        if (!method_exists($this, "$methodName")) throw new FlatbedException("Method: $methodName does not exist in class: $this->className");
+        if (!method_exists($this, "$methodName")) throw new FlatbedException("Method: $method does not exist in class: $this->className");
 
         $className = get_class($this);
 

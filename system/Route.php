@@ -37,34 +37,34 @@ class Route
         ':all' => '(.*)'
     );
 
-    public function __construct($parameters = [])
+    public function __construct($options = [])
     {
 
         /* init children collection*/
         $this->children = new RouteCollection();
 
-        if (isset($parameters["method"])) {
-            $this->method($parameters["method"]);
+        if (isset($options["method"])) {
+            $this->method($options["method"]);
         }
 
-        if (isset($parameters["hostname"])) {
-            $this->hostname($parameters["hostname"]);
+        if (isset($options["hostname"])) {
+            $this->hostname($options["hostname"]);
         }
 
-        if (isset($parameters["path"])) {
-            $this->path($parameters["path"]);
+        if (isset($options["path"])) {
+            $this->path($options["path"]);
         }
 
-        if (isset($parameters["callback"])) {
-            $this->callback($parameters["callback"]);
+        if (isset($options["callback"])) {
+            $this->callback($options["callback"]);
         }
 
-        if (isset($parameters["parent"])) {
-            $this->parent($parameters["parent"]);
+        if (isset($options["parent"])) {
+            $this->parent($options["parent"]);
         }
 
-        if (isset($parameters["name"])) {
-            $this->name($parameters["name"]);
+        if (isset($options["name"])) {
+            $this->name($options["name"]);
         }
 
     }
@@ -243,11 +243,17 @@ class Route
         return $this;
     }
 
+    /**
+     * @param $request
+     * @return bool
+     *
+     * Return true if the request is a match for this Route
+     *
+     */
     public function match($request)
     {
 
         $url = $this->url();
-
 
         // first check method, and fail if no match
         if ($this->method !== $request->method) {

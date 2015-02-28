@@ -14,6 +14,8 @@ class Admin extends Extension
     public $route;
     public $messages = [];
 
+    protected $page;
+
     /* ObjectCollection used to create menus */
     public $children;
 
@@ -30,7 +32,6 @@ class Admin extends Extension
         app("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
         app("config")->scripts->add("{$this->url}scripts/main.js");
         app("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
-
 
 
         // determine the admin route to use
@@ -99,6 +100,7 @@ class Admin extends Extension
         if ($session->has("adminMessages")) $this->messages = unserialize($session->get("adminMessages"));
 
 
+
         if ($user->isGuest()) {
 
             if ($request->url != $router->login->url) $session->redirect($router->login->url);
@@ -107,6 +109,12 @@ class Admin extends Extension
             include "login.php";
         } else if ($user->isLoggedIn()) {
             if ($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
+
+            // if(!$this->page instanceof AdminPage) throw new FlatbedException("Cannot render admin: no valid AdminPage set");
+
+            if($this->page instanceof AdminPage)
+                $this->output = $this->page->render();
+
             if ($this->output) include_once "layout.php";
         }
 
@@ -150,5 +158,24 @@ class Admin extends Extension
         app("session")->flash("adminMessages", $messages);
     }
 
+    /**
+     * Sets the admin page that will be rendered when route matched
+     */
+    protected function setPage(AdminPage $page)
+    {
+        $this->page = $page;
+    }
+
+
+    public function set($name, $value){
+
+        switch($name){
+            case 'page':
+                $this->setPage($value);
+            default:
+                parent::set($name, $value);
+        }
+        return $this;
+    }
 
 }

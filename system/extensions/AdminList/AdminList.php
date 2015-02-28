@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 7:36 PMs
  */
-abstract class AdminList extends Admin
+abstract class AdminList extends Admin implements AdminPage
 {
 
     public $title;

@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 7:36 PM
  */
-class AdminListPages extends Extension
+class AdminListPages extends Extension implements AdminPage
 {
 
     protected $output;
@@ -26,8 +26,12 @@ class AdminListPages extends Extension
             ->parent(app("admin")->route)
             ->callback(
                 function () {
+                    $admin =  app("admin");
                     $this->rootPage = app("pages")->get("/");
-                    $this->render();
+
+                    $admin->title = "Pages";
+                    $admin->page = $this;
+                    $admin->render();
                 }
             );
 
@@ -38,9 +42,13 @@ class AdminListPages extends Extension
             ->path("pages/:all")
             ->parent("admin")
             ->callback(
-                function ($url) {
-                    $this->rootPage = app("pages")->get($url);
-                    $this->render();
+                function ($uri) {
+                    $admin =  app("admin");
+                    $this->rootPage = app("pages")->get($uri);
+
+                    $admin->title = "Pages";
+                    $admin->page = $this;
+                    $admin->render();
                 }
             );
         app("router")->add($subpageRoute);
@@ -91,22 +99,17 @@ class AdminListPages extends Extension
     public function render()
     {
 
-        $admin = app("admin");
-        $admin->title = "Pages";
-
-        $template = $this->rootPage->template;
 
 
-
-        if (is_array($template->view) && $template->view["type"] == "list") {
-            $admin->output .= $this->renderPageList();
+        if (is_array($this->rootPage->template->view) && $this->rootPage->template->view["type"] == "list") {
+            $output .= $this->renderPageList();
         } else {
-            $admin->output .= $this->renderPageTree();
+            $output .= $this->renderPageTree();
         }
 
-        $admin->output = $this->renderSubnav() . $admin->output;
+        return $output = $this->renderSubnav() . $output;
 
-        $admin->render();
+//        $admin->render();
 
     }
 
