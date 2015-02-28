@@ -10,7 +10,7 @@ class AdminListPages extends Extension
 {
 
     protected $output;
-    protected $pageListPage; // TODO this variable name suck and so does the way this works, you should be ashamed
+    protected $rootPage; // TODO this variable name suck and so does the way this works, you should be ashamed
 
     protected function setup()
     {
@@ -18,26 +18,15 @@ class AdminListPages extends Extension
         $pageTree = new Route;
         $pageTree
             ->name("pages")
-            ->path("pages")
+            ->path("pages:all")
             ->parent(app("admin")->route)
             ->callback(
-                function () {
+                function ($url) {
+                    $this->rootPage = app("pages")->get($url);
                     $this->render();
                 }
             );
         app("router")->add($pageTree);
-
-        $pagesList = new Route;
-        $pagesList
-            ->path("pages/:all")
-            ->parent("admin")
-            ->callback(
-                function ($url) {
-                    $this->pageListPage = app("pages")->get($url);
-                    $this->render();
-                }
-            );
-        app("router")->add($pagesList);
 
     }
 
@@ -46,9 +35,7 @@ class AdminListPages extends Extension
     {
 
         $markupPageList = app("extensions")->get("MarkupPageTree");
-
-        $home = app("pages")->get("/");
-        $markupPageList->rootPage = $home;
+        $markupPageList->rootPage = $this->rootPage;
         $markupPageList->adminPanel = $this;
 
         return "<div class='container'>" . $markupPageList->render() . "</div>";
@@ -59,7 +46,7 @@ class AdminListPages extends Extension
     {
 
         $markupPageList = app("extensions")->get("MarkupPageList");
-        $markupPageList->rootPage = $this->pageListPage;
+        $markupPageList->rootPage = $this->rootPage;
         $markupPageList->adminPanel = $this;
 
         return "<div class='container'>" . $markupPageList->render() . "</div>";
@@ -71,11 +58,14 @@ class AdminListPages extends Extension
 
         $admin = app("admin");
         $admin->title = "Pages";
-        if($this->pageListPage instanceof Page){
-            $admin->output = $this->renderPageList($this->pageListPage);
+
+
+
+        if($this->rootPage->template->view){
+            $admin->output = $this->renderPageList($this->rootPage);
         }
         else{
-            $admin->output = $this->renderPageTree();
+            $admin->output = $this->renderPageTree($this->rootPage);
         }
         $admin->render();
 
