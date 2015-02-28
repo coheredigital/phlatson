@@ -32,7 +32,7 @@ class AdminListPages extends Extension implements AdminPage
                     $this->rootPage = app("pages")->get("/");
                     app("admin")->title = "Pages";
                     app("admin")->page = $this;
-                    app("admin")->render();
+                     app("admin")->render();
                 }
             );
 

@@ -18,12 +18,6 @@ class Route
         "DELETE"
     ];
 
-    // different idea for callback structure
-    private $mock = [
-        "before" => [],
-        "during" => [],
-        "after" => []
-    ];
 
     private $name = null;
     private $path = null;
@@ -32,13 +26,17 @@ class Route
 
     public $ssl = false;
 
-    private $parent = false;
+    private $parent;
     private $children;
 
     private $method = "GET";
 
     private $before = [];
-    private $callbacks = [];
+    private $callbacks = [
+        "before" => [],
+        "default" => [],
+        "after" => []
+    ];
     private $after = [];
 
     private $filters = [];
@@ -67,8 +65,14 @@ class Route
             $this->path($options["path"]);
         }
 
+        if (isset($options["before"])) {
+            $this->callback($options["before"]);
+        }
         if (isset($options["callback"])) {
             $this->callback($options["callback"]);
+        }
+        if (isset($options["after"])) {
+            $this->callback($options["after"]);
         }
 
         if (isset($options["parent"])) {
@@ -234,9 +238,21 @@ class Route
      * appends new callback to the end of the callbacks set
      *
      */
-    public function callback($callback)
+    public function callback($callback, $set = "default")
     {
-        array_push($this->callbacks, $callback);
+        array_push($this->callbacks[$set], $callback);
+        return $this;
+    }
+
+    public function before($callback)
+    {
+        $this->callback($callback, "before");
+        return $this;
+    }
+
+    public function after($callback)
+    {
+        $this->callback($callback, "after");
         return $this;
     }
 
@@ -248,11 +264,11 @@ class Route
      * alias of callback() method for logical consistency
      *
      */
-    public function appendCallback($callback)
-    {
-        $this->callback($callback);
-        return $this;
-    }
+//    public function appendCallback($callback)
+//    {
+//        $this->callback($callback);
+//        return $this;
+//    }
 
     /**
      * @param $callback
@@ -262,11 +278,11 @@ class Route
      * alias of callback() method for logical consistency
      *
      */
-    public function prependCallback($callback)
-    {
-        array_unshift($this->callbacks, $callback);
-        return $this;
-    }
+//    public function prependCallback($callback)
+//    {
+//        array_unshift($this->callbacks, $callback);
+//        return $this;
+//    }
 
     /**
      * @param $request
@@ -310,16 +326,30 @@ class Route
     public function execute()
     {
 
-        if (count($this->before)) {
-
+        if ($this->parent instanceof Route) {
+            $this->parent->executeCallbacks("before");
         }
+
+        $this->executeCallbacks("before");
 
         // first execute parent routes in order
-        if ($this->parent) {
-            $this->parent->execute();
+        if ($this->parent instanceof Route) {
+            $this->parent->executeCallbacks("before");
         }
 
-        foreach ($this->callbacks as $callback) {
+        $this->executeCallbacks();
+        $this->executeCallbacks("after");
+        if ($this->parent instanceof Route) {
+            $this->parent->executeCallbacks("after");
+        }
+    }
+
+    public function executeCallbacks($set = "default")
+    {
+
+        if(!count($this->callbacks[$set])) return false;
+
+        foreach ($this->callbacks[$set] as $callback) {
 
             if (!is_object($callback)) {
 
@@ -353,7 +383,6 @@ class Route
 
         }
     }
-
 
     /**
      * @param $name
