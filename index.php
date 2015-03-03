@@ -17,10 +17,11 @@ try {
     app('response', new Response);
 
     /* init Router and set default request behaviour */
-    app('router', new Router( new Route([
+    $pagesRoute = new Route([
         "path" =>":all",
         "callback" => "Pages.render"
-    ])));
+    ]);
+    app('router', new Router($pagesRoute));
 
     /* setup config routes */
     if(count(app("config")->routes)) foreach (app("config")->routes as $r){

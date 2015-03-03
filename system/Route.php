@@ -46,6 +46,8 @@ class Route
         ':all' => '(.*)'
     );
 
+    private $response = null;
+
     public function __construct($options = [])
     {
 
