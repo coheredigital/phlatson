@@ -37,20 +37,22 @@ class Router
         $method = $route->method;
         $path = $route->path;
 
+        $key = $method . $path;
 
-        $this->routes[$hostname][$method][$path] = $route;
-//        $this->routes[$hostname][$path] = $route; // removed method requirement
+
+        $this->routes[$hostname][$key] = $route;
+
         if ($route->name) {
 
-            $key = [
-                "hostname" => $hostname,
-                "method" => $method,
-                "path" => $path
-            ];
+//            $routeArray = [
+//                "hostname" => $hostname,
+//                "method" => $method,
+//                "path" => $path
+//            ];
+//
+//            $routeSerialized = serialize($routeArray);
 
-            $key = serialize($key);
-
-            $this->namedRoutes[$route->name] = $key;
+            $this->namedRoutes[$route->name] = $route;
         }
 
 
@@ -58,15 +60,16 @@ class Router
     }
 
     /**
-     * Runs the callback for the given request
-     * Called by __destruct()
+     * @param Request $request
+     * @throws FlatbedException
+     *
      */
     public function run(Request $request)
     {
         $found = false;
 
         // get the set to iterate based on the current request
-        $routes = $this->routes[$request->hostname][$request->method];
+        $routes = $this->routes[$request->hostname];
 
         foreach ($routes as $route) {
             if (!$route->match($request)) continue;
@@ -116,10 +119,10 @@ class Router
             return false;
         }
 
-        $key = $this->namedRoutes[$name];
-        $key = unserialize($key);
-        $key = objectify($key);
-        $route = $this->routes[$key->hostname][$key->method][$key->path];
+        $route = $this->namedRoutes[$name];
+//        $key = unserialize($key);
+//        $key = objectify($key);
+//        $route = $this->routes[$key->hostname][$key->method][$key->path];
         return $route;
     }
 

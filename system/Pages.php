@@ -20,15 +20,4 @@ class Pages extends Objects
         }
     }
 
-    protected function isAdminRequest($query)
-    {
-        $requests = explode("/", $query);
-        $requestRoot = normalizeDirectory($requests[0]);
-        $adminUrl = normalizeDirectory(app("config")->adminUrl);
-
-        return $requestRoot == $adminUrl;
-    }
-
-
-
 }

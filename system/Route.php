@@ -11,7 +11,7 @@ class Route
 
     use hookable;
 
-    private $methods = [
+    private $allowedMethods = [
         "GET",
         "POST",
         "PUT",
@@ -31,13 +31,12 @@ class Route
 
     private $method = "GET";
 
-    private $before = [];
     private $callbacks = [
         "before" => [],
         "default" => [],
         "after" => []
     ];
-    private $after = [];
+
 
     private $filters = [];
     private $parameters = [];
@@ -66,13 +65,13 @@ class Route
         }
 
         if (isset($options["before"])) {
-            $this->callback($options["before"]);
+            $this->before($options["before"]);
         }
         if (isset($options["callback"])) {
             $this->callback($options["callback"]);
         }
         if (isset($options["after"])) {
-            $this->callback($options["after"]);
+            $this->after($options["after"]);
         }
 
         if (isset($options["parent"])) {
@@ -167,7 +166,6 @@ class Route
 
     }
 
-
     public function parent($route)
     {
         if (is_string($route)) {
@@ -189,19 +187,22 @@ class Route
         $this->children->add($route);
     }
 
-    public function method($name)
+    public function method($name = null)
     {
+        if($name){
+            $method = trim(strtoupper($name));
+            $methods = explode("|", $method);
+            if (array_diff($methods, $this->allowedMethods)) {
+                throw new FlatbedException("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(", ", $this->allowedMethods) . " ).");
+            }
 
-        $method = trim(strtoupper($name));
-        if (!in_array($method, $this->methods)) {
-            throw new FlatbedException("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(
-                    ", ",
-                    $this->methods
-                ) . " ).");
+            $this->method = $method;
+            return $this;
+        }
+        else{
+
         }
 
-        $this->method = $method;
-        return $this;
     }
 
     /**
@@ -256,33 +257,6 @@ class Route
         return $this;
     }
 
-    /**
-     * @param $callback
-     * @return $this
-     *
-     * appends new callback to the end of the callbacks set
-     * alias of callback() method for logical consistency
-     *
-     */
-//    public function appendCallback($callback)
-//    {
-//        $this->callback($callback);
-//        return $this;
-//    }
-
-    /**
-     * @param $callback
-     * @return $this
-     *
-     * appends new callback to the end of the callbacks set
-     * alias of callback() method for logical consistency
-     *
-     */
-//    public function prependCallback($callback)
-//    {
-//        array_unshift($this->callbacks, $callback);
-//        return $this;
-//    }
 
     /**
      * @param $request
@@ -295,11 +269,13 @@ class Route
     {
 
         $url = $this->url();
+        $routeMethods = explode("|",$this->method);
 
-        // first check method, and fail if no match
-        if ($this->method !== $request->method) {
+
+        if(!in_array($request->method, $routeMethods)){
             return false;
         }
+
 
         // check exact match to url & method
         if ($url == $request->url) {
@@ -334,7 +310,7 @@ class Route
 
         // first execute parent routes in order
         if ($this->parent instanceof Route) {
-            $this->parent->executeCallbacks("before");
+            $this->parent->executeCallbacks();
         }
 
         $this->executeCallbacks();
@@ -347,7 +323,7 @@ class Route
     public function executeCallbacks($set = "default")
     {
 
-        if(!count($this->callbacks[$set])) return false;
+        if (!count($this->callbacks[$set])) return false;
 
         foreach ($this->callbacks[$set] as $callback) {
 

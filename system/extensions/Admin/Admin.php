@@ -34,22 +34,9 @@ class Admin extends Extension
         app("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
 
-        // determine the admin route to use
-        // check for a route named admin otherwise default to '/admin'
         if (app("router")->get("admin")) {
             $this->route = app("router")->get("admin");
-        } else {
-
-            $this->route = new Route();
-            $this->route
-                ->name("admin")
-                ->path("/admin")
-                ->callback(function(){
-                    app("admin")->render();
-                });
-
-            app('router')->add($this->route);
-        }
+        } else throw new FlatbedException("Admin route missing from Site.json configuration file.");
 
         // add the admin URL to the config urls variable for easy access/reference
         app("config")->urls->admin = $this->route->url;
@@ -72,7 +59,7 @@ class Admin extends Extension
         $login
             ->name("login")
             ->path("login")
-            ->parent($this->route);
+            ->parent("admin");
         app('router')->add($login);
 
 
@@ -80,7 +67,7 @@ class Admin extends Extension
         $loginSubmit
             ->path("login")
             ->method("POST")
-            ->parent($this->route)
+            ->parent("admin")
             ->callback(
                 function () {
                     if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
@@ -95,6 +82,22 @@ class Admin extends Extension
     }
 
 
+    public function authorize()
+    {
+        $app = app();
+
+        if($app["user"]->isGuest()){
+
+            if ($request->url != $router->login->url) $session->redirect($router->login->url);
+
+        }
+        else{
+
+        }
+
+
+    }
+
     public function _render()
     {
 
@@ -102,10 +105,9 @@ class Admin extends Extension
         if ($session->has("adminMessages")) $this->messages = unserialize($session->get("adminMessages"));
 
 
-
         if ($user->isGuest()) {
 
-            if ($request->url != $router->login->url) $session->redirect($router->login->url);
+
             // add the login stylesheet and load the login layout
             app("config")->styles->add("{$this->url}styles/login.css");
             include "login.php";
@@ -114,7 +116,7 @@ class Admin extends Extension
 
             // if(!$this->page instanceof AdminPage) throw new FlatbedException("Cannot render admin: no valid AdminPage set");
 
-            if($this->page instanceof AdminPage)
+            if ($this->page instanceof AdminPage)
                 $this->output = $this->page->render();
 
             if ($this->output) include_once "layout.php";
@@ -169,9 +171,10 @@ class Admin extends Extension
     }
 
 
-    public function set($name, $value){
+    public function set($name, $value)
+    {
 
-        switch($name){
+        switch ($name) {
             case 'page':
                 $this->setPage($value);
             default:

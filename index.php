@@ -11,20 +11,18 @@ require_once ROOT_PATH . 'system/_traits.php';
 
 try {
 
-    /* instatiate app variables */
+    /* instantiate app variables */
     app('config', new Config);
     app('request', new Request);
+    app('response', new Response);
 
-    /* set default request behaviour */
-    $pagesRoute = new Route();
-    $pagesRoute
-        ->path(":all")
-        ->callback("Pages.render");
-
-    app('router', new Router($pagesRoute));
+    /* init Router and set default request behaviour */
+    app('router', new Router( new Route([
+        "path" =>":all",
+        "callback" => "Pages.render"
+    ])));
 
     /* setup config routes */
-
     if(count(app("config")->routes)) foreach (app("config")->routes as $r){
         $route = new Route($r);
         app("router")->add($route);
@@ -42,6 +40,8 @@ try {
     app('logger', 'Logger');
 
     app('router')->run(app('request'));
+
+
 } catch(FlatbedException $exception) {
     echo $exception->render();
 }

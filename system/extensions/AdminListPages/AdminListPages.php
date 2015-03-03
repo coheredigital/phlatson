@@ -19,9 +19,6 @@ class AdminListPages extends Extension implements AdminPage
 
         $this->subnav = new ObjectCollection();
 
-
-
-
         $this->route = new Route;
         $this->route
             ->name("pages")
@@ -32,7 +29,7 @@ class AdminListPages extends Extension implements AdminPage
                     $this->rootPage = app("pages")->get("/");
                     app("admin")->title = "Pages";
                     app("admin")->page = $this;
-                     app("admin")->render();
+                    app("admin")->render();
                 }
             );
 

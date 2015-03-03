@@ -7,8 +7,10 @@
 
     "routes" : [
         {
+            "method": "GET|POST",
             "name": "admin",
             "path": "admin/",
+            "before": "Admin.authorize",
             "after": "Admin.render"
         }
     ]

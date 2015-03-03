@@ -13,35 +13,6 @@ abstract class Input extends Extension implements RenderInterface
     public $field; // field this input belongs to
     public $object; // object (page/field/template) that the above field belongs to
 
-//    /**
-//     * Gets the Label as defined by the corresponding Field, otherwise gets a set label
-//     *
-//     * @return null|string
-//     */
-//    public function getLabel(){
-//        if($this->field instanceof Field){
-//            return $this->field->title;
-//        }
-//        if($this->has("label")){
-//            return $this->getUnformatted("label");
-//        }
-//        return null;
-//    }
-
-//    /**
-//     * Gets the VALUE as defined by the corresponding Object, otherwise gets a set label
-//     *
-//     * @return null|string
-//     */
-//    public function getValue(){
-//        if($this->object instanceof Object && $this->field instanceof Field){
-//            $value = $this->object->getUnformatted($this->field->name);
-//        }
-//        if($this->has("value")){
-//            $value = $this->getUnformatted("value");
-//        }
-//        return $value;
-//    }
 
     /**
      * @param $name
