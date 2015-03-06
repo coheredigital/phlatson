@@ -16,3 +16,8 @@ interface AdminPage
 {
     public function render();
 }
+
+interface RenderInterface
+{
+    public function _render();
+}

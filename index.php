@@ -13,15 +13,14 @@ try {
 
     /* instantiate app variables */
     app('config', new Config);
-    app('request', new Request);
-    app('response', new Response);
+    app('request', $request = new Request);
 
     /* init Router and set default request behaviour */
     $pagesRoute = new Route([
         "path" =>":all",
         "callback" => "Pages.render"
     ]);
-    app('router', new Router($pagesRoute));
+    app('router', $router = new Router($pagesRoute));
 
     /* setup config routes */
     if(count(app("config")->routes)) foreach (app("config")->routes as $r){
@@ -40,8 +39,7 @@ try {
     app('session', 'Session');
     app('logger', 'Logger');
 
-    app('router')->run(app('request'));
-
+    $router->run($request);
 
 } catch(FlatbedException $exception) {
     echo $exception->render();

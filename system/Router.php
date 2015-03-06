@@ -15,6 +15,7 @@ class Router
     private $defaultRoute;
 
 
+
     public function __construct(Route $defaultRoute){
 
         $this->defaultRoute = $defaultRoute;
@@ -43,15 +44,6 @@ class Router
         $this->routes[$hostname][$key] = $route;
 
         if ($route->name) {
-
-//            $routeArray = [
-//                "hostname" => $hostname,
-//                "method" => $method,
-//                "path" => $path
-//            ];
-//
-//            $routeSerialized = serialize($routeArray);
-
             $this->namedRoutes[$route->name] = $route;
         }
 
@@ -90,6 +82,37 @@ class Router
 
 
         if ($found === false) throw new FlatbedException("Invalid request, app cannot run");
+    }
+
+
+    /**
+     * redirects page using PHP header
+     * @param  string or Page object  $url   redirect to url from root or to page
+     * @param  boolean $permanent is redirect permanent?
+     */
+    public function redirect($value, $permanent = true)
+    {
+
+
+        switch($value){
+            case ($value instanceof Page):
+            case ($value instanceof Route):
+                $url = $value->url;
+                break;
+            default:
+                $url = $value;
+                break;
+        }
+
+
+
+        // perform the redirect
+        if ($permanent) {
+            header("HTTP/1.1 301 Moved Permanently");
+        }
+        header("Location: $url");
+        header("Connection: close");
+        exit(0);
     }
 
 

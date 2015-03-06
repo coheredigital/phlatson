@@ -7,7 +7,7 @@ class Response
     protected $headers;
     protected $cached = false;
 
-    public $body = null;
+    protected $content = null;
 
     // prevent further changes
     protected $locked = false;
@@ -32,7 +32,7 @@ class Response
 
         $url = $location instanceof Page ? $location->url : $location;
 
-        $this->code($code);
+//        $this->code($code);
         $this->header('Location', $url);
         $this->lock();
 
@@ -40,7 +40,7 @@ class Response
         if ($permanent) {
             $this->header("HTTP/1.1 301 Moved Permanently");
         }
-        header("Location: $url");
+//        header("Location: $url");
         return $this;
     }
 
@@ -53,7 +53,9 @@ class Response
     public function render()
     {
 
-        echo $this->body;
+        $output = implode("\n", $this->headers);
+
+        echo $output;
 
     }
 

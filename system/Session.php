@@ -169,22 +169,6 @@ class Session implements IteratorAggregate
         return $this->set($key, $value);
     }
 
-    /**
-     * redirects page using PHP header
-     * @param  string or Page object  $url   redirect to url from root or to page
-     * @param  boolean $permanent is redirect permanent?
-     */
-    public function redirect($value, $permanent = true)
-    {
-        $url = $value instanceof Page ? $value->url : $value;
-        // perform the redirect
-        if ($permanent) {
-            header("HTTP/1.1 301 Moved Permanently");
-        }
-        header("Location: $url");
-        header("Connection: close");
-        exit(0);
-    }
 
     /**
      * start the session, provide for syntactical convenience

@@ -49,7 +49,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     app("session")->logout();
-                    app("session")->redirect($this->route->url);
+                    app("router")->redirect($this->route);
                 }
             );
         app('router')->add($logoutRoute);
@@ -59,7 +59,19 @@ class Admin extends Extension
         $login
             ->name("login")
             ->path("login")
-            ->parent("admin");
+            ->parent("admin")
+            ->before(function(){
+                if(!app("user")->isGuest()){
+                    $pages = app("router")->get("pages");
+                    app("router")->redirect($pages);
+                }
+            })
+            ->callback(function(){
+                //  add the login stylesheet and load the login layout
+                app("config")->styles->add("{$this->url}styles/login.css");
+                include "login.php";
+
+            });
         app('router')->add($login);
 
 
@@ -71,7 +83,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
-                        app("session")->redirect(app("router")->get("admin")->url);
+                        app("router")->redirect(app("router")->get("admin")->url);
                     }
 
 
@@ -84,17 +96,15 @@ class Admin extends Extension
 
     public function authorize()
     {
+
         $app = app();
+        if ($app["user"]->isGuest()) {
 
-        if($app["user"]->isGuest()){
-
-            if ($request->url != $router->login->url) $session->redirect($router->login->url);
-
-        }
-        else{
+            if (app("request")->url != app("router")->login->url) {
+                app("router")->redirect($app["router"]->login->url);
+            }
 
         }
-
 
     }
 
@@ -102,25 +112,23 @@ class Admin extends Extension
     {
 
         extract(app());
-        if ($session->has("adminMessages")) $this->messages = unserialize($session->get("adminMessages"));
+        $this->messages = $this->getMessages();
 
-
-        if ($user->isGuest()) {
-
-
-            // add the login stylesheet and load the login layout
-            app("config")->styles->add("{$this->url}styles/login.css");
-            include "login.php";
-        } else if ($user->isLoggedIn()) {
-            if ($request->url == $router->login->url || $request->url == $router->admin->url) $session->redirect($router->admin->url . "pages");
-
-            // if(!$this->page instanceof AdminPage) throw new FlatbedException("Cannot render admin: no valid AdminPage set");
+//        if ($user->isGuest()) {
+//
+//
+//            // add the login stylesheet and load the login layout
+//            app("config")->styles->add("{$this->url}styles/login.css");
+//            include "login.php";
+//        }
+//        else if ($user->isLoggedIn()) {
+//            if ($request->url == $router->login->url || $request->url == $router->admin->url) $router->redirect($router->admin->url . "pages");
 
             if ($this->page instanceof AdminPage)
                 $this->output = $this->page->render();
 
             if ($this->output) include_once "layout.php";
-        }
+//        }
 
     }
 
@@ -146,7 +154,13 @@ class Admin extends Extension
 
     }
 
-
+    /**
+     * @param $string
+     *
+     * Adds a String message to be read back on next page load,
+     * uses Session flash variable, is remove on access
+     *
+     */
     public function addMessage($string)
     {
 
@@ -160,6 +174,14 @@ class Admin extends Extension
         // serialize and store
         $messages = serialize($messages);
         app("session")->flash("adminMessages", $messages);
+    }
+
+    protected function getMessages()
+    {
+        if (app("session")->has("adminMessages")) {
+            return unserialize(app("session")->get("adminMessages"));
+        }
+        return null;
     }
 
     /**
