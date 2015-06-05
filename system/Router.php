@@ -71,6 +71,7 @@ class Router
         }
 
 
+
         // default route if nothing matched
         if ($found === false && $this->defaultRoute !== false) {
             if($this->defaultRoute->match($request)){
@@ -143,9 +144,6 @@ class Router
         }
 
         $route = $this->namedRoutes[$name];
-//        $key = unserialize($key);
-//        $key = objectify($key);
-//        $route = $this->routes[$key->hostname][$key->method][$key->path];
         return $route;
     }
 

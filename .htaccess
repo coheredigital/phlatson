@@ -24,7 +24,7 @@ DirectoryIndex index.php index.html index.htm
 	RewriteEngine On
 	AddDefaultCharset UTF-8
 
-	# RewriteBase /
+	RewriteBase /
 
 
     # Access Restrictions

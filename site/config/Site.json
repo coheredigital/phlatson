@@ -11,7 +11,7 @@
             "name": "admin",
             "path": "admin/",
             "before": "Admin.authorize",
-            "after": "Admin.render"
+            "after": "Admin.gotoAdminPage"
         }
     ]
 }

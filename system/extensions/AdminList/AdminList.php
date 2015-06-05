@@ -49,9 +49,6 @@ abstract class AdminList extends Admin implements AdminPage
 
 
     protected function renderPageControls(Object $object){
-
-        $admin = app("admin");
-
         $output = "<div class='page-tree-item-buttons' style='visibility: visible;'>";
         if($object->isEditable()) $output .= "<a class='page-tree-item-button' href='{$object->urlEdit}'><i class='icon icon-pencil'></i></a>";
         if($object->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$object->url}'><i class='icon icon-eye'></i></a>";

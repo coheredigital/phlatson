@@ -49,7 +49,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     app("session")->logout();
-                    app("router")->redirect($this->route);
+                    app("router")->redirect(app("router")->get("login"));
                 }
             );
         app('router')->add($logoutRoute);
@@ -60,13 +60,7 @@ class Admin extends Extension
             ->name("login")
             ->path("login")
             ->parent("admin")
-            ->before(function(){
-                if(!app("user")->isGuest()){
-                    $pages = app("router")->get("pages");
-                    app("router")->redirect($pages);
-                }
-            })
-            ->callback(function(){
+            ->callback(function () {
                 //  add the login stylesheet and load the login layout
                 app("config")->styles->add("{$this->url}styles/login.css");
                 include "login.php";
@@ -93,64 +87,52 @@ class Admin extends Extension
 
     }
 
-
+    /**
+     * run before all children of the the "admin" route to
+     * ensure user is logged in before taking action
+     *
+     */
     public function authorize()
     {
 
         $app = app();
         if ($app["user"]->isGuest()) {
 
-            if (app("request")->url != app("router")->login->url) {
-                app("router")->redirect($app["router"]->login->url);
+            if (app("request")->url != app("router")->get("login")->url) {
+                app("router")->redirect( app("router")->get("login"), false );
             }
 
         }
 
     }
 
-    public function _render()
+
+
+    /**
+     * send the user to the correct admin landing page based on logged in state
+     */
+    public function gotoAdminPage()
     {
 
-        extract(app());
-        $this->messages = $this->getMessages();
+        // only run on admin route exact match
+        if( app("request")->url != app("router")->admin->url ) return false;
 
-//        if ($user->isGuest()) {
-//
-//
-//            // add the login stylesheet and load the login layout
-//            app("config")->styles->add("{$this->url}styles/login.css");
-//            include "login.php";
-//        }
-//        else if ($user->isLoggedIn()) {
-//            if ($request->url == $router->login->url || $request->url == $router->admin->url) $router->redirect($router->admin->url . "pages");
-
-            if ($this->page instanceof AdminPage)
-                $this->output = $this->page->render();
-
-            if ($this->output) include_once "layout.php";
-//        }
+        if (app("user")->isGuest()) app("router")->redirect(app("router")->get("login"));
+        else app("router")->redirect(app("router")->get("pages"));
 
     }
 
-
-    public function getSettings()
+    public function _render()
     {
 
+        $this->messages = $this->getMessages();
 
-        $form = app("extensions")->get("MarkupEditForm");
+        if ($this->page instanceof AdminPage) // TODO why do I need to check this here?
+            $this->output = $this->page->render();
 
-        $fieldset = app("extensions")->get("MarkupFormtab");
-        $fieldset->label = $this->get("title");
+        extract(app()); // extract app variables for easier use in admin templates
+        if ($this->output) include_once "layout.php";
 
-        $field = new FieldtypeText();
-        $field->label = "Main Color";
-        $field->name = "color";
-
-        $fieldset->add($field);
-
-        $form->add($fieldset);
-
-        return $form->render();
 
     }
 

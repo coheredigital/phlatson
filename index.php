@@ -1,6 +1,6 @@
 <?php
 
-define("XPAGES", true);
+define("FLATBED", true);
 define('ROOT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 define('ROOT_URL', "/");
 
