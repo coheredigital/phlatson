@@ -49,7 +49,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     app("session")->logout();
-                    app("router")->redirect(app("router")->get("login"));
+                    app("router")->redirect(app("router")->get("login"), false);
                 }
             );
         app('router')->add($logoutRoute);
@@ -77,7 +77,7 @@ class Admin extends Extension
             ->callback(
                 function () {
                     if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
-                        app("router")->redirect(app("router")->get("admin")->url);
+                        app("router")->redirect(app("router")->get("admin")->url, false);
                     }
 
 
@@ -107,7 +107,6 @@ class Admin extends Extension
     }
 
 
-
     /**
      * send the user to the correct admin landing page based on logged in state
      */
@@ -117,8 +116,8 @@ class Admin extends Extension
         // only run on admin route exact match
         if( app("request")->url != app("router")->admin->url ) return false;
 
-        if (app("user")->isGuest()) app("router")->redirect(app("router")->get("login"));
-        else app("router")->redirect(app("router")->get("pages"));
+        if (app("user")->isGuest()) app("router")->redirect(app("router")->get("login"), false);
+        else app("router")->redirect(app("router")->get("pages"), false);
 
     }
 
@@ -135,6 +134,7 @@ class Admin extends Extension
 
 
     }
+
 
     /**
      * @param $string
