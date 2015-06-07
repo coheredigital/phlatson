@@ -37,6 +37,26 @@ class AdminEditField extends AdminEdit
         );
         app("router")->add($newFieldRoute);
 
+
+
+        $newSave = new Route;
+        $newSave
+            ->path("fields/new/:any/:all")
+            ->parent("admin")
+            ->method("POST")
+            ->callback(
+                function ($template, $parent) {
+                    // TODO: the duplication of code here doesn't seem natural, reevaluate
+
+                    $this->object = new Page();
+                    $this->object->template = $template;
+                    $this->object->parent = $parent;
+                    $this->processSave();
+                }
+            );
+        app("router")->add($newSave);
+
+
         $saveFieldRoute = new Route;
         $saveFieldRoute
             ->path("fields/edit/:any")

@@ -12,14 +12,7 @@ class Router
     // routes organize in multidimensional array
     private $routes = [];
     private $namedRoutes = [];
-    private $defaultRoute;
-
-
-
-    public function __construct(Route $defaultRoute){
-
-        $this->defaultRoute = $defaultRoute;
-    }
+    private $defaultRoute = false;
 
     /**
      * Defines callback if route is not found
@@ -68,17 +61,6 @@ class Router
             $route->execute();
             $found = true;
             break;
-        }
-
-
-
-        // default route if nothing matched
-        if ($found === false && $this->defaultRoute !== false) {
-            if($this->defaultRoute->match($request)){
-                $this->defaultRoute->execute();
-                $found = true;
-
-            }
         }
 
 

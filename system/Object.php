@@ -38,7 +38,7 @@ abstract class Object implements JsonSerializable
 
         }
 
-        $this->checkDataIntegrity();
+        // $this->checkDataIntegrity();
 
     }
 

@@ -20,9 +20,9 @@ try {
         "path" =>":all",
         "callback" => "Pages.render"
     ]);
-    app('router', $router = new Router($pagesRoute));
+    app('router', new Router);
 
-    /* setup config routes */
+    /* setup config routes, default is just the admin route */
     if(count(app("config")->routes)) foreach (app("config")->routes as $r){
         $route = new Route($r);
         app("router")->add($route);
@@ -39,7 +39,15 @@ try {
     app('session', 'Session');
     app('logger', 'Logger');
 
-    $router->run($request);
+    // add pages route last just before running app
+    $pagesRoute = new Route([
+        "path" =>":all",
+        "callback" => "Pages.render"
+    ]);
+    app('router')->add($pagesRoute);
+
+    // run the app
+    app('router')->run($request);
 
 } catch(FlatbedException $exception) {
     echo $exception->render();
