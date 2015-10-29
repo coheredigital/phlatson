@@ -9,10 +9,15 @@ function flatbedErrorHandler($errno, $errstr, $errfile, $errline) {
 }
 set_error_handler('flatbedErrorHandler');
 
-// shorthand for api($name) and api::set($key, $value)
+// shorthand for get app($name) and set app($name, $value)
 function app($name = null, $value = null, $lock = false)
 {
-    return App::__invoke($name, $value, $lock);
+    if (is_null($value)) {
+        return App::get($name, $value, $lock);
+    }
+    else{
+        return App::set($name, $value, $lock);
+    }
 }
 
 // Emulate register_globals off

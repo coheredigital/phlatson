@@ -39,7 +39,7 @@ final class App
      * @return array
      * @throws Exception
      */
-    public static function __invoke($name = null, $object = null, $lock = true)
+    public function __invoke($name = null, $object = null, $lock = true)
     {
 
         if (!is_null($name) && !is_null($object)) {
