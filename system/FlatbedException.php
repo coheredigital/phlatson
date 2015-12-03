@@ -19,16 +19,16 @@ class FlatbedException extends Exception
         return $this->render();
     }
 
-    public function render()
+    public function render($config)
     {
 
-        $this->log();
+        // $this->log();
 
 
         $message = "<pre id='title'>Exception<pre id='file'>" . $this->getFile() . "</pre></pre>";
 
         $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
-        if (app("config")->debug) {
+        if ($config->debug) {
             $message .= $this->renderCodeSnippet();
             $message .= $this->renderTraceTable();
         }
@@ -102,10 +102,10 @@ class FlatbedException extends Exception
         return $output;
     }
 
-    protected function log()
+    protected function log($logger)
     {
 
-        if(!app("logger")) return false;
+        if(!$logger) return false;
 
         $message = trim($this->getMessage());
         $file = $this->getFile();
@@ -113,7 +113,7 @@ class FlatbedException extends Exception
         $trace = $trace[0];
         $line = "#" . $this->getLine() . " (" . $trace['class'] . $trace['type'] . $trace['function'] . ")";
         $log = "Exception: $message in ($file) on $line";
-        app("logger")->add("error", $log);
+        $logger->add("error", $log);
 
     }
 

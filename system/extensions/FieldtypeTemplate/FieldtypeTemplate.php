@@ -7,7 +7,7 @@ class FieldtypeTemplate extends Fieldtype
 
     public function getOutput($name)
     {
-        $template = app("templates")->get($name);
+        $template = $this->api("templates")->get($name);
         $template->parent = $this->object;
         return $template;
     }
@@ -18,7 +18,7 @@ class FieldtypeTemplate extends Fieldtype
             return $value->name;
         }
         else{
-            $template = app("templates")->get($value);
+            $template = $this->api("templates")->get($value);
             if ($template instanceof Template) return $template->name;
         }
         return null;
@@ -35,7 +35,7 @@ class FieldtypeTemplate extends Fieldtype
     {
         $selectOptions = array();
 
-        $templates = app("templates")->all();
+        $templates = $this->api("templates")->all();
         foreach ($templates as $t) {
             $selectOptions["$t->label"] = "$t->name";
         }

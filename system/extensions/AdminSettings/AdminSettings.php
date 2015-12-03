@@ -21,14 +21,14 @@ class AdminSettings extends Extension
             }
         ]);
 
-        app('router')->add($this->route);
+        $this->api('router')->add($this->route);
 
     }
 
 
     public function render()
     {
-        $admin = app("admin");
+        $admin = $this->api("admin");
         $admin->title = $this->title;
         $admin->render();
 

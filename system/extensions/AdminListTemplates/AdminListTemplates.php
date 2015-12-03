@@ -19,13 +19,13 @@ class AdminListTemplates extends AdminList
         $this->route
             ->name("templates")
             ->path("templates")
-            ->parent(app("admin")->route)
+            ->parent($this->api("admin")->route)
             ->callback(
                 function () {
                     $this->render();
                 }
             );
-        app('router')->add($this->route);
+        $this->api('router')->add($this->route);
 
     }
 

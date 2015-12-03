@@ -7,7 +7,7 @@ class FieldtypeInput extends Fieldtype implements ProvidesOptions
 
     public function getOutput($name)
     {
-        $field = app("extensions")->get("$name");
+        $field = $this->api("extensions")->get("$name");
         return $field;
     }
 
@@ -17,7 +17,7 @@ class FieldtypeInput extends Fieldtype implements ProvidesOptions
             return $value->name;
         }
         else{
-            $input = app("extensions")->get($value);
+            $input = $this->api("extensions")->get($value);
             if ($input instanceof Input) return $input->name;
         }
         return null;
@@ -26,7 +26,7 @@ class FieldtypeInput extends Fieldtype implements ProvidesOptions
     public function options()
     {
 
-        $inputs = app("extensions")->all();
+        $inputs = $this->api("extensions")->all();
         $inputs
             ->filter(["type"=>"Input"])
             ->sort("title");

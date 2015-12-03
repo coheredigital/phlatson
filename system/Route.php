@@ -1,12 +1,7 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Adam
- * Date: 7/17/14
- * Time: 8:33 PM
- */
-class Route
+
+class Route extends App
 {
 
     use hookable;
@@ -101,7 +96,7 @@ class Route
                 if ($this->parent) {
                     return $this->parent->hostname();
                 } else {
-                    return app("config")->hostname;
+                    return $this->api("config")->hostname;
                 }
             }
 
@@ -171,7 +166,7 @@ class Route
     public function parent($route)
     {
         if (is_string($route)) {
-            $route = app("router")->get($route);
+            $route = $this->api("router")->get($route);
         }
 
         if (!$route instanceof Route) {

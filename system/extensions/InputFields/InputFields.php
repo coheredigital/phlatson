@@ -50,8 +50,8 @@ class InputFields extends Input implements ReceivesOptions
 
     protected function renderInput()
     {
-        app('config')->styles->add($this->url . "{$this->className}.css");
-        app('config')->scripts->add($this->url . "{$this->className}.js");
+        $this->api('config')->styles->add($this->url . "{$this->className}.css");
+        $this->api('config')->scripts->add($this->url . "{$this->className}.js");
 
 
         array_unshift($this->options, "Choose a field to add...");
@@ -65,7 +65,7 @@ class InputFields extends Input implements ReceivesOptions
 
             $fields = new ObjectCollection();
             foreach ($this->value as $item) {
-                $field = app("fields")->get($item['name']);
+                $field = $this->api("fields")->get($item['name']);
                 $fields->add($field);
             }
 

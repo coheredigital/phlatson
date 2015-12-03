@@ -15,7 +15,7 @@ class FieldtypeField extends Fieldtype
 
     public function getOutput($name)
     {
-        $field = app("fields")->get("$name");
+        $field = $this->api("fields")->get("$name");
         return $field;
     }
 

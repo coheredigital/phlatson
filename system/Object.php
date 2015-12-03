@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object implements JsonSerializable
+abstract class Object extends App implements JsonSerializable
 {
 
     use hookable;
@@ -83,7 +83,7 @@ abstract class Object implements JsonSerializable
             $rootDirectory = "system/";
         }
 
-        $path = app('config')->paths->root . $rootDirectory . $this->rootFolder;
+        $path = $this->api('config')->paths->root . $rootDirectory . $this->rootFolder;
         $path = Filter::path($path);
         return $path;
     }
@@ -97,7 +97,7 @@ abstract class Object implements JsonSerializable
     public function isSystem()
     {
         // remove site root from path
-        $path = str_replace(app('config')->paths->root, "", $this->file);
+        $path = str_replace($this->api('config')->paths->root, "", $this->file);
         $path = Filter::uri($path);
 
         // get first part of path
@@ -156,7 +156,7 @@ abstract class Object implements JsonSerializable
     protected function getUrl(){
 
 
-        $rootPath = app("config")->paths->root;
+        $rootPath = $this->api("config")->paths->root;
 
         $replace = [ROOT_PATH,$rootPath, "data.json"];
 
@@ -171,14 +171,15 @@ abstract class Object implements JsonSerializable
     {
 
         // get raw value
-        $value = $this->getUnformatted($name);
+
+        if(!$value = $this->getUnformatted($name)) return null;
 
         // get the field object matching the passed "$name"
-        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
+        $field = $this->api("fields") ? $this->api("fields")->get($name) : false; // TODO, why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
 
         if ($field instanceof Field) {
 
-            $fieldtype = app("extensions")->get($field->getFieldtypeName());
+            $fieldtype = $this->api("extensions")->get($field->getFieldtypeName());
             $fieldtype->object = $this;
             $value = $fieldtype->getOutput($value);
 
@@ -191,7 +192,7 @@ abstract class Object implements JsonSerializable
     protected function setFormatted($name, $value)
     {
         // get the field object matching the passed "$name"
-        $field = app("fields") ? app("fields")->get($name) : false; // TODO, why am I check if the app("fields") instance exist yet, this shouldn't be needed
+        $field = $this->api("fields") ? $this->api("fields")->get($name) : false; // TODO, why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field) {
 
@@ -232,15 +233,14 @@ abstract class Object implements JsonSerializable
      */
     protected function getUnformatted($name)
     {
-        $value = $this->data[$name];
-        return $value;
+        return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
 
     protected function processInputData()
     {
 
-        $post = app("request")->post;
+        $post = $this->api("request")->post;
 
         // loop through the templates available fields so that we only set values
         // for available fields and ignore the rest
@@ -266,14 +266,14 @@ abstract class Object implements JsonSerializable
     protected function processSaveName()
     {
 
-        $post = app("request")->post;
+        $post = $this->api("request")->post;
 
         // set name value
         if ($post->name && !$this->isNew()) { // TODO : this is temp
             $currentName = $this->name;
             $newName = Filter::name($post->name); // TODO add page name sanitizer
             if($currentName != $newName){
-                app("logger")->add("notice","Page '$this->name' renamed to '$newName'");
+                $this->api("logger")->add("notice","Page '$this->name' renamed to '$newName'");
                 unset($this->data["name"]);
                 $this->rename($newName);
             }
@@ -336,7 +336,7 @@ abstract class Object implements JsonSerializable
         // store objects existing data for reference
         $this->previousData = $this->data;
 
-        if (app("config")->simulate) {
+        if ($this->api("config")->simulate) {
             $saveFile = "test.json";
         } else {
             $saveFile = static::DEFAULT_SAVE_FILE;
@@ -458,14 +458,10 @@ abstract class Object implements JsonSerializable
                 return $this->getUrl();
             case 'urlEdit':
                 // TODO: temp solution for save redirect
-                $url = app('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
+                $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
             case 'path':
                 return $this->{$name};
-//            case 'path':
-//                return $this->getPath();
-//            case 'name':
-//                return $this->getName();
             case 'modified':
                 return filemtime($this->file);
             case 'className':

@@ -9,8 +9,8 @@ class MarkupPageTree extends Extension
 
     protected function setup()
     {
-        $this->admin = app("admin");
-        app('config')->scripts->add($this->url . "{$this->className}.js");
+        $this->admin = $this->api("admin");
+        $this->api('config')->scripts->add($this->url . "{$this->className}.js");
     }
 
 
@@ -78,7 +78,7 @@ class MarkupPageTree extends Extension
     protected function renderDropdown(Page $page)
     {
 
-        $templates = app("templates")->all(); // TODO: change to list only supported child templates for this template
+        $templates = $this->api("templates")->all(); // TODO: change to list only supported child templates for this template
 
         if (count($templates) > 1) {
 
@@ -88,7 +88,7 @@ class MarkupPageTree extends Extension
 
             foreach ($templates as $t) {
 
-                $rootUrl = app("admin")->route->url;
+                $rootUrl = $this->api("admin")->route->url;
 
                 $output .= "<a class='item' href='{$rootUrl}pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
             }
@@ -100,7 +100,7 @@ class MarkupPageTree extends Extension
         } else {
             if (count($templates)) {
 
-                $output = "<a class='button' href='" . app('config')->urls->root . app(
+                $output = "<a class='button' href='" . $this->api('config')->urls->root . $this->api(
                         "config"
                     )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon icon-plus'></i></a>";
                 return $output;

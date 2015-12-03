@@ -24,8 +24,8 @@ abstract class AdminList extends Admin implements AdminPage
     protected function renderList()
     {
 
-        $objectCollection = app($this->objectName)->all();
-        $table = app("extensions")->get("MarkupTable");
+        $objectCollection = $this->api($this->objectName)->all();
+        $table = $this->api("extensions")->get("MarkupTable");
 
         $this->columns["controls"] = "controls";
         $table->setColumns($this->columns);
@@ -82,7 +82,7 @@ abstract class AdminList extends Admin implements AdminPage
     public function render()
     {
 
-        $admin = app("admin");
+        $admin = $this->api("admin");
         $admin->title = $this->title;
         $heading = $this->renderHeading();
         $list = $this->renderList();

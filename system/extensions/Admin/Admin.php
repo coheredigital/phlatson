@@ -22,24 +22,28 @@ class Admin extends Extension
     protected function setup()
     {
 
-        app("admin", $this); // register api variable
+        $this->api("admin", $this); // register api variable
 
         $this->children = new ObjectCollection();
 
+        var_dump($this->api());
+        
         // default admin scripts and styles
-        app("config")->styles->add("{$this->url}styles/admin.css");
-        app("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
-        app("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
-        app("config")->scripts->add("{$this->url}scripts/main.js");
-        app("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
+        $this->api("config")->styles->add("{$this->url}styles/admin.css");
+        $this->api("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
+        $this->api("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
+        $this->api("config")->scripts->add("{$this->url}scripts/main.js");
+        $this->api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
 
-        if (app("router")->get("admin")) {
-            $this->route = app("router")->get("admin");
+
+
+        if ($this->api("router")->get("admin")) {
+            $this->route = $this->api("router")->get("admin");
         } else throw new FlatbedException("Admin route missing from Site.json configuration file.");
 
         // add the admin URL to the config urls variable for easy access/reference
-        app("config")->urls->admin = $this->route->url;
+        $this->api("config")->urls->admin = $this->route->url;
 
 
         $logoutRoute = new Route;
@@ -48,11 +52,11 @@ class Admin extends Extension
             ->parent($this->route)
             ->callback(
                 function () {
-                    app("session")->logout();
-                    app("router")->redirect(app("router")->get("login"), false);
+                    $this->api("session")->logout();
+                    $this->api("router")->redirect($this->api("router")->get("login"), false);
                 }
             );
-        app('router')->add($logoutRoute);
+        $this->api('router')->add($logoutRoute);
 
 
         $login = new Route;
@@ -62,11 +66,11 @@ class Admin extends Extension
             ->parent("admin")
             ->callback(function () {
                 //  add the login stylesheet and load the login layout
-                app("config")->styles->add("{$this->url}styles/login.css");
+                $this->api("config")->styles->add("{$this->url}styles/login.css");
                 include "login.php";
 
             });
-        app('router')->add($login);
+        $this->api('router')->add($login);
 
 
         $loginSubmit = new Route;
@@ -76,14 +80,14 @@ class Admin extends Extension
             ->parent("admin")
             ->callback(
                 function () {
-                    if (app("session")->login(app("request")->post->username, app("request")->post->password)) {
-                        app("router")->redirect(app("router")->get("admin")->url, false);
+                    if ($this->api("session")->login($this->api("request")->post->username, $this->api("request")->post->password)) {
+                        $this->api("router")->redirect($this->api("router")->get("admin")->url, false);
                     }
 
 
                 }
             );
-        app('router')->add($loginSubmit);
+        $this->api('router')->add($loginSubmit);
 
     }
 
@@ -95,11 +99,11 @@ class Admin extends Extension
     public function authorize()
     {
 
-        $app = app();
+        $app = $this->api();
         if ($app["user"]->isGuest()) {
 
-            if (app("request")->url != app("router")->get("login")->url) {
-                app("router")->redirect( app("router")->get("login"), false );
+            if ($this->api("request")->url != $this->api("router")->get("login")->url) {
+                $this->api("router")->redirect( $this->api("router")->get("login"), false );
             }
 
         }
@@ -114,10 +118,10 @@ class Admin extends Extension
     {
 
         // only run on admin route exact match
-        if( app("request")->url != app("router")->admin->url ) return false;
+        if( $this->api("request")->url != $this->api("router")->admin->url ) return false;
 
-        if (app("user")->isGuest()) app("router")->redirect(app("router")->get("login"), false);
-        else app("router")->redirect(app("router")->get("pages"), false);
+        if ($this->api("user")->isGuest()) $this->api("router")->redirect($this->api("router")->get("login"), false);
+        else $this->api("router")->redirect($this->api("router")->get("pages"), false);
 
     }
 
@@ -129,7 +133,7 @@ class Admin extends Extension
         if ($this->page instanceof AdminPage) // TODO why do I need to check this here?
             $this->output = $this->page->render();
 
-        extract(app()); // extract app variables for easier use in admin templates
+        extract($this->api()); // extract app variables for easier use in admin templates
         if ($this->output) include_once "layout.php";
 
 
@@ -147,7 +151,7 @@ class Admin extends Extension
     {
 
         // retrieve messages and unserialize
-        $messages = app("session")->get("adminMessages");
+        $messages = $this->api("session")->get("adminMessages");
         $messages = unserialize($messages);
 
         // add message to array
@@ -155,13 +159,13 @@ class Admin extends Extension
 
         // serialize and store
         $messages = serialize($messages);
-        app("session")->flash("adminMessages", $messages);
+        $this->api("session")->flash("adminMessages", $messages);
     }
 
     protected function getMessages()
     {
-        if (app("session")->has("adminMessages")) {
-            return unserialize(app("session")->get("adminMessages"));
+        if ($this->api("session")->has("adminMessages")) {
+            return unserialize($this->api("session")->get("adminMessages"));
         }
         return null;
     }

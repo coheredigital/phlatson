@@ -34,9 +34,9 @@ class Page extends Object
                 $this->settings->nameFrom
             )
         ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return app("sanitizer")->name($this->settings->nameFrom);
+            return $this->api("sanitizer")->name($this->settings->nameFrom);
         } else {
-            return app("sanitizer")->name($this->title);
+            return $this->api("sanitizer")->name($this->title);
         }
 
     }
@@ -68,7 +68,7 @@ class Page extends Object
         foreach ($subs as $folder) {
 
             $url = $this->get("directory") . "/" . basename($folder);
-            $page = app("pages")->get($url);
+            $page = $this->api("pages")->get($url);
             if ($page instanceof Page) {
                 // pass the Page to $children array, use url as key to avoid duplicates
                 // should be impossible for any to items to return the same url
@@ -93,7 +93,7 @@ class Page extends Object
         }
 
         foreach ($urls as $url) {
-            $page = app("pages")->get($url);
+            $page = $this->api("pages")->get($url);
             $parents[] = $page;
         }
 
@@ -106,7 +106,7 @@ class Page extends Object
         if ($name == $this->get("url")) {
             return $this;
         }
-        return app("pages")->get($name);
+        return $this->api("pages")->get($name);
     }
 
     protected function createUrl($array)
@@ -126,7 +126,7 @@ class Page extends Object
                 $directory = implode("/", $this->route);
                 return Filter::uri($directory);
             case 'url':
-                return app('config')->urls->root . ltrim($this->directory, "/");
+                return $this->api('config')->urls->root . ltrim($this->directory, "/");
             case 'children':
                 return $this->children();
             case 'rootParent':
@@ -158,7 +158,7 @@ class Page extends Object
                 break;
             default:
                 if ($this->template && $this->template->fields->has($name)) {
-                    $field = app("fields")->get("$name");
+                    $field = $this->api("fields")->get("$name");
                     $fieldtype = $field->type;
                     $this->data[$name] = $fieldtype->getSave($value);
                 } else {

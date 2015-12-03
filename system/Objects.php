@@ -1,6 +1,6 @@
 <?php
 
-abstract class Objects
+abstract class Objects extends App
 {
 
     use hookable;
@@ -23,7 +23,7 @@ abstract class Objects
         $this->systemRoot = Filter::path(ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
 
         if ($this instanceof Pages) {
-            $this->data['/'] = app("config")->paths->pages . "data.json";
+            $this->data['/'] = $this->api("config")->paths->pages . "data.json";
         }
 
     }

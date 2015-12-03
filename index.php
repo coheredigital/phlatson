@@ -12,43 +12,46 @@ require_once ROOT_PATH . 'system/_traits.php';
 try {
 
     /* instantiate app variables */
-    app('config', new Config);
-    app('request', $request = new Request);
+
+    $flatbed = new App;
+
+    $flatbed->api('config', $config = new Config);
+    $flatbed->api('request', $request = new Request);
 
     /* init Router and set default request behaviour */
     $pagesRoute = new Route([
         "path" =>":all",
         "callback" => "Pages.render"
     ]);
-    app('router', new Router);
+    $flatbed->api('router', new Router);
 
     /* setup config routes, default is just the admin route */
-    if(count(app("config")->routes)) foreach (app("config")->routes as $r){
+    if(count($flatbed->api("config")->routes)) foreach ($flatbed->api("config")->routes as $r){
         $route = new Route($r);
-        app("router")->add($route);
+        $flatbed->api("router")->add($route);
     }
 
 
     // wrapped in try while extensions requires instantiation
-    app('events', 'Events');
-    app('extensions', new Extensions);
-    app('pages', 'Pages');
-    app('users', 'Users');
-    app('fields', 'Fields');
-    app('templates', 'Templates');
-    app('session', 'Session');
-    app('logger', 'Logger');
+    $flatbed->api('events', 'Events');
+    $flatbed->api('extensions', new Extensions);
+    $flatbed->api('pages', 'Pages');
+    $flatbed->api('users', 'Users');
+    $flatbed->api('fields', 'Fields');
+    $flatbed->api('templates', 'Templates');
+    $flatbed->api('session', 'Session');
+    $flatbed->api('logger', 'Logger');
 
     // add pages route last just before running app
     $pagesRoute = new Route([
         "path" =>":all",
         "callback" => "Pages.render"
     ]);
-    app('router')->add($pagesRoute);
+    $flatbed->api('router')->add($pagesRoute);
 
     // run the app
-    app('router')->run($request);
+    $flatbed->api('router')->run($request);
 
 } catch(FlatbedException $exception) {
-    echo $exception->render();
+    echo $exception->render($config);
 }

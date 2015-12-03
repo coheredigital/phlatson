@@ -10,7 +10,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
         $fields = new ObjectCollection();
 
         if(count($array)) foreach ($array as $item) {
-            if(isset($item['name']) && $field = app("fields")->get($item['name'])) {
+            if(isset($item['name']) && $field = $this->api("fields")->get($item['name'])) {
                 $fields->add($field);
             }
         }
@@ -20,7 +20,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
 
         if (count($defaultFields)) {
             foreach ($defaultFields as $item) {
-                $field = app("fields")->get($item);
+                $field = $this->api("fields")->get($item);
                 if ($field instanceof Field) {
                     $fields->add($field);
                 }
@@ -39,7 +39,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
 
         // remove invalid fields
         foreach ($array as $key => $name) {
-            if (!app("fields")->get($key)) {
+            if (!$this->api("fields")->get($key)) {
                 unset($array[$key]);
             } else {
                 $formattedArray[] = ["name" => $key];
@@ -52,7 +52,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
     public function options(){
 
         $options = [];
-        $fields = app("fields")->all();
+        $fields = $this->api("fields")->all();
 
         foreach($fields as $field){
             $options["$field->title"] = $field->name;

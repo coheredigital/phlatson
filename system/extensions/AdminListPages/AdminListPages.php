@@ -26,14 +26,14 @@ class AdminListPages extends Extension implements AdminPage
             ->parent("admin")
             ->callback(
                 function () {
-                    $this->rootPage = app("pages")->get("/");
-                    app("admin")->title = "Pages";
-                    app("admin")->page = $this;
-                    app("admin")->render();
+                    $this->rootPage = $this->api("pages")->get("/");
+                    $this->api("admin")->title = "Pages";
+                    $this->api("admin")->page = $this;
+                    $this->api("admin")->render();
                 }
             );
 
-        app("router")->add($this->route);
+        $this->api("router")->add($this->route);
 
         $subpageRoute = new Route;
         $subpageRoute
@@ -41,15 +41,15 @@ class AdminListPages extends Extension implements AdminPage
             ->parent("admin")
             ->callback(
                 function ($uri) {
-                    $admin =  app("admin");
-                    $this->rootPage = app("pages")->get($uri);
+                    $admin =  $this->api("admin");
+                    $this->rootPage = $this->api("pages")->get($uri);
 
                     $admin->title = "Pages";
                     $admin->page = $this;
                     $admin->render();
                 }
             );
-        app("router")->add($subpageRoute);
+        $this->api("router")->add($subpageRoute);
 
     }
 
@@ -57,7 +57,7 @@ class AdminListPages extends Extension implements AdminPage
     protected function renderPageTree()
     {
 
-        $markupPageList = app("extensions")->get("MarkupPageTree");
+        $markupPageList = $this->api("extensions")->get("MarkupPageTree");
         $markupPageList->rootPage = $this->rootPage;
         $markupPageList->admin = $this;
 
@@ -68,7 +68,7 @@ class AdminListPages extends Extension implements AdminPage
     protected function renderPageList()
     {
 
-        $markupPageList = app("extensions")->get("MarkupPageList");
+        $markupPageList = $this->api("extensions")->get("MarkupPageList");
         $markupPageList->rootPage = $this->rootPage;
         $markupPageList->adminPanel = $this;
 

@@ -13,7 +13,7 @@ class File extends Object
 
         $this->page = $page;
         $this->path = $page->path;
-        $this->url = app("config")->urls->pages . $page->directory . "/" . rawurlencode($name);
+        $this->url = $this->api("config")->urls->pages . $page->directory . "/" . rawurlencode($name);
         $this->file = $page->path . $name;
         $this->filesize = filesize($this->file);
         $this->filesizeFormatted = $this->formatSizeUnits($this->filesize);

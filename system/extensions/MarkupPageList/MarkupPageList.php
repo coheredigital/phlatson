@@ -9,7 +9,7 @@ class MarkupPageList extends Extension
 
     protected function renderList(Page $page){
 
-        $table = app("extensions")->get("MarkupTable");
+        $table = $this->api("extensions")->get("MarkupTable");
 
         $children = $page->children();
 
@@ -34,7 +34,7 @@ class MarkupPageList extends Extension
 
     protected function renderPageControls(Page $page){
 
-        $admin = app("admin");
+        $admin = $this->api("admin");
 
         $output = "<div class='page-tree-item-buttons' style='visibility: visible;'>";
         if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";

@@ -15,11 +15,11 @@ class Template extends Object
             case 'template':
                 //  TODO : refactor - the method for defining the master to this template is done manually here
                 // maybe I can automate this like with pages
-                $template = app("templates")->get("template");
+                $template = $this->api("templates")->get("template");
                 $template->parent = $this;
                 return $template;
             case 'layout':
-                $layoutFile = app('config')->paths->layouts . $this->name . ".php";
+                $layoutFile = $this->api('config')->paths->layouts . $this->name . ".php";
                 return $layoutFile;
             default:
                 return parent::get($name);

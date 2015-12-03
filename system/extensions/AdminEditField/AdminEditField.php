@@ -13,12 +13,12 @@ class AdminEditField extends AdminEdit
             ->parent("admin")
             ->callback(
             function ($name) {
-                $this->object = app("fields")->get($name);
+                $this->object = $this->api("fields")->get($name);
                 $this->title = "Edit Field";
                 $this->render();
             }
         );
-        app("router")->add($fieldRoute);
+        $this->api("router")->add($fieldRoute);
 
 
         $newFieldRoute = new Route;
@@ -35,7 +35,7 @@ class AdminEditField extends AdminEdit
                 $this->render();
             }
         );
-        app("router")->add($newFieldRoute);
+        $this->api("router")->add($newFieldRoute);
 
 
 
@@ -54,7 +54,7 @@ class AdminEditField extends AdminEdit
                     $this->processSave();
                 }
             );
-        app("router")->add($newSave);
+        $this->api("router")->add($newSave);
 
 
         $saveFieldRoute = new Route;
@@ -64,12 +64,12 @@ class AdminEditField extends AdminEdit
             ->parent("admin")
             ->callback(
             function ($name) {
-                $page = app("fields")->get($name);
+                $page = $this->api("fields")->get($name);
                 $this->object = $page;
                 $this->processSave();
             }
         );
-        app("router")->add($saveFieldRoute);
+        $this->api("router")->add($saveFieldRoute);
 
 
 

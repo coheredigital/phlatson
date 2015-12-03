@@ -7,7 +7,7 @@ class InputPageFiles extends Input
 
     protected function renderInput()
     {
-        $config = app("config");
+        $config = $this->api("config");
 
         $config->scripts->add($this->url . "dropzone.js");
         $config->scripts->add($this->url . $this->className . ".js");

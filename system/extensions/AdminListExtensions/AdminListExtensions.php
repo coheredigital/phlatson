@@ -14,14 +14,14 @@ class AdminListExtensions extends AdminList
         $this->route
             ->name("extensions")
             ->path("extensions")
-            ->parent(app("admin")->route)
+            ->parent($this->api("admin")->route)
             ->callback(
                 function () {
                     $this->render();
                 }
             );
 
-        app('router')->add($this->route);
+        $this->api('router')->add($this->route);
 
     }
 

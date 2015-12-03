@@ -19,7 +19,7 @@ class AdminListFields extends AdminList
         $this->route
             ->name("fields")
             ->path("fields")
-            ->parent(app("admin")->route)
+            ->parent($this->api("admin")->route)
             ->callback(
                 function () {
                     $this->render();
@@ -27,7 +27,7 @@ class AdminListFields extends AdminList
                 }
             );
 
-        app('router')->add($this->route);
+        $this->api('router')->add($this->route);
 
     }
 

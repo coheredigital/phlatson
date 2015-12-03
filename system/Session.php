@@ -14,25 +14,25 @@ class Session implements IteratorAggregate
 
         // check for a logged in user
         if ($username = $this->get('_user_name')) {
-            $user = app('users')->get($username);
+            $user = $this->api('users')->get($username);
             // update timestamp to extend session life
             if ($user) {
                 $this->set('_user_ts', time());
             }
             // set current user to the logged in user
         } else {
-            $user = app('users')->get("guest");
+            $user = $this->api('users')->get("guest");
         }
 
-//        app('users')->setActiveUser($user);
+//        $this->api('users')->setActiveUser($user);
 
-        app('user', $user);
+        $this->api('user', $user);
 
     }
 
 
     public function exists(){
-        if( isset($_SESSION) || $_COOKIE[app('config')->sessionName] ){
+        if( isset($_SESSION) || $_COOKIE[$this->api('config')->sessionName] ){
             return true;
         }
         return false;
@@ -175,7 +175,7 @@ class Session implements IteratorAggregate
      */
     protected function start()
     {
-        session_name(app('config')->sessionName);
+        session_name($this->api('config')->sessionName);
         @session_start();
     }
 
@@ -219,7 +219,7 @@ class Session implements IteratorAggregate
     public function login($name, $password)
     {
         // should sanitize name
-        $user = app('users')->get("$name");
+        $user = $this->api('users')->get("$name");
         if (!$user instanceof User) {
             throw new FlatbedException("User {$name} not found!");
         }
@@ -228,7 +228,7 @@ class Session implements IteratorAggregate
             $this->regenerate(); // rebuild session data
             $this->set('_user_name', $user->name);
             $this->set('_user_time', time());
-            app('user', $user);
+            $this->api('user', $user);
             return true;
         }
         return null;

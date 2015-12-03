@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 8:33 PM
  */
-class Router
+class Router extends App
 {
 
     // routes organize in multidimensional array
@@ -27,7 +27,7 @@ class Router
     {
 
 
-        $hostname = $route->hostname ? $route->hostname : app("config")->hostname; // by default routes are children of the default hostname
+        $hostname = $route->hostname ? $route->hostname : $this->api("config")->hostname; // by default routes are children of the default hostname
         $method = $route->method;
         $path = $route->path;
 

@@ -4,16 +4,31 @@
  * API Registry class contains all core api classes to be accessed by any
  * class extending the core. or any class via the api() function defined in _functions.php
  */
-final class App
+class App
 {
 
-    private static $registry = array();
-    private static $lock = array();
+    private $registry = array();
+    private $lock = array();
 
 
-    public static function __callStatic($name, $arguments)
+    /**
+     * @param $key
+     * @param $value
+     * @throws Exception
+     */
+    public function api($key = null, $value = null)
     {
-        return static::get($name);
+        if ($value && $key) {
+            
+            $this->setApi($key, $value, true);
+            return $this;
+        }
+        else if($key){
+           return $this->getApi($key);
+        }
+        else{
+            return $this->fetchAll();
+        }
     }
 
     /**
@@ -22,15 +37,15 @@ final class App
      * @param bool $lock
      * @throws Exception
      */
-    public static function set($key, $value, $lock = true)
+    public function setApi($key, $value, $lock = true)
     {
 
-        if (isset(static::$registry[$key]) && in_array($key, static::$lock)) {
+        if (isset($this->registry[$key]) && in_array($key, $this->lock)) {
             throw new Exception("There is already an API entry for '{$key}', value is locked.");
         }
         // set $key and $value the same to avoid duplicates
-        if ($lock) static::$lock[$key] = $key;
-        static::$registry[$key] = $value;
+        if ($lock) $this->lock[$key] = $key;
+        $this->registry[$key] = $value;
 
     }
 
@@ -43,9 +58,9 @@ final class App
     {
 
         if (!is_null($name) && !is_null($object)) {
-            static::set($name, $object, $lock);
+            $this->set($name, $object, $lock);
         } else {
-            return static::get($name);
+            return $this->get($name);
         }
 
         return false;
@@ -53,37 +68,61 @@ final class App
     }
 
 
-    public static function fetchAll()
+    public function fetchAll()
     {
         // instantiate an objects passed as string value
-        foreach (static::$registry as $key => $value) {
+        foreach ($this->registry as $key => $value) {
             if (is_object($value)) continue;
-            static::instantiate($key);
+            $this->instantiate($key);
         }
-        return static::$registry;
+        return $this->registry;
     }
 
-    public static function instantiate($name)
+    public function instantiate($name)
     {
-        static::$registry[$name] = new static::$registry[$name];
+        if(!$classname = $this->registry[$name]) return null;
+        $this->registry[$name] = new $classname;
     }
 
-    protected static function has($name)
+    protected function has($name)
     {
-        return isset(static::$registry[$name]);
+        return isset($this->registry[$name]);
     }
 
-    public static function get($name)
+    public function getApi($name)
     {
         if (is_null($name))
-            return static::fetchAll();
-        if (!static::has($name)) {
+            return $this->fetchAll();
+        if (!$this->has($name)) {
             return false;
         }
-        if (!is_object(static::$registry[$name])) {
-            static::instantiate($name);
+        if (!is_object($this->registry[$name])) {
+            $this->instantiate($name);
         }
-        return static::$registry[$name];
+        return $this->registry[$name];
+    }
+
+    public function __get($name)
+    {
+        $this->getApi($name);
+    }
+
+
+    public function __set($name, $value)
+    {
+        $this->setApi($name, $value);
+    }
+
+
+    public static function __callStatic($name, $arguments)
+    {
+        // Note: value of $name is case sensitive.
+        switch ($name) {
+            case 'api':
+                return $this->api($arguments);
+            default:
+                return null;
+        }
     }
 
 }
