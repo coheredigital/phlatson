@@ -22,11 +22,12 @@ class Admin extends Extension
     protected function setup()
     {
 
-        $this->api("admin", $this); // register api variable
+        if (!$this->api("admin")) {
+            $this->api("admin", $this); // register api variable
+        }
+        
 
         $this->children = new ObjectCollection();
-
-        var_dump($this->api());
         
         // default admin scripts and styles
         $this->api("config")->styles->add("{$this->url}styles/admin.css");
@@ -34,7 +35,6 @@ class Admin extends Extension
         $this->api("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
         $this->api("config")->scripts->add("{$this->url}scripts/main.js");
         $this->api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
-
 
 
 
@@ -99,8 +99,9 @@ class Admin extends Extension
     public function authorize()
     {
 
-        $app = $this->api();
-        if ($app["user"]->isGuest()) {
+
+
+        if ($this->api("user")->isGuest()) {
 
             if ($this->api("request")->url != $this->api("router")->get("login")->url) {
                 $this->api("router")->redirect( $this->api("router")->get("login"), false );

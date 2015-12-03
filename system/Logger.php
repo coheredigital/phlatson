@@ -6,7 +6,7 @@
  * Time: 10:51 AM
  */
 
-class Logger{
+class Logger extends App {
 
     private $file;
     private $data;

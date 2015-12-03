@@ -9,16 +9,6 @@ function flatbedErrorHandler($errno, $errstr, $errfile, $errline) {
 }
 set_error_handler('flatbedErrorHandler');
 
-// shorthand for get $this->api($name) and set $this->api($name, $value)
-// function $this->api($name = null, $value = null, $lock = false)
-// {
-//     if (is_null($value)) {
-//         return App::get($name, $value, $lock);
-//     }
-//     else{
-//         return App::set($name, $value, $lock);
-//     }
-// }
 
 // Emulate register_globals off
 function unregister_GLOBALS()

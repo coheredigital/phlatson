@@ -15,14 +15,15 @@ try {
 
     $flatbed = new App;
 
-    $flatbed->api('config', $config = new Config);
-    $flatbed->api('request', $request = new Request);
+    $flatbed->api('config', new Config);
+    $flatbed->api('request', new Request);
 
     /* init Router and set default request behaviour */
     $pagesRoute = new Route([
         "path" =>":all",
         "callback" => "Pages.render"
     ]);
+
     $flatbed->api('router', new Router);
 
     /* setup config routes, default is just the admin route */
@@ -39,7 +40,7 @@ try {
     $flatbed->api('users', 'Users');
     $flatbed->api('fields', 'Fields');
     $flatbed->api('templates', 'Templates');
-    $flatbed->api('session', 'Session');
+    $flatbed->api('session', new Session);
     $flatbed->api('logger', 'Logger');
 
     // add pages route last just before running app
@@ -50,8 +51,8 @@ try {
     $flatbed->api('router')->add($pagesRoute);
 
     // run the app
-    $flatbed->api('router')->run($request);
+    $flatbed->api('router')->run($flatbed->api("request"));
 
 } catch(FlatbedException $exception) {
-    echo $exception->render($config);
+    echo $exception->render($flatbed->api("config"));
 }

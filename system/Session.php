@@ -1,6 +1,6 @@
 <?php
 
-class Session implements IteratorAggregate
+class Session extends App implements IteratorAggregate
 {
 
     private $name;
@@ -23,8 +23,6 @@ class Session implements IteratorAggregate
         } else {
             $user = $this->api('users')->get("guest");
         }
-
-//        $this->api('users')->setActiveUser($user);
 
         $this->api('user', $user);
 
