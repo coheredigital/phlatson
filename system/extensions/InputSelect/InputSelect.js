@@ -1,1 +1,3 @@
-$('.FieldtypeSelect select').select2();
+$(function(){
+	$('select.InputSelect').selectize();
+});

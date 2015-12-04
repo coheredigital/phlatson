@@ -15,6 +15,12 @@ class Events {
         $this->listeners[$event][] = $callback;
     }
 
+
+    public function detach($event)
+    {
+       unset($this->listeners[$event]);
+    }
+
     public function execute($event, Event $param)
     {
 

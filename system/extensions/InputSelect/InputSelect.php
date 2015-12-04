@@ -1,17 +1,22 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: aspruijt
- * Date: 22/08/14
- * Time: 12:48 PM
- */
+
 class InputSelect extends Input implements ReceivesOptions
 {
 
     protected $options = [];
     protected $selected = [];
 
+
+    protected function setup(){
+
+        $this->api('config')->styles->add($this->url . "selectize/css/selectize.css");
+        $this->api('config')->styles->add($this->url . "{$this->className}.css");
+
+        $this->api('config')->scripts->add($this->url . "selectize/js/standalone/selectize.js");
+        $this->api('config')->scripts->add($this->url . "{$this->className}.js");
+
+    }
 
     protected function renderOptions()
     {
@@ -56,7 +61,9 @@ class InputSelect extends Input implements ReceivesOptions
     protected function renderInput()
     {
         $options = $this->renderOptions();
-        $output = "<select {$this->attributes}>$options</select>";
+        $this->attribute('class', 'ui input ' . $this->className);
+        $attributes = $this->getAttributes();
+        $output = "<select {$attributes} >$options</select>";
         return $output;
     }
 

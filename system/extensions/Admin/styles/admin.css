@@ -2213,12 +2213,6 @@ input {
   border: 1px solid #dddddd;
   resize: none;
 }
-select:focus,
-textarea:focus,
-textarea:focus,
-input:focus {
-  border-bottom-color: #7bd290;
-}
 .form {
   position: relative;
 }
