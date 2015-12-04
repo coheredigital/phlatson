@@ -15,7 +15,7 @@ class InputPageFiles extends Input
 
 
         if( count($this->files) ) $this->files->sort("extension");
-        $output .= "<div action='{$config->urls->admin}pages/upload/{$this->object->directory}' class='' id='files'></div>";
+        $output .= "<div action='{$config->urls->admin}pages/upload{$this->object->url}' class='' id='files'></div>";
         $output .= "<div class='{$this->name}-dragndrop dz-clickable dropzone'>";
         $output .= "<i class='big cloud upload icon'></i>Drag &amp; drop files here";
         $output .= '<div class="sub header">or click to choose files</div>';

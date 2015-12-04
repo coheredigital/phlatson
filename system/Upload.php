@@ -1,6 +1,6 @@
 <?php
 
-class Upload
+class Upload extends Flatbed
 {
 
     protected $object;

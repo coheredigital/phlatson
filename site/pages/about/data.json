@@ -1,6 +1,6 @@
 {
     "title": "About",
-    "content": false,
+    "content": "",
     "name": "about",
     "template": "default",
     "parent": "\/"

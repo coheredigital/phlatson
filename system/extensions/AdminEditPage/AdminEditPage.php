@@ -117,6 +117,9 @@ class AdminEditPage extends AdminEdit
         $input = $this->api("extensions")->get("InputPageFiles");
         $input->label = "Files";
         $input->attribute("name", "parent");
+
+
+        $input->object = $this->object;
         $input->files = $this->object->files;
 
         return $input;
