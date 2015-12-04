@@ -1,15 +1,24 @@
 @import "../Admin/styles/_variables";
+.field-InputTinymce{
+	.mce-tinymce{
 
-.mce-tinymce{
-
-	&.mce-container{
-		// border-color: 
-		border: 0 !important;
+		&.mce-container{
+			// border-color: 
+			border: 0 !important;
+		}
+		.mce-btn{
+			background-color: #fff;
+		}
 	}
-	.mce-btn{
-		background-color: #fff;
+	.mce-panel{
+		
+		background: #fff !important;
 	}
-}
-.mce-panel{
-	background: #fff !important;
+	.mce-toolbar-grp{
+		padding: .5em;
+	}
+	
+	.mce-edit-area{
+		border-color: @light-gray;
+	}
 }

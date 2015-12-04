@@ -1,1 +1,18 @@
-.mce-tinymce.mce-container{border:0 !important}.mce-tinymce .mce-btn{background-color:#fff}.mce-panel{background:#fff !important}
+/* Colors */
+/* ELEMENT COLORS */
+/* SIZES */
+.field-InputTinymce .mce-tinymce.mce-container {
+  border: 0 !important;
+}
+.field-InputTinymce .mce-tinymce .mce-btn {
+  background-color: #fff;
+}
+.field-InputTinymce .mce-panel {
+  background: #fff !important;
+}
+.field-InputTinymce .mce-toolbar-grp {
+  padding: .5em;
+}
+.field-InputTinymce .mce-edit-area {
+  border-color: #dddddd;
+}

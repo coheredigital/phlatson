@@ -1,5 +1,7 @@
 {
     "title": "History",
     "content": "<p>sdsdsd<\/p>",
-    "template": "article"
+    "name": "historycopy",
+    "template": "article",
+    "parent": "\/"
 }
