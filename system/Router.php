@@ -6,7 +6,7 @@
  * Date: 7/17/14
  * Time: 8:33 PM
  */
-class Router extends App
+class Router extends Flatbed
 {
 
     // routes organize in multidimensional array

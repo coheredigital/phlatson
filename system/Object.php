@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object extends App implements JsonSerializable
+abstract class Object extends Flatbed implements JsonSerializable
 {
 
     use hookable;

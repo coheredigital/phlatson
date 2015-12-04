@@ -13,10 +13,10 @@ try {
 
     /* instantiate app variables */
 
-    $flatbed = new App;
+    $flatbed = new Flatbed;
 
-    $flatbed->api('config', new Config);
-    $flatbed->api('request', new Request);
+    $flatbed->api('config', new Config, true);
+    $flatbed->api('request', new Request, true);
 
     /* init Router and set default request behaviour */
     $pagesRoute = new Route([
@@ -33,26 +33,24 @@ try {
     }
 
 
-    // wrapped in try while extensions requires instantiation
-    $flatbed->api('events', 'Events');
-    $flatbed->api('extensions', new Extensions);
-    $flatbed->api('pages', 'Pages');
-    $flatbed->api('users', 'Users');
-    $flatbed->api('fields', 'Fields');
-    $flatbed->api('templates', 'Templates');
-    $flatbed->api('session', new Session);
-    $flatbed->api('logger', 'Logger');
+    $flatbed->api('events', 'Events', true);
+    $flatbed->api('extensions', new Extensions, true);
+    $flatbed->api('pages', 'Pages', true);
+    $flatbed->api('users', 'Users', true);
+    $flatbed->api('fields', 'Fields', true);
+    $flatbed->api('templates', 'Templates', true);
+    $flatbed->api('session', new Session, true);
+    $flatbed->api('logger', 'Logger', true);
 
     // add pages route last just before running app
-    $pagesRoute = new Route([
+    $flatbed->api('router')->add(new Route([
         "path" =>":all",
         "callback" => "Pages.render"
-    ]);
-    $flatbed->api('router')->add($pagesRoute);
+    ]));
 
     // run the app
     $flatbed->api('router')->run($flatbed->api("request"));
 
 } catch(FlatbedException $exception) {
-    echo $exception->render($flatbed->api("config"));
+    echo $exception->render(Api::get("config"));
 }

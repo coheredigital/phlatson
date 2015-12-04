@@ -1,7 +1,7 @@
 <?php
 
 
-class Route extends App
+class Route extends Flatbed
 {
 
     use hookable;

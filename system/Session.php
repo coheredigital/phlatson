@@ -1,6 +1,6 @@
 <?php
 
-class Session extends App implements IteratorAggregate
+class Session extends Flatbed implements IteratorAggregate
 {
 
     private $name;

@@ -1,10 +1,4 @@
 {
-    "title": "HTML",
-    "type": "Fieldtype",
-    "listeners": [
-        {
-            "name": "before.FieldtypeRichtext.render",
-            "methods": ["preloadStyle"]
-        }
-    ]
+    "title": "Richtext",
+    "type": "Fieldtype"
 }

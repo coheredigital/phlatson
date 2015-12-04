@@ -30,7 +30,8 @@ class MarkupPageTree extends Extension
 
         if(is_array($view) && $view['type'] == "list"){
             if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
-            $output .= "<a class='page-tree-item-button' href='{$this->admin->route->url}pages{$page->url}'><i class='icon icon-list'></i></a>";
+            $url = $this->admin->route->url . ltrim($page->url, '/');
+            $output .= "<a class='page-tree-item-button' href='{$url}'><i class='icon icon-list'></i></a>";
             if($this->admin) $this->admin->subnav->add($page);
 
 

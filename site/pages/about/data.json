@@ -1,6 +1,6 @@
 {
     "title": "About",
-    "content": "<p>sdsdsd<\/p>",
+    "content": false,
     "name": "about",
     "template": "default",
     "parent": "\/"

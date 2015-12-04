@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aspruijt
- * Date: 05/02/2015
- * Time: 10:51 AM
- */
 
-class Logger extends App {
+
+
+class Logger extends Flatbed {
 
     private $file;
     private $data;

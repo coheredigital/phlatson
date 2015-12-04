@@ -1,6 +1,6 @@
 <?php
 
-abstract class Objects extends App
+abstract class Objects extends Flatbed
 {
 
     use hookable;
