@@ -39,7 +39,6 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         }
 
-        // $this->checkDataIntegrity();
 
     }
 
@@ -176,11 +175,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         if(!$value = $this->getUnformatted($name)) return null;
 
         // get the field object matching the passed "$name"
-        $field = $this->api("fields") ? $this->api("fields")->get($name) : false; // TODO, why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
+        $field = $this->api("fields")->get($name);
 
         if ($field instanceof Field) {
 
-            $fieldtype = $this->api("extensions")->get($field->getFieldtypeName());
+            $fieldtypeName = $field->getUnformatted("fieldtype");
+            $fieldtype = $this->api("extensions")->get($fieldtypeName);
             $fieldtype->object = $this;
             $value = $fieldtype->getOutput($value);
 

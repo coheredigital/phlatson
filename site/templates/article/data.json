@@ -7,11 +7,5 @@
     {
       "name": "content"
     }
-  ],
-  "view" : {
-    "type": "list",
-    "columns": [
-      "title"
-    ]
-  }
+  ]
 }

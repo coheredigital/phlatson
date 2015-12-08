@@ -1,4 +1,4 @@
 {
   "label": "User",
-  "fields": []
+  "fields": ["name", "password"]
 }

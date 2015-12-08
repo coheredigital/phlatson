@@ -32,12 +32,14 @@ try {
         $flatbed->api("router")->add($route);
     }
 
-
     $flatbed->api('events', 'Events', true);
+
+    $flatbed->api('fields', new Fields, true);
     $flatbed->api('extensions', new Extensions, true);
+
     $flatbed->api('pages', 'Pages', true);
     $flatbed->api('users', 'Users', true);
-    $flatbed->api('fields', 'Fields', true);
+
     $flatbed->api('templates', 'Templates', true);
     $flatbed->api('session', new Session, true);
     $flatbed->api('logger', 'Logger', true);

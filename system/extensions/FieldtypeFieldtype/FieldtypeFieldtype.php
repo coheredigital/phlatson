@@ -3,12 +3,12 @@
 class FieldtypeFieldtype extends Fieldtype implements ProvidesOptions
 {
     protected $page;
-    protected $objectType = "field";
+//    protected $objectType = "field";
 
     public function getOutput($name)
     {
-        $field = $this->api("extensions")->get("$name");
-        return $field;
+        $fieldtype = $this->api("extensions")->get("$name");
+        return $fieldtype;
     }
 
     public function getSave($value)

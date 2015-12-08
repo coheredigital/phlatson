@@ -1,7 +1,6 @@
 {
     "title": "News",
     "content": "<p>sdsdsd<\/p>",
-    "name": "contact-us1rt",
-    "template": "article",
-    "parent": "\/"
+    "name": "news",
+    "template": "blog"
 }
