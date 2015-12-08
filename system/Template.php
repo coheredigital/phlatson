@@ -5,8 +5,7 @@ class Template extends Object
 
     public $parent; // the object this template belongs to
     protected $rootFolder = "templates";
-    public $defaultFields = ['title','fields'];
-
+    public $defaultFields = ['title','fields', 'name'];
 
 
     public function get($name)

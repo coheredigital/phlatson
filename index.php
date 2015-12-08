@@ -16,7 +16,7 @@ try {
     $flatbed = new Flatbed;
 
     $flatbed->api('config', new Config, true);
-    $flatbed->api('request', new Request, true);
+    $flatbed->api('request', $request = new Request, true);
 
     /* init Router and set default request behaviour */
     $pagesRoute = new Route([
@@ -24,7 +24,7 @@ try {
         "callback" => "Pages.render"
     ]);
 
-    $flatbed->api('router', new Router);
+    $flatbed->api('router', new Router, true);
 
     /* setup config routes, default is just the admin route */
     if(count($flatbed->api("config")->routes)) foreach ($flatbed->api("config")->routes as $r){
@@ -49,7 +49,7 @@ try {
     ]));
 
     // run the app
-    $flatbed->api('router')->run($flatbed->api("request"));
+    $flatbed->api('router')->run($request);
 
 } catch(FlatbedException $exception) {
     echo $exception->render(Api::get("config"));

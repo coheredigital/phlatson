@@ -1,7 +1,7 @@
 {
-    "title": "About",
-    "content": "",
-    "name": "about",
+    "title": "sdsdsd",
+    "content": "<p>sdsdsdsd<\/p>",
+    "name": "",
     "template": "default",
-    "parent": "\/"
+    "parent": "\/about"
 }

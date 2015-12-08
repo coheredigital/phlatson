@@ -26,20 +26,20 @@ class Page extends Object
         array_pop($requests); // remove current (last) item to find parent
         return $this->createUrl($requests);
     }
-
-    protected function getNewName()
-    {
-        // set object name
-        if ($this->template->_settings->nameFrom && $this->template->fields->has(
-                $this->settings->nameFrom
-            )
-        ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-            return $this->api("sanitizer")->name($this->settings->nameFrom);
-        } else {
-            return $this->api("sanitizer")->name($this->title);
-        }
-
-    }
+//
+//    protected function getNewName()
+//    {
+//        // set object name
+//        if ($this->template->_settings->nameFrom && $this->template->fields->has(
+//                $this->settings->nameFrom
+//            )
+//        ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
+//            return $this->api("sanitizer")->name($this->settings->nameFrom);
+//        } else {
+//            return $this->api("sanitizer")->name($this->title);
+//        }
+//
+//    }
 
     public function files()
     {

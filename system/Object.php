@@ -15,7 +15,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
-    protected $previousData = [];
+    protected $initData = [];
     protected $settings = [];
 
     protected $defaultFields = [];
@@ -33,6 +33,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->rootPath = $this->getRootPath();
             $this->path = $this->getPath();
             $this->data = $this->getData();
+            $this->initData = $this->getData();
             $this->setUnformatted("name", $this->getName());
             $this->route = $this->getRoute();
 
@@ -237,58 +238,58 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-    protected function processInputData()
-    {
-
-        $post = $this->api("request")->post;
-
-        // loop through the templates available fields so that we only set values
-        // for available fields and ignore the rest
-
-        $fields = $this->template->fields;
-
-        // create new array for save data, this will inherently remove data values that do not have matching fields
-        $data = [];
-
-        foreach ($fields as $field) {
-            $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
-            $value = $field->type->getSave($value);
-            $data[$field->name] = $value;
-        }
-
-        $this->data = $data;
-
-    }
+//    protected function processInputData()
+//    {
+//
+//        $post = $this->api("request")->post;
+//
+//        // loop through the templates available fields so that we only set values
+//        // for available fields and ignore the rest
+//
+//        $fields = $this->template->fields;
+//
+//        // create new array for save data, this will inherently remove data values that do not have matching fields
+//        $data = [];
+//
+//        foreach ($fields as $field) {
+//            $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
+//            $value = $field->type->getSave($value);
+//            $data[$field->name] = $value;
+//        }
+//
+//        $this->data = $data;
+//
+//    }
 
     /**
      * Determine if Object name has changed or needs to be created for the first time
      */
-    protected function processSaveName()
-    {
-
-        $post = $this->api("request")->post;
-
-        // set name value
-        if ($post->name && !$this->isNew()) { // TODO : this is temp
-            $currentName = $this->name;
-            $newName = Filter::name($post->name); // TODO add page name sanitizer
-            if($currentName != $newName){
-                $this->api("logger")->add("notice","Page '$this->name' renamed to '$newName'");
-                unset($this->data["name"]);
-                $this->rename($newName);
-            }
-
-
-
-        } else if($this->isNew()) { // generate page name from defined field
-            $template = $this->template;
-            $nameFieldReference = $template->settings['nameFrom'];
-            $name = $this->get($nameFieldReference);
-            $name = Filter::name($name);
-            $this->name = $name;// TODO:  refactor code to allow name setting and getting to be handled the same way as other fields (by the Fieldtype class associated with it)
-        }
-
-    }
+//    protected function processSaveName()
+//    {
+//
+//        $post = $this->api("request")->post;
+//
+//        // set name value
+//        if ($post->name && !$this->isNew()) { // TODO : this is temp
+//            $currentName = $this->name;
+//            $newName = Filter::name($post->name); // TODO add page name sanitizer
+//            if($currentName != $newName){
+//                $this->api("logger")->add("notice","Page '$this->name' renamed to '$newName'");
+//                unset($this->data["name"]);
+//                $this->rename($newName);
+//            }
+//
+//
+//
+//        } else if($this->isNew()) { // generate page name from defined field
+//            $template = $this->template;
+//            $nameFieldReference = $template->settings['nameFrom'] ? $template->settings['nameFrom'] : "title";
+//            $name = $this->get($nameFieldReference);
+//            $name = Filter::name($name);
+//            $this->name = $name;// TODO:  refactor code to allow name setting and getting to be handled the same way as other fields (by the Fieldtype class associated with it)
+//        }
+//
+//    }
 
 
     protected function processSavePath()
@@ -313,39 +314,24 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     }
 
-    protected function saveFile($path, $filename)
+    protected function saveToFile($path, $filename)
     {
-
-        file_put_contents(
-            $path . $filename,
-            json_encode($this->data, JSON_PRETTY_PRINT)
-        );
-
+        $file = $path . $filename;
+        $json = json_encode($this->data, JSON_PRETTY_PRINT);
+        file_put_contents($file, $json);
     }
 
     public function _save()
     {
 
-        // block editing of any system Objects
-        if($this->isSystem()) throw new FlatbedException("Cannot edit system $this->className ($this->name), duplicate in site folder to makes changes");
-
-
         // can't edit system objects
-        if($this->isEditable())
+        if( !$this->isEditable() ) return false;
 
-        // store objects existing data for reference
-        $this->previousData = $this->data;
 
-        if ($this->api("config")->simulate) {
-            $saveFile = "test.json";
-        } else {
-            $saveFile = static::DEFAULT_SAVE_FILE;
-        }
 
-        $this->processSaveName();
         $this->processSavePath();
-        $this->processInputData();
-        $this->saveFile($this->path, $saveFile);
+
+        $this->saveToFile($this->path, static::DEFAULT_SAVE_FILE);
 
         return $this;
 
@@ -457,7 +443,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             case 'url':
                 return $this->getUrl();
             case 'urlEdit':
-                // TODO: temp solution for save redirect
+                // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
             case 'path':

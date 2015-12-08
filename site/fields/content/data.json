@@ -1,5 +1,6 @@
 {
     "title": "Content",
     "fieldtype": "FieldtypeRichtext",
-    "input": "InputTinymce"
+    "input": "InputTinymce",
+    "name": "content"
 }

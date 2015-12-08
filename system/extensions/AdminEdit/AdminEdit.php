@@ -56,13 +56,34 @@ class AdminEdit extends Extension
     public function processSave()
     {
 
+        $this->processInputData();
 
-        $this->object->save();
-        $this->api("admin")->addMessage("Page '{$this->object->url} saved successfully'  ");
-        $this->api("router")->redirect( $this->object->urlEdit );
+        if($this->object->save()){
+            $this->api("admin")->addMessage("'{$this->object->name}' {$this->object->className} saved successfully'  ");
+            $this->api("router")->redirect( $this->object->urlEdit );
+        }
 
     }
 
+    protected function processInputData()
+    {
+
+        $post = $this->api("request")->post;
+
+        // loop through the templates available fields so that we only set values
+        // for available fields and ignore the rest
+        $fields = $this->object->template->fields;
+
+
+        foreach ($fields as $field) {
+            $name = $field->name;
+            $value = isset($post->{$name}) ? $post->{$name} : $this->object->getUnformatted("$name");
+            $value = $field->type->getSave($value);
+            $this->object->set($name, $value);
+        }
+
+
+    }
 
     private function renderForm(){
         $this->form = $this->api("extensions")->get("MarkupEditForm");

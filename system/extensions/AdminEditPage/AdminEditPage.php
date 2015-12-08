@@ -43,25 +43,26 @@ class AdminEditPage extends AdminEdit
                     $this->object = new Page();
                     $this->object->template = $template;
                     $this->object->parent = $parent;
+                    $this->processInputData();
                     $this->processSave();
                 }
             );
 
         // temp solution to the above issue
-        $newRootChild = new Route;
-        $newRootChild->path("/pages/new/:any/")
-            ->parent("admin")
-            ->callback(
-                function ($template) {
-
-                    $this->object = new Page();
-                    $this->object->template = $template;
-                    $this->object->parent = "/";
-
-                    $this->title = "New Page";
-                    $this->render();
-                }
-            );
+//        $newRootChild = new Route;
+//        $newRootChild->path("/pages/new/:any/")
+//            ->parent("admin")
+//            ->callback(
+//                function ($template) {
+//
+//                    $this->object = new Page();
+//                    $this->object->template = $template;
+//                    $this->object->parent = "/";
+//
+//                    $this->title = "New Page";
+//                    $this->render();
+//                }
+//            );
 
 
         $save = new Route();
@@ -73,6 +74,7 @@ class AdminEditPage extends AdminEdit
                 function ($url) {
                     $page = $this->api("pages")->get($url);
                     $this->object = $page;
+
                     $this->processSave();
                 }
             );

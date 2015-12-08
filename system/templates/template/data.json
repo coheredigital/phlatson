@@ -1,4 +1,6 @@
 {
-    "fields": [],
-    "title": "Template"
+    "title": "Template",
+    "fields": [
+        "fields"
+    ]
 }

@@ -14,13 +14,11 @@ class FieldtypePage extends Fieldtype
         if ($value instanceof Page) {
             $value = $value->url;
         } else {
-            $page = $this->api("pages")->get("$url");
+            $page = $this->api("pages")->get("$value");
             $value = $page->url;
         }
-        $value = "$value"; // stringify for certainty :)
         return $value;
     }
-
 
 
     protected function renderInput()
