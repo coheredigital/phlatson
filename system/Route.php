@@ -310,13 +310,15 @@ class Route extends Flatbed
             return true;
         }
 
-        // check for pattern match potential
+        // check for pattern match potential (if none then return false as the exact match didn't occur above)
         if (strpos($path, ':') === false) return false;
 
 
-        $searches = array_keys($this->patterns);
-        $replaces = array_values($this->patterns);
-        $path = str_replace($searches, $replaces, $path);
+        $path = str_replace(
+            array_keys($this->patterns),
+            array_values($this->patterns),
+            $path
+        );
         $path = rtrim($path, "/");
 
         if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
@@ -324,9 +326,6 @@ class Route extends Flatbed
             $this->parameters = $matched;
             return true;
         }
-
-
-
 
         return false;
     }

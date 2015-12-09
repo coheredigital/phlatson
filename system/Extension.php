@@ -15,6 +15,14 @@ class Extension extends Object
         $file = $this->getFile();
         parent::__construct($file);
         $this->setup();
+//        $routesFile = $this->path . "{$this->className}Routes.php";
+//        if(file_exists($routesFile)){
+//
+//            include_once $routesFile;
+//            $className = "{$this->className}Routes";
+//            $routes = new $className();
+//            $routes->setup();
+//        }
     }
 
     protected function getFile()

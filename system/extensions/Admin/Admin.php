@@ -22,13 +22,12 @@ class Admin extends Extension
     protected function setup()
     {
 
-        if (!$this->api("admin")) {
-            $this->api("admin", $this); // register api variable
-        }
-        
+
+        $this->api("admin", $this); // register api variable
+
 
         $this->children = new ObjectCollection();
-        
+
         // default admin scripts and styles
         $this->api("config")->styles->add("{$this->url}styles/admin.css");
         $this->api("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
@@ -36,6 +35,12 @@ class Admin extends Extension
         $this->api("config")->scripts->add("{$this->url}scripts/main.js");
         $this->api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
+        $this->setupRoutes();
+
+    }
+
+
+    protected function setupRoutes(){
 
 
         if ($this->api("router")->get("admin")) {
@@ -83,8 +88,6 @@ class Admin extends Extension
                     if ($this->api("session")->login($this->api("request")->post->username, $this->api("request")->post->password)) {
                         $this->api("router")->redirect($this->api("router")->get("admin")->url, false);
                     }
-
-
                 }
             );
         $this->api('router')->add($loginSubmit);
@@ -98,16 +101,12 @@ class Admin extends Extension
      */
     public function authorize()
     {
+        if ( !$this->api("user")->isGuest() )  return;
 
+        $loginRoute = $this->api("router")->get("login");
+        if ($this->api("request")->url == $loginRoute->url) return;
 
-
-        if ($this->api("user")->isGuest()) {
-
-            if ($this->api("request")->url != $this->api("router")->get("login")->url) {
-                $this->api("router")->redirect( $this->api("router")->get("login"), false );
-            }
-
-        }
+        $this->api("router")->redirect( $loginRoute, false );
 
     }
 
@@ -119,7 +118,7 @@ class Admin extends Extension
     {
 
         // only run on admin route exact match
-        if( $this->api("request")->url != $this->api("router")->admin->url ) return false;
+        if( $this->api("request")->url != $this->api("router")->get("admin")->url ) return false;
 
         if ($this->api("user")->isGuest()) $this->api("router")->redirect($this->api("router")->get("login"), false);
         else $this->api("router")->redirect($this->api("router")->get("pages"), false);

@@ -24,13 +24,10 @@
 
 <div id="header">
     <div class="container">
-
-
         <div class="logo">
             <a href="<?php echo $this->route->url ?>">
                 <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
             </a>
-
         </div>
         <div class="main-menu menu">
 
