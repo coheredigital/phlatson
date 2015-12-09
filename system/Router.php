@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Adam
- * Date: 7/17/14
- * Time: 8:33 PM
- */
+
 class Router extends Flatbed
 {
 
@@ -27,7 +22,7 @@ class Router extends Flatbed
     {
 
 
-        $hostname = $route->hostname ? $route->hostname : $this->api("config")->hostname; // by default routes are children of the default hostname
+        $hostname = $route->hostname ?: $this->api("config")->hostname; // by default routes are children of the default hostname
         $method = $route->method;
         $path = $route->path;
 
@@ -55,6 +50,11 @@ class Router extends Flatbed
 
         // get the set to iterate based on the current request
         $routes = $this->routes[$request->hostname];
+
+        // sort by priority first
+        $routes = $this->sort($routes);
+
+
 
         foreach ($routes as $route) {
             if (!$route->match($request)) continue;
@@ -96,6 +96,23 @@ class Router extends Flatbed
         header("Location: $url");
         header("Connection: close");
         exit(0);
+    }
+
+
+    /**
+     *
+     * Sort routes by priority value
+     *
+     */
+    protected function sort($routes){
+
+        uasort($routes, function($a, $b){
+            if ($a->priority() == $b->priority()) return 0;
+            return ($a->priority() > $b->priority()) ? -1 : 1;
+        });
+
+        return $routes;
+
     }
 
 

@@ -25,6 +25,12 @@ try {
     ]);
 
     $flatbed->api('router', new Router, true);
+    // add pages route
+    $flatbed->api('router')->add(new Route([
+        "path" =>":all",
+        "callback" => "Pages.render"
+    ]));
+
 
     /* setup config routes, default is just the admin route */
     if(count($flatbed->api("config")->routes)) foreach ($flatbed->api("config")->routes as $r){
@@ -44,11 +50,6 @@ try {
     $flatbed->api('session', new Session, true);
     $flatbed->api('logger', 'Logger', true);
 
-    // add pages route last just before running app
-    $flatbed->api('router')->add(new Route([
-        "path" =>":all",
-        "callback" => "Pages.render"
-    ]));
 
     // run the app
     $flatbed->api('router')->run($request);

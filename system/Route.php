@@ -15,6 +15,7 @@ class Route extends Flatbed
 
 
     private $name = null;
+    private $method = "GET";
     private $path = null;
     private $scheme = "http";
     private $hostname = false;
@@ -24,7 +25,8 @@ class Route extends Flatbed
     private $parent;
     private $children;
 
-    private $method = "GET";
+    private $priority;
+
 
     private $callbacks = [
         "before" => [],
@@ -79,6 +81,7 @@ class Route extends Flatbed
             $this->name($options["name"]);
         }
 
+
     }
 
 
@@ -120,7 +123,7 @@ class Route extends Flatbed
 
             $path = $this->path;
             if ($this->parent instanceof Route) {
-                $path = trim($this->parent->path, "/") . "/" . trim($path, "/");
+                $path = $this->parent->path . $path;
             }
             return $path;
 
@@ -145,7 +148,7 @@ class Route extends Flatbed
      *
      * return a url for the route
      */
-    private function url(array $parameters = [])
+    public function url(array $parameters = [])
     {
 
         if (count($parameters)) {
@@ -153,7 +156,7 @@ class Route extends Flatbed
         } else { // return url without using parameters
             $url = $this->path;
             if ($this->parent instanceof Route) {
-                $url = trim($this->parent->url, "/") . "/" . trim($url, "/") . "/";
+                $url = trim($this->parent->url(), "/") . "/" . trim($url, "/") . "/";
             } else {
                 $path = trim($url, "/") ? "/" . trim($url, "/") . "/" : "/";
                 $url = $this->scheme . "://" . trim($this->hostname(), "/") . $path;
@@ -230,6 +233,33 @@ class Route extends Flatbed
 
 
     /**
+     * Determines priority value;
+     */
+
+    public function priority(){
+
+        if($this->priority) return $this->priority;
+
+        $path = $this->path();
+
+        if(strpos($path, ':') !== false){
+            $priority = (substr_count($path, "/") + substr_count($path, ":")) * 2; // longer more specific urls first
+            $parts = explode(":", $path);
+            // boost ie this "/pages:all" over "/:all" or similar, first example must match first
+            foreach($parts as $key => $part){
+                if(substr($part, -1) != "/") $priority++;
+            }
+        }
+        else{
+            $priority = substr_count($path, "/") * 100; // longer more spcific urls first
+        }
+
+
+        $this->priority = $priority;
+        return $priority;
+    }
+
+    /**
      * @param $callback
      * @return $this
      *
@@ -265,7 +295,8 @@ class Route extends Flatbed
     public function match($request)
     {
 
-        $url = $this->url();
+        $path = $this->path();
+        $requestPath = rtrim($request->path, "/");
         $routeMethods = explode("|",$this->method);
 
 
@@ -275,22 +306,26 @@ class Route extends Flatbed
 
 
         // check exact match to url & method
-        if ($url == $request->url) {
+        if ($path == $requestPath) {
             return true;
         }
 
         // check for pattern match potential
-        if (strpos($url, ':') !== false) {
-            $searches = array_keys($this->patterns);
-            $replaces = array_values($this->patterns);
-            $url = str_replace($searches, $replaces, $url);
-        }
+        if (strpos($path, ':') === false) return false;
 
-        if (preg_match("#^" . $url . "$#", $request->url, $matched)) {
+
+        $searches = array_keys($this->patterns);
+        $replaces = array_values($this->patterns);
+        $path = str_replace($searches, $replaces, $path);
+        $path = rtrim($path, "/");
+
+        if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
             array_shift($matched); //remove $matched[0] as [1] is the first parameter.
             $this->parameters = $matched;
             return true;
         }
+
+
 
 
         return false;
