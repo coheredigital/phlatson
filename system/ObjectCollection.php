@@ -79,6 +79,11 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
         return $this;
     }
 
+    /**
+     * @param $property
+     * @param string $direction
+     * @return $this
+     */
     public function sort($property, $direction = "ASC")
     {
 
@@ -106,13 +111,19 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
             }
         );
 
-        if ($direction == "DESC") {
-            $this->data = array_reverse($this->data);
-        }
+        if ($direction == "DESC") $this->reverse();
+
+        return $this;
     }
 
-
-
+    /**
+     * reverses array orders
+     * @return $this
+     */
+    public function reverse(){
+        $this->data = array_reverse($this->data);
+        return $this;
+    }
 
 
     public function has($name)
