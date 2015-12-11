@@ -34,8 +34,7 @@ try {
 
     /* setup config routes, default is just the admin route */
     if(count($flatbed->api("config")->routes)) foreach ($flatbed->api("config")->routes as $r){
-        $route = new Route($r);
-        $flatbed->api("router")->add($route);
+        $flatbed->api("router")->add(new Route($r));
     }
 
     $flatbed->api('events', 'Events', true);
