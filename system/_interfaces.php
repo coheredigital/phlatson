@@ -21,3 +21,9 @@ interface RenderInterface
 {
     public function _render();
 }
+
+interface FieldtypeSortable {
+
+    public function sort();
+
+}
