@@ -44,8 +44,8 @@ DirectoryIndex index.php index.html index.htm
     # If any conditions above match, isssue a 403 forbidden
     RewriteRule ^.*$ - [F,L]
 
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteCond %{REQUEST_URI} "^/~?[-_.a-zA-Z0-9/]*$"
-
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !(favicon\.ico|robots\.txt)
