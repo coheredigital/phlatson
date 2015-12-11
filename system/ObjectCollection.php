@@ -1,10 +1,9 @@
 <?php
 
-class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
+class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess, Countable
 {
 
     protected $object;
-//    public $children;
     protected $data = [];
 
     public function setObject($object)
@@ -84,11 +83,19 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
      * @param string $direction
      * @return $this
      */
-    public function sort($property, $direction = "ASC")
+    public function sort($fieldname, $direction = "ASC")
     {
 
         $object = $this->first();
-        $value = $object->get($property);
+
+        $value = $object->getUnformatted($fieldname);
+
+        if(!$field = $this->api("fields")->get($fieldname)){
+            throw new FlatbedException("Cannot sort by '$fieldname' no Field by that name can be found.");
+        }
+
+
+
         $type = gettype($value);
 
 
@@ -115,6 +122,9 @@ class ObjectCollection implements IteratorAggregate, ArrayAccess, Countable
 
         return $this;
     }
+
+
+
 
     /**
      * reverses array orders
