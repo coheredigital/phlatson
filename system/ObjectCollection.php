@@ -88,13 +88,9 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
 
         $object = $this->first();
 
-        $value = $object->getUnformatted($fieldname);
-
-        if(!$field = $this->api("fields")->get($fieldname)){
-            throw new FlatbedException("Cannot sort by '$fieldname' no Field by that name can be found.");
+        if(!$value = $object->getUnformatted($fieldname)){
+            throw new FlatbedException("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
         }
-
-
 
         $type = gettype($value);
 

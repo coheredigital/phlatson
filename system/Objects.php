@@ -8,6 +8,12 @@ abstract class Objects extends Flatbed
     public $data = array();
     protected $count;
 
+    protected $url;
+    protected $path;
+
+    protected $systemUrl;
+    protected $systemPath;
+
     // the folder within the site and system paths to check for items ex: fields, templates, etc
     protected $rootFolder;
     protected $siteRoot;
@@ -20,10 +26,16 @@ abstract class Objects extends Flatbed
     {
 
         $this->siteRoot = Filter::path(ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
+        $this->path = Filter::path(ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
+
         $this->systemRoot = Filter::path(ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
+        $this->systemPath = Filter::path(ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
+
+        $this->url = Filter::url(ROOT_URL . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
+        $this->systemUrl = Filter::url(ROOT_URL . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
 
         if ($this instanceof Pages) {
-            $this->data['/'] = $this->api("config")->paths->pages . "data.json";
+            $this->data['/'] = $this->path . "data.json";
         }
 
     }

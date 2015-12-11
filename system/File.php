@@ -3,17 +3,14 @@
 class File extends Object
 {
 
-    protected $page;
-    protected $data = array();
-
-    public function __construct($page, $name)
+    public function __construct(Page $page, $name)
     {
 
         // TODO : throw FlatbedException if not valid file
 
-        $this->page = $page;
+        $this->page = $page->url;
         $this->path = $page->path;
-        $this->url = $this->api("config")->urls->pages . $page->directory . "/" . rawurlencode($name);
+        $this->url = $this->api("pages")->url . $page->directory . "/" . rawurlencode($name);
         $this->file = $page->path . $name;
         $this->filesize = filesize($this->file);
         $this->filesizeFormatted = $this->formatSizeUnits($this->filesize);
