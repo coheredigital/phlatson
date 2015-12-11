@@ -5,22 +5,27 @@ class FieldtypeDateTime extends Fieldtype
 
     public function getOutput($value)
     {
-//        $value = date((string)$this->settings->format, (int)$value);
-//        return $value;
+        if(is_int($value)){
+            $value = date("c", $value);
+        }
+        $datetime = new FlatbedDateTime($value);
+
+        return $datetime;
     }
 
     public function getSave($value)
     {
-        $value = strtotime($value);
+        if(is_int($value)){
+            $value = date("c", $value);
+        }
+        $datetime = new FlatbedDateTime($value);
+        $value = (int) $datetime->format("U");
         return $value;
     }
 
     protected function renderInput()
     {
 
-        $this->api('config')->styles->add($this->url . "datetimepicker/jquery.datetimepicker.css");
-        $this->api('config')->scripts->add($this->url . "datetimepicker/jquery.datetimepicker.js");
-        $this->api('config')->scripts->add($this->url . "$this->className.js");
 
         $this->attribute("type", "text");
 
