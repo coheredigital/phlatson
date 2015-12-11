@@ -28,19 +28,16 @@ class MarkupPageTree extends Extension
 
         $output = "<div class='page-tree-item-buttons'>";
 
+        if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
+        if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
+
         if(is_array($view) && $view['type'] == "list"){
-            if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
             $url = $this->admin->route->url . ltrim($page->url, '/');
             $output .= "<a class='page-tree-item-button' href='{$url}'><i class='icon icon-list'></i></a>";
             if($this->admin) $this->admin->subnav->add($page);
-
-
         }
         else{
-            if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
-            if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
             $output .= $this->renderDropdown($page);
-
         }
         $output .= "</div>";
         return $output;
