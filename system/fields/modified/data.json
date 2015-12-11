@@ -1,0 +1,5 @@
+{
+    "title": "Modified DateTime",
+    "fieldtype": "FieldtypeDateTime",
+    "input": "InputText"
+}
