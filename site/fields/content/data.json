@@ -2,5 +2,7 @@
     "title": "Content",
     "fieldtype": "FieldtypeRichtext",
     "input": "InputTinymce",
-    "name": "content"
+    "template": "field",
+    "name": "content",
+    "modified": 1449861999
 }
