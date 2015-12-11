@@ -8,15 +8,33 @@ class Template extends Object
     public $defaultFields = ['title','fields', 'name'];
 
 
+    function __construct($file = null)
+    {
+
+        parent::__construct($file);
+
+        $this->defaultFields = array_merge($this->defaultFields, [
+            "title",
+            "fields"
+        ]);
+
+        $this->skippedFields = array_merge($this->skippedFields, [
+            "template"
+        ]);
+
+        $this->setUnformatted("template", "template");
+
+    }
+
     public function get($name)
     {
         switch ($name) {
-            case 'template':
-                //  TODO : refactor - the method for defining the master to this template is done manually here
-                // maybe I can automate this like with pages
-                $template = $this->api("templates")->get("template");
-                $template->parent = $this;
-                return $template;
+//            case 'template':
+//                //  TODO : refactor - the method for defining the master to this template is done manually here
+//                // maybe I can automate this like with pages
+//                $template = $this->api("templates")->get("template");
+//                $template->parent = $this;
+//                return $template;
             case 'layout':
                 $layoutFile = $this->api('config')->paths->layouts . $this->name . ".php";
                 return $layoutFile;

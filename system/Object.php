@@ -9,7 +9,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $file;
     protected $path;
-    protected $modified;
+//    protected $modified;
     protected $rootFolder;
     protected $rootPath;
 
@@ -18,7 +18,8 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected $initData = [];
     protected $settings = [];
 
-    protected $defaultFields = [];
+    protected $defaultFields = ["name","modified","template"];
+    protected $skippedFields = ["name","modified"];
     protected $route = [];
 
     protected $requiredElements = [];
@@ -36,6 +37,9 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->initData = $this->getData();
             $this->setUnformatted("name", $this->getName());
             $this->route = $this->getRoute();
+
+            // set modified in data so it can be accessed like a field
+            $this->setUnformatted("modified", filemtime($this->file));
 
         }
 
@@ -232,64 +236,10 @@ abstract class Object extends Flatbed implements JsonSerializable
      * @param  string $name
      * @return mixed
      */
-    protected function getUnformatted($name)
+    public function getUnformatted($name)
     {
         return isset($this->data[$name]) ? $this->data[$name] : null;
     }
-
-
-//    protected function processInputData()
-//    {
-//
-//        $post = $this->api("request")->post;
-//
-//        // loop through the templates available fields so that we only set values
-//        // for available fields and ignore the rest
-//
-//        $fields = $this->template->fields;
-//
-//        // create new array for save data, this will inherently remove data values that do not have matching fields
-//        $data = [];
-//
-//        foreach ($fields as $field) {
-//            $value = isset($post->{$field->name}) ? $post->{$field->name} : $this->getUnformatted("$field->name");
-//            $value = $field->type->getSave($value);
-//            $data[$field->name] = $value;
-//        }
-//
-//        $this->data = $data;
-//
-//    }
-
-    /**
-     * Determine if Object name has changed or needs to be created for the first time
-     */
-//    protected function processSaveName()
-//    {
-//
-//        $post = $this->api("request")->post;
-//
-//        // set name value
-//        if ($post->name && !$this->isNew()) { // TODO : this is temp
-//            $currentName = $this->name;
-//            $newName = Filter::name($post->name); // TODO add page name sanitizer
-//            if($currentName != $newName){
-//                $this->api("logger")->add("notice","Page '$this->name' renamed to '$newName'");
-//                unset($this->data["name"]);
-//                $this->rename($newName);
-//            }
-//
-//
-//
-//        } else if($this->isNew()) { // generate page name from defined field
-//            $template = $this->template;
-//            $nameFieldReference = $template->settings['nameFrom'] ? $template->settings['nameFrom'] : "title";
-//            $name = $this->get($nameFieldReference);
-//            $name = Filter::name($name);
-//            $this->name = $name;// TODO:  refactor code to allow name setting and getting to be handled the same way as other fields (by the Fieldtype class associated with it)
-//        }
-//
-//    }
 
 
     protected function processSavePath()
@@ -309,8 +259,7 @@ abstract class Object extends Flatbed implements JsonSerializable
                 mkdir($this->path, 0777, true);
             }
         }
-        // unset parent value in data container
-        unset($this->data["parent"]);
+
 
     }
 
@@ -328,6 +277,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         if( !$this->isEditable() ) return false;
 
 
+
+        foreach($this->skippedFields as $fieldname){
+
+            if($this->has($fieldname)) unset($this->data[$key]);
+
+        }
 
         $this->processSavePath();
 
@@ -421,6 +376,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
+
     protected function checkDataIntegrity()
     {
 
@@ -448,8 +404,9 @@ abstract class Object extends Flatbed implements JsonSerializable
                 return $url;
             case 'path':
                 return $this->{$name};
-            case 'modified':
-                return filemtime($this->file);
+//            case 'modified':
+//                $time = filemtime($this->file);
+//                return DateTime::createFromFormat("U", $time);
             case 'className':
                 return get_class($this);
             case 'defaultFields':

@@ -5,7 +5,24 @@ class Field extends Object
     protected $rootFolder = "fields";
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
-    protected $defaultFields = ["fieldtype","input"];
+
+    function __construct($file = null)
+    {
+
+        parent::__construct($file);
+
+        $this->defaultFields = array_merge($this->defaultFields, [
+            "fieldtype",
+            "input"
+        ]);
+
+        $this->skippedFields = array_merge($this->skippedFields, [
+            "template"
+        ]);
+
+        $this->setUnformatted("template", "field");
+
+    }
 
     /**
      * retrieves the input object associated with "$this" field
@@ -60,10 +77,10 @@ class Field extends Object
                 return $this->fieldtype;
             case 'input':
                 return $this->getInput();
-            case 'template':
-                $template = $this->api("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
-                $template->parent = $this;
-                return $template;
+//            case 'template':
+//                $template = $this->api("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
+//                $template->parent = $this;
+//                return $template;
             default:
                 return parent::get($name);
         }

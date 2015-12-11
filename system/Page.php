@@ -5,12 +5,15 @@ class Page extends Object
 {
 
     protected $rootFolder = "pages";
-    public $defaultFields = array("name", "template", "parent");
 
     function __construct($file = null)
     {
 
         parent::__construct($file);
+
+        $this->defaultFields = array_merge($this->defaultFields, [
+            "parent"
+        ]);
 
         // set parent page value
         if (!$this->isNew()) {
@@ -26,20 +29,6 @@ class Page extends Object
         array_pop($requests); // remove current (last) item to find parent
         return $this->createUrl($requests);
     }
-//
-//    protected function getNewName()
-//    {
-//        // set object name
-//        if ($this->template->_settings->nameFrom && $this->template->fields->has(
-//                $this->settings->nameFrom
-//            )
-//        ) { // TODO : this is not in yet, we need support for creating the name from referencing another field
-//            return $this->api("sanitizer")->name($this->settings->nameFrom);
-//        } else {
-//            return $this->api("sanitizer")->name($this->title);
-//        }
-//
-//    }
 
     public function files()
     {
@@ -54,25 +43,25 @@ class Page extends Object
     public function children()
     {
 
-        if ($this->path === null) {
-            return;
+
+
+        if ($this->isNew()) {
+            return false;
         }
+        
+        $children = new ObjectCollection();
 
-        // break out if no valid path
-        // get all subfolder of current page path
-        // TODO: improve validation of existing Object, unless new, a path being none existing should throw an exception
+        $subfolders = glob($this->path . "*", GLOB_ONLYDIR);
 
-        $subs = glob($this->path . "*", GLOB_ONLYDIR);
 
-        $children = array();
-        foreach ($subs as $folder) {
+        foreach ($subfolders as $folder) {
 
-            $url = $this->get("directory") . "/" . basename($folder);
+            $name = basename($folder);
+
+            $url = $this->url . "/" . $name;
             $page = $this->api("pages")->get($url);
             if ($page instanceof Page) {
-                // pass the Page to $children array, use url as key to avoid duplicates
-                // should be impossible for any to items to return the same url
-                $children["$page->directory"] = $page;
+                $children->add($page);
             }
 
         }
