@@ -296,7 +296,7 @@ class Route extends Flatbed
     {
 
         $path = $this->path();
-        $requestPath = rtrim($request->path, "/");
+        $requestPath = "/" . trim($request->path, "/");
         $routeMethods = explode("|",$this->method);
 
 
@@ -319,7 +319,7 @@ class Route extends Flatbed
             array_values($this->patterns),
             $path
         );
-        $path = rtrim($path, "/");
+        $path = "/" . trim($path, "/");
 
         if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
             array_shift($matched); //remove $matched[0] as [1] is the first parameter.
