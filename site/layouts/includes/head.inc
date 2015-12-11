@@ -48,7 +48,7 @@
         </div>
     </div>
 </div>
-<?php if ($page->rootParent->name != "blog" && count($page->rootParent->children)): ?>
+<?php if ($page->parent->template->name != "blog" && $page->template->name != "blog"): ?>
     <nav id="subnav" class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
             <ul class="nav navbar-nav">
@@ -61,6 +61,5 @@
     </nav>
 <?php endif ?>
 <?php include "breadcrumbs.inc" ?>
-
 <div id="main">
 
