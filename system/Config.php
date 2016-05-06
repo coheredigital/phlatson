@@ -14,7 +14,11 @@ class Config extends Object
         $this->setupDirectories();
 
         // load site config
-        $this->getData("{$this->paths->config}site.json");
+        $this->file = "{$this->paths->config}site.json";
+
+        // merge site config with default data
+        $this->data = array_merge($this->data, $this->getData());
+        
 
 
         /*
@@ -37,16 +41,6 @@ class Config extends Object
         ini_set("date.timezone", $this->timezone);
         ini_set('default_charset', 'utf-8');
 
-    }
-
-
-    protected function getData($file)
-    {
-        if (is_file($file)) {
-            $this->path = Filter::path(str_replace(Object::DEFAULT_SAVE_FILE, "", $file));
-            // merge config file data with directories
-            $this->data = array_merge($this->data, json_decode(file_get_contents($file), true));
-        }
     }
 
     protected function setupDirectories()
