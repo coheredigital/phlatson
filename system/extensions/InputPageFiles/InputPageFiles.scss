@@ -1,6 +1,6 @@
-@import "../Admin/styles/_variables";
+@import "../Admin/styles/variables";
 
-.FieldtypePageFiles{
+.InputPageFiles{
   margin-top: 2em;
   padding-bottom: 3em;
   .field-label{
@@ -17,18 +17,18 @@
   position: relative;
 }
 
-.FieldtypePageFiles-dragndrop {
+.InputPageFiles-dragndrop {
   padding: 2em;
-  margin-bottom: 2em;
+  // margin-bottom: 2em;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  left: @sidebar-width;
-  border: 3px dashed @light-gray;
+  left: $sidebar-width;
+  border: 3px dashed $light-gray;
   z-index: 1;
 }
 
-.FieldtypePageFiles-dragndrop .sub.header {
+.InputPageFiles-dragndrop .sub.header {
   font-size: 0.8em;
   text-transform: uppercase;
   color: #888;
@@ -41,7 +41,7 @@
   height: 5px;
   clear: both;
   margin-top: -5px;
-  background: @green;
+  background: $green;
   -webkit-transition: all 0.6s ease-in-out;
   -moz-transition: all 0.6s ease-in-out;
   -o-transition: all 0.6s ease-in-out;
@@ -55,7 +55,7 @@
 }
 
 /* FILETYPE ICONS */
-@foldsize: 14px;
+$foldsize: 14px;
 .FiletypeIcon {
   height: 56px;
   width: 40px;
@@ -66,8 +66,8 @@
   position: relative;
 
   &:before {
-    height: @foldsize;
-    width: @foldsize;
+    height: $foldsize;
+    width: $foldsize;
     content: "";
     position: absolute;
     top: 0;
@@ -84,7 +84,7 @@
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 @foldsize @foldsize 0;
+    border-width: 0 $foldsize $foldsize 0;
     border-color: transparent #ffffff transparent transparent;
   }
 }
@@ -118,7 +118,7 @@
 
 .file-list {
   .item {
-    border: 1px solid @light-gray;
+    border: 1px solid $light-gray;
     background: #fff;
     margin-bottom: 1em;
     
