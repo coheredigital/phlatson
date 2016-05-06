@@ -8,7 +8,7 @@ User Menu
   font-size: 0.8em;
   font-weight: bold;
   text-transform: uppercase;
-  //  background: darken(@sidebar-background, 5%);
+  //  background: darken($sidebar-background, 5%);
 }
 .user-menu-content{
   //  padding: 1em;
@@ -16,7 +16,7 @@ User Menu
 
 .user-name{
   line-height: 1em;
-  color: @blue;
+  color: $blue;
   margin-right: 1em;
   display: inline-block;
 //  width: 60%;
@@ -25,7 +25,7 @@ User Menu
 }
 .user-logout{
   text-transform: uppercase;
-  color: @gray;
+  color: $gray;
 
 
   text-decoration: none !important;
@@ -34,6 +34,6 @@ User Menu
   display: inline-block;
   vertical-align: middle;
   &:hover{
-    color: @brand;
+    color: $brand;
   }
 }

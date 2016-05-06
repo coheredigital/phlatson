@@ -76,7 +76,7 @@ form{
 }
 
 #main{
-  background: $main-background;
+  background: $main-background; 
   vertical-align: top;
 }
 
@@ -94,14 +94,14 @@ form{
 //  display: none;
 }
 
-$import "partials/menus";
-$import "partials/buttons";
-$import "partials/tabs";
-$import "partials/tables";
-$import "partials/fields";
-$import "partials/pagetree";
-$import "partials/usermenu";
-$import "partials/messages";
+@import "partials/menus";
+@import "partials/buttons";
+@import "partials/tabs";
+@import "partials/tables";
+@import "partials/fields";
+@import "partials/pagetree";
+@import "partials/usermenu";
+@import "partials/messages";
 
 
 

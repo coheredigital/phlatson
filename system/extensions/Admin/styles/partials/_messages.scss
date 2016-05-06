@@ -1,6 +1,6 @@
 .messages{
-  background: @green;
-  color: darken(@green, 30%);
+  background: $green;
+  color: darken($green, 30%);
   padding: .2em 0;
   .container{
     div{

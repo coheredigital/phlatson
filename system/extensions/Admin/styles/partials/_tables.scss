@@ -3,7 +3,7 @@
   border-collapse: collapse;
   margin-top: 2em;
   //  background: #fff;
-  //  border: 1px solid @light-gray;
+  //  border: 1px solid $light-gray;
   tr{
     border-radius: 2em;
     overflow: hidden;
@@ -17,10 +17,10 @@
     }
   }
   th{
-    color: @gray;
+    color: $gray;
     text-transform: uppercase;
     font-weight: 100;
-    border-bottom: 1px solid darken(@main-background, 10%);
+    border-bottom: 1px solid darken($main-background, 10%);
   }
   td{
     //    padding-bottom: 0;
@@ -34,7 +34,7 @@
 
     tr:hover{
       td{
-        //        border-color: darken(@main-background, 10%);
+        //        border-color: darken($main-background, 10%);
         background: #fff;
       }
     }

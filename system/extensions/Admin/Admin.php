@@ -30,6 +30,7 @@ class Admin extends Extension
 
         // default admin scripts and styles
         $this->api("config")->styles->add("{$this->url}styles/admin.css");
+        $this->api("config")->styles->add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css");
         $this->api("config")->scripts->add("{$this->url}scripts/jquery-sortable.js");
         $this->api("config")->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
         $this->api("config")->scripts->add("{$this->url}scripts/main.js");

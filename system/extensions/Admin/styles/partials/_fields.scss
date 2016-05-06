@@ -9,10 +9,10 @@ input{
   box-sizing: border-box;
   font-size: 1em;
   background: #fff;
-  border: 1px solid @light-gray;
+  border: 1px solid $light-gray;
   resize: none;
   // &:focus{
-  //   border-bottom-color: @green;
+  //   border-bottom-color: $green;
   // }
 }
 
@@ -45,7 +45,7 @@ input{
   padding: 0.6em 0;
   font-size: 0.8em;
   text-transform: uppercase;
-  color: @gray;
+  color: $gray;
 }
 .field-input{
   position: relative;
@@ -57,7 +57,7 @@ input{
   height: 0;
   border-style: solid;
   border-width: 0 1em 1em 0;
-  border-color: transparent @red transparent transparent;
+  border-color: transparent $red transparent transparent;
   position: absolute;
   top: -1px;
   right: -1px;
@@ -65,17 +65,17 @@ input{
 
 .field.focus{
   .field-label{
-    color: @dark-gray;
+    color: $dark-gray;
   }
   .field-input{
-    border-color: @blue;
+    border-color: $blue;
   }
 }
 
 .FieldtypeFields{
   .item{
     padding: 1em;
-    border: 1px solid @light-gray;
+    border: 1px solid $light-gray;
     margin: -1px;
     background: #fff;
   }

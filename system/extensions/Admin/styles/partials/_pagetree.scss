@@ -30,7 +30,7 @@
 //  outline: 1px solid red;
   position: relative;
   &:before{
-    border-left: 1px dashed @light-gray;
+    border-left: 1px dashed $light-gray;
     content: "";
     display: block;
     position: absolute;
@@ -52,7 +52,7 @@
   position: relative;
   margin-bottom: 0.5em;
   border-radius: 2em;
-  background: @main-background;
+  background: $main-background;
   display: inline-block;
 
   &:hover{
@@ -63,7 +63,7 @@
   }
   
   > .icon{
-    color: @dark-green;
+    color: $dark-green;
     margin-right: .6em;
 //    vertical-align: middle;
     &:before{
@@ -73,8 +73,8 @@
     }
   }
   &:before{
-    border-left: 1px solid @light-gray;
-    border-bottom: 1px solid @light-gray;
+    border-left: 1px solid $light-gray;
+    border-bottom: 1px solid $light-gray;
     content: "";
     position: absolute;
     top: -1.5em;
@@ -88,15 +88,15 @@
 
 
 .page-tree-item-title{
-  color: @gray;
+  color: $gray;
 //  vertical-align: middle;
   display: inline-block;
 }
 
 .page-tree-item-edit{
-  color: @gray;
+  color: $gray;
   &:hover{
-    color: @brand
+    color: $brand
   }
 }
 
@@ -112,9 +112,9 @@
   cursor: pointer;
   text-decoration: none !important;
   text-transform: uppercase;
-  color: @gray;
+  color: $gray;
   &:hover{
-    color: @brand;
+    color: $brand;
   }
 }
 
@@ -132,7 +132,7 @@
       border-width: .5em 0 .5em .6em;
       margin-bottom: -.25em;
       bottom: 100%;
-      border-color: transparent transparent transparent @brand;
+      border-color: transparent transparent transparent $brand;
       z-index: 100;
     }
   }

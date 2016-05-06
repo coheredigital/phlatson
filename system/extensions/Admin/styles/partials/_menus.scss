@@ -27,7 +27,7 @@
   display: inline-block;
   max-width: 80%;
   .item{
-    color: darken(@header-background, 25%);
+    color: darken($header-background, 25%);
     margin: 0;
     padding: 1em;
     display: inline-block;
@@ -36,10 +36,10 @@
       margin-right: 0.2em;
     }
     &:hover{
-      color: @blue;
+      color: $blue;
     }
     &.active{
-      color: @brand;
+      color: $brand;
     }
   }
 }
@@ -51,8 +51,8 @@
     position: absolute;
     display: none;
     right: 0;
-    background: @dark-gray;
-    //    box-shadow: 0 0 1em @light-gray;
+    background: $dark-gray;
+    //    box-shadow: 0 0 1em $light-gray;
     z-index: 5;
     top: 1.7em;
     padding: .3em 0;
@@ -65,17 +65,17 @@
       bottom: 100%;
       border-style: solid;
       border-width: 0 0.4em 0.4em 0.4em;
-      border-color:  transparent transparent @dark-gray transparent;
+      border-color:  transparent transparent $dark-gray transparent;
 
     }
     .item{
       display: block;
       text-transform: none;
       padding: .3em .6em;
-      color: @light-gray;
+      color: $light-gray;
       &:hover{
         color: #fff;
-        background: @brand;
+        background: $brand;
       }
     }
   }
@@ -84,7 +84,7 @@
       display: block;
     }
     .button{
-      color: @brand;
+      color: $brand;
     }
   }
 }
