@@ -17,7 +17,7 @@ class MarkupPageTree extends Extension
     protected function renderPageTitle(Page $page)
     {
         $output .= "<div class='page-tree-item'>";
-        $output .= "<i class='icon icon-circle'></i><span class='page-tree-item-title'>{$page->title}</span>";
+        $output .= "<i class='icon fa fa-circle'></i><span class='page-tree-item-title'>{$page->title}</span>";
         $output .= $this->renderPageControls($page);
         $output .= "</div>";
         return $output;
@@ -28,12 +28,12 @@ class MarkupPageTree extends Extension
 
         $output = "<div class='page-tree-item-buttons'>";
 
-        if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon icon-pencil'></i></a>";
-        if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon icon-eye'></i></a>";
+        if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon fa fa-pencil'></i></a>";
+        if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon fa fa-eye'></i></a>";
 
         if(is_array($view) && $view['type'] == "list"){
             $url = $this->admin->route->url . ltrim($page->url, '/');
-            $output .= "<a class='page-tree-item-button' href='{$url}'><i class='icon icon-list'></i></a>";
+            $output .= "<a class='page-tree-item-button' href='{$url}'><i class='icon fa fa-list'></i></a>";
             if($this->admin) $this->admin->subnav->add($page);
         }
         else{
@@ -81,7 +81,7 @@ class MarkupPageTree extends Extension
         if (count($templates) > 1) {
 
             $output = '<div class="dropdown page-tree-item-button">';
-            $output .= '<div class="dropdown-button"><i class="icon icon-plus "></i></div>';
+            $output .= '<div class="dropdown-button"><i class="icon fa fa-plus "></i></div>';
             $output .= '<div class="menu">';
 
             foreach ($templates as $t) {
@@ -100,7 +100,7 @@ class MarkupPageTree extends Extension
 
                 $output = "<a class='button' href='" . $this->api('config')->urls->root . $this->api(
                         "config"
-                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon icon-plus'></i></a>";
+                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon fa fa-plus'></i></a>";
                 return $output;
             }
         }
