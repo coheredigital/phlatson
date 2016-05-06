@@ -10,7 +10,7 @@ a.button{
   outline: none !important;
   text-transform: uppercase;
   padding: 0.5em 1.2em;
-  background: @gray;
+  background: $gray;
   font-weight: normal;
   color:#fff;
   text-decoration: none !important;
@@ -18,7 +18,7 @@ a.button{
   display: inline-block;
   font-size: 1em;
   &:hover{
-    background: @darker-gray;
+    background: $darker-gray;
 
   }
   .icon{
@@ -28,9 +28,9 @@ a.button{
 
 .button-save{
   color: #fff;
-  background: @dark-green;
+  background: $dark-green;
   &:hover{
-    background: @green;
+    background: $green;
   }
 }
 
@@ -38,6 +38,6 @@ a.button{
 
   &:hover{
     color: #fff;
-    background: @red;
+    background: $red;
   }
 }
