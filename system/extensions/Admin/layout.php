@@ -23,50 +23,48 @@
 <?php endif; ?>
 
 <div id="header">
-    <div class="container">
-        <div class="logo">
-            <a href="<?php echo $this->route->url ?>">
-                <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
+    <div class="logo">
+        <a href="<?php echo $this->route->url ?>">
+            <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
+        </a>
+    </div>
+    <div class="main-menu menu">
+
+        <?php
+
+
+        $menuLinks = [
+            "Fields" => [
+                "icon" => "edit",
+                "url" => $router->fields->url
+            ],
+            "Templates" => [
+                "icon" => "code",
+                "url" => $router->templates->url
+            ],
+            "Extensions" => [
+                "icon" => "cubes",
+                "url" => $router->extensions->url
+            ],
+            "Users" => [
+                "icon" => "users",
+                "url" => $router->users->url
+            ],
+            "Settings" => [
+                "icon" => "cog",
+                "url" => $router->settings->url
+            ]
+        ];
+
+        ?>
+
+        <?php foreach ($menuLinks as $key => $value): ?>
+            <?php $class = $value['url'] == $request->url ? "active" : "" ?>
+            <a class="item <?php echo $class ?>" href="<?php echo $value['url'] ?>">
+                <i class="icon icon-<?php echo $value['icon'] ?>"></i>
+                <?php echo $key ?>
             </a>
-        </div>
-        <div class="main-menu menu">
-
-            <?php
-
-
-            $menuLinks = [
-                "Fields" => [
-                    "icon" => "edit",
-                    "url" => $router->fields->url
-                ],
-                "Templates" => [
-                    "icon" => "code",
-                    "url" => $router->templates->url
-                ],
-                "Extensions" => [
-                    "icon" => "cubes",
-                    "url" => $router->extensions->url
-                ],
-                "Users" => [
-                    "icon" => "users",
-                    "url" => $router->users->url
-                ],
-                "Settings" => [
-                    "icon" => "cog",
-                    "url" => $router->settings->url
-                ]
-            ];
-
-            ?>
-
-            <?php foreach ($menuLinks as $key => $value): ?>
-                <?php $class = $value['url'] == $request->url ? "active" : "" ?>
-                <a class="item <?php echo $class ?>" href="<?php echo $value['url'] ?>">
-                    <i class="icon icon-<?php echo $value['icon'] ?>"></i>
-                    <?php echo $key ?>
-                </a>
-            <?php endforeach; ?>
-        </div>
+        <?php endforeach; ?>
 
     </div>
 

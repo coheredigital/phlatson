@@ -24,22 +24,22 @@
 }
 
 .main-menu{
-  display: inline-block;
-  max-width: 80%;
   .item{
     color: darken($header-background, 25%);
     margin: 0;
     padding: 1em;
-    display: inline-block;
+    display: block;
     text-decoration: none !important;
     .icon{
       margin-right: 0.2em;
     }
     &:hover{
-      color: $blue;
+      color: #fff;
+      background: rgba(0,0,0,.1);
     }
     &.active{
-      color: $brand;
+      background: rgba(0,0,0,.1);
+      color: #fff;
     }
   }
 }

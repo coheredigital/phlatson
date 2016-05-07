@@ -34,22 +34,18 @@ $dark-red: darken($red, 10%);
 $light-red: lighten($red, 10%);
 
 
-$orange: #f4a056;
+$orange: #f46b4b;
 $dark-orange: darken($orange, 10%);
 $light-orange: lighten($orange, 10%);
 
 /* ELEMENT COLORS */
-
+$text-color: #555;
 $link-color: $navy;
 $link-hover-color: $blue;
 
-$header-background: #8291af;
-$header-background: #fff;
-//$header-background: #DCE2E8;
-//$main-background: $softer-gray;
+$header-background: $brand;
+$tab-background: $light-gray;
 $main-background: #f4f4f4;
-//$main-background: #fff;
-//$main-background: #fff;
 $sidebar-background: $softer-gray;
 
 

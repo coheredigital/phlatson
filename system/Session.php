@@ -89,7 +89,6 @@ class Session extends Flatbed implements IteratorAggregate
      * @param string $key The key for the flash value.
      * @param mixed $value The value for the flash.
      *
-
      */
     public function flash($key, $value = null)
     {
