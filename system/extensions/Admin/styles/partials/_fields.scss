@@ -9,11 +9,8 @@ input{
   box-sizing: border-box;
   font-size: 1em;
   background: #fff;
-  border: 1px solid $light-gray;
+  border: 1px solid $gray;
   resize: none;
-  // &:focus{
-  //   border-bottom-color: $green;
-  // }
 }
 
 .form{
@@ -34,7 +31,7 @@ input{
     margin: 0;
     box-sizing: border-box;
     display: block;
-    border: none;
+    border: none !important;
     font-size: 1em;
     background: transparent;
     width: 100%;
@@ -49,7 +46,7 @@ input{
 }
 .field-input{
   position: relative;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   background: #fff;
 }
 .field-required{

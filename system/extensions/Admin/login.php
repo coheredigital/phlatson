@@ -26,9 +26,6 @@ $passwordInput->attribute("placeholder","Password");
 <body>
     <div id="main">
         <form class='ui form segment form-login' method='POST'>
-            <div class="logo">
-                <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
-            </div>
             <?php
             echo $usernameInput->render();
             echo $passwordInput->render();

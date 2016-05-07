@@ -2,34 +2,38 @@
 
 body {
     background: $brand;
-//    background: #fff;
 }
 
 .form-login{
-  background: $header-background;
-  padding-top: 0;
-  width: 200px;
+  background: #fff;
+  padding: 2em;
+  width: 240px;
+  box-sizing: border-box;
   position: absolute;
   left: 50%;
   top: 50%;
-  margin: -120px 0 0 -100px;
+  margin: -120px 0 0 -120px;
+  box-shadow: 0 1.5em 3em rgba(0,0,0,.3), 0 .5em 1em rgba(0,0,0,.1), 0 .2em .4em rgba(0,0,0,.3); 
   .field{
-    padding: 0 1em;
     box-sizing: border-box;
     input{
       background-color: transparent !important;
 
     }
-
+    &:first-child {
+      margin-top: 0;
+    }
   }
   .button{
     border-radius: 0;
     margin-top: 1em;
     width: 100%;
-    background: $main-background;
-    color: $gray !important;
+    background: $green;
+    padding: 1em;
+    color: #fff !important;
+    border-radius: .2em;
     &:hover{
-      background: #333;
+      background: darken($green, 10%);
       color: #fff !important;
     }
   }

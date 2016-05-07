@@ -23,17 +23,16 @@
 <?php endif; ?>
 
 <div id="header">
-    <div class="logo">
-        <a href="<?php echo $this->route->url ?>">
-            <img src="<?php echo $this->url ?>styles/images/logo.png" alt=""/>
-        </a>
-    </div>
     <div class="main-menu menu">
 
         <?php
 
 
         $menuLinks = [
+            "Pages" => [
+                "icon" => "edit",
+                "url" => $router->pages->url
+            ],
             "Fields" => [
                 "icon" => "edit",
                 "url" => $router->fields->url
@@ -67,20 +66,20 @@
         <?php endforeach; ?>
 
     </div>
+    <div class="user-menu">
+        <div class="container">
+            <div class="user-menu-content">
+                <div class="user-name"><?php echo $user->name ?></div>
+                <a href="<?php echo $config->urls->admin ?>logout" class="user-logout"><i class="icon icon-lock"></i> Logout</a>
+            </div>
+        </div>
 
+    </div>
 </div>
 <div id="main">
     <?php echo $this->output ?>
 </div>
-<div class="user-menu">
-    <div class="container">
-        <div class="user-menu-content">
-            <div class="user-name"><?php echo $user->name ?></div>
-            <a href="<?php echo $config->urls->admin ?>logout" class="user-logout"><i class="icon icon-lock"></i> Logout</a>
-        </div>
-    </div>
 
-</div>
 <?php
 foreach ($config->scripts as $file) {
     echo "\n    <script src='{$file}'></script>";
