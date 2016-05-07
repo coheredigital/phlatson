@@ -18,8 +18,8 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected $initData = [];
     protected $settings = [];
 
-    protected $defaultFields = ["name","modified","template"];
-    protected $skippedFields = ["name","modified"];
+    protected $defaultFields = ["name","template"];
+    protected $skippedFields = ["name"];
     protected $route = [];
 
     protected $requiredElements = [];

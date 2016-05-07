@@ -1,7 +1,8 @@
 {
     "title": "sdsdsd",
     "content": "<p>sdsdsdsd<\/p>",
-    "name": "",
+    "name": "about",
     "template": "default",
-    "parent": "\/about"
+    "parent": "\/",
+    "modified": 1449795026
 }
