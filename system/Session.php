@@ -28,7 +28,7 @@ class Session extends Flatbed implements IteratorAggregate
 
     }
 
-
+    // check that a valid session still exists
     public function exists(){
         if( isset($_SESSION) || $_COOKIE[$this->api('config')->sessionName] ){
             return true;
