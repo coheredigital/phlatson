@@ -8,20 +8,20 @@
 	}
 	
 	.selectize-input{
-		border-color: @light-gray;
+		border-color: $light-gray;
 		padding: 1em;
-		color: @dark-gray;
+		color: $dark-gray;
 		font-size: 1em;
 		overflow: visible;
 		box-shadow: none;
 		border-radius: 0;
 		&.focus{
-			border-color: @blue;
+			border-color: $blue;
 			
 		}
 	}
 	.selectize-dropdown{
-		border-color: @blue;
+		border-color: $blue;
 		width: 100% !important;
 		box-shadow: none;
 		border-radius: 0;
@@ -29,13 +29,13 @@
 	.option{
 		padding: .8em 1em;
 		&.active{
-			background: @brand;
-			color: darken(@brand, 20%);
+			background: $brand;
+			color: darken($brand, 20%);
 			color: #fff;
 		}
 		&.selected{
-			background: @lighter-gray;
-			color: @light-gray;
+			background: $lighter-gray;
+			color: $light-gray;
 		}
 	}
 
