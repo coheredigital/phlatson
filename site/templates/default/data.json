@@ -2,7 +2,13 @@
     "title": "Page (default)",
     "fields": [
         {
-            "name": "title"
+            "name": "title",
+		    "title": "Title",
+		    "fieldtype": "FieldtypeText",
+		    "input": "InputText",
+		    "settings" : {
+		        "required" : true
+		    }
         },
         {
             "name": "content"
