@@ -44,11 +44,17 @@ $link-color: $navy;
 $link-hover-color: $blue;
 
 $header-background: $brand;
-$tab-background: $light-gray;
+$tab-background: #fff;
 $main-background: #f4f4f4;
 $sidebar-background: $softer-gray;
 
-
+// page tree
+$page-tree-item-padding: .8em;
+$page-tree-item-background: $light-gray;
+$page-tree-item-hover-background: $link-color;
+$page-tree-item-hover-title-color: #fff;
+$page-tree-item-title-color: $dark-gray;
+$page-tree-branchline-color: darken($main-background, 12%);
 
 /* SIZES */
 
