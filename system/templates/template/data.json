@@ -1,6 +1,11 @@
 {
     "title": "Template",
     "fields": [
-        "fields"
+	    {
+	        "name":"title"
+	    },
+	    {
+	        "name":"fields"
+	    }
     ]
 }

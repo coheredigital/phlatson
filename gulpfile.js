@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 
 var browserSync = require('browser-sync').create();
 
-var sassFiles = 'system/extensions/Admin/**/*.scss';
+var sassFiles = 'system/extensions/**/*.scss';
 
 // browser sync proxy server
 gulp.task('serve', function() {
@@ -28,7 +28,7 @@ gulp.task('sass', function () {
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(gulp.dest('system/extensions/Admin'))
+    .pipe(gulp.dest('system/extensions'))
     .pipe(browserSync.stream());
 });
 

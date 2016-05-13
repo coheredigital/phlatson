@@ -50,8 +50,8 @@ class InputFields extends Input implements ReceivesOptions
 
     protected function renderInput()
     {
-        $this->api('config')->styles->add($this->url . "{$this->className}.css");
-        $this->api('config')->scripts->add($this->url . "{$this->className}.js");
+        $this->api('config')->styles->add("{$this->url}{$this->className}.css");
+        $this->api('config')->scripts->add("{$this->url}{$this->className}.js");
 
 
         array_unshift($this->options, "Choose a field to add...");

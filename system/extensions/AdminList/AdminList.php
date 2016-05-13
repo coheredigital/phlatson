@@ -59,7 +59,9 @@ abstract class AdminList extends Admin implements AdminPage
     protected function renderControls()
     {
         $output = "<div class='form-actions'>";
+        $output .= "<div class='container'>";
         $output .= "<a class='button' href='{$this->route->url}new'>New</a>";
+        $output .= "</div>";
         $output .= "</div>";
 
         return $output;
