@@ -27,8 +27,11 @@
   .item{
     color: darken($header-background, 25%);
     margin: 0;
-    padding: 1em;
-    display: block;
+    padding: .6em 1em;
+    margin: 1em;
+    margin-left: 0;
+    border-radius: .3em;
+    display: inline-block;
     text-decoration: none !important;
     .icon{
       margin-right: 0.2em;

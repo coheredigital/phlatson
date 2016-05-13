@@ -24,7 +24,7 @@
 
 <div id="header">
     <div class="main-menu menu">
-
+    
         <?php
 
 
@@ -56,16 +56,23 @@
         ];
 
         ?>
-
+        <div class="container">
         <?php foreach ($menuLinks as $key => $value): ?>
-            <?php $class = $value['url'] == $request->url ? "active" : "" ?>
+            <?php $class = strpos($request->url , $value['url']) !== FALSE ? "active" : "" ?>
             <a class="item <?php echo $class ?>" href="<?php echo $value['url'] ?>">
                 <i class="icon icon-<?php echo $value['icon'] ?>"></i>
                 <?php echo $key ?>
             </a>
         <?php endforeach; ?>
+        </div>
+
 
     </div>
+
+</div>
+<div id="main">
+    <?php echo $this->output ?>
+</div>
     <div class="user-menu">
         <div class="container">
             <div class="user-menu-content">
@@ -75,11 +82,6 @@
         </div>
 
     </div>
-</div>
-<div id="main">
-    <?php echo $this->output ?>
-</div>
-
 <?php
 foreach ($config->scripts as $file) {
     echo "\n    <script src='{$file}'></script>";
