@@ -55,7 +55,7 @@ class Config extends Object
         $directories['fields'] = $directories['site'] . 'fields/';
         $directories['templates'] = $directories['site'] . 'templates/';
         $directories['extensions'] = $directories['site'] . 'extensions/';
-        $directories['layouts'] = $directories['site'] . 'layouts/';
+        $directories['views'] = $directories['site'] . 'views/';
         $directories['users'] = $directories['site'] . 'users/';
 
 
