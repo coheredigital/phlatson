@@ -16,7 +16,6 @@ abstract class Object extends Flatbed implements JsonSerializable
     // main data container, holds data loaded from JSON file
     protected $data = [];
     protected $initData = [];
-    protected $settings = [];
 
     protected $defaultFields = ["name","template"];
     protected $skippedFields = ["name"];

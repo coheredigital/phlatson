@@ -10,7 +10,7 @@ class MarkupPageTree extends Extension
     protected function setup()
     {
         $this->admin = $this->api("admin");
-        $this->api('config')->scripts->add($this->url . "{$this->className}.js");
+        $this->api('config')->scripts->add("{$this->url}{$this->className}.js");
     }
 
 
@@ -29,7 +29,7 @@ class MarkupPageTree extends Extension
     }
 
     protected function renderPageControls(Page $page){
-        $view = $page->template->view;
+        $view = $page->template->settings->pageTreeView;
 
         $output = "<div class='page-tree-item-buttons'>";
 
@@ -53,17 +53,17 @@ class MarkupPageTree extends Extension
         $class = "page-tree-single";
 
 
-        if ($page->template->view) {
+        var_dump($page->template->settings->pageTreeView);
+        if ($page->template->settings->pageTreeView) {
 
         } else {
-            if (count($page->children())) {
+            if (count($page->children)) {
                 $output .= $this->renderPageList($page->children);
                 $class = "page-tree-group";
             }
         }
 
-
-        $output = "<li class='$class page-tree-group'>{$output}</li>";
+        $output = "<li class='{$class} page-tree-group'>{$output}</li>";
         return $output;
     }
 

@@ -8,10 +8,13 @@
       "name": "content"
     }
   ],
-  "view" : {
-    "type": "list",
-    "columns": [
-      "title"
-    ]
+  "settings" : {
+    "pageTreeView" : {
+      "type": "list",
+      "columns": [
+        "title"
+      ]
+    }
   }
+
 }

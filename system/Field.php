@@ -43,19 +43,6 @@ class Field extends Object
 
     }
 
-    protected function getNewName()
-    {
-        // TODO : this is not in yet, we need support for creating the name from referencing another field
-        if ($this->template->_settings->nameFrom && $this->template->fields->has($this->settings->nameFrom)) {
-            return $this->api("sanitizer")->name($this->settings->nameFrom);
-        } else {
-            return $this->api("sanitizer")->name($this->label);
-        }
-
-    }
-
-
-
     protected function processSavePath()
     {
 
@@ -77,10 +64,6 @@ class Field extends Object
                 return $this->fieldtype;
             case 'input':
                 return $this->getInput();
-//            case 'template':
-//                $template = $this->api("templates")->get("field"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
-//                $template->parent = $this;
-//                return $template;
             default:
                 return parent::get($name);
         }
