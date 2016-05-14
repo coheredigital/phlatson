@@ -1,6 +1,6 @@
 <?php
 
-class Page extends Object
+class Page extends Object implements ViewableObject
 {
 
     protected $rootFolder = "pages";
@@ -112,7 +112,9 @@ class Page extends Object
         return true;
     }
 
+    public function _render(){
 
+    }
 
     public function get($name)
     {

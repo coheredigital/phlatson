@@ -52,8 +52,6 @@ class MarkupPageTree extends Extension
         $output = $this->renderPageTitle($page);
         $class = "page-tree-single";
 
-
-        var_dump($page->template->settings->pageTreeView);
         if ($page->template->settings->pageTreeView) {
 
         } else {
