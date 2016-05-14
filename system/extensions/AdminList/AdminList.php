@@ -16,11 +16,6 @@ abstract class AdminList extends Admin implements AdminPage
         "Name" => "name"
     ];
 
-    protected function setup()
-    {
-    }
-
-
     protected function renderList()
     {
 

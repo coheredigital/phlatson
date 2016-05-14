@@ -131,11 +131,13 @@ class Admin extends Extension
 
         $this->messages = $this->getMessages();
 
-        if ($this->page instanceof AdminPage) // TODO why do I need to check this here?
+        if ($this->page instanceof AdminPage){
             $this->output = $this->page->render();
-
-        extract($this->api()); // extract app variables for easier use in admin templates
-        if ($this->output) include_once "layout.php";
+        }
+        
+        // extract app variables for easier use in admin templates
+        extract($this->api()); 
+        include_once "layout.php";
 
 
     }

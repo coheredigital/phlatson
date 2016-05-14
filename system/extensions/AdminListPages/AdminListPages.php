@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Adam
- * Date: 7/17/14
- * Time: 7:36 PM
- */
 class AdminListPages extends Extension implements AdminPage
 {
 
@@ -97,18 +91,12 @@ class AdminListPages extends Extension implements AdminPage
     public function render()
     {
 
-
-
         if (is_array($this->rootPage->template->view) && $this->rootPage->template->view["type"] == "list") {
             $output .= $this->renderPageList();
         } else {
             $output .= $this->renderPageTree();
         }
-
         return $output = $this->renderSubnav() . $output;
-
-//        $admin->render();
-
     }
 
 } 
