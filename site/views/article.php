@@ -1,4 +1,4 @@
-<?php include 'includes/head.inc' ?>
+<?php include 'includes/head.php' ?>
     <div class="container">
         <!-- PAGE CONTENT -->
         <?php if ($page->children): ?>
@@ -8,4 +8,4 @@
             <?php endforeach ?>
         <?php endif ?>
     </div>
-<?php include 'includes/foot.inc';
+<?php include 'includes/foot.php';

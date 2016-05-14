@@ -106,6 +106,19 @@ class Page extends Object
         return null;
     }
 
+
+    /**
+     * @return bool
+     */
+    public function isViewable()
+    {
+        if($this->isSystem()) return false;
+        if(!is_file($this->view)) return false;
+        return true;
+    }
+
+
+
     public function get($name)
     {
         switch ($name) {

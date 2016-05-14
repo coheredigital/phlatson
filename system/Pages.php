@@ -12,7 +12,7 @@ class Pages extends Objects
     {
         $page = $this->get($path);
         if ($page instanceof Page) {
-            extract($this->api()); // get access to api variables for rendered layout
+            extract($this->api()); // get access to api variables for rendered view
             include $page->template->view;
         }
         else{

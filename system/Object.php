@@ -350,16 +350,6 @@ abstract class Object extends Flatbed implements JsonSerializable
         return true;
     }
 
-    /**
-     * @return bool
-     */
-    public function isViewable()
-    {
-        if($this->isSystem()) return false;
-        if(!$this instanceof Page) return false;
-        if(!is_file($this->layout)) return false;
-        return true;
-    }
 
     /**
      * @return bool

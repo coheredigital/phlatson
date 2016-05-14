@@ -1,0 +1,34 @@
+.header{
+	padding: 3em 0;
+	border-bottom: 2px solid $brand;
+	margin-bottom: 3em;
+}
+
+.breadcrumbs {
+	padding: 1em 0;
+	border: 1px solid $light-gray;
+	border-left: 0;
+	border-right: 0;
+	margin-bottom: 3em;
+	a {
+		text-decoration: none;
+		&:after{
+			content: "/";
+			margin: .5em;
+			color: $gray;
+		}
+	}
+}
+
+nav{
+	padding: 1em 0;
+	a{
+		text-transform: uppercase;
+		text-decoration: none;
+		margin-right: 2em;
+	}
+}
+
+.footer {
+	text-align: center;
+}
