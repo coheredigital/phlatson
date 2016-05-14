@@ -71,21 +71,16 @@ class Page extends Object
     public function parents()
     {
 
-        $requests = $this->route;
-        $parents = array();
-        $urls = array();
+        $parents = new ObjectCollection();  
 
-        for ($x = count($requests); $x > 0; $x--) {
-            array_pop($requests);
-            $urls[] = $this->createUrl($requests);
+        // start with current page
+        $page = $this;
+
+        while ($page = $page->parent) {
+            $parents->add($page);
         }
 
-        foreach ($urls as $url) {
-            $page = $this->api("pages")->get($url);
-            $parents[] = $page;
-        }
-
-        return array_reverse($parents);
+        return $parents->reverse();
     }
 
     public function rootParent()
@@ -130,6 +125,8 @@ class Page extends Object
                 return $this->api('config')->urls->root . ltrim($this->directory, "/");
             case 'children':
                 return $this->children();
+            case 'parents':
+                return $this->parents();
             case 'rootParent':
                 return $this->rootParent();
             case 'files':
