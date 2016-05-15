@@ -12,17 +12,9 @@ class Extension extends Object
 
     final public function __construct($file = null)
     {
-        $file = $this->getFile();
+        // $file = $this->getFile();
         parent::__construct($file);
         $this->setup();
-//        $routesFile = $this->path . "{$this->className}Routes.php";
-//        if(file_exists($routesFile)){
-//
-//            include_once $routesFile;
-//            $className = "{$this->className}Routes";
-//            $routes = new $className();
-//            $routes->setup();
-//        }
     }
 
     protected function getFile()
@@ -32,6 +24,20 @@ class Extension extends Object
         $file = $directory . "data.json";
         return $file;
     }
+
+    /**
+     * @return boolean
+     *
+     * Check if extension has configuration settings
+     */
+    public function isConfigurable()
+    {
+        if (file_exists("{$this->path}defaultConfiguration.json")) {
+            return true;
+        }
+        return false;
+    }
+
 
     protected function setup()
     {

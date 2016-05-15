@@ -34,9 +34,7 @@ abstract class Objects extends Flatbed
         $this->url = Filter::url(ROOT_URL . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
         $this->systemUrl = Filter::url(ROOT_URL . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
 
-        if ($this instanceof Pages) {
-            $this->data['/'] = $this->path . "data.json";
-        }
+
 
     }
 
@@ -96,16 +94,16 @@ abstract class Objects extends Flatbed
 
         $iterator->setMaxDepth($depth);
 
-        foreach ($iterator as $item) {
+        foreach ($iterator as $folder) {
 
-            $itemPath = Filter::path($item->getPathName());
+            $folderPath = Filter::path($folder->getPathName());
 
-            if(!$this->isValidObject($item)) continue;
+            if(!$this->isValidObject($folder)) continue;
 
-            $directory = $this->getItemUri($item);
+            $directory = $this->getItemUri($folder);
 
             // add root items for pages to allow home selection
-            $this->data["$directory"] = $itemPath;
+            $this->data["$directory"] = $folderPath;
 
         }
 
@@ -206,9 +204,6 @@ abstract class Objects extends Flatbed
     {
         // normalize the query to avoid errors
         $key = Filter::uri($key);
-
-
-
         return $this->getObject($key);
     }
 

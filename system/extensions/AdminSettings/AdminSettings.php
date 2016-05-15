@@ -29,9 +29,36 @@ class AdminSettings extends Admin implements AdminPage
     }
 
 
+    protected function renderList()
+    {
+
+        // $objectCollection = $this->api($this->objectName)->all();
+        $table = $this->api("extensions")->get("MarkupTable");
+
+        $configurableExtensions = $this->api("extensions")->all();
+
+        $table->setColumns([
+            "title"
+        ]);
+
+        foreach ($configurableExtensions as $extension) {
+            if ($extension instanceof Extension && $extension->configurable) continue;
+            $table->addRow(
+                array(
+                    "title" => $object->title,
+                )
+            );
+        }
+
+        $output = $table->render();
+
+        return "<div class='container'>{$output}</div>";
+
+    }
 
     public function render()
     {
+        $output = $this->renderList();
         return "";
     }
 

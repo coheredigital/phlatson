@@ -6,7 +6,8 @@
  * Date: 7/17/14
  * Time: 7:36 PMs
  */
-abstract class AdminList extends Admin implements AdminPage
+// abstract class AdminList extends Admin implements AdminPage
+class AdminList extends Admin implements AdminPage
 {
 
     public $title;
@@ -22,7 +23,6 @@ abstract class AdminList extends Admin implements AdminPage
         $objectCollection = $this->api($this->objectName)->all();
         $table = $this->api("extensions")->get("MarkupTable");
 
-        // $this->columns["controls"] = "controls";
         $table->setColumns($this->columns);
 
         foreach ($objectCollection as $object) {
@@ -30,7 +30,6 @@ abstract class AdminList extends Admin implements AdminPage
                 array(
                     "title" => $object->isEditable() ? "<a href='{$object->urlEdit}'>{$object->title}</a>" : $object->title,
                     "name" => $object->name,
-                    // "controls" => $this->renderPageControls($object)
                 )
             );
         }

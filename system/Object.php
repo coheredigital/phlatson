@@ -9,7 +9,6 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $file;
     protected $path;
-//    protected $modified;
     protected $rootFolder;
     protected $rootPath;
 
