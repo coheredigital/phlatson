@@ -17,8 +17,3 @@
 <?php
 
 include 'includes/foot.php';
-
-
-foreach ( $extensions->all() as $extension) {
-    var_dump("$extension->path");
-}

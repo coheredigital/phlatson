@@ -157,11 +157,14 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     protected function getUrl(){
 
-
+        
         $rootPath = $this->api("config")->paths->root;
 
-        $replace = [ROOT_PATH,$rootPath, "data.json"];
-
+        $replace = [
+            ROOT_PATH,
+            $this->api("config")->paths->root,
+            "data.json"
+        ];
         $url = trim(str_replace($replace, "", $this->path), "/");
         $url = Filter::url($url);
         $url = "/$url";

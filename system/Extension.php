@@ -12,7 +12,7 @@ class Extension extends Object
 
     final public function __construct($file = null)
     {
-        // $file = $this->getFile();
+        $file = $this->getFile();
         parent::__construct($file);
         $this->setup();
     }

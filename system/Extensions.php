@@ -17,7 +17,7 @@ class Extensions extends Objects
         $this->getFileList($systemExtensions);
         $this->getFileList();
 
-        // $this->preloadExtensions();
+        $this->preloadExtensions();
     }
 
 
@@ -26,18 +26,15 @@ class Extensions extends Objects
      * @return [type] [description]
      */
     protected function preloadExtensions(){
-
-        var_dump($this->data);
-        foreach ($this->data as $className => $path) {
+        foreach ($this->data as $name => $path) {
+            $extension = new ObjectStub($path);
 
             if($extension->autoload){
-                $extension = new $className();
+                $extension = $this->getObject($name);
             }
-            else{
-                $extension = new ObjectStub($path);
-            }
-            $this->data["$className"] = $extension;
+            $this->data[$name] = $extension;
         }
+
     }
 
     protected function getObject($name)
@@ -71,10 +68,8 @@ class Extensions extends Objects
 
         foreach ($this->data as $name => $file) {
             $extension = $this->getObject($name);
-            // todo: all extensions are being instatiate, all the time, this need to improved, maybe a ExtensionStub class?
             $extensions->add($extension);
         }
-        var_dump($this->data);
 
         return $extensions;
     }
