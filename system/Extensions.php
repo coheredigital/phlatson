@@ -11,51 +11,34 @@ class Extensions extends Objects
     public function __construct()
     {
         parent::__construct();
+
+        $systemExtensions = __DIR__ . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR;
+
+        $this->getFileList($systemExtensions);
         $this->getFileList();
-        // $this->getFileList();
 
-        var_dump($this->data);
-        // $systemExtensions = __DIR__ . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR;
-        // $this->getFileList($systemExtensions);
-        // $this->getFileList(); // for now this need to be fired on every request TODO: remove this requirement
-
+        // $this->preloadExtensions();
     }
 
-    // protected function getFileList($path = null, $depth = 1)
-    // {
 
-    //     if(is_null($path)) $path = $this->siteRoot;
+    /**
+     * preload autoload extensions and ExtensionStubs
+     * @return [type] [description]
+     */
+    protected function preloadExtensions(){
 
-    //     $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
-    //     $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+        var_dump($this->data);
+        foreach ($this->data as $className => $path) {
 
-    //     $iterator->setMaxDepth($depth);
-
-    //     foreach ($iterator as $item) {
-
-    //         $itemPath = Filter::path($item->getPath());
-    //         $itemFile = $item->getFileName();
-
-    //         $filePath = $itemPath . $itemFile;
-
-    //         if (!$this->isValidObject($item)) continue;
-
-    //         $className = basename($itemPath);
-
-    //         $extension = new ObjectStub($filePath);
-    //         $extension->creator = $this;
-
-    //         $this->data["$className"] = $extension;
-
-    //         if($extension->autoload){
-    //             $extension = new $className();
-    //             $this->data["$className"] = $extension;
-    //         }
-
-    //     }
-
-    // }
-
+            if($extension->autoload){
+                $extension = new $className();
+            }
+            else{
+                $extension = new ObjectStub($path);
+            }
+            $this->data["$className"] = $extension;
+        }
+    }
 
     protected function getObject($name)
     {

@@ -96,14 +96,14 @@ abstract class Objects extends Flatbed
 
         foreach ($iterator as $folder) {
 
-            $folderPath = Filter::path($folder->getPathName());
+            $filePath = Filter::path($folder->getPathName());
 
             if(!$this->isValidObject($folder)) continue;
 
-            $directory = $this->getItemUri($folder);
+            $uri = $this->getItemUri($folder);
 
-            // add root items for pages to allow home selection
-            $this->data["$directory"] = $folderPath;
+
+            $this->data["$uri"] = $filePath;
 
         }
 
@@ -160,11 +160,11 @@ abstract class Objects extends Flatbed
     protected function getItemUri(SplFileInfo $item){
         $path = $item->getPath();
         $filename = $item->getFilename();
+  
+        $uri = Filter::uri($path);
+        $uri = str_replace($this->path, "", $uri);
+        $uri = str_replace($this->systemPath, "", $uri);
 
-        $uri = str_replace($this->siteRoot, "", $path);
-        $uri = str_replace($filename, "", $uri);
-        $uri = trim($uri, DIRECTORY_SEPARATOR);
-        $uri = Filter::uri($uri);
         return $uri;
     }
 
