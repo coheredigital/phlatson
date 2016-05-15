@@ -26,13 +26,14 @@ class Extensions extends Objects
      * @return [type] [description]
      */
     protected function preloadExtensions(){
-        foreach ($this->data as $name => $path) {
+        foreach ($this->data as $className => $path) {
             $extension = new ObjectStub($path);
 
             if($extension->autoload){
-                $extension = $this->getObject($name);
+                $extension = new $className();
             }
-            $this->data[$name] = $extension;
+            $extension->file = $path;
+            $this->data[$className] = $extension;
         }
 
     }
@@ -44,6 +45,7 @@ class Extensions extends Objects
             return false;
         }
 
+        // TODO double check need for this
         $extension = $this->instantiateExtension($name, $extension);
 
 
