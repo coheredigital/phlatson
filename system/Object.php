@@ -202,7 +202,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         if ($field instanceof Field) {
 
-            $fieldtype = $field->type;
+            $fieldtype = $field->fieldtype;
             $fieldtype->object = $this;
 
             if ($fieldtype instanceof Fieldtype) {

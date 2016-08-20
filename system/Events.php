@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aspruijt
- * Date: 05/02/2015
- * Time: 11:51 AM
- */
 
 class Events {
 

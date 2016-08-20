@@ -2,7 +2,8 @@
     "title": "Field",
     "fields": [
         {
-            "name": "title"
+            "name": "title",
+            "required" : true
         }
     ]
 }

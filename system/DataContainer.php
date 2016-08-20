@@ -32,7 +32,7 @@ abstract class DataContainer implements JsonSerializable
         $field = $this->api("fields") ? $this->api("fields")->get($name) : false; // TODO, why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed, if it is I should note the reason here
 
         if ($field instanceof Field ) {
-            $fieldtype = $field->type;
+            $fieldtype = $field->fieldtype;
             $fieldtype->object = $this;
             if ($fieldtype instanceof Fieldtype) {
                 $value = $fieldtype->getOutput($value);
@@ -52,7 +52,7 @@ abstract class DataContainer implements JsonSerializable
         $field = $this->api("fields") ? $this->api("fields")->get($name) : false; // TODO, why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field ) {
-            $fieldtype = $field->type;
+            $fieldtype = $field->fieldtype;
             $fieldtype->object = $this;
 
             if ($fieldtype instanceof Fieldtype) {

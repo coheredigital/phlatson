@@ -36,7 +36,7 @@ class AdminEdit extends Extension
         $input->label = $field->title;
         // todo: improve select value handling
         if($input instanceof ReceivesOptions){
-            $fieldtype = $field->type;
+            $fieldtype = $field->fieldtype;
             $array = $fieldtype->options();
             $input->addOptions($array);
         }
@@ -78,7 +78,7 @@ class AdminEdit extends Extension
         foreach ($fields as $field) {
             $name = $field->name;
             $value = isset($post->{$name}) ? $post->{$name} : $this->object->getUnformatted("$name");
-            $value = $field->type->getSave($value);
+            $value = $field->fieldtype->getSave($value);
             $this->object->set($name, $value);
         }
 

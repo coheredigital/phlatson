@@ -1,11 +1,13 @@
 @import "_variables";
-
+html,
 body {
     background: $brand;
+    height: 100%;
 }
 
 #main {
   background-color: transparent;
+  height: 100%;
 }
 
 .form-login{
@@ -17,7 +19,7 @@ body {
   left: 50%;
   top: 50%;
   margin: -120px 0 0 -120px;
-  box-shadow: 0 1.5em 3em rgba(0,0,0,.3), 0 .5em 1em rgba(0,0,0,.1), 0 .2em .4em rgba(0,0,0,.3); 
+  box-shadow: 0 1.5em 3em rgba(0,0,0,.1), 0 .5em 1em rgba(0,0,0,.1), 0 .2em .4em rgba(0,0,0,.1); 
   .field{
     box-sizing: border-box;
     input{
