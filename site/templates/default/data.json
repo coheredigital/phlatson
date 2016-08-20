@@ -1,17 +1,8 @@
 {
     "title": "Page (default)",
-    "fields": [
-        {
-            "name": "title",
-		    "title": "Title",
-		    "fieldtype": "FieldtypeText",
-		    "input": "InputText",
-		    "settings" : {
-		        "required" : true
-		    }
-        },
-        {
-            "name": "content"
-        }
-    ]
+    "fields": [],
+    "name": "default",
+    "modified": 1462640491,
+    "template": "template",
+    "view": "default"
 }

@@ -3,7 +3,7 @@
 abstract class Fieldtype extends Extension
 {
 
-    public $wrap = true;
+    // public $wrap = true;
     protected $field;
     protected $object;
 
@@ -14,8 +14,8 @@ abstract class Fieldtype extends Extension
 
     protected function setup()
     {
-        $this->attribute('class', 'input ' . $this->className);
-        $this->attribute("name", $this->field->name);
+        // $this->attribute("class", "input " . $this->className);
+        // $this->attribute("name", $this->field->name);
     }
 
     public function getOutput($value)
@@ -33,7 +33,6 @@ abstract class Fieldtype extends Extension
     {
         return $value;
     }
-
 
 
     public function attribute($key, $value = false)

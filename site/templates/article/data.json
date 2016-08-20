@@ -2,7 +2,7 @@
     "title": "Article",
     "fields": [],
     "name": "article",
-    "modified": 1471722343,
+    "modified": 1471722760,
     "template": "template",
-    "view": ""
+    "view": "article"
 }
