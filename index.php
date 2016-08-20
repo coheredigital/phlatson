@@ -50,6 +50,7 @@ try {
     $flatbed->api('logger', 'Logger', true);
 
 
+
     // run the app
     $flatbed->api('router')->run($request);
 

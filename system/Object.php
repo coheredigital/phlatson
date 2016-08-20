@@ -187,6 +187,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             $fieldtypeName = $field->getUnformatted("fieldtype");
             $fieldtype = $this->api("extensions")->get($fieldtypeName);
             $fieldtype->object = $this;
+            $fieldtype->value = $value;
             $value = $fieldtype->getOutput($value);
 
         }

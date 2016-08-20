@@ -81,8 +81,6 @@ class AdminEdit extends Extension
             $value = $field->fieldtype->getSave($value);
             $this->object->set($name, $value);
         }
-
-
     }
 
     private function renderForm(){

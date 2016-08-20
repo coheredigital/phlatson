@@ -19,8 +19,7 @@ class Pages extends Objects
     {
         $page = $this->get($path);
         if ($page instanceof Page) {
-            $this->api("page",$page);
-            echo $page->template->view;
+            echo $page->render();
         }
         else{
             echo "Page not found! ($path)";

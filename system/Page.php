@@ -108,12 +108,27 @@ class Page extends Object implements ViewableObject
     public function isViewable()
     {
         if($this->isSystem()) return false;
-        if(!is_file($this->view)) return false;
+        if(!$this->template->view) return false;
         return true;
     }
 
     public function _render(){
 
+        // render template file
+        ob_start();
+
+        // add self as page api variable
+        $this->api("page", $this);
+
+        // give the rendered page access to the API
+        extract($this->api());
+
+        // render found file
+        include($this->template->view);
+
+        $output = ob_get_contents(); 
+        ob_end_clean();
+        return $output;
     }
 
     public function get($name)
@@ -135,10 +150,6 @@ class Page extends Object implements ViewableObject
                 return $this->files();
             case 'images':
                 return $this->images();
-            case 'view':
-                // alias for $page->template->view (required by AdminPage class)
-                $view = $this->template->view;
-                return $view;
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:
@@ -165,7 +176,6 @@ class Page extends Object implements ViewableObject
                     parent::set($name, $value);
                 }
         }
-
 
     }
 

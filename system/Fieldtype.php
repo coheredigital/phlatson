@@ -55,6 +55,7 @@ abstract class Fieldtype extends Extension
     }
 
 
+
 //     // we will default to rendering a basic text field since it will be the most common inout type for most field types
 //     final protected function renderWrapper($input)
 //     {
