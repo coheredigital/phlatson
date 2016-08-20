@@ -20,6 +20,7 @@ class Pages extends Objects
         $page = $this->get($path);
         if ($page instanceof Page) {
             extract($this->api()); // get access to api variables for rendered view
+            var_dump($page->template->view);
             include $page->template->view;
         }
         else{

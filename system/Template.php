@@ -5,7 +5,7 @@ class Template extends Object
 
     public $parent; // the object this template belongs to
     protected $rootFolder = "templates";
-    public $defaultFields = ['title','fields', 'name'];
+    public $defaultFields = ['title','fields', 'name','view'];
 
 
     function __construct($file = null)
@@ -13,10 +13,11 @@ class Template extends Object
 
         parent::__construct($file);
 
-        $this->defaultFields = array_merge($this->defaultFields, [
-            "title",
-            "fields"
-        ]);
+        // $this->defaultFields = array_merge($this->defaultFields, [
+        //     "title",
+        //     "fields",
+        //     "view"
+        // ]);
 
         $this->skippedFields = array_merge($this->skippedFields, [
             "template"
@@ -26,16 +27,16 @@ class Template extends Object
 
     }
 
-    public function get($name)
-    {
-        switch ($name) {
-            case 'view':
-                $viewFile = $this->api('config')->paths->views . $this->name . ".php";
-                return $viewFile;
-            default:
-                return parent::get($name);
-        }
-    }
+    // public function get($name)
+    // {
+    //     switch ($name) {
+    //         case 'view':
+    //             $viewFile = $this->api('config')->paths->views . $this->name . ".php";
+    //             return $viewFile;
+    //         default:
+    //             return parent::get($name);
+    //     }
+    // }
 
     public function hasField($name){
         return isset($this->data["fields"][$name]);

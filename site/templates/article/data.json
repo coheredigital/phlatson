@@ -1,11 +1,8 @@
 {
-  "title": "Blog",
-  "fields": [
-    {
-      "name": "title"
-    },
-    {
-      "name": "content"
-    }
-  ]
+    "title": "Article",
+    "fields": [],
+    "name": "article",
+    "modified": 1471722343,
+    "template": "template",
+    "view": ""
 }
