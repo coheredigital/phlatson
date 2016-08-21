@@ -15,14 +15,4 @@
         <?php endif ?>
     </div>
 <?php
-
-$field = new Field;
-$field->fieldtype = "FieldtypeText";
-$field->input = "InputText";
-
-echo $field->input->render();
-
-// var_dump($field);
-
-
 include 'includes/foot.php';

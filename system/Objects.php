@@ -38,6 +38,15 @@ abstract class Objects extends Flatbed
 
     }
 
+    public function create($name)
+    {
+        $field = new $this->singularName;
+        $field->name = $name;
+        $field->parent = $parent;
+        return $field;
+    }
+
+
     /**
      * @param $name
      * @return mixed

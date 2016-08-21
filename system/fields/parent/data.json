@@ -1,9 +1,5 @@
 {
     "fieldtype": "FieldtypePage",
     "input": "InputText",
-    "title": "Parent",
-    "settings": {
-        "system": true
-    }
-
+    "title": "Parent"
 }

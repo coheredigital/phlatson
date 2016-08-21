@@ -18,15 +18,17 @@ class Page extends Object implements ViewableObject
         if (!$this->isNew()) {
             $parentUrl = $this->getParentUrl();
             $this->setUnformatted("parent", $parentUrl);
+            // $this->setUnformatted("parent", $this->parent->url);
         }
 
     }
 
     protected function getParentUrl()
     {
-        $requests = $this->route; // make a copy as to not alter route
-        array_pop($requests); // remove current (last) item to find parent
-        return $this->createUrl($requests);
+
+        $directoryParts = $this->directoryParts();
+        array_pop($directoryParts); // remove current (last) item to find parent
+        return $this->createUrl($directoryParts);
     }
 
     public function files()
@@ -91,7 +93,7 @@ class Page extends Object implements ViewableObject
 
     protected function createUrl($array)
     {
-        if (is_array($array) && implode("", $this->route)) {
+        if (is_array($array) && implode("", $array)) {
             $url = "/" . implode("/", $array);
             return $url;
         }
@@ -131,10 +133,7 @@ class Page extends Object implements ViewableObject
     public function get($name)
     {
         switch ($name) {
-            case 'uri':
-            case 'directory':
-                $directory = implode("/", $this->route);
-                return Filter::uri($directory);
+
             case 'url':
                 return $this->api('config')->urls->root . ltrim($this->directory, "/");
             case 'children':

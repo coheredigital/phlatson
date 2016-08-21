@@ -9,6 +9,8 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $file;
     protected $path;
+    protected $root;
+
     protected $rootFolder;
     protected $rootPath;
 
@@ -18,28 +20,30 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $defaultFields = ["name","template"];
     protected $skippedFields = ["name"];
-    public $lockedFields = [];
-    protected $route = [];
+    protected $lockedFields = [];
 
     protected $requiredElements = [];
 
-    function __construct($file = null)
+    public function __construct($file = null)
     {
 
-        $this->file = $file;
+        $this->rootPath = $this->getRootPath();
 
-        if (!is_null($this->file)) {
+        if ($file) {
 
-            $this->rootPath = $this->getRootPath();
+            $this->file = $file;
+            
             $this->path = $this->getPath();
             $this->data = $this->getData();
             $this->initData = $this->getData();
             $this->setUnformatted("name", $this->getName());
-            $this->route = $this->getRoute();
 
             // set modified in data so it can be accessed like a field
             $this->setUnformatted("modified", filemtime($this->file));
 
+        }
+        else{
+            $this->root = $this->api('config')->paths->site . $this->rootFolder;
         }
 
 
@@ -67,9 +71,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     public function getName()
     {
-        $path = $this->getPath();
-        $name = basename($path);
-        return $name;
+        return basename(dirname($this->file));
     }
 
     /**
@@ -112,7 +114,8 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     public function getPath()
     {
-        $path = Filter::path(str_replace(static::DEFAULT_SAVE_FILE, "", $this->file));
+        $path = str_replace(static::DEFAULT_SAVE_FILE, "", $this->file);
+        $path = Filter::path($path);
         return $path;
     }
 
@@ -126,21 +129,20 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function getDirectory()
     {
 
+        // strip array parts
         $remove = [
             $this->rootPath,
             static::DEFAULT_SAVE_FILE
         ];
 
         $path = str_replace($remove, "", $this->file);
-        $path = Filter::uri($path);
-
-        return $path;
+        return Filter::uri($path);
     }
 
     /**
      * @return array
      */
-    protected function getRoute()
+    protected function directoryParts()
     {
 
         // first get root relative path
@@ -257,14 +259,16 @@ abstract class Object extends Flatbed implements JsonSerializable
             }
 
             if (!$this->name) {
-                throw new FlatbedException("cannot create new {$this->className} without valid parent");
+                throw new FlatbedException("cannot create new {$this->className} without valid name");
             }
 
-            $this->path = $this->parent->path . $this->name . "/";
+            // $this->path = "{$this->api("config")->paths->site}{$this->rootFolder}/{$this->parent->directory}{$this->name}/";
+            var_dump(static::DEFAULT_SAVE_FILE);
+            var_dump($this->root);
 
-            if (!file_exists($this->path)) {
-                mkdir($this->path, 0777, true);
-            }
+            // if (!file_exists($this->path)) {
+            //     mkdir($this->path, 0777, true);
+            // }
         }
 
 
@@ -390,17 +394,21 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     public function get($name)
     {
-        switch ($name) {
+        switch ($name) {            
+            case 'uri':
             case 'directory':
-                return Filter::uri($this->getName());
+                return $this->getDirectory();
+            // case 'directory':
+            //     return Filter::uri($this->getName());
             case 'url':
                 return $this->getUrl();
             case 'urlEdit':
                 // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
-            case 'path':
-                return $this->{$name};
+
+            // case 'path':
+            //     return $this->{$name};
 //            case 'modified':
 //                $time = filemtime($this->file);
 //                return DateTime::createFromFormat("U", $time);
