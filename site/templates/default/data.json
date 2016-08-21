@@ -1,6 +1,19 @@
 {
     "title": "Page (default)",
-    "fields": [],
+    "fields": [
+    	{
+	    	"name":"title",
+	    	"required": true,
+	    	"settings" : {
+	    		"required" : true,
+	    		"locked": true,
+	    		"width": 20
+	    	}
+	    },
+    	{
+	    	"name":"body"
+	    }
+	],
     "name": "default",
     "modified": 1462640491,
     "template": "template",

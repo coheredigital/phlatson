@@ -1,5 +1,5 @@
 {
     "fieldtype": "FieldtypeTemplate",
-    "input": "InputText",
+    "input": "InputSelect",
     "title": "Template"
 }

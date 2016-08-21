@@ -41,19 +41,33 @@ class FieldtypeTemplate extends Fieldtype
         }
         $this->setOptions($selectOptions);
     }
-
-
-    protected function renderInput()
+    public function options()
     {
-        $this->attribute("type", "text");
 
-        if ($this->value) {
-            $this->attribute("value", $this->value->name);
+        $inputs = $this->api("templates")->all();
+        // $inputs
+        //     ->filter(["type"=>"Input"])
+        //     ->sort("title");
+
+        $options = [];
+        foreach($inputs as $fieldtype) {
+            $options[$fieldtype->title] = $fieldtype->name;
         }
 
-        $attributes = $this->getAttributes();
-        $output = "<input {$attributes}>";
-        return $output;
+        return $options;
     }
+
+    // protected function renderInput()
+    // {
+    //     $this->attribute("type", "text");
+
+    //     if ($this->value) {
+    //         $this->attribute("value", $this->value->name);
+    //     }
+
+    //     $attributes = $this->getAttributes();
+    //     $output = "<input {$attributes}>";
+    //     return $output;
+    // }
 
 }

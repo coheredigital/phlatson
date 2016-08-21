@@ -18,6 +18,7 @@ class AdminEdit extends Extension
 
 
         if($fields->count) foreach ($fields as $field) {
+            if ($field->locked) continue;
             $fieldtype = $this->getFieldInput($field);
             $fieldset->add($fieldtype);
         }
@@ -77,6 +78,7 @@ class AdminEdit extends Extension
 
         foreach ($fields as $field) {
             $name = $field->name;
+            if ($field->locked) continue;
             $value = isset($post->{$name}) ? $post->{$name} : $this->object->getUnformatted("$name");
             $value = $field->fieldtype->getSave($value);
             $this->object->set($name, $value);

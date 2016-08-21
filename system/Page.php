@@ -165,7 +165,7 @@ class Page extends Object implements ViewableObject
                 parent::set($name, $value);
                 break;
             default:
-                if ($this->template && $this->template->fields->has($name)) {
+                if ($this->template && $this->template->fields && $this->template->fields->has($name)) {
                     $field = $this->api("fields")->get("$name");
                     $fieldtype = $field->fieldtype;
                     $this->data[$name] = $fieldtype->getSave($value);

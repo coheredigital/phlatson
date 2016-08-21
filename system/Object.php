@@ -18,6 +18,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $defaultFields = ["name","template"];
     protected $skippedFields = ["name"];
+    public $lockedFields = [];
     protected $route = [];
 
     protected $requiredElements = [];
@@ -251,8 +252,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         if ($this->isNew()) {
             // TODO - validate parent
 
-            if (!$this->parent instanceof Page) {
-                throw new FlatbedException("cannot create new page without valid parent");
+            if (!$this->parent instanceof Object) {
+                throw new FlatbedException("cannot create new {$this->className} without valid parent");
+            }
+
+            if (!$this->name) {
+                throw new FlatbedException("cannot create new {$this->className} without valid parent");
             }
 
             $this->path = $this->parent->path . $this->name . "/";

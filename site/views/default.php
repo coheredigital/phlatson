@@ -16,10 +16,13 @@
     </div>
 <?php
 
-var_dump($page->parents->count());
+$field = new Field;
+$field->fieldtype = "FieldtypeText";
+$field->input = "InputText";
 
-foreach ($page->parents as $p) {
-    echo "$p->name<br>";
-}
+echo $field->input->render();
+
+// var_dump($field);
+
 
 include 'includes/foot.php';
