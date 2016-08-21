@@ -35,7 +35,7 @@ class MarkupPageTree extends Extension
 
         $output = "<div class='page-tree-item-buttons'>";
 
-        if ($page->children->count && $page->parent == $this->rootPage) $output .= "<a class='page-tree-item-button page-tree-item-button-expand' href='{$this->admin->route->url}?root={$page->url}'>[+]</a>";
+        if ($page->children->count && $page->url != "/") $output .= "<a class='page-tree-item-button page-tree-item-button-expand' href='{$this->admin->route->url}?root={$page->url}'>[+]</a>";
         if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'>View</a>";
 
         if(is_array($view) && $view['type'] == "list"){

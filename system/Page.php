@@ -17,6 +17,7 @@ class Page extends Object implements ViewableObject
         // set parent page value
         if (!$this->isNew()) {
             $parentUrl = $this->getParentUrl();
+            // var_dump($parentUrl);
             $this->setUnformatted("parent", $parentUrl);
             // $this->setUnformatted("parent", $this->parent->url);
         }
