@@ -17,7 +17,7 @@ class AdminEdit extends Extension
         $fields = $template->fields;
 
 
-        foreach ($fields as $field) {
+        if($fields->count) foreach ($fields as $field) {
             $fieldtype = $this->getFieldInput($field);
             $fieldset->add($fieldtype);
         }

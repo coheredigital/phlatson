@@ -16,4 +16,10 @@
     </div>
 <?php
 
+var_dump($page->parents->count());
+
+foreach ($page->parents as $p) {
+    echo "$p->name<br>";
+}
+
 include 'includes/foot.php';

@@ -9,7 +9,7 @@
   list-style: none;
   position: relative;
 }
-.page-tree-root{
+.page-tree > .page-tree-list{
   padding: 0 !important;
   > .page-tree-group{
     > .page-tree-item{

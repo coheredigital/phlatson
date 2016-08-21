@@ -42,8 +42,6 @@ class Page extends Object implements ViewableObject
     public function children()
     {
 
-
-
         if ($this->isNew()) {
             return false;
         }
@@ -51,8 +49,6 @@ class Page extends Object implements ViewableObject
         $children = new ObjectCollection();
 
         $subfolders = glob($this->path . "*", GLOB_ONLYDIR);
-
-
         foreach ($subfolders as $folder) {
 
             $name = basename($folder);
@@ -64,6 +60,7 @@ class Page extends Object implements ViewableObject
             }
 
         }
+
         return $children;
     }
 

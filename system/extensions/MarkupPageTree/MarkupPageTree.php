@@ -3,6 +3,8 @@
 class MarkupPageTree extends Extension
 {
 
+    private $defaultDepth = 2;
+
     public $rootPage;
     public $admin;
     public $postTypes = array(); // array representing posts types or "Page Tables" that will be offers at top of the page
@@ -33,6 +35,7 @@ class MarkupPageTree extends Extension
 
         $output = "<div class='page-tree-item-buttons'>";
 
+        if ($page->children->count && $page->parent == $this->rootPage) $output .= "<a class='page-tree-item-button page-tree-item-button-expand' href='{$this->admin->route->url}?root={$page->url}'>[+]</a>";
         if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'>View</a>";
 
         if(is_array($view) && $view['type'] == "list"){
@@ -50,28 +53,32 @@ class MarkupPageTree extends Extension
     protected function renderPageItem(Page $page)
     {
         $output = $this->renderPageTitle($page);
-        $class = "page-tree-single";
+        // $class = "page-tree-single";
 
         if ($page->template->settings->pageTreeView) {
 
         } else {
-            if (count($page->children)) {
+            if ($page->children->count && $page == $this->rootPage) {
                 $output .= $this->renderPageList($page->children);
                 $class = "page-tree-group";
             }
+            else $output .= $this->renderPageList();
         }
 
         $output = "<li class='{$class} page-tree-group'>{$output}</li>";
         return $output;
     }
 
-    protected function renderPageList($pages)
+    protected function renderPageList($pages = [])
     {
         $output = "";
-        foreach ($pages as $p) {
-            $output .= $this->renderPageItem($p);
-        }
-        $output = "<ul class='page-tree-list'> {$output} </ul>";
+        if($pages->count){
+            foreach ($pages as $p) {
+                $output .= $this->renderPageItem($p);
+            }
+            $output = "<ul class='page-tree-list'>{$output}</ul>";
+        } 
+        $output = "<div class='page-tree-list-wrapper'>{$output}</div>";
         return $output;
     }
 
@@ -113,7 +120,7 @@ class MarkupPageTree extends Extension
     public function render()
     {
         $output = $this->renderPageItem($this->rootPage);
-        $output = "<div class='page-tree'><ul class='page-tree-list page-tree-root'>{$output}</ul></div>";
+        $output = "<div class='page-tree'><ul class='page-tree-list'>{$output}</ul></div>";
         return $output;
     }
 
