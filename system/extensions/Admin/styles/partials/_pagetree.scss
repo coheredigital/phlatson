@@ -5,9 +5,11 @@
   padding-top: 1em;
 }
 
+
 .page-tree-list{
   list-style: none;
   position: relative;
+
 }
 .page-tree > .page-tree-list{
   padding: 0 !important;
@@ -25,6 +27,14 @@
 }
 .page-tree-group{
   position: relative;
+  > .page-tree-list-wrapper{
+    display: none;
+  }
+  &.is-open{
+    > .page-tree-list-wrapper{
+      display: block;
+    } 
+  }
   &:before{
     border-left: 1px dashed $page-tree-branchline-color;
     content: "";

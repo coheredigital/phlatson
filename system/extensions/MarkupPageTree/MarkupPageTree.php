@@ -65,7 +65,7 @@ class MarkupPageTree extends Extension
             else $output .= $this->renderPageList();
         }
 
-        $output = "<li class='{$class} page-tree-group'>{$output}</li>";
+        $output = "<li class='{$class} page-tree-group is-open'>{$output}</li>";
         return $output;
     }
 
@@ -73,12 +73,13 @@ class MarkupPageTree extends Extension
     {
         $output = "";
         if($pages->count){
+            $class = "is-open";
             foreach ($pages as $p) {
                 $output .= $this->renderPageItem($p);
             }
             $output = "<ul class='page-tree-list'>{$output}</ul>";
         } 
-        $output = "<div class='page-tree-list-wrapper'>{$output}</div>";
+        $output = "<div class='page-tree-list-wrapper {$class}'>{$output}</div>";
         return $output;
     }
 
