@@ -46,10 +46,11 @@ class Filter
 
     public static function path($path)
     {
-        // $path = realpath($path);
+        $path = realpath($path);
         $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
+        $path = str_replace("//", "/", $path);
+        $path = str_replace("//", "/", $path);
         $path = is_file($path) ? $path : $path . "/";
-
         return $path;
     }
 

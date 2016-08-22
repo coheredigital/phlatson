@@ -24,17 +24,11 @@ abstract class Objects extends Flatbed
 
     public function __construct()
     {
-
-        $this->siteRoot = Filter::path(ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
-        $this->path = Filter::path(ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
-
-        $this->systemRoot = Filter::path(ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
-        $this->systemPath = Filter::path(ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
-
-        $this->url = Filter::url(ROOT_URL . "site" . DIRECTORY_SEPARATOR . $this->rootFolder);
-        $this->systemUrl = Filter::url(ROOT_URL . "system" . DIRECTORY_SEPARATOR . $this->rootFolder);
-
-
+        // store paths and urls 
+        $this->path = Filter::path(ROOT_PATH . "site/{$this->rootFolder}");
+        $this->systemPath = Filter::path(ROOT_PATH . "system/{$this->rootFolder}");
+        $this->url = Filter::url(ROOT_URL . "site/{$this->rootFolder}");
+        $this->systemUrl = Filter::url(ROOT_URL . "site/{$this->rootFolder}");
 
     }
 
@@ -67,19 +61,21 @@ abstract class Objects extends Flatbed
 
     protected function getDataFile($name){
 
-        $sitePath = Filter::path($this->siteRoot . $name);
-        $systemPath = Filter::path($this->systemRoot . $name);
+        $sitePath = Filter::path($this->path . $name);
+        $systemPath = Filter::path($this->systemPath . $name);
 
         $siteFile = "{$sitePath}data.json";
         $systemFile = "{$systemPath}data.json";
 
-        if (is_file($systemFile)) {
+
+        if (file_exists($siteFile)) {
+            $this->set($name, $siteFile);
+        }
+        else if (file_exists($systemFile)) {
             $this->set($name, $systemFile);
         }
 
-        if (is_file($siteFile)) {
-            $this->set($name, $siteFile);
-        }
+
     }
 
     /**
@@ -96,7 +92,7 @@ abstract class Objects extends Flatbed
     protected function getFileList($path = null, $depth = 1)
     {
 
-        if(is_null($path)) $path = $this->siteRoot;
+        if(is_null($path)) $path = $this->path;
 
         $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
@@ -187,7 +183,7 @@ abstract class Objects extends Flatbed
     protected function isValidPath($path)
     {
 
-        if (strpos($path, $this->siteRoot) !== false) {
+        if (strpos($path, $this->path) !== false) {
             return true;
         }
         return false;
@@ -209,11 +205,19 @@ abstract class Objects extends Flatbed
         return $this->get($key);
     }
 
-    public function get($key)
+    public function get($name)
     {
+        switch ($name) {
+            // case 'path':
+            //     return Filter::path(ROOT_PATH . "site/{$this->rootFolder}");
+            
+            default:
+                // code...
+                break;
+        }
         // normalize the query to avoid errors
-        $key = Filter::uri($key);
-        return $this->getObject($key);
+        $name = Filter::uri($name);
+        return $this->getObject($name);
     }
 
 

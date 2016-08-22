@@ -114,18 +114,16 @@ abstract class Object extends Flatbed implements JsonSerializable
         return false;
     }
 
-    public function getPath()
-    {   
-        if ($this->file) {
-            $path = str_replace(static::DEFAULT_SAVE_FILE, "", $this->file);
-        }
-        else{
-            $path = $this->rootPath . $this->name;
-        }
 
-        return Filter::path($path);
+
+
+    /**
+     * @return array
+     */
+    protected function directoryParts()
+    {
+        return explode("/", $this->getDirectory());
     }
-
 
     /**
      * @return string
@@ -146,12 +144,18 @@ abstract class Object extends Flatbed implements JsonSerializable
         return Filter::uri($path);
     }
 
-    /**
-     * @return array
-     */
-    protected function directoryParts()
-    {
-        return explode("/", $this->getDirectory());
+    public function getPath()
+    {   
+        if ($this->file) {
+            $path = str_replace(static::DEFAULT_SAVE_FILE , "", $this->file);
+            $path = Filter::path($path);
+        }
+        else{
+            $path = $this->rootPath . $this->name;
+            $path =  Filter::uri($path) . "/";
+        }
+
+        return $path;
     }
 
     /**

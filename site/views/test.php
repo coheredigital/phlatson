@@ -12,7 +12,7 @@ var_dump($field->rootPath);
 var_dump($field->name);
 var_dump($field->path);
 
-$field->save();
+// $field->save();
 // 
 echo "<br>";
 echo "<br>";
@@ -28,7 +28,7 @@ echo '=====================================================';
 echo "<br>";
 echo "<br>";
 $title = $fields->get("title");
-var_dump($title->rootPath);
+
 var_dump($title->path);
 var_dump($title->file);
 var_dump($title->name);
