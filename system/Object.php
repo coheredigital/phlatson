@@ -8,7 +8,6 @@ abstract class Object extends Flatbed implements JsonSerializable
     const DEFAULT_SAVE_FILE = "data.json";
 
     protected $file;
-    protected $path;
     protected $root;
 
     protected $rootFolder;
@@ -31,11 +30,14 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         if ($file) {
 
+            if (!file_exists($file)) {
+                throw new FlatbedException("Invalid file passed to {$this->className} class.");
+            }
+
             $this->file = $file;
             
-            $this->path = $this->getPath();
             $this->data = $this->getData();
-            $this->initData = $this->getData();
+            $this->initData = $this->data;
             $this->setUnformatted("name", $this->getName());
 
             // set modified in data so it can be accessed like a field
@@ -113,10 +115,15 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
     public function getPath()
-    {
-        $path = str_replace(static::DEFAULT_SAVE_FILE, "", $this->file);
-        $path = Filter::path($path);
-        return $path;
+    {   
+        if ($this->file) {
+            $path = str_replace(static::DEFAULT_SAVE_FILE, "", $this->file);
+        }
+        else{
+            $path = $this->rootPath . $this->name;
+        }
+
+        return Filter::path($path);
     }
 
 
@@ -144,12 +151,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     protected function directoryParts()
     {
-
-        // first get root relative path
-        $directory = $this->getDirectory();
-
-        // break the path into it's parts an return the resulting array
-        return explode("/", $directory);
+        return explode("/", $this->getDirectory());
     }
 
     /**
@@ -169,10 +171,10 @@ abstract class Object extends Flatbed implements JsonSerializable
             "data.json"
         ];
         $url = trim(str_replace($replace, "", $this->path), "/");
-        $url = Filter::url($url);
-        $url = "/$url";
+        // $url = Filter::url($url);
+        // $url = "/$url";
 
-        return $url;
+        return Filter::url($url);
     }
 
     protected function getFormatted($name)
@@ -254,7 +256,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         if ($this->isNew()) {
             // TODO - validate parent
 
-            if (!$this->parent instanceof Object) {
+            if ($this instanceof Page && !$this->parent instanceof Page) {
                 throw new FlatbedException("cannot create new {$this->className} without valid parent");
             }
 
@@ -262,13 +264,9 @@ abstract class Object extends Flatbed implements JsonSerializable
                 throw new FlatbedException("cannot create new {$this->className} without valid name");
             }
 
-            // $this->path = "{$this->api("config")->paths->site}{$this->rootFolder}/{$this->parent->directory}{$this->name}/";
-            var_dump(static::DEFAULT_SAVE_FILE);
-            var_dump($this->root);
-
-            // if (!file_exists($this->path)) {
-            //     mkdir($this->path, 0777, true);
-            // }
+            if (!file_exists($this->path)) {
+                mkdir($this->path, 0777, true);
+            }
         }
 
 
@@ -398,17 +396,16 @@ abstract class Object extends Flatbed implements JsonSerializable
             case 'uri':
             case 'directory':
                 return $this->getDirectory();
-            // case 'directory':
-            //     return Filter::uri($this->getName());
             case 'url':
                 return $this->getUrl();
+            case 'path':
+                return $this->getPath();
             case 'urlEdit':
                 // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
 
-            // case 'path':
-            //     return $this->{$name};
+
 //            case 'modified':
 //                $time = filemtime($this->file);
 //                return DateTime::createFromFormat("U", $time);

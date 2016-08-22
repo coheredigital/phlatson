@@ -2,7 +2,7 @@
 
 class Field extends Object
 {
-    protected $baseFolder = "fields";
+    protected $rootFolder = "fields";
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
 
@@ -23,7 +23,6 @@ class Field extends Object
             "template"
         ];
 
-        $this->setUnformatted("parent", "/");
         $this->setUnformatted("template", "field");
 
     }
