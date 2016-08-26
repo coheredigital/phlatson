@@ -69,10 +69,11 @@ class MarkupEditForm extends Extension
         $formActions = $this->renderActions();
 
         // wrap form tabs
-        if($formTabMenu) $formTabMenu = "<div id='formTabs'><div class='container'>$formTabMenu</div></div>";
+        if($formTabMenu) $formTabMenu = "<div id='formTabs' class='form-tabs-count-{$tabCount}'><div class='container'>$formTabMenu</div></div>";
 
         $output = "<form id='pageEdit' class='ui form' method='POST' role='form'>";
-        $output .= "{$formTabMenu}{$formTabContent}{$formActions}";
+        $output .= $formTabMenu;
+        $output .= "{$formTabContent}{$formActions}";
         $output .= "</form>";
 
 
