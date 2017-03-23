@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 define("FLATBED", true);
 define('ROOT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 define('ROOT_URL', "/");
@@ -8,6 +10,11 @@ require_once ROOT_PATH . 'system/_functions.php';
 require_once ROOT_PATH . 'system/_autoload.php';
 require_once ROOT_PATH . 'system/_interfaces.php';
 require_once ROOT_PATH . 'system/_traits.php';
+
+// add ref for debugging, remove later
+require ROOT_PATH . "libraries/ref/ref.php";
+ref::config('expLvl', 0);
+ref::config('validHtml', true);
 
 try {
 
@@ -46,6 +53,8 @@ try {
     $flatbed->api('users', 'Users', true);
 
     $flatbed->api('templates', 'Templates', true);
+    $flatbed->api('views', 'Views', true);
+
     $flatbed->api('session', new Session, true);
     $flatbed->api('logger', 'Logger', true);
 
