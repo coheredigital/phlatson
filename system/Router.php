@@ -135,15 +135,11 @@ class Router extends Flatbed
      * return a named Route object if it exists
      *
      */
-    public function get($name)
+    public function get( string $name): Route
     {
-
-        if (!isset($this->namedRoutes[$name])) {
-            return false;
+        if (isset($this->namedRoutes[$name])) {
+            return $this->namedRoutes[$name];
         }
-
-        $route = $this->namedRoutes[$name];
-        return $route;
     }
 
 
