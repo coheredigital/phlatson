@@ -38,16 +38,11 @@ class Extensions extends Objects
 
     }
 
-    protected function getObject($name)
+    public function get($name)
     {
-        // get the file if it exists
-        if (!$extension = $this->getItem($name)) {
-            return false;
-        }
 
         // TODO double check need for this
-        $extension = $this->instantiateExtension($name, $extension);
-
+        $extension = $this->init($name, $extension);
 
         if(!$extension->singluar){
             $extension = clone $extension; // TODO I don't know if I want to use clone here
@@ -56,7 +51,14 @@ class Extensions extends Objects
         return $extension;
     }
 
-    protected function instantiateExtension($name, $extension){
+    /**
+     * run extension init process
+     * @param  string       $name           ClassName that the extension runs
+     * @param  Exstension   $extension      Extension object that was retrieved
+     * @return Extension                    returns same extension once init has run
+     */
+    protected function init($name, $extension)
+    {
         if(!$extension instanceof Extension){
             $extension = new $name($extension->file);
         }
@@ -69,8 +71,12 @@ class Extensions extends Objects
         $extensions = new ObjectCollection();
 
         foreach ($this->data as $name => $file) {
-            $extension = $this->getObject($name);
+
+            $extension = $this->get($name);
+            if (!$extension ) continue;
+       
             $extensions->add($extension);
+            
         }
 
         return $extensions;
