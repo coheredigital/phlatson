@@ -23,8 +23,15 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
 
     public function add(Object $item)
     {
+        $this->data += [$item->name => $item];
+        return $this;
+    }
 
-        $this->data[$item->name] = $item;
+
+    public function prepend(Object $item)
+    {
+
+        $this->data = [ $item->name => $item ] + $this->data;
         return $this;
 
     }
