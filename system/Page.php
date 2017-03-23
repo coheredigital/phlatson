@@ -13,7 +13,6 @@ class Page extends Object implements ViewableObject
         $this->defaultFields = array_merge($this->defaultFields, [
             "parent"
         ]);
-
         // set parent page value
         if (!$this->isNew()) {
             $parentUrl = $this->getParentUrl();
@@ -44,10 +43,6 @@ class Page extends Object implements ViewableObject
 
     public function children()
     {
-
-        if ($this->isNew()) {
-            return false;
-        }
         
         $children = new ObjectCollection();
 
