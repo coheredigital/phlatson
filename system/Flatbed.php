@@ -16,7 +16,7 @@ class Flatbed
      * @param $value
      * @throws Exception
      */
-    final public function api($name = null, $value = null, $lock = false)
+    final public function api(string $name = null, $value = null, bool $lock = false)
     {
         if (!is_null($name) && !is_null($value)) {
             // all APIs set this way are locked
