@@ -24,14 +24,6 @@
     <?php endforeach ?>
     </div>
 </nav>
-<?php if ($page->parent->template->name != "blog" && $page->template->name != "blog"): ?>
-    <nav class="sub-menu" role="navigation">
-        <div class="container">
-        <?php foreach ($page->rootParent->children as $p): 
-            $class = $p->url == $page->rootParent->url ? "class='active'" : "";
-            ?><a <?php echo $class ?> href="<?php echo $p->url ?>"><?php echo $p->title ?></a><?php endforeach ?>
-        </div>
-    </nav>
-<?php endif ?>
+
 
 <div class="main">
