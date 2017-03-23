@@ -46,36 +46,37 @@ class Page extends Object implements ViewableObject
         
         $children = new ObjectCollection();
 
-        $subfolders = glob($this->path . "*", GLOB_ONLYDIR);
+        $subfolders = glob( $this->path . "*", GLOB_ONLYDIR);
+
         foreach ($subfolders as $folder) {
 
             $name = basename($folder);
+            $url = "{$this->url}/{$name}";
 
-            $url = $this->url . "/" . $name;
-            $page = $this->api("pages")->get($url);
-            if ($page instanceof Page) {
-                $children->add($page);
-            }
+            $page = $this->api("pages")->get("{$this->url}/{$name}");
+
+            if (!$page instanceof self) continue;
+                
+            $children->add($page);
+            
 
         }
 
         return $children;
     }
 
-
     public function parents()
     {
 
         $parents = new ObjectCollection();  
-
         // start with current page
         $page = $this;
 
+        // get parent and set current page as parent until no parents exist
         while ($page = $page->parent) {
-            $parents->add($page);
+            $parents->prepend($page);
         }
-
-        return $parents->reverse();
+        return $parents;
     }
 
     public function rootParent()
