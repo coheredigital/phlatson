@@ -120,15 +120,15 @@ class FlatbedException extends Exception
     protected function renderPageStyles()
     {
         $styles = "<style>
-                    *{font-family: 'Courier New', monospace !important; margin: 0;}
-                    body{background: #222; width: 100%; overflow: hidden; font-size: 16px;}
-                    #title{background: #e55550; color: #fff; padding: 20px; font-size: 26px; }
+                    *{font-family: 'Courier New', monospace !important; margin: 0; font-size: 14px;}
+                    body{background: #222; width: 100%; overflow: hidden; font-size: 14px;}
+                    #title{background: #e55550; color: #fff; padding: 20px; font-size: 20px; font-weight: bold; }
                     #message{ background: #fff; color: #999; padding: 13px 20px; white-space: normal;}
-                    #file{ color: #894343; padding: 0; font-size: 16px;}
-                    #trace{ padding:20px;}
+                    #file{ color: #752929; padding: 0; font-size: 14px;}
+                    #trace{ padding:20px; font-size: 14px;}
                     #trace table{ width: 100%; color: #aaa; text-align: left; border-collapse: collapse;}
                     #trace th{ font-weight: bold; border-bottom: 1px solid #333 !important; padding: 8px 4px; color: #ddd;}
-                    #trace td{ padding: 4px;}
+                    #trace td{ padding: 4px;  font-size: 14px;}
                     #trace tbody tr:first-child td{ padding: 12px 4px 4px 4px;}
                     #code{ padding: 10px 0; color: #909090; background: #111; line-height: 1.6em; width: 100%; overflow: hidden;}
                     #code > code{ padding: 2px 20px; display: block !important; white-space: pre-wrap; width: 100%;}
