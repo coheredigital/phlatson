@@ -1,7 +1,0 @@
-{
-    "parent": "\/",
-    "template": "field",
-    "name": "test",
-    "fieldtype": "FieldtypeText",
-    "input": "InputText"
-}
