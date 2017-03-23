@@ -5,8 +5,8 @@ abstract class Objects extends Flatbed
 
     use hookable;
 
-    public $data = array();
-    protected $count;
+    public $data = [];
+    // protected $count;
 
     protected $url;
     protected $path;
@@ -16,8 +16,6 @@ abstract class Objects extends Flatbed
 
     // the folder within the site and system paths to check for items ex: fields, templates, etc
     protected $rootFolder;
-    protected $siteRoot;
-    protected $systemRoot;
 
     // used to identify the singular version $this relates to
     protected $singularName;
@@ -25,56 +23,64 @@ abstract class Objects extends Flatbed
     public function __construct()
     {
         // store paths and urls 
-        $this->path = Filter::path(ROOT_PATH . "site/{$this->rootFolder}");
-        $this->systemPath = Filter::path(ROOT_PATH . "system/{$this->rootFolder}");
-        $this->url = Filter::url(ROOT_URL . "site/{$this->rootFolder}");
-        $this->systemUrl = Filter::url(ROOT_URL . "site/{$this->rootFolder}");
-
-    }
-
-    public function create($name)
-    {
-        $field = new $this->singularName;
-        $field->name = $name;
-        $field->parent = $parent;
-        return $field;
+        $this->path = Filter::path( ROOT_PATH . "site/" . $this->rootFolder );
+        $this->systemPath = Filter::path( ROOT_PATH . "system/{$this->rootFolder}");
+        $this->url = Filter::url( ROOT_URL . "site/{$this->rootFolder}");
+        $this->systemUrl = Filter::url( ROOT_URL . "site/{$this->rootFolder}");
     }
 
 
     /**
-     * @param $name
-     * @return mixed
-     *
-     * Get the raw file address on the Flatbed object
-     *
+     * sets the root path to look for data objects
+     * @param [type] $path [description]
      */
-    protected function getItem($name)
+    public function setDataRoot( $folder )
     {
+        
 
-        if (!$this->has($name)) {
-            $this->getDataFile($name);
-        }
-
-        return $this->data[$name];
+        if (!file_exists($path)) throw new FlatbedException("Path ($path) does not exist, cannot be used for root of '$this->className'");
 
     }
 
-    protected function getDataFile($name){
 
-        $sitePath = Filter::path($this->path . $name);
-        $systemPath = Filter::path($this->systemPath . $name);
-
-        $siteFile = "{$sitePath}data.json";
-        $systemFile = "{$systemPath}data.json";
-
-
-        if (file_exists($siteFile)) {
-            $this->set($name, $siteFile);
+    public function create($name): Object
+    {
+        $object = new $this->singularName;
+        if (is_array($name)) {
+            foreach ($name as $key => $value) {
+                $object->set($key, $value);
+            }
         }
-        else if (file_exists($systemFile)) {
-            $this->set($name, $systemFile);
+        else {
+            $object->name = $name;
         }
+        
+        $object->parent = $parent;
+        return $object;
+    }
 
+
+
+
+    protected function getDataFile($name): string
+    {
+
+        // $siteFile = "{$this->path}{$name}/data.json";
+        // $systemFile = "{$this->systemPath}{$name}/data.json";
+
+        // if (file_exists($siteFile)) {
+        //     $this->set($name, $siteFile);
+        // }
+        // else if (file_exists($systemFile)) {
+        //     $this->set($name, $systemFile);
+        // }
+        $file = "{$this->path}{$name}/data.json";
+        if (file_exists($file)) return $file;
+
+        $file = "{$this->systemPath}{$name}/data.json";
+        if (file_exists($file)) return $file;
+
+        return '';
 
     }
 
@@ -153,14 +159,7 @@ abstract class Objects extends Flatbed
         return $collection;
     }
 
-    protected function getObject($name)
-    {
-        // get the file if it exists
-        if (!$file = $this->getItem($name)) {
-            return false;
-        }
-        return new $this->singularName($file);
-    }
+
 
     protected function getItemUri(SplFileInfo $item){
         $path = $item->getPath();
@@ -207,19 +206,44 @@ abstract class Objects extends Flatbed
 
     public function get($name)
     {
-        switch ($name) {
-            // case 'path':
-            //     return Filter::path(ROOT_PATH . "site/{$this->rootFolder}");
-            
-            default:
-                // code...
-                break;
-        }
         // normalize the query to avoid errors
         $name = Filter::uri($name);
-        return $this->getObject($name);
+
+        // get the file if it exists
+        if (!$file = $this->getDataFile($name)) {
+            return false;
+        }
+        return new $this->singularName($file);
+
     }
 
+    protected function getObject($name)
+    {
+        // get the file if it exists
+        if (!$file = $this->getDataFile($name)) {
+            return false;
+        }
+        return new $this->singularName($file);
+    }
+
+
+    /**
+     * @param $name
+     * @return mixed
+     *
+     * Get the raw file address on the Flatbed object
+     *
+     */
+    protected function getItem($name)
+    {
+
+        if (!$this->has($name)) {
+            $this->getDataFile($name);
+        }
+
+        return $this->data[$name];
+
+    }
 
     public function has($key)
     {
