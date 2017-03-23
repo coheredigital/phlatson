@@ -31,18 +31,23 @@ abstract class Objects extends Flatbed
 
 
     /**
-     * sets the root path to look for data objects
-     * @param [type] $path [description]
+     * validates and adds a path to the end of the dataPaths set
+     * @param string $path [description]
      */
-    public function setDataRoot( $folder )
-    {
-        
+    public function addDataPath( string $path ) {
 
-        if (!file_exists($path)) throw new FlatbedException("Path ($path) does not exist, cannot be used for root of '$this->className'");
-
+        if (!file_exists($path)) {
+            throw new FlatbedException("The path ($path) deos not exist cannot be used as a data path for {$this->className}");
+        }
+        $this->dataPaths[] = $path;
     }
 
 
+    /**
+     * instantiates a new Object of the set singular type
+     * @param  strin $name the name of the new object that will be used once it is saved
+     * @return Object       [description]
+     */
     public function create($name): Object
     {
         $object = new $this->singularName;
@@ -65,15 +70,6 @@ abstract class Objects extends Flatbed
     protected function getDataFile($name): string
     {
 
-        // $siteFile = "{$this->path}{$name}/data.json";
-        // $systemFile = "{$this->systemPath}{$name}/data.json";
-
-        // if (file_exists($siteFile)) {
-        //     $this->set($name, $siteFile);
-        // }
-        // else if (file_exists($systemFile)) {
-        //     $this->set($name, $systemFile);
-        // }
         $file = "{$this->path}{$name}/data.json";
         if (file_exists($file)) return $file;
 
@@ -81,7 +77,6 @@ abstract class Objects extends Flatbed
         if (file_exists($file)) return $file;
 
         return '';
-
     }
 
     /**
@@ -95,24 +90,40 @@ abstract class Objects extends Flatbed
         $this->getFileList();
     }
 
-    protected function getFileList($path = null, $depth = 1)
+
+
+    protected function getFileList($path = null)
     {
 
         if(is_null($path)) $path = $this->path;
 
-        $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
-        $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+        // $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        // $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
-        $iterator->setMaxDepth($depth);
+        // $iterator->setMaxDepth(1);
 
-        foreach ($iterator as $folder) {
+        // foreach ($iterator as $folder) {
 
-            $filePath = Filter::path($folder->getPathName());
+        //     $filePath = Filter::path($folder->getPathName());
 
-            if(!$this->isValidObject($folder)) continue;
+        //     if(!$this->isValidObject($folder)) continue;
 
-            $uri = $this->getItemUri($folder);
+        //     $uri = $this->getItemUri($folder);
 
+
+        //     $this->data["$uri"] = $filePath;
+
+        // }
+
+        $folders = glob( $this->path . "*", GLOB_ONLYDIR);
+
+        foreach ($folders as $folder) {
+
+            $filePath = Filter::path($folder);
+
+            // if(!$this->isValidObject($folder)) continue;
+
+            $uri = basename($filePath);
 
             $this->data["$uri"] = $filePath;
 

@@ -1,6 +1,6 @@
 <?php
 
-class Page extends Object implements ViewableObject
+class Page extends DataObject implements ViewableObject
 {
 
     protected $rootFolder = "pages";

@@ -11,10 +11,7 @@ require_once ROOT_PATH . 'system/_autoload.php';
 require_once ROOT_PATH . 'system/_interfaces.php';
 require_once ROOT_PATH . 'system/_traits.php';
 
-// add ref for debugging, remove later
-require ROOT_PATH . "libraries/ref/ref.php";
-ref::config('expLvl', 0);
-ref::config('validHtml', true);
+
 
 try {
 
