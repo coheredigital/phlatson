@@ -1,35 +1,26 @@
 <?php
 
-echo "Field new API";
-echo "<br>";
+
+// require "{$config->paths->root}/libraries/ref/ref.php";
+
+// ref::config('expLvl', 0);
+// ref::config('validHtml', true);
 
 $field = new Field;
 $field->name = "test";
 $field->fieldtype = "FieldtypeText";
 $field->input = "InputText";
 
-var_dump($field->rootPath);
-var_dump($field->name);
-var_dump($field->path);
+r($field);
 
-// $field->save();
-// 
-echo "<br>";
-echo "<br>";
-echo '=====================================================';
 
-$f = $fields->create("summary");
-var_dump($f->name);
-var_dump($f->className);
+$f = $fields->create([
+	name => "summary",
+	fieldtype => "FieldtypeText",
+]);
 
-echo "<br>";
-echo "<br>";
-echo '=====================================================';
-echo "<br>";
-echo "<br>";
+r($f);
+
 $title = $fields->get("title");
-
-var_dump($title->path);
-var_dump($title->file);
-var_dump($title->name);
+r($title);
 
