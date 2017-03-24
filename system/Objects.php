@@ -97,36 +97,14 @@ abstract class Objects extends Flatbed
 
         if(is_null($path)) $path = $this->path;
 
-        // $iterator = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
-        // $iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
 
-        // $iterator->setMaxDepth(1);
-
-        // foreach ($iterator as $folder) {
-
-        //     $filePath = Filter::path($folder->getPathName());
-
-        //     if(!$this->isValidObject($folder)) continue;
-
-        //     $uri = $this->getItemUri($folder);
-
-
-        //     $this->data["$uri"] = $filePath;
-
-        // }
-
-        $folders = glob( $this->path . "*", GLOB_ONLYDIR);
+        $path = Filter::path($path);
+        $folders = glob( $path . "*", GLOB_ONLYDIR);
 
         foreach ($folders as $folder) {
-
-            $filePath = Filter::path($folder);
-
-            // if(!$this->isValidObject($folder)) continue;
-
-            $uri = basename($filePath);
-
-            $this->data["$uri"] = $filePath;
-
+            $folder = Filter::path($folder);
+            $name = basename($folder);
+            $this->data["$name"] = $folder . "data.json";
         }
 
     }
@@ -181,22 +159,6 @@ abstract class Objects extends Flatbed
         $uri = str_replace($this->systemPath, "", $uri);
 
         return $uri;
-    }
-
-    /**
-     * @param $path
-     * @return bool
-     *
-     * Checks that path is withing Objects root path
-     *
-     */
-    protected function isValidPath($path)
-    {
-
-        if (strpos($path, $this->path) !== false) {
-            return true;
-        }
-        return false;
     }
 
     /**
