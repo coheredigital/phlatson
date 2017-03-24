@@ -14,6 +14,13 @@ abstract class Objects extends Flatbed
     protected $systemUrl;
     protected $systemPath;
 
+    // array to store a set of paths to check for data for this object
+    // all values are relative to the site root and require a key
+    protected $dataPaths = [
+        "system" => "/system/",
+        "site" => "/site/",
+    ];
+
     // the folder within the site and system paths to check for items ex: fields, templates, etc
     protected $rootFolder;
 
