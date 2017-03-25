@@ -16,9 +16,10 @@ abstract class Objects extends Flatbed
 
     // array to store a set of paths to check for data for this object
     // all values are relative to the site root and require a key
-    protected $dataPaths = [
-        "system" => "/system/",
-        "site" => "/site/",
+    // TODO: move to congfig or app root???
+    protected $rootFolders = [
+        "site" => "site/",
+        "system" =>  "system/"
     ];
 
     // the folder within the site and system paths to check for items ex: fields, templates, etc
@@ -29,6 +30,8 @@ abstract class Objects extends Flatbed
 
     public function __construct()
     {
+
+        
         // store paths and urls 
         $this->path = Filter::path( ROOT_PATH . "site/" . $this->rootFolder );
         $this->systemPath = Filter::path( ROOT_PATH . "system/{$this->rootFolder}");
@@ -77,11 +80,11 @@ abstract class Objects extends Flatbed
     protected function getDataFile($name): string
     {
 
-        $file = "{$this->path}{$name}/data.json";
-        if (file_exists($file)) return $file;
-
-        $file = "{$this->systemPath}{$name}/data.json";
-        if (file_exists($file)) return $file;
+        foreach ($this->rootFolders as $folder) {
+            $folder = Filter::path( ROOT_PATH . $folder . $this->rootFolder ) . $name ;
+            $file = "{$folder}/data.json";
+            if (file_exists($file)) return $file;
+        }
 
         return '';
     }
