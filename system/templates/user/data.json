@@ -6,11 +6,11 @@
         "required": true
     },
     {
-        "name": "role",
+        "name": "password",
         "required": true
     },
     {
-        "name": "password",
+        "name": "role",
         "required": true
     }]
 }

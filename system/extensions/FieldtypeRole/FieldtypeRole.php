@@ -1,6 +1,6 @@
 <?php
 
-class FieldtypeRole extends Fieldtype
+class FieldtypeRole extends Fieldtype implements ProvidesOptions
 {
 
     protected $objectType = "template";
@@ -14,60 +14,27 @@ class FieldtypeRole extends Fieldtype
 
     public function getSave($value)
     {
-        if ($value instanceof Template) {
+        if ($value instanceof Role) {
             return $value->name;
         }
         else{
-            $template = $this->api("templates")->get($value);
-            if ($template instanceof Template) return $template->name;
+            $template = $this->api("roles")->get($value);
+            if ($template instanceof Role) return $template->name;
         }
         return null;
     }
 
-    protected function setup()
-    {
-        $this->label = "Template";
-        $this->columns = 6;
-        $this->attribute("name", $this->field->name);
-    }
-
-    protected function setAllowedTemplates()
-    {
-        $selectOptions = array();
-
-        $templates = $this->api("templates")->all();
-        foreach ($templates as $t) {
-            $selectOptions["$t->label"] = "$t->name";
-        }
-        $this->setOptions($selectOptions);
-    }
     public function options()
     {
 
-        $inputs = $this->api("templates")->all();
-        // $inputs
-        //     ->filter(["type"=>"Input"])
-        //     ->sort("title");
+        $roles = $this->api("roles")->all();
 
         $options = [];
-        foreach($inputs as $fieldtype) {
-            $options[$fieldtype->title] = $fieldtype->name;
+        foreach($roles as $role) {
+            $options[$role->title] = $role->name;
         }
 
         return $options;
     }
-
-    // protected function renderInput()
-    // {
-    //     $this->attribute("type", "text");
-
-    //     if ($this->value) {
-    //         $this->attribute("value", $this->value->name);
-    //     }
-
-    //     $attributes = $this->getAttributes();
-    //     $output = "<input {$attributes}>";
-    //     return $output;
-    // }
 
 }

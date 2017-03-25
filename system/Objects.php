@@ -157,30 +157,6 @@ abstract class Objects extends Flatbed
         return $collection;
     }
 
-
-
-    protected function getItemUri(SplFileInfo $item){
-        $path = $item->getPath();
-        $filename = $item->getFilename();
-  
-        $uri = Filter::uri($path);
-        $uri = str_replace($this->path, "", $uri);
-        $uri = str_replace($this->systemPath, "", $uri);
-
-        return $uri;
-    }
-
-    /**
-     * @param SplFileInfo $item
-     * @return bool
-     *
-     * Determine if the current Iterator is a valid Flatbed Object (contains a data.json file)
-     *
-     */
-    protected function isValidObject(SplFileInfo $item){
-        return ($item->getFileName() == "data.json");
-    }
-
     public function __get($key)
     {
         return $this->get($key);
