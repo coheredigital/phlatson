@@ -1,7 +1,4 @@
 <?php
 
 
-class ObjectStub extends Object
-{
-    public $creator;
-}
+class ObjectStub extends Object {}

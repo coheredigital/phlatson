@@ -31,7 +31,6 @@ abstract class Objects extends Flatbed
     public function __construct()
     {
 
-        
         // store paths and urls 
         $this->path = Filter::path( ROOT_PATH . "site/" . $this->rootFolder );
         $this->systemPath = Filter::path( ROOT_PATH . "system/{$this->rootFolder}");

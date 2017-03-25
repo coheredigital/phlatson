@@ -4,7 +4,19 @@ class User extends Object
 {
 
     protected $rootFolder = "users";
-    public $defaultFields = ["password"];
+
+    public $defaultFields = [
+        "name",
+        "password",
+        "role"
+    ];
+
+    protected $requiredFields = [
+        "name",
+        "password",
+        "role"
+    ];
+
     protected $requiredElements = ["password","role"];
 
     /**
@@ -48,8 +60,8 @@ class User extends Object
     {
         switch ($name) {
             case 'template':
-                $template = $this->api("templates")->get("user"); //  TODO : refactor - the method for defining the master to this template is done manually here, maybe I can automate this like with pages
-                $template->master = $this;
+                $template = $this->api("templates")->get("user"); 
+                // $template->master = $this;
                 return $template;
             default:
                 return parent::get($name);

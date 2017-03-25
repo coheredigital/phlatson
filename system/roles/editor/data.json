@@ -1,0 +1,8 @@
+{
+    "label": "Admin",
+    "permissions": [
+    	"page-edit",
+    	"user-edit",
+    	"users-manage"
+    ]
+}

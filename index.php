@@ -48,6 +48,7 @@ try {
 
     $flatbed->api('pages', 'Pages', true);
     $flatbed->api('users', 'Users', true);
+    $flatbed->api('roles', 'Roles', true);
 
     $flatbed->api('templates', 'Templates', true);
     $flatbed->api('views', 'Views', true);
