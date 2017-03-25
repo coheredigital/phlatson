@@ -7,7 +7,6 @@ class Extensions extends Objects
     protected $rootFolder = "extensions";
     protected $singularName = "extension";
 
-
     public function __construct()
     {
         parent::__construct();
@@ -23,8 +22,8 @@ class Extensions extends Objects
 
     /**
      * preload autoload extensions and ExtensionStubs
-     * @return [type] [description]
      */
+
     protected function preloadExtensions(){
         foreach ($this->data as $className => $path) {
             $extension = new ObjectStub($path);
