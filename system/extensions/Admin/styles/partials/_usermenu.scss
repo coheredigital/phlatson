@@ -4,7 +4,7 @@ User Menu
 
 .user-menu{
   padding-top: 2em;
-  text-align: center;
+  text-align: right;
   font-size: 0.8em;
   font-weight: bold;
   text-transform: uppercase;
@@ -15,17 +15,29 @@ User Menu
   color: rgba(0,0,0,.4);
   margin-right: 1em;
   display: inline-block;
-//  width: 60%;
+  padding-left: 1em;
   vertical-align: middle;
 
 }
+
+.user-menu-content {
+  display: inline-block;
+  background: #fff;
+  padding: .5em;
+  border: 1px solid $light-gray;
+  border-radius: 2em;
+}
 .user-logout{
   text-transform: uppercase;
-  color: rgba(255,255,255,.6);
+  color: rgba(0,0,0,.6);
   text-decoration: none !important;
   display: inline-block;
   vertical-align: middle;
+  background: $light-gray;
+  padding: .5em 1em;
+  border-radius: 2em;
   &:hover{
     color: #fff;
+    background: $brand;
   }
 }

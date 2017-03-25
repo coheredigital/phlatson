@@ -127,7 +127,7 @@ class Page extends DataObject implements ViewableObject
         return $output;
     }
 
-    public function get($name)
+    public function get( string $name)
     {
         switch ($name) {
 
@@ -152,7 +152,7 @@ class Page extends DataObject implements ViewableObject
     }
 
 
-    public function set($name, $value)
+    public function set( string $name, $value )
     {
 
         // only allow values to be set for existing fields ??
