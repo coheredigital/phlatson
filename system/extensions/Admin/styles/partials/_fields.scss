@@ -17,10 +17,13 @@ input{
   position: relative;
 }
 .field{
-  margin-top: 2em;
+  // margin-top: 2em;
+  margin-bottom: -1px;
   position: relative;
+  // z-index: 1;
   background: #fff;
-  box-shadow: 0 .1em .7em rgba(0,0,0,.1);
+  border: 1px solid $light-gray;
+  // box-shadow: 0 .1em .7em rgba(0,0,0,.1);
   &:after{
     content: "";
     display: table;
@@ -29,7 +32,7 @@ input{
   select,
   textarea,
   input{
-    padding: 1em;
+    padding: $input-padding;
     margin: 0;
     box-sizing: border-box;
     display: block;
@@ -41,11 +44,13 @@ input{
 }
 .field-label{
   display: block;
-  padding: 1.2em;
+  padding: 1em 1.2em;
+  padding-bottom: 0;
+  font-weight: bold;
   // font-size: 0.8em;
   // text-transform: uppercase;
-  color: #fff;
-  background: $gray;
+  // color: #fff;
+  // background: #eee;
 }
 .field-input{
   margin: 1.5em 1.2em;
@@ -65,10 +70,12 @@ input{
 }
 
 .field.focus{
-  box-shadow: 0 .3em 1.3em rgba(0,0,0,.1);
-  .field-label{
-    background: $blue;
-  }
+  box-shadow: 0 .2em 1em rgba(0,0,0,.2);
+  border-color: $blue;
+  z-index: 10;
+  // .field-label{
+  //   background: $blue;
+  // }
   .field-input{
     border-color: $blue;
   }

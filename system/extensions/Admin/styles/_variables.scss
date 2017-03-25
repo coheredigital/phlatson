@@ -45,12 +45,17 @@ $link-hover-color: $blue;
 
 $header-background: $brand;
 $tab-background: #fff;
-$main-background: #f4f4f4;
+$main-background: #eee;
 $sidebar-background: $softer-gray;
+
+// field styling
+$input-padding: .6em .8em;
+$input-border-color: #ccc;
+
 
 // page tree
 $page-tree-item-padding: .8em;
-$page-tree-item-background: $light-gray;
+$page-tree-item-background: #fff;
 $page-tree-item-hover-background: $blue;
 $page-tree-item-hover-title-color: #fff;
 $page-tree-item-title-color: $dark-gray;

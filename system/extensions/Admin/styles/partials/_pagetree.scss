@@ -58,6 +58,8 @@
   position: relative;
   margin-bottom: 0.4em;
   background: $page-tree-item-background;
+  border: 1px solid $light-gray;
+  box-sizing: border-box;
   &:hover{
     background: $page-tree-item-hover-background;
     .page-tree-item-buttons{
@@ -90,7 +92,7 @@
     top: -$page-tree-item-padding;
     z-index: -1;
     bottom: $page-tree-item-padding*1.7;
-    left: -$page-tree-item-padding*2.1;
+    left: -$page-tree-item-padding*2.2;
     right: 50%;
   }
 
@@ -120,16 +122,19 @@
   padding-right: .5em;
 }
 .page-tree-item-button{
-  margin-left: 0.2em;
+  margin: 0.4em;
+  margin-right: 0;
   display: inline-block;
   cursor: pointer;
-  background: rgba(0,0,0,.3);
-  padding: $page-tree-item-padding;
+  background: #fff;
+  padding: .4em;
   text-decoration: none !important;
   text-transform: uppercase;
-  color: #fff !important;
+  color: $dark-gray;
+  border-radius: .2em;
   &:hover{
-    // background: $brand;
+    background: $brand;
+    color: #fff;
   }
 }
 

@@ -2,15 +2,16 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 2em;
+  background: #fff;
   //  background: #fff;
-  //  border: 1px solid $light-gray;
+   border: 1px solid $light-gray;
   tr{
     border-radius: 2em;
     overflow: hidden;
   }
   th,
   td{
-    padding: .6em 1em;
+    padding: .8em 1em;
     text-align: left;
     &:first-child{
       border-left: none !important;
@@ -35,7 +36,11 @@
     tr:hover{
       td{
         //        border-color: darken($main-background, 10%);
-        background: #fff;
+        background: $blue;
+        color: #fff;
+        a{
+          color: #fff;
+        }
       }
     }
   }
