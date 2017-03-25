@@ -345,13 +345,18 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $this;
     }
 
-    public function __set($name, $value)
+    /**
+     * setter magic method
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set( string $name, $value)
     {
         $this->set($name, $value);
     }
 
 
-    public function __isset($name)
+    public function __isset( string $name)
     {
         return isset($this->data[$name]);
     }

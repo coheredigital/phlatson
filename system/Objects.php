@@ -121,25 +121,6 @@ abstract class Objects extends Flatbed
         return $data;
     }
 
-    protected function instantiateFileList(){
-
-        foreach ($this->data as $key => $value) {
-            $object = $this->getObject($key);
-            $this->data[$key] = $object;
-        }
-
-    }
-
-    public function __set($key, $value)
-    {
-        $this->set($key, $value);
-    }
-
-    public function set($key, $value)
-    {
-        $this->data[$key] = $value;
-        return $this;
-    }
 
     /**
      * @return ObjectCollection
@@ -149,6 +130,9 @@ abstract class Objects extends Flatbed
      */
     public function all()
     {
+     
+
+
         $this->preloadFileList();
         $collection = new ObjectCollection();
 
@@ -160,12 +144,25 @@ abstract class Objects extends Flatbed
         return $collection;
     }
 
+
+
+    public function __set( string $key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    public function set($key, $value)
+    {
+        $this->data[$key] = $value;
+        return $this;
+    }
+
     public function __get($key)
     {
         return $this->get($key);
     }
 
-    public function get($name)
+    public function get( string $name )
     {
         // normalize the query to avoid errors
         $name = Filter::uri($name);
@@ -186,32 +183,5 @@ abstract class Objects extends Flatbed
         }
         return new $this->singularName($file);
     }
-
-
-    /**
-     * @param $name
-     * @return mixed
-     *
-     * Get the raw file address on the Flatbed object
-     *
-     */
-    protected function getItem($name)
-    {
-
-        if (!$this->has($name)) {
-            $this->getDataFile($name);
-        }
-
-        return $this->data[$name];
-
-    }
-
-    public function has($key)
-    {
-        $key = Filter::uri($key);
-        return array_key_exists($key, $this->data);
-    }
-
-
 
 }

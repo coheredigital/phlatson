@@ -37,7 +37,7 @@ class Extensions extends Objects
 
     }
 
-    public function get($name)
+    public function get(string $name)
     {
 
         // TODO double check need for this

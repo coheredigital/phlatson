@@ -36,28 +36,28 @@ class Session extends Flatbed implements IteratorAggregate
         return false;
     }
 
-    public function set($key, $value)
+    public function set( string $name, $value)
     {
 
         if(!$this->exists()) $this->start();
 
-        $_SESSION["$this->className"][$key] = $value;
+        $_SESSION["$this->className"][$name] = $value;
         return $this;
     }
 
     /**
      * Gets a session / flash variable
-     * @param  string $key
+     * @param  string $name
      * @return mixed
      */
-    public function get($key)
+    public function get($name)
     {
 
-        $value = $this->has($key) ? $_SESSION["$this->className"][$key] : null;
+        $value = $this->has($name) ? $_SESSION["$this->className"][$name] : null;
         // check if the key is a flash variable and remove if it is
-        if ($this->isFlash($key) && !is_null($value)) {
-            $this->remove($key);
-            $this->removeFlash($key);
+        if ($this->isFlash($name) && !is_null($value)) {
+            $this->remove($name);
+            $this->removeFlash($name);
         }
         return $value;
     }
@@ -75,31 +75,31 @@ class Session extends Flatbed implements IteratorAggregate
      * Checks for the existence of a session variable
      * Particularly useful for flash variables, where calling get will unset them
      *
-     * @param  string $key the session key to check for
+     * @param  string $name the session key to check for
      * @return boolean      isset() result
      */
-    public function has($key)
+    public function has($name)
     {
-        return isset($_SESSION["$this->className"][$key]);
+        return isset($_SESSION["$this->className"][$name]);
     }
 
     /**
      *
      * Sets a read-once flash value on the segment or convert an existing session variable into a flash variable if no value supplied
-     * @param string $key The key for the flash value.
+     * @param string $name The key for the flash value.
      * @param mixed $value The value for the flash.
      *
      */
-    public function flash($key, $value = null)
+    public function flash($name, $value = null)
     {
 
         if($value){
             // set the value in session
-            $this->set($key, $value);
+            $this->set($name, $value);
         }
 
-        if($this->has($key)){
-            $_SESSION["$this->className"]["_flash"][$key] = 1;
+        if($this->has($name)){
+            $_SESSION["$this->className"]["_flash"][$name] = 1;
         }
 
     }
@@ -161,7 +161,7 @@ class Session extends Flatbed implements IteratorAggregate
         return $this->get($key);
     }
 
-    public function __set($key, $value)
+    public function __set( string $key, $value)
     {
         return $this->set($key, $value);
     }
@@ -179,7 +179,7 @@ class Session extends Flatbed implements IteratorAggregate
     /**
      *
      * Regenerates and replaces the current session id
-     * @return bool True is regeneration worked, false if not.
+     * @return bool true is regeneration worked, false if not.
      *
      */
     public function regenerate()

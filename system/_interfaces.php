@@ -1,5 +1,10 @@
 <?php
 
+interface ObjectInterface {
+
+    public function get();
+    public function set();
+}
 
 interface ProvidesOptions
 {

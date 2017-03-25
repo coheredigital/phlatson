@@ -36,7 +36,7 @@ class Flatbed
     }
 
 
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
         Api::set($name, $value, true);
     }

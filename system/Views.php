@@ -16,7 +16,7 @@ class Views extends Objects
 
 
 
-    public function get($name)
+    public function get( string $name)
     {
 
     	$file = $this->api('config')->paths->root . "site/views/{$name}.php";
