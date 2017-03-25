@@ -115,14 +115,5 @@ abstract class Input extends Extension implements RenderInterface
 
     }
 
-    public function get($name){
-        switch($name){
-            case "attributes":
-                return $this->getAttributes();
-            default:
-                return parent::get($name);
-        }
-    }
-
 
 }
