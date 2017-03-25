@@ -13,10 +13,10 @@ class Extensions extends Objects
 
         $systemExtensions = __DIR__ . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR;
 
-        $this->getFileList($systemExtensions);
-        $this->getFileList();
+        $this->preloadFileList($systemExtensions);
+        $this->preloadFileList();
 
-        $this->preloadExtensions();
+        $this->initializeAutoloadExtensions();
     }
 
 
@@ -24,7 +24,7 @@ class Extensions extends Objects
      * preload autoload extensions and ExtensionStubs
      */
 
-    protected function preloadExtensions(){
+    protected function initializeAutoloadExtensions(){
         foreach ($this->data as $className => $path) {
             $extension = new ObjectStub($path);
 
@@ -66,7 +66,7 @@ class Extensions extends Objects
 
     public function all()
     {
-        $this->getObjectList();
+        $this->preloadFileList();
         $extensions = new ObjectCollection();
 
         foreach ($this->data as $name => $file) {

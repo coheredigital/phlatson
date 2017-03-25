@@ -89,19 +89,21 @@ abstract class Objects extends Flatbed
     }
 
     /**
-     * @param null $directory
-     *
-     * Combined function, get file list and instantiate all for use
-     *
+     * preloads the available data directories / files into '$this->data' using getFileList()
+     * @param  string $path the location to be searched
      */
-    protected function getObjectList()
+    protected function preloadFileList($path = null)
     {
-        $this->getFileList();
+        $this->data += $this->getFileList($path); 
     }
 
-
-
-    protected function getFileList($path = null)
+    /**
+     * scans the available data directories and returns the found array 
+     * key : basename of folder
+     * value : path to data file
+     * @param  string $path the location to be searched
+     */
+    protected function getFileList($path = null): array
     {
 
         if(is_null($path)) $path = $this->path;
@@ -110,12 +112,13 @@ abstract class Objects extends Flatbed
         $path = Filter::path($path);
         $folders = glob( $path . "*", GLOB_ONLYDIR);
 
+        $data = [];
         foreach ($folders as $folder) {
             $folder = Filter::path($folder);
             $name = basename($folder);
-            $this->data["$name"] = $folder . "data.json";
+            $data["$name"] = $folder . "data.json";
         }
-
+        return $data;
     }
 
     protected function instantiateFileList(){
@@ -146,7 +149,7 @@ abstract class Objects extends Flatbed
      */
     public function all()
     {
-        $this->getObjectList();
+        $this->preloadFileList();
         $collection = new ObjectCollection();
 
         foreach ($this->data as $key => $value) {

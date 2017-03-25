@@ -10,11 +10,11 @@ class FileCollection extends ObjectCollection
 
         $this->page = $page;
 
-        $fileList = $this->getFileList();
+        $fileList = $this->getFiles();
 
         if ($fileList) {
 
-            foreach ($this->getFileList() as $filename) {
+            foreach ($this->getFiles() as $filename) {
 
                 $file = $page->path . $filename;
 
@@ -40,7 +40,7 @@ class FileCollection extends ObjectCollection
     }
 
 
-    protected function getFileList()
+    protected function getFiles()
     {
 
         if ($this->page->isNew()) {
