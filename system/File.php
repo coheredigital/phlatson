@@ -40,7 +40,7 @@ class File extends Object
     }
 
 
-    public function get($string)
+    public function get( string $string)
     {
         switch ($string) {
             case 'directory':
@@ -56,22 +56,7 @@ class File extends Object
         }
     }
 
-    public function __get($name)
-    {
-        return $this->get($name);
-    }
 
-    public function set($name, $value)
-    {
-        switch ($name) {
-            default:
-                $this->data[$name] = $value;
-        }
-    }
 
-    public function __set($name, $value)
-    {
-        return $this->set($name, $value);
-    }
 
 }
