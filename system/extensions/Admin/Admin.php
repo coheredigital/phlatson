@@ -182,7 +182,7 @@ class Admin extends Extension
     }
 
 
-    public function set($name, $value)
+    public function set( string $name, $value )
     {
 
         switch ($name) {

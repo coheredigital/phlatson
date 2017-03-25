@@ -56,7 +56,7 @@ class User extends Object
     }
 
 
-    public function get($name)
+    public function get( string $name)
     {
         switch ($name) {
             case 'template':

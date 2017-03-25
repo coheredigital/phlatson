@@ -83,7 +83,7 @@ class Config extends Object
     }
 
 
-    public function get($name)
+    public function get( string $name )
     {
         if ($this->has($name)) {
             return $this->getUnformatted($name);

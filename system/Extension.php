@@ -1,7 +1,5 @@
 <?php
-
-
-class Extension extends Object
+class Extension extends Object implements ObjectInterface
 {
 
     protected $rootFolder = "extensions";
@@ -14,7 +12,11 @@ class Extension extends Object
     {
         $file = $this->getFile();
         parent::__construct($file);
-        $this->setup();
+
+        if (method_exists($this, 'setup')) {
+            $this->setup();
+        }
+        
     }
 
     protected function getFile()
@@ -37,10 +39,5 @@ class Extension extends Object
         }
         return false;
     }
-
-
-    protected function setup()
-    {
-    }
-
+    
 }

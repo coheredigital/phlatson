@@ -2,8 +2,8 @@
 
 interface ObjectInterface {
 
-    public function get();
-    public function set();
+    // public function get( string $name );
+    // public function set( string $name, $value );
 }
 
 interface ProvidesOptions

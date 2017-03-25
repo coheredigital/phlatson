@@ -306,7 +306,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-    public function get($name)
+    public function get( string $name)
     {
         switch ($name) {            
             case 'uri':
@@ -339,7 +339,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $this->get($name);
     }
 
-    public function set($name, $value)
+    public function set( string $name, $value)
     {
         $this->setFormatted($name, $value);
         return $this;

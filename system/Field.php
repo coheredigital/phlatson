@@ -19,6 +19,7 @@ class Field extends Object
         $this->skippedFields = array_merge($this->skippedFields, [
             "template"
         ]);
+        
         $this->lockedFields = [
             "template"
         ];

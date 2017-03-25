@@ -1,6 +1,5 @@
 <?php
 
-
 class Extensions extends Objects
 {
 
@@ -28,7 +27,7 @@ class Extensions extends Objects
         foreach ($this->data as $className => $path) {
             $extension = new ObjectStub($path);
 
-            if($extension->autoload){
+            if( $extension->autoload ){
                 $extension = new $className();
             }
             $extension->file = $path;
@@ -41,7 +40,7 @@ class Extensions extends Objects
     {
 
         // TODO double check need for this
-        $extension = $this->init($name, $extension);
+        $extension = $this->initialize($name, $extension);
 
         if(!$extension->singluar){
             $extension = clone $extension; // TODO I don't know if I want to use clone here
@@ -56,7 +55,7 @@ class Extensions extends Objects
      * @param  Exstension   $extension      Extension object that was retrieved
      * @return Extension                    returns same extension once init has run
      */
-    protected function init($name, $extension)
+    protected function initialize($name, $extension)
     {
         if(!$extension instanceof Extension){
             $extension = new $name($extension->file);
