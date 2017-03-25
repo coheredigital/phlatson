@@ -11,3 +11,4 @@ site/assets/sessions/*
 assets/*
 prepros.cfg
 libraries/
+.vscode/
