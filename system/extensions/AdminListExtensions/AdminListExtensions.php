@@ -22,8 +22,36 @@ class AdminListExtensions extends AdminList
             );
 
         $this->api('router')->add($this->route);
-
     }
 
+    protected function renderList()
+    {
 
+        $objectCollection = $this->api($this->objectName)->all();
+
+        $table = $this->api("extensions")->get("MarkupTable");
+
+        $table->setColumns([
+            "Title" => "title",
+            "Name" => "name",
+            "Autoload" => "autoload"
+        ]);
+
+        foreach ($objectCollection as $object) {
+
+            if( $object->isSystem() ) continue;
+            
+            $table->addRow(
+                array(
+                    "title" => $object->isEditable() ? "<a href='{$object->urlEdit}'>{$object->title}</a>" : $object->title,
+                    "name" => $object->name,
+                    "autoload" => $object->autoload ? 'YES' : ''
+                )
+            );
+        }
+
+        $output = $table->render();
+
+        return "<div class='container'>{$output}</div>";
+    }
 }
