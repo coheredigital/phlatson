@@ -4,8 +4,6 @@
 class Views extends Objects
 {
 
-
-
     public function __construct()
     {
         // store paths and urls 
