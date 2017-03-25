@@ -86,7 +86,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * @param $property
+     * @param $fieldname
      * @param string $direction
      * @return $this
      */
@@ -104,9 +104,9 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
 
         usort(
             $this->data,
-            function ($a, $b) use ($property, $type) {
-                $v1 = $a->get($property);
-                $v2 = $b->get($property);
+            function ($a, $b) use ($fieldname, $type) {
+                $v1 = $a->get($fieldname);
+                $v2 = $b->get($fieldname);
 
                 switch ($type) {
                     case "integer":
