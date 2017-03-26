@@ -1,4 +1,4 @@
-<?php if (count($page->parents)): ?>
+<?php if ($page->parents->count()): ?>
 <div class="breadcrumbs">
     <?php foreach ($page->parents as $p): ?>
         <a href="<?php echo $p->url ?>"><?php echo $p->title ?></a>
