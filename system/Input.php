@@ -103,8 +103,23 @@ abstract class Input extends Extension implements RenderInterface
         return $this->render();
     }
 
-
-    protected function getAttributes()
+    /**
+     * returns the attributes array
+     * @return array
+     */
+    public function getAttributes()
+    {
+        $string = "";
+        foreach ($this->data["attributes"] as $key => $value) {
+            $string .= "{$key}='$value' ";
+        }
+        return $this->data["attributes"];
+    }
+    /**
+     * get attributes array as HTML compatible key=value string
+     * @return [type] [description]
+     */
+    public function getAttributesString()
     {
         $string = "";
 
@@ -113,6 +128,16 @@ abstract class Input extends Extension implements RenderInterface
         }
         return trim($string);
 
+    }
+
+    public function get( string $name)
+    {
+        switch ($name) {            
+            case 'attributes':
+                return $this->getAttributesString();
+            default:
+                return $this->getFormatted($name);
+        }
     }
 
 
