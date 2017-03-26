@@ -25,6 +25,10 @@ $passwordInput->attribute("placeholder","Password");
 </head>
 <body>
     <div id="main">
+        <?php if ($this->api('session')->has('loginError')): ?>
+            <div class="login-error"><span><?= $this->api('session')->get('loginError') ?></span></div>
+        <?php endif ?>
+
         <form class='ui form segment form-login' method='POST'>
             <?php
             echo $usernameInput->render();
