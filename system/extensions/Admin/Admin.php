@@ -86,8 +86,16 @@ class Admin extends Extension
             ->parent("admin")
             ->callback(
                 function () {
-                    if ($this->api("session")->login($this->api("request")->post->username, $this->api("request")->post->password)) {
-                        $this->api("router")->redirect($this->api("router")->get("admin")->url, false);
+                    $session = $this->api("session");
+                    $router = $this->api("router");
+
+                    try {
+                        if ($session->login( $this->api("request")->post->username , $this->api("request")->post->password )) {
+                            $router->redirect( $router->get("admin")->url, false );
+                        }
+                    } catch (FlatbedException $e) {
+                        $session->flash("loginError", $e->getMessage());
+                        $router->redirect( $router->get("login")->url, false );
                     }
                 }
             );
