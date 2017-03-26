@@ -81,11 +81,13 @@ class Page extends DataObject implements ViewableObject
 
     public function rootParent()
     {
-        $name = $this->route[0];
-        if ($name == $this->get("url")) {
+        $parents = $this->parents;
+        if ($parents->count()) {
+            return $parents->last();
+        }
+        else {
             return $this;
         }
-        return $this->api("pages")->get($name);
     }
 
     protected function createUrl($array)
@@ -134,15 +136,11 @@ class Page extends DataObject implements ViewableObject
             case 'url':
                 return $this->api('config')->urls->root . ltrim($this->directory, "/");
             case 'children':
-                return $this->children();
             case 'parents':
-                return $this->parents();
             case 'rootParent':
-                return $this->rootParent();
             case 'files':
-                return $this->files();
             case 'images':
-                return $this->images();
+                return $this->{$name}();
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:
