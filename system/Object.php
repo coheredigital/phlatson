@@ -15,12 +15,10 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
-    protected $initData = [];
-
-
 
     protected $defaultFields = ["name","template"];
     protected $skippedFields = ["name"];
+    
     protected $lockedFields = [];
 
     protected $requiredElements = [];
@@ -320,8 +318,6 @@ abstract class Object extends Flatbed implements JsonSerializable
                 // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
-
-
 //            case 'modified':
 //                $time = filemtime($this->file);
 //                return DateTime::createFromFormat("U", $time);
