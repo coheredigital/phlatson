@@ -8,9 +8,19 @@ function classLoader($className)
     $systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR;
     $className = normalizeDirectorySeperators($className);
 
+
+    // first check if in root system
     $file = $systemPath . $className . ".php";
 
+    // then for folder with that name
     if (!is_file($file)) {
+        $file = $systemPath . $className . DIRECTORY_SEPARATOR . $className . ".php";
+    }
+
+    // then look to extensions
+    if (!is_file($file)) {
+
+
         $extensionsSitePath = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
         $extensionsSystemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
 
