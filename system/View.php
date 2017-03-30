@@ -27,4 +27,26 @@ class View extends Object
 
     }
 
+
+    public function render($page) {
+
+        // render template file
+        ob_start();
+
+        // add page as api variable
+        $this->api("page", $page);
+
+        // give the rendered page access to the API
+        extract($this->api());
+
+        // render found file
+        include($this);
+
+        $output = ob_get_contents(); 
+        ob_end_clean();
+        return $output;
+
+
+    }
+
 }
