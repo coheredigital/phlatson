@@ -145,10 +145,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         return Filter::uri($path);
     }
 
-    public function getPath()
+    public function getPath(): string
     {   
-        if ($this->file) {
-            $path = str_replace(static::DEFAULT_SAVE_FILE , "", $this->file);
+
+        $path = '';
+        if ( file_exists( $this->file ) ) {
+            $path = dirname($this->file);
             $path = Filter::path($path);
         }
         else{
@@ -169,17 +171,19 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     protected function getUrl(){
 
-        
+        // get the site root
         $rootPath = $this->api("config")->paths->root;
 
+        // remove the ROOT_PATH, site root, and data.json from the object path to get a relative directory
         $replace = [
             ROOT_PATH,
             $this->api("config")->paths->root,
             "data.json"
         ];
-        $url = trim(str_replace($replace, "", $this->path), "/");
-        // $url = Filter::url($url);
-        // $url = "/$url";
+
+        $url = str_replace( $replace, "", $this->path);
+
+        // $url = trim( $url , "/");
 
         return Filter::url($url);
     }
@@ -192,9 +196,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         if(!$value = $this->getUnformatted($name)) return null;
 
         // get the field object matching the passed "$name"
-        $field = $this->api("fields")->get($name);
-
-        if ($field instanceof Field) {
+        if ($this->api("fields")) {
+            $field = $this->api("fields")->get($name);
+        }
+        // use field formatting if instance of field is available and API extensions is accesible
+        // TODO: extensions should always be available
+        if ($field instanceof Field && $this->api("extensions")) {
 
             $fieldtypeName = $field->getUnformatted("fieldtype");
             $fieldtype = $this->api("extensions")->get($fieldtypeName);
