@@ -74,7 +74,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     public function getName()
     {
-        return basename(dirname($this->file));
+        return basename($this->getPath());
     }
 
     /**
@@ -151,13 +151,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         $path = '';
         if ( file_exists( $this->file ) ) {
             $path = dirname($this->file);
-            $path = Filter::path($path);
         }
         else{
             $path = $this->rootPath . $this->name;
-            $path =  Filter::uri($path) . "/";
         }
 
+        return Filter::path($path);
         return $path;
     }
 
@@ -181,7 +180,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             "data.json"
         ];
 
-        $url = str_replace( $replace, "", $this->path);
+        $url = str_replace( $replace, "", $this->getPath());
 
         // $url = trim( $url , "/");
 
@@ -314,6 +313,8 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function get( string $name)
     {
         switch ($name) {            
+            case 'name':
+                return $this->getName();
             case 'uri':
             case 'directory':
                 return $this->getDirectory();

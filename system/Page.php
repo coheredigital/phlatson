@@ -14,6 +14,7 @@ class Page extends DataObject implements ViewableObject
             "parent"
         ]);
         // set parent page value
+        // this should be require to be set in API and not done here
         if (!$this->isNew()) {
             $parentUrl = $this->getParentUrl();
             // var_dump($parentUrl);
@@ -21,6 +22,15 @@ class Page extends DataObject implements ViewableObject
             // $this->setUnformatted("parent", $this->parent->url);
         }
 
+    }
+
+    /**
+     * override of Object::getUrl because page are accessed from the 
+     * site root URL and note under /site/pages/
+     * @return [type] [description]
+     */
+    public function getUrl() {
+        return $this->api('config')->urls->root . ltrim($this->directory, "/");
     }
 
     protected function getParentUrl()
@@ -133,8 +143,6 @@ class Page extends DataObject implements ViewableObject
     {
         switch ($name) {
 
-            case 'url':
-                return $this->api('config')->urls->root . ltrim($this->directory, "/");
             case 'children':
             case 'parents':
             case 'rootParent':
