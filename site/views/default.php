@@ -1,8 +1,9 @@
 <?php include 'includes/head.php' ?>
     <div class="container">
-        <!-- PAGE CONTENT -->
+        <h6><strong><?= $page->modified->format("F j, Y") ?></strong></h6>
         <?= $page->content ?>
         <?php if ($page->children): ?>
+
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul>

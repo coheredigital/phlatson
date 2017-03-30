@@ -145,6 +145,10 @@ abstract class Object extends Flatbed implements JsonSerializable
         return Filter::uri($path);
     }
 
+
+    /**
+     * @return string  path to the current object data file
+     */
     public function getPath(): string
     {   
 
@@ -161,11 +165,20 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
+    /**
+     * @return string  path to the current object data file
+     */
+    public function getModified()
+    {   
+        $time = filemtime($this->file);
+        $datetime = FlatbedDateTime::createFromFormat("U", $time);
+        return $datetime;
+    }
+
+
 
     /**
-     * @return string
-     *
-     * Get the public accessible url for this Object
+     * @return  string  the public accessible url for this Object
      *
      */
     protected function getUrl(){
@@ -326,9 +339,8 @@ abstract class Object extends Flatbed implements JsonSerializable
                 // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
-//            case 'modified':
-//                $time = filemtime($this->file);
-//                return DateTime::createFromFormat("U", $time);
+           case 'modified':
+               return $this->getModified();
             case 'className':
                 return get_class($this);
             case 'defaultFields':

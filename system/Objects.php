@@ -130,9 +130,6 @@ abstract class Objects extends Flatbed
      */
     public function all()
     {
-     
-
-
         $this->preloadFileList();
         $collection = new ObjectCollection();
 
@@ -140,7 +137,6 @@ abstract class Objects extends Flatbed
             $object = $this->getObject($key);
             $collection->add($object);
         }
-
         return $collection;
     }
 
@@ -162,6 +158,11 @@ abstract class Objects extends Flatbed
         return $this->get($key);
     }
 
+    /**
+     * get the singular object type by it uri
+     * @param  string $name the name or uri that points to the object relative to its storage folder
+     * @return Object 
+     */
     public function get( string $name )
     {
         // normalize the query to avoid errors
@@ -173,6 +174,32 @@ abstract class Objects extends Flatbed
         }
         return new $this->singularName($file);
 
+    }
+
+    /**
+     * get the singular object type by absolute path
+     * @param  string $path path to look for a data JSON file that describe a Flatbed Object
+     * @return Object 
+     */
+    public function getByPath( $path )
+    {
+        $file = Filter::path($path) . "data.json";
+        return $this->getByFile($file);
+    }
+
+    /**
+     * get the singular object type by absolute file path
+     * @param  string $file the data JSON file that describes the Flatbed Object
+     * @return Object 
+     */
+    public function getByFile( $file )
+    {
+
+        // get the file if it exists
+        if (!is_file($file)) {
+            return false;
+        }
+        return new $this->singularName($file);
     }
 
     protected function getObject($name)

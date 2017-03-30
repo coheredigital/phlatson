@@ -13,14 +13,6 @@ class Page extends DataObject implements ViewableObject
         $this->defaultFields = array_merge($this->defaultFields, [
             "parent"
         ]);
-        // set parent page value
-        // this should be require to be set in API and not done here
-        if (!$this->isNew()) {
-            $parentUrl = $this->getParentUrl();
-            // var_dump($parentUrl);
-            $this->setUnformatted("parent", $parentUrl);
-            // $this->setUnformatted("parent", $this->parent->url);
-        }
 
     }
 
@@ -33,13 +25,6 @@ class Page extends DataObject implements ViewableObject
         return $this->api('config')->urls->root . ltrim($this->directory, "/");
     }
 
-    protected function getParentUrl()
-    {
-
-        $directoryParts = $this->directoryParts();
-        array_pop($directoryParts); // remove current (last) item to find parent
-        return $this->createUrl($directoryParts);
-    }
 
     public function files()
     {
@@ -74,6 +59,33 @@ class Page extends DataObject implements ViewableObject
 
         return $children;
     }
+
+
+    protected function getParentUrl()
+    {
+
+        $directoryParts = $this->directoryParts();
+        array_pop($directoryParts); // remove current (last) item to find parent
+        return $this->createUrl($directoryParts);
+    }
+
+    protected function getParentPath()
+    {
+        return dirname($this->path);
+    }
+
+    public function parent()
+    {
+
+        $parents = new Page();  
+        // start with current page
+        $parentPath = $this->getParentPath();
+        $parent = $this->api("pages")->getByPath($parentPath);
+
+        // get parent and set current page as parent until no parents exist
+        return $parent;
+    }
+
 
     public function parents()
     {
@@ -144,6 +156,7 @@ class Page extends DataObject implements ViewableObject
         switch ($name) {
 
             case 'children':
+            case 'parent':
             case 'parents':
             case 'rootParent':
             case 'files':
