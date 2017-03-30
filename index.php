@@ -43,8 +43,9 @@ try {
 
     $flatbed->api('events', 'Events', true);
 
-    $flatbed->api('fields', new Fields, true);
+    
     $flatbed->api('extensions', new Extensions, true);
+    $flatbed->api('fields', new Fields, true);
 
     $flatbed->api('pages', 'Pages', true);
     $flatbed->api('users', 'Users', true);
