@@ -6,6 +6,5 @@ ref::config('expLvl', 2);
 ref::config('validHtml', true);
 
 
-r($extensions);
 
 
