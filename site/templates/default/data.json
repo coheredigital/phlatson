@@ -5,13 +5,11 @@
 	    	"name":"title",
 	    	"required": true,
 	    	"settings" : {
-	    		"required" : true,
-	    		"locked": true,
-	    		"width": 20
+	    		"required" : true
 	    	}
 	    },
     	{
-	    	"name":"body"
+	    	"name":"content"
 	    }
 	],
     "name": "default",
