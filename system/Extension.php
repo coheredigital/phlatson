@@ -16,7 +16,7 @@ class Extension extends Object implements ObjectInterface
         if (method_exists($this, 'setup')) {
             $this->setup();
         }
-        
+
     }
 
     protected function getFile()
@@ -32,12 +32,9 @@ class Extension extends Object implements ObjectInterface
      *
      * Check if extension has configuration settings
      */
-    public function isConfigurable()
+    public function isConfigurable(): boolean
     {
-        if (file_exists("{$this->path}defaultConfiguration.json")) {
-            return true;
-        }
-        return false;
+        return file_exists("{$this->path}defaultConfiguration.json");
     }
-    
+
 }
