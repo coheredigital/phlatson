@@ -147,7 +147,7 @@ abstract class Objects extends Flatbed
         $this->set($key, $value);
     }
 
-    public function set($key, $value)
+    public function set( string $key, $value)
     {
         $this->data[$key] = $value;
         return $this;
@@ -159,17 +159,17 @@ abstract class Objects extends Flatbed
     }
 
     /**
-     * get the singular object type by it uri
+     * get the singular object type by it uri/name
      * @param  string $name the name or uri that points to the object relative to its storage folder
      * @return Object 
      */
-    public function get( string $name )
+    public function get( string $uri )
     {
         // normalize the query to avoid errors
-        $name = Filter::uri($name);
+        $uri = Filter::uri($uri);
 
         // get the file if it exists
-        if (!$file = $this->getDataFile($name)) {
+        if (!$file = $this->getDataFile($uri)) {
             return false;
         }
         return new $this->singularName($file);
@@ -194,7 +194,6 @@ abstract class Objects extends Flatbed
      */
     public function getByFile( $file )
     {
-
         // get the file if it exists
         if (!is_file($file)) {
             return false;
