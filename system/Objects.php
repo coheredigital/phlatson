@@ -31,7 +31,7 @@ abstract class Objects extends Flatbed
     public function __construct()
     {
 
-        // store paths and urls 
+        // store paths and urls
         $this->path = Filter::path( ROOT_PATH . "site/" . $this->rootFolder );
         $this->systemPath = Filter::path( ROOT_PATH . "system/{$this->rootFolder}");
         $this->url = Filter::url( ROOT_URL . "site/{$this->rootFolder}");
@@ -68,7 +68,7 @@ abstract class Objects extends Flatbed
         else {
             $object->name = $name;
         }
-        
+
         $object->parent = $parent;
         return $object;
     }
@@ -76,9 +76,9 @@ abstract class Objects extends Flatbed
 
 
 
-    protected function getDataFile($name): string
+    protected function findDataFileByName($name): string
     {
-
+        // loop through the possible root data folders
         foreach ($this->rootFolders as $folder) {
             $folder = Filter::path( ROOT_PATH . $folder . $this->rootFolder ) . $name ;
             $file = "{$folder}/data.json";
@@ -94,11 +94,11 @@ abstract class Objects extends Flatbed
      */
     protected function preloadFileList($path = null)
     {
-        $this->data += $this->getFileList($path); 
+        $this->data += $this->getFileList($path);
     }
 
     /**
-     * scans the available data directories and returns the found array 
+     * scans the available data directories and returns the found array
      * key : basename of folder
      * value : path to data file
      * @param  string $path the location to be searched
@@ -161,7 +161,7 @@ abstract class Objects extends Flatbed
     /**
      * get the singular object type by it uri/name
      * @param  string $name the name or uri that points to the object relative to its storage folder
-     * @return Object 
+     * @return Object
      */
     public function get( string $uri )
     {
@@ -169,7 +169,7 @@ abstract class Objects extends Flatbed
         $uri = Filter::uri($uri);
 
         // get the file if it exists
-        if (!$file = $this->getDataFile($uri)) {
+        if (!$file = $this->findDataFileByName($uri)) {
             return false;
         }
         return new $this->singularName($file);
@@ -179,7 +179,7 @@ abstract class Objects extends Flatbed
     /**
      * get the singular object type by absolute path
      * @param  string $path path to look for a data JSON file that describe a Flatbed Object
-     * @return Object 
+     * @return Object
      */
     public function getByPath( $path )
     {
@@ -190,7 +190,7 @@ abstract class Objects extends Flatbed
     /**
      * get the singular object type by absolute file path
      * @param  string $file the data JSON file that describes the Flatbed Object
-     * @return Object 
+     * @return Object
      */
     public function getByFile( $file )
     {
@@ -204,7 +204,7 @@ abstract class Objects extends Flatbed
     protected function getObject($name)
     {
         // get the file if it exists
-        if (!$file = $this->getDataFile($name)) {
+        if (!$file = $this->findDataFileByName($name)) {
             return false;
         }
         return new $this->singularName($file);
