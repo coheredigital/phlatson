@@ -23,7 +23,7 @@ abstract class Input extends Extension implements RenderInterface
      * Gets when just $name supplied, returns false if no attribute exists
      *
      */
-    final public function attribute($name, $value = false)
+    final public function attribute(string $name, $value = false)
     {
 
         if ($value) {
@@ -59,9 +59,7 @@ abstract class Input extends Extension implements RenderInterface
         }
 
         $output .= "<div class='field-input' for='{$this->name}'>";
-//        if ($this->attribute('required')) {
-//            $output .= "<div class='field-required''></div>";
-//        }
+
         $output .= "$input";
         $output .= "</div>";
 
@@ -109,10 +107,6 @@ abstract class Input extends Extension implements RenderInterface
      */
     public function getAttributes()
     {
-        $string = "";
-        foreach ($this->data["attributes"] as $key => $value) {
-            $string .= "{$key}='$value' ";
-        }
         return $this->data["attributes"];
     }
     /**
@@ -123,7 +117,8 @@ abstract class Input extends Extension implements RenderInterface
     {
         $string = "";
 
-        foreach ($this->data["attributes"] as $key => $value) {
+        $attributes = $this->getAttributes();
+        foreach ($attributes as $key => $value) {
             $string .= "{$key}='$value' ";
         }
         return trim($string);

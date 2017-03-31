@@ -15,8 +15,7 @@ class InputTinymce extends Input
     {
 
         $this->attribute('class', 'ui input ' . $this->className);
-        $attributes = $this->getAttributes();
-        $output = "<textarea $attributes >{$this->value}</textarea>";
+        $output = "<textarea $this->attributes >{$this->value}</textarea>";
         return $output;
 
     }
