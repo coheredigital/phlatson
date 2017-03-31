@@ -1,5 +1,8 @@
 <?php
 
+
+throw new FlatbedException("Error Processing Request");
+
 // add ref for debugging, remove later
 require ROOT_PATH . "libraries/ref/ref.php";
 ref::config('expLvl', 1);

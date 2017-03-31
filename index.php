@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 define("FLATBED", true);
 define('ROOT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+define('SYSTEM_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . "system" . DIRECTORY_SEPARATOR );
+define('CORE_PATH', SYSTEM_PATH . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR );
 define('ROOT_URL', "/");
 
-require_once ROOT_PATH . 'system/_functions.php';
-require_once ROOT_PATH . 'system/_autoload.php';
-require_once ROOT_PATH . 'system/_interfaces.php';
-require_once ROOT_PATH . 'system/_traits.php';
-
-
+require_once CORE_PATH . '_functions.php';
+require_once CORE_PATH . '_autoload.php';
+require_once CORE_PATH . '_interfaces.php';
+require_once CORE_PATH . '_traits.php';
 
 try {
 
@@ -43,7 +43,7 @@ try {
 
     $flatbed->api('events', 'Events', true);
 
-    
+
     $flatbed->api('extensions', new Extensions, true);
     $flatbed->api('fields', new Fields, true);
 
