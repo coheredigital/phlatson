@@ -18,7 +18,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $defaultFields = ["name","template"];
     protected $skippedFields = ["name"];
-    
+
     protected $lockedFields = [];
 
     protected $requiredElements = [];
@@ -35,7 +35,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             }
 
             $this->file = $file;
-            
+
             $this->data = $this->getData();
             $this->initData = $this->data;
             $this->setUnformatted("name", $this->getName());
@@ -150,10 +150,10 @@ abstract class Object extends Flatbed implements JsonSerializable
      * @return string  path to the current object data file
      */
     public function getPath(): string
-    {   
+    {
 
         $path = '';
-        if ( file_exists( $this->file ) ) {
+        if ( is_file( $this->file ) ) {
             $path = dirname($this->file);
         }
         else{
@@ -169,7 +169,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      * @return string  path to the current object data file
      */
     public function getModified()
-    {   
+    {
         $time = filemtime($this->file);
         $datetime = FlatbedDateTime::createFromFormat("U", $time);
         return $datetime;
@@ -325,7 +325,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     public function get( string $name)
     {
-        switch ($name) {            
+        switch ($name) {
             case 'name':
                 return $this->getName();
             case 'uri':
