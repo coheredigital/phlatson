@@ -2,10 +2,18 @@
 
 
 function flatbedErrorHandler($errno, $errstr, $errfile, $errline) {
-    if ( E_RECOVERABLE_ERROR===$errno ) {
-        throw new FlatbedException($errstr, $errno);
+
+    switch ($errno) {
+        case 'E_USER_ERROR':
+        case 'E_RECOVERABLE_ERROR':
+            throw new FlatbedException($errstr, $errno);
+            break;
+
+        default:
+            # code...
+            break;
     }
-    return false;
+    return true;
 }
 set_error_handler('flatbedErrorHandler');
 

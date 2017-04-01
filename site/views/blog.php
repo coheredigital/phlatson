@@ -4,19 +4,21 @@
         <?php
 
         $children = $page->children;
-        $children->sort("modified");
+        $children->limit(5)->paginate();
 
-
-        if ($children): ?>
-            <?php foreach ($children as $p):?>
+         ?>
+            <?php foreach ($children as $key => $value):?>
                 <article>
                     <header>
-                        <h5 class="title"><a href="<?= $p->url ?>"><?= $p->title ?></a></h5>
-                        <h6><strong><?= $p->modified ?></strong></h6>
+                        <h5 class="title"><a href="<?= $value->url ?>"><?= $value->title ?></a></h5>
+                        <h6><strong><?= $value->modified ?></strong></h6>
                     </header>
                 </article>
-
+                <hr>
             <?php endforeach ?>
-        <?php endif ?>
+
+        <?php if ($children->count > $this->limit): ?>
+            <a class="button" href="?page">Next</a>
+        <?php endif; ?>
     </div>
 <?php include 'includes/foot.php';
