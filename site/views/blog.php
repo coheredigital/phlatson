@@ -4,7 +4,7 @@
         <?php
 
         $children = $page->children;
-        $children->limit(5)->paginate();
+        $children->sort("modified")->limit(5)->paginate();
 
          ?>
             <?php foreach ($children as $key => $value):?>
