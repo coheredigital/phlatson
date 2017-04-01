@@ -11,12 +11,9 @@
             <?php foreach ($children as $p):?>
                 <article>
                     <header>
-                        <h3 class="title"><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></h3>
-                        <h6><?php echo $p->modified ?></h6>
+                        <h5 class="title"><a href="<?= $p->url ?>"><?= $p->title ?></a></h5>
+                        <h6><strong><?= $p->modified ?></strong></h6>
                     </header>
-
-
-                    <?php echo $p->content ?>
                 </article>
 
             <?php endforeach ?>
