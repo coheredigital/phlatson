@@ -13,11 +13,13 @@ class FlatbedException extends Exception
     // custom string representation of object
     public function __toString()
     {
+
         return $this->render();
     }
 
     public function render( $config )
     {
+        ob_clean(); // clear exising markup
         include 'output.php';
     }
 

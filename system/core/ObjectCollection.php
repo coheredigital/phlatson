@@ -126,14 +126,22 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
         return $this;
     }
 
-
-
+    /**
+     * reverses array orders
+     * @return $this
+     */
+    public function limit(int $count) : self
+    {
+        $this->data = array_reverse($this->data);
+        return $this;
+    }
 
     /**
      * reverses array orders
      * @return $this
      */
-    public function reverse(){
+    public function reverse()
+    {
         $this->data = array_reverse($this->data);
         return $this;
     }
@@ -230,7 +238,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
             default:
                 return $this->data[$name];
         }
-        
+
     }
 
     public function __get($name)
