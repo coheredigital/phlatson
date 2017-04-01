@@ -1,6 +1,5 @@
 <?php
 
-
 class FlatbedException extends Exception
 {
 
@@ -17,10 +16,43 @@ class FlatbedException extends Exception
         return $this->render();
     }
 
-    public function render($config)
+    public function render( $config )
     {
         include 'output.php';
     }
+
+    /**
+     * pass in a trace to get a simple function call as string
+     * @param  array  $trace
+     * @return string
+     */
+    protected function getFunctionString( array $trace ) : string
+    {
+        $string = '';
+        if ( isset($trace['class']) ) $string .= $trace['class'];
+        if ( isset($trace['type']) ) $string .= $trace['type'];
+        if ( isset($trace['function']) ) $string .= $trace['function'];
+        return $string;
+    }
+
+    protected function getArgumentsString( array $trace ) : string
+    {
+        $arguments = [];
+
+        if (isset($trace['args']) && count($trace['args'])) {
+            // $string = print_r($trace['args']);
+            foreach ($trace['args'] as $value) {
+                $arguments[] = gettype($value);
+            }
+
+        }
+
+        if ( count($arguments) == 0 ) return '';
+
+        $string = implode(' , ', $arguments);
+        return " $string ";
+    }
+
 
     protected function renderCodeSnippet($file, $line)
     {
@@ -49,6 +81,22 @@ class FlatbedException extends Exception
         return $output;
     }
 
+
+    protected function renderPageStyles($link = false)
+    {
+      if ($link) {
+        $file = "/system/core/FlatbedException/" . get_class($this) . ".css";
+        $styles = "<link href='$file' rel='stylesheet' type='text/css'>";
+      }
+      else {
+        $styles = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . get_class($this) . ".css");
+        $styles = "<style>$styles</style>";
+      }
+      return $styles;
+
+    }
+
+
     protected function log($logger)
     {
 
@@ -61,22 +109,6 @@ class FlatbedException extends Exception
         $line = "#" . $this->getLine() . " (" . $trace['class'] . $trace['type'] . $trace['function'] . ")";
         $log = "Exception: $message in ($file) on $line";
         $logger->add("error", $log);
-
-    }
-
-    protected function renderPageStyles($link = false)
-    {
-      if ($link) {
-        $file = "/system/core/FlatbedException/" . get_class($this) . ".css";
-        $styles = "<link href='$file' rel='stylesheet' type='text/css'>";
-      }
-      else {
-        $styles = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . get_class($this) . ".css");
-        $styles = "<style>$styles</style>";
-      }
-
-
-      return $styles;
 
     }
 
