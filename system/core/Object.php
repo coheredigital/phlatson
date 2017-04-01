@@ -171,7 +171,14 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function getModified()
     {
         $time = filemtime($this->file);
-        $datetime = FlatbedDateTime::createFromFormat("U", $time);
+        $datetime = new FlatbedDateTime();
+
+        // set default format if defined in config
+        if ($this->api("config")->get('dateTimeFormat')) {
+            $datetime->setOutputFormat( $this->api("config")->get('dateTimeFormat') );
+        }
+
+        $datetime->createFromFormat("U", $time);
         return $datetime;
     }
 
