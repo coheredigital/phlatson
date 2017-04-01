@@ -19,67 +19,16 @@ class FlatbedException extends Exception
 
     public function render($config)
     {
-
-        // $this->log();
-
-
-        $message = "<pre id='title'>Exception<pre id='file'>" . $this->getFile() . "</pre></pre>";
-
-        $message .= "<pre id='message'>" . trim($this->getMessage()) . "</pre>";
-        if ($config->debug) {
-            $message .= $this->renderCodeSnippet();
-            $message .= $this->renderTraceTable();
-        }
-
-
-
-
-        $output = $this->renderPage($message);
-        return $output;
+        include 'output.php';
     }
 
-    public function renderTraceTable()
+    protected function renderCodeSnippet($file, $line)
     {
-
-        $table = "<div id='trace'><table>";
-        $table .= "<thead><tr><th>line</th><th>file</th><th>class@method('args')</th></tr></thead><tbody>";
-
-        foreach ($this->getTrace() as $trace) {
-            $table .= "<tr>";
-            $table .= "<td>" . $trace['line'] . "</td>";
-            $table .= "<td>" . $trace['file'] . "</td>";
-            $table .= "<td><pre class='php'>"
-                . $trace['class']
-                . $trace['type']
-                . $trace['function']
-                . "("
-//                . implode(",", $trace['args'] )
-                . ")</pre></td>";
-            $table .= "</tr>";
-
-        }
-
-        $table .= "</tbody></table></div>";
-
-        return $table;
-
-    }
-
-    protected function renderCodeSnippet()
-    {
-
-        $trace = $this->getTrace();
-        $trace = $trace[0];
-
-        $file = $trace["file"];
-        $line = $trace["line"];
-
-        if(!isset($trace["file"])) return false;
 
         $code = file($file);
 
-        $lineStart = $line - 5;
-        $lineEnd = $line + 5;
+        $lineStart = $line - 10;
+        $lineEnd = $line + 10;
 
 
         $output = "";
@@ -87,7 +36,7 @@ class FlatbedException extends Exception
         while($position < $lineEnd){
             $class = "";
             // highlight line before as well as this is often the offending line
-            if($position == $line || $position == ($line - 1)) $class = "class='highlight'";
+            if($position == $line) $class = "class='highlight'";
 
 
             $lineNumber = $position;
@@ -96,7 +45,7 @@ class FlatbedException extends Exception
             $position++;
         }
 
-        $output = "<pre id='code' class='php'>$output</pre>";
+        $output = "<pre class='fbe-code language-php php'>$output</pre>";
         return $output;
     }
 
@@ -115,27 +64,20 @@ class FlatbedException extends Exception
 
     }
 
-    protected function renderPageStyles()
+    protected function renderPageStyles($link = false)
     {
-      $styles = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . get_class($this) . ".css");
-      $styles = "<style>$styles</style>";
+      if ($link) {
+        $file = "/system/core/FlatbedException/" . get_class($this) . ".css";
+        $styles = "<link href='$file' rel='stylesheet' type='text/css'>";
+      }
+      else {
+        $styles = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . get_class($this) . ".css");
+        $styles = "<style>$styles</style>";
+      }
+
+
       return $styles;
 
-    }
-
-    protected function renderPage($message)
-    {
-        $output = "<html>";
-        $output .= "<head>";
-        $output .= '<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>';
-        $output .= '<script>hljs.initHighlightingOnLoad();</script>';
-        $output .= "<head>";
-        $output .= "</head>";
-        $output .= "</head>";
-        $output .= $this->renderPageStyles();
-        $output .= "<body>$message</body>";
-        $output .= "<html>";
-        return $output;
     }
 
 }
