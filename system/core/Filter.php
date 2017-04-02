@@ -23,7 +23,7 @@ class Filter
 
         return $string;
     }
-    
+
     public static function url($url)
     {
         $url = str_replace("\\", "/", $url);
@@ -46,11 +46,11 @@ class Filter
 
     public static function path($path)
     {
-        $path = realpath($path);
-        $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
-        $path = str_replace("//", "/", $path);
-        $path = str_replace("//", "/", $path);
-        $path = is_file($path) ? $path : $path . "/";
+        // TODO : FIX, closed system, should have to check for double slashes
+        $path = str_replace( '\\\\' , DIRECTORY_SEPARATOR, $path);
+        $path = str_replace( '\\' , DIRECTORY_SEPARATOR, $path);
+        $path = str_replace( "/" , DIRECTORY_SEPARATOR, $path);
+        $path = is_file($path) ? $path : $path . DIRECTORY_SEPARATOR;
         return $path;
     }
 

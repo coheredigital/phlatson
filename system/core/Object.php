@@ -8,6 +8,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     const DEFAULT_SAVE_FILE = "data.json";
 
     protected $file;
+    protected $name;
     protected $root;
 
     protected $rootFolder;
@@ -16,8 +17,8 @@ abstract class Object extends Flatbed implements JsonSerializable
     // main data container, holds data loaded from JSON file
     protected $data = [];
 
-    protected $defaultFields = ["name","template"];
-    protected $skippedFields = ["name"];
+    // protected $defaultFields = ["name","template"];
+    // protected $skippedFields = ["name"];
 
     protected $lockedFields = [];
 
@@ -35,6 +36,8 @@ abstract class Object extends Flatbed implements JsonSerializable
             }
 
             $this->file = $file;
+            $this->name = $this->getName();
+
 
             $this->data = $this->getData();
             $this->initData = $this->data;
@@ -75,6 +78,12 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function getName()
     {
         return basename($this->getPath());
+    }
+
+    public function setName( string $name )
+    {
+        $this->name = $name;
+        return $this;
     }
 
     /**
@@ -163,69 +172,6 @@ abstract class Object extends Flatbed implements JsonSerializable
         return Filter::path($path);
         return $path;
     }
-
-
-
-
-        protected function getParentUrl()
-        {
-
-            $directoryParts = $this->directoryParts();
-            array_pop($directoryParts); // remove current (last) item to find parent
-            return $this->createUrl($directoryParts);
-        }
-
-        protected function getParentPath()
-        {
-            return dirname($this->path);
-        }
-
-        public function parent()
-        {
-
-            $parents = new Page();
-            // start with current page
-            $parentPath = $this->getParentPath();
-            $parent = $this->api("pages")->getByPath($parentPath);
-
-            // get parent and set current page as parent until no parents exist
-            return $parent;
-        }
-
-        /**
-         * return an ObjectCollections contain this Objects
-         * parent and each succesive after that
-         *
-         * @return ObjectCollection
-         */
-        public function parents() : ObjectCollection
-        {
-
-            $parents = new ObjectCollection();
-            // start with current page
-            $page = $this;
-
-            // get parent and set current page as parent until no parents exist
-            while ($page = $page->parent) {
-                $parents->prepend($page);
-            }
-            return $parents;
-        }
-
-        /**
-         * returns highest level parent, or self if no other parent found
-         * @return [type] [description]
-         */
-        public function rootParent()
-        {
-            $parents = $this->parents();
-            if ($parents->count()) {
-                return $parents->last();
-            }
-            else {
-                return $this;
-            }
-        }
 
 
     /**
@@ -427,7 +373,15 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     public function set( string $name, $value)
     {
-        $this->setFormatted($name, $value);
+        switch ($name) {
+            case 'name':
+                $this->setName($value);
+                break;
+
+            default:
+                $this->setFormatted($name, $value);
+                break;
+        }
         return $this;
     }
 

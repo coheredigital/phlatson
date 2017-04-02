@@ -57,18 +57,10 @@ abstract class Objects extends Flatbed
      * @param  strin $name the name of the new object that will be used once it is saved
      * @return Object       [description]
      */
-    public function create($name): Object
+    public function new( string $name ) : Object
     {
         $object = new $this->singularName;
-        if (is_array($name)) {
-            foreach ($name as $key => $value) {
-                $object->set($key, $value);
-            }
-        }
-        else {
-            $object->name = $name;
-        }
-
+        $object->name = $name;
         $object->parent = $parent;
         return $object;
     }
@@ -177,7 +169,10 @@ abstract class Objects extends Flatbed
         if (!$file = $this->findDataFileByName($uri)) {
             return false;
         }
-        return new $this->singularName($file);
+
+        $object = new $this->singularName($file);
+
+        return $object;
 
     }
 
