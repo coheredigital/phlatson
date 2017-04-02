@@ -4,7 +4,7 @@
 class Pages extends Objects
 {
 
-    protected $rootFolder = "pages/";
+    protected $rootFolder = "pages";
     protected $singularName = "Page";
 
     public function __construct()

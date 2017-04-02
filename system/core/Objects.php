@@ -18,8 +18,8 @@ abstract class Objects extends Flatbed
     // all values are relative to the site root and require a key
     // TODO: move to congfig or app root???
     protected $rootFolders = [
-        "site" => "site/",
-        "system" =>  "system/"
+        "site" => "site" . DIRECTORY_SEPARATOR,
+        "system" =>  "system" . DIRECTORY_SEPARATOR
     ];
 
     // the folder within the site and system paths to check for items ex: fields, templates, etc
@@ -68,12 +68,14 @@ abstract class Objects extends Flatbed
 
 
 
-    protected function findDataFileByName($name): string
+    protected function findDataFileByName( string $name ): string
     {
+        $name = trim($name, "/\\");
         // loop through the possible root data folders
         foreach ($this->rootFolders as $folder) {
-            $folder = Filter::path( ROOT_PATH . $folder . $this->rootFolder ) . $name ;
-            $file = "{$folder}/data.json";
+            $folder = ROOT_PATH . $folder . $this->rootFolder . DIRECTORY_SEPARATOR . $name ;
+            $folder = Filter::path( $folder );
+            $file = "{$folder}data.json";
             if (file_exists($file)) return $file;
         }
 
@@ -162,8 +164,6 @@ abstract class Objects extends Flatbed
      */
     public function get( string $uri )
     {
-        // normalize the query to avoid errors
-        $uri = Filter::uri($uri);
 
         // get the file if it exists
         if (!$file = $this->findDataFileByName($uri)) {

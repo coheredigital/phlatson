@@ -82,6 +82,7 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
 
             $objects = array_filter(
                 $this->data,
+
                 function ($object) use ($key, $value) {
 
                     if (!isset($object->{$key})) {
@@ -147,7 +148,7 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
             throw new FlatbedException("Limit cannot be set to less than 0");
         }
         $this->limit = $limit;
-
+        $this->endIndex = $this->limit - 1;
 
         return $this;
     }
@@ -282,7 +283,7 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
 
     public function valid()
     {
-        if ($this->limit > 0 && $this->currentIndex === $this->endIndex) return false;
+        if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) return false;
         return array_key_exists( $this->key() , $this->data );
     }
     /* Interface requirements */

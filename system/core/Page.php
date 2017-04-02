@@ -42,7 +42,6 @@ class Page extends DataObject implements ViewableObject
      */
     public function getPath(): string
     {
-
         $path = '';
         if ( !$this->isNew() ) {
             $path = dirname( $this->file );
