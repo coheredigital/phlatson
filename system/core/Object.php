@@ -192,8 +192,13 @@ abstract class Object extends Flatbed implements JsonSerializable
             return $parent;
         }
 
-
-        public function parents()
+        /**
+         * return an ObjectCollections contain this Objects
+         * parent and each succesive after that
+         *
+         * @return ObjectCollection
+         */
+        public function parents() : ObjectCollection
         {
 
             $parents = new ObjectCollection();
@@ -207,9 +212,13 @@ abstract class Object extends Flatbed implements JsonSerializable
             return $parents;
         }
 
+        /**
+         * returns highest level parent, or self if no other parent found
+         * @return [type] [description]
+         */
         public function rootParent()
         {
-            $parents = $this->parents;
+            $parents = $this->parents();
             if ($parents->count()) {
                 return $parents->last();
             }
