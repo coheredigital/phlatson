@@ -165,6 +165,60 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
+
+
+        protected function getParentUrl()
+        {
+
+            $directoryParts = $this->directoryParts();
+            array_pop($directoryParts); // remove current (last) item to find parent
+            return $this->createUrl($directoryParts);
+        }
+
+        protected function getParentPath()
+        {
+            return dirname($this->path);
+        }
+
+        public function parent()
+        {
+
+            $parents = new Page();
+            // start with current page
+            $parentPath = $this->getParentPath();
+            $parent = $this->api("pages")->getByPath($parentPath);
+
+            // get parent and set current page as parent until no parents exist
+            return $parent;
+        }
+
+
+        public function parents()
+        {
+
+            $parents = new ObjectCollection();
+            // start with current page
+            $page = $this;
+
+            // get parent and set current page as parent until no parents exist
+            while ($page = $page->parent) {
+                $parents->prepend($page);
+            }
+            return $parents;
+        }
+
+        public function rootParent()
+        {
+            $parents = $this->parents;
+            if ($parents->count()) {
+                return $parents->last();
+            }
+            else {
+                return $this;
+            }
+        }
+
+
     /**
      * @return string  path to the current object data file
      */
