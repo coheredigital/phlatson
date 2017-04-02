@@ -58,3 +58,11 @@ function unregister_GLOBALS()
         }
     }
 }
+
+
+function getMemoryUse()
+{
+    $memory = memory_get_usage() / pow( 1024 , 2 );
+    $memory = round( $memory , 2);
+    return "{$memory}mb";
+}

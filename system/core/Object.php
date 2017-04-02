@@ -211,9 +211,10 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         $url = str_replace( $replace, "", $this->getPath());
 
-        // $url = trim( $url , "/");
+        $url = trim( $url , "/");
 
-        return Filter::url($url);
+        // $url = Filter::url($url);
+        return "$url/";
     }
 
     protected function getFormatted($name)

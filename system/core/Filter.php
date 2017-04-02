@@ -28,7 +28,6 @@ class Filter
     {
         $url = str_replace("\\", "/", $url);
         $url = trim($url, "/") . "/";
-
         return "/$url";
     }
 

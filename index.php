@@ -16,7 +16,7 @@ require_once CORE_PATH . '_traits.php';
 try {
 
     /* instantiate app variables */
-
+    $start = microtime(true);
     $flatbed = new Flatbed;
 
     $flatbed->api('config', new Config, true);
@@ -57,10 +57,12 @@ try {
     $flatbed->api('session', new Session, true);
     $flatbed->api('logger', 'Logger', true);
 
-
-
     // run the app
     $flatbed->api('router')->run($request);
+
+    $end = microtime(true);
+    $creationtime = round(($end - $start), 2);
+    echo "<!-- Page created in $creationtime seconds. (" . getMemoryUse() .") -->";
 
 } catch(FlatbedException $exception) {
     echo $exception->render(Api::get("config"));
