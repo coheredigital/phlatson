@@ -40,11 +40,9 @@ abstract class Object extends Flatbed implements JsonSerializable
 
 
             $this->data = $this->getData();
-            $this->initData = $this->data;
-            $this->setUnformatted("name", $this->getName());
 
             // set modified in data so it can be accessed like a field
-            $this->setUnformatted("modified", filemtime($this->file));
+            // $this->setUnformatted("modified", filemtime($this->file));
 
         }
         else{
@@ -64,16 +62,14 @@ abstract class Object extends Flatbed implements JsonSerializable
      *
      */
     protected function getData(){
-        $this->validateDataFile($this->file);
         return json_decode(file_get_contents($this->file), true);
     }
 
-    protected function validateDataFile($file){
-        if(!is_file($file)){
-            throw new FlatbedException("Ivalid file ($file) passed for $this->className");
-        }
-
-    }
+    // protected function validateDataFile($file){
+    //     if(!is_file($file)){
+    //         throw new FlatbedException("Ivalid file ($file) passed for $this->className");
+    //     }
+    // }
 
     public function getName()
     {
@@ -96,6 +92,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     {
 
         $rootDirectory = "site/";
+        // TODO :  EVAL, this isn't inline with new direction
         if($this->isSystem()){
             $rootDirectory = "system/";
         }
@@ -113,6 +110,8 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     public function isSystem()
     {
+
+        // TODO :  EVAL, this is shit
         // remove site root from path
         $path = str_replace($this->api('config')->paths->root, "", $this->file);
         $path = Filter::uri($path);
@@ -169,7 +168,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             $path = $this->rootPath . $this->name;
         }
 
-        return Filter::path($path);
+        // return Filter::path($path);
         return $path;
     }
 
@@ -212,9 +211,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         $url = str_replace( $replace, "", $this->getPath());
 
         $url = trim( $url , "/");
-
-        // $url = Filter::url($url);
-        return "$url/";
+        return Filter::url($url);
     }
 
     protected function getFormatted($name)

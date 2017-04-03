@@ -7,12 +7,10 @@
         $children->limit(5)->paginate();
 
         ?>
+        <h4><?= $children->count() ?></h4>
         <?php foreach ($children as $key => $value):?>
             <article>
-                <header>
-                    <h5 class="title"><a href="<?= $value->url ?>"><?= $value->title ?></a></h5>
-                    <h6><strong><?= $value->modified ?></strong></h6>
-                </header>
+                <h2><?= $value->name ?></h2>
             </article>
             <hr>
         <?php endforeach ?>

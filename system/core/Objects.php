@@ -32,10 +32,10 @@ abstract class Objects extends Flatbed
     {
 
         // store paths and urls
-        $this->path = Filter::path( ROOT_PATH . "site/" . $this->rootFolder );
-        $this->systemPath = Filter::path( ROOT_PATH . "system/{$this->rootFolder}");
-        $this->url = Filter::url( ROOT_URL . "site/{$this->rootFolder}");
-        $this->systemUrl = Filter::url( ROOT_URL . "site/{$this->rootFolder}");
+        $this->path = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder;
+        $this->systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "{$this->rootFolder}";
+        $this->url = ROOT_URL . "site/" . $this->rootFolder;
+        $this->systemUrl = ROOT_URL . "system/" . $this->rootFolder;
     }
 
 

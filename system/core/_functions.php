@@ -60,7 +60,7 @@ function unregister_GLOBALS()
 }
 
 
-function getMemoryUse()
+function getMemoryUse() : string
 {
     $memory = memory_get_usage() / pow( 1024 , 2 );
     $memory = round( $memory , 2);

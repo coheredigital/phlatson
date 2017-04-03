@@ -145,21 +145,11 @@ class Page extends DataObject implements ViewableObject
     {
 
         $children = new ObjectCollection();
-
         $subfolders = glob( $this->path . "*", GLOB_ONLYDIR);
-
         foreach ($subfolders as $folder) {
-
-            $name = basename($folder);
-            $url = "{$this->url}/{$name}";
-
-            $page = $this->api("pages")->get("{$this->url}/{$name}");
-
+            $page = $this->api("pages")->getByPath($folder);
             if (!$page instanceof self) continue;
-
             $children->add($page);
-
-
         }
 
         return $children;

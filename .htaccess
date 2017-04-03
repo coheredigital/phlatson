@@ -59,8 +59,3 @@ DirectoryIndex index.php index.html index.htm
 
 
 </IfModule>
-
-
-
-# file handling
-php_value upload_max_filesize 10M
