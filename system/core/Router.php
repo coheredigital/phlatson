@@ -54,8 +54,6 @@ class Router extends Flatbed
         // sort by priority first
         $routes = $this->sort($routes);
 
-
-
         foreach ($routes as $route) {
             if (!$route->match($request)) continue;
             $route->execute();
@@ -87,8 +85,6 @@ class Router extends Flatbed
                 break;
         }
 
-
-
         // perform the redirect
         if ($permanent) {
             header("HTTP/1.1 301 Moved Permanently");
@@ -96,6 +92,7 @@ class Router extends Flatbed
         header("Location: $url");
         header("Connection: close");
         exit(0);
+
     }
 
 
