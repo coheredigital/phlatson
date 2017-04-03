@@ -46,7 +46,15 @@ class Admin extends Extension
 
         if ($this->api("router")->get("admin")) {
             $this->route = $this->api("router")->get("admin");
-        } else throw new FlatbedException("Admin route missing from Site.json configuration file.");
+        } else {
+            $route = new Route;
+            $route->path("admin")
+                ->name("admin")
+                ->before("Admin.authorize")
+                ->before("Admin.gotoAdminPage");
+            $this->api('router')->add($route);
+            $this->route = $route;
+        }
 
         // add the admin URL to the config urls variable for easy access/reference
         $this->api("config")->urls->admin = $this->route->url;
@@ -142,9 +150,9 @@ class Admin extends Extension
         if ($this->page instanceof AdminPage){
             $this->output = $this->page->render();
         }
-        
+
         // extract app variables for easier use in admin templates
-        extract($this->api()); 
+        extract($this->api());
         include_once "layout.php";
 
 
