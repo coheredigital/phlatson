@@ -47,8 +47,8 @@ DirectoryIndex index.php index.html index.htm
     # block access json file in site folder
     RewriteRule ^site/(.*)\.(txt|md|mdown)$ error [R=301,L]
 
-    # block access to all system files
-    RewriteRule ^system/(.*) error [R=301,L]
+    # block access to all sensitive system files
+    RewriteRule ^site/(.*)\.(php|txt|md|mdown)$ error [R=301,L]
 
     # allow direct file access
 	RewriteCond %{REQUEST_FILENAME} !-f

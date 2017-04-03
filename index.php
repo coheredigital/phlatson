@@ -37,8 +37,12 @@ try {
 
 
     /* setup config routes, default is just the admin route */
-    if(count($flatbed->api("config")->routes)) foreach ($flatbed->api("config")->routes as $r){
-        $flatbed->api("router")->add(new Route($r));
+    if( count( $flatbed->api("config")->routes ) ) {
+
+        foreach ($flatbed->api("config")->routes as $r){
+            $flatbed->api("router")->add(new Route($r));
+        }
+
     }
 
     $flatbed->api('events', 'Events', true);
@@ -60,6 +64,7 @@ try {
     // run the app
     $flatbed->api('router')->run($request);
 
+    // end performance tracking
     $end = microtime(true);
     $creationtime = round(($end - $start), 2);
     echo "<!-- Page created in $creationtime seconds. (" . getMemoryUse() .") -->";
