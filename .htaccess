@@ -36,32 +36,24 @@ DirectoryIndex index.php index.html index.htm
       SetEnv HTTP_MOD_REWRITE On
     </IfModule>
 
-	# RewriteBase /
+    # set root URL if needed for running from a sub folder
+    # exmplate www.wesite.com/example-url
+	# RewriteBase /example-url
 
     # Lets Encrypt support
     RewriteRule "(^|/)\.(?!well-known)" - [F]
 
-    # Access Restrictions
 
-    # Block access to any htaccess files
-    RewriteCond %{REQUEST_URI} (^|/)\.htaccess$ [NC,OR]
-    # Block access to data directories
-    RewriteCond %{REQUEST_URI} (^|/)site/(fields|templates|config|users)($|/.*$) [OR]
-    # Block access to page JSON data files
-    RewriteCond %{REQUEST_URI} (^|/)site/.*\.(json)$ [OR]
-    # Block direct access to any PHP files in site
-    RewriteCond %{REQUEST_URI} (^|/)site/.*\.(php|inc|html|html|tpl|module)$ [OR]
-    # Block access to any PHP files in system
-    RewriteCond %{REQUEST_URI} (^|/)system/.*\.(php|inc|html|html|tpl|module)$ [OR]
-    # Block access to any software identifying txt files
-    RewriteCond %{REQUEST_URI} (^|/)(COPYRIGHT|README|htaccess)\.(txt|md)$
-    # If any conditions above match, isssue a 403 forbidden
-    RewriteRule ^.*$ - [F,L]
+    # block access json file in site folder
+    RewriteRule ^site/(.*)\.(txt|md|mdown)$ error [R=301,L]
+
+    # block access to all system files
+    RewriteRule ^system/(.*) error [R=301,L]
 
     # allow direct file access
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !(favicon\.ico|robots\.txt)
+
 
     # prevent flatbed from attempting to load images or anything in assets
     RewriteCond %{REQUEST_FILENAME} !\.(jpg|jpeg|gif|png|ico)$ [NC]

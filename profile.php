@@ -2,6 +2,12 @@
 
 require 'C:\Users\Adam\Websites\dev\flatbed\libraries\ref\ref.php';
 
+// add ref for debugging, remove later
+ref::config('expLvl', 0);
+ref::config('validHtml', true);
+
+
+
 function getMemoryUse() : string
 {
     $memory = memory_get_usage() / pow( 1024 , 2 );
@@ -18,7 +24,7 @@ $data = [];
 
 
 $subfolders = glob( $folder. "*", GLOB_ONLYDIR);
-// r($subfolders);
+
 
 foreach ($subfolders as $folder) {
 
@@ -35,14 +41,26 @@ foreach ($subfolders as $folder) {
 
 
 
-r($data);
+
+
+?>
+
+<div class="">
+    <?php
+
+    foreach ($data as $i) {
+
+        echo $i->title;
+        echo "<hr>";
+    }
+    ?>
+
+</div>
 
 
 
 
-
-
-
+<?php
 
 $end = microtime(true);
 $creationtime = round(($end - $start), 2);
