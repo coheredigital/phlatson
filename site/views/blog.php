@@ -2,10 +2,7 @@
     <div class="container">
         <!-- PAGE CONTENT -->
         <?php
-
-        $children = $page->children;
-        $children->limit(5)->paginate();
-
+        $children = $page->children()->limit(5)->paginate();
         ?>
         <h4><?= $children->count() ?></h4>
         <?php foreach ($children as $key => $value):?>

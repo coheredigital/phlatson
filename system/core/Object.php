@@ -129,10 +129,10 @@ abstract class Object extends Flatbed implements JsonSerializable
     /**
      * @return array
      */
-    protected function directoryParts()
-    {
-        return explode("/", $this->getDirectory());
-    }
+    // protected function directoryParts()
+    // {
+    //     return explode("/", $this->getDirectory());
+    // }
 
     /**
      * @return string

@@ -22,7 +22,7 @@ ref::config('validHtml', true); ?>
 </div>
 <nav class="main-menu" role="navigation">
     <div class="container">
-    <?php foreach ($home->children as $p): ?>
+    <?php foreach ($home->children() as $p): ?>
         <?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
         <a <?php echo $class ?> href="<?php echo $p->url ?>"><?php echo $p->title ?></a>
     <?php endforeach ?>

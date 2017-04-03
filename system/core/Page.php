@@ -4,7 +4,6 @@ class Page extends DataObject implements ViewableObject
 {
 
     protected $parent;
-
     protected $rootFolder = "pages";
 
     function __construct($file = null)
@@ -200,7 +199,7 @@ class Page extends DataObject implements ViewableObject
     {
         switch ($name) {
 
-            case 'children':
+            // case 'children':
             case 'parent':
             case 'parents':
             case 'rootParent':
