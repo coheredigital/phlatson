@@ -14,6 +14,8 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected $rootFolder;
     protected $rootPath;
 
+    protected $isSystem;
+
     // main data container, holds data loaded from JSON file
     protected $data = [];
 
@@ -37,15 +39,9 @@ abstract class Object extends Flatbed implements JsonSerializable
 
             $this->file = $file;
             $this->name = $this->getName();
-
-
             $this->data = $this->getData();
 
-            // set modified in data so it can be accessed like a field
-            // $this->setUnformatted("modified", filemtime($this->file));
-
-        }
-        else{
+        } else {
             $this->root = $this->api('config')->paths->site . $this->rootFolder;
         }
 
@@ -61,22 +57,18 @@ abstract class Object extends Flatbed implements JsonSerializable
      * return array of data from the passed in JSON file (ie: data.json)
      *
      */
-    protected function getData(){
+    protected function getData()
+    {
         return json_decode(file_get_contents($this->file), true);
     }
 
-    // protected function validateDataFile($file){
-    //     if(!is_file($file)){
-    //         throw new FlatbedException("Ivalid file ($file) passed for $this->className");
-    //     }
-    // }
 
     public function getName()
     {
         return basename($this->getPath());
     }
 
-    public function setName( string $name )
+    public function setName(string $name)
     {
         $this->name = $name;
         return $this;
@@ -91,14 +83,9 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function getRootPath()
     {
 
-        $rootDirectory = "site/";
-        // TODO :  EVAL, this isn't inline with new direction
-        if($this->isSystem()){
-            $rootDirectory = "system/";
-        }
-
-        $path = $this->api('config')->paths->root . $rootDirectory . $this->rootFolder;
-        $path = Filter::path($path);
+        $root = $this->isSystem() ? SYSTEM_ROOT : SITE_ROOT;
+        $path = $root . $this->rootFolder;
+        // $path = Filter::path($path); // TODO : add back in if needed, trying to avoid overuse for now
         return $path;
     }
 
@@ -111,28 +98,17 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function isSystem()
     {
 
-        // TODO :  EVAL, this is shit
-        // remove site root from path
-        $path = str_replace($this->api('config')->paths->root, "", $this->file);
-        $path = Filter::uri($path);
+        // not system if new since new items can't be added to system
+        if ($this->isNew()) {
+            return false;
+        }
 
-        // get first part of path
-        $pathParts = explode("/", $path);
+        // check if the system path is found at the beginning of this Objects file
+        $bool = substr($this->file, 0, strlen(SYSTEM_PATH)) === 0 ? false : true;
+        return $bool;
 
-        if($pathParts[0] == "system") return true;
-        return false;
     }
 
-
-
-
-    /**
-     * @return array
-     */
-    // protected function directoryParts()
-    // {
-    //     return explode("/", $this->getDirectory());
-    // }
 
     /**
      * @return string
@@ -161,10 +137,9 @@ abstract class Object extends Flatbed implements JsonSerializable
     {
 
         $path = '';
-        if ( is_file( $this->file ) ) {
+        if (is_file($this->file)) {
             $path = dirname($this->file);
-        }
-        else{
+        } else {
             $path = $this->rootPath . $this->name;
         }
 
@@ -183,7 +158,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         // set default format if defined in config
         if ($this->api("config")->get('dateTimeFormat')) {
-            $datetime->setOutputFormat( $this->api("config")->get('dateTimeFormat') );
+            $datetime->setOutputFormat($this->api("config")->get('dateTimeFormat'));
         }
 
         $datetime->createFromFormat("U", $time);
@@ -191,12 +166,12 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-
     /**
      * @return  string  the public accessible url for this Object
      *
      */
-    protected function getUrl(){
+    protected function getUrl()
+    {
 
         // get the site root
         $rootPath = $this->api("config")->paths->root;
@@ -208,9 +183,9 @@ abstract class Object extends Flatbed implements JsonSerializable
             "data.json"
         ];
 
-        $url = str_replace( $replace, "", $this->getPath());
+        $url = str_replace($replace, "", $this->getPath());
 
-        $url = trim( $url , "/");
+        $url = trim($url, "/");
         return Filter::url($url);
     }
 
@@ -219,7 +194,9 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         // get raw value
 
-        if(!$value = $this->getUnformatted($name)) return null;
+        if (!$value = $this->getUnformatted($name)) {
+            return null;
+        }
 
         // get the field object matching the passed "$name"
         if ($this->api("fields")) {
@@ -302,7 +279,9 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     public function isEditable()
     {
-        if($this->isSystem()) return false;
+        if ($this->isSystem()) {
+            return false;
+        }
         return true;
     }
 
@@ -322,14 +301,14 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-
     protected function checkDataIntegrity()
     {
 
         foreach ($this->requiredElements as $name) {
 
             if (!$this->has($name)) {
-                throw new FlatbedException(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ", $this->requiredElements) . ").");
+                throw new FlatbedException(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ",
+                        $this->requiredElements) . ").");
             }
 
         }
@@ -337,7 +316,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-    public function get( string $name)
+    public function get(string $name)
     {
         switch ($name) {
             case 'name':
@@ -353,8 +332,8 @@ abstract class Object extends Flatbed implements JsonSerializable
                 // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
                 return $url;
-           case 'modified':
-               return $this->getModified();
+            case 'modified':
+                return $this->getModified();
             case 'className':
                 return get_class($this);
             case 'defaultFields':
@@ -369,7 +348,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $this->get($name);
     }
 
-    public function set( string $name, $value)
+    public function set(string $name, $value)
     {
         switch ($name) {
             case 'name':
@@ -388,13 +367,13 @@ abstract class Object extends Flatbed implements JsonSerializable
      * @param string $name
      * @param mixed $value
      */
-    public function __set( string $name, $value)
+    public function __set(string $name, $value)
     {
         $this->set($name, $value);
     }
 
 
-    public function __isset( string $name)
+    public function __isset(string $name)
     {
         return isset($this->data[$name]);
     }
