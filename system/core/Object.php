@@ -86,7 +86,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function getRootPath(): string
     {
 
-        $root = $this->isSystem() ? SYSTEM_ROOT : SITE_ROOT;
+        $root = $this->isSystem() ? SYSTEM_PATH : SITE_PATH;
         $path = $root . $this->rootFolder;
         // $path = Filter::path($path); // TODO : add back in if needed, trying to avoid overuse for now
         return $path;
@@ -104,13 +104,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function getDirectory(): string
     {
 
-        // strip array parts
-        $remove = [
-            $this->getRootPath(),
-            static::DEFAULT_SAVE_FILE
-        ];
-
-        $path = str_replace($this->getRootPath(), "", $this->getPath());
+        $path = str_replace($this->getRootPath(), "", $this->getPath() );
         $path =  Filter::uri($path);
         return $path;
     }
