@@ -35,7 +35,7 @@ class MarkupPageTree extends Extension
 
         $output = "<div class='page-tree-item-buttons'>";
 
-        if ($page->children->count && $page->url != "/") $output .= "<a class='page-tree-item-button page-tree-item-button-expand' href='{$this->admin->route->url}?root={$page->url}'>[+]</a>";
+        if ($page->children()->count && $page->url != "/") $output .= "<a class='page-tree-item-button page-tree-item-button-expand' href='{$this->admin->route->url}?root={$page->url}'>[+]</a>";
         if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'>View</a>";
 
         if(is_array($view) && $view['type'] == "list"){
@@ -53,17 +53,13 @@ class MarkupPageTree extends Extension
     protected function renderPageItem(Page $page)
     {
         $output = $this->renderPageTitle($page);
-        // $class = "page-tree-single";
 
-        if ($page->template->settings->pageTreeView) {
-
-        } else {
-            if ($page->children->count && $page == $this->rootPage) {
-                $output .= $this->renderPageList($page->children);
-                $class = "page-tree-group";
-            }
-            else $output .= $this->renderPageList();
+        if ($page->children()->count && $page == $this->rootPage) {
+            $output .= $this->renderPageList($page->children());
+            $class = "page-tree-group";
         }
+        else $output .= $this->renderPageList();
+
 
         $output = "<li class='{$class} page-tree-group is-open'>{$output}</li>";
         return $output;
@@ -78,7 +74,7 @@ class MarkupPageTree extends Extension
                 $output .= $this->renderPageItem($p);
             }
             $output = "<ul class='page-tree-list'>{$output}</ul>";
-        } 
+        }
         $output = "<div class='page-tree-list-wrapper {$class}'>{$output}</div>";
         return $output;
     }
