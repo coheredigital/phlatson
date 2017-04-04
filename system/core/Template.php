@@ -3,8 +3,9 @@
 class Template extends Object
 {
 
+    const DATA_FOLDER = 'templates';
+
     public $parent; // the object this template belongs to
-    protected $rootFolder = "templates";
     public $defaultFields = ['title','fields', 'name','view'];
 
 

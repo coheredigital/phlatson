@@ -3,6 +3,7 @@
 class Page extends DataObject implements ViewableObject
 {
 
+    const DATA_FOLDER = 'pages';
     protected $parent;
     protected $rootFolder = "pages";
 

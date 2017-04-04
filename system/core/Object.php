@@ -37,10 +37,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->name = $this->getName();
             $this->data = $this->getData();
 
-        } else {
-            $this->rootPath = SITE_PATH . self::DATA_FOLDER;
         }
-
 
     }
 

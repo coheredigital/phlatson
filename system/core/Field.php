@@ -2,9 +2,12 @@
 
 class Field extends Object
 {
-    protected $rootFolder = "fields";
+    const DATA_FOLDER = 'fields';
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
+
+    const SYSTEM_ROOT = SYSTEM_PATH . "fields" . DIRECTORY_SEPARATOR;
+    const SITE_ROOT = SYSTEM_PATH . "fields" . DIRECTORY_SEPARATOR;
 
     function __construct($file = null)
     {
@@ -19,7 +22,7 @@ class Field extends Object
         $this->skippedFields = array_merge($this->skippedFields, [
             "template"
         ]);
-        
+
         $this->lockedFields = [
             "template"
         ];

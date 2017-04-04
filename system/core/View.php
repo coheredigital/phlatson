@@ -2,7 +2,7 @@
 
 class View extends Object
 {
-    protected $rootFolder = "view";
+    const DATA_FOLDER = 'views';
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
 
@@ -42,7 +42,7 @@ class View extends Object
         // render found file
         include($this);
 
-        $output = ob_get_contents(); 
+        $output = ob_get_contents();
         ob_end_clean();
         return $output;
 
