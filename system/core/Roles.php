@@ -2,7 +2,7 @@
 class Roles extends Objects
 {
 
-    protected $rootFolder = "roles/";
+    protected $rootFolder = "roles";
     protected $singularName = "Role";
 
 }
