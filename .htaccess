@@ -36,6 +36,10 @@ DirectoryIndex index.php index.html index.htm
       SetEnv HTTP_MOD_REWRITE On
     </IfModule>
 
+    # force trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+
     # set root URL if needed for running from a sub folder
     # exmplate www.wesite.com/example-url
 	# RewriteBase /example-url
