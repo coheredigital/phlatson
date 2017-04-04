@@ -26,7 +26,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $requiredElements = [];
 
-    public function __construct($file = null)
+    public function __construct( string $file = '')
     {
 
         $this->rootPath = $this->getRootPath();
@@ -80,7 +80,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      * Determine rootPAth of this Object type from the Objects $file
      *
      */
-    public function getRootPath()
+    public function getRootPath(): string
     {
 
         $root = $this->isSystem() ? SYSTEM_ROOT : SITE_ROOT;
@@ -95,7 +95,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      * Determine if Object is a system object
      *
      */
-    public function isSystem()
+    public function isSystem(): boolean
     {
 
         // not system if new since new items can't be added to system
@@ -116,7 +116,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      * Directory refers to the rootPath relative folder
      *
      */
-    public function getDirectory()
+    public function getDirectory(): string
     {
 
         // strip array parts
