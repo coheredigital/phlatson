@@ -2,14 +2,14 @@
 
 .field-InputSelect{
 
-	border: 0;
+
 	.field-input{
 		border: 0;
 	}
 	
 	.selectize-input{
-		border-color: $light-gray;
-		padding: 1em;
+		border-color: $input-border-color;
+		padding: $input-padding;
 		color: $dark-gray;
 		font-size: 1em;
 		overflow: visible;
@@ -27,7 +27,7 @@
 		border-radius: 0;
 	}
 	.option{
-		padding: .8em 1em;
+		padding: $input-padding;
 		&.active{
 			background: $brand;
 			color: darken($brand, 20%);

@@ -1,0 +1,57 @@
+// template data.json
+{
+	"title": "Basic Page",
+	"fields" : [
+		{
+			"name" : "title",
+			"type" : "FieldtypeText",
+			"required": true
+		},
+		{
+			"name" : "member",
+			"type" : "FieldtypePage",
+			"required": true
+		},
+		{
+			"name": "address",
+			"type": "FieldtypeGroup",
+			"fields": [
+				{
+					"name" : "title",
+					"label" : "Title",
+					"type" : "FieldtypeText",
+					"required": true
+				},
+				{
+					"name" : "street",
+					"type" : "FieldtypeText",
+					"required": true
+				},
+				{
+					"name" : "city",
+					"type" : "FieldtypeText",
+					"required": true
+				},
+				{
+					"name" : "country",
+					"type" : "FieldtypeText",
+					"required": true
+				}
+			]
+		}
+
+	]
+}
+
+// page data.json
+{
+	"title" : "This is the page title",
+	"member": "/members/name-of-company",
+	"address" : {
+		"title": "this is the address name",
+		"street" : "234 Fake Street",
+		"city": "St Catharines",
+		"country": "Canada",
+	},
+
+}

@@ -1,14 +1,12 @@
 <?php
 
-class FieldtypeTemplate extends Fieldtype
+class FieldtypeTemplate extends Fieldtype implements ProvidesOptions
 {
-
-    protected $objectType = "template";
 
     public function getOutput($name)
     {
         $template = $this->api("templates")->get($name);
-        $template->parent = $this->object;
+        // $template->parent = $this->object;
         return $template;
     }
 
@@ -24,36 +22,16 @@ class FieldtypeTemplate extends Fieldtype
         return null;
     }
 
-    protected function setup()
+    public function options()
     {
-        $this->label = "Template";
-        $this->columns = 6;
-        $this->attribute("name", $this->field->name);
-    }
 
-    protected function setAllowedTemplates()
-    {
-        $selectOptions = array();
-
-        $templates = $this->api("templates")->all();
-        foreach ($templates as $t) {
-            $selectOptions["$t->label"] = "$t->name";
-        }
-        $this->setOptions($selectOptions);
-    }
-
-
-    protected function renderInput()
-    {
-        $this->attribute("type", "text");
-
-        if ($this->value) {
-            $this->attribute("value", $this->value->name);
+        $inputs = $this->api("templates")->all();
+        $options = [];
+        foreach($inputs as $fieldtype) {
+            $options[$fieldtype->title] = $fieldtype->name;
         }
 
-        $attributes = $this->getAttributes();
-        $output = "<input {$attributes}>";
-        return $output;
+        return $options;
     }
 
 }

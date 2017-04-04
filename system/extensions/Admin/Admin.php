@@ -46,7 +46,15 @@ class Admin extends Extension
 
         if ($this->api("router")->get("admin")) {
             $this->route = $this->api("router")->get("admin");
-        } else throw new FlatbedException("Admin route missing from Site.json configuration file.");
+        } else {
+            $route = new Route;
+            $route->path("admin")
+                ->name("admin")
+                ->before("Admin.authorize")
+                ->before("Admin.gotoAdminPage");
+            $this->api('router')->add($route);
+            $this->route = $route;
+        }
 
         // add the admin URL to the config urls variable for easy access/reference
         $this->api("config")->urls->admin = $this->route->url;
@@ -86,8 +94,16 @@ class Admin extends Extension
             ->parent("admin")
             ->callback(
                 function () {
-                    if ($this->api("session")->login($this->api("request")->post->username, $this->api("request")->post->password)) {
-                        $this->api("router")->redirect($this->api("router")->get("admin")->url, false);
+                    $session = $this->api("session");
+                    $router = $this->api("router");
+
+                    try {
+                        if ($session->login( $this->api("request")->post->username , $this->api("request")->post->password )) {
+                            $router->redirect( $router->get("admin")->url, false );
+                        }
+                    } catch (FlatbedException $e) {
+                        $session->flash("loginError", $e->getMessage());
+                        $router->redirect( $router->get("login")->url, false );
                     }
                 }
             );
@@ -131,11 +147,13 @@ class Admin extends Extension
 
         $this->messages = $this->getMessages();
 
-        if ($this->page instanceof AdminPage) // TODO why do I need to check this here?
+        if ($this->page instanceof AdminPage){
             $this->output = $this->page->render();
+        }
 
-        extract($this->api()); // extract app variables for easier use in admin templates
-        if ($this->output) include_once "layout.php";
+        // extract app variables for easier use in admin templates
+        extract($this->api());
+        include_once "layout.php";
 
 
     }
@@ -180,7 +198,7 @@ class Admin extends Extension
     }
 
 
-    public function set($name, $value)
+    public function set( string $name, $value )
     {
 
         switch ($name) {

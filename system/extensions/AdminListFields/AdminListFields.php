@@ -23,7 +23,6 @@ class AdminListFields extends AdminList
             ->callback(
                 function () {
                     $this->render();
-
                 }
             );
 

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Adam
- * Date: 7/17/14
- * Time: 7:36 PM
- */
 class AdminListPages extends Extension implements AdminPage
 {
 
@@ -16,8 +10,13 @@ class AdminListPages extends Extension implements AdminPage
 
     protected function setup()
     {
+        $this->api("config")->scripts->add("{$this->url}{$this->className}.js");
+
+
 
         $this->subnav = new ObjectCollection();
+
+
 
         $this->route = new Route;
         $this->route
@@ -42,8 +41,6 @@ class AdminListPages extends Extension implements AdminPage
             ->callback(
                 function ($uri) {
                     $admin =  $this->api("admin");
-                    $this->rootPage = $this->api("pages")->get($uri);
-
                     $admin->title = "Pages";
                     $admin->page = $this;
                     $admin->render();
@@ -55,10 +52,19 @@ class AdminListPages extends Extension implements AdminPage
 
 
     protected function renderPageTree()
-    {
+    {   
+        
+
+
+        if ($this->api("request")->get->root) {
+            $rootPage = $this->api("pages")->get($this->api("request")->get->root);
+        }
+        else {
+            $rootPage = $this->api("pages")->get("/");
+        }
 
         $markupPageList = $this->api("extensions")->get("MarkupPageTree");
-        $markupPageList->rootPage = $this->rootPage;
+        $markupPageList->rootPage = $rootPage;
         $markupPageList->admin = $this;
 
         return "<div class='container'>" . $markupPageList->render() . "</div>";
@@ -97,18 +103,12 @@ class AdminListPages extends Extension implements AdminPage
     public function render()
     {
 
-
-
         if (is_array($this->rootPage->template->view) && $this->rootPage->template->view["type"] == "list") {
             $output .= $this->renderPageList();
         } else {
             $output .= $this->renderPageTree();
         }
-
         return $output = $this->renderSubnav() . $output;
-
-//        $admin->render();
-
     }
 
 } 

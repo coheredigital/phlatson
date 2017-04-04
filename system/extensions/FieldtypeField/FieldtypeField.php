@@ -5,14 +5,6 @@ class FieldtypeField extends Fieldtype
     protected $page;
     protected $objectType = "field";
 
-
-    protected function setup()
-    {
-        $this->label = "Field";
-        $this->attribute("name", "template");
-    }
-
-
     public function getOutput($name)
     {
         $field = $this->api("fields")->get("$name");

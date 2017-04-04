@@ -1,17 +1,16 @@
 {
-  "title": "Blog",
-  "fields": [
-    {
-      "name": "title"
+    "title": "Blog",
+    "fields": [],
+    "settings": {
+        "pageTreeView": {
+            "type": "list",
+            "columns": [
+                "title"
+            ]
+        }
     },
-    {
-      "name": "content"
-    }
-  ],
-  "view" : {
-    "type": "list",
-    "columns": [
-      "title"
-    ]
-  }
+    "name": "blog",
+    "modified": 1471724739,
+    "template": "template",
+    "view": "blog"
 }

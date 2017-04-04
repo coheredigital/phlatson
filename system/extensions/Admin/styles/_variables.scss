@@ -17,7 +17,7 @@ $lighter-gray: #eee;
 $soft-gray: #f5f5f5;
 $softer-gray: #fafafa;
 
-$blue: #8ba3d8;
+$blue: #7aa9e9;
 $dark-blue: darken($blue, 5%);
 $darker-blue: darken($blue, 15%);
 
@@ -34,25 +34,32 @@ $dark-red: darken($red, 10%);
 $light-red: lighten($red, 10%);
 
 
-$orange: #f4a056;
+$orange: #f46b4b;
 $dark-orange: darken($orange, 10%);
 $light-orange: lighten($orange, 10%);
 
 /* ELEMENT COLORS */
-
+$text-color: #555;
 $link-color: $navy;
 $link-hover-color: $blue;
 
-$header-background: #8291af;
-$header-background: #fff;
-//$header-background: #DCE2E8;
-//$main-background: $softer-gray;
-$main-background: #f4f4f4;
-//$main-background: #fff;
-//$main-background: #fff;
+$header-background: $brand;
+$tab-background: #fff;
+$main-background: #eee;
 $sidebar-background: $softer-gray;
 
+// field styling
+$input-padding: .6em .8em;
+$input-border-color: #ccc;
 
+
+// page tree
+$page-tree-item-padding: .8em;
+$page-tree-item-background: #fff;
+$page-tree-item-hover-background: $blue;
+$page-tree-item-hover-title-color: #fff;
+$page-tree-item-title-color: $dark-gray;
+$page-tree-branchline-color: darken($main-background, 12%);
 
 /* SIZES */
 

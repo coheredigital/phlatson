@@ -1,0 +1,11 @@
+{
+  "fields": [
+    {
+      "label": "Main Color",
+      "name": "mainColor",
+      "fieldtype" : "text",
+      "inputtype" : "InputColor",
+      "default" : "#f46b4b"
+    }
+  ]
+}

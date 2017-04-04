@@ -18,6 +18,21 @@ class AdminEditPage extends AdminEdit
                 }
             );
 
+
+        $save = new Route();
+        $save
+            ->path("/pages/edit:all")
+            ->method("POST")
+            ->parent("admin")
+            ->callback(
+                function ($url) {
+                    $page = $this->api("pages")->get($url);
+                    $this->object = $page;
+
+                    $this->processSave();
+                }
+            );
+
         // TODO: this method still doesn't properly support adding new pages under the root page
         $new = new Route;
         $new->path("/pages/new/:any/:all")
@@ -65,19 +80,6 @@ class AdminEditPage extends AdminEdit
 //            );
 
 
-        $save = new Route();
-        $save
-            ->path("/pages/edit/:all")
-            ->method("POST")
-            ->parent("admin")
-            ->callback(
-                function ($url) {
-                    $page = $this->api("pages")->get($url);
-                    $this->object = $page;
-
-                    $this->processSave();
-                }
-            );
 
         $upload = new Route();
         $upload

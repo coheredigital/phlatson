@@ -3,6 +3,8 @@
 class MarkupPageTree extends Extension
 {
 
+    private $defaultDepth = 2;
+
     public $rootPage;
     public $admin;
     public $postTypes = array(); // array representing posts types or "Page Tables" that will be offers at top of the page
@@ -10,30 +12,35 @@ class MarkupPageTree extends Extension
     protected function setup()
     {
         $this->admin = $this->api("admin");
-        $this->api('config')->scripts->add($this->url . "{$this->className}.js");
+        $this->api('config')->scripts->add("{$this->url}{$this->className}.js");
     }
 
 
     protected function renderPageTitle(Page $page)
     {
         $output .= "<div class='page-tree-item'>";
-        $output .= "<i class='icon fa fa-circle'></i><span class='page-tree-item-title'>{$page->title}</span>";
+        if($page->isEditable()){
+            $output .= "<span class='page-tree-item-title'><a href='{$page->urlEdit}'>{$page->title}</a></span>";
+        }
+        else {
+            $output .= "<span class='page-tree-item-title'>{$page->title}</span>";
+        }
         $output .= $this->renderPageControls($page);
         $output .= "</div>";
         return $output;
     }
 
     protected function renderPageControls(Page $page){
-        $view = $page->template->view;
+        $view = $page->template->settings->pageTreeView;
 
         $output = "<div class='page-tree-item-buttons'>";
 
-        if($page->isEditable()) $output .= "<a class='page-tree-item-button' href='$page->urlEdit'><i class='icon fa fa-pencil'></i></a>";
-        if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'><i class='icon fa fa-eye'></i></a>";
+        if ($page->children()->count && $page->url != "/") $output .= "<a class='page-tree-item-button page-tree-item-button-expand' href='{$this->admin->route->url}?root={$page->url}'>[+]</a>";
+        if($page->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$page->url}'>View</a>";
 
         if(is_array($view) && $view['type'] == "list"){
             $url = $this->admin->route->url . ltrim($page->url, '/');
-            $output .= "<a class='page-tree-item-button' href='{$url}'><i class='icon fa fa-list'></i></a>";
+            $output .= "<a class='page-tree-item-button' href='{$url}'>List</a>";
             if($this->admin) $this->admin->subnav->add($page);
         }
         else{
@@ -46,30 +53,29 @@ class MarkupPageTree extends Extension
     protected function renderPageItem(Page $page)
     {
         $output = $this->renderPageTitle($page);
-        $class = "page-tree-single";
 
-
-        if ($page->template->view) {
-
-        } else {
-            if (count($page->children())) {
-                $output .= $this->renderPageList($page->children);
-                $class = "page-tree-group";
-            }
+        if ($page->children()->count && $page == $this->rootPage) {
+            $output .= $this->renderPageList($page->children());
+            $class = "page-tree-group";
         }
+        else $output .= $this->renderPageList();
 
 
-        $output = "<li class='$class page-tree-group'>{$output}</li>";
+        $output = "<li class='{$class} page-tree-group is-open'>{$output}</li>";
         return $output;
     }
 
-    protected function renderPageList($pages)
+    protected function renderPageList($pages = [])
     {
         $output = "";
-        foreach ($pages as $p) {
-            $output .= $this->renderPageItem($p);
+        if($pages->count){
+            $class = "is-open";
+            foreach ($pages as $p) {
+                $output .= $this->renderPageItem($p);
+            }
+            $output = "<ul class='page-tree-list'>{$output}</ul>";
         }
-        $output = "<ul class='page-tree-list'> {$output} </ul>";
+        $output = "<div class='page-tree-list-wrapper {$class}'>{$output}</div>";
         return $output;
     }
 
@@ -81,7 +87,7 @@ class MarkupPageTree extends Extension
         if (count($templates) > 1) {
 
             $output = '<div class="dropdown page-tree-item-button">';
-            $output .= '<div class="dropdown-button"><i class="icon fa fa-plus "></i></div>';
+            $output .= '<div class="dropdown-button">New</div>';
             $output .= '<div class="menu">';
 
             foreach ($templates as $t) {
@@ -111,7 +117,7 @@ class MarkupPageTree extends Extension
     public function render()
     {
         $output = $this->renderPageItem($this->rootPage);
-        $output = "<div class='page-tree'><ul class='page-tree-list page-tree-root'>{$output}</ul></div>";
+        $output = "<div class='page-tree'><ul class='page-tree-list'>{$output}</ul></div>";
         return $output;
     }
 

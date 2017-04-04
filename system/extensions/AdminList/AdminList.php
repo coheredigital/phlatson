@@ -6,7 +6,8 @@
  * Date: 7/17/14
  * Time: 7:36 PMs
  */
-abstract class AdminList extends Admin implements AdminPage
+// abstract class AdminList extends Admin implements AdminPage
+class AdminList extends Admin implements AdminPage
 {
 
     public $title;
@@ -16,26 +17,19 @@ abstract class AdminList extends Admin implements AdminPage
         "Name" => "name"
     ];
 
-    protected function setup()
-    {
-    }
-
-
     protected function renderList()
     {
 
         $objectCollection = $this->api($this->objectName)->all();
         $table = $this->api("extensions")->get("MarkupTable");
 
-        $this->columns["controls"] = "controls";
         $table->setColumns($this->columns);
 
         foreach ($objectCollection as $object) {
             $table->addRow(
                 array(
-                    "title" => $object->title,
+                    "title" => $object->isEditable() ? "<a href='{$object->urlEdit}'>{$object->title}</a>" : $object->title,
                     "name" => $object->name,
-                    "controls" => $this->renderPageControls($object)
                 )
             );
         }
@@ -50,8 +44,7 @@ abstract class AdminList extends Admin implements AdminPage
 
     protected function renderPageControls(Object $object){
         $output = "<div class='page-tree-item-buttons' style='visibility: visible;'>";
-        if($object->isEditable()) $output .= "<a class='page-tree-item-button' href='{$object->urlEdit}'><i class='fa fa-pencil'></i></a>";
-        if($object->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$object->url}'><i class='fa fa-eye'></i></a>";
+        if($object instanceof ViewableObject && $object->isViewable()) $output .= "<a class='page-tree-item-button' target='_blank' href='{$object->url}'><i class='fa fa-eye'></i></a>";
         $output .= "</div>";
         return $output;
     }
@@ -59,7 +52,9 @@ abstract class AdminList extends Admin implements AdminPage
     protected function renderControls()
     {
         $output = "<div class='form-actions'>";
+        $output .= "<div class='container'>";
         $output .= "<a class='button' href='{$this->route->url}new'>New</a>";
+        $output .= "</div>";
         $output .= "</div>";
 
         return $output;

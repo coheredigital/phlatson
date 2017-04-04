@@ -1,9 +1,10 @@
 {
     "sessionName": "xpages",
-    "sessionExpireSeconds": 0,
+    "sessionExpireSeconds": 3200,
     "timezone": "America/New_York",
     "debug": true,
     "hostname": "flatbed.dev",
+    "dateTimeFormat" : "F j, Y",
 
     "routes" : [
         {

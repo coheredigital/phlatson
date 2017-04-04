@@ -1,16 +1,16 @@
 {
-  "description": "Allows management of site using a GUI",
-  "title": "Admin Panel",
-  "type": "Admin",
-  "autoload": true,
-  "configurable": true,
-  "singleton": true,
-  "fields": [
-    {
-      "name": "color",
-      "label": "Main Color",
-      "default": "#f90",
-      "fieldtype": "FieldtypeText"
-    }
-  ]
+	"description": "Allows management of site using a GUI",
+	"title": "Admin Panel",
+	"type": "Admin",
+	"autoload": true,
+	"configurable": true,
+	"singleton": true,
+	"fields": [
+		{
+			"name": "color",
+			"label": "Main Color",
+			"default": "#f90",
+			"fieldtype": "FieldtypeText"
+		}
+	]
 }
