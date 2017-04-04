@@ -29,13 +29,13 @@ class Page extends DataObject implements ViewableObject
     }
 
 
-    protected function getParentUrl()
-    {
-
-        $directoryParts = $this->directoryParts();
-        array_pop($directoryParts); // remove current (last) item to find parent
-        return $this->createUrl($directoryParts);
-    }
+    // protected function getParentUrl()
+    // {
+    //
+    //     $directoryParts = $this->directoryParts();
+    //     array_pop($directoryParts); // remove current (last) item to find parent
+    //     return $this->createUrl($directoryParts);
+    // }
 
 
     /**

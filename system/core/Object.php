@@ -19,6 +19,9 @@ abstract class Object extends Flatbed implements JsonSerializable
     // main data container, holds data loaded from JSON file
     protected $data = [];
 
+    // prep to have a system to turn fromatting on and off TODO: use this, lol
+    protected $enableFormatting = false;
+
     // protected $defaultFields = ["name","template"];
     // protected $skippedFields = ["name"];
 
@@ -95,7 +98,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      * Determine if Object is a system object
      *
      */
-    public function isSystem(): boolean
+    public function isSystem(): bool
     {
 
         // not system if new since new items can't be added to system
@@ -121,12 +124,13 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         // strip array parts
         $remove = [
-            $this->rootPath,
+            $this->getRootPath(),
             static::DEFAULT_SAVE_FILE
         ];
 
-        $path = str_replace($remove, "", $this->file);
-        return Filter::uri($path);
+        $path = str_replace($this->getRootPath(), "", $this->getPath());
+        $path =  Filter::uri($path);
+        return $path;
     }
 
 
@@ -151,7 +155,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     /**
      * @return string  path to the current object data file
      */
-    public function getModified()
+    public function getModified(): FlatbedDateTime
     {
         $time = filemtime($this->file);
         $datetime = new FlatbedDateTime();
@@ -174,7 +178,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     {
 
         // get the site root
-        $rootPath = $this->api("config")->paths->root;
+        $rootPath = ROOT_PATH;
 
         // remove the ROOT_PATH, site root, and data.json from the object path to get a relative directory
         $replace = [
