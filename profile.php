@@ -26,20 +26,7 @@ $data = [];
 $subfolders = glob( $folder. "*", GLOB_ONLYDIR);
 
 
-foreach ($subfolders as $folder) {
-
-    $file = $folder . "\data.json";
-
-    if (file_exists($file)) {
-
-        $json = file_get_contents($file);
-        $json = json_decode($json);
-        $data[] = $json;
-    }
-
-}
-
-
+$it = new FilesystemIterator( $folder );
 
 
 
@@ -47,12 +34,20 @@ foreach ($subfolders as $folder) {
 
 <div class="">
     <?php
+    foreach ($it as $folder) {
+        $file =  "$folder\data.json";
 
-    foreach ($data as $i) {
-
-        echo $i->title;
+        echo $folder->getBasename() . "<br>";
+        echo $folder->getBasename() . "<br>";
         echo "<hr>";
+
+        if (file_exists($file)) {
+            $json = file_get_contents($file);
+            $json = json_decode($json);
+            $data[] = $json;
+        }
     }
+
     ?>
 
 </div>

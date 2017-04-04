@@ -6,6 +6,9 @@ class Page extends DataObject implements ViewableObject
     protected $parent;
     protected $rootFolder = "pages";
 
+    const SYSTEM_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
+    const SITE_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
+
     function __construct($file = null)
     {
 
@@ -27,15 +30,6 @@ class Page extends DataObject implements ViewableObject
         // TODO :  improve this, too 'hard coded'
         return str_replace("/site/pages", "", $url);
     }
-
-
-    // protected function getParentUrl()
-    // {
-    //
-    //     $directoryParts = $this->directoryParts();
-    //     array_pop($directoryParts); // remove current (last) item to find parent
-    //     return $this->createUrl($directoryParts);
-    // }
 
 
     /**
@@ -60,10 +54,6 @@ class Page extends DataObject implements ViewableObject
         return $path;
     }
 
-    protected function getParentPath()
-    {
-        return dirname($this->getPath());
-    }
 
     protected function getParentPathFromFile($file)
     {

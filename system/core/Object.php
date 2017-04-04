@@ -7,6 +7,9 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     const DEFAULT_SAVE_FILE = "data.json";
 
+    const SYSTEM_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
+    const SITE_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
+    
     protected $file;
     protected $name;
     protected $root;
@@ -88,7 +91,6 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         $root = $this->isSystem() ? SYSTEM_PATH : SITE_PATH;
         $path = $root . $this->rootFolder;
-        // $path = Filter::path($path); // TODO : add back in if needed, trying to avoid overuse for now
         return $path;
     }
 
