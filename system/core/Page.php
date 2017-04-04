@@ -23,7 +23,9 @@ class Page extends DataObject implements ViewableObject
      * @return [type] [description]
      */
     public function getUrl() {
-        return $this->api('config')->urls->root . ltrim($this->directory, "/");
+        $url = parent::getUrl();
+        // TODO :  improve this, too 'hard coded'
+        return str_replace("/site/pages", "", $url);
     }
 
 
@@ -46,7 +48,12 @@ class Page extends DataObject implements ViewableObject
             $path = dirname( $this->file );
         }
         else{
-            $path = $this->parent->getPath() . $this->name;
+            if ( $this->parent instanceof Page) {
+                $path = $this->parent->getPath() . $this->name;
+            }
+            else {
+                $path = SITE_PATH . $this->name;
+            }
         }
 
         return Filter::path($path);
