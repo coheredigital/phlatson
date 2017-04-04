@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
+/* instantiate app variables */
+$start = microtime(true);
+
+
 define("FLATBED", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
-define('SYSTEM_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . "system" . DIRECTORY_SEPARATOR );
-define('CORE_PATH', SYSTEM_PATH . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR );
+define('SYSTEM_PATH', ROOT_PATH . "system" . DIRECTORY_SEPARATOR );
+define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR );
+define('CORE_PATH', SYSTEM_PATH . "core" . DIRECTORY_SEPARATOR );
 define('ROOT_URL', "/");
 
 require_once CORE_PATH . '_functions.php';
@@ -15,8 +20,6 @@ require_once CORE_PATH . '_traits.php';
 
 try {
 
-    /* instantiate app variables */
-    $start = microtime(true);
     $flatbed = new Flatbed;
 
     $flatbed->api('config', new Config, true);
