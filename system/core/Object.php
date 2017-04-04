@@ -92,25 +92,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $path;
     }
 
-    /**
-     * @return bool
-     *
-     * Determine if Object is a system object
-     *
-     */
-    public function isSystem(): bool
-    {
 
-        // not system if new since new items can't be added to system
-        if ($this->isNew()) {
-            return false;
-        }
-
-        // check if the system path is found at the beginning of this Objects file
-        $bool = substr($this->file, 0, strlen(SYSTEM_PATH)) === 0 ? false : true;
-        return $bool;
-
-    }
 
 
     /**
@@ -266,36 +248,65 @@ abstract class Object extends Flatbed implements JsonSerializable
         return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
+
+    /**
+     * @return bool
+     *
+     * Determine if Object is a system object
+     *
+     */
+    public function isSystem(): bool
+    {
+
+        // not system if new since new items can't be added to system
+        if ($this->isNew()) {
+            return false;
+        }
+
+        // check if the system path is found at the beginning of this Objects file
+        return substr($this->file, 0, strlen(SYSTEM_PATH)) === SYSTEM_PATH;
+
+    }
+
     /**
      * @return bool
      *
      * Used to check if the page exist in the filesystem yet
      *
      */
-    public function isNew()
+    public function isNew(): bool
     {
         return !file_exists($this->file);
     }
 
 
     /**
+     *
+     *  Placeholder, will return true for pages that can be edited
+     *  for now allows editing of non system content,
+     *  should check user permission in future
+     *  TODO :  finish this
+     *
      * @return bool
      */
-    public function isEditable()
+    public function isEditable(): bool
     {
-        if ($this->isSystem()) {
-            return false;
-        }
-        return true;
+        return !$this->isSystem();
     }
 
 
     /**
+     *
+     *  Placeholder, will return true for pages that can be removed
+     *  for now allows deletion of non system content,
+     *  should check user permission in future
+     *  TODO :  finish this
+     *
      * @return bool
      */
-    public function isDeletable()
+    public function isDeletable(): bool
     {
-        return true;
+        return !$this->isSystem();
     }
 
 
@@ -305,19 +316,19 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-    protected function checkDataIntegrity()
-    {
-
-        foreach ($this->requiredElements as $name) {
-
-            if (!$this->has($name)) {
-                throw new FlatbedException(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ",
-                        $this->requiredElements) . ").");
-            }
-
-        }
-
-    }
+    // protected function checkDataIntegrity()
+    // {
+    //
+    //     foreach ($this->requiredElements as $name) {
+    //
+    //         if (!$this->has($name)) {
+    //             throw new FlatbedException(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ",
+    //                     $this->requiredElements) . ").");
+    //         }
+    //
+    //     }
+    //
+    // }
 
 
     public function get(string $name)
