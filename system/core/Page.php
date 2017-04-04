@@ -5,10 +5,6 @@ class Page extends DataObject implements ViewableObject
 
     const DATA_FOLDER = 'pages';
     protected $parent;
-    protected $rootFolder = "pages";
-
-    const SYSTEM_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
-    const SITE_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
 
     function __construct($file = null)
     {
