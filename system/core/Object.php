@@ -6,15 +6,11 @@ abstract class Object extends Flatbed implements JsonSerializable
     use hookable;
 
     const DEFAULT_SAVE_FILE = "data.json";
+    const DATA_FOLDER = '';
 
-    const SYSTEM_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
-    const SITE_ROOT = SYSTEM_PATH . "pages" . DIRECTORY_SEPARATOR;
-    
     protected $file;
     protected $name;
-    protected $root;
 
-    protected $rootFolder;
     protected $rootPath;
 
     protected $isSystem;
@@ -25,12 +21,6 @@ abstract class Object extends Flatbed implements JsonSerializable
     // prep to have a system to turn fromatting on and off TODO: use this, lol
     protected $enableFormatting = false;
 
-    // protected $defaultFields = ["name","template"];
-    // protected $skippedFields = ["name"];
-
-    protected $lockedFields = [];
-
-    protected $requiredElements = [];
 
     public function __construct( string $file = '')
     {
@@ -48,7 +38,7 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->data = $this->getData();
 
         } else {
-            $this->root = $this->api('config')->paths->site . $this->rootFolder;
+            $this->rootPath = SITE_PATH . self::DATA_FOLDER;
         }
 
 
@@ -88,9 +78,14 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     public function getRootPath(): string
     {
+        if ($this->isNew()) {
+            $path = SITE_PATH . self::DATA_FOLDER;
+        }
+        else {
+            $root = $this->isSystem() ? SYSTEM_PATH : SITE_PATH;
+            $path = $root . self::DATA_FOLDER;
+        }
 
-        $root = $this->isSystem() ? SYSTEM_PATH : SITE_PATH;
-        $path = $root . $this->rootFolder;
         return $path;
     }
 
@@ -341,7 +336,7 @@ abstract class Object extends Flatbed implements JsonSerializable
                 return $this->getPath();
             case 'urlEdit':
                 // TODO: temp solution for save redirect (maybe add via a hook)
-                $url = $this->api('admin')->route->url . $this->rootFolder . "/edit/" . $this->getDirectory();
+                $url = $this->api('admin')->route->url . self::DATA_FOLDER . "/edit/" . $this->getDirectory();
                 return $url;
             case 'modified':
                 return $this->getModified();
