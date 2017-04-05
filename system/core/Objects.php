@@ -2,7 +2,6 @@
 
 abstract class Objects extends Flatbed
 {
-    use hookable;
 
     public $data = [];
     // protected $count;
@@ -110,7 +109,7 @@ abstract class Objects extends Flatbed
 
         $path = Filter::path($path);
 
-        
+
         $folders = glob($path . "*", GLOB_ONLYDIR);
 
         $iterator = new FilesystemIterator($path);

@@ -3,10 +3,8 @@
 // placeholder for a restructuring idea I am considering
 
 
-abstract class DataContainer implements JsonSerializable
+abstract class DataContainer extends Flatbed implements JsonSerializable
 {
-
-    use hookable;
 
 
     public $name;

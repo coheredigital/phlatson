@@ -14,16 +14,15 @@ class Config extends Object
         $this->setupDirectories();
 
         // load site config
-        $this->file = "{$this->paths->config}site.json";
+        $this->file = SITE_PATH . "config" . DIRECTORY_SEPARATOR . "site.json";
 
         // merge site config with default data
         $this->data = array_merge($this->data, $this->getData());
         
-
-
         /*
          * Output errors if debug true, else disable error reporting
          */
+        
         if ($this->debug) {
             error_reporting(E_ALL ^ E_NOTICE);
             ini_set('xdebug.var_display_max_depth', '10');

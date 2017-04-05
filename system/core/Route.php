@@ -4,8 +4,6 @@
 class Route extends Flatbed
 {
 
-    use hookable;
-
     private $allowedMethods = [
         "GET",
         "POST",
