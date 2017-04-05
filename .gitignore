@@ -7,7 +7,7 @@
 sftp-site.json
 
 #CMS Assets
-site/assets/sessions/*
+cache/*
 assets/*
 prepros.cfg
 libraries/

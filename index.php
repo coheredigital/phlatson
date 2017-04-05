@@ -62,7 +62,7 @@ try {
 
     $flatbed->api('session', new Session, true);
     $flatbed->api('logger', 'Logger', true);
-
+    
     // run the app
     $flatbed->api('router')->run($request);
 
