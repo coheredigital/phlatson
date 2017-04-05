@@ -25,14 +25,12 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         $this->rootPath = $this->getRootPath();
 
-        if ($file) {
+        if (!is_null($file)) {
             if (!file_exists($file)) {
                 throw new FlatbedException("Invalid file passed to {$this->className} class.");
             }
 
             $this->file = $file;
-
-
             $this->name = $this->getName();
             $this->data = $this->getData();
         }
