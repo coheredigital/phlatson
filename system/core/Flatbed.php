@@ -61,5 +61,14 @@ class Flatbed
         return $event->return;
     }
 
+    /**
+     * allow for more convenient access to the API
+     * @param  $string $name name one the api variable we want access to
+     * @return Object    API object
+     */
+    final public function __invoke($name)
+    {
+       return $this->api($name);
+    }
 
 }
