@@ -16,7 +16,6 @@ define('ROOT_URL', "/");
 require_once CORE_PATH . '_functions.php';
 require_once CORE_PATH . '_autoload.php';
 require_once CORE_PATH . '_interfaces.php';
-require_once CORE_PATH . '_traits.php';
 
 try {
 
