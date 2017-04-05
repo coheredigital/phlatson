@@ -2,7 +2,6 @@
 
 abstract class Objects extends Flatbed
 {
-
     use hookable;
 
     public $data = [];
@@ -43,8 +42,8 @@ abstract class Objects extends Flatbed
      * validates and adds a path to the end of the dataPaths set
      * @param string $path [description]
      */
-    public function addDataPath( string $path ) {
-
+    public function addDataPath(string $path)
+    {
         if (!file_exists($path)) {
             throw new FlatbedException("The path ($path) deos not exist cannot be used as a data path for {$this->className}");
         }
@@ -57,7 +56,7 @@ abstract class Objects extends Flatbed
      * @param  strin $name the name of the new object that will be used once it is saved
      * @return Object       [description]
      */
-    public function new( string $name ) : Object
+    public function new(string $name) : Object
     {
         $object = new $this->singularName;
         $object->name = $name;
@@ -68,15 +67,17 @@ abstract class Objects extends Flatbed
 
 
 
-    protected function findDataFileByName( string $name ): string
+    protected function findDataFileByName(string $name): string
     {
         $name = trim($name, "/\\");
         // loop through the possible root data folders
         foreach ($this->rootFolders as $folder) {
             $folder = ROOT_PATH . $folder . $this->rootFolder . DIRECTORY_SEPARATOR . $name ;
-            $folder = Filter::path( $folder );
+            $folder = Filter::path($folder);
             $file = "{$folder}data.json";
-            if (file_exists($file)) return $file;
+            if (file_exists($file)) {
+                return $file;
+            }
         }
 
         return '';
@@ -99,23 +100,26 @@ abstract class Objects extends Flatbed
      */
     protected function getFileList($path = null): array
     {
+        if (is_null($path)) {
+            $path = $this->path;
+        }
 
-        if(is_null($path)) $path = $this->path;
-
-        if ( !file_exists($path) ) {
+        if (!file_exists($path)) {
             throw new FlatbedException("Cannot get file list, invalid path: {$path}");
         }
 
         $path = Filter::path($path);
 
+        
+        $folders = glob($path . "*", GLOB_ONLYDIR);
 
-        $folders = glob( $path . "*", GLOB_ONLYDIR);
+        $iterator = new FilesystemIterator($path);
 
         $fileList = [];
-        foreach ($folders as $folder) {
-            $folder = Filter::path($folder);
-            $name = basename($folder);
-            $fileList["$name"] = $folder . "data.json";
+        foreach ($iterator as $folder) {
+            $path = $folder->getPathname();
+            $name = $folder->getPathname();
+            $fileList["$name"] = $path . DIRECTORY_SEPARATOR . "data.json";
         }
         return $fileList;
     }
@@ -141,12 +145,12 @@ abstract class Objects extends Flatbed
 
 
 
-    public function __set( string $key, $value)
+    public function __set(string $key, $value)
     {
         $this->set($key, $value);
     }
 
-    public function set( string $key, $value)
+    public function set(string $key, $value)
     {
         $this->data[$key] = $value;
         return $this;
@@ -162,7 +166,7 @@ abstract class Objects extends Flatbed
      * @param  string $name the name or uri that points to the object relative to its storage folder
      * @return Object
      */
-    public function get( string $uri )
+    public function get(string $uri)
     {
 
         // get the file if it exists
@@ -173,7 +177,6 @@ abstract class Objects extends Flatbed
         $object = new $this->singularName($file);
 
         return $object;
-
     }
 
     /**
@@ -181,7 +184,7 @@ abstract class Objects extends Flatbed
      * @param  string $path path to look for a data JSON file that describe a Flatbed Object
      * @return Object
      */
-    public function getByPath( $path )
+    public function getByPath($path)
     {
         $file = Filter::path($path) . "data.json";
         return $this->getByFile($file);
@@ -192,7 +195,7 @@ abstract class Objects extends Flatbed
      * @param  string $file the data JSON file that describes the Flatbed Object
      * @return Object
      */
-    public function getByFile( $file )
+    public function getByFile($file)
     {
         // get the file if it exists
         if (!is_file($file)) {
@@ -209,5 +212,4 @@ abstract class Objects extends Flatbed
         }
         return new $this->singularName($file);
     }
-
 }
