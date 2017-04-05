@@ -27,16 +27,6 @@ class Flatbed
         }
     }
 
-    // public function __get($name)
-    // {
-    //     return Api::get($name);
-    // }
-
-    // public function __set(string $name, $value)
-    // {
-    //     Api::set($name, $value, true);
-    // }
-
     /**
      * @param $method
      * @param $arguments
