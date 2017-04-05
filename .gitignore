@@ -10,5 +10,5 @@ sftp-site.json
 cache/*
 assets/*
 prepros.cfg
-libraries/
-.vscode/
+libraries/*
+.vscode/*
