@@ -1,6 +1,6 @@
 <?php
 
-abstract class Object extends Flatbed implements JsonSerializable
+abstract class Object implements JsonSerializable
 {
     
     use hookable;
@@ -297,20 +297,6 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
     
     
-    // protected function checkDataIntegrity()
-    // {
-    //
-    //     foreach ($this->requiredElements as $name) {
-    //
-    //         if (!$this->has($name)) {
-    //             throw new FlatbedException(" Cannot continue: missing '$name' in $this '$this->name' ($this->file) from required elements (" . implode(", ",
-    //                     $this->requiredElements) . ").");
-    //         }
-    //
-    //     }
-    //
-    // }
-    
     
     public function get(string $name)
     {
@@ -358,11 +344,11 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $this;
     }
                                     
-                                    /**
-                                    * setter magic method
-                                    * @param string $name
-                                    * @param mixed $value
-                                    */
+    /**
+    * setter magic method
+    * @param string $name
+    * @param mixed $value
+    */
     public function __set(string $name, $value)
     {
         $this->set($name, $value);

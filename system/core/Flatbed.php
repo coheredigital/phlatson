@@ -8,8 +8,7 @@ class Flatbed
 {
 
     private $registry = array();
-    private $lock = array();
-
+    private $lock     = array();
 
     /**
      * @param $key
@@ -23,24 +22,19 @@ class Flatbed
             // return $this allows chaining
             Api::set($name, $value, $lock);
             return $this;
-        }
-        else{
-           return Api::get($name);
+        } else {
+            return Api::get($name);
         }
     }
-
 
     public function __get($name)
     {
         return Api::get($name);
     }
 
-
     public function __set(string $name, $value)
     {
         Api::set($name, $value, true);
     }
-
-
 
 }

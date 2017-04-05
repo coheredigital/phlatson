@@ -10,7 +10,9 @@ $font-monospace: 'Consolas', 'Courier New', monospace !important;
     font-family: $font-monospace;
     line-height: 1.3em;
 }
-
+label {
+    cursor: pointer;    
+}
 #FlatbedException {
     background: #4b5760;
     color: #222;
@@ -38,11 +40,20 @@ $font-monospace: 'Consolas', 'Courier New', monospace !important;
     color: #fff;
     padding: 1em;
     position: relative;
+    display: block;
+    &:hover {
+        background: darken($red, 3%);
+    }
+    .trace-line {
+        background: darken($red, 6%);
+        font-size: 1.18em;
+    }
 }
 
 .fbe-heading {
     font-size: 1.4em;
     margin-bottom: 0.2em;
+    display: block;
 }
 
 .fbe-label {
@@ -57,6 +68,7 @@ $font-monospace: 'Consolas', 'Courier New', monospace !important;
 .fbe-file {
     font-family: $font-monospace;
     color: rgba(0,0,0,.7);
+    display: block;
     // font-weight: bold;
 }
 

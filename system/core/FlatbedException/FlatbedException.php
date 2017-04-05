@@ -62,24 +62,23 @@ class FlatbedException extends Exception
         $code = file($file);
 
         $lineStart = $line - 10;
-        $lineEnd = $line + 10;
+        $lineEnd = $line + 9;
 
 
         $output = "";
         $position = $lineStart;
         while($position < $lineEnd){
+
             $class = "";
-            // highlight line before as well as this is often the offending line
-            if($position == $line) $class = "class='highlight'";
+            if(($position+1) == $line) $class = "class='highlight'";
 
-
-            $lineNumber = $position;
+            $lineNumber = $position + 1;
             $codeline = htmlspecialchars($code[$position]);
             $output .= "<code $class>{$lineNumber}{$codeline}</code>";
             $position++;
         }
 
-        $output = "<pre class='fbe-code language-php php'>$output</pre>";
+        $output = "<pre class='fbe-code language-php'>$output</pre>";
         return $output;
     }
 
