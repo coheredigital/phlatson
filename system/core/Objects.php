@@ -117,7 +117,7 @@ abstract class Objects extends Flatbed
         $fileList = [];
         foreach ($iterator as $folder) {
             $path = $folder->getPathname();
-            $name = $folder->getPathname();
+            $name = $folder->getBasename();
             $fileList["$name"] = $path . DIRECTORY_SEPARATOR . "data.json";
         }
         return $fileList;
@@ -136,7 +136,7 @@ abstract class Objects extends Flatbed
         $collection = new ObjectCollection();
 
         foreach ($this->data as $key => $value) {
-            $object = $this->getObject($key);
+            if (!$object = $this->getObject($key)) continue;
             $collection->add($object);
         }
         return $collection;
@@ -207,7 +207,7 @@ abstract class Objects extends Flatbed
     {
         // get the file if it exists
         if (!$file = $this->findDataFileByName($name)) {
-            return false;
+            return null;
         }
         return new $this->singularName($file);
     }

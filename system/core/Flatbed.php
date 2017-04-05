@@ -27,15 +27,15 @@ class Flatbed
         }
     }
 
-    public function __get($name)
-    {
-        return Api::get($name);
-    }
+    // public function __get($name)
+    // {
+    //     return Api::get($name);
+    // }
 
-    public function __set(string $name, $value)
-    {
-        Api::set($name, $value, true);
-    }
+    // public function __set(string $name, $value)
+    // {
+    //     Api::set($name, $value, true);
+    // }
 
     /**
      * @param $method
@@ -43,9 +43,10 @@ class Flatbed
      * @throws Exception
      *
      * Used as a simple hook method, automatically executes events before and after any mother prefixed with and underscore
+     * no other classes that extend Flatbed should be allowed to override this behaviour
      *
      */
-    public function __call($method, $arguments)
+    final public function __call($method, $arguments)
     {
         $methodName = "_$method";
         if (!method_exists($this, "$methodName")) throw new FlatbedException("Method: $method does not exist in class: $this->className");

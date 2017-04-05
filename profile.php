@@ -23,11 +23,8 @@ $folder = 'C:\Users\Adam\Websites\dev\flatbed\site\pages\news\\';
 $data = [];
 
 
-$subfolders = glob( $folder. "*", GLOB_ONLYDIR);
-
 
 $it = new FilesystemIterator( $folder );
-
 
 
 ?>

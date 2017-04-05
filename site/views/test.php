@@ -15,11 +15,8 @@ foreach ($data as $key => $value) {
     $name = Filter::name($value->title);
     $parent = $pages->get("/news/");
 
-
     $article = $pages->get("/news/$name");
     if ($article) continue;
-
-
 
     $article = $pages->new( $name );
     $article->parent = $parent;
