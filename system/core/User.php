@@ -38,20 +38,32 @@ class User extends Object
     }
 
 
-    public function authenticate($pass)
+    /**
+     * 
+     * Autheticate a user
+     * 
+     * First check is a hashed version of the password matches a hashed version
+     * of the string stored in the users password field, so we can determine that 
+     * the password has not been hashed yet, but avoid a possible brute force 
+     * string match to the hash
+     *
+     * @param string $password
+     * @return bool
+     */
+    public function authenticate( string $password): bool
     {
-        /*  Check if string passed matches a hashed version of the stored password
-            so we can determine that the password has not been hashed yet, but avoid
-            a possible brute force string match to the hash
-        */
-        $passGet = $this->get("password");
-        $hash = password_hash($passGet, PASSWORD_DEFAULT);
-        if (password_verify($pass, $hash)) {
-            $this->password = $hash;
-            $this->save();
+        
+        // first hash the stored password
+        $storedPasswordHash = password_hash( $this->get("password") , PASSWORD_DEFAULT);
+
+        // match against entered password
+        if (password_verify($password, $storedPasswordHash)) {
+            // if a match is made we store this to the user 
+            $this->set('password', $storedPasswordHash )->save();
         }
 
-        return password_verify($pass, $this->get("password"));
+        // verify entered password
+        return password_verify($password, $this->get("password"));
 
     }
 
