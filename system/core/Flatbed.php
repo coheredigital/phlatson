@@ -7,9 +7,6 @@
 class Flatbed
 {
 
-    private $registry = array();
-    private $lock     = array();
-
     /**
      * @param $key
      * @param $value
@@ -66,9 +63,9 @@ class Flatbed
      * @param  $string $name name one the api variable we want access to
      * @return Object    API object
      */
-    final public function __invoke($name)
+    final public function __invoke($name, $value = null, $lock = false)
     {
-       return $this->api($name);
+        $this->api($name, $value, $lock);
     }
 
 }
