@@ -7,6 +7,8 @@ ref::config('validHtml', true);
 
 
 $pages->get('news');
+$pages->get('about');
+$pages->get('derp');
 
 r($pages->path);
 r($pages);

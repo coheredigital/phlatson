@@ -4,6 +4,7 @@ abstract class Objects extends Flatbed
 {
 
     public $data = [];
+    public $cache = [];
     // protected $count;
 
     protected $url;
@@ -66,7 +67,7 @@ abstract class Objects extends Flatbed
 
 
 
-    protected function findDataFileByName(string $name): string
+    protected function getDataFile(string $name): string
     {
         $name = trim($name, "/\\");
         // loop through the possible root data folders
@@ -107,10 +108,6 @@ abstract class Objects extends Flatbed
             throw new FlatbedException("Cannot get file list, invalid path: {$path}");
         }
 
-        $path = Filter::path($path);
-
-
-        $folders = glob($path . "*", GLOB_ONLYDIR);
 
         $iterator = new FilesystemIterator($path);
 
@@ -136,7 +133,7 @@ abstract class Objects extends Flatbed
         $collection = new ObjectCollection();
 
         foreach ($this->data as $key => $value) {
-            if (!$object = $this->getObject($key)) continue;
+            if (!$object = $this->get($key)) continue;
             $collection->add($object);
         }
         return $collection;
@@ -168,14 +165,21 @@ abstract class Objects extends Flatbed
     public function get(string $uri)
     {
 
-        // get the file if it exists
-        if (!$file = $this->findDataFileByName($uri)) {
-            return false;
+        if (!isset($this->cache[$uri])) {
+
+            // get the file if it exists
+            if (!$file = $this->getDataFile($uri)) {
+                return false;
+            }
+
+            // store found object for future reference
+            $this->cache[$uri] = new $this->singularName($file);
+
         }
 
-        $object = new $this->singularName($file);
 
-        return $object;
+
+        return $this->cache[$uri];
     }
 
     /**
@@ -185,7 +189,7 @@ abstract class Objects extends Flatbed
      */
     public function getByPath($path)
     {
-        $file = Filter::path($path) . "data.json";
+        $file = $path . DIRECTORY_SEPARATOR . "data.json";
         return $this->getByFile($file);
     }
 
@@ -197,7 +201,7 @@ abstract class Objects extends Flatbed
     public function getByFile($file)
     {
         // get the file if it exists
-        if (!is_file($file)) {
+        if (!file_exists($file)) {
             return false;
         }
         return new $this->singularName($file);
@@ -205,10 +209,15 @@ abstract class Objects extends Flatbed
 
     protected function getObject($name)
     {
+
+        $name = dirname();
+
         // get the file if it exists
-        if (!$file = $this->findDataFileByName($name)) {
+        if (!$file = $this->getDataFile($name)) {
             return null;
         }
+        
+
         return new $this->singularName($file);
     }
 }
