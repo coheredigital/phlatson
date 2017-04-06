@@ -72,9 +72,10 @@ abstract class Objects extends Flatbed
         $name = trim($name, "/\\");
         // loop through the possible root data folders
         foreach ($this->rootFolders as $folder) {
-            $folder = ROOT_PATH . $folder . $this->rootFolder . DIRECTORY_SEPARATOR . $name ;
-            $folder = Filter::path($folder);
+            $folder = ROOT_PATH . $folder . $this->rootFolder . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR;
             $file = "{$folder}data.json";
+
+            // return file on first match to break loop
             if (file_exists($file)) {
                 return $file;
             }
@@ -200,6 +201,9 @@ abstract class Objects extends Flatbed
      */
     public function getByFile($file)
     {
+
+
+
         // get the file if it exists
         if (!file_exists($file)) {
             return false;
@@ -207,17 +211,4 @@ abstract class Objects extends Flatbed
         return new $this->singularName($file);
     }
 
-    protected function getObject($name)
-    {
-
-        $name = dirname();
-
-        // get the file if it exists
-        if (!$file = $this->getDataFile($name)) {
-            return null;
-        }
-        
-
-        return new $this->singularName($file);
-    }
 }
