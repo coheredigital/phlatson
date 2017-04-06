@@ -7,8 +7,8 @@
 final class Api
 {
 
-    private static $registry = array();
-    private static $lock = array();
+    private static $registry = [];
+    private static $lock = [];
     private static $instance = null;
 
     public static function __callStatic($name, $arguments)

@@ -5,4 +5,8 @@ require ROOT_PATH . "libraries/ref/ref.php";
 ref::config('expLvl', 1);
 ref::config('validHtml', true);
 
-r( Flatbed::pages() );
+
+$pages->get('news');
+
+r($pages->path);
+r($pages);
