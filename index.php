@@ -47,24 +47,24 @@ try {
 
     }
 
-    $flatbed->api('events', 'Events', true);
+    $flatbed->api('events', new Events, true);
 
 
     $flatbed->api('extensions', new Extensions, true);
     $flatbed->api('fields', new Fields, true);
 
-    $flatbed->api('pages', 'Pages', true);
-    $flatbed->api('users', 'Users', true);
-    $flatbed->api('roles', 'Roles', true);
+    $flatbed->api('pages', new Pages, true);
+    $flatbed->api('users', new Users, true);
+    $flatbed->api('roles', new Roles, true);
 
-    $flatbed->api('templates', 'Templates', true);
-    $flatbed->api('views', 'Views', true);
+    $flatbed->api('templates', new Templates, true);
+    $flatbed->api('views', new Views, true);
 
     $flatbed->api('session', new Session, true);
-    $flatbed->api('logger', 'Logger', true);
+    // $flatbed->api('logger', new Logger, true);
     
     // run the app
-    $flatbed->api('router')->run($request);
+    $flatbed('router')->run($request);
 
     // end performance tracking
     $end = microtime(true);
@@ -72,5 +72,5 @@ try {
     echo "<!-- Page created in $creationtime seconds. (" . getMemoryUse() .") -->";
 
 } catch(FlatbedException $exception) {
-    echo $exception->render(Api::get("config"));
+    echo $exception->render($flatbed("config"));
 }

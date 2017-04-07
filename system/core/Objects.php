@@ -15,7 +15,7 @@ abstract class Objects extends Flatbed
 
     // array to store a set of paths to check for data for this object
     // all values are relative to the site root and require a key
-    // TODO: move to congfig or app root???
+    // TODO: move to config or app root???
     protected $rootFolders = [
         "site" => "site" . DIRECTORY_SEPARATOR,
         "system" =>  "system" . DIRECTORY_SEPARATOR
@@ -29,10 +29,9 @@ abstract class Objects extends Flatbed
 
     public function __construct()
     {
-
         // store paths and urls
-        $this->path = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder;
-        $this->systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "{$this->rootFolder}";
+        $this->path = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR;
+        $this->systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR;
         $this->url = ROOT_URL . "site/" . $this->rootFolder;
         $this->systemUrl = ROOT_URL . "system/" . $this->rootFolder;
     }
@@ -153,10 +152,10 @@ abstract class Objects extends Flatbed
         return $this;
     }
 
-    public function __get($key)
-    {
-        return $this->get($key);
-    }
+    // public function __get($key)
+    // {
+    //     return $this->get($key);
+    // }
 
     /**
      * get the singular object type by it uri/name
@@ -166,7 +165,7 @@ abstract class Objects extends Flatbed
     public function get(string $uri)
     {
 
-        if (!isset($this->cache[$uri])) {
+        // if (!isset($this->cache[$uri])) {
 
             // get the file if it exists
             if (!$file = $this->getDataFile($uri)) {
@@ -174,9 +173,9 @@ abstract class Objects extends Flatbed
             }
 
             // store found object for future reference
-            $this->cache[$uri] = new $this->singularName($file);
+            return new $this->singularName($file);
 
-        }
+        // }
 
 
 

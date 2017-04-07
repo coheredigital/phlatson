@@ -15,10 +15,10 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
+    protected $data_formatted = []; // TODO : evaluate the need for this, not yet implemented?
 
     // prep to have a system to turn fromatting on and off TODO: use this, lol
     protected $enableFormatting = false;
-
 
     public function __construct( $file = null )
     {
@@ -91,9 +91,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     */
     public function getDirectory(): string
     {
-
         $path = str_replace($this->getRootPath(), "", $this->getPath() );
-        $path =  Filter::uri($path);
         return $path;
     }
 
@@ -110,8 +108,6 @@ abstract class Object extends Flatbed implements JsonSerializable
         } else {
             $path = $this->rootPath . $this->name;
         }
-
-        // return Filter::path($path);
         return $path;
     }
 
@@ -131,6 +127,22 @@ abstract class Object extends Flatbed implements JsonSerializable
 
         $datetime->createFromFormat("U", $time);
         return $datetime;
+    }
+
+    /**
+     * Get, instantiate and store the Objects Template
+     * Return the template if already stored
+     * @return Template
+     */
+    public function getTemplate(): Template
+    {
+        
+        if (!$this->_template instanceof Object) {
+            $template = $this->data['template'];
+            $this->_template = $this->api('templates')->get($template);;
+        }
+
+        return $this->_template;
     }
 
 
@@ -160,8 +172,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected function getFormatted($name)
     {
 
-        // get raw value
-
+        // set raw value, return null if no raw value available
         if (!$value = $this->getUnformatted($name)) {
             return null;
         }
@@ -172,7 +183,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         }
         // use field formatting if instance of field is available and API extensions is accesible
         // TODO: extensions should always be available
-        if ($field instanceof Field && $this->api("extensions")) {
+        if ($field instanceof Field) {
             $fieldtypeName = $field->getUnformatted("fieldtype");
             $fieldtype = $this->api("extensions")->get($fieldtypeName);
             $fieldtype->object = $this;
@@ -186,7 +197,8 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected function setFormatted($name, $value)
     {
         // get the field object matching the passed "$name"
-        $field = $this->api("fields") ? $this->api("fields")->get($name) : false; // TODO, why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed
+        $field = $this->api("fields") ? $this->api("fields")->get($name) : false; 
+        // TODO: why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field) {
             $fieldtype = $field->fieldtype;
@@ -223,7 +235,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     */
     public function getUnformatted($name)
     {
-        return isset($this->data[$name]) ? $this->data[$name] : null;
+        return $this->data[$name] ?? null;
     }
 
 
@@ -316,6 +328,8 @@ abstract class Object extends Flatbed implements JsonSerializable
                 return get_class($this);
             case 'defaultFields':
                 return $this->defaultFields;
+            case 'template':
+                return $this->getTemplate();
             default:
                 return $this->getFormatted($name);
         }

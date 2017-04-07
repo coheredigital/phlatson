@@ -22,21 +22,14 @@ $folder = 'C:\Users\Adam\Websites\dev\flatbed\site\pages\news\\';
 
 $data = [];
 
-
-
-$it = new FilesystemIterator( $folder );
-
+$folders = glob($folder . "*",  GLOB_ONLYDIR | GLOB_NOSORT)
 
 ?>
 
-<div class="">
+<div>
     <?php
-    foreach ($it as $folder) {
+    foreach ($folders as $folder) {
         $file =  "$folder\data.json";
-
-        echo $folder->getBasename() . "<br>";
-        echo $folder->getBasename() . "<br>";
-        echo "<hr>";
 
         if (file_exists($file)) {
             $json = file_get_contents($file);
@@ -48,9 +41,12 @@ $it = new FilesystemIterator( $folder );
     ?>
 
 </div>
-
-
-
+<div class="list">
+    <?php foreach ($data as $value): ?>
+        <?= $value->title ?? $value['title'] ?>
+        <hr>
+    <?php endforeach ?>
+</div>
 
 <?php
 

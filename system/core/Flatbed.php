@@ -65,7 +65,8 @@ class Flatbed
      */
     final public function __invoke($name, $value = null, $lock = false)
     {
-        $this->api($name, $value, $lock);
+        // $this->api($name, $value, $lock);
+        return Api::get($name);
     }
 
 }

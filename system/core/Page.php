@@ -20,9 +20,10 @@ class Page extends DataObject implements ViewableObject
     /**
      * override of Object::getUrl because page are accessed from the
      * site root URL and note under /site/pages/
-     * @return [type] [description]
+     * @return string 
      */
-    public function getUrl() {
+    public function getUrl(): string
+    {
         $url = parent::getUrl();
         // TODO :  improve this, too 'hard coded'
         return str_replace("/site/pages", "", $url);
@@ -138,25 +139,33 @@ class Page extends DataObject implements ViewableObject
     {
 
         $children = new ObjectCollection();
-        $iterator = new FilesystemIterator( $this->path );
-        foreach ($iterator as $folder) {
-            // check that folder contains
-            $page = $this->api("pages")->getByPath( $folder->getPathname() );
+
+        $folders = glob( $this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
+
+        foreach ($folders as $folder) {
+            $page = $this->api("pages")->getByPath( $folder );
             if (!$page instanceof self) continue;
             $children->add($page);
         }
+
         return $children;
     }
 
 
-
-    protected function createUrl($array)
+    /**
+     * temp solution to have "create" url in backend
+     * TODO: replace
+     * 
+     * @param array
+     * @return void
+     */
+    protected function createUrl(array $array): string
     {
         if (is_array($array) && implode("", $array)) {
             $url = "/" . implode("/", $array);
             return $url;
         }
-        return null;
+        return '';
     }
 
 
@@ -192,8 +201,6 @@ class Page extends DataObject implements ViewableObject
     public function get( string $name)
     {
         switch ($name) {
-
-            // case 'children':
             case 'parent':
             case 'parents':
             case 'rootParent':
@@ -221,7 +228,7 @@ class Page extends DataObject implements ViewableObject
                 parent::set($name, $value);
                 break;
             default:
-                if ($this->template && $this->template->fields && $this->template->fields->has($name)) {
+                if ($this->getTemplate() && $this->getTemplate()->fields && $this->getTemplate()->fields->has($name)) {
                     $field = $this->api("fields")->get("$name");
                     $fieldtype = $field->fieldtype;
                     $this->data[$name] = $fieldtype->getSave($value);
