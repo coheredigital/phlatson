@@ -4,10 +4,8 @@
 final class ExtensionStub extends Object {
 
 
-	public function initialize() {
-
+	public function instantiate() {
 		$extension = new $this->name($this->file);
-
 	}
 
 }

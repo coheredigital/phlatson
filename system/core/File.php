@@ -10,7 +10,7 @@ class File extends Object
 
         $this->page = $page->url;
         $this->path = $page->path;
-        $this->url = $this->api("pages")->url . $page->directory . "/" . rawurlencode($name);
+        $this->url = $this->api("pages")->url . $page->uri . "/" . rawurlencode($name);
         $this->file = $page->path . $name;
         $this->filesize = filesize($this->file);
         $this->filesizeFormatted = $this->formatSizeUnits($this->filesize);

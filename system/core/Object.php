@@ -8,9 +8,11 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected $file;
     protected $name;
+    protected $path;
+    protected $uri;
+    protected $url;
 
     protected $rootPath;
-
     protected $isSystem;
 
     // main data container, holds data loaded from JSON file
@@ -23,18 +25,25 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function __construct( $file = null )
     {
 
-        $this->rootPath = $this->getRootPath();
+        // $this->rootPath = $this->getRootPath();
 
         if (!is_null($file)) {
+
             if (!file_exists($file)) {
                 throw new FlatbedException("Invalid file passed to {$this->className} class.");
             }
 
             $this->file = $file;
-            $this->name = $this->getName();
+            $this->path = dirname($file) . DIRECTORY_SEPARATOR;
+            $this->name = basename($this->path);
+            $this->url = $this->getUrl();
+            $this->uri = trim($this->url, "/");
+            
             $this->data = $this->getData();
+
         }
     }
+
 
 
     /**
@@ -51,65 +60,6 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-    public function getName()
-    {
-        return basename($this->getPath());
-    }
-
-    public function setName(string $name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-    * @return string full system path (ie: C:/root/site/etc/)
-    *
-    * Determine rootPAth of this Object type from the Objects $file
-    *
-    */
-    public function getRootPath(): string
-    {
-        if ($this->isNew()) {
-            $path = SITE_PATH . self::DATA_FOLDER;
-        } else {
-            $root = $this->isSystem() ? SYSTEM_PATH : SITE_PATH;
-            $path = $root . self::DATA_FOLDER;
-        }
-
-        return $path;
-    }
-
-
-
-
-    /**
-    * @return string
-    *
-    * Directory refers to the rootPath relative folder
-    *
-    */
-    public function getDirectory(): string
-    {
-        $path = str_replace($this->getRootPath(), "", $this->getPath() );
-        return $path;
-    }
-
-
-    /**
-    * @return string  path to the current object data file
-    */
-    public function getPath(): string
-    {
-
-        $path = '';
-        if (is_file($this->file)) {
-            $path = dirname($this->file);
-        } else {
-            $path = $this->rootPath . $this->name;
-        }
-        return $path;
-    }
 
 
     /**
@@ -136,13 +86,8 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     public function getTemplate(): Template
     {
-        
-        if (!$this->_template instanceof Object) {
-            $template = $this->data['template'];
-            $this->_template = $this->api('templates')->get($template);;
-        }
-
-        return $this->_template;
+        $template = $this->data['template'];
+        return $this->api('templates')->get($template);
     }
 
 
@@ -152,21 +97,22 @@ abstract class Object extends Flatbed implements JsonSerializable
     */
     protected function getUrl()
     {
+        $url = str_replace(ROOT_PATH, "", $this->path);
+        $url = str_replace("\\", "/", $url);
+        $url = "/$url";
+        return $url;
+    }
 
-        // get the site root
-        $rootPath = ROOT_PATH;
-
-        // remove the ROOT_PATH, site root, and data.json from the object path to get a relative directory
-        $replace = [
-        ROOT_PATH,
-        $this->api("config")->paths->root,
-        "data.json"
-        ];
-
-        $url = str_replace($replace, "", $this->getPath());
-
+    /**
+    * @return  string  the public accessible url for this Object
+    *
+    */
+    protected function getUri()
+    {
+        $url = str_replace(ROOT_PATH, "", $this->path);
+        $url = str_replace("\\", "/", $url);
         $url = trim($url, "/");
-        return Filter::url($url);
+        return $url;
     }
 
     protected function getFormatted($name)
@@ -309,18 +255,18 @@ abstract class Object extends Flatbed implements JsonSerializable
     public function get(string $name)
     {
         switch ($name) {
+            // these properties are allowed public viewing, 
+            // but should not be able to be directly updated
             case 'name':
-                return $this->getName();
             case 'uri':
-            case 'directory':
-                return $this->getDirectory();
-            case 'url':
-                return $this->getUrl();
             case 'path':
-                return $this->getPath();
+            case 'url':
+                return $this->{$name};
+
+        
             case 'urlEdit':
                 // TODO: temp solution for save redirect (maybe add via a hook)
-                $url = $this->api('admin')->route->url . self::DATA_FOLDER . "/edit/" . $this->getDirectory();
+                $url = $this->api('admin')->route->url . self::DATA_FOLDER . "/edit/" . $this->uri;
                 return $url;
             case 'modified':
                 return $this->getModified();

@@ -53,7 +53,7 @@ class Flatbed
         $event->return = $this->api("events")->execute("before.$className.$method", $event);
         // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
         $event->return = call_user_func_array([$this, "_$method"], $event->arguments);
-        $this->api("events")->execute("after.$className.$method", $event);
+        // $this->api("events")->execute("after.$className.$method", $event);
 
         return $event->return;
     }

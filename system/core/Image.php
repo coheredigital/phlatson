@@ -257,7 +257,7 @@ class Image extends File
     function save()
     {
 
-        $location = $this->api("config")->paths->cache . $this->page->directory;
+        $location = $this->api("config")->paths->cache . $this->page->uri;
 
         // create save name
         $name = rtrim($this->name, $this->ext);
@@ -298,7 +298,7 @@ class Image extends File
         }
 
 
-        $this->url = $this->url = $this->api("config")->urls->cache . $this->page->directory . "/" . rawurlencode($name);
+        $this->url = $this->url = $this->api("config")->urls->cache . $this->page->uri . "/" . rawurlencode($name);
 
         return $this;
     }

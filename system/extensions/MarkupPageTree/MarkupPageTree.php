@@ -94,7 +94,7 @@ class MarkupPageTree extends Extension
 
                 $rootUrl = $this->api("admin")->route->url;
 
-                $output .= "<a class='item' href='{$rootUrl}pages/new/{$t->name}/{$page->directory}'>{$t->name}</a>";
+                $output .= "<a class='item' href='{$rootUrl}pages/new/{$t->name}/{$page->uri}'>{$t->name}</a>";
             }
 
             $output .= '</div>';
@@ -106,7 +106,7 @@ class MarkupPageTree extends Extension
 
                 $output = "<a class='button' href='" . $this->api('config')->urls->root . $this->api(
                         "config"
-                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->directory . "'><i class='icon fa fa-plus'></i></a>";
+                    )->adminUrl . "/pages/new/" . $templates[0]->name . "/" . $page->uri . "'><i class='icon fa fa-plus'></i></a>";
                 return $output;
             }
         }

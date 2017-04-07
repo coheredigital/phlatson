@@ -29,7 +29,7 @@ class Extensions extends Objects
             $extension = new ExtensionStub($file);
 
             if( $extension->autoload ){
-                $extension = $extension->initialize();
+                $extension = $extension->instantiate();
             }
 
             $this->data[$className] = $extension;
