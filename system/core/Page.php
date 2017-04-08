@@ -179,25 +179,12 @@ class Page extends DataObject implements ViewableObject
         return true;
     }
 
-    public function _render(){
-
-        // render template file
-        ob_start();
-
-        // add self as page api variable
-        $this->api("page", $this);
-
-        // give the rendered page access to the API
-        extract($this->api());
-
-        $viewfile = $this->template->view;
-
-        // render found file
-        include($viewfile);
-
-        $output = ob_get_contents();
-        ob_end_clean();
-        return $output;
+    /**
+     * enable convenient access to $page->template->view->render();
+     * @return string decided by view file, typically HTML markup
+     */
+    public function _render(){        
+        return $this->template->view->render($this);
     }
 
     /**

@@ -165,19 +165,13 @@ abstract class Objects extends Flatbed
     public function get(string $uri)
     {
 
-        // if (!isset($this->cache[$uri])) {
+        // get the file if it exists
+        if (!$file = $this->getDataFile($uri)) {
+            return false;
+        }
 
-            // get the file if it exists
-            if (!$file = $this->getDataFile($uri)) {
-                return false;
-            }
-
-            // store found object for future reference
-            return new $this->singularName($file);
-
-        // }
-
-
+        // store found object for future reference
+        return new $this->singularName($file);
 
         return $this->cache[$uri];
     }
@@ -200,9 +194,6 @@ abstract class Objects extends Flatbed
      */
     public function getByFile($file)
     {
-
-
-
         // get the file if it exists
         if (!file_exists($file)) {
             return false;

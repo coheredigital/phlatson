@@ -1,30 +1,19 @@
 <?php
 
-class View extends Object
+class View extends Flatbed
 {
     const DATA_FOLDER = 'views';
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
 
-    function __construct($file = null)
+    protected $file;
+
+    function __construct($file)
     {
-
-        parent::__construct($file);
-
-        $this->defaultFields = array_merge($this->defaultFields, [
-            "fieldtype",
-            "input"
-        ]);
-
-        $this->skippedFields = array_merge($this->skippedFields, [
-            "template"
-        ]);
-        $this->lockedFields = [
-            "template"
-        ];
-
-        $this->setUnformatted("template", "field");
-
+        if(!file_exists($file)) {
+            throw new FlatbedException("Ivalide file ($file) cannot be used as view");
+        }
+        $this->file = $file;
     }
 
 
@@ -40,7 +29,7 @@ class View extends Object
         extract($this->api());
 
         // render found file
-        include($this);
+        include($this->file);
 
         $output = ob_get_contents();
         ob_end_clean();
