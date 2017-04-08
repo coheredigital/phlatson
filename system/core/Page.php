@@ -190,14 +190,21 @@ class Page extends DataObject implements ViewableObject
         // give the rendered page access to the API
         extract($this->api());
 
+        $viewfile = $this->template->view;
+
         // render found file
-        include($this->template->view);
+        include($viewfile);
 
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
     }
 
+    /**
+     * get variable overrides specifc to Page
+     * @param  string $name the key / name being requested
+     * @return mixed
+     */
     public function get( string $name)
     {
         switch ($name) {

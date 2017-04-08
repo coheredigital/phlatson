@@ -4,27 +4,20 @@
 class Views extends Objects
 {
 
-    public function __construct()
-    {
-        // store paths and urls 
-        $this->path = Filter::path( ROOT_PATH . "site/views/" );
-        $this->systemPath = Filter::path( ROOT_PATH . "system/views/" );
-
-        $this->url = Filter::url( ROOT_URL . "site/views/");
-        $this->systemUrl = Filter::url( ROOT_URL . "site/views/");
-    }
+    protected $rootFolder = "users";
+    protected $singularName = "User";
 
 
 
     public function get( string $name)
     {
 
-    	$file = $this->api('config')->paths->root . "site/views/{$name}.php";
+    	$file = SITE_PATH . "views" . DIRECTORY_SEPARATOR . "{$name}.php";
         if (file_exists($file)) return $file;
 
-    	$file = $this->api('config')->paths->root . "system/views/{$name}.php";
+    	$file = SYSTEM_PATH . "views" . DIRECTORY_SEPARATOR . "{$name}.php";
         if (file_exists($file)) return $file;
-
+        
         return null;
         
     }

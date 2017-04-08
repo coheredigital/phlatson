@@ -166,9 +166,9 @@ class Route extends Flatbed
 
     public function parent($route)
     {
-        if (is_string($route)) {
-            $route = $this->api("router")->get($route);
-        }
+        // if (is_string($route)) {
+        //     $route = $this->api("router")->get($route);
+        // }
 
         if (!$route instanceof Route) {
             throw new FlatbedException("Invalid route: cannot be added as parent");

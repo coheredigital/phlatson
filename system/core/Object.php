@@ -60,8 +60,6 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
 
-
-
     /**
     * @return string  path to the current object data file
     */
@@ -250,8 +248,6 @@ abstract class Object extends Flatbed implements JsonSerializable
         return array_key_exists($key, $this->data);
     }
 
-
-
     public function get(string $name)
     {
         switch ($name) {
@@ -262,8 +258,6 @@ abstract class Object extends Flatbed implements JsonSerializable
             case 'path':
             case 'url':
                 return $this->{$name};
-
-        
             case 'urlEdit':
                 // TODO: temp solution for save redirect (maybe add via a hook)
                 $url = $this->api('admin')->route->url . self::DATA_FOLDER . "/edit/" . $this->uri;

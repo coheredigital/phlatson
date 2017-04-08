@@ -23,37 +23,14 @@ try {
 
     $flatbed->api('config', new Config, true);
     $flatbed->api('request', $request = new Request, true);
-
-    /* init Router and set default request behaviour */
-    $pagesRoute = new Route([
-        "path" =>":all",
-        "callback" => "Pages.render"
-    ]);
-
-    $flatbed->api('router', new Router, true);
-    // add pages route
-    $flatbed->api('router')->add(new Route([
-        "path" =>":all",
-        "callback" => "Pages.render"
-    ]));
-
-
-    /* setup config routes, default is just the admin route */
-    if( count( $flatbed->api("config")->routes ) ) {
-
-        foreach ($flatbed->api("config")->routes as $r){
-            $flatbed->api("router")->add(new Route($r));
-        }
-
-    }
+    // $flatbed->api('request', $request = new Request, true);
 
     $flatbed->api('events', new Events, true);
-
 
     $flatbed->api('extensions', new Extensions, true);
     $flatbed->api('fields', new Fields, true);
 
-    $flatbed->api('pages', new Pages, true);
+    $flatbed->api('pages', $pages = new Pages, true);
     $flatbed->api('users', new Users, true);
     $flatbed->api('roles', new Roles, true);
 
@@ -64,7 +41,8 @@ try {
     // $flatbed->api('logger', new Logger, true);
     
     // run the app
-    $flatbed('router')->run($request);
+    $page = $pages->get($request->path);
+    echo $page->render();
 
     // end performance tracking
     $end = microtime(true);

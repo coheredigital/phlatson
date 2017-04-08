@@ -36,79 +36,6 @@ class Admin extends Extension
         $this->api("config")->scripts->add("{$this->url}scripts/main.js");
         $this->api("config")->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
-        $this->setupRoutes();
-
-    }
-
-
-    protected function setupRoutes(){
-
-
-        if ($this->api("router")->get("admin")) {
-            $this->route = $this->api("router")->get("admin");
-        } else {
-            $route = new Route;
-            $route->path("admin")
-                ->name("admin")
-                ->before("Admin.authorize")
-                ->before("Admin.gotoAdminPage");
-            $this->api('router')->add($route);
-            $this->route = $route;
-        }
-
-        // add the admin URL to the config urls variable for easy access/reference
-        $this->api("config")->urls->admin = $this->route->url;
-
-
-        $logoutRoute = new Route;
-        $logoutRoute->path("logout")
-            ->name("logout")
-            ->parent($this->route)
-            ->callback(
-                function () {
-                    $this->api("session")->logout();
-                    $this->api("router")->redirect($this->api("router")->get("login"), false);
-                }
-            );
-        $this->api('router')->add($logoutRoute);
-
-
-        $login = new Route;
-        $login
-            ->name("login")
-            ->path("login")
-            ->parent("admin")
-            ->callback(function () {
-                //  add the login stylesheet and load the login layout
-                $this->api("config")->styles->add("{$this->url}styles/login.css");
-                include "login.php";
-
-            });
-        $this->api('router')->add($login);
-
-
-        $loginSubmit = new Route;
-        $loginSubmit
-            ->path("login")
-            ->method("POST")
-            ->parent("admin")
-            ->callback(
-                function () {
-                    $session = $this->api("session");
-                    $router = $this->api("router");
-
-                    try {
-                        if ($session->login( $this->api("request")->post->username , $this->api("request")->post->password )) {
-                            $router->redirect( $router->get("admin")->url, false );
-                        }
-                    } catch (FlatbedException $e) {
-                        $session->flash("loginError", $e->getMessage());
-                        $router->redirect( $router->get("login")->url, false );
-                    }
-                }
-            );
-        $this->api('router')->add($loginSubmit);
-
     }
 
     /**
@@ -123,7 +50,7 @@ class Admin extends Extension
         $loginRoute = $this->api("router")->get("login");
         if ($this->api("request")->url == $loginRoute->url) return;
 
-        $this->api("router")->redirect( $loginRoute, false );
+        // $this->api("router")->redirect( $loginRoute, false );
 
     }
 

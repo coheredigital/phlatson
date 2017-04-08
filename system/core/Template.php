@@ -26,4 +26,29 @@ class Template extends Object
         return isset($this->data["fields"][$name]);
     }
 
+    /**
+     * get the view file associated wioth this template
+     * default name to look for is {$template->name}.php
+     * @param  string $name 
+     * @return sting  file path
+     */
+    public function getViewFile( string $name = '')
+    {
+        $filename = $name ? $name : $this->name;
+        return $this('views')->get($filename);
+    }
+
+    public function get( string $name)
+    {
+        switch ($name) {
+            case 'view':
+                return $this->getViewFile();
+            case 'objectType': // protected / private variable that should have public get
+                return $this->{$name};
+            default:
+                return parent::get($name);
+        }
+
+    }
+
 }
