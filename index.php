@@ -23,8 +23,7 @@ try {
 
     $flatbed->api('config', new Config, true);
     $flatbed->api('request', $request = new Request, true);
-    // $flatbed->api('request', $request = new Request, true);
-
+    
     $flatbed->api('events', new Events, true);
 
     $flatbed->api('extensions', new Extensions, true);
@@ -41,8 +40,14 @@ try {
     // $flatbed->api('logger', new Logger, true);
     
     // run the app
-    $page = $pages->get($request->path);
-    echo $page->render();
+    if ($page = $pages->get($request->path)) {
+        echo $page->render();
+    }
+    else {
+        // TODO :  I'd like to see if I can do this without the need for a page and template
+        echo $pages->get('404')->render();
+    }
+    
 
     // end performance tracking
     $end = microtime(true);
