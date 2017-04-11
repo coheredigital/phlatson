@@ -36,20 +36,6 @@ abstract class Objects extends Flatbed
         $this->systemUrl = ROOT_URL . "system/" . $this->rootFolder;
     }
 
-
-    /**
-     * validates and adds a path to the end of the dataPaths set
-     * @param string $path [description]
-     */
-    public function addDataPath(string $path)
-    {
-        if (!file_exists($path)) {
-            throw new FlatbedException("The path ($path) deos not exist cannot be used as a data path for {$this->className}");
-        }
-        $this->dataPaths[] = $path;
-    }
-
-
     /**
      * instantiates a new Object of the set singular type
      * @param  strin $name the name of the new object that will be used once it is saved
@@ -63,9 +49,11 @@ abstract class Objects extends Flatbed
         return $object;
     }
 
-
-
-
+    /**
+     * when provided a name will find an existing valid data file
+     * @param  string $name valid system name
+     * @return string       filname path
+     */
     protected function getDataFile(string $name): string
     {
         $name = trim($name, "/\\");
@@ -83,42 +71,7 @@ abstract class Objects extends Flatbed
         return '';
     }
 
-    /**
-     * preloads the available data directories / files into '$this->data' using getFileList()
-     * @param  string $path the location to be searched
-     */
-    protected function preloadFileList($path = null)
-    {
-        $this->data += $this->getFileList($path);
-    }
 
-    /**
-     * scans the available data directories and returns the found array
-     * key : basename of folder
-     * value : path to data file
-     * @param  string $path the location to be searched
-     */
-    protected function getFileList($path = null): array
-    {
-        if (is_null($path)) {
-            $path = $this->path;
-        }
-
-        if (!file_exists($path)) {
-            throw new FlatbedException("Cannot get file list, invalid path: {$path}");
-        }
-
-
-        $iterator = new FilesystemIterator($path);
-
-        $fileList = [];
-        foreach ($iterator as $folder) {
-            $path = $folder->getPathname();
-            $name = $folder->getBasename();
-            $fileList["$name"] = $path . DIRECTORY_SEPARATOR . "data.json";
-        }
-        return $fileList;
-    }
 
 
     /**

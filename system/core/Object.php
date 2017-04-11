@@ -17,6 +17,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
+    protected $options = [];
     protected $data_formatted = []; // TODO : evaluate the need for this, not yet implemented?
 
     // prep to have a system to turn fromatting on and off TODO: use this, lol
@@ -38,8 +39,11 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->name = basename($this->path);
             $this->url = $this->getUrl();
             $this->uri = trim($this->url, "/");
-            
             $this->data = $this->getData();
+
+            if ($this->data['settings']) {
+                $this->settings = $this->data['settings'];
+            }
 
         }
     }
@@ -253,6 +257,8 @@ abstract class Object extends Flatbed implements JsonSerializable
         switch ($name) {
             // these properties are allowed public viewing, 
             // but should not be able to be directly updated
+            case 'options':
+                return $this->options;
             case 'name':
             case 'uri':
             case 'path':
