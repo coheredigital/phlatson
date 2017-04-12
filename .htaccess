@@ -36,38 +36,38 @@ DirectoryIndex index.php index.html index.htm
       SetEnv HTTP_MOD_REWRITE On
     </IfModule>
 
-    # force trailing slashes
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+  # force trailing slashes
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
 
-    # set root URL if needed for running from a sub folder
-    # exmplate www.wesite.com/example-url
-	# RewriteBase /example-url
-	RewriteBase /
+  # set root URL if needed for running from a sub folder
+  # exmplate www.wesite.com/example-url
+  # RewriteBase /example-url
+  RewriteBase /
 
-    # Lets Encrypt support
-    RewriteRule "(^|/)\.(?!well-known)" - [F]
+  # Lets Encrypt support
+  RewriteRule "(^|/)\.(?!well-known)" - [F]
 
 
-    # block access json file in site folder
-    RewriteRule ^site/(.*)\.(txt|md|mdown)$ error [R=301,L]
+  # block access json file in site folder
+  RewriteRule ^site/(.*)\.(txt|md|mdown)$ error [R=301,L]
 
-    # block access to all sensitive system files
-    RewriteRule ^site/(.*)\.(php|txt|md|mdown)$ error [R=301,L]
+  # block access to all sensitive system files
+  RewriteRule ^site/(.*)\.(php|txt|md|mdown)$ error [R=301,L]
 
-    # allow direct file access
+  # allow direct file access
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 
 
-    # prevent flatbed from attempting to load images or anything in assets
-    RewriteCond %{REQUEST_FILENAME} !\.(jpg|jpeg|gif|png|ico)$ [NC]
-    RewriteCond %{REQUEST_FILENAME} !(^|/)site/assets/
+  # prevent flatbed from attempting to load images or anything in assets
+  RewriteCond %{REQUEST_FILENAME} !\.(jpg|jpeg|gif|png|ico)$ [NC]
+  RewriteCond %{REQUEST_FILENAME} !(^|/)site/assets/
 
-    # don't send missing image request through Flatbed
-    RewriteCond %{REQUEST_URI} !\.(gif|jpg|png|ico)$ [NC]
+  # don't send missing image request through Flatbed
+  RewriteCond %{REQUEST_URI} !\.(gif|jpg|png|ico)$ [NC]
 
-    # pass request to Flatbed (use the seconf rule here instead if using VirtualDocumentRoot)
+  # pass request to Flatbed (use the seconf rule here instead if using VirtualDocumentRoot)
 	RewriteRule ^(.*)$ index.php [L,QSA]
 
 
