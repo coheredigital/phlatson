@@ -17,7 +17,7 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
-    protected $options = [];
+    protected $settings;
     protected $data_formatted = []; // TODO : evaluate the need for this, not yet implemented?
 
     // prep to have a system to turn fromatting on and off TODO: use this, lol
@@ -92,9 +92,14 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $this->api('templates')->get($template);
     }
 
-    public function option($name)
-    {
-        return $this->options[$name];
+    /**
+     * get the named setting
+     * @param  string $name
+     * @return mixed
+     */
+    public function setting($name)
+    {   
+        return $this->settings[$name];
     }
 
     /**

@@ -4,4 +4,4 @@
 </div>
 </body>
 </html>
-<?php // r($page);
+<?php

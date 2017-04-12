@@ -44,14 +44,16 @@ nav{
 		text-decoration: none;
 		color: $brand;
 		display: inline-block;
-		color: $gray;
+		color: $gray !important;
 		padding: 0 0 .7em 0;
 		margin-right: 2em;
 		border-bottom: 3px solid transparent;
-		&:hover{
-			color: $brand;
-		}
+		margin-bottom: -2px;
+		
 		&.active {
+			border-color: $gray;
+		}
+		&:hover{
 			border-color: $brand;
 		}
 	}

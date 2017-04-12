@@ -1,52 +1,45 @@
 <?php
 
-class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess, Countable
+class ObjectCollectionIterator implements Iterator, ArrayAccess, Countable
 {
 
-    protected $object;
 
-    protected $iterator;
+    protected $currentIndex = 0;
+    protected $startIndex = 0;
+    protected $endIndex;
+
+    protected $limit = 0;
+    protected $pageCount;
+    protected $currentPage;
+
+    protected $isPaginated = false;
+
+    protected $collection = [];
+
     protected $filter;
-    protected $collection;
 
-    public function __construct()
-    {
-        $this->iterator = new ObjectCollectionIterator();
-        $this->collection = new ObjectCollectionFilter($this->iterator);
-    }
-
-    public function setObject($object)
-    {
-        $this->object = $object;
-    }
-
-    protected function isValidItem($item)
-    {
-
-        if ($item instanceof Object) {
-            return true;
-        }
-        return false;
-    }
 
     public function append(Object $item)
     {
-        $this->iterator->append($item);
+        $this->collection += [$item->name => $item];
         return $this;
     }
-
 
     public function prepend(Object $item)
     {
 
-        $this->iterator->prepend($item);
+        $this->collection = [ $item->name => $item ] + $this->collection;
         return $this;
-
     }
 
-    public function import($items)
+    public function import(ObjectCollection $items)
     {
-        $this->iterator->import($items);
+        foreach ($items as $item) {
+            if (!$this->isValidItem($item)) {
+                continue;
+            }
+            $this->append($item);
+        }
         return $this;
     }
 
@@ -69,7 +62,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
 
 
         usort(
-            $this->data,
+            $this->collection,
             function ($a, $b) use ($fieldname, $type) {
                 $v1 = $a->get($fieldname);
                 $v2 = $b->get($fieldname);
@@ -98,7 +91,12 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      */
     public function limit(int $limit) : self
     {
-        $this->iterator->limit( (int) $limit);
+        if ($limit < 0) {
+            throw new FlatbedException("Limit cannot be set to less than 0");
+        }
+        $this->limit = $limit;
+        $this->endIndex = $this->limit - 1;
+
         return $this;
     }
 
@@ -106,15 +104,33 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      * returns self with a limit set for pagination
      * @return $this
      */
-    public function paginate(string $name = "page") : self
+    public function paginate($pageNumber) : self
     {
 
-        $currentPage = (int) $this->api('request')->get->{$name};
+        if ($this->limit ===  0) {
+            throw new FlatbedException("Cannot paginate results that have no set limt");
+        }
 
-        $this->iterator->paginate($name, $currentPage);
+        $this->isPaginated = true;
+        // TODO : set $name to paramter, this is the get variable to use for paginating
+
+        // determine the page count
+        $count = $this->count();
+        $this->pageCount = intval($count / $this->limit);
+        if($count % $this->limit > 0) $this->pageCount++;
+
+        $this->currentPage = 1;
+
+        // overwrite current page base on request page
+        if ( $pageNumber && $this->limit ) {
+            $this->currentPage = $pageNumber;
+        }
+
+        $this->endIndex = $this->currentPage * $this->limit;
 
         return $this;
     }
+
 
 
 
@@ -134,14 +150,14 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      */
     public function reverse()
     {
-        $this->data = array_reverse($this->data);
+        $this->collection = array_reverse($this->collection);
         return $this;
     }
 
 
     public function has($name)
     {
-        return $this->iterator->has($name);
+        return isset($this->collection[$name]);
     }
 
     /**
@@ -150,7 +166,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      */
     public function first()
     {
-        return $this->iterator->first();
+        return $this->index(0);
     }
 
     /**
@@ -159,7 +175,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      */
     public function last()
     {
-        return $this->iterator->last();
+        return $this->index(-1);
     }
 
     /**
@@ -168,25 +184,60 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
     public function index($x)
     {
 
-        return $this->iterator->index($x);
+        if(!count($this->collection)){
+            throw new FlatbedException("$this->className is empty, cannot retrieve index($x)");
+        }
+        return array_values($this->collection)[$x];
     }
 
     public function getArray($key, $value)
     {
-        // TODO :  is this being used???
-        return $this->iterator->getArray();
+
+        $array = [];
+        foreach ($this as $object) {
+            $key = $object->get($key);
+            $value = $object->get($value);
+
+            $array[$key] = $value;
+        }
+        return $array;
+
     }
 
 
-    /** 
-     * hands of iteration resposabiliies to the ObjectCollectionIterator class
-     * @return ObjectCollectionIterator 
-     */
-    public function getIterator()
+    /* Interface requirements */
+    public function rewind()
     {
-        return $this->collection;
+        if ( $this->currentPage > 1 ) {
+            $this->currentIndex = ($this->currentPage - 1) * $this->limit;
+        }
+        else {
+            $this->currentIndex = 0;
+        }
+
+    }
+    public function current()
+    {
+        return $this->index($this->currentIndex);
     }
 
+    public function key()
+    {
+        return array_keys($this->collection)[$this->currentIndex];
+    }
+
+    public function next()
+    {
+        $this->currentIndex++;
+    }
+
+    public function valid()
+    {
+        if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) return false;
+
+        return array_key_exists( $this->key() , $this->collection );
+    }
+    /* Interface requirements */
 
     /**
      * simply return the count of elments in the data container
@@ -194,7 +245,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      */
     public function count() : int
     {
-        return $this->collection->count();
+        return (int) count($this->collection);
     }
 
     public function offsetSet($key, $value)
@@ -233,7 +284,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
             case 'previousPage':
                 return $this->currentPage - 1;
             default:
-                return $this->data[$name];
+                return $this->collection[$name];
         }
 
     }

@@ -118,7 +118,7 @@ class Page extends DataObject implements ViewableObject
     {
         // get parents, add self to simplify 
         // process of returning self when nearest parent is root
-        $parents = $this->parents()->add($this);
+        $parents = $this->parents()->append($this);
         if ($parents->count()) {
             return $parents->index(1);
         }
@@ -147,7 +147,7 @@ class Page extends DataObject implements ViewableObject
         foreach ($folders as $folder) {
             $page = $this->api("pages")->getByPath( $folder );
             if (!$page instanceof self) continue;
-            $children->add($page);
+            $children->append($page);
         }
 
         return $children;
