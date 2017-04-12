@@ -172,11 +172,14 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
         $this->pageCount = intval($count / $this->limit);
         if($count % $this->limit > 0) $this->pageCount++;
 
+        $this->currentPage = 1;
 
+        // overwrite current page base on request page
         if ( $this->api('request')->get->page && $this->limit ) {
             $this->currentPage = (int) $this->api('request')->get->page;
-            $this->endIndex = $this->currentPage * $this->limit;
         }
+
+        $this->endIndex = $this->currentPage * $this->limit;
 
         return $this;
     }
@@ -284,6 +287,7 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
     public function valid()
     {
         if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) return false;
+        
         return array_key_exists( $this->key() , $this->data );
     }
     /* Interface requirements */
@@ -294,6 +298,7 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
     {
         return count($this->data);
     }
+
     public function offsetSet($key, $value)
     {
         $this->set($key, $value);
@@ -314,8 +319,6 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
         return $this->has($key);
     }
 
-
-
     public function get($name)
     {
         switch ($name) {
@@ -324,8 +327,13 @@ class ObjectCollection extends Flatbed implements Iterator, ArrayAccess, Countab
             case 'count':
                 return $this->count();
             case 'limit':
-                return $this->limit;
-
+            case 'currentPage':
+            case 'pageCount':
+                return $this->{$name};
+            case 'nextPage':
+                return $this->currentPage + 1;
+            case 'previousPage':
+                return $this->currentPage - 1;
             default:
                 return $this->data[$name];
         }

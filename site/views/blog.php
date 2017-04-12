@@ -2,18 +2,26 @@
     <div class="container">
         <!-- PAGE CONTENT -->
         <?php
-        $children = $page->children()->limit(5)->paginate();
+        $children = $page->children()->limit(10)->paginate();
         ?>
-        <h4><?= $children->count() ?></h4>
-        <?php foreach ($children as $key => $value):?>
+        <?php foreach ($children as $p):?>
             <article>
-                <h2><?= $value->name ?></h2>
+                <h3><?= $p->title ?></h3>
+                <h6><?= $p->name ?></h6>
+                <a href="<?= $p->url ?>">Read more...</a>
             </article>
             <hr>
         <?php endforeach ?>
 
-        <?php if ($children->count > $this->limit): ?>
-            <a class="button" href="?page">Next</a>
+        <?php if ($children->pageCount): ?>
+            <?php if ($children->nextPage): ?>
+                <a class="button button-primary u-pull-right" href="?page=<?= $children->nextPage ?>">>></a>
+            <?php endif ?>
+
+            <?php if ($children->previousPage): ?>
+                <a class="button button-primary u-pull-left" href="?page=<?= $children->previousPage ?>"><<</a>
+            <?php endif ?>
+            
         <?php endif; ?>
     </div>
 <?php include 'includes/foot.php';
