@@ -116,13 +116,15 @@ class Page extends DataObject implements ViewableObject
      */
     public function rootParent()
     {
-        $parents = $this->parents();
+        // get parents, add self to simplify 
+        // process of returning self when nearest parent is root
+        $parents = $this->parents()->add($this);
         if ($parents->count()) {
-            return $parents->last();
+            return $parents->index(1);
         }
-        else {
-            return $this;
-        }
+        
+        return false;
+        
     }
 
     // public function files()
@@ -140,7 +142,7 @@ class Page extends DataObject implements ViewableObject
 
         $children = new ObjectCollection();
 
-        $folders = glob( $this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
+        $folders = glob( $this->path . "[!.]*", GLOB_ONLYDIR);
 
         foreach ($folders as $folder) {
             $page = $this->api("pages")->getByPath( $folder );
