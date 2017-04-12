@@ -6,9 +6,9 @@ ref::config('validHtml', true); ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>XTest - <?php echo $page->title ?></title>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,200,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <title>Flatbed - <?php echo $page->title ?></title>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?php echo $config->urls->views ?>styles/main.css">
 </head>
 <body>
@@ -22,12 +22,12 @@ ref::config('validHtml', true); ?>
 </div>
 <nav class="main-menu" role="navigation">
     <div class="container">
+    <!-- <?= $page->rootParent->url ?> -->
     <?php foreach ($home->children() as $p): ?>
+
         <?php $class = $p->url == $page->rootParent->url ? "class='active'" : "" ?>
         <a <?php echo $class ?> href="<?php echo $p->url ?>"><?php echo $p->title ?></a>
     <?php endforeach ?>
     </div>
 </nav>
-
-
 <div class="main">
