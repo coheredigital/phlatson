@@ -1,6 +1,6 @@
 {
-	"title" : "Admin",
-	"template" : "admin",
+	"title":"404",
+	"template":"404",
 	"settings": {
 		"hidden" : true,
 		"locked" : true
