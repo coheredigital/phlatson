@@ -92,6 +92,10 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $this->api('templates')->get($template);
     }
 
+    public function option($name)
+    {
+        return $this->options[$name];
+    }
 
     /**
     * @return  string  the public accessible url for this Object
