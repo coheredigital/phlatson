@@ -1,5 +1,8 @@
 {
     "template": "article",
     "title": "a libero nam dui",
-    "content": "Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi."
+    "content": "Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.",
+    "settings": {
+		"hidden" : true
+	}
 }

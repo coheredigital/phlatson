@@ -1,5 +1,8 @@
 {
     "template": "article",
     "title": "a ipsum integer a nibh in quis justo maecenas rhoncus aliquam",
-    "content": "Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet."
+    "content": "Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.",
+    "settings": {
+		"hidden" : true
+	}
 }

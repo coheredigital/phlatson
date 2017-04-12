@@ -12,7 +12,7 @@
             </article>
             <hr>
         <?php endforeach ?>
-
+        <?php r($children->pageCount) ?>
         <?php if ($children->pageCount): ?>
             <?php if ($children->nextPage): ?>
                 <a class="button button-primary u-pull-right" href="?page=<?= $children->nextPage ?>">>></a>

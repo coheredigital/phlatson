@@ -108,7 +108,7 @@ class ObjectCollectionIterator implements Iterator, ArrayAccess, Countable
     {
 
         if ($this->limit ===  0) {
-            throw new FlatbedException("Cannot paginate results that have no set limt");
+            throw new FlatbedException("Must set a limit on ObjectCollection before pagination can be used.");
         }
 
         $this->isPaginated = true;

@@ -142,7 +142,7 @@ class Page extends DataObject implements ViewableObject
 
         $children = new ObjectCollection();
 
-        $folders = glob( $this->path . "[!.]*", GLOB_ONLYDIR);
+        $folders = glob( $this->path . "*", GLOB_ONLYDIR);
 
         foreach ($folders as $folder) {
             $page = $this->api("pages")->getByPath( $folder );
