@@ -4,8 +4,6 @@
         <?php
         $children = $page->children()->limit(10)->paginate();
         ?>
-
-        <p><?= $children->count() ?></p>
         <?php foreach ($children as $p):?>
             <article>
                 <h3><?= $p->title ?></h3>
