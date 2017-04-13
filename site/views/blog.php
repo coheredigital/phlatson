@@ -4,6 +4,8 @@
         <?php
         $children = $page->children()->limit(10)->paginate();
         ?>
+
+        <p><?= $children->count() ?></p>
         <?php foreach ($children as $p):?>
             <article>
                 <h3><?= $p->title ?></h3>
@@ -12,7 +14,7 @@
             </article>
             <hr>
         <?php endforeach ?>
-        <?php r($children->pageCount) ?>
+
         <?php if ($children->pageCount): ?>
             <?php if ($children->nextPage): ?>
                 <a class="button button-primary u-pull-right" href="?page=<?= $children->nextPage ?>">>></a>
@@ -21,7 +23,6 @@
             <?php if ($children->previousPage): ?>
                 <a class="button button-primary u-pull-left" href="?page=<?= $children->previousPage ?>"><<</a>
             <?php endif ?>
-            
         <?php endif; ?>
     </div>
 <?php include 'includes/foot.php';
