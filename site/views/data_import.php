@@ -6,7 +6,7 @@ require ROOT_PATH . "libraries/ref/ref.php";
 ref::config('expLvl', 2);
 ref::config('validHtml', true);
 
-$data = file_get_contents('C:\Users\Adam\Websites\dev\flatbed\MOCK_DATA.json');
+$data = file_get_contents('C:\Users\Adam\Websites\dev\flatbed\MOCK_DATA_500.json');
 $data = json_decode($data);
 
 
@@ -20,7 +20,7 @@ foreach ($data as $key => $value) {
     if ($article) continue;
 
 
-
+    // TODO : cant create pages anymore :(
     $article = $pages->new( $name );
     $article->parent = $parent;
 
@@ -34,6 +34,6 @@ foreach ($data as $key => $value) {
     r( $article->getPath() );
     r( $article );
 
-    if ( $key == 2 ) break;
+    // if ( $key == 2 ) break;
 
 }

@@ -45,7 +45,7 @@ abstract class Objects extends Flatbed
     {
         $object = new $this->singularName;
         $object->name = $name;
-        $object->parent = $parent;
+        // $object->parent = $parent;
         return $object;
     }
 

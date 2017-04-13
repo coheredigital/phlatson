@@ -299,7 +299,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     {
         switch ($name) {
             case 'name':
-                $this->setName($value);
+                $this->name = $value;
                 break;
 
             default:
