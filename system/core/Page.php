@@ -197,7 +197,8 @@ class Page extends DataObject implements ViewableObject
     public function get( string $name)
     {
         switch ($name) {
-            case 'parent':
+            case 'children':
+            case 'parent':            
             case 'parents':
             case 'rootParent':
             case 'files':
