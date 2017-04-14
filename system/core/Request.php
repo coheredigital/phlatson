@@ -12,7 +12,7 @@ class Request
 
     // TODO : consider seperating request::segments from response:segments
     public $segments = [];
-    public $segmentsString = [];
+    public $segmentsString = '';
 
     public $domain;
     public $method;
@@ -23,6 +23,13 @@ class Request
     public $hostname;
 
     public $ajax;
+    public $ip;
+
+
+    public $cookies;
+    public $get;
+    public $post;
+
 
     public function __construct()
     {
@@ -33,27 +40,25 @@ class Request
 
         // get url path from root of request
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-        // $this->segments = $this->getSegments($url);
         $this->urls = $this->getUrls($url);
-
-
         $this->httpUrl = $this->scheme . "://{$this->hostname}{$this->url}";
 
         $this->ssl = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
         $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
+        $this->ip = $_SERVER['REMOTE_ADDR'];
 
-        // setup GET & POST variables
-        $this->get = new stdClass();
-        foreach ($_GET as $key => $value) {
-            $this->get->$key = $value;
-        }
+        // set params
+        $this->get = count($_COOKIES) ? $this->objectify($_COOKIES) : null;
+        $this->get = count($_GET) ? $this->objectify($_GET) : null;
+        $this->post = count($_POST) ? $this->objectify($_POST) : null;
 
-        $this->post = new stdClass();
-        foreach ($_POST as $key => $value) {
-            $this->post->$key = $value;
-        }
+
+    }
+
+
+    protected function objectify(array $array) {
+        return json_decode( json_encode( $array ) );
     }
 
 
@@ -83,6 +88,13 @@ class Request
 
     }
 
+
+
+    public function segment(int $position) {
+        $index = $position - 1;
+        return $this->segments[$index];
+    }
+
     public function get(string $name)
     {
         switch ($name) {
@@ -93,10 +105,6 @@ class Request
         }
     }
 
-    public function segment(int $position) {
-        $index = $position - 1;
-        return $this->segments[$index];
-    }
 
     /**
      * give property access to all get() variables
