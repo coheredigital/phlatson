@@ -3,6 +3,7 @@
 abstract class Objects extends Flatbed
 {
 
+    const SINGULAR_CLASSNAME = '';
     public $data = [];
     public $cache = [];
     // protected $count;
@@ -87,7 +88,7 @@ abstract class Objects extends Flatbed
 
         foreach ($this->data as $key => $value) {
             if (!$object = $this->get($key)) continue;
-            $collection->add($object);
+            $collection->append($object);
         }
         return $collection;
     }

@@ -4,7 +4,9 @@ class Extensions extends Objects
 {
 
     protected $rootFolder = "extensions";
-    protected $singularName = "extension";
+    protected $singularName = "Extension";
+    const SINGULAR_CLASSNAME = 'Extension';
+
 
     public function __construct()
     {
