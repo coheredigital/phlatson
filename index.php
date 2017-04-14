@@ -21,33 +21,25 @@ try {
 
     $flatbed = new Flatbed;
 
-    $flatbed->api('config', new Config, true);
-    $flatbed->api('request', $request = new Request, true);
+    $flatbed->register('config', new Config, true);
+    $flatbed->register('request', $request = new Request, true);
     
-    $flatbed->api('events', new Events, true);
+    $flatbed->register('events', new Events, true);
 
-    $flatbed->api('extensions', new Extensions, true);
-    $flatbed->api('fields', new Fields, true);
+    $flatbed->register('extensions', new Extensions, true);
+    $flatbed->register('fields', new Fields, true);
 
-    $flatbed->api('pages', $pages = new Pages, true);
-    $flatbed->api('users', new Users, true);
-    $flatbed->api('roles', new Roles, true);
+    $flatbed->register('pages', $pages = new Pages, true);
+    $flatbed->register('users', new Users, true);
+    $flatbed->register('roles', new Roles, true);
 
-    $flatbed->api('templates', new Templates, true);
-    $flatbed->api('views', new Views, true);
+    $flatbed->register('templates', new Templates, true);
+    $flatbed->register('views', new Views, true);
 
-    $flatbed->api('session', new Session, true);
-    // $flatbed->api('logger', new Logger, true);
-    
-    // run the app
-    if ($page = $pages->get($request->path)) {
-        echo $page->render();
-    }
-    else {
-        // TODO :  I'd like to see if I can do this without the need for a page and template
-        echo $pages->get('404')->render();
-    }
-    
+    $flatbed->register('session', new Session, true);
+    $flatbed->register('router', $router = new Router($request), true);
+
+    echo $router->execute();  
 
     // end performance tracking
     $end = microtime(true);
