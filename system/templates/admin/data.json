@@ -1,4 +1,7 @@
 {
 	"title": "Admin",
-    "fields": []
+    "fields": [],
+    "settings": {
+        "urlSegments" : true
+    }
 }

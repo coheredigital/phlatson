@@ -4,4 +4,3 @@
 </div>
 </body>
 </html>
-<?php

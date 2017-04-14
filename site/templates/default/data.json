@@ -3,7 +3,6 @@
     "fields": [
     	{
 	    	"name":"title",
-	    	"required": true,
 	    	"settings" : {
 	    		"required" : true
 	    	}
