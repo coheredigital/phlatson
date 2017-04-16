@@ -11,7 +11,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
     public function __construct()
     {
         $this->iterator = new ObjectCollectionIterator();
-        $this->iterator = new ObjectCollectionFilter( $this->iterator );
+        $this->iterator = new ObjectCollectionFilter( $this->iterator, null );
     }
 
     public function setObject($object)

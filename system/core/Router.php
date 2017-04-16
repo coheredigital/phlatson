@@ -42,16 +42,22 @@ class Router extends Flatbed
 
     public function execute() {
 		
+		$response = new Response($this->request);
 
     	$match = $this->match($this->request->path);
 
     	if ($match) {
-    		return $match->render();
+    		$body = $match->render();
+    		$response->append($body);
     	}
-	    
-        // TODO :  I'd like to see if I can do this without the need for a page and template
-        return $this('pages')->get('404')->render();
-	    
+    	else {
+	        // TODO :  I'd like to see if I can do this without the need for a page and template
+	        $body = $this('pages')->get('404')->render();
+	        $response->code(404);
+	        $response->append($body);
+    	}
+
+	    $response->send();
     
     }
 

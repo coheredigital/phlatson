@@ -75,7 +75,7 @@ class Extensions extends Objects
 
     }
 
-    public function get(string $name)
+    public function get(string $name): ?Object
     {
 
         // TODO double check need for this

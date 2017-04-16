@@ -10,9 +10,10 @@ class Request
 
     public $matchedUrl;
 
+    public $format;
+
     // TODO : consider seperating request::segments from response:segments
     public $segments = [];
-    public $segmentsString = '';
 
     public $domain;
     public $method;
@@ -23,7 +24,8 @@ class Request
     public $hostname;
 
     public $ajax;
-    public $ip;
+    public $ip = null;
+    public $userAgent ;
 
 
     public $cookies;
@@ -46,7 +48,11 @@ class Request
         $this->ssl = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
         $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
-        $this->ip = $_SERVER['REMOTE_ADDR'];
+        // find the client ip
+        $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
+        $this->ip = $this->ip === null && isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+
+        $this->userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
 
         // set params
         $this->get = count($_COOKIES) ? $this->objectify($_COOKIES) : null;
@@ -82,15 +88,20 @@ class Request
         $this->matchedUrl = $key;
 
         $matchedUrl = $this->urls[$key];
-        $this->segmentsString = "/" . str_replace($matchedUrl, '', $this->url);
+        $urlSegment = "/" . str_replace($matchedUrl, '', $this->url);
 
-        $this->segments = $this->getSegments($this->segmentsString);
+        $this->segments = $this->getSegments($urlSegment);
 
     }
 
 
-
-    public function segment(int $position) {
+    /**
+     * get the segment portion at the request position, counting from left to right
+     * @param  int    $position
+     * @return string           the URL portion at the posisiton set
+     */
+    public function segment(int $position) : ?string
+    {
         $index = $position - 1;
         return $this->segments[$index];
     }
@@ -100,6 +111,8 @@ class Request
         switch ($name) {
             case 'url':
                 return $this->urls[0];
+            case 'segment':
+                return implode("/", $this->segments) . "/";
             default:
                 return null;
         }

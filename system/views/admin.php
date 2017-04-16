@@ -1,7 +1,8 @@
 <?php 
-require_once ROOT_PATH . "libraries/ref/ref.php";
-ref::config('expLvl', 1);
-ref::config('validHtml', true);
 
-// r($_SERVER);
-r($request);
+if ($request->segment(1) == "fields") {
+
+
+	$view = $views->get('admin.fields');
+	echo $view->render($page);
+}

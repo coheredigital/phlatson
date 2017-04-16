@@ -17,12 +17,12 @@ class View extends Flatbed
     }
 
 
-    public function render($page) {
+    public function render(?Page $page = null) {
 
         // render template file
         ob_start();
 
-        // add page as api variable
+        // add page as api variable        
         $this->api("page", $page);
 
         // give the rendered page access to the API
@@ -34,7 +34,6 @@ class View extends Flatbed
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-
 
     }
 

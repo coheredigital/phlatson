@@ -100,15 +100,10 @@ abstract class Objects extends Flatbed
         $this->set($key, $value);
     }
 
-    public function set(string $key, $value)
-    {
-        $this->data[$key] = $value;
-        return $this;
-    }
-
-    // public function __get($key)
+    // public function set(string $key, $value)
     // {
-    //     return $this->get($key);
+    //     $this->data[$key] = $value;
+    //     return $this;
     // }
 
     /**
@@ -116,12 +111,12 @@ abstract class Objects extends Flatbed
      * @param  string $name the name or uri that points to the object relative to its storage folder
      * @return Object
      */
-    public function get(string $uri)
+    public function get(string $uri) : ?Object
     {
 
         // get the file if it exists
         if (!$file = $this->getDataFile($uri)) {
-            return false;
+            return null;
         }
 
         // store found object for future reference
@@ -150,7 +145,7 @@ abstract class Objects extends Flatbed
     {
         // get the file if it exists
         if (!file_exists($file)) {
-            return false;
+            return null;
         }
         return new $this->singularName($file);
     }
