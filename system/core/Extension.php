@@ -5,9 +5,6 @@ class Extension extends Object implements ObjectInterface
     protected $rootFolder = "extensions";
     protected $requiredElements = ['title', 'type'];
 
-    protected $instantiated = false;
-
-
     final public function __construct($file = null)
     {
         $file = $this->getFile();
