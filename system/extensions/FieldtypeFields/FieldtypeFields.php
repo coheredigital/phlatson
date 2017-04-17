@@ -11,7 +11,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
 
         if(count($array)) foreach ($array as $item) {
             if(isset($item['name']) && $field = $this->api("fields")->get($item['name'])) {
-                $fields->add($field);
+                $fields->append($field);
             }
         }
 
@@ -22,7 +22,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
             foreach ($defaultFields as $item) {
                 $field = $this->api("fields")->get($item);
                 if ($field instanceof Field) {
-                    $fields->add($field);
+                    $fields->append($field);
                 }
             }
         }

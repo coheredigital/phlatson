@@ -16,7 +16,6 @@ class MarkupEditForm extends Extension
 
     protected function renderActions(){
 
-
         $output .= "<div class='form-actions'>";
         $output .= "<div class='container'>";
         $output .= "<a href='{$this->object->url}' target='_external' class='button button-view'><i class='fa fa-share'></i></a> ";

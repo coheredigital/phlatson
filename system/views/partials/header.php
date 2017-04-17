@@ -7,7 +7,7 @@
         $menuLinks = [
             "Pages" => [
                 "icon" => "edit",
-                "url" => "{$page->url}"
+                "url" => "{$page->url}pages"
             ],
             "Fields" => [
                 "icon" => "edit",

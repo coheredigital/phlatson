@@ -3,7 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Flatbed CMS</title>
-	<link rel="stylesheet" href="/system/views/styles/admin.css">
+	<?php foreach ($config->styles as $file): ?>
+		<link rel="stylesheet" href="<?= $file ?>">
+	<?php endforeach ?>
 </head>
 <body>
 	<?= $this->main ?>
