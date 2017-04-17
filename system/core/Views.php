@@ -26,10 +26,8 @@ class Views extends Flatbed
     public function render( string $name)
     {
 
-
         $view = $this->get($name);
-
-        return $view->render();
+        return $view->render($page);
         
     }
 
