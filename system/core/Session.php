@@ -153,13 +153,6 @@ class Session extends Flatbed implements IteratorAggregate
         return $this;
     }
 
-    /**
-     * Getter / Setter allow object like access ($session->variable)
-     */
-    public function __get($key)
-    {
-        return $this->get($key);
-    }
 
     public function __set( string $key, $value)
     {

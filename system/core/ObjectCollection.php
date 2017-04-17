@@ -207,10 +207,4 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
 
     }
 
-    public function __get($name)
-    {
-        return $this->get($name);
-    }
-
-
 }
