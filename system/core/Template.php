@@ -32,7 +32,7 @@ class Template extends Object
      * @param  string $name 
      * @return sting  file path
      */
-    public function getViewFile( string $name = '')
+    public function getView( string $name = '')
     {
         $filename = $name ? $name : $this->name;
         return $this('views')->get($filename);
@@ -42,7 +42,7 @@ class Template extends Object
     {
         switch ($name) {
             case 'view':
-                return $this->getViewFile();
+                return $this->getView();
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:
