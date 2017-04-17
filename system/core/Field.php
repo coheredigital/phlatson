@@ -31,4 +31,23 @@ class Field extends Object
 
     }
 
+    public function getFieldtype()
+    {
+        $fieldtype = $this->getUnformatted("fieldtype");
+        $fieldtype = $this->api("extensions")->get($fieldtype);
+        return $fieldtype;
+    }
+
+    public function get( string $name)
+    {
+        switch ($name) {
+            case 'fieldtype':
+            case 'type': // alias
+                return $this->getFieldtype();
+            default:
+                return parent::get($name);
+        }
+
+    }
+
 }
