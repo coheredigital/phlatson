@@ -138,13 +138,15 @@ abstract class Object extends Flatbed implements JsonSerializable
         if ($this->api("fields")) {
             $field = $this->api("fields")->get($name);
         }
+
         // use field formatting if instance of field is available and API extensions is accesible
         // TODO: extensions should always be available
         if ($field instanceof Field) {
-            $fieldtypeName = $field->getUnformatted("fieldtype");
-            $fieldtype = $this->api("extensions")->get($fieldtypeName);
+
+            $fieldtype = $field->type;
             $fieldtype->object = $this;
             $fieldtype->value = $value;
+
             $value = $fieldtype->getOutput($value);
         }
         return $value;
@@ -267,16 +269,11 @@ abstract class Object extends Flatbed implements JsonSerializable
             // these properties are allowed public viewing, 
             // but should not be able to be directly updated
             case 'options':
-                return $this->options;
             case 'name':
             case 'uri':
             case 'path':
             case 'url':
                 return $this->{$name};
-            case 'urlEdit':
-                // TODO: temp solution for save redirect (maybe add via a hook)
-                $url = $this->api('admin')->route->url . self::DATA_FOLDER . "/edit/" . $this->uri;
-                return $url;
             case 'modified':
                 return $this->getModified();
             case 'className':
@@ -288,16 +285,6 @@ abstract class Object extends Flatbed implements JsonSerializable
             default:
                 return $this->getFormatted($name);
         }
-    }
-
-    /**
-     * give property access to all get() variables
-     * @param  string $name
-     * @return mixed
-     */
-    final public function __get( string $name)
-    {
-        return $this->get($name);
     }
 
     public function set(string $name, $value)
