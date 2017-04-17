@@ -74,4 +74,24 @@ class Flatbed
         return Api::get($name);
     }
 
+    public function get(string $name)
+    {
+        switch ($name) {
+            case 'className':
+                return get_class($this);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * give property access to all get() variables
+     * @param  string $name
+     * @return mixed
+     */
+    final public function __get( string $name)
+    {
+        return $this->get($name);
+    }
+
 }
