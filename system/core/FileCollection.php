@@ -29,7 +29,7 @@ class FileCollection extends ObjectCollection
                 }
 
                 if ($fileObject) {
-                    $this->add($fileObject);
+                    $this->append($fileObject);
                 }
 
             }
