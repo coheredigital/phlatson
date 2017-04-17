@@ -185,7 +185,8 @@ class Page extends DataObject implements ViewableObject
      * enable convenient access to $page->template->view->render();
      * @return string decided by view file, typically HTML markup
      */
-    public function _render(){        
+    public function _render()
+    {
         return $this->template->view->render($this);
     }
 
