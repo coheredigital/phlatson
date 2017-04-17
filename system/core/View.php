@@ -6,6 +6,7 @@ class View extends Flatbed
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
 
+    protected $page;
     protected $file;
 
     function __construct($file)
@@ -22,8 +23,7 @@ class View extends Flatbed
         // render template file
         ob_start();
 
-        // add page as api variable        
-        $this->api("page", $page);
+        // TODO :  add support for overriding default page with passed in value
 
         // give the rendered page access to the API
         extract($this->api());
@@ -36,5 +36,6 @@ class View extends Flatbed
         return $output;
 
     }
+
 
 }
