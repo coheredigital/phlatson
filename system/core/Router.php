@@ -18,7 +18,6 @@ class Router extends Flatbed
 	    foreach ($this->request->urls as $key => $url) {
 	    	
 	    	$page = $this('pages')->get($url);
-
 	    	
 	    	if ($page) {
 	    		// page match on first url is an exact match, return it
@@ -44,15 +43,18 @@ class Router extends Flatbed
 		
 		$response = new Response($this->request);
 
-    	$match = $this->match($this->request->path);
+    	$page = $this->match($this->request->path);
 
-    	if ($match) {
-    		$body = $match->render();
+    	if ($page instanceof Page) {
+    		$this->register('page', $page, true);
+    		$body = $page->render();
     		$response->append($body);
     	}
     	else {
 	        // TODO :  I'd like to see if I can do this without the need for a page and template
-	        $body = $this('pages')->get('404')->render();
+	        $page = $this('pages')->get('404');
+	        $this->register('page', $page, true);
+	        $body = $page->render();
 	        $response->code(404);
 	        $response->append($body);
     	}
