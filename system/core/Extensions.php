@@ -14,48 +14,12 @@ class Extensions extends Objects
 
         $systemExtensions = SYSTEM_PATH . "extensions" . DIRECTORY_SEPARATOR;
 
-        $this->preloadExtensionList($systemExtensions);
-        $this->preloadExtensionList();
+        $this->preloadFileList($systemExtensions);
+        $this->preloadFileList();
 
         $this->initializeAutoloadExtensions();
     }
 
-
-    /**
-     * preloads the available data directories / files into '$this->data' using getFileList()
-     * @param  string $path the location to be searched
-     */
-    protected function preloadExtensionList($path = null)
-    {
-        foreach ($this->rootFolders as $folder) {
-            $path = ROOT_PATH . $folder . $this->rootFolder . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR;
-            $this->data += $this->getFileList($path);
-        }
-    }
-
-    /**
-     * scans the available data directories and returns the found array
-     * key : basename of folder
-     * value : path to data file
-     * @param  string $path the location to be searched
-     */
-    protected function getFileList($path): array
-    {
-        if (!file_exists($path)) {
-            throw new FlatbedException("Cannot get file list, invalid path: {$path}");
-        }
-
-
-    
-        $folders = glob( $this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
-
-        $fileList = [];
-        foreach ($folders as $folder) {
-            $name = basename($folder);
-            $fileList["$name"] = $folder . DIRECTORY_SEPARATOR . "data.json";
-        }
-        return $fileList;
-    }
 
     /**
      * preload autoload extensions and ExtensionStubs
