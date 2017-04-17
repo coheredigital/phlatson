@@ -10,7 +10,7 @@ class Views extends Flatbed
     public function get( string $name)
     {
 
-    	$file = SITE_PATH . "views" . DIRECTORY_SEPARATOR . "{$name}.php";
+        $file = SITE_PATH . "views" . DIRECTORY_SEPARATOR . "{$name}.php";
 
         // fallback to checking system folder for file
         if (!file_exists($file)) {
@@ -20,6 +20,16 @@ class Views extends Flatbed
         $view = new View($file);
 
         return $view;
+        
+    }
+
+    public function render( string $name)
+    {
+
+
+        $view = $this->get($name);
+
+        return $view->render();
         
     }
 

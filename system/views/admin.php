@@ -1,8 +1,13 @@
 <?php 
 
-if ($request->segment(1) == "fields") {
+$layout = $views->get('layouts/default');
 
-
-	$view = $views->get('admin.fields');
-	echo $view->render($page);
+if ($page->messages) {
+	$layout->main .= $views->get('partials/messages')->render();
 }
+
+$layout->main .= $views->render('partials/header');
+
+
+
+echo $layout->render();
