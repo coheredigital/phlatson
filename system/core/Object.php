@@ -143,12 +143,14 @@ abstract class Object extends Flatbed implements JsonSerializable
         // TODO: extensions should always be available
         if ($field instanceof Field) {
 
-            $fieldtype = $field->type;
+            $fieldtype = $field->get('fieldtype');
             $fieldtype->object = $this;
             $fieldtype->value = $value;
 
             $value = $fieldtype->getOutput($value);
         }
+
+
         return $value;
     }
 
@@ -160,7 +162,7 @@ abstract class Object extends Flatbed implements JsonSerializable
         // TODO: why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed
 
         if ($field instanceof Field) {
-            $fieldtype = $field->fieldtype;
+            $fieldtype = $field->get('fieldtype');
             $fieldtype->object = $this;
 
             if ($fieldtype instanceof Fieldtype) {
