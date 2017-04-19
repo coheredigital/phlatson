@@ -26,7 +26,7 @@ class Router extends Flatbed
 	    			return $page;
 	    		}
 	    		// subsequent match is a partial match, and requires template to support url segments
-	    		else if($page->template->setting('urlSegments') ) {
+	    		else if($page->template->setting('allow_segments') ) {
 	    			$this->request->setMatch($key);
 	    			return $page;
 	    		}
@@ -41,23 +41,41 @@ class Router extends Flatbed
 
     public function execute() {
 		
-		$response = new Response($this->request);
+		
 
     	$page = $this->match($this->request->path);
 
     	if ($page instanceof Page) {
-    		$this->register('page', $page, true);
-    		$body = $page->render();
-    		$response->append($body);
+
+    		$this->api('page', $page, true);
+    		// create reponse and add to API
+    		$response = new Response($this->request, $page);
+    		$this->api('response', $response, true);
+
+    		// execute controller
+    		$controller = $page->get('template')->get('controller');
+    		if (is_file($controller)) {
+    			extract($this->api());
+    			include_once $controller;
+    		}
+
     	}
     	else {
 	        // TODO :  I'd like to see if I can do this without the need for a page and template
 	        $page = $this('pages')->get('404');
-	        $this->register('page', $page, true);
-	        $body = $page->render();
+
+	        // set the response so the page has access
+	        $response = new Response($this->request, $page);
 	        $response->code(404);
-	        $response->append($body);
+	        $this->api('response', $response, true);
+
+	        
+	        
     	}
+
+    	// add response and page to api
+    	$response->append($page->render());
+    	
 
 	    $response->send();
     
