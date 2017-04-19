@@ -8,24 +8,22 @@ class Flatbed
 {
 
     /**
-     * @param $name
-     */
-    final public function api(string $name = null)
-    {
-        return Api::get($name);
-    }
-
-    /**
-     * register new API variable to be universally accesible to classes extending Flatbed
+     * get or register API variable 
+     * universally accesible to classes extending Flatbed
      * @param  string       $name  unique name that the API is registered under
      * @param  mixed        $value the value to be stored
      * @param  bool|boolean $lock  set to true to prevent the API variable being overwritten
      * @return self         returns self to allow chaining
      */
-    public function register(string $name, $value, bool $lock = false) : self
+    final public function api( ?string $name = null, $value = null, bool $lock = false)
     {
-        Api::set($name, $value, $lock);
-        return $this;
+
+        if ($value !== null) {
+            Api::set($name, $value, $lock);
+            return $this;
+        }
+
+        return Api::get($name);
     }
 
 

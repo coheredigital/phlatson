@@ -21,23 +21,18 @@ try {
 
     $flatbed = new Flatbed;
 
-    $flatbed->register('config', new Config, true);
-    $flatbed->register('request', $request = new Request, true);
-    
-    $flatbed->register('events', new Events, true);
-
-    $flatbed->register('extensions', new Extensions, true);
-    $flatbed->register('fields', new Fields, true);
-
-    $flatbed->register('pages', $pages = new Pages, true);
-    $flatbed->register('users', new Users, true);
-    $flatbed->register('roles', new Roles, true);
-
-    $flatbed->register('templates', new Templates, true);
-    $flatbed->register('views', new Views, true);
-
-    $flatbed->register('session', new Session, true);
-    $flatbed->register('router', $router = new Router($request), true);
+    $flatbed->api('config', new Config, true);
+    $flatbed->api('request', $request = new Request, true);
+    $flatbed->api('users', new Users, true);
+    $flatbed->api('session', new Session, true);
+    $flatbed->api('events', new Events, true);
+    $flatbed->api('extensions', new Extensions, true);
+    $flatbed->api('fields', new Fields, true);
+    $flatbed->api('pages', $pages = new Pages, true);
+    $flatbed->api('roles', new Roles, true);
+    $flatbed->api('templates', new Templates, true);
+    $flatbed->api('views', new Views, true);
+    $flatbed->api('router', $router = new Router($request), true);
 
     echo $router->execute();  
 
