@@ -11,10 +11,10 @@ abstract class Fieldtype extends Extension
         return $value;
     }
 
-    public function getEdit($value)
-    {
-        return $this->getOutput($value);
-    }
+    // public function getEdit($value)
+    // {
+    //     return $this->getOutput($value);
+    // }
 
     public function getSave($value)
     {
