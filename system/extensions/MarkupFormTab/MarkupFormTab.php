@@ -26,7 +26,7 @@ class MarkupFormTab extends Extension
             }
         }
 
-        $output = "<li class='{$this->className} tab' data-tab='{$this->id}'>{$label}{$output}{$submit}</li>";
+        $output = "<li class='{$this->className}' data-tab='{$this->id}'>{$label}{$output}{$submit}</li>";
         return $output;
 
 

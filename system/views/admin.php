@@ -8,22 +8,47 @@ $config->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
 $config->scripts->add("{$this->url}scripts/main.js");
 $config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
-$layout = $views->get('layouts/default');
+require ROOT_PATH . "libraries/ref/ref.php";
+ref::config('expLvl', 1);
+ref::config('validHtml', true);
 
-if ($page->messages) {
-	$layout->main .= $views->get('partials/messages')->render();
+
+
+if ($response->segment(1) === "login") {
+
+
+	if ($request->method == "POST" && $request->post->username && $request->post->password) {
+		
+		$username = $request->post->username;
+		$password = $request->post->password;
+
+
+		if ($session->login($username, $password)) {
+			$response->redirect($page->url);
+		}
+
+	}
+
+
+	$config->styles->add("/system/views/styles/login.css");
+	$page->layout = $views->get('layouts/login');
 }
 
-$layout->main .= $views->render('partials/header');
+
+if ($page->messages) {
+	$page->layout->main .= $views->get('partials/messages')->render();
+}
+
+
 
 
 if ($request->segment(1) == "fields") {
 	if ($request->segment(2)) {
-		$layout->main .= $views->render('partials/edit-field');
+		$page->layout->main .= $views->render('partials/edit-field');
 	}
 	else {
-		$layout->main .= $views->render('partials/list-fields');
+		$page->layout->main .= $views->render('partials/list-fields');
 	}
 }
 
-echo $layout->render();
+echo $page->layout->render();
