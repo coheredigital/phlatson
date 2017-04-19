@@ -86,12 +86,8 @@ class Request
     public function setMatch(int $key)
     {
         $this->matchedUrl = $key;
-
         $matchedUrl = $this->urls[$key];
-        $urlSegment = "/" . str_replace($matchedUrl, '', $this->url);
-
-        $this->segments = $this->getSegments($urlSegment);
-
+        $this->segments = $this->getSegments($this->url);
     }
 
 
