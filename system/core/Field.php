@@ -41,8 +41,8 @@ class Field extends Object
     public function get( string $name)
     {
         switch ($name) {
+            // get fieldtype needs manual handling to avoid an infinite loop
             case 'fieldtype':
-            case 'type': // alias
                 return $this->getFieldtype();
             default:
                 return parent::get($name);
