@@ -2,6 +2,6 @@
 	"title": "Admin",
     "fields": [],
     "settings": {
-        "urlSegments" : true
+        "allow_segments" : true
     }
 }
