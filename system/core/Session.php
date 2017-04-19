@@ -7,14 +7,15 @@ class Session extends Flatbed implements IteratorAggregate
 
     function __construct()
     {
+
         if($this->exists()){
             $this->start();
         }
-        unregister_GLOBALS();
 
         // check for a logged in user
         if ($username = $this->get('_user_name')) {
             $user = $this->api('users')->get($username);
+
             // update timestamp to extend session life
             if ($user) {
                 $this->set('_user_ts', time());
@@ -130,7 +131,7 @@ class Session extends Flatbed implements IteratorAggregate
     }
 
     /**
-     * Removes / cancels an existing flash session key
+     * Removes existing flash session key
      * Session varible will go back to being a regular session variable,
      * and will remain in session until it expires
      * @param  string $key
