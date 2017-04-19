@@ -5,8 +5,8 @@
 class Response extends Flatbed
 {
 
-    protected $config;
     protected $request;
+    public $page;
 
     protected $protocol = '1.1';
 
@@ -21,6 +21,8 @@ class Response extends Flatbed
     protected $locked = false;
     protected $sent = false;
 
+    protected $segments = [];
+
     // TODO :  move the ResponseFormat class
     protected $common_formats = [
         'html' => 'text/html',
@@ -34,10 +36,16 @@ class Response extends Flatbed
         'jsonp' => 'text/javascript'
     ];
 
-    public function __construct( Request $request, Config $config = null)
+    public function __construct( Request $request, Page $page)
     {
         $this->request = $request;
+        $this->page = $page;
         
+        $segment = str_remove_prefix($request->url, $page->url);
+        if ($segment = trim($segment,"/")) {
+            $this->segments = explode("/", $segment);
+        }
+
         // set default response status
         $this->status = new ResponseStatus(200);
 
@@ -238,13 +246,34 @@ class Response extends Flatbed
      * @param  integer $code [description]
      * @return Response
      */
-    public function redirect( string $url, int $code = 302) : self
+    public function redirect( string $url, int $code = 302)
     {
+        $this->unlock();
         $this->code($code);
         $this->header('Location', $url);
-        $this->lock();
         return $this;
+        exit;
     }
 
+    /**
+     * get the segment portion at the request position, counting from left to right
+     * @param  int    $position
+     * @return string           the URL portion at the posisiton set
+     */
+    public function segment(int $position) : ?string
+    {
+        $index = $position - 1;
+        return $this->segments[$index];
+    }
+
+    public function get(string $name)
+    {
+        switch ($name) {
+            case 'segment':
+                return implode("/", $this->segments) . "/";
+            default:
+                return null;
+        }
+    }
 
 }
