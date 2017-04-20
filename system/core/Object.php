@@ -11,6 +11,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected $path;
     protected $uri;
     protected $url;
+    protected $template;
 
     protected $rootPath;
     protected $isSystem;
@@ -39,13 +40,12 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->name = basename($this->path);
             $this->url = $this->getUrl();
             $this->uri = trim($this->url, "/");
+
             $this->data = $this->getData();
 
-            $this->data('modified', $this->getModified());
+            $this->template = $this->getTemplate();
 
-            if ($this->data['settings']) {
-                $this->settings = $this->data['settings'];
-            }
+            $this->data('modified', filemtime($this->file));
 
         }
     }
@@ -67,20 +67,18 @@ abstract class Object extends Flatbed implements JsonSerializable
 
 
     /**
-    * @return string  path to the current object data file
-    */
-    public function getModified(): FlatbedDateTime
+     * Get, instantiate and store the Objects Template
+     * Return the template if already stored
+     * @return Template
+     */
+    public function setTemplate( string $name) : self
     {
-        $time = filemtime($this->file);
-        $datetime = new FlatbedDateTime();
-
-        // set default format if defined in config
-        if ($this->api("config")->get('dateTimeFormat')) {
-            $datetime->setOutputFormat($this->api("config")->get('dateTimeFormat'));
+        
+        if(!$template = $this->data('template')) {
+            return null;
         }
 
-        $datetime->createFromFormat("U", $time);
-        return $datetime;
+        return $this->api('templates')->get($template);
     }
 
     /**
@@ -88,10 +86,13 @@ abstract class Object extends Flatbed implements JsonSerializable
      * Return the template if already stored
      * @return Template
      */
-    public function getTemplate(): Template
+    public function getTemplate(?string $name = null): ?Template
     {
-        $template = $this->data['template'];
-        return $this->api('templates')->get($template);
+        $name = $name !== null ? $name : $this->data('template');
+
+        if($name === null) return null;
+
+        return $this->api('templates')->get($name);
     }
 
     /**
@@ -101,7 +102,8 @@ abstract class Object extends Flatbed implements JsonSerializable
      */
     public function setting($name)
     {   
-        return $this->settings[$name];
+        $settings = $this->data('settings');
+        return $settings[$name] ?? null;
     }
 
     /**
@@ -129,7 +131,14 @@ abstract class Object extends Flatbed implements JsonSerializable
     }
 
     protected function getField($name) {
-        if ($this->template->has($name)) {
+
+        if (!$this->get('template') instanceof Template) {
+            return null;
+        }
+
+        $found = $this->template->hasField($name);
+
+        if ($this->template->hasField($name)) {
             return $this->api("fields")->get($name);
         }
         
@@ -150,19 +159,12 @@ abstract class Object extends Flatbed implements JsonSerializable
         $value = $this->data($name);
 
         // get the field object matching the passed "$name"
-        $field = $this->getField($name);
-        
+        // $field = $this->getField($name);        
 
-        // use field formatting if instance of field is available and API extensions is accesible
-        if ($field instanceof Field) {
-
-            $fieldtype = $field->get('fieldtype');
-            $fieldtype->object = $this;
-            $fieldtype->value = $value;
-
-            $value = $fieldtype->get($value);
+        // // use field formatting if instance of field is available and API extensions is accesible
+        if ($field instanceof Field && $fieldtype = $field->get('fieldtype')) {
+            $value = $fieldtype->ouput($value);
         }
-
 
         return $value;
     }
@@ -171,64 +173,58 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected function setFormatted($name, $value)
     {
         // get the field object matching the passed "$name"
-        $field = $this->api("fields") ? $this->api("fields")->get($name) : false; 
-        // TODO: why am I check if the $this->api("fields") instance exist yet, this shouldn't be needed
 
-        if ($field instanceof Field) {
-            $fieldtype = $field->get('fieldtype');
-            $fieldtype->object = $this;
+        if ($this->api("fields")) {
 
-            if ($fieldtype instanceof Fieldtype) {
-                $value = $fieldtype->getSave($value);
-            }
+            $field = $this->getField($name); 
+
+        }
+
+        
+        if ($field instanceof Field && $fieldtype = $field->get('fieldtype')) {
+            $value = $fieldtype->input($value);
         }
         $this->data($name, $value);
+        
     }
 
 
     /**
-    * set value directly to $this->data[$name]
-    * skips validation of passed value
-    * should not generally be used on public facing API
     *
-    * @param  string $name
-    * @param  mixed $value
-    * @return mixed
-    */
-    // public function setUnformatted($name, $value)
-    // {
-    //     $this->data[$name] = $value;
-    // }
-
-    /**
-    * get value directly to $this->data[$name]
     * skips formatting of passed value
+    * get / set value directly from / to $this->data[$name]
+    * 
     *
     * @param  string $name
     * @return mixed
     */
-    // public function getUnformatted($name)
-    // {
-    //     return $this->data[$name] ?? null;
-    // }
-
-    /**
-    * get / set value directly to $this->data[$name]
-    * skips formatting of passed value
-    *
-    * @param  string $name
-    * @return mixed
-    */
-    public function data( string $name, $value = null)
+    protected function data( string $name, $value = null)
     {
         if ($value === null) {
             return $this->data[$name] ?? null;
         }
-        else {
-            $this->data[$name] = $value;
-        }
+        
+        $this->data[$name] = $value;
+        return $this;
+        
     }
 
+    /**
+    * @return string  path to the current object data file
+    */
+    public function getModified(): FlatbedDateTime
+    {
+        $time = filemtime($this->file);
+        $datetime = new FlatbedDateTime();
+
+        // set default format if defined in config
+        if ($this->api("config")->get('dateTimeFormat')) {
+            $datetime->setOutputFormat($this->api("config")->get('dateTimeFormat'));
+        }
+
+        $datetime->createFromFormat("U", $time);
+        return $datetime;
+    }
 
     /**
     * @return bool
@@ -300,20 +296,20 @@ abstract class Object extends Flatbed implements JsonSerializable
         switch ($name) {
             // these properties are allowed public viewing, 
             // but should not be able to be directly updated
-            case 'options':
             case 'name':
             case 'uri':
             case 'path':
             case 'url':
+            case 'template':
                 return $this->{$name};
-            // case 'modified':
-            //     return $this->getModified();
+            case 'modified':
+                return $this->getModified();
             case 'className':
                 return get_class($this);
             case 'defaultFields':
                 return $this->defaultFields;
-            case 'template':
-                return $this->getTemplate();
+            // case 'template':
+            //     return $this->getTemplate();
             default:
                 return $this->getFormatted($name);
         }

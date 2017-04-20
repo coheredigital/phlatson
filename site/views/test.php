@@ -13,6 +13,13 @@ $limit = 10000;
 
 $count = 0;
 
+$p = $pages->get("/");
+$t = $p->template;
+// r($t);
+r($t->fields);
+r($t->hasField('content'));
+r($t->hasField('sdsds'));
 
-r($request);
-r($response);
+
+$field = $fields->get('content');
+r($field->template);

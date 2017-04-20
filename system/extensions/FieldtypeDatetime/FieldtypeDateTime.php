@@ -3,7 +3,7 @@
 class FieldtypeDateTime extends Fieldtype
 {
 
-    public function get($value)
+    public function output($value)
     {
         
         if(is_int($value)){
@@ -15,7 +15,7 @@ class FieldtypeDateTime extends Fieldtype
         return $datetime;
     }
 
-    public function set($value)
+    public function input($value)
     {
         if(is_int($value)){
             $value = date("c", $value);

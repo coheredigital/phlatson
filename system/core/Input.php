@@ -69,7 +69,7 @@ abstract class Input extends Extension implements RenderInterface
     }
 
     /**
-     * @return String/Markup
+     * @return String
      *
      * should return a raw Input field to be placed inside an Input Wrapper
      *
@@ -83,7 +83,7 @@ abstract class Input extends Extension implements RenderInterface
      * Returns the final output, primarily used by admin editing pages
      *
      */
-    final public function _render()
+    final public function render()
     {
 
 
@@ -111,7 +111,7 @@ abstract class Input extends Extension implements RenderInterface
     }
     /**
      * get attributes array as HTML compatible key=value string
-     * @return [type] [description]
+     * @return string
      */
     public function getAttributesString()
     {

@@ -4,7 +4,7 @@ abstract class Fieldtype extends Extension
 {
 
     protected $field;
-    protected $object;
+    public $object;
 
     /**
      * format value for output
@@ -12,12 +12,12 @@ abstract class Fieldtype extends Extension
      * @param mixed raw input value
      * @return mixed formatted publc facing variable
      */
-    public function get($value)
+    public function input($value)
     {
         return $value;
     }
 
-    public function set($value)
+    public function output($value)
     {
         return $value;
     }

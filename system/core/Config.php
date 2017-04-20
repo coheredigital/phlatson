@@ -6,9 +6,10 @@ class Config extends Object
 
     public function __construct()
     {
+        $this->data("styles", new SimpleArray());
+        $this->data("scripts", new SimpleArray());
 
-        $this->styles = new SimpleArray();
-        $this->scripts = new SimpleArray();
+
 
         // setup default urls / paths
         $this->setupDirectories();
@@ -48,15 +49,15 @@ class Config extends Object
         // store an array of directories
         $directories = array();
         $directories['assets'] = 'assets/';
-        $directories['cache'] = 'cache/';
+        // $directories['cache'] = 'cache/';
         $directories['site'] = 'site/';
-        $directories['config'] = $directories['site'] . 'config/';
-        $directories['pages'] = $directories['site'] . 'pages/';
-        $directories['fields'] = $directories['site'] . 'fields/';
-        $directories['templates'] = $directories['site'] . 'templates/';
-        $directories['extensions'] = $directories['site'] . 'extensions/';
-        $directories['views'] = $directories['site'] . 'views/';
-        $directories['users'] = $directories['site'] . 'users/';
+        //$directories['config'] = $directories['site'] . 'config/';
+        //$directories['pages'] = $directories['site'] . 'pages/';
+        //$directories['fields'] = $directories['site'] . 'fields/';
+        // $directories['templates'] = $directories['site'] . 'templates/';
+        // $directories['extensions'] = $directories['site'] . 'extensions/';
+        // $directories['views'] = $directories['site'] . 'views/';
+        // $directories['users'] = $directories['site'] . 'users/';
 
 
         /*
@@ -76,13 +77,12 @@ class Config extends Object
 
 
         // add the urls anc paths to config
-        $this->urls = $urls;
-        $this->paths = $paths;
-
+        $this->data('urls',  $urls);
+        $this->data('paths',  $paths);
 
     }
 
-
+    
     public function get( string $name )
     {
         if ($this->has($name)) {

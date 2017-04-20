@@ -112,9 +112,9 @@ class Page extends DataObject implements ViewableObject
 
     /**
      * returns highest level parent, or self if no other parent found
-     * @return [type] [description]
+     * @return Object
      */
-    public function rootParent()
+    public function rootParent() : ?Object
     {
         // get parents, add self to simplify 
         // process of returning self when nearest parent is root
@@ -123,7 +123,7 @@ class Page extends DataObject implements ViewableObject
             return $parents->index(1);
         }
         
-        return false;
+        return null;
         
     }
 
@@ -185,7 +185,7 @@ class Page extends DataObject implements ViewableObject
      * enable convenient access to $page->template->view->render();
      * @return string decided by view file, typically HTML markup
      */
-    public function _render()
+    public function render()
     {
         return $this->template->view->render($this);
     }

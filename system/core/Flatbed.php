@@ -36,30 +36,30 @@ class Flatbed
      * no other classes that extend Flatbed should be allowed to override this behaviour
      *
      */
-    final public function __call($method, $arguments)
-    {
-        $methodName = "_$method";
-        if (!method_exists($this, "$methodName")) throw new FlatbedException("Method: $method does not exist in class: $this->className");
+    // final public function __call($method, $arguments)
+    // {
+    //     $methodName = "_$method";
+    //     if (!method_exists($this, "$methodName")) throw new FlatbedException("Method: $method does not exist in class: $this->className");
 
-        $className = get_class($this);
+    //     $className = get_class($this);
 
-        // create the Event object to store and pass all the good stuff we want to have available to our listeners
-        $event = new Event;
+    //     // create the Event object to store and pass all the good stuff we want to have available to our listeners
+    //     $event = new Event;
 
-        $event->method = $method;
-        $event->arguments = $arguments;
-        $event->object = $this;
-        $event->return = null;
+    //     $event->method = $method;
+    //     $event->arguments = $arguments;
+    //     $event->object = $this;
+    //     $event->return = null;
 
 
-        // TODO :  work on function return handling logic
-        $event->return = $this->api("events")->execute("before.$className.$method", $event);
-        // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
-        $event->return = call_user_func_array([$this, "_$method"], $event->arguments);
-        // $this->api("events")->execute("after.$className.$method", $event);
+    //     // TODO :  work on function return handling logic
+    //     $event->return = $this->api("events")->execute("before.$className.$method", $event);
+    //     // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
+    //     $event->return = call_user_func_array([$this, "_$method"], $event->arguments);
+    //     // $this->api("events")->execute("after.$className.$method", $event);
 
-        return $event->return;
-    }
+    //     return $event->return;
+    // }
 
     /**
      * allow for more convenient access to the API
@@ -83,5 +83,19 @@ class Flatbed
     }
 
 
+    /**
+     * give property access to all get() variables
+     * @param  string $name
+     * @return mixed
+     */
+    public function __get( string $name)
+    {
+        switch ($name) {
+            case 'url':
+                return $this->{$name};
+            default:
+                return null;
+        }
+    }
 
 }

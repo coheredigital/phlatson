@@ -18,9 +18,9 @@ class ObjectCollectionPagination extends LimitIterator
 
     /**
      * returns the number of pages required based on the set limit
-     * @return [type] [description]
+     * @return int
      */
-    public function getPageCount(int $limit)
+    public function getPageCount(int $limit) : int
     {
 
     	$count = iterator_count($this->getInnerIterator());

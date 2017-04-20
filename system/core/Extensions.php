@@ -45,9 +45,10 @@ class Extensions extends Objects
         // TODO double check need for this
         $extension = $this->initialize($name, $extension);
 
-        if(!$extension->singular){
-            $extension = clone $extension; // TODO I don't know if I want to use clone here
-        }
+        // TODO : FIX, this was causing a formatting error
+        // if(!$extension->singular){
+        //     $extension = clone $extension; // TODO I don't know if I want to use clone here
+        // }
 
         return $extension;
     }

@@ -25,7 +25,7 @@ try {
     $flatbed->api('request', $request = new Request, true);
     $flatbed->api('users', new Users, true);
     $flatbed->api('session', new Session, true);
-    $flatbed->api('events', new Events, true);
+    // $flatbed->api('events', new Events, true);
     $flatbed->api('extensions', new Extensions, true);
     $flatbed->api('fields', new Fields, true);
     $flatbed->api('pages', $pages = new Pages, true);

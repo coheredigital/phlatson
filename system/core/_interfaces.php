@@ -25,13 +25,13 @@ interface AdminPage
 interface ViewableObject
 {
 	// bool check for permission to view and existing view files
-	public function isViewable();
-	public function _render();
+	// public function isViewable();
+	// public function _render();
 }
 
 interface RenderInterface
 {
-    public function _render();
+    // public function _render();
 }
 
 interface FieldtypeSortable {

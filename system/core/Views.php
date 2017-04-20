@@ -1,13 +1,13 @@
 <?php
 
 
-class Views extends Flatbed
+class Views extends Objects
 {
 
-    protected $rootFolder = "users";
-    protected $singularName = "User";
+    protected $rootFolder = "views";
+    protected $singularName = "View";
 
-    public function get( string $name)
+    public function get( string $name): ?Object
     {
 
         $file = SITE_PATH . "views" . DIRECTORY_SEPARATOR . "{$name}.php";
@@ -30,6 +30,8 @@ class Views extends Flatbed
         return $view->render($page);
         
     }
+
+
 
 
 }

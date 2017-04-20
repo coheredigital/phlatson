@@ -7,4 +7,6 @@ class Templates extends Objects
     protected $singularName = "Template";
 	const SINGULAR_CLASSNAME = 'Template';
 
+    
+
 }

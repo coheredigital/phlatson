@@ -38,4 +38,16 @@ class View extends Object
     }
 
 
+
+    // public function set(string $name, $value)
+    // {
+    //     switch ($name) {
+
+    //         default:
+    //             $this->data($name, $value);
+    //             break;
+    //     }
+    //     return $this;
+    // }
+
 }

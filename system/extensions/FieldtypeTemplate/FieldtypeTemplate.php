@@ -3,14 +3,13 @@
 class FieldtypeTemplate extends Fieldtype implements ProvidesOptions
 {
 
-    public function getOutput($name)
+    public function output($name)
     {
         $template = $this->api("templates")->get($name);
-        // $template->parent = $this->object;
         return $template;
     }
 
-    public function getSave($value)
+    public function input($value)
     {
         if ($value instanceof Template) {
             return $value->name;

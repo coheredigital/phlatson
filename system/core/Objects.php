@@ -6,7 +6,6 @@ abstract class Objects extends Flatbed
     const SINGULAR_CLASSNAME = '';
     public $data = [];
     public $cache = [];
-    // protected $count;
 
     protected $url;
     protected $path;
@@ -33,8 +32,8 @@ abstract class Objects extends Flatbed
         // store paths and urls
         $this->path = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR;
         $this->systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR;
-        $this->url = ROOT_URL . "site/" . $this->rootFolder;
-        $this->systemUrl = ROOT_URL . "system/" . $this->rootFolder;
+        $this->url = ROOT_URL . "site/{$this->rootFolder}/";
+        $this->systemUrl = ROOT_URL . "system/{$this->rootFolder}/";
     }
 
 
@@ -42,7 +41,7 @@ abstract class Objects extends Flatbed
      * preloads the available data directories / files into '$this->data' using getFileList()
      * @param  string $path the location to be searched
      */
-    protected function preloadFileList($path = null)
+    protected function preloadFileList( ?string $path = null)
     {
         foreach ($this->rootFolders as $folder) {
             $path = ROOT_PATH . $folder . $this->rootFolder . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR;
@@ -132,18 +131,22 @@ abstract class Objects extends Flatbed
         return $collection;
     }
 
-
-
-    public function __set(string $key, $value)
+    /**
+     * give property access to all get() variables
+     * @param  string $name
+     * @return mixed
+     */
+    final public function __get( string $name)
     {
-        $this->set($key, $value);
+        switch ($name) {
+            case 'systemUrl':
+            case 'systemPath':
+                return $this->{$name};
+            default:
+                return parent::__get($name);
+        }
     }
 
-    // public function set(string $key, $value)
-    // {
-    //     $this->data[$key] = $value;
-    //     return $this;
-    // }
 
     /**
      * get the singular object type by it uri/name

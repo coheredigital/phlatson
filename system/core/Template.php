@@ -6,7 +6,7 @@ class Template extends Object
     const DATA_FOLDER = 'templates';
 
     public $parent; // the object this template belongs to
-    public $defaultFields = ['title','fields', 'name','view'];
+    public $defaultFields = ['title','fields', 'name','view','modified'];
 
 
     function __construct($file = null)
@@ -14,16 +14,30 @@ class Template extends Object
 
         parent::__construct($file);
 
-        $this->skippedFields = array_merge($this->skippedFields, [
-            "template"
-        ]);
 
-        $this->data("template", "template");
+
+        // // $this->data("template", "template");
+
+        // foreach ($this->defaultFields as $name) {
+        //     if (!$name) continue;
+        //     $this->addField($name);
+        // }
 
     }
 
     public function hasField($name){
+        
         return isset($this->data["fields"][$name]);
+    }
+
+    public function addField( string $name )
+    {
+
+        if (!$field = $this->api('fields')->get($name)) {
+            return;
+        }
+
+        return $this->data["fields"][$name];
     }
 
     /**
@@ -59,6 +73,10 @@ class Template extends Object
     public function get( string $name)
     {
         switch ($name) {
+            case 'template':
+                $template = $this->api('templates')->get('template');
+                $template->parent = $this;
+                return $this->api('templates')->get('template');
             case 'view':
                 return $this->getView();
             case 'controller':
