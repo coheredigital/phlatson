@@ -86,7 +86,7 @@ class Config extends Object
     public function get( string $name )
     {
         if ($this->has($name)) {
-            return $this->getUnformatted($name);
+            return $this->data($name);
         } else {
             return parent::get($name);
         }

@@ -41,6 +41,8 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->uri = trim($this->url, "/");
             $this->data = $this->getData();
 
+            $this->data('modified', $this->getModified());
+
             if ($this->data['settings']) {
                 $this->settings = $this->data['settings'];
             }
@@ -126,28 +128,39 @@ abstract class Object extends Flatbed implements JsonSerializable
         return $url;
     }
 
+    protected function getField($name) {
+        if ($this->template->has($name)) {
+            return $this->api("fields")->get($name);
+        }
+        
+        return null;
+
+    }
+
+
     protected function getFormatted($name)
     {
 
-        // set raw value, return null if no raw value available
-        if (!$value = $this->getUnformatted($name)) {
+        // return null if no raw value available
+        if (!$this->has($name)) {
             return null;
         }
 
+        // set raw value
+        $value = $this->data($name);
+
         // get the field object matching the passed "$name"
-        if ($this->api("fields")) {
-            $field = $this->api("fields")->get($name);
-        }
+        $field = $this->getField($name);
+        
 
         // use field formatting if instance of field is available and API extensions is accesible
-        // TODO: extensions should always be available
         if ($field instanceof Field) {
 
             $fieldtype = $field->get('fieldtype');
             $fieldtype->object = $this;
             $fieldtype->value = $value;
 
-            $value = $fieldtype->getOutput($value);
+            $value = $fieldtype->get($value);
         }
 
 
@@ -169,7 +182,7 @@ abstract class Object extends Flatbed implements JsonSerializable
                 $value = $fieldtype->getSave($value);
             }
         }
-        $this->setUnformatted($name, $value);
+        $this->data($name, $value);
     }
 
 
@@ -182,10 +195,10 @@ abstract class Object extends Flatbed implements JsonSerializable
     * @param  mixed $value
     * @return mixed
     */
-    public function setUnformatted($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
+    // public function setUnformatted($name, $value)
+    // {
+    //     $this->data[$name] = $value;
+    // }
 
     /**
     * get value directly to $this->data[$name]
@@ -194,9 +207,26 @@ abstract class Object extends Flatbed implements JsonSerializable
     * @param  string $name
     * @return mixed
     */
-    public function getUnformatted($name)
+    // public function getUnformatted($name)
+    // {
+    //     return $this->data[$name] ?? null;
+    // }
+
+    /**
+    * get / set value directly to $this->data[$name]
+    * skips formatting of passed value
+    *
+    * @param  string $name
+    * @return mixed
+    */
+    public function data( string $name, $value = null)
     {
-        return $this->data[$name] ?? null;
+        if ($value === null) {
+            return $this->data[$name] ?? null;
+        }
+        else {
+            $this->data[$name] = $value;
+        }
     }
 
 
@@ -276,8 +306,8 @@ abstract class Object extends Flatbed implements JsonSerializable
             case 'path':
             case 'url':
                 return $this->{$name};
-            case 'modified':
-                return $this->getModified();
+            // case 'modified':
+            //     return $this->getModified();
             case 'className':
                 return get_class($this);
             case 'defaultFields':

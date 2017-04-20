@@ -7,7 +7,7 @@
         <?php foreach ($children as $p):?>
             <article>
                 <h3><?= $p->title ?></h3>
-                <h6><?= $p->name ?></h6>
+                <h6><?= $p->modified ?> :: <?= $p->name ?></h6>
                 <a href="<?= $p->url ?>">Read more...</a>
             </article>
             <hr>

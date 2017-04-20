@@ -27,13 +27,13 @@ class Field extends Object
             "template"
         ];
 
-        $this->setUnformatted("template", "field");
+        $this->data("template", "field");
 
     }
 
     public function getFieldtype()
     {
-        $fieldtype = $this->getUnformatted("fieldtype");
+        $fieldtype = $this->data("fieldtype");
         $fieldtype = $this->api("extensions")->get($fieldtype);
         return $fieldtype;
     }

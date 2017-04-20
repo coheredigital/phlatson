@@ -18,7 +18,7 @@ class Template extends Object
             "template"
         ]);
 
-        $this->setUnformatted("template", "template");
+        $this->data("template", "template");
 
     }
 

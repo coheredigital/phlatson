@@ -6,12 +6,6 @@ abstract class Fieldtype extends Extension
     protected $field;
     protected $object;
 
-
-    public function getOutput($value)
-    {
-        return $value;
-    }
-
     /**
      * format value for output
      *
@@ -24,11 +18,6 @@ abstract class Fieldtype extends Extension
     }
 
     public function set($value)
-    {
-        return $value;
-    }
-
-    public function getSave($value)
     {
         return $value;
     }
