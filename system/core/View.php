@@ -1,6 +1,6 @@
 <?php
 
-class View extends Flatbed
+class View extends Object
 {
     const DATA_FOLDER = 'views';
     protected $attributes = null;

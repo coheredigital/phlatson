@@ -1,7 +1,9 @@
 {
 	"title": "Admin",
-    "fields": [],
     "settings": {
         "allow_segments" : true
+    },
+    "access": {
+    	"view": ["editor"]
     }
 }

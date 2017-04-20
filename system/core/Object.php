@@ -312,7 +312,15 @@ abstract class Object extends Flatbed implements JsonSerializable
     {
         $this->set($name, $value);
     }
-
+    /**
+     * give property access to all get() variables
+     * @param  string $name
+     * @return mixed
+     */
+    final public function __get( string $name)
+    {
+        return $this->get($name);
+    }
 
     public function __isset(string $name)
     {
