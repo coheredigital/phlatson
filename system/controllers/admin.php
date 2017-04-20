@@ -18,7 +18,13 @@ $page->layout = $views->get('layouts/default');
 
 if ($response->segment(1) === "login") {
 	$page->layout = $views->get('layouts/login');
+	// $page->template->set('view', "admin.login");
 }
 else {
+
 	$page->layout->main .= $views->render('partials/header');
+
+
+	
+	$page->layout->main .= $views->render('partials/user-menu');
 }
