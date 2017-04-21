@@ -7,10 +7,11 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
     public function output($array) : ObjectCollection
     {
 
+
         $fields = new ObjectCollection();
 
-        if(count($array)) foreach ($array as $item) {
-            if(isset($item['name']) && $field = $this->api("fields")->get($item['name'])) {
+        if(count($array)) foreach ($array as $name => $item) {
+            if($field = $this->api("fields")->get($name)) {
                 $fields->append($field);
             }
         }

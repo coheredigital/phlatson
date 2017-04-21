@@ -1,10 +1,9 @@
 {
     "title": "Field",
-    "fields": [
-        {
-            "name": "title",
+    "fields": {
+        "title" : {
             "required" : true,
             "locked" : true
         }
-    ]
+    }
 }

@@ -15,7 +15,7 @@ if (!$template instanceof Template) {
     throw new FlatbedException("Template not valid");
 }
 
-$templateFields = $pageEdit->get('template')->get('fields');
+$templateFields = $template->get('fields');
 
 $inputs = new ObjectCollection;
 
@@ -23,12 +23,13 @@ foreach ($templateFields as $templateFieldName => $templateField) {
 
     $input = $templateField->get('input');
     $input->label = $templateField->title;
+    
     // todo: improve select value handling
     if($input instanceof ReceivesOptions){
         $fieldtype = $field->fieldtype;
         $input->addOptions($fieldtype->options());
     }
-    $input->value = $field->getUnformatted($templateFieldName);
+    $input->value = $templateField->data($templateFieldName);
     $input->attribute("name", $templateFieldName);
 
 
