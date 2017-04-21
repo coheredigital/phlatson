@@ -4,7 +4,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
 {
 
 
-    public function getOutput($array)
+    public function output($array) : ObjectCollection
     {
 
         $fields = new ObjectCollection();
@@ -28,7 +28,7 @@ class FieldtypeFields extends Fieldtype implements ProvidesOptions
         }
 
         // attached the reference Object
-        $fields->setObject($this->object);
+        // $fields->setObject($this->object);
         return $fields;
     }
 

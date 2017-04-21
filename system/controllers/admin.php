@@ -32,5 +32,5 @@ else {
 
 
 	
-	$page->layout->main .= $views->render('partials/user-menu');
+	
 }

@@ -1,9 +1,21 @@
 <?php 
 
-$fieldname = $response->segment(2);
-$field = $fields->get($fieldname);
+$pagename = $request->get->page;
 
-$templateFields = $field->get('template')->get('fields');
+$pageEdit = $pages->get($pagename);
+
+// var_dump($pageEdit->get('template'));
+
+if (!$pageEdit instanceof Page) {
+    throw new FlatbedException("Page: {$pagename} not found");
+}
+
+$template = $pageEdit->get('template');
+if (!$template instanceof Template) {
+    throw new FlatbedException("Template not valid");
+}
+
+$templateFields = $pageEdit->get('template')->get('fields');
 
 $inputs = new ObjectCollection;
 
@@ -16,7 +28,7 @@ foreach ($templateFields as $templateFieldName => $templateField) {
         $fieldtype = $field->fieldtype;
         $input->addOptions($fieldtype->options());
     }
-    $input->value = $field->data($templateFieldName);
+    $input->value = $field->getUnformatted($templateFieldName);
     $input->attribute("name", $templateFieldName);
 
 

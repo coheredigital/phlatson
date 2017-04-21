@@ -205,6 +205,8 @@ class Page extends DataObject implements ViewableObject
             case 'files':
             case 'images':
                 return $this->{$name}();
+            case 'template':
+                return $this->getTemplate();
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:

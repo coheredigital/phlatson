@@ -20,7 +20,7 @@ class MarkupPageTree extends Extension
     {
         $output .= "<div class='page-tree-item'>";
         if($page->isEditable()){
-            $output .= "<span class='page-tree-item-title'><a href='{$page->urlEdit}'>{$page->title}</a></span>";
+            $output .= "<span class='page-tree-item-title'><a href='{$this->admin->url}pages/edit?page={$page->url}'>{$page->title}</a></span>";
         }
         else {
             $output .= "<span class='page-tree-item-title'>{$page->title}</span>";

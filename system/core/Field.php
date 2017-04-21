@@ -42,6 +42,8 @@ class Field extends Object
     {
         switch ($name) {
             // get fieldtype needs manual handling to avoid an infinite loop
+            case 'template':
+                return $this->api('templates')->get('field');
             case 'fieldtype':
                 return $this->getFieldtype();
             default:

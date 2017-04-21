@@ -17,7 +17,7 @@ ref::config('validHtml', true);
 if ($response->segment(1) === "login") {
 
 
-	if ($request->method == "POST" && $request->post->username && $request->post->password) {
+	if ($response->method == "POST" && $request->post->username && $request->post->password) {
 		
 		$username = $request->post->username;
 		$password = $request->post->password;
@@ -39,16 +39,25 @@ if ($page->messages) {
 	$page->layout->main .= $views->get('partials/messages')->render();
 }
 
-
-
-
-if ($request->segment(1) == "fields") {
-	if ($request->segment(2)) {
-		$page->layout->main .= $views->render('partials/edit-field');
-	}
-	else {
-		$page->layout->main .= $views->render('partials/list-fields');
-	}
+switch ($response->segment(1)) {
+	case 'fields':
+		if ($response->segment(2)) {
+			$page->layout->main .= $views->render('partials/edit-field');
+		}
+		else {
+			$page->layout->main .= $views->render('partials/list-fields');
+		}
+		break;
+	
+	case 'pages':
+		if ($response->segment(2)) {
+			$page->layout->main .= $views->render('partials/edit-page');
+		}
+		else {
+			$page->layout->main .= $views->render('partials/page-tree');
+		}
+		break;
 }
+
 
 echo $page->layout->render();

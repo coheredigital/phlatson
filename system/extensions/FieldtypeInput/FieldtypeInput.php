@@ -5,7 +5,7 @@ class FieldtypeInput extends Fieldtype implements ProvidesOptions
     protected $page;
     protected $objectType = "field";
 
-    public function getOutput($name)
+    public function output($name)
     {
         $field = $this->api("extensions")->get("$name");
         return $field;

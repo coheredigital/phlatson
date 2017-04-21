@@ -136,11 +136,11 @@ abstract class Object extends Flatbed implements JsonSerializable
             return null;
         }
 
-        $found = $this->template->hasField($name);
+        // $found = $this->template->hasField($name);
 
-        if ($this->template->hasField($name)) {
+        // if ($this->template->hasField($name)) {
             return $this->api("fields")->get($name);
-        }
+        // }
         
         return null;
 
@@ -159,11 +159,11 @@ abstract class Object extends Flatbed implements JsonSerializable
         $value = $this->data($name);
 
         // get the field object matching the passed "$name"
-        // $field = $this->getField($name);        
+        $field = $this->getField($name);        
 
         // // use field formatting if instance of field is available and API extensions is accesible
         if ($field instanceof Field && $fieldtype = $field->get('fieldtype')) {
-            $value = $fieldtype->ouput($value);
+            $value = $fieldtype->output($value);
         }
 
         return $value;

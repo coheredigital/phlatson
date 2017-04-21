@@ -9,5 +9,6 @@
 </head>
 <body>
 	<?= $this->main ?>
+	<?= $views->render('partials/user-menu') ?>
 </body>
 </html>
