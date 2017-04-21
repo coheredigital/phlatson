@@ -172,18 +172,16 @@ abstract class Object extends Flatbed implements JsonSerializable
 
     protected function setFormatted($name, $value)
     {
+        
         // get the field object matching the passed "$name"
-
         if ($this->api("fields")) {
-
             $field = $this->getField($name); 
-
         }
 
-        
         if ($field instanceof Field && $fieldtype = $field->get('fieldtype')) {
             $value = $fieldtype->input($value);
         }
+        // store raw value
         $this->data($name, $value);
         
     }
