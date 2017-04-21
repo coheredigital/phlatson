@@ -6,10 +6,9 @@ class Config extends Object
 
     public function __construct()
     {
+
         $this->data("styles", new SimpleArray());
         $this->data("scripts", new SimpleArray());
-
-
 
         // setup default urls / paths
         $this->setupDirectories();
@@ -37,7 +36,7 @@ class Config extends Object
         ini_set('session.use_cookies', true);
         ini_set('session.use_only_cookies', 1);
         ini_set("session.gc_maxlifetime", "$this->sessionExpireSeconds");
-        ini_set("session.save_path", $this->paths->cache . "/sessions");
+        ini_set("session.save_path", CACHE_PATH . "/sessions");
         ini_set("date.timezone", $this->timezone);
         ini_set('default_charset', 'utf-8');
 
@@ -48,9 +47,8 @@ class Config extends Object
 
         // store an array of directories
         $directories = array();
-        $directories['assets'] = 'assets/';
         // $directories['cache'] = 'cache/';
-        $directories['site'] = 'site/';
+        // $directories['site'] = 'site/';
         //$directories['config'] = $directories['site'] . 'config/';
         //$directories['pages'] = $directories['site'] . 'pages/';
         //$directories['fields'] = $directories['site'] . 'fields/';
@@ -77,8 +75,8 @@ class Config extends Object
 
 
         // add the urls anc paths to config
-        $this->data('urls',  $urls);
-        $this->data('paths',  $paths);
+        // $this->data('urls',  $urls);
+        // $this->data('paths',  $paths);
 
     }
 

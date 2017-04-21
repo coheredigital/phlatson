@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+
+$profile = new stdClass;
 /* instantiate app variables */
-$start = microtime(true);
+$profile->start = microtime(true);
 
 
 define("FLATBED", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 define('SYSTEM_PATH', ROOT_PATH . "system" . DIRECTORY_SEPARATOR );
 define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR );
+define('CACHE_PATH', ROOT_PATH . "cache" . DIRECTORY_SEPARATOR );
 define('CORE_PATH', SYSTEM_PATH . "core" . DIRECTORY_SEPARATOR );
 define('ROOT_URL', "/");
 
@@ -21,10 +24,11 @@ try {
 
     $flatbed = new Flatbed;
 
-    $flatbed->api('config', new Config, true);
+    $flatbed->api('profile', $profile, true);
+    $flatbed->api('config', $config = new Config, true);
     $flatbed->api('request', $request = new Request, true);
     $flatbed->api('users', new Users, true);
-    $flatbed->api('session', new Session, true);
+    $flatbed->api('session', new Session($config->sessionName), true);
     // $flatbed->api('events', new Events, true);
     $flatbed->api('extensions', new Extensions, true);
     $flatbed->api('fields', new Fields, true);
@@ -36,11 +40,8 @@ try {
 
     echo $router->execute();  
 
-    // end performance tracking
-    $end = microtime(true);
-    $creationtime = round(($end - $start), 2);
-    echo "<!-- Page created in $creationtime seconds. (" . getMemoryUse() .") -->";
+
 
 } catch(FlatbedException $exception) {
-    echo $exception->render($flatbed("config"));
+    echo $exception->render($config);
 }

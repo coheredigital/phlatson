@@ -177,7 +177,7 @@ class Response extends Flatbed
     public function send($override = false)
     {
         $this->flush($override);
-        exit();
+        exit;
     }
 
     public function flush($override = false)
@@ -196,8 +196,19 @@ class Response extends Flatbed
         $this->sendHeaders();
         $this->sent = true;
 
+
+        // TODO : temp profiling, remove later, maybe implement built in version
+        $profile = $this->api('profile');
+        $profile->end = microtime(true);
+        $profile->time = round(($profile->end - $profile->start), 2);
+        $this->chunks[] = "<!-- Page created in $profile->time seconds. (" . getMemoryUse() .") -->";
+
         // build the output
         $out = implode('', $this->chunks);
+
+
+
+
         $this->chunks = []; // clear body content chunks
         echo ($out);
         return $this;

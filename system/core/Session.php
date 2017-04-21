@@ -3,10 +3,12 @@
 class Session extends Flatbed implements IteratorAggregate
 {
 
-    private $name;
+    protected $name;
 
-    function __construct()
+    function __construct(string $name)
     {
+
+        $this->name = $name;
 
         if($this->exists()){
             $this->start();
@@ -20,18 +22,20 @@ class Session extends Flatbed implements IteratorAggregate
             if ($user) {
                 $this->set('_user_ts', time());
             }
-            // set current user to the logged in user
+            
         } else {
             $user = $this->api('users')->get("guest");
         }
 
+        // set current user found user
         $this->api('user', $user);
+
 
     }
 
     // check that a valid session still exists
     public function exists(){
-        if( isset($_SESSION) || $_COOKIE[$this->api('config')->sessionName] ){
+        if( isset($_SESSION) || $_COOKIE[$this->name] ){
             return true;
         }
         return false;
@@ -42,7 +46,7 @@ class Session extends Flatbed implements IteratorAggregate
 
         if(!$this->exists()) $this->start();
 
-        $_SESSION["$this->className"][$name] = $value;
+        $_SESSION["$this->name"][$name] = $value;
         return $this;
     }
 
@@ -54,7 +58,7 @@ class Session extends Flatbed implements IteratorAggregate
     public function get($name)
     {
 
-        $value = $this->has($name) ? $_SESSION["$this->className"][$name] : null;
+        $value = $this->has($name) ? $_SESSION["$this->name"][$name] : null;
         // check if the key is a flash variable and remove if it is
         if ($this->isFlash($name) && !is_null($value)) {
             $this->remove($name);
@@ -69,7 +73,7 @@ class Session extends Flatbed implements IteratorAggregate
      */
     public function all()
     {
-        return $_SESSION["$this->className"];
+        return $_SESSION["$this->name"];
     }
 
     /**
@@ -81,7 +85,7 @@ class Session extends Flatbed implements IteratorAggregate
      */
     public function has($name)
     {
-        return isset($_SESSION["$this->className"][$name]);
+        return isset($_SESSION["$this->name"][$name]);
     }
 
     /**
@@ -100,7 +104,7 @@ class Session extends Flatbed implements IteratorAggregate
         }
 
         if($this->has($name)){
-            $_SESSION["$this->className"]["_flash"][$name] = 1;
+            $_SESSION["$this->name"]["_flash"][$name] = 1;
         }
 
     }
@@ -113,7 +117,7 @@ class Session extends Flatbed implements IteratorAggregate
      */
     public function hasFlash($key)
     {
-        return isset($_SESSION["$this->className"]["_flash"][$key]);
+        return isset($_SESSION["$this->name"]["_flash"][$key]);
     }
 
 
@@ -139,7 +143,7 @@ class Session extends Flatbed implements IteratorAggregate
      */
     public function removeFlash($key)
     {
-        unset($_SESSION["$this->className"]["_flash"][$key]);
+        unset($_SESSION["$this->name"]["_flash"][$key]);
         return $this;
     }
 
@@ -150,7 +154,7 @@ class Session extends Flatbed implements IteratorAggregate
      */
     public function remove($key)
     {
-        unset($_SESSION["$this->className"][$key]);
+        unset($_SESSION["$this->name"][$key]);
         return $this;
     }
 
@@ -166,7 +170,7 @@ class Session extends Flatbed implements IteratorAggregate
      */
     protected function start()
     {
-        session_name($this->api('config')->sessionName);
+        session_name($this->name);
         @session_start();
     }
 
@@ -197,15 +201,6 @@ class Session extends Flatbed implements IteratorAggregate
         session_destroy();
     }
 
-    /**
-     * get/set current session name
-     * @see session_name()
-     */
-    public function name($name = null)
-    {
-        return session_name($name);
-    }
-
 
     public function login($name, $password)
     {
@@ -227,15 +222,13 @@ class Session extends Flatbed implements IteratorAggregate
 
     public function logout()
     {
-        $sessionName = $this->name();
         $this->clear();
 
-
-        if (isset($_COOKIE[$sessionName])) {
+        if (isset($_COOKIE[$this->name])) {
 
             $sessionTime = time() - 42000;
 
-            setcookie($sessionName, '', $sessionTime, '/');
+            setcookie($this->name, '', $sessionTime, '/');
         }
 
 
@@ -248,7 +241,7 @@ class Session extends Flatbed implements IteratorAggregate
 
     public function getIterator()
     {
-        return new ArrayObject($_SESSION["$this->className"]);
+        return new ArrayObject($_SESSION["$this->name"]);
     }
 
     /**
