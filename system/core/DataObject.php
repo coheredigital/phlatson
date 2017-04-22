@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 abstract class DataObject extends Object
 {
 

@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class Events {
 
     private $listeners = array();

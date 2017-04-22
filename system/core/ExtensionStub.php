@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 
 final class ExtensionStub extends Object {
 

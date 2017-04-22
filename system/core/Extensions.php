@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class Extensions extends Objects
 {
 
@@ -62,7 +62,8 @@ class Extensions extends Objects
     protected function initialize($name, $extension)
     {
         if(!$extension instanceof Extension){
-            $extension = new $name($extension->file);
+            $class = "Flatbed\\$name";
+            $extension = new $class($extension->file);
         }
         return $extension;
     }

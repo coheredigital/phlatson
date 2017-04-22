@@ -1,9 +1,9 @@
 <?php
-
-class ObjectCollectionFilter extends FilterIterator
+namespace Flatbed;
+class ObjectCollectionFilter extends \FilterIterator
 {
 
-    public function __construct(Iterator $collection , $filter )
+    public function __construct(\Iterator $collection , $filter )
     {
         parent::__construct($collection);
     }

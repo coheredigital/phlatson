@@ -1,6 +1,6 @@
 <?php
-
-abstract class Object extends Flatbed implements JsonSerializable
+namespace Flatbed;
+abstract class Object extends Flatbed implements \JsonSerializable
 {
 
     const DEFAULT_SAVE_FILE = "data.json";

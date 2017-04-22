@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class Upload extends Flatbed
 {
 

@@ -12,18 +12,8 @@ $limit = 10000;
 
 $count = 0;
 
-$collection = new ObjectCollection();
-
-$collection->append($fields->get('content'));
-$collection->append($fields->get('markdown'));
+$collection = new Flatbed\ObjectCollection();
 
 
 
-foreach ($collection as $field) {
-    r($field);
-    r($field->file);
-    r($field->template);
-    r($field->data('fieldtype'));
-    r($field->get('fieldtype'));
 
-}

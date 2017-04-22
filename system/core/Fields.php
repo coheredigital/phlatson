@@ -1,4 +1,5 @@
 <?php
+namespace Flatbed;
 class Fields extends Objects
 {
 

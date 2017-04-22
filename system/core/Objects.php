@@ -1,4 +1,6 @@
 <?php
+namespace Flatbed;
+
 
 abstract class Objects extends Flatbed
 {
@@ -162,7 +164,8 @@ abstract class Objects extends Flatbed
         }
 
         // store found object for future reference
-        return new $this->singularName($file);
+        $class = "Flatbed\\$this->singularName";
+        return new $class($file);
 
         return $this->cache[$uri];
     }
@@ -189,7 +192,8 @@ abstract class Objects extends Flatbed
         if (!file_exists($file)) {
             return null;
         }
-        return new $this->singularName($file);
+        $class = "Flatbed\\$this->singularName";
+        return new $class($file);
     }
 
 }

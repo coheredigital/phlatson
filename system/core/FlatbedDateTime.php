@@ -11,8 +11,8 @@
  *  TODO: reference Drupal DateTimePlus for some ideas on how to extend
  *
  */
-
-class FlatbedDateTime extends DateTime
+namespace Flatbed;
+class FlatbedDateTime extends \DateTime
 {
 
     protected $outputFormat = "c"; // default to ISO 8601

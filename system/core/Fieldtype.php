@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 abstract class Fieldtype extends Extension
 {
 

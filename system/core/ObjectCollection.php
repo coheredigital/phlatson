@@ -1,6 +1,8 @@
 <?php
 
-class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess, Countable
+namespace Flatbed;
+
+class ObjectCollection extends Flatbed implements \IteratorAggregate, \ArrayAccess, \Countable
 {
 
     public $iterator;
@@ -135,7 +137,7 @@ class ObjectCollection extends Flatbed implements IteratorAggregate, ArrayAccess
      * hands of iteration resposabiliies to the ObjectCollectionIterator class
      * @return ObjectCollectionIterator 
      */
-    public function getIterator() : Iterator
+    public function getIterator() : \Iterator
     {
         if($this->limit > 0 && !$this->iterator instanceof ObjectCollectionPagination) {
             $offset = $this->paginate ? ($this->currentPage * $this->limit) - $this->limit : 0;

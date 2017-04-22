@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class FieldtypeMarkdown extends FieldtypeText
 {
 
@@ -10,7 +10,7 @@ class FieldtypeMarkdown extends FieldtypeText
 
     public function output($value)
     {
-        $parsedown = new Parsedown;
+        $parsedown = new \Parsedown;
         return $parsedown->text($value);
     }
 

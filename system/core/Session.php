@@ -1,6 +1,6 @@
 <?php
-
-class Session extends Flatbed implements IteratorAggregate
+namespace Flatbed;
+class Session extends Flatbed implements \IteratorAggregate
 {
 
     protected $name;

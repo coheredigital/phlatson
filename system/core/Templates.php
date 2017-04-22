@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class Templates extends Objects
 {
 

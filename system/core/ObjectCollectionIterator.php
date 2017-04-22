@@ -1,6 +1,6 @@
 <?php
-
-class ObjectCollectionIterator implements Iterator, ArrayAccess, Countable
+namespace Flatbed;
+class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
 {
 
 

@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Flatbed;
 class Pages extends Objects
 {
 

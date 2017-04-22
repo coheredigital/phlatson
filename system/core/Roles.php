@@ -1,4 +1,5 @@
 <?php
+namespace Flatbed;
 class Roles extends Objects
 {
 

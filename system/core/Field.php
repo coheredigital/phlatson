@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class Field extends Object
 {
     const DATA_FOLDER = 'fields';

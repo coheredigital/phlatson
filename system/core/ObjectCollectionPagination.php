@@ -1,13 +1,13 @@
 <?php
-
-class ObjectCollectionPagination extends LimitIterator
+namespace Flatbed;
+class ObjectCollectionPagination extends \LimitIterator
 {
 
     protected $limit = -1;
     protected $pageCount;
     protected $currentPage;
 
-    public function __construct(Iterator $collection ,  int $offset = 0, int $limit = -1 )
+    public function __construct(\Iterator $collection ,  int $offset = 0, int $limit = -1 )
     {
 
     	parent::__construct($collection, $offset, $limit);

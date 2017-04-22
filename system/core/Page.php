@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class Page extends DataObject implements ViewableObject
 {
 

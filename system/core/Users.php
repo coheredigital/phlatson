@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Flatbed;
 class Users extends Objects
 {
 

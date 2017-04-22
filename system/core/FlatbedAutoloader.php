@@ -1,6 +1,7 @@
 <?php
 // spl_autoload_register('flatbedAutoloader');
 
+
 class FlatbedAutoloader {
 
 
@@ -12,10 +13,19 @@ class FlatbedAutoloader {
 
     public function load($class)
     {
+        
 
+        // normalize directory separators
+        $class = str_replace("\\", DIRECTORY_SEPARATOR,$class);
 
-        // var_dump($class);
-        $class = $this->normalizeDirectorySeperators($class);
+        $parts = explode(DIRECTORY_SEPARATOR, $class);
+        if ($parts[0] == "Flatbed") {
+            array_shift($parts);
+        }
+        if (count($parts)) {
+            $class = implode($parts);
+        }
+        
 
         // first check if in root system
         $file = CORE_PATH . "$class.php";
@@ -24,6 +34,9 @@ class FlatbedAutoloader {
         if (!is_file($file)) {
             $file = CORE_PATH . $class . DIRECTORY_SEPARATOR . $class . ".php";
         }
+        
+        //  r($file);
+        // //  r($parts);
 
         // then look to extensions
         if (!is_file($file)) {
@@ -38,7 +51,7 @@ class FlatbedAutoloader {
             if (!is_file($extensionSite) && !is_file($extensionSystem)) {
                 throw new FlatbedException("Extension {$class} does not exist / cannot be found!");
             }
-
+            
             if (is_file($extensionSystem)) $file = $extensionSystem;
             // a site extension can replace a System core extension
             if (is_file($extensionSite)) $file = $extensionSite;
@@ -52,10 +65,6 @@ class FlatbedAutoloader {
 
         require_once $file;  
 
-    }
-
-    public function normalizeDirectorySeperators($path){
-        return str_replace("\\", DIRECTORY_SEPARATOR, $path);
     }
 
 

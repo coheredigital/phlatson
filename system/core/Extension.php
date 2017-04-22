@@ -1,4 +1,5 @@
 <?php
+namespace Flatbed;
 class Extension extends Object implements ObjectInterface
 {
 
@@ -18,7 +19,7 @@ class Extension extends Object implements ObjectInterface
 
     protected function getFile()
     {
-        $reflection = new ReflectionClass($this);
+        $reflection = new \ReflectionClass($this);
         $directory = dirname($reflection->getFileName()) . DIRECTORY_SEPARATOR;
         $file = $directory . "data.json";
         return $file;

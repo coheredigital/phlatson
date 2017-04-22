@@ -1,7 +1,7 @@
 <?php
 
 
-
+namespace Flatbed;
 class Response extends Flatbed
 {
 

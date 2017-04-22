@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 interface ObjectInterface {
 
     // public function get( string $name );

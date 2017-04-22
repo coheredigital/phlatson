@@ -1,4 +1,6 @@
 <?php
+namespace Flatbed;
+namespace Flatbed;
 
 /**
  * Root class that ties system together

@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 /*
 
 Basic data array to access simple arrays like object and provide common functionality in the api
@@ -8,7 +8,7 @@ Objects and allow natural fall-backs
 
  */
 
-class SimpleArray implements IteratorAggregate
+class SimpleArray implements \IteratorAggregate
 {
 
     protected $data = [];
