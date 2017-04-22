@@ -1,7 +1,0 @@
-{
-    "title": "Admin User List View",
-    "description": "",
-    "type": "Admin",
-    "singleton": true,
-    "autoload": true
-}

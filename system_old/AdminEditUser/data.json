@@ -1,8 +1,0 @@
-{
-    "description": "Creates the forms and enable the edit/saving of users.",
-    "title": "User Edit",
-    "type": "Admin",
-    "singleton": true,
-    "autoload": true
-}
-
