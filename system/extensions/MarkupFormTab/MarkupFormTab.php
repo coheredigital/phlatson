@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class MarkupFormTab extends Extension
 {
     // array of field markup to be rendered

@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class InputText extends Input {
 
     protected function renderInput()

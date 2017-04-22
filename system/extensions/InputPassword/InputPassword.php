@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class InputPassword extends Input {
 
     protected function renderInput()

@@ -1,5 +1,7 @@
 <?php
+
 namespace Flatbed;
+
 class View extends Object
 {
     const DATA_FOLDER = 'views';

@@ -94,7 +94,7 @@ class SimpleArray implements \IteratorAggregate
 
     public function getIterator()
     {
-        return new ArrayObject($this->data);
+        return new \ArrayObject($this->data);
     }
 
     public function __unset($key)

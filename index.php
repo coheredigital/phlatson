@@ -20,6 +20,7 @@ require_once SYSTEM_PATH . 'init.php';
 try {
 
     $flatbed = new Flatbed\Flatbed;
+    $flatbed->api('flatbed', $flatbed, true);
     $flatbed->api('profile', $profile, true);
     $flatbed->api('config', $config = new Flatbed\Config, true);
     $flatbed->api('request', $request = new Flatbed\Request, true);

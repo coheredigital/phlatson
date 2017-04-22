@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 /**
  * Class Input
  *

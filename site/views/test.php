@@ -12,8 +12,7 @@ $limit = 10000;
 
 $count = 0;
 
-$collection = new Flatbed\ObjectCollection();
+$extension = $extensions->get('MarkupPagetree');
 
-
-
-
+r($flatbed);
+r($extension);

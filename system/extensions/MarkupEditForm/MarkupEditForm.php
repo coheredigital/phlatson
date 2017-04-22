@@ -1,5 +1,7 @@
 <?php
 
+namespace Flatbed;
+
 class MarkupEditForm extends Extension
 {
     // array of field markup to be rendered

@@ -27,10 +27,5 @@ if ($response->segment(1) === "login") {
 	// $page->template->set('view', "admin.login");
 }
 else {
-
 	$page->layout->main .= $views->render('partials/header');
-
-
-	
-	
 }

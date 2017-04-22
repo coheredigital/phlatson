@@ -1,5 +1,7 @@
 <?php
 
+namespace Flatbed;
+
 class MarkupPageTree extends Extension
 {
 
