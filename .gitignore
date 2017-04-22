@@ -12,3 +12,7 @@ assets/*
 prepros.cfg
 libraries/*
 .vscode/*
+vendor/composer/autoload_classmap.php
+vendor/
+composer.lock
+composer.json
