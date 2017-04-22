@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class InputFields extends Input implements ReceivesOptions
 {
 

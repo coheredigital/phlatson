@@ -29,7 +29,7 @@ class FlatbedAutoloader {
         }
 
         if(!is_file($file)) {
-            throw new FlatbedException\FlatbedException("Flatbed could not load the class '{$class}'!");
+            // throw new FlatbedException\FlatbedException("Flatbed could not load the class '{$class}'!");
         }
 
         require_once $file;  
@@ -56,11 +56,11 @@ class FlatbedAutoloader {
 
         // check site extensions
         $files[] = SITE_PATH . "extensions" . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $name . ".php";
-        $files[] = SITE_PATH . "extensions" . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $name . ".php";
+        $files[] = SITE_PATH . "extensions" . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR  . $name . DIRECTORY_SEPARATOR. $name . ".php";
         
         // then system
         $files[] = SYSTEM_PATH . "extensions" . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $name . ".php";
-        $files[] = SYSTEM_PATH . "extensions" . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $name . ".php";
+        $files[] = SYSTEM_PATH . "extensions" . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR  . $name . DIRECTORY_SEPARATOR . $name . ".php";
 
 
         // loop through locations and return the first found file

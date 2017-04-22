@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Flatbed;
 class InputSelect extends Input implements ReceivesOptions
 {
 

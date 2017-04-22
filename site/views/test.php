@@ -12,7 +12,7 @@ $limit = 10000;
 
 $count = 0;
 
-$extension = $extensions->get('MarkupPagetree');
+$extension = $extensions->get('FieldtypeText');
 
 $matches = preg_split("/(?=[A-Z])/", 'MarkupPagetree', 0, PREG_SPLIT_NO_EMPTY );
 

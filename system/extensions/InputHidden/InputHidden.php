@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class InputHidden extends Input {
 
     public function setup()
