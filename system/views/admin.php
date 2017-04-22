@@ -8,9 +8,6 @@ $config->scripts->add("{$this->url}scripts/hashtabber/hashTabber.js");
 $config->scripts->add("{$this->url}scripts/main.js");
 $config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
-require ROOT_PATH . "libraries/ref/ref.php";
-ref::config('expLvl', 1);
-ref::config('validHtml', true);
 
 
 
