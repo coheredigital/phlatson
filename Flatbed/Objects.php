@@ -60,7 +60,7 @@ abstract class Objects extends Flatbed
     protected function getFileList($path): array
     {
         if (!file_exists($path)) {
-            throw new FlatbedException\FlatbedException("Cannot get file list, invalid path: {$path}");
+            throw new Exceptions\FlatbedException("Cannot get file list, invalid path: {$path}");
         }
 
 

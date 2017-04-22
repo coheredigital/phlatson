@@ -109,7 +109,7 @@ class Response extends Flatbed
     public function verifyUnlocked()
     {
         if ($this->isLocked()) {
-            throw new FlatbedException\FlatbedException('Response is locked, must be unlocked before being modified');
+            throw new Exceptions\FlatbedException('Response is locked, must be unlocked before being modified');
         }
         return $this;
     }
@@ -184,7 +184,7 @@ class Response extends Flatbed
     {
 
         if (headers_sent() && !$override) {
-            throw new FlatbedException\FlatbedException("Response already sent: {$this->format}");
+            throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
         }
 
         // If no format was set use the request format

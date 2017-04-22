@@ -12,7 +12,6 @@ $profile->start = microtime(true);
 define("FLATBED", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 define('SYSTEM_PATH', ROOT_PATH . "system" . DIRECTORY_SEPARATOR );
-
 define('VENDOR_PATH', ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR );
 define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR );
 define('CACHE_PATH', ROOT_PATH . "cache" . DIRECTORY_SEPARATOR );
@@ -21,8 +20,6 @@ define('ROOT_URL', "/");
 
 // pre includes some default core file for flatbed
 // files / class that will be REQUIRED for every single request
-
-
 
 require_once CORE_PATH . '_functions.php';
 
@@ -57,6 +54,6 @@ try {
 
 
 
-} catch(FlatbedException\FlatbedException $exception) {
+} catch(Exceptions\FlatbedException $exception) {
     echo $exception->render($config);
 }

@@ -26,12 +26,12 @@ function flatbedErrorHandler($errno, $errorMessage, $errfile, $errline) {
         case E_ERROR:
         case E_PARSE:
         case E_PARSE:
-            throw new FlatbedException\FlatbedException($errorMessage, $errno);
+            throw new Exceptions\FlatbedException($errorMessage, $errno);
             break;
 
         default:
             // var_dump($errno);
-            // throw new FlatbedException\FlatbedException($errorMessage, $errno);
+            // throw new Exceptions\FlatbedException($errorMessage, $errno);
             break;
     }
     return true;

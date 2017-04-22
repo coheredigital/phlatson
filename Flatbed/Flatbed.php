@@ -41,7 +41,7 @@ class Flatbed
     // final public function __call($method, $arguments)
     // {
     //     $methodName = "_$method";
-    //     if (!method_exists($this, "$methodName")) throw new FlatbedException\FlatbedException("Method: $method does not exist in class: $this->className");
+    //     if (!method_exists($this, "$methodName")) throw new Exceptions\FlatbedException("Method: $method does not exist in class: $this->className");
 
     //     $className = get_class($this);
 

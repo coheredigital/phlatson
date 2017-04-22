@@ -12,11 +12,11 @@ abstract class DataObject extends Object
             // TODO - validate parent
 
             if ($this instanceof Page && !$this->parent instanceof Page) {
-                throw new FlatbedException\FlatbedException("cannot create new {$this->className} without valid parent");
+                throw new Exceptions\FlatbedException("cannot create new {$this->className} without valid parent");
             }
 
             if (!$this->name) {
-                throw new FlatbedException\FlatbedException("cannot create new {$this->className} without valid name");
+                throw new Exceptions\FlatbedException("cannot create new {$this->className} without valid name");
             }
 
             if (!file_exists($this->path)) {

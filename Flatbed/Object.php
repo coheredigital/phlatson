@@ -32,7 +32,7 @@ abstract class Object extends Flatbed implements \JsonSerializable
         if (!is_null($file)) {
 
             if (!file_exists($file)) {
-                throw new FlatbedException\FlatbedException("Invalid file passed to {$this->className} class.");
+                throw new Exceptions\FlatbedException("Invalid file passed to {$this->className} class.");
             }
 
             $this->file = $file;
@@ -65,7 +65,7 @@ abstract class Object extends Flatbed implements \JsonSerializable
 
         if ($data == false) {
             $error = json_last_error() === 4 ? 'Syntax Error' : 'Error';
-            throw new FlatbedException\FlatbedException("$error : Invalid JSON file ($this->file) passed to " . __CLASS__);
+            throw new Exceptions\FlatbedException("$error : Invalid JSON file ($this->file) passed to " . __CLASS__);
         }
 
         return json_decode(file_get_contents($this->file), true);

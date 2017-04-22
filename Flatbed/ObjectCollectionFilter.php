@@ -23,7 +23,7 @@ class ObjectCollectionFilter extends \FilterIterator
     // public function limit(int $limit) : self
     // {
     //     if ($limit < 0) {
-    //         throw new FlatbedException\FlatbedException("Limit cannot be set to less than 0");
+    //         throw new Exceptions\FlatbedException("Limit cannot be set to less than 0");
     //     }
     //     $this->limit = $limit;
     //     $this->endIndex = $this->limit - 1;
@@ -40,7 +40,7 @@ class ObjectCollectionFilter extends \FilterIterator
     // {
 
     //     if ($this->limit ===  0) {
-    //         throw new FlatbedException\FlatbedException("Must set a limit on ObjectCollection before pagination can be used.");
+    //         throw new Exceptions\FlatbedException("Must set a limit on ObjectCollection before pagination can be used.");
     //     }
 
     //     $this->isPaginated = true;

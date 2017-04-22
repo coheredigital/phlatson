@@ -29,7 +29,7 @@ class FlatbedAutoloader {
         }
 
         if(!is_file($file)) {
-            throw new FlatbedException\FlatbedException("Flatbed could not load the class '{$class}'!");
+            throw new Exceptions\FlatbedException("Flatbed could not load the class '{$class}'!");
         }
 
         require_once $file;  
