@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class FieldtypeRole extends Fieldtype implements ProvidesOptions
 {
 

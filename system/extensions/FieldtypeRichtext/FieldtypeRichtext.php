@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class FieldtypeRichtext extends Fieldtype
 {
 

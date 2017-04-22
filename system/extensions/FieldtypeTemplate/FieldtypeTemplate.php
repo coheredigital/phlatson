@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class FieldtypeTemplate extends Fieldtype implements ProvidesOptions
 {
 

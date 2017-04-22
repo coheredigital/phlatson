@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class FieldtypeSelect extends Fieldtype implements ProvidesOptions
 {
 

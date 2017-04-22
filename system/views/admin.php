@@ -14,17 +14,7 @@ $config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 if ($response->segment(1) === "login") {
 
 
-	if ($response->method == "POST" && $request->post->username && $request->post->password) {
-		
-		$username = $request->post->username;
-		$password = $request->post->password;
 
-
-		if ($session->login($username, $password)) {
-			$response->redirect($page->url);
-		}
-
-	}
 
 
 	$config->styles->add("/system/views/styles/login.css");

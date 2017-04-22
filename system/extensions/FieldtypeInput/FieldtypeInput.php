@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class FieldtypeInput extends Fieldtype implements ProvidesOptions
 {
     protected $page;

@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 class InputDateTimePicker extends Input {
 
     protected function renderInput()

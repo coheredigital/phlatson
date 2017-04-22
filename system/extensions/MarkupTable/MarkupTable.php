@@ -1,5 +1,5 @@
 <?php
-
+namespace Flatbed;
 // columns should be an array of name retrivable from the data objects passed to the rows
 class MarkupTable extends Extension
 {
