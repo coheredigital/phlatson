@@ -46,7 +46,7 @@ class MarkupPageList extends Extension
     public function render()
     {
 
-        if(!$this->rootPage instanceof Page) throw new FlatbedException("No 'rootRage' set in '$this->className'");
+        if(!$this->rootPage instanceof Page) throw new FlatbedException\FlatbedException("No 'rootRage' set in '$this->className'");
         $output = $this->renderList($this->rootPage);
         return $output;
     }

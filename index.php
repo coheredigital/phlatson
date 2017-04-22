@@ -33,7 +33,7 @@ else require_once CORE_PATH . 'FlatbedAutoloader.php';
 
 require_once CORE_PATH . '_interfaces.php';
 
-$autoloader = new FlatbedAutoloader();
+$autoloader = new Flatbed\FlatbedAutoloader();
 
 try {
 
@@ -57,6 +57,6 @@ try {
 
 
 
-} catch(FlatbedException $exception) {
+} catch(FlatbedException\FlatbedException $exception) {
     echo $exception->render($config);
 }

@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Flatbed;
 class Router extends Flatbed
 {
 
@@ -62,7 +62,7 @@ class Router extends Flatbed
         }
 
 
-        if ($found === false) throw new FlatbedException("Invalid request, app cannot run");
+        if ($found === false) throw new FlatbedException\FlatbedException("Invalid request, app cannot run");
     }
 
 

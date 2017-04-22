@@ -142,7 +142,7 @@ class RouteCollection implements IteratorAggregate, ArrayAccess, Countable
     {
 
         if(!count($this->data)){
-            throw new FlatbedException("$this->className is empty, cannot retrieve index($x)");
+            throw new FlatbedException\FlatbedException("$this->className is empty, cannot retrieve index($x)");
         }
 
         return array_values($this->data)[$x];

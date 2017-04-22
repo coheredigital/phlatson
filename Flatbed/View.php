@@ -14,7 +14,7 @@ class View extends Object
     function __construct($file)
     {
         if(!file_exists($file)) {
-            throw new FlatbedException("Ivalide file ($file) cannot be used as view");
+            throw new FlatbedException\FlatbedException("Ivalide file ($file) cannot be used as view");
         }
         $this->file = $file;
     }

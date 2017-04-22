@@ -1,6 +1,8 @@
 <?php
 
-class FlatbedException extends Exception
+namespace Flatbed\FlatbedException;
+
+class FlatbedException extends \Exception
 {
 
     // Redefine the exception so message isn't optional
@@ -17,7 +19,7 @@ class FlatbedException extends Exception
         return $this->render();
     }
 
-    public function render( $config )
+    public function render()
     {
         ob_clean(); // clear exising markup
         include 'output.php';
@@ -86,7 +88,8 @@ class FlatbedException extends Exception
     protected function renderPageStyles($link = false)
     {
       if ($link) {
-        $file = "/system/core/FlatbedException/" . get_class($this) . ".css";
+          $url = \str_replace("\\", "/",get_class($this));
+        $file = "/$url.css";
         $styles = "<link href='$file' rel='stylesheet' type='text/css'>";
       }
       else {

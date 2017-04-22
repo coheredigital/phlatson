@@ -53,7 +53,7 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
         $object = $this->first();
 
         if(!$value = $object->getUnformatted($fieldname)){
-            throw new FlatbedException("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
+            throw new FlatbedException\FlatbedException("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
         }
 
         $type = gettype($value);
@@ -140,7 +140,7 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
     {
 
         if(!count($this->collection)){
-            throw new FlatbedException("$this->className is empty, cannot retrieve index($x)");
+            throw new FlatbedException\FlatbedException("$this->className is empty, cannot retrieve index($x)");
         }
         return array_values($this->collection)[$x];
     }

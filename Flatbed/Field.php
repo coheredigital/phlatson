@@ -35,12 +35,12 @@ class Field extends Object
         $fieldtype = $this->data("fieldtype");
 
         // if (!$fieldtype) {
-        //     throw new FlatbedException("Fieldtype value (required) is not set for field : $this->name");
+        //     throw new FlatbedException\FlatbedException("Fieldtype value (required) is not set for field : $this->name");
         // }
         $fieldtype = $this->api("extensions")->get($fieldtype);
 
         if (!$fieldtype instanceof Fieldtype) {
-            throw new FlatbedException("Failed to retrieve field type for field : $this->name");
+            throw new FlatbedException\FlatbedException("Failed to retrieve field type for field : $this->name");
         }
         return $fieldtype;
     }

@@ -207,7 +207,7 @@ class Session extends Flatbed implements \IteratorAggregate
         // should sanitize name
         $user = $this->api('users')->get("$name");
         if (!$user instanceof User) {
-            throw new FlatbedException("User {$name} not found!");
+            throw new FlatbedException\FlatbedException("User {$name} not found!");
         }
 
         if ($user->authenticate($password)) {

@@ -1,4 +1,5 @@
 <?php
+namespace Flatbed;
 
 function str_remove_prefix ($string, $prefix) 
 {
@@ -25,17 +26,17 @@ function flatbedErrorHandler($errno, $errorMessage, $errfile, $errline) {
         case E_ERROR:
         case E_PARSE:
         case E_PARSE:
-            throw new FlatbedException($errorMessage, $errno);
+            throw new FlatbedException\FlatbedException($errorMessage, $errno);
             break;
 
         default:
             // var_dump($errno);
-            // throw new FlatbedException($errorMessage, $errno);
+            // throw new FlatbedException\FlatbedException($errorMessage, $errno);
             break;
     }
     return true;
 }
-set_error_handler('flatbedErrorHandler');
+set_error_handler('Flatbed\flatbedErrorHandler');
 
 function getMemoryUse() : string
 {

@@ -26,7 +26,7 @@ final class Api
     {
 
         if (isset(static::$registry[$key]) && in_array($key, static::$lock)) {
-            throw new FlatbedException("There is already an API entry for '{$key}', value is locked.");
+            throw new FlatbedException\FlatbedException("There is already an API entry for '{$key}', value is locked.");
         }
         // set $key and $value the same to avoid duplicates
         if ($lock) static::$lock[$key] = $key;

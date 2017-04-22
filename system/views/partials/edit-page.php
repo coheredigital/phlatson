@@ -7,12 +7,12 @@ $pageEdit = $pages->get($pagename);
 // var_dump($pageEdit->get('template'));
 
 if (!$pageEdit instanceof Page) {
-    throw new FlatbedException("Page: {$pagename} not found");
+    throw new FlatbedException\FlatbedException("Page: {$pagename} not found");
 }
 
 $template = $pageEdit->get('template');
 if (!$template instanceof Template) {
-    throw new FlatbedException("Template not valid");
+    throw new FlatbedException\FlatbedException("Template not valid");
 }
 
 $templateFields = $template->get('fields');
