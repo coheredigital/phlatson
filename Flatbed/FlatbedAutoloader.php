@@ -19,22 +19,30 @@ class FlatbedAutoloader {
         $class = str_replace("\\", DIRECTORY_SEPARATOR,$class);
 
         $parts = explode(DIRECTORY_SEPARATOR, $class);
-        if ($parts[0] == "Flatbed") {
-            array_shift($parts);
-        }
+        // if ($parts[0] == "Flatbed") {
+        //     array_shift($parts);
+        // }
         if (count($parts)) {
-            $class = implode($parts);
+            $class = implode($parts, DIRECTORY_SEPARATOR);
         }
-        
+
 
         // first check if in root system
-        $file = CORE_PATH . "$class.php";
+        $file = ROOT_PATH . "$class.php";
+
+        // r($class);
+        // r(CORE_PATH . "$class.php");
 
         // then for folder with that name
         if (!is_file($file)) {
             $file = CORE_PATH . $class . DIRECTORY_SEPARATOR . $class . ".php";
         }
         
+        if ($parts[0] == "Flatbed") {
+            array_shift($parts);
+            $class = implode($parts, DIRECTORY_SEPARATOR);
+        }
+
         //  r($file);
         // //  r($parts);
 

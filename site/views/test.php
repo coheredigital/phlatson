@@ -14,5 +14,8 @@ $count = 0;
 
 $extension = $extensions->get('MarkupPagetree');
 
-r($flatbed);
+$matches = preg_split("/(?=[A-Z])/", 'MarkupPagetree', 0, PREG_SPLIT_NO_EMPTY );
+
+
+r($matches);
 r($extension);
