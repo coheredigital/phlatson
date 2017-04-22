@@ -1,8 +1,5 @@
 {
     "title": "Content",
     "fieldtype": "FieldtypeRichtext",
-    "input": "InputTinymce",
-    "template": "field",
-    "name": "content",
-    "modified": 1471721877
+    "input": "InputTinymce"
 }

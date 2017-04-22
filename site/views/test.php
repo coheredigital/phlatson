@@ -12,9 +12,18 @@ $limit = 10000;
 
 $count = 0;
 
+$collection = new ObjectCollection();
 
-$field = $fields->get('markdown');
-r($field);
-r($field->template);
-r($field->data());
-r($field->get('fieldtype'));
+$collection->append($fields->get('content'));
+$collection->append($fields->get('markdown'));
+
+
+
+foreach ($collection as $field) {
+    r($field);
+    r($field->file);
+    r($field->template);
+    r($field->data('fieldtype'));
+    r($field->get('fieldtype'));
+
+}
