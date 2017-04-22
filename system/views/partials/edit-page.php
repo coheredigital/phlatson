@@ -6,13 +6,13 @@ $pageEdit = $pages->get($pagename);
 
 // var_dump($pageEdit->get('template'));
 
-if (!$pageEdit instanceof Page) {
-    throw new FlatbedException\FlatbedException("Page: {$pagename} not found");
+if (!$pageEdit) {
+    throw new Flatbed\FlatbedException\FlatbedException("Page: {$pagename} not found");
 }
 
 $template = $pageEdit->get('template');
-if (!$template instanceof Template) {
-    throw new FlatbedException\FlatbedException("Template not valid");
+if (!$template) {
+    throw new Flatbed\FlatbedException\FlatbedException("Template not valid");
 }
 
 $templateFields = $template->get('fields');
