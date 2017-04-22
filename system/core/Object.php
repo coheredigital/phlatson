@@ -60,6 +60,14 @@ abstract class Object extends Flatbed implements JsonSerializable
     */
     protected function getData()
     {
+
+        $data = json_decode(file_get_contents($this->file), true);
+
+        if ($data == false) {
+            $error = json_last_error() === 4 ? 'Syntax Error' : 'Error';
+            throw new FlatbedException("$error : Invalid JSON file ($this->file) passed to " . __CLASS__);
+        }
+
         return json_decode(file_get_contents($this->file), true);
     }
 
