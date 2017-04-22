@@ -14,15 +14,6 @@ class Template extends Object
 
         parent::__construct($file);
 
-
-
-        // // $this->data("template", "template");
-
-        // foreach ($this->defaultFields as $name) {
-        //     if (!$name) continue;
-        //     $this->addField($name);
-        // }
-
     }
 
     public function hasField($name){
@@ -40,17 +31,6 @@ class Template extends Object
         return $this->data["fields"][$name];
     }
 
-    /**
-     * get the view file associated wioth this template
-     * default name to look for is {$template->name}.php
-     * @param  string $name 
-     * @return sting  file path
-     */
-    public function getView( string $name = '')
-    {
-        $filename = $name ? $name : $this->name;
-        return $this('views')->get($filename);
-    }
 
     /**
      * get the view file associated wioth this template
@@ -78,7 +58,8 @@ class Template extends Object
                 $template->parent = $this;
                 return $this->api('templates')->get('template');
             case 'view':
-                return $this->getView();
+                // TODO : look into allowing this to be configurable
+                return $this('views')->get($this->name);
             case 'controller':
                 return $this->getController();
             case 'objectType': // protected / private variable that should have public get

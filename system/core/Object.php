@@ -11,7 +11,7 @@ abstract class Object extends Flatbed implements JsonSerializable
     protected $path;
     protected $uri;
     protected $url;
-    protected $template;
+    // protected $template;
 
     protected $rootPath;
     protected $isSystem;
@@ -42,8 +42,6 @@ abstract class Object extends Flatbed implements JsonSerializable
             $this->uri = trim($this->url, "/");
 
             $this->data = $this->getData();
-
-            $this->template = $this->getTemplate();
 
             $this->data('modified', filemtime($this->file));
 
@@ -191,13 +189,18 @@ abstract class Object extends Flatbed implements JsonSerializable
     *
     * skips formatting of passed value
     * get / set value directly from / to $this->data[$name]
-    * 
+    * if no $name is set returns the current data array
     *
     * @param  string $name
     * @return mixed
     */
-    protected function data( string $name, $value = null)
+    protected function data( ?string $name = null, $value = null)
     {
+
+        if ($name === null) {
+            return $this->data;
+        }
+
         if ($value === null) {
             return $this->data[$name] ?? null;
         }
@@ -306,8 +309,6 @@ abstract class Object extends Flatbed implements JsonSerializable
                 return get_class($this);
             case 'defaultFields':
                 return $this->defaultFields;
-            // case 'template':
-            //     return $this->getTemplate();
             default:
                 return $this->getFormatted($name);
         }
@@ -341,7 +342,7 @@ abstract class Object extends Flatbed implements JsonSerializable
      * @param  string $name
      * @return mixed
      */
-    final public function __get( string $name)
+    final public function __get(string $name)
     {
         return $this->get($name);
     }

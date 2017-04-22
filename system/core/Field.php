@@ -14,27 +14,34 @@ class Field extends Object
 
         parent::__construct($file);
 
-        $this->defaultFields = array_merge($this->defaultFields, [
-            "fieldtype",
-            "input"
-        ]);
+        // $this->defaultFields = array_merge($this->defaultFields, [
+        //     "fieldtype",
+        //     "input"
+        // ]);
 
-        $this->skippedFields = array_merge($this->skippedFields, [
-            "template"
-        ]);
+        // $this->skippedFields = array_merge($this->skippedFields, [
+        //     "template"
+        // ]);
 
-        $this->lockedFields = [
-            "template"
-        ];
+        // $this->lockedFields = [
+        //     "template"
+        // ];
 
-        $this->data("template", "field");
 
     }
 
-    public function getFieldtype()
+    public function fieldtype()
     {
         $fieldtype = $this->data("fieldtype");
+
+        // if (!$fieldtype) {
+        //     throw new FlatbedException("Fieldtype value (required) is not set for field : $this->name");
+        // }
         $fieldtype = $this->api("extensions")->get($fieldtype);
+
+        if (!$fieldtype instanceof Fieldtype) {
+            throw new FlatbedException("Failed to retrieve field type for field : $this->name");
+        }
         return $fieldtype;
     }
 
@@ -45,7 +52,7 @@ class Field extends Object
             case 'template':
                 return $this->api('templates')->get('field');
             case 'fieldtype':
-                return $this->getFieldtype();
+                return $this->fieldtype();
             default:
                 return parent::get($name);
         }

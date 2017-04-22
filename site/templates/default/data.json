@@ -1,13 +1,9 @@
 {
     "title": "Page (default)",
     "fields": {
-    	"title": {
-	    	"required" : true
-	    },
-    	"content" : {},
+    	"title": {},
+        "content" : {},
+    	"markdown" : {},
     	"files" : {}
-	},
-    "modified": 1462640491,
-    "template": "template",
-    "view": "default"
+	}
 }

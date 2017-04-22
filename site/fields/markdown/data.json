@@ -1,0 +1,5 @@
+{
+    "title": "Markdown",
+    "fieldtype": "FieldtypeMarkdown",
+    "input": "InputTinymce",
+}

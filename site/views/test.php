@@ -2,8 +2,7 @@
 
 
 // add ref for debugging, remove later
-require ROOT_PATH . "libraries/ref/ref.php";
-ref::config('expLvl', 1);
+ref::config('expLvl', 0);
 ref::config('validHtml', true);
 
 $data = file_get_contents('C:\Users\Adam\Websites\dev\flatbed\MOCK_DATA_500.json');
@@ -13,13 +12,9 @@ $limit = 10000;
 
 $count = 0;
 
-$p = $pages->get("/");
-$t = $p->template;
-// r($t);
-r($t->fields);
-r($t->hasField('content'));
-r($t->hasField('sdsds'));
 
-
-$field = $fields->get('content');
+$field = $fields->get('markdown');
+r($field);
 r($field->template);
+r($field->data());
+r($field->get('fieldtype'));

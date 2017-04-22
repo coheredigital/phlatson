@@ -1,47 +1,63 @@
 <?php
-spl_autoload_register('classLoader');
+// spl_autoload_register('flatbedAutoloader');
+
+class FlatbedAutoloader {
 
 
-function classLoader($className)
-{
-
-    $systemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "core" . DIRECTORY_SEPARATOR;
-    $className = normalizeDirectorySeperators($className);
-
-
-    // first check if in root system
-    $file = $systemPath . $className . ".php";
-
-    // then for folder with that name
-    if (!is_file($file)) {
-        $file = $systemPath . $className . DIRECTORY_SEPARATOR . $className . ".php";
+    public function __construct()
+    {
+        spl_autoload_register([$this ,'load']);
+        
     }
 
-    // then look to extensions
-    if (!is_file($file)) {
+    public function load($class)
+    {
 
 
-        $extensionsSitePath = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
-        $extensionsSystemPath = ROOT_PATH . "system" . DIRECTORY_SEPARATOR . "extensions" . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR;
+        // var_dump($class);
+        $class = $this->normalizeDirectorySeperators($class);
 
-        $extensionSite = $extensionsSitePath . $className . ".php";
-        $extensionSystem = $extensionsSystemPath . $className . ".php";
+        // first check if in root system
+        $file = CORE_PATH . "$class.php";
 
-        if (!is_file($extensionSite) && !is_file($extensionSystem)) {
-            throw new FlatbedException("Extension {$className} does not exist / cannot be found!");
+        // then for folder with that name
+        if (!is_file($file)) {
+            $file = CORE_PATH . $class . DIRECTORY_SEPARATOR . $class . ".php";
         }
 
-        if (is_file($extensionSystem)) $file = $extensionSystem;
-        // a site extension can replace a System core extension
-        if (is_file($extensionSite)) $file = $extensionSite;
+        // then look to extensions
+        if (!is_file($file)) {
 
+
+            $extensionsSitePath = SITE_PATH . "extensions" . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR;
+            $extensionsSystemPath = SYSTEM_PATH . "extensions" . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR;
+
+            $extensionSite = $extensionsSitePath . $class . ".php";
+            $extensionSystem = $extensionsSystemPath . $class . ".php";
+
+            if (!is_file($extensionSite) && !is_file($extensionSystem)) {
+                throw new FlatbedException("Extension {$class} does not exist / cannot be found!");
+            }
+
+            if (is_file($extensionSystem)) $file = $extensionSystem;
+            // a site extension can replace a System core extension
+            if (is_file($extensionSite)) $file = $extensionSite;
+
+
+        }
+
+        if(!is_file($file)) {
+            throw new FlatbedException("Flatbed could not load the class '{$class}'!");
+        }
+
+        require_once $file;  
 
     }
 
-    require_once $file;
+    public function normalizeDirectorySeperators($path){
+        return str_replace("\\", DIRECTORY_SEPARATOR, $path);
+    }
 
-}
 
-function normalizeDirectorySeperators($path){
-    return str_replace("\\", DIRECTORY_SEPARATOR, $path);
+
 }

@@ -8,16 +8,29 @@ function str_remove_prefix ($string, $prefix)
     return $string;
 }
 
-function flatbedErrorHandler($errno, $errstr, $errfile, $errline) {
+function flatbedErrorHandler($errno, $errorMessage, $errfile, $errline) {
+
+    if (!(error_reporting() & $errno)) {
+        // This error code is not included in error_reporting, so let it fall
+        // through to the standard PHP error handler
+        return false;
+    }
 
     switch ($errno) {
-        case 'E_USER_ERROR':
-        case 'E_RECOVERABLE_ERROR':
-            throw new FlatbedException($errstr, $errno);
+        case E_USER_ERROR:
+        case E_RECOVERABLE_ERROR:
+        case E_CORE_ERROR:
+        case E_COMPILE_ERROR:
+        case E_STRICT:
+        case E_ERROR:
+        case E_PARSE:
+        case E_PARSE:
+            throw new FlatbedException($errorMessage, $errno);
             break;
 
         default:
-            # code...
+            // var_dump($errno);
+            // throw new FlatbedException($errorMessage, $errno);
             break;
     }
     return true;
