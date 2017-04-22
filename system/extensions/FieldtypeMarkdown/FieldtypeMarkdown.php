@@ -10,7 +10,8 @@ class FieldtypeMarkdown extends FieldtypeText
 
     public function output($value)
     {
-        return Parsedown::instance()->parse($value);
+        $parsedown = new Parsedown;
+        return $parsedown->text($value);
     }
 
     public function set($value)
