@@ -5,7 +5,7 @@ $field = $fields->get($fieldname);
 
 $templateFields = $field->get('template')->get('fields');
 
-$inputs = new ObjectCollection;
+$inputs = new Flatbed\ObjectCollection;
 
 foreach ($templateFields as $templateFieldName => $templateField) {
 

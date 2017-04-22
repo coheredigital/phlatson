@@ -17,7 +17,7 @@ if (!$template instanceof Template) {
 
 $templateFields = $template->get('fields');
 
-$inputs = new ObjectCollection;
+$inputs = new Flatbed\ObjectCollection;
 
 foreach ($templateFields as $templateFieldName => $templateField) {
 
