@@ -7,7 +7,7 @@ class Template extends Object
 
     public $parent; // the object this template belongs to
     public $defaultFields = ['title','fields', 'name','view','modified'];
-
+    public $controller = null;
 
     function __construct($file = null)
     {
@@ -31,25 +31,6 @@ class Template extends Object
         return $this->data["fields"][$name];
     }
 
-
-    /**
-     * get the view file associated wioth this template
-     * default name to look for is {$template->name}.php
-     * @param  string $name 
-     * @return sting  file path
-     */
-    public function getController()
-    {
-
-        $file = SITE_PATH . "controllers" . DIRECTORY_SEPARATOR . "{$this->name}.php";
-        if (is_file($file)) return $file;
-
-        $file = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR . "{$this->name}.php";
-        if (is_file($file)) return $file;
-
-        return null;
-    }
-
     public function get( string $name)
     {
         switch ($name) {
@@ -60,8 +41,6 @@ class Template extends Object
             case 'view':
                 // TODO : look into allowing this to be configurable
                 return $this('views')->get($this->name);
-            case 'controller':
-                return $this->getController();
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:
