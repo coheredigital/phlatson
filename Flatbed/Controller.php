@@ -8,13 +8,14 @@ Controller loaded automatically based on the matching template
     or method spcific if defined: /contollers/article.post.php
 
 IDEA : named segment types extended to support
-    - (name:controller)     - changes the controller that will be loaded for the template
-    - (name:method)         - fires the given method
-    - (name:page)           - changes that page variable
+    - (controller:name)     - changes the controller that will be loaded for the template
+    - (method:name)         - fires the given method
+    - (page:url)           - changes that page variable
                                 - default to "all" capture type
                                 - TODO:  determine what if anything could be done with this
                                 - could just return a $page for the name variable : YES
-    - (name:user)           - support all object types as above? 
+    - (user:name)           - support all object types as above? 
+    - (view:name)           
 
 
 Controllers can change the page that is returned

@@ -296,8 +296,8 @@ class Response extends Flatbed
 
         foreach ($segment_map as $key => $map) {
             
-            $map = explode(":",$map);
-            list($name, $type) = $map;
+            $map = explode(":", $map);
+            list($type, $name) = $map;
             $position = $key+1;
 
             switch ($type) {
@@ -315,9 +315,6 @@ class Response extends Flatbed
                     $named_segments["$name"] = $segmemt;
                     break 2;
             }
-            
-            
-
 
         }
 

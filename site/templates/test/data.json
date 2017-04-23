@@ -5,6 +5,6 @@
     "template": "template",
     "settings": {
         "allow_segments" : true,
-        "segment_map" : "page:any/count:int/path:all"
+        "segment_map" : "string:page/int:count/all:path"
     }
 }
