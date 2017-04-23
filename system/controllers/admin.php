@@ -25,18 +25,7 @@ $page->layout = $views->get('layouts/default');
 // login page is requested
 if ($response->segment(1) === "login") {
 
-	// check for submitted form
-	if ($request->method == "POST" && $request->post->username && $request->post->password) {
-		
-		$username = $request->post->username;
-		$password = $request->post->password;
 
-
-		if ($session->login($username, $password)) {
-			$response->redirect($page->url);
-		}
-
-	}
 
 
 	$page->layout = $views->get('layouts/login');
