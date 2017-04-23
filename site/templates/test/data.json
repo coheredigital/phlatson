@@ -4,6 +4,7 @@
     "modified": 1471815666,
     "template": "template",
     "settings": {
-        "allow_segments" : true
+        "allow_segments" : true,
+        "segment_map" : "page:any/count:int/path:all"
     }
 }

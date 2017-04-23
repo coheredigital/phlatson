@@ -2,7 +2,7 @@
 
 
 // add ref for debugging, remove later
-ref::config('expLvl', 0);
+ref::config('expLvl', 1);
 ref::config('validHtml', true);
 
 $data = file_get_contents('C:\Users\Adam\Websites\dev\flatbed\MOCK_DATA_500.json');
@@ -17,5 +17,4 @@ $extension = $extensions->get('FieldtypeText');
 $matches = preg_split("/(?=[A-Z])/", 'MarkupPagetree', 0, PREG_SPLIT_NO_EMPTY );
 
 
-r($matches);
-r($extension);
+
