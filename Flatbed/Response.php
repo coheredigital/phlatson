@@ -7,6 +7,7 @@ class Response extends Flatbed
 
     protected $request;
     public $page;
+    public $template;
 
     protected $protocol = '1.1';
 
@@ -22,6 +23,7 @@ class Response extends Flatbed
     protected $sent = false;
 
     protected $segments = [];
+    protected $named_segments = [];
 
     // TODO :  move the ResponseFormat class
     protected $common_formats = [
@@ -40,10 +42,17 @@ class Response extends Flatbed
     {
         $this->request = $request;
         $this->page = $page;
-        
+        $this->template = $page->template;
+
+        // set raw request segment array
         $segment = str_remove_prefix($request->url, $page->url);
         if ($segment = trim($segment,"/")) {
             $this->segments = explode("/", $segment);
+        }
+
+        // set named segment array if segment_map is defined
+        if (count($this->segments) && $segemnt_map = $this->template->setting('segment_map')) {
+            $this->named_segments = $this->getNamedSegments($segemnt_map);
         }
 
         // set default response status
@@ -182,10 +191,10 @@ class Response extends Flatbed
 
     public function flush($override = false)
     {
-
-        if (headers_sent() && !$override) {
-            throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
-        }
+        // TODO : temp disabled for testing
+        // if (headers_sent() && !$override) {
+        //     throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
+        // }
 
         // If no format was set use the request format
         // TODO : implement
@@ -205,9 +214,6 @@ class Response extends Flatbed
 
         // build the output
         $out = implode('', $this->chunks);
-
-
-
 
         $this->chunks = []; // clear body content chunks
         echo ($out);
@@ -271,10 +277,48 @@ class Response extends Flatbed
      * @param  int    $position
      * @return string           the URL portion at the posisiton set
      */
-    public function segment(int $position) : ?string
+    public function segment(int $start, ?int $limit = 1) : ?string
     {
-        $index = $position - 1;
-        return $this->segments[$index];
+        
+        $index = $start - 1;
+        $segments = array_slice($this->segments, $index, $limit);
+        return implode("/", $segments);
+    }
+
+    protected function getNamedSegments(string $segment_map) {
+        
+        $named_segments = [];
+
+        // trim open and close slashes in case they were included
+        $segment_map = trim($segment_map, "/");
+        $segment_map = explode("/", $segment_map );
+
+        foreach ($segment_map as $key => $map) {
+            
+            $map = explode(":",$map);
+            list($name, $type) = $map;
+            $position = $key+1;
+
+            switch ($type) {
+                case 'any':
+                case 'int':
+                    $segmemt = $this->segment($position);
+                    $named_segments["$name"] = $segmemt;
+                    break;
+                case 'all':
+                    $segmemt = $this->segment($position, null);
+                    $named_segments["$name"] = $segmemt;
+                    break 2;
+            }
+            
+
+
+        }
+
+
+
+        return $named_segments;
+        
     }
 
     public function get(string $name)
