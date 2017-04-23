@@ -7,6 +7,16 @@ Controller loaded automatically based on the matching template
     example: Template: article loads Controller: /contollers/article.php
     or method spcific if defined: /contollers/article.post.php
 
+IDEA : named segment types extended to support
+    - (name:controller)     - changes the controller that will be loaded for the template
+    - (name:method)         - fires the given method
+    - (name:page)           - changes that page variable
+                                - default to "all" capture type
+                                - TODO:  determine what if anything could be done with this
+                                - could just return a $page for the name variable : YES
+    - (name:user)           - support all object types as above? 
+
+
 Controllers can change the page that is returned
     request to /blog/2017/04/27/the-new-site-is-online
     would be a segment that matched to blog template / page
