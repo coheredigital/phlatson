@@ -63,4 +63,11 @@ class Controller extends Flatbed
         
     }
 
+
+    public function __get($name) {
+
+        return $this->api($name);
+
+    }
+
 }
