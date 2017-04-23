@@ -25,18 +25,6 @@ class Response extends Flatbed
     protected $segments = [];
     protected $named_segments = [];
 
-    // TODO :  move the ResponseFormat class
-    protected $common_formats = [
-        'html' => 'text/html',
-        'txt' => 'text/plain',
-        'css' => 'text/css',
-        'js' => 'application/x-javascript',
-        'xml' => 'application/xml',
-        'rss' => 'application/rss+xml',
-        'atom' => 'application/atom+xml',
-        'json' => 'application/json',
-        'jsonp' => 'text/javascript'
-    ];
 
     public function __construct( Request $request, Page $page)
     {
@@ -283,6 +271,16 @@ class Response extends Flatbed
         $index = $start - 1;
         $segments = array_slice($this->segments, $index, $limit);
         return implode("/", $segments);
+    }
+
+    /**
+     * get the segment portion at the request position, counting from left to right
+     * @param  int    $position
+     * @return string           the URL portion at the posisiton set
+     */
+    public function segments( bool $named = false) : array
+    {
+        return $named ? $this->named_segments : $this->segments;
     }
 
     protected function getNamedSegments(string $segment_map) {

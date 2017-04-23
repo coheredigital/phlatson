@@ -1,6 +1,5 @@
 <?php 
 
-
 // check if user is logged in yet
 // 
 // TODO :  templates should be able to define access level 

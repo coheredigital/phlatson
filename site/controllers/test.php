@@ -2,4 +2,4 @@
 
 // r($request);
 
-r($response);
+r($response->segments(true));
