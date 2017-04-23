@@ -14,25 +14,53 @@ Controllers can change the page that is returned
     returning it with its template and page etc
     this is handled by $this->page() method
 
-
-
 */
 
 class Controller extends Flatbed
 {
 
-    protected $request;
-    protected $template;
-
-    final public function __construct(Template $template, Request $request)
+    final public function __construct(Response $response)
     {
-        $this->request = $request;
+        $file = $this->getController($response->template);
+        $this->execute($file,$response);
     }
 
+	protected function getController( Template $template) 
+	{
 
-    protected function page() : Page
+
+		if ($template->isSystem()) {
+			$rootPath = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR;
+		}
+		else {
+			$rootPath = SITE_PATH . "controllers" . DIRECTORY_SEPARATOR;
+		}
+		$name = $template->name;
+		$method = $this->request->method;
+
+        $file = "{$rootPath}{$name}.{$method}.php";
+        if (is_file($file)) return $file;
+
+        $file = $rootPath . $name . ".php";
+        if (is_file($file)) return $file;
+
+        return null;
+
+	}
+
+
+    public function execute($file,$response)
     {
 
+        if (!is_file($file)) return;
+
+        // extract named segment variables
+        if ($segments = $response->segments(true)) {
+            extract($segments);
+        }
+
+        include_once $file;
+        
     }
 
 }
