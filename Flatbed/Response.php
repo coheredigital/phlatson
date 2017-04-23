@@ -270,10 +270,10 @@ class Response extends Flatbed
         
         $index = $start - 1;
         $segments = array_slice($this->segments, $index, $limit);
-
         $segment = implode("/", $segments);
+        $segment = trim($segment);
 
-        return $segment ? $segment : null;
+        return isset($segment) && $segment != '' ? $segment : null;
     }
 
     /**
@@ -300,15 +300,26 @@ class Response extends Flatbed
             list($type, $name) = $map;
             $position = $key+1;
 
+            // $segmemt = trim($segment);
+
             switch ($type) {
                 case 'any':
                 case 'string':
                     $segmemt = $this->segment($position);
+                    
                     $named_segments["$name"] = $segmemt;
                     break;
                 case 'int':
                     $segmemt = $this->segment($position);
-                    $named_segments["$name"] = (int) $segmemt;
+                    // special case to handle zero
+                    if ($segmemt == "0") {
+                        $segmemt = (int) $segmemt;
+                    }
+                    else {
+                        $segmemt = (int) $segmemt ?: null;
+                    }
+                    
+                    $named_segments["$name"] = $segmemt;
                     break;
                 case 'all':
                     $segmemt = $this->segment($position, null);
