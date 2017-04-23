@@ -309,6 +309,12 @@ class Response extends Flatbed
                     
                     $named_segments["$name"] = $segmemt;
                     break;
+                // TODO : just for testing
+                case 'field':
+                    $segmemt = $this->segment($position);
+                    $field = $this('fields')->get($segmemt);
+                    $named_segments["$name"] = $field;
+                    break;
                 case 'int':
                     $segmemt = $this->segment($position);
                     // special case to handle zero
