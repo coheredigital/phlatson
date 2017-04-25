@@ -296,8 +296,15 @@ class Response extends Flatbed
 
         foreach ($segment_map as $key => $map) {
             
+            // break map segment into its components
             $map = explode(":", $map);
             list($type, $name) = $map;
+
+            // type are all lowercase
+            $type = strtolower($type);
+
+            // default name to the type requested
+            $name = $name ? $name : $type;
 
             $position = $key+1;
             $segmemt = $this->segment($position);
@@ -307,16 +314,6 @@ class Response extends Flatbed
                 case 'string':
                     $named_segments["$name"] = $segmemt;
                     break;
-                // TODO : just for testing
-                case 'subview':
-                    $subview = $this->api('views')->get("{$this->template->name}.{$segmemt}");
-                    $named_segments["$name"] = $subview;
-                    break;
-                case 'field':
-
-                    $field = $this('fields')->get($segmemt);
-                    $named_segments["$name"] = $field;
-                    break;
                 case 'int':
                     // special case to handle zero
                     if ($segmemt == "0") {
@@ -325,9 +322,31 @@ class Response extends Flatbed
                     else {
                         $segmemt = (int) $segmemt ?: null;
                     }
-                    
                     $named_segments["$name"] = $segmemt;
                     break;
+
+                // TODO : just for testing
+                case 'extension':
+                    $subview = $this->api('extensions')->get($segmemt);
+                    $named_segments["$name"] = $subview;
+                    break;
+                case 'subview':
+                    $subview = $this->api('views')->get("{$this->template->name}.{$segmemt}");
+                    $named_segments["$name"] = $subview;
+                    break;
+                case 'field':
+                    $field = $this('fields')->get($segmemt);
+                    $named_segments["$name"] = $field;
+                    break;
+                case 'template':
+                    $field = $this('templates')->get($segmemt);
+                    $named_segments["$name"] = $field;
+                    break;
+                case 'page':
+                    $segmemt = $this->segment($position, null);
+                    $field = $this('pages')->get($segmemt);
+                    $named_segments["$name"] = $field;
+                    break 2;
                 case 'all':
                     $segmemt = $this->segment($position, null);
                     $named_segments["$name"] = $segmemt;
@@ -335,9 +354,6 @@ class Response extends Flatbed
             }
 
         }
-
-
-
         return $named_segments;
         
     }
