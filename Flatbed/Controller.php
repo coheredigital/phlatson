@@ -32,11 +32,11 @@ class Controller extends Flatbed
 
     final public function __construct(Response $response)
     {
-        $file = $this->getController($response->template);
+        $file = $this->getFile($response->template);
         $this->execute($file,$response);
     }
 
-	protected function getController( Template $template) 
+	protected function getFile( Template $template) 
 	{
 
 
