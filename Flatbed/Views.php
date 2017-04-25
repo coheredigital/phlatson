@@ -17,6 +17,8 @@ class Views extends Objects
             $file = SYSTEM_PATH . "views" . DIRECTORY_SEPARATOR . "{$name}.php";
         }
 
+        if(!file_exists($file)) return null;
+
         $view = new View($file);
 
         return $view;
