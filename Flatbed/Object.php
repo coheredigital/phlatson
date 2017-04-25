@@ -11,10 +11,8 @@ abstract class Object extends Flatbed implements \JsonSerializable
     protected $path;
     protected $uri;
     protected $url;
-    // protected $template;
 
     protected $rootPath;
-    protected $isSystem;
 
     // main data container, holds data loaded from JSON file
     protected $data = [];
