@@ -310,6 +310,7 @@ class Response extends Flatbed
             $segmemt = $this->segment($position);
 
             switch ($type) {
+                // simple scalar type
                 case 'any':
                 case 'string':
                     $named_segments["$name"] = $segmemt;
@@ -324,33 +325,40 @@ class Response extends Flatbed
                     }
                     $named_segments["$name"] = $segmemt;
                     break;
+                case 'all':
+                    $segmemt = $this->segment($position, null);
+                    $named_segments["$name"] = $segmemt;
+                    break 2;
 
+                // advanced Object types
                 // TODO : just for testing
-                case 'extension':
-                    $subview = $this->api('extensions')->get($segmemt);
-                    $named_segments["$name"] = $subview;
-                    break;
                 case 'subview':
                     $subview = $this->api('views')->get("{$this->template->name}.{$segmemt}");
                     $named_segments["$name"] = $subview;
+                    break;
+                case 'extension':
+                    $extension = $this->api('extensions')->get($segmemt);
+                    $named_segments["$name"] = $extension;
                     break;
                 case 'field':
                     $field = $this('fields')->get($segmemt);
                     $named_segments["$name"] = $field;
                     break;
                 case 'template':
-                    $field = $this('templates')->get($segmemt);
-                    $named_segments["$name"] = $field;
+                    $template = $this('templates')->get($segmemt);
+                    $named_segments["$name"] = $template;
+                    break;
+                    break;
+                case 'user':
+                    $user = $this('users')->get($segmemt);
+                    $named_segments["$name"] = $user;
                     break;
                 case 'page':
                     $segmemt = $this->segment($position, null);
-                    $field = $this('pages')->get($segmemt);
-                    $named_segments["$name"] = $field;
+                    $page = $this('pages')->get($segmemt);
+                    $named_segments["$name"] = $page;
                     break 2;
-                case 'all':
-                    $segmemt = $this->segment($position, null);
-                    $named_segments["$name"] = $segmemt;
-                    break 2;
+
             }
 
         }
