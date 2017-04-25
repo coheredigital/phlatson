@@ -228,13 +228,7 @@ class Page extends DataObject implements ViewableObject
                 parent::set($name, $value);
                 break;
             default:
-                if ($this->getTemplate() && $this->getTemplate()->fields && $this->getTemplate()->fields->has($name)) {
-                    $field = $this->api("fields")->get("$name");
-                    $fieldtype = $field->fieldtype;
-                    $this->data[$name] = $fieldtype->getSave($value);
-                } else {
-                    parent::set($name, $value);
-                }
+                parent::set($name, $value);
         }
 
     }
