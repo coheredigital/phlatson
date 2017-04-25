@@ -298,25 +298,26 @@ class Response extends Flatbed
             
             $map = explode(":", $map);
             list($type, $name) = $map;
-            $position = $key+1;
 
-            // $segmemt = trim($segment);
+            $position = $key+1;
+            $segmemt = $this->segment($position);
 
             switch ($type) {
                 case 'any':
                 case 'string':
-                    $segmemt = $this->segment($position);
-                    
                     $named_segments["$name"] = $segmemt;
                     break;
                 // TODO : just for testing
+                case 'subview':
+                    $subview = $this->api('views')->get("{$this->template->name}.{$segmemt}");
+                    $named_segments["$name"] = $subview;
+                    break;
                 case 'field':
-                    $segmemt = $this->segment($position);
+
                     $field = $this('fields')->get($segmemt);
                     $named_segments["$name"] = $field;
                     break;
                 case 'int':
-                    $segmemt = $this->segment($position);
                     // special case to handle zero
                     if ($segmemt == "0") {
                         $segmemt = (int) $segmemt;
