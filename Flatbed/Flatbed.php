@@ -86,7 +86,10 @@ class Flatbed
     {
         switch ($name) {
             case 'className':
-                return get_class($this);
+            case 'classname':
+                return (new \ReflectionClass($this))->isAnonymous() ? get_parent_class($this) : get_class($this);
+            // case 'url':
+            //     return $this->{$name};
             default:
                 return null;
         }
@@ -98,14 +101,9 @@ class Flatbed
      * @param  string $name
      * @return mixed
      */
-    public function __get( string $name)
+    public function __get(string $name)
     {
-        switch ($name) {
-            case 'url':
-                return $this->{$name};
-            default:
-                return null;
-        }
+        return $this->get($name);
     }
 
 
@@ -118,20 +116,34 @@ class Flatbed
      */
     final public function bind( string $name, Callable $function) {
 
-        $classname = (new \ReflectionClass($this))->isAnonymous() ? get_parent_class($this) : get_class($this);
-
         if (method_exists($this, "$name")) {
-            throw new Exceptions\FlatbedException("Cannont bind method '$name' to {$classname} : method already exists!");
+            throw new Exceptions\FlatbedException("Cannot bind method '$name' to {$this->classname} : method already exists!");
         }
 
         $this->callbacks[$name] = $function;
     }
     final public function bindBefore( string $name, Callable $function) {
-        $this->callbacks[$name] = $function;
+
+        $methodName = "_$name";
+        $class = get_class($this);
+
+        if (!method_exists($this, "$methodName")) {
+            throw new Exceptions\FlatbedException("Cannot bindBefore method '$name' in {$class} : method does not exist!");
+        }
+
+        $this->callbacksBefore[$name] = $function;
     }
 
     final public function bindAfter( string $name, Callable $function) {
-        $this->callbacks[$name] = $function;
+
+        $methodName = "_$name";
+        $class = get_class($this);
+
+        if (!method_exists($this, "$methodName")) {
+            throw new Exceptions\FlatbedException("Cannot bindAfter method '$name' in {$class} : method does not exist!");
+        }
+
+        $this->callbacksAfter[$name] = $function;
     }
 
 
