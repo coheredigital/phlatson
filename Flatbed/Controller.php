@@ -7,23 +7,9 @@ Controller loaded automatically based on the matching template
     example: Template: article loads Controller: /contollers/article.php
     or method spcific if defined: /contollers/article.post.php
 
-IDEA : named segment types extended to support
-    - (controller:name)     - changes the controller that will be loaded for the template
-    - (method:name)         - fires the given method
-    - (page:url)           - changes that page variable
-                                - default to "all" capture type
-                                - TODO:  determine what if anything could be done with this
-                                - could just return a $page for the name variable : YES
-    - (user:name)           - support all object types as above? 
-    - (view:name)           
 
-
-Controllers can change the page that is returned
-    request to /blog/2017/04/27/the-new-site-is-online
-    would be a segment that matched to blog template / page
-    but the Controller can intercept the request and match it to the blog post /blog/20170427-the-new-site-is-online
-    returning it with its template and page etc
-    this is handled by $this->page() method
+Controller is primarily defined to controller to use of construct, set to final to prevent overriding behavious
+and is devoid of method so that they can be bound at runtime since Controller extends Flatbed and is bind methods and API access
 
 */
 
@@ -31,42 +17,28 @@ class Controller extends Flatbed
 {
 
 
-    public $callbacks = [];
-
     final public function __construct(Response $response)
     {
         // determine controller file
-        $file = $this->getFile($response->template);
-        $this->execute($file,$response);
-    }
-
-	protected function getFile( Template $template) 
-	{
-
-
-		if ($template->isSystem()) {
-			$rootPath = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR;
-		}
-		else {
-			$rootPath = SITE_PATH . "controllers" . DIRECTORY_SEPARATOR;
-		}
-		$name = $template->name;
+        $name = $response->template->name;
 		$method = $this->request->method;
 
-        $file = "{$rootPath}{$name}.{$method}.php";
-        if (is_file($file)) return $file;
+		if ($response->template->isSystem()) {
+			$path = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR;
+		}
+		else {
+			$path = SITE_PATH . "controllers" . DIRECTORY_SEPARATOR;
+		}
 
-        $file = $rootPath . $name . ".php";
-        if (is_file($file)) return $file;
+        
+        // check for method specific variation first
+        $file = "{$path}{$name}.{$method}.php";
 
-        return null;
+        if (!is_file($file)) {
+            $file = "{$path}{$name}.php";
+        };
 
-	}
-
-
-    public function execute($file,$response)
-    {
-
+        // no controller file was found, return
         if (!is_file($file)) return;
 
         // extract named segment variables
@@ -74,18 +46,14 @@ class Controller extends Flatbed
             extract($segments);
         }
 
+        // and include controller
         include_once $file;
-        
     }
 
 
+    // give property access to variable
     public function __get($name) {
-
         return $this->api($name);
-
     }
-
-
-
 
 }
