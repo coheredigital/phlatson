@@ -12,7 +12,7 @@
         <label for='trace' class="fbe-title">
           <span class="fbe-heading">
             <span class="fbe-label"><?=get_class($this)?></span><br>
-            <span class="fbe-message" style="font-size: 14px;"><?=$this->getMessage()?></span>
+            <span class="fbe-message" style="font-size: 16px; font-weight:bold;"><?=$this->getMessage()?></span>
           </span>
           <span class="fbe-file"><?=$this->getFile()?></span>
           <span class="trace-line"><?=$this->line?></span>
