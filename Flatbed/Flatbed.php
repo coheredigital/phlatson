@@ -9,6 +9,12 @@ namespace Flatbed;
 class Flatbed
 {
 
+
+    public $callbacks = [];
+    public $callbacksBefore = [];
+    public $callbacksAfter = [];
+
+
     /**
      * get or register API variable 
      * universally accesible to classes extending Flatbed
@@ -38,37 +44,39 @@ class Flatbed
      * no other classes that extend Flatbed should be allowed to override this behaviour
      *
      */
-    // final public function __call($method, $arguments)
-    // {
-    //     $methodName = "_$method";
-    //     if (!method_exists($this, "$methodName")) throw new Exceptions\FlatbedException("Method: $method does not exist in class: $this->className");
+    final public function __call($method, $arguments)
+    {
 
-    //     $className = get_class($this);
-
-    //     // create the Event object to store and pass all the good stuff we want to have available to our listeners
-    //     $event = new Event;
-
-    //     $event->method = $method;
-    //     $event->arguments = $arguments;
-    //     $event->object = $this;
-    //     $event->return = null;
+        // first check for simple bound methods
+        if ( isset($this->callbacks[$method] ) ) {
+            
+            return call_user_func($this->callbacks[$method], $arguments);
+        }
 
 
-    //     // TODO :  work on function return handling logic
-    //     $event->return = $this->api("events")->execute("before.$className.$method", $event);
-    //     // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
-    //     $event->return = call_user_func_array([$this, "_$method"], $event->arguments);
-    //     // $this->api("events")->execute("after.$className.$method", $event);
+        // then check if a exentable method exists
+        $methodName = "_$method";
+        $className = get_class($this);
 
-    //     return $event->return;
-    // }
+
+
+        // TODO :  work on function return handling logic
+        // $event->return = $this->api("events")->execute("before.$className.$method", $event);
+        // call the real method and pass the arguments from the Event reference (this allows for interception and alterations)
+        // $event->return = call_user_func_array([$this, "_$method"], $event->arguments);
+        // $this->api("events")->execute("after.$className.$method", $event);
+
+        // return $event->return;
+    }
+
+    
 
     /**
      * allow for more convenient access to the API
      * @param  $string $name name one the api variable we want access to
      * @return Object    API object
      */
-    final public function __invoke($name, $value = null, $lock = false)
+    final public function __invoke($name)
     {
         // $this->api($name, $value, $lock);
         return Api::get($name);
@@ -99,5 +107,32 @@ class Flatbed
                 return null;
         }
     }
+
+
+    /**
+     * bind a new method to the class
+     *
+     * @param string $name
+     * @param callback $callback
+     * @return void
+     */
+    final public function bind( string $name, Callable $function) {
+
+        $classname = (new \ReflectionClass($this))->isAnonymous() ? get_parent_class($this) : get_class($this);
+
+        if (method_exists($this, "$name")) {
+            throw new Exceptions\FlatbedException("Cannont bind method '$name' to {$classname} : method already exists!");
+        }
+
+        $this->callbacks[$name] = $function;
+    }
+    final public function bindBefore( string $name, Callable $function) {
+        $this->callbacks[$name] = $function;
+    }
+
+    final public function bindAfter( string $name, Callable $function) {
+        $this->callbacks[$name] = $function;
+    }
+
 
 }

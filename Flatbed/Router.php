@@ -52,8 +52,19 @@ class Router extends Flatbed
     		$response = new Response($this->request, $page);
     		$this->api('response', $response, true);
 
+
+			$controllerFile = $this->getControllerFile($response);
+
+			
+			$controller = new class($response) extends Controller {
+
+			};
+			
+
 			// execute controller
-			(new Controller($response));
+			
+			// $controller->execute($controllerFile, $response);
+			// (new Controller($response));
 
     	}
     	else {
@@ -75,6 +86,29 @@ class Router extends Flatbed
     
     }
 
+
+	public function getControllerFile($response) {
+
+		$template = $response->template;
+
+		if ($template->isSystem()) {
+			$rootPath = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR;
+		}
+		else {
+			$rootPath = SITE_PATH . "controllers" . DIRECTORY_SEPARATOR;
+		}
+		$name = $template->name;
+		$method = $this->request->method;
+
+        $file = "{$rootPath}{$name}.{$method}.php";
+        if (is_file($file)) return $file;
+
+        $file = $rootPath . $name . ".php";
+        if (is_file($file)) return $file;
+
+        return null;
+
+	}
 
 
 }

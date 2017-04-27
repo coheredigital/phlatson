@@ -358,7 +358,9 @@ class Response extends Flatbed
                     $page = $this('pages')->get($segmemt);
                     $named_segments["$name"] = $page;
                     break 2;
-
+                // api access
+                case 'api':
+                    
             }
 
         }

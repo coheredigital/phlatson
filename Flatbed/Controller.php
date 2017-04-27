@@ -30,8 +30,12 @@ Controllers can change the page that is returned
 class Controller extends Flatbed
 {
 
+
+    public $callbacks = [];
+
     final public function __construct(Response $response)
     {
+        // determine controller file
         $file = $this->getFile($response->template);
         $this->execute($file,$response);
     }
@@ -80,5 +84,8 @@ class Controller extends Flatbed
         return $this->api($name);
 
     }
+
+
+
 
 }
