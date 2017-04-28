@@ -145,7 +145,7 @@ abstract class Objects extends Flatbed
             case 'systemPath':
                 return $this->{$name};
             default:
-                return parent::__get($name);
+                return parent::get($name);
         }
     }
 
