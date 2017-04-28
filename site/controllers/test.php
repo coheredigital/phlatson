@@ -1,10 +1,7 @@
 <?php
 
-
 $this->bind('login', function($event){
     var_dump($event);
-    echo "login callback: $event";
+    echo "login callback";
 });
 
-
-$this->login("awesome");

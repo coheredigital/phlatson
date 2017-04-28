@@ -5,7 +5,6 @@
     <title>Flatbed - <?php echo $page->title ?></title>
     <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>
-    <!--<link rel="stylesheet" href="<?php echo $config->urls->views ?>styles/main.css">-->
     <link rel="stylesheet" href="<?php echo $views->url ?>styles/main.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">

@@ -5,6 +5,12 @@
     "template": "template",
     "settings": {
         "allow_segments" : true,
-        "segment_map" : "user:"
+        "segment_map" : "method:",
+        "route" : {
+            "enable": true,
+            "map" : {
+                "GET|"
+            }
+        }
     }
 }
