@@ -8,6 +8,7 @@ class Response extends Flatbed
     protected $request;
     public $page;
     public $template;
+    public $controller;
 
     protected $protocol = '1.1';
 
