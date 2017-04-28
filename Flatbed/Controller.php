@@ -16,9 +16,13 @@ and is devoid of method so that they can be bound at runtime since Controller ex
 class Controller extends Flatbed
 {
 
+    public $response;
 
     final public function __construct(Response $response)
     {
+        // TODO :  this should not be needed here, temp fix
+        $this->response = $response;
+
         // determine controller file
         $name = $response->template->name;
 		$method = $this->request->method;

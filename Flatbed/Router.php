@@ -46,27 +46,21 @@ class Router extends Flatbed
     	$page = $this->match($this->request->path);
 
     	if ($page instanceof Page) {
-
     		$this->api('page', $page, true);
     		// create reponse and add to API
     		$response = new Response($this->request, $page);
-    		$this->api('response', $response, true);
-
-			$response->controller = new class($response) extends Controller {};
-
+    		
     	}
     	else {
 	        // TODO :  I'd like to see if I can do this without the need for a page and template
 	        $page = $this('pages')->get('404');
-
 	        // set the response so the page has access
 	        $response = new Response($this->request, $page);
 	        $response->code(404);
-	        $this->api('response', $response, true);
-
-	        
-	        
     	}
+
+		// add response to flatbed API
+		$this->api('response', $response, true);
 
     	// add response and page to api
     	$response->append( $page->render() );

@@ -6,11 +6,21 @@
     "settings": {
         "allow_segments" : true,
         "segment_map" : "method:",
-        "route" : {
+        "segments" : {
             "enable": true,
-            "map" : {
-                "GET|"
-            }
+            "routes" : [
+                {
+                    "method" : "ANY",
+                    "path" : "that",
+                    "callback" : "logout"
+                },
+                {
+                    "method" : "POST",
+                    "path" : "pages/save",
+                    "callback" : "save"
+                }
+
+            ]
         }
     }
 }

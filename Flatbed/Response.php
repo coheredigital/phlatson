@@ -32,6 +32,7 @@ class Response extends Flatbed
         $this->request = $request;
         $this->page = $page;
         $this->template = $page->template;
+        $this->controller = new Controller($this);
 
         // set raw request segment array
         $segment = str_remove_prefix($request->url, $page->url);
@@ -308,60 +309,70 @@ class Response extends Flatbed
             $name = $name ? $name : $type;
 
             $position = $key+1;
-            $segmemt = $this->segment($position);
+            $segment = $this->segment($position);
 
             switch ($type) {
                 // simple scalar type
                 case 'any':
                 case 'string':
-                    $named_segments["$name"] = $segmemt;
+                    $named_segments["$name"] = $segment;
                     break;
                 case 'int':
                     // special case to handle zero
-                    if ($segmemt == "0") {
-                        $segmemt = (int) $segmemt;
+                    if ($segment == "0") {
+                        $segment = (int) $segment;
                     }
                     else {
-                        $segmemt = (int) $segmemt ?: null;
+                        $segment = (int) $segment ?: null;
                     }
-                    $named_segments["$name"] = $segmemt;
+                    $named_segments["$name"] = $segment;
                     break;
                 case 'all':
-                    $segmemt = $this->segment($position, null);
-                    $named_segments["$name"] = $segmemt;
+                    $segment = $this->segment($position, null);
+                    $named_segments["$name"] = $segment;
                     break 2;
 
                 // advanced Object types
                 // TODO : just for testing
                 case 'subview':
-                    $subview = $this->api('views')->get("{$this->template->name}.{$segmemt}");
+                    $subview = $this->api('views')->get("{$this->template->name}.{$segment}");
                     $named_segments["$name"] = $subview;
                     break;
                 case 'extension':
-                    $extension = $this->api('extensions')->get($segmemt);
+                    $extension = $this->api('extensions')->get($segment);
                     $named_segments["$name"] = $extension;
                     break;
                 case 'field':
-                    $field = $this('fields')->get($segmemt);
+                    $field = $this('fields')->get($segment);
                     $named_segments["$name"] = $field;
                     break;
                 case 'template':
-                    $template = $this('templates')->get($segmemt);
+                    $template = $this('templates')->get($segment);
                     $named_segments["$name"] = $template;
                     break;
                     break;
                 case 'user':
-                    $user = $this('users')->get($segmemt);
+                    $user = $this('users')->get($segment);
                     $named_segments["$name"] = $user;
                     break;
                 case 'page':
-                    $segmemt = $this->segment($position, null);
-                    $page = $this('pages')->get($segmemt);
+                    $segment = $this->segment($position, null);
+                    $page = $this('pages')->get($segment);
                     $named_segments["$name"] = $page;
                     break 2;
+
+                // method calls
+                case 'method':
+                    if (is_callable($this->controller, $segment)) {
+                        $this->controller->{$segment}();
+                    }
+                    // $named_segments["$name"] = $page;
+                    break;
+                    
                 // api access
                 case 'api':
-                    
+                    $named_segments["$name"] = 'poop';
+                    break 2;
             }
 
         }

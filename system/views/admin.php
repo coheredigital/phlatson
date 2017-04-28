@@ -10,7 +10,6 @@ $config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
 
 
-
 if ($response->segment(1) === "login") {
 
 

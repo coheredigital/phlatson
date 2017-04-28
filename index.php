@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+
 $profile = new stdClass;
 /* instantiate app variables */
 $profile->start = microtime(true);
@@ -29,6 +30,10 @@ if(file_exists($composer)) require_once($composer);
 else require_once CORE_PATH . 'FlatbedAutoloader.php';
 
 require_once CORE_PATH . '_interfaces.php';
+
+ref::config('expLvl', 1);
+ref::config('maxDepth', 2);
+
 
 $autoloader = new Flatbed\FlatbedAutoloader();
 
