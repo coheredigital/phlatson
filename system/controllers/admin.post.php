@@ -7,7 +7,7 @@ if ($this->request->post->username && $this->request->post->password) {
     $password = $this->request->post->password;
 
     if ($this->session->login($username, $password)) {
-        $response->redirect("$page->url/pages");
+        $response->redirect("{$this->page->url}/pages");
     }
 
 }
