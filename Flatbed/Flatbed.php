@@ -88,8 +88,8 @@ class Flatbed
             case 'className':
             case 'classname':
                 return (new \ReflectionClass($this))->isAnonymous() ? get_parent_class($this) : get_class($this);
-            // case 'url':
-            //     return $this->{$name};
+            case 'url':
+                return $this->{$name};
             default:
                 return null;
         }
