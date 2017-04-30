@@ -24,6 +24,20 @@ $this->respond("/pages", function($response){
 
 
 $this->respond("/login", function($response){
+
+    if ($response->method = "POST") {
+        // TODO : give call back access to request
+        $username = $request->post->username;
+        $password = $request->post->password;
+
+        // if ($this->api('session')->login($username, $password)) {
+        //     $response->redirect("{$this->page->url}/pages");
+        // }
+    }
+    else {
+
+    }
+
     // redirect user already logged in
     if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
 
@@ -34,7 +48,7 @@ $this->respond("/login", function($response){
 });
 
 
-$this->respond("logout", function($response){
+$this->respond("/logout", function($response){
 
 	$this->api('session')->logout();
 
