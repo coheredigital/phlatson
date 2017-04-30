@@ -5,12 +5,11 @@
     "template": "template",
     "settings": {
         "allow_segments" : true,
-        "segment_map" : "method:",
+        "segment_map" : "route:",
         "segments" : {
             "enable": true,
             "routes" : [
                 {
-                    "method" : "ANY",
                     "path" : "that",
                     "callback" : "logout"
                 },

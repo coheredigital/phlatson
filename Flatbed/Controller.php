@@ -18,6 +18,8 @@ class Controller extends Flatbed
 
     public $response;
 
+    protected $routes;
+
     final public function __construct(Response $response)
     {
         // TODO :  this should not be needed here, temp fix
@@ -52,6 +54,22 @@ class Controller extends Flatbed
 
         // and include controller
         include_once $file;
+    }
+
+    public function respond($method, $path = '*', $callback = null)
+    {
+        // Get the arguments in a very loose format
+        extract(
+            $this->parseLooseArgumentOrder(func_get_args()),
+            EXTR_OVERWRITE
+        );
+        $route = $this->route_factory->build($callback, $path, $method);
+        $this->routes->add($route);
+        return $route;
+    }
+
+    public function respond(string $path, Callable $callback) {
+
     }
 
 

@@ -11,11 +11,6 @@ $config->scripts->prepend("{$this->url}scripts/jquery-1.11.1.min.js");
 
 
 if ($response->segment(1) === "login") {
-
-
-
-
-
 	$config->styles->add("/system/views/styles/login.css");
 	$page->layout = $views->get('layouts/login');
 }

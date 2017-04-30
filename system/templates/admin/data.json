@@ -4,6 +4,7 @@
         "allow_segments" : true
     },
     "access": {
-    	"view": ["editor"]
+    	"view": ["editor"],
+        "redirect" : "{page.url}/login"
     }
 }

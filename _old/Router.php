@@ -28,14 +28,11 @@ class Router extends Flatbed
 
         $key = $method . $path;
 
-
         $this->routes[$hostname][$key] = $route;
 
         if ($route->name) {
             $this->namedRoutes[$route->name] = $route;
         }
-
-
 
     }
 

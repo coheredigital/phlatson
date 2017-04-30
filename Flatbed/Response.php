@@ -32,7 +32,7 @@ class Response extends Flatbed
         $this->request = $request;
         $this->page = $page;
         $this->template = $page->template;
-        $this->controller = new Controller($this);
+        
 
         // set raw request segment array
         $segment = str_remove_prefix($request->url, $page->url);
@@ -44,9 +44,11 @@ class Response extends Flatbed
         if (count($this->segments) && $segemnt_map = $this->template->setting('segment_map')) {
             $this->named_segments = $this->getNamedSegments($segemnt_map);
         }
-
         // set default response status
         $this->status = new ResponseStatus(200);
+
+        // once the response has been fully instantiated the controller can be created
+        $this->controller = new Controller($this);
 
     }
 
@@ -182,9 +184,9 @@ class Response extends Flatbed
     public function flush($override = false)
     {
         // TODO : temp disabled for testing
-        // if (headers_sent() && !$override) {
-        //     throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
-        // }
+        if (headers_sent() && !$override) {
+            throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
+        }
 
         // If no format was set use the request format
         // TODO : implement
