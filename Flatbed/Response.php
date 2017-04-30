@@ -24,7 +24,7 @@ class Response extends Flatbed
     protected $sent = false;
 
     protected $segments = [];
-    protected $named_segments = [];
+
 
 
     public function __construct( Request $request, Page $page)
@@ -40,15 +40,15 @@ class Response extends Flatbed
             $this->segments = explode("/", $segment);
         }
 
-        // set named segment array if segment_map is defined
-        if (count($this->segments) && $segemnt_map = $this->template->setting('segment_map')) {
-            $this->named_segments = $this->getNamedSegments($segemnt_map);
-        }
+
         // set default response status
         $this->status = new ResponseStatus(200);
 
         // once the response has been fully instantiated the controller can be created
         $this->controller = new Controller($this);
+
+        // excute the controller ??  TODO : this needs to move, the structure of all this SUCKS
+        $this->controller->run($request);
 
     }
 
@@ -184,9 +184,9 @@ class Response extends Flatbed
     public function flush($override = false)
     {
         // TODO : temp disabled for testing
-        if (headers_sent() && !$override) {
-            throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
-        }
+        // if (headers_sent() && !$override) {
+        //     throw new Exceptions\FlatbedException("Response already sent: {$this->format}");
+        // }
 
         // If no format was set use the request format
         // TODO : implement
@@ -288,98 +288,6 @@ class Response extends Flatbed
     public function segments( bool $named = false) : array
     {
         return $named ? $this->named_segments : $this->segments;
-    }
-
-    protected function getNamedSegments(string $segment_map) {
-        
-        $named_segments = [];
-
-        // trim open and close slashes in case they were included
-        $segment_map = trim($segment_map, "/");
-        $segment_map = explode("/", $segment_map );
-
-        foreach ($segment_map as $key => $map) {
-            
-            // break map segment into its components
-            $map = explode(":", $map);
-            list($type, $name) = $map;
-
-            // type are all lowercase
-            $type = strtolower($type);
-
-            // default name to the type requested
-            $name = $name ? $name : $type;
-
-            $position = $key+1;
-            $segment = $this->segment($position);
-
-            switch ($type) {
-                // simple scalar type
-                case 'any':
-                case 'string':
-                    $named_segments["$name"] = $segment;
-                    break;
-                case 'int':
-                    // special case to handle zero
-                    if ($segment == "0") {
-                        $segment = (int) $segment;
-                    }
-                    else {
-                        $segment = (int) $segment ?: null;
-                    }
-                    $named_segments["$name"] = $segment;
-                    break;
-                case 'all':
-                    $segment = $this->segment($position, null);
-                    $named_segments["$name"] = $segment;
-                    break 2;
-
-                // advanced Object types
-                // TODO : just for testing
-                case 'subview':
-                    $subview = $this->api('views')->get("{$this->template->name}.{$segment}");
-                    $named_segments["$name"] = $subview;
-                    break;
-                case 'extension':
-                    $extension = $this->api('extensions')->get($segment);
-                    $named_segments["$name"] = $extension;
-                    break;
-                case 'field':
-                    $field = $this('fields')->get($segment);
-                    $named_segments["$name"] = $field;
-                    break;
-                case 'template':
-                    $template = $this('templates')->get($segment);
-                    $named_segments["$name"] = $template;
-                    break;
-                    break;
-                case 'user':
-                    $user = $this('users')->get($segment);
-                    $named_segments["$name"] = $user;
-                    break;
-                case 'page':
-                    $segment = $this->segment($position, null);
-                    $page = $this('pages')->get($segment);
-                    $named_segments["$name"] = $page;
-                    break 2;
-
-                // method calls
-                case 'method':
-                    if (is_callable($this->controller, $segment)) {
-                        $this->controller->{$segment}();
-                    }
-                    // $named_segments["$name"] = $page;
-                    break;
-                    
-                // api access
-                case 'api':
-                    $named_segments["$name"] = 'poop';
-                    break 2;
-            }
-
-        }
-        return $named_segments;
-        
     }
 
     public function get(string $name)
