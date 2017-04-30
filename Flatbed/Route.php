@@ -27,12 +27,13 @@ class Route
 
     protected $priority;
 
+    public $callback;
 
-    public $callbacks = [
-        "before" => [],
-        "default" => [],
-        "after" => []
-    ];
+    // public $callbacks = [
+    //     "before" => [],
+    //     "default" => [],
+    //     "after" => []
+    // ];
 
 
     protected $parameters = [];
@@ -45,8 +46,7 @@ class Route
 
     public function __construct($options = [])
     {
-        /* init children collection*/
-        // $this->children = new RouteCollection();
+
 
         if (isset($options["method"])) {
             $this->method($options["method"]);
@@ -65,7 +65,7 @@ class Route
             $this->before($options["before"]);
         }
         if (isset($options["callback"])) {
-            $this->callback($options["callback"]);
+            $this->callback = $options["callback"];
         }
         if (isset($options["after"])) {
             $this->after($options["after"]);
@@ -209,21 +209,22 @@ class Route
      */
     public function callback( Callable $callback, $set = "default")
     {
-        array_push($this->callbacks[$set], $callback);
+        // array_push($this->callbacks[$set], $callback);
+        $this->callback = $callback;
         return $this;
     }
 
-    public function before( Callable $callback)
-    {
-        $this->callback($callback, "before");
-        return $this;
-    }
+    // public function before( Callable $callback)
+    // {
+    //     $this->callback($callback, "before");
+    //     return $this;
+    // }
 
-    public function after( Callable $callback)
-    {
-        $this->callback($callback, "after");
-        return $this;
-    }
+    // public function after( Callable $callback)
+    // {
+    //     $this->callback($callback, "after");
+    //     return $this;
+    // }
 
 
     /**
@@ -243,53 +244,39 @@ class Route
         if(!in_array($request->method, $this->methods)){
             return false;
         }
-
+        
         // check exact match to url & method
         if ($path == $request->path) {
             return true;
         }
 
-        // check for pattern match potential (if none then return false as the exact match didn't occur above)
-        if (strpos($path, ':') === false) return false;
+        // // check for pattern match potential (if none then return false as the exact match didn't occur above)
+        // if (strpos($path, ':') === false) return false;
 
 
-        $path = str_replace(
-            array_keys($this->patterns),
-            array_values($this->patterns),
-            $path
-        );
-        $path = "/" . trim($path, "/");
+        // $path = str_replace(
+        //     array_keys($this->patterns),
+        //     array_values($this->patterns),
+        //     $path
+        // );
+        // $path = "/" . trim($path, "/");
 
-        if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
-            array_shift($matched); //remove $matched[0] as [1] is the first parameter.
-            $this->parameters = $matched;
-            return true;
-        }
+        // if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
+        //     array_shift($matched); //remove $matched[0] as [1] is the first parameter.
+        //     $this->parameters = $matched;
+        //     return true;
+        // }
 
         return false;
     }
 
-    public function execute()
+    public function execute($response) : Response
     {
-
-        // if ($this->parent instanceof Route) {
-        //     $this->parent->executeCallbacks("before");
-        // }
-
-        // $this->executeCallbacks("before");
-
-        // first execute parent routes in order
-        // if ($this->parent instanceof Route) {
-        //     $this->parent->executeCallbacks();
-        // }
-
-        $this->executeCallbacks();
-
-        // $this->executeCallbacks("after");
-
-        // if ($this->parent instanceof Route) {
-        //     $this->parent->executeCallbacks("after");
-        // }
+        call_user_func(
+            $this->callback,
+            $response
+        );
+        return $response;
     }
 
     public function executeCallbacks($set = "default")
@@ -326,7 +313,15 @@ class Route
                 call_user_func_array([$class, $methodName], $this->parameters);
 
             } else {
-                call_user_func_array($callback, $this->parameters);
+
+                $args = func_get_args();
+                d($args);
+                return call_user_func_array(
+                    $this->callback,
+                    $args
+                );
+
+                call_user_func_array($callback, $args);
             }
 
         }

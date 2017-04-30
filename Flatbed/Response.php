@@ -1,10 +1,10 @@
 <?php
 namespace Flatbed;
-class Response extends Flatbed
+class Response
 {
 
     // protected $request;
-    // public $page;
+    public $page;
     // public $template;
     // public $controller;
 
@@ -21,7 +21,7 @@ class Response extends Flatbed
     protected $locked = false;
     protected $sent = false;
 
-    // protected $segments = [];
+    protected $segments = [];
 
 
 
@@ -33,10 +33,10 @@ class Response extends Flatbed
         
 
         // set raw request segment array
-        // $segment = str_remove_prefix($request->url, $page->url);
-        // if ($segment = trim($segment,"/")) {
-        //     $this->segments = explode("/", $segment);
-        // }
+        $segment = str_remove_prefix($request->url, $page->url);
+        if ($segment = trim($segment,"/")) {
+            $this->segments = explode("/", $segment);
+        }
 
 
         // set default response status
@@ -197,10 +197,10 @@ class Response extends Flatbed
 
 
         // TODO : temp profiling, remove later, maybe implement built in version
-        $profile = $this->api('profile');
-        $profile->end = microtime(true);
-        $profile->time = round(($profile->end - $profile->start), 2);
-        $this->chunks[] = "<!-- Page created in $profile->time seconds. (" . getMemoryUse() .") -->";
+        // $profile = $this->api('profile');
+        // $profile->end = microtime(true);
+        // $profile->time = round(($profile->end - $profile->start), 2);
+        // $this->chunks[] = "<!-- Page created in $profile->time seconds. (" . getMemoryUse() .") -->";
 
         // build the output
         $out = implode('', $this->chunks);

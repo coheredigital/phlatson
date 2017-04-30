@@ -59,6 +59,6 @@ $this->bind('save', function($event){
 
 
 // d(1);
-d("CONTROLLER");
+d("CONTROLLER FILE");
 
 

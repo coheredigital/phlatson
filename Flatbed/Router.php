@@ -28,41 +28,44 @@ class Router extends Flatbed
         $this->request = $request;
         $this->response = new Response;
 
-        $this->page = $this->matchPage($request->path);
+        // add response to API
+        $this->api('response', $this->response);
+        
+        // $this->page = $this->matchPage($request);
+        $this->page = $this->matchPage($request);
+        $this->response->page = $this->page;
 
-        if ($this->page instanceof Page) {
-            $this->template = $this->page->template;
-            $this->controller = new Controller($this->template);
+        if ($this->response->page instanceof Page) {
+            $this->controller = new Controller($this->response->page->template);
         }
 
     }
 
 
     // router first matches an exsiting page
-    protected function matchPage($path)
+    protected function matchPage($request) : ?Page
     {
 
         // loop through possible URLs
         // checking for an exact page match
-        foreach ($this->request->urls as $key => $url) {
+        foreach ($request->urls as $key => $url) {
             
             $page = $this('pages')->get($url);
-           
             
 
             if ($page instanceof Page) {
-
+                // set page API variable
+                $this->api('page', $this->page);
                 $page->initializeRoutes();
 
-                // page match on first url is an exact match, return it
-                if ($key === 0) {
-                    return $page;
-                } //  
-                else if ($page->routes->count() > 1) {
+                // return if pge is exct match or has routes defined on it
+                if ($key === 0 || $page->routes->count() > 1) {
                     return $page;
                 } 
+
             }
         }
+
     }
 
 
@@ -71,19 +74,26 @@ class Router extends Flatbed
      * @throws FlatbedException
      *
      */
-    public function getResponse(Request $request)
+    public function run(Request $request)
     {
         $found = false;
 
-        foreach ($this->page->routes as $route) {
+        foreach ($this->response->page->routes as $route) {
+            // continue until a match is made
             if (!$route->match($request)) continue;
-            $route->execute();
+
             $found = true;
+
+            $this->response = $route->execute( $this->response );
+            
             break;
         }
 
         if (!$found) {
-            d("route no matchy");
+            // TODO :  improve this, a bit to verbose
+            $this->response->page = $this('pages')->get('404');
+            $this->response->append($this->response->page->render());
+            $this->response->code(404);
         }
         
     }
@@ -91,20 +101,7 @@ class Router extends Flatbed
 
     public function execute()
     {
-
-        // TEMP
-        $this->getResponse($this->request);
-
-        if ($this->page instanceof Page) {
-            $this->api('page', $this->page, true);
-        } else {
-            // TODO :  I'd like to see if I can do this without the need for a page and template
-            $this->page = $this('pages')->get('404');
-            $this->response->code(404);
-        }
-
-        // add response and page to api
-        $this->response->append( $this->page->render() );
+        $this->run($this->request);
         $this->response->send();
     }
 }

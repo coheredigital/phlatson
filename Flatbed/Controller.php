@@ -21,7 +21,6 @@ class Controller extends Flatbed
 
         $this->template = $template;
 
-
         // determine controller file
         $name = $template->name;
 

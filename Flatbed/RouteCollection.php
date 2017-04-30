@@ -2,7 +2,7 @@
 namespace Flatbed;
 
 
-class RouteCollection implements \IteratorAggregate, \Countable
+class RouteCollection extends Flatbed implements \IteratorAggregate, \Countable
 {
 
     protected $page;
@@ -11,32 +11,28 @@ class RouteCollection implements \IteratorAggregate, \Countable
 
     public function __construct( Page $page )
     {
-            $this->page = $page;
+        $this->page = $page;
 
-            // determine root path based on isSystem() return value
-            if ($page->template->isSystem()) {
-                $path = SYSTEM_PATH . "routes" . DIRECTORY_SEPARATOR;
-            }
-            else {
-                $path = SITE_PATH . "routes" . DIRECTORY_SEPARATOR;
-            }
+        // setup default route
+        $this->respond( "/" , function( $response ){
+            $response->append(  $response->page->render() );
+        });
 
-            
-            $file = "{$path}{$page->template->name}.php";
-            
-            // no controller file was found, return
-            if (!is_file($file)) return;
-
-            // and include route definition file
-            include_once $file;
+        // determine root path based on isSystem() return value
+        if ($page->template->isSystem()) $path = SYSTEM_PATH . "routes" . DIRECTORY_SEPARATOR;
+        else $path = SITE_PATH . "routes" . DIRECTORY_SEPARATOR;
         
-
+        // default template routs file location
+        $file = "{$path}{$page->template->name}.php";
+        // no controller file was found, return
+        if (is_file($file)) include_once $file;            
+        
     }
 
 
     public function append(Route $route) : self
     {
-        $this->data[] = $route;
+        $this->data[$route->name] = $route;
         return $this;
     }
 
@@ -52,15 +48,18 @@ class RouteCollection implements \IteratorAggregate, \Countable
     }
 
     
-    public function respond(string $path, Callable  $callback = null)
+    public function respond(?string $name = null, Callable $callback = null)
     {
 
         $method = 'GET';
 
-        if(strpos($path, ':') !== false) {
+        if(strpos($name, ':') !== false) {
             
             list($method, $path) = explode(":",$path); 
 
+        }
+        else {
+            $path = $name;
         }
 
         // prepend current page to path
@@ -68,6 +67,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
 
         // $route = $this->route_factory->build($callback, $path, $method);
         $route = new Route([
+            "name" => $name,
             "method" => $method,
             "path" => $path,
             "callback" => $callback
@@ -76,8 +76,5 @@ class RouteCollection implements \IteratorAggregate, \Countable
         $this->append($route);
         return $route;
     }
-
-
-
 
 }
