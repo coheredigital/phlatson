@@ -1,14 +1,12 @@
 <?php
-
-
 namespace Flatbed;
 class Response extends Flatbed
 {
 
-    protected $request;
-    public $page;
-    public $template;
-    public $controller;
+    // protected $request;
+    // public $page;
+    // public $template;
+    // public $controller;
 
     protected $protocol = '1.1';
 
@@ -23,32 +21,32 @@ class Response extends Flatbed
     protected $locked = false;
     protected $sent = false;
 
-    protected $segments = [];
+    // protected $segments = [];
 
 
 
-    public function __construct( Request $request, Page $page)
+    public function __construct()
     {
-        $this->request = $request;
-        $this->page = $page;
-        $this->template = $page->template;
+        // $this->request = $request;
+        // $this->page = $page;
+        // $this->template = $page->template;
         
 
         // set raw request segment array
-        $segment = str_remove_prefix($request->url, $page->url);
-        if ($segment = trim($segment,"/")) {
-            $this->segments = explode("/", $segment);
-        }
+        // $segment = str_remove_prefix($request->url, $page->url);
+        // if ($segment = trim($segment,"/")) {
+        //     $this->segments = explode("/", $segment);
+        // }
 
 
         // set default response status
         $this->status = new ResponseStatus(200);
 
-        // once the response has been fully instantiated the controller can be created
-        $this->controller = new Controller($this);
+        // // once the response has been fully instantiated the controller can be created
+        // $this->controller = new Controller($this);
 
-        // excute the controller ??  TODO : this needs to move, the structure of all this SUCKS
-        $this->controller->run($request);
+        // // excute the controller ??  TODO : this needs to move, the structure of all this SUCKS
+        // $this->controller->run($request);
 
     }
 
@@ -287,7 +285,7 @@ class Response extends Flatbed
      */
     public function segments( bool $named = false) : array
     {
-        return $named ? $this->named_segments : $this->segments;
+        return $this->segments;
     }
 
     public function get(string $name)

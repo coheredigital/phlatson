@@ -14,24 +14,19 @@ and is devoid of method so that they can be bound at runtime since Controller ex
 class Controller extends Flatbed
 {
 
-    public $response;
-    protected $routes;
+    public $template;
 
-    final public function __construct(Response $response)
+    final public function __construct( Template $template )
     {
 
-        // create the routes collection
-        $this->routes = new RouteCollection;
+        $this->template = $template;
 
-        // TODO :  this should not be needed here, temp fix
-        $this->response = $response;
 
         // determine controller file
-        $name = $response->template->name;
-		$method = $this->request->method;
+        $name = $template->name;
 
         // determine root path based on isSystem() return value
-		if ($response->template->isSystem()) {
+		if ($template->isSystem()) {
 			$path = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR;
 		}
 		else {
@@ -39,13 +34,8 @@ class Controller extends Flatbed
 		}
 
         
-        // check for method specific variation first
-        $file = "{$path}{$name}.{$method}.php";
-
-        if (!is_file($file)) {
-            $file = "{$path}{$name}.php";
-        };
-
+        $file = "{$path}{$name}.php";
+        
         // no controller file was found, return
         if (!is_file($file)) return;
 
@@ -53,51 +43,6 @@ class Controller extends Flatbed
         include_once $file;
     }
 
-    public function respond($path = '*', Callable  $callback = null)
-    {
-
-        $method = 'GET';
-
-        if(strpos($path, ':') !== false) {
-            
-            list($method, $path) = explode(":",$path); 
-
-        }
-
-        // prepend current page to path
-        $path = rtrim($this->response->page->url, "/") . $path;
-
-        // $route = $this->route_factory->build($callback, $path, $method);
-        $route = new Route([
-            "method" => $method,
-            "path" => $path,
-            "callback" => $callback
-        ]);
-        $this->routes->append($route);
-        return $route;
-    }
-
-    /**
-     * @param Request $request
-     * @throws FlatbedException
-     *
-     */
-    public function run(Request $request)
-    {
-        $found = false;
-
-        foreach ($this->routes as $route) {
-            if (!$route->match($request)) continue;
-            $route->execute();
-            $found = true;
-            break;
-        }
-
-        if (!$found) {
-            d("route no matchy");
-        }
-        
-    }
 
     // give property access to variable
     public function __get($name) {

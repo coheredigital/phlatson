@@ -1,71 +1,110 @@
 <?php
 namespace Flatbed;
+
+/*
+
+Working toward using the Router to bind the app together
+
+example: 
+    just fixed an issue with every template loading controller, 
+    only the current page should execute the controller
+    so this is now handled here
+    now the problem is how to determine template has extra routes
+
+*/
+
 class Router extends Flatbed
 {
 
     protected $request;
-
+    protected $routes;
+    protected $response;
+    protected $page;
+    protected $template;
+    protected $controller;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
-    }
+        $this->response = new Response;
 
+        $this->page = $this->matchPage($request->path);
 
-    protected function match($path) {
-
-    	// check for an exact page match
-	    foreach ($this->request->urls as $key => $url) {
-	    	
-	    	$page = $this('pages')->get($url);
-	    	
-	    	if ($page) {
-	    		// page match on first url is an exact match, return it
-	    		if ($key === 0) {
-	    			$this->request->setMatch($key);
-	    			return $page;
-	    		}
-	    		// subsequent match is a partial match, and requires template to support url segments
-	    		else if($page->template->setting('allow_segments') ) {
-	    			$this->request->setMatch($key);
-	    			return $page;
-	    		}
-	    		// otherwise we stop checking
-	    		else break;
-	    	}
-
-	    }
+        if ($this->page instanceof Page) {
+            $this->template = $this->page->template;
+            $this->controller = new Controller($this->template);
+        }
 
     }
 
 
-    public function execute() {
-		
-		
+    // router first matches an exsiting page
+    protected function matchPage($path)
+    {
 
-    	$page = $this->match($this->request->path);
+        // loop through possible URLs
+        // checking for an exact page match
+        foreach ($this->request->urls as $key => $url) {
+            
+            $page = $this('pages')->get($url);
+           
+            
 
-    	if ($page instanceof Page) {
-    		$this->api('page', $page, true);
-    		// create reponse and add to API
-    		$response = new Response($this->request, $page);
-    		
-    	}
-    	else {
-	        // TODO :  I'd like to see if I can do this without the need for a page and template
-	        $page = $this('pages')->get('404');
-	        // set the response so the page has access
-	        $response = new Response($this->request, $page);
-	        $response->code(404);
-    	}
+            if ($page instanceof Page) {
 
-		// add response to flatbed API
-		$this->api('response', $response, true);
+                $page->initializeRoutes();
 
-    	// add response and page to api
-    	$response->append( $page->render() );
-	    $response->send();
-    
+                // page match on first url is an exact match, return it
+                if ($key === 0) {
+                    return $page;
+                } //  
+                else if ($page->routes->count() > 1) {
+                    return $page;
+                } 
+            }
+        }
     }
 
+
+    /**
+     * @param Request $request
+     * @throws FlatbedException
+     *
+     */
+    public function getResponse(Request $request)
+    {
+        $found = false;
+
+        foreach ($this->page->routes as $route) {
+            if (!$route->match($request)) continue;
+            $route->execute();
+            $found = true;
+            break;
+        }
+
+        if (!$found) {
+            d("route no matchy");
+        }
+        
+    }
+
+
+    public function execute()
+    {
+
+        // TEMP
+        $this->getResponse($this->request);
+
+        if ($this->page instanceof Page) {
+            $this->api('page', $this->page, true);
+        } else {
+            // TODO :  I'd like to see if I can do this without the need for a page and template
+            $this->page = $this('pages')->get('404');
+            $this->response->code(404);
+        }
+
+        // add response and page to api
+        $this->response->append( $this->page->render() );
+        $this->response->send();
+    }
 }

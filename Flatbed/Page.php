@@ -5,6 +5,8 @@ class Page extends DataObject implements ViewableObject
 
     const DATA_FOLDER = 'pages';
     protected $parent;
+    public $template;
+    public $routes;
 
     function __construct($file = null)
     {
@@ -15,6 +17,15 @@ class Page extends DataObject implements ViewableObject
 
         parent::__construct($file);
 
+        // template need to be editable
+        $this->template = $this->getTemplate();
+
+    }
+
+
+
+    public function initializeRoutes() {
+        $this->routes = new RouteCollection($this);
     }
 
     /**
@@ -205,8 +216,8 @@ class Page extends DataObject implements ViewableObject
             case 'files':
             case 'images':
                 return $this->{$name}();
-            case 'template':
-                return $this->getTemplate();
+            // case 'template':
+            //     return $this->getTemplate();
             case 'objectType': // protected / private variable that should have public get
                 return $this->{$name};
             default:

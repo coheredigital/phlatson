@@ -4,22 +4,5 @@
     "modified": 1471815666,
     "template": "template",
     "settings": {
-        "allow_segments" : true,
-        "segment_map" : "route:",
-        "segments" : {
-            "enable": true,
-            "routes" : [
-                {
-                    "path" : "that",
-                    "callback" : "logout"
-                },
-                {
-                    "method" : "POST",
-                    "path" : "pages/save",
-                    "callback" : "save"
-                }
-
-            ]
-        }
     }
 }

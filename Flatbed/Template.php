@@ -7,14 +7,7 @@ class Template extends Object
 
     public $parent; // the object this template belongs to
     public $defaultFields = ['title','fields', 'name','view','modified'];
-    public $controller = null;
-
-    function __construct($file = null)
-    {
-
-        parent::__construct($file);
-
-    }
+    
 
     public function hasField($name){
         
@@ -48,5 +41,32 @@ class Template extends Object
         }
 
     }
+
+
+    public function respond(string $path, Callable  $callback = null)
+    {
+
+        $method = 'GET';
+
+        if(strpos($path, ':') !== false) {
+            
+            list($method, $path) = explode(":",$path); 
+
+        }
+
+        // prepend current page to path
+        $path = rtrim($this->response->page->url, "/") . $path;
+
+        // $route = $this->route_factory->build($callback, $path, $method);
+        $route = new Route([
+            "method" => $method,
+            "path" => $path,
+            "callback" => $callback
+        ]);
+
+        $this->routes->append($route);
+        return $route;
+    }
+
 
 }

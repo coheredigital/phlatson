@@ -1,10 +1,11 @@
 <?php
 
+namespace Flatbed;
 
-class Route extends Flatbed
+class Route
 {
 
-    private $allowedMethods = [
+    protected $allowedMethods = [
         "GET",
         "POST",
         "PUT",
@@ -13,42 +14,39 @@ class Route extends Flatbed
     ];
 
 
-    private $name = null;
-    private $method = "GET";
-    private $path = null;
-    private $scheme = "http";
-    private $hostname = false;
+    protected $name = null;
+    protected $method = "GET";
+    protected $path = null;
+    protected $scheme = "http";
+    protected $hostname = false;
 
     public $ssl = false;
 
-    private $parent;
-    private $children;
+    protected $parent;
+    protected $children;
 
-    private $priority;
+    protected $priority;
 
 
-    private $callbacks = [
+    public $callbacks = [
         "before" => [],
         "default" => [],
         "after" => []
     ];
 
 
-    private $filters = [];
-    private $parameters = [];
+    protected $parameters = [];
 
-    private $patterns = array(
+    protected $patterns = array(
         ':any' => '([^/]+)',
         ':all' => '(.*)'
     );
 
-    private $response = null;
 
     public function __construct($options = [])
     {
-
         /* init children collection*/
-        $this->children = new RouteCollection();
+        // $this->children = new RouteCollection();
 
         if (isset($options["method"])) {
             $this->method($options["method"]);
@@ -59,6 +57,7 @@ class Route extends Flatbed
         }
 
         if (isset($options["path"])) {
+            
             $this->path($options["path"]);
         }
 
@@ -78,30 +77,6 @@ class Route extends Flatbed
 
         if (isset($options["name"])) {
             $this->name($options["name"]);
-        }
-
-
-    }
-
-
-    public function hostname($domain = null)
-    {
-
-        if ($domain) {
-            $this->hostname = $domain;
-            return $this;
-        } else {
-
-            if ($this->hostname) {
-                return $this->hostname;
-            } else {
-                if ($this->parent) {
-                    return $this->parent->hostname();
-                } else {
-                    return $this->api("config")->hostname;
-                }
-            }
-
         }
 
 
@@ -133,7 +108,7 @@ class Route extends Flatbed
                 $this->method($pathParts[0]);
                 $this->path = '/' . trim($pathParts[1], '/');
             } else {
-                $this->path = '/' . trim($path, '/');
+                $this->path = '/' . trim($path, '/') . "/";
             }
             return $this;
 
@@ -141,29 +116,6 @@ class Route extends Flatbed
 
     }
 
-    /**
-     * @param array $parameters
-     * @return null|string
-     *
-     * return a url for the route
-     */
-    public function url(array $parameters = [])
-    {
-
-        if (count($parameters)) {
-            // generate url, replace regex with parameters
-        } else { // return url without using parameters
-            $url = $this->path;
-            if ($this->parent instanceof Route) {
-                $url = trim($this->parent->url(), "/") . "/" . trim($url, "/") . "/";
-            } else {
-                $path = trim($url, "/") ? "/" . trim($url, "/") . "/" : "/";
-                $url = $this->scheme . "://" . trim($this->hostname(), "/") . $path;
-            }
-            return $url;
-        }
-
-    }
 
     public function parent($route)
     {
@@ -172,7 +124,7 @@ class Route extends Flatbed
         }
 
         if (!$route instanceof Route) {
-            throw new FlatbedException("Invalid route: cannot be added as parent");
+            throw new Exceptions\FlatbedException("Invalid route: cannot be added as parent");
         }
 
         $this->parent = $route;
@@ -192,7 +144,7 @@ class Route extends Flatbed
             $method = trim(strtoupper($name));
             $methods = explode("|", $method);
             if (array_diff($methods, $this->allowedMethods)) {
-                throw new FlatbedException("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(", ", $this->allowedMethods) . " ).");
+                throw new Exceptions\FlatbedException("Invalid method '$method' must use one of the predetermined methods for all routes ( " . implode(", ", $this->allowedMethods) . " ).");
             }
 
             $this->method = $method;
@@ -219,17 +171,6 @@ class Route extends Flatbed
     }
 
 
-    public function filter($callback)
-    {
-        if (is_callable($callback)) {
-            array_push($this->filters, $callback);
-            return $this;
-        } else {
-            // run filters
-        }
-
-    }
-
 
     /**
      * Determines priority value;
@@ -244,6 +185,7 @@ class Route extends Flatbed
         if(strpos($path, ':') !== false){
             $priority = (substr_count($path, "/") + substr_count($path, ":")) * 2; // longer more specific urls first
             $parts = explode(":", $path);
+
             // boost ie this "/pages:all" over "/:all" or similar, first example must match first
             foreach($parts as $key => $part){
                 if(substr($part, -1) != "/") $priority++;
@@ -265,19 +207,19 @@ class Route extends Flatbed
      * appends new callback to the end of the callbacks set
      *
      */
-    public function callback($callback, $set = "default")
+    public function callback( Callable $callback, $set = "default")
     {
         array_push($this->callbacks[$set], $callback);
         return $this;
     }
 
-    public function before($callback)
+    public function before( Callable $callback)
     {
         $this->callback($callback, "before");
         return $this;
     }
 
-    public function after($callback)
+    public function after( Callable $callback)
     {
         $this->callback($callback, "after");
         return $this;
@@ -291,21 +233,19 @@ class Route extends Flatbed
      * Return true if the request is a match for this Route
      *
      */
-    public function match($request)
+    public function match( Request $request) : bool
     {
 
+        // store route path as variable
         $path = $this->path();
-        $requestPath = "/" . trim($request->path, "/");
-        $routeMethods = explode("|",$this->method);
-
-
-        if(!in_array($request->method, $routeMethods)){
+        
+        // check that the request method matches the allowed methods for this route
+        if(!in_array($request->method, $this->methods)){
             return false;
         }
 
-
         // check exact match to url & method
-        if ($path == $requestPath) {
+        if ($path == $request->path) {
             return true;
         }
 
@@ -332,22 +272,24 @@ class Route extends Flatbed
     public function execute()
     {
 
-        if ($this->parent instanceof Route) {
-            $this->parent->executeCallbacks("before");
-        }
+        // if ($this->parent instanceof Route) {
+        //     $this->parent->executeCallbacks("before");
+        // }
 
-        $this->executeCallbacks("before");
+        // $this->executeCallbacks("before");
 
         // first execute parent routes in order
-        if ($this->parent instanceof Route) {
-            $this->parent->executeCallbacks();
-        }
+        // if ($this->parent instanceof Route) {
+        //     $this->parent->executeCallbacks();
+        // }
 
         $this->executeCallbacks();
-        $this->executeCallbacks("after");
-        if ($this->parent instanceof Route) {
-            $this->parent->executeCallbacks("after");
-        }
+
+        // $this->executeCallbacks("after");
+
+        // if ($this->parent instanceof Route) {
+        //     $this->parent->executeCallbacks("after");
+        // }
     }
 
     public function executeCallbacks($set = "default")
@@ -379,7 +321,7 @@ class Route extends Flatbed
 
                 //call method and pass any extra parameters to the method
                 if (!is_callable([$class, $methodName])) {
-                    throw new FlatbedException("Method: $methodName does not exist in class: $className");
+                    throw new Exceptions\FlatbedException("Method: $methodName does not exist in class: $className");
                 }
                 call_user_func_array([$class, $methodName], $this->parameters);
 
@@ -409,6 +351,8 @@ class Route extends Flatbed
             case "children":
             case "parent":
                 return $this->{$name};
+            case "methods":
+                return explode("|",$this->method);
             default:
                 return false;
         }

@@ -158,7 +158,6 @@ abstract class Objects extends Flatbed
      */
     public function has(string $uri) : bool
     {
-
         // get the file if it exists
         if ($this->getDataFile($uri)) {
             return true;
