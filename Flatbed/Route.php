@@ -102,13 +102,9 @@ class Route
 
         } else {
 
-            if (strpos(trim($path), " ") !== false) { // assume that a URL with a space defined an alternative method
-                $pathParts = explode(" ", $path);
-                $this->method($pathParts[0]);
-                $this->path = '/' . trim($pathParts[1], '/');
-            } else {
-                $this->path = '/' . trim($path, '/') . "/";
-            }
+            // make sure all path end with slash
+            $this->path = rtrim($path, "/") . "/";
+        
             return $this;
 
         }
