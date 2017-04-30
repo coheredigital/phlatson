@@ -5,6 +5,8 @@ class Request
 
     public $httpUrl;
 
+    public $path;
+
     // array store path requested and all possible parent paths
     public $urls = [];
 
@@ -41,8 +43,8 @@ class Request
         $this->domain = $this->hostname;
 
         // get url path from root of request
-        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $this->urls = $this->getUrls($url);
+        $this->path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $this->urls = $this->getUrls($this->path);
         $this->httpUrl = $this->scheme . "://{$this->hostname}{$this->url}";
 
         $this->ssl = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
