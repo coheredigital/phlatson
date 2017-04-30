@@ -151,6 +151,23 @@ abstract class Objects extends Flatbed
 
 
     /**
+     * check if the Singular Object type exists
+     * 
+     * @param  string $name the name or uri that points to the object relative to its storage folder
+     * @return bool
+     */
+    public function has(string $uri) : bool
+    {
+
+        // get the file if it exists
+        if ($this->getDataFile($uri)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * get the singular object type by it uri/name
      * @param  string $name the name or uri that points to the object relative to its storage folder
      * @return Object
