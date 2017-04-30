@@ -166,20 +166,13 @@ class Response
         return $this;
     }
 
-    public function sendBody() : self
+    public function render() : string
     {
-        echo (string) $this->body;
-        return $this;
+        return $this->page->render();
     }
 
 
     public function send($override = false)
-    {
-        $this->flush($override);
-        exit;
-    }
-
-    public function flush($override = false)
     {
         // TODO : temp disabled for testing
         // if (headers_sent() && !$override) {
@@ -195,20 +188,15 @@ class Response
         $this->sendHeaders();
         $this->sent = true;
 
-
-        // TODO : temp profiling, remove later, maybe implement built in version
-        // $profile = $this->api('profile');
-        // $profile->end = microtime(true);
-        // $profile->time = round(($profile->end - $profile->start), 2);
-        // $this->chunks[] = "<!-- Page created in $profile->time seconds. (" . getMemoryUse() .") -->";
-
         // build the output
-        $out = implode('', $this->chunks);
+        $out = $this->render();
 
         $this->chunks = []; // clear body content chunks
         echo ($out);
         return $this;
+        exit;
     }
+
 
 
     /**

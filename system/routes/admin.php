@@ -5,12 +5,23 @@ $this->respond("/", function($response){
 
     // redirect user already logged in
     if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
-
     $response->page->layout = $this->api("views")->get('layouts/default');
     $response->page->layout->main .= $this->api("views")->render('partials/header');
-    $response->append(  $response->page->render() );
+
 
 });
+
+
+$this->respond("/pages", function($response){
+
+    // redirect user already logged in
+    if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
+    $response->page->layout = $this->api("views")->get('layouts/default');
+    $response->page->layout->main .= $this->api("views")->render('partials/header');
+
+});
+
+
 
 $this->respond("/login", function($response){
     // redirect user already logged in

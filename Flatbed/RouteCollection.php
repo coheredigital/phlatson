@@ -14,9 +14,8 @@ class RouteCollection extends Flatbed implements \IteratorAggregate, \Countable
         $this->page = $page;
 
         // setup default route
-        $this->respond( "/" , function( $response ){
-            $response->append(  $response->page->render() );
-        });
+        // route without callback renders found page
+        $this->respond("/");
 
         // determine root path based on isSystem() return value
         if ($page->template->isSystem()) $path = SYSTEM_PATH . "routes" . DIRECTORY_SEPARATOR;

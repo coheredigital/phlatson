@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class Page extends DataObject implements ViewableObject
+class Page extends DataObject implements ViewableObject, RenderInterface
 {
 
     const DATA_FOLDER = 'pages';

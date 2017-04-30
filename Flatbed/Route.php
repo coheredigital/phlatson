@@ -57,7 +57,6 @@ class Route
         }
 
         if (isset($options["path"])) {
-            
             $this->path($options["path"]);
         }
 
@@ -250,22 +249,22 @@ class Route
             return true;
         }
 
-        // // check for pattern match potential (if none then return false as the exact match didn't occur above)
-        // if (strpos($path, ':') === false) return false;
+        // check for pattern match potential (if none then return false as the exact match didn't occur above)
+        if (strpos($path, ':') === false) return false;
 
 
-        // $path = str_replace(
-        //     array_keys($this->patterns),
-        //     array_values($this->patterns),
-        //     $path
-        // );
-        // $path = "/" . trim($path, "/");
+        $path = str_replace(
+            array_keys($this->patterns),
+            array_values($this->patterns),
+            $path
+        );
+        $path = "/" . trim($path, "/");
 
-        // if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
-        //     array_shift($matched); //remove $matched[0] as [1] is the first parameter.
-        //     $this->parameters = $matched;
-        //     return true;
-        // }
+        if (preg_match("#^" . $path . "$#", $requestPath, $matched)) {
+            array_shift($matched); //remove $matched[0] as [1] is the first parameter.
+            $this->parameters = $matched;
+            return true;
+        }
 
         return false;
     }
