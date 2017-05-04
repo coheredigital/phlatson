@@ -265,10 +265,11 @@ class Route
         return false;
     }
 
-    public function execute($response) : Response
+    public function execute($request , $response) : Response
     {
         call_user_func(
             $this->callback,
+            $request,
             $response
         );
         return $response;

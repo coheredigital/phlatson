@@ -32,11 +32,13 @@ class Router extends Flatbed
         $this->api('response', $this->response);
         
         // $this->page = $this->matchPage($request);
-        $this->page = $this->matchPage($request);
-        $this->response->page = $this->page;
+        $page = $this->matchPage($request);
+        
 
-        if ($this->response->page instanceof Page) {
-            $this->controller = new Controller($this->response->page->template);
+        if ($page instanceof Page) {
+            // add $page to response
+            $this->response->page = $page;
+            $this->controller = new Controller($page->template);
         }
 
     }
@@ -55,7 +57,7 @@ class Router extends Flatbed
 
             if ($page instanceof Page) {
                 // set page API variable
-                $this->api('page', $this->page);
+                $this->api('page', $page);
                 $page->initializeRoutes();
 
                 // return if pge is exct match or has routes defined on it
@@ -83,8 +85,8 @@ class Router extends Flatbed
             if (!$route->match($request)) continue;
 
             $found = true;
-
-            $this->response = $route->execute( $this->response );
+            // exceute the route, passing in the current request and default response
+            $this->response = $route->execute( $request, $this->response );
             
             break;
         }
