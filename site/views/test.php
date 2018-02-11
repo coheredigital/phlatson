@@ -2,4 +2,6 @@
 
 $template = $this->api('page')->template;
 
-d($template->routes);
+r($request);
+
+r($template->routes);

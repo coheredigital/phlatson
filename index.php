@@ -2,13 +2,9 @@
 
 declare(strict_types=1);
 
-
-
 $profile = new stdClass;
 /* instantiate app variables */
 $profile->start = microtime(true);
-
-
 
 define("FLATBED", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
@@ -27,9 +23,9 @@ require_once CORE_PATH . '_functions.php';
 // check for composer autoloader
 $composer = VENDOR_PATH .'autoload.php'; // composer autoloader
 if(file_exists($composer)) require_once($composer);
-else require_once CORE_PATH . 'FlatbedAutoloader.php';
+// else require_once CORE_PATH . 'FlatbedAutoloader.php';
 
-require_once CORE_PATH . '_interfaces.php';
+// require_once CORE_PATH . '_interfaces.php';
 
 ref::config('expLvl', 1);
 ref::config('maxDepth', 2);
@@ -55,7 +51,7 @@ try {
     $flatbed->api('views', new Flatbed\Views, true);
     $flatbed->api('router', $router = new Flatbed\Router($request), true);
 
-    echo $router->execute();  
+    echo $router->execute();
 
 
 

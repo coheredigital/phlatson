@@ -13,7 +13,6 @@ class DatatypeInterger extends Datatype
      */
     public function get($value) : int
     {
-        
         return $this->value;
     }
 

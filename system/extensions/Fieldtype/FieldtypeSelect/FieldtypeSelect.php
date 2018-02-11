@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class FieldtypeSelect extends Fieldtype implements ProvidesOptions
+class FieldtypeSelect extends Fieldtype implements ProvidesOptionsInterface
 {
 
     public $options = [];
@@ -14,4 +14,4 @@ class FieldtypeSelect extends Fieldtype implements ProvidesOptions
         return [];
     }
 
-} 
+}

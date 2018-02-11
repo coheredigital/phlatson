@@ -104,7 +104,6 @@ class Route
 
             // make sure all path end with slash
             $this->path = rtrim($path, "/") . "/";
-        
             return $this;
 
         }

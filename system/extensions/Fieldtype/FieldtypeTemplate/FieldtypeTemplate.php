@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class FieldtypeTemplate extends Fieldtype implements ProvidesOptions
+class FieldtypeTemplate extends Fieldtype implements ProvidesOptionsInterface
 {
 
     public function output($name)

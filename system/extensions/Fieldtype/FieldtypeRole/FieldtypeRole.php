@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class FieldtypeRole extends Fieldtype implements ProvidesOptions
+class FieldtypeRole extends Fieldtype implements ProvidesOptionsInterface
 {
 
     protected $objectType = "template";

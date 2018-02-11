@@ -172,7 +172,7 @@ class Response
     }
 
 
-    public function send($override = false)
+    public function send($override = false) 
     {
         // TODO : temp disabled for testing
         // if (headers_sent() && !$override) {

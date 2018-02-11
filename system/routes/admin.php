@@ -11,6 +11,9 @@ $this->respond("/", function($request, $response){
 });
 
 
+
+
+
 $this->respond("/pages", function($request, $response){
 
     // redirect user already logged in
@@ -21,28 +24,37 @@ $this->respond("/pages", function($request, $response){
 });
 
 
-
 $this->respond("/login", function($request, $response){
+    // redirect user already logged in
+    if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
+    $response->page->layout = $this->api("views")->get('layouts/login');
+    $response->append(  $response->page->render() );
+});
 
-    if ($response->method = "POST") {
+
+$this->respond("POST/login", function($request, $response){
+
+
+
+    if ($request->method == "POST") {
         // TODO : give call back access to request
         $username = $request->post->username;
         $password = $request->post->password;
 
-        // if ($this->api('session')->login($username, $password)) {
-        //     $response->redirect("{$this->page->url}/pages");
-        // }
+        if ($this->api('session')->login($username, $password)) {
+            $response->redirect("{$response->page->url}/pages");
+        }
     }
     else {
+        // redirect user already logged in
+        if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
 
+        $response->page->layout = $this->api("views")->get('layouts/login');
+
+        $response->append(  $response->page->render() );
     }
 
-    // redirect user already logged in
-    if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
 
-    $response->page->layout = $this->api("views")->get('layouts/login');
-
-    $response->append(  $response->page->render() );
 
 });
 

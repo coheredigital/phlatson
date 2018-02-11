@@ -45,7 +45,7 @@ Could define more traditional routes here too?
 
 $this->bind('login', function($event){
     r($event);
-    d($this);
+    r($this);
 });
 
 $this->bind('logout', function($event){
@@ -59,6 +59,6 @@ $this->bind('save', function($event){
 
 
 // d(1);
-d("CONTROLLER FILE");
+r("CONTROLLER FILE");
 
 

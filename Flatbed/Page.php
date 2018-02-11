@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class Page extends DataObject implements ViewableObject, RenderInterface
+class Page extends DataObject implements ViewableObjectInterface, RenderInterface
 {
 
     const DATA_FOLDER = 'pages';
@@ -31,7 +31,7 @@ class Page extends DataObject implements ViewableObject, RenderInterface
     /**
      * override of Object::getUrl because page are accessed from the
      * site root URL and note under /site/pages/
-     * @return string 
+     * @return string
      */
     public function getUrl(): string
     {
@@ -127,15 +127,15 @@ class Page extends DataObject implements ViewableObject, RenderInterface
      */
     public function rootParent() : ?Object
     {
-        // get parents, add self to simplify 
+        // get parents, add self to simplify
         // process of returning self when nearest parent is root
         $parents = $this->parents()->append($this);
         if ($parents->count()) {
             return $parents->index(1);
         }
-        
+
         return null;
-        
+
     }
 
     // public function files()
@@ -168,7 +168,7 @@ class Page extends DataObject implements ViewableObject, RenderInterface
     /**
      * temp solution to have "create" url in backend
      * TODO: replace
-     * 
+     *
      * @param array
      * @return void
      */
@@ -210,7 +210,7 @@ class Page extends DataObject implements ViewableObject, RenderInterface
     {
         switch ($name) {
             case 'children':
-            case 'parent':            
+            case 'parent':
             case 'parents':
             case 'rootParent':
             case 'files':

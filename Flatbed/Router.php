@@ -71,6 +71,19 @@ class Router extends Flatbed
     }
 
 
+    // router first matches an exsiting page
+    protected function match($request)
+    {
+
+        // loop through possible URLs
+        // checking for an exact page match
+        foreach ($this->routes as $key => $url) {
+            
+        }
+
+    }
+
+
     /**
      * @param Request $request
      * @throws FlatbedException
