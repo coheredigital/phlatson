@@ -1,12 +1,12 @@
 <?php
 namespace Flatbed;
+
 class Extensions extends Objects
 {
 
     protected $rootFolder = "extensions";
     protected $singularName = "Extension";
     const SINGULAR_CLASSNAME = 'Extension';
-
 
     public function __construct()
     {
@@ -20,6 +20,24 @@ class Extensions extends Objects
         $this->initializeAutoloadExtensions();
     }
 
+    protected function getFile ($name) : ?string
+    {
+        // check site extension
+        $file = SITE_PATH . "extensions" . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $name . ".php";
+
+        if (\file_exists($file)) {
+          return $file;
+        }
+
+        // then system
+        $file = SYSTEM_PATH . "extensions" . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $name . ".php";
+        if (\file_exists($file)) {
+          return $file;
+        }
+
+        return null;
+
+    }
 
     /**
      * preload autoload extensions and ExtensionStubs
@@ -63,7 +81,12 @@ class Extensions extends Objects
     {
         if(!$extension instanceof Extension){
             $class = "Flatbed\\$name";
-            $extension = new $class($extension->file);
+
+            $file = $this->getFile($name);
+            if ($file) {
+              require_once $file;
+              $extension = new $class($extension->file);
+            }
         }
         return $extension;
     }

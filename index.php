@@ -1,10 +1,7 @@
 <?php
 
-declare(strict_types=1);
 
-$profile = new stdClass;
-/* instantiate app variables */
-$profile->start = microtime(true);
+declare(strict_types=1);
 
 define("FLATBED", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
@@ -18,16 +15,17 @@ define('ROOT_URL', "/");
 // pre includes some default core file for flatbed
 // files / class that will be REQUIRED for every single request
 
-require_once CORE_PATH . '_functions.php';
+require CORE_PATH . '_functions.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
 // use composer autoloader
-require_once(VENDOR_PATH .'autoload.php');
+$composer = require_once(VENDOR_PATH .'autoload.php');
 
+// config ref
 ref::config('expLvl', 1);
 ref::config('maxDepth', 2);
-
-
-$autoloader = new Flatbed\FlatbedAutoloader();
 
 try {
 
@@ -48,8 +46,6 @@ try {
     $flatbed->api('router', $router = new Flatbed\Router($request), true);
 
     echo $router->execute();
-
-
 
 } catch(Exceptions\FlatbedException $exception) {
     echo $exception->render($config);

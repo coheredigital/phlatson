@@ -1,5 +1,6 @@
 <?php
 namespace Flatbed;
+
 class FieldtypeText extends Fieldtype
 {
     /**
