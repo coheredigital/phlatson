@@ -42,7 +42,6 @@ class Extensions extends Objects
     /**
      * preload autoload extensions and ExtensionStubs
      */
-
     protected function initializeAutoloadExtensions(){
         foreach ($this->data as $className => $file) {
 
