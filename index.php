@@ -20,12 +20,8 @@ define('ROOT_URL', "/");
 
 require_once CORE_PATH . '_functions.php';
 
-// check for composer autoloader
-$composer = VENDOR_PATH .'autoload.php'; // composer autoloader
-if(file_exists($composer)) require_once($composer);
-// else require_once CORE_PATH . 'FlatbedAutoloader.php';
-
-// require_once CORE_PATH . '_interfaces.php';
+// use composer autoloader
+require_once(VENDOR_PATH .'autoload.php');
 
 ref::config('expLvl', 1);
 ref::config('maxDepth', 2);
