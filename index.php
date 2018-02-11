@@ -27,6 +27,9 @@ $composer = require_once(VENDOR_PATH .'autoload.php');
 ref::config('expLvl', 1);
 ref::config('maxDepth', 2);
 
+$exceptionHandler = new Flatbed\ErrorHandler();
+$exceptionHandler->register();
+
 try {
 
     $flatbed = new Flatbed\Flatbed;
