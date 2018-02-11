@@ -23,17 +23,23 @@ class Response
 
     protected $segments = [];
 
-
+	protected function removePrefix ($string, $prefix)
+	{
+	    if (substr($string, 0, strlen($prefix)) == $prefix) {
+	        $string = substr($string, strlen($prefix));
+	    }
+	    return $string;
+	}
 
     public function __construct()
     {
         // $this->request = $request;
         // $this->page = $page;
         // $this->template = $page->template;
-        
+
 
         // set raw request segment array
-        $segment = str_remove_prefix($request->url, $page->url);
+        $segment = $this->removePrefix($request->url, $page->url);
         if ($segment = trim($segment,"/")) {
             $this->segments = explode("/", $segment);
         }
@@ -172,7 +178,7 @@ class Response
     }
 
 
-    public function send($override = false) 
+    public function send($override = false)
     {
         // TODO : temp disabled for testing
         // if (headers_sent() && !$override) {
@@ -212,8 +218,8 @@ class Response
         return $this;
     }
 
-    
-    public function cookie( string $name, $value, $expiry = null, string $path = '/', ?string $domain = null, bool $secure = false, bool $httponly = false) : self 
+
+    public function cookie( string $name, $value, $expiry = null, string $path = '/', ?string $domain = null, bool $secure = false, bool $httponly = false) : self
     {
         // set default expiry
         if (null === $expiry) {
@@ -257,7 +263,7 @@ class Response
      */
     public function segment(int $start, ?int $limit = 1) : ?string
     {
-        
+
         $index = $start - 1;
         $segments = array_slice($this->segments, $index, $limit);
         $segment = implode("/", $segments);
