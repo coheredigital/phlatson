@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class InputFields extends Input implements ReceivesOptions
+class InputFields extends Input implements ReceivesOptionsInterface
 {
 
     protected $options = [];

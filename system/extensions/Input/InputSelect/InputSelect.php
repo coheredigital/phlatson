@@ -1,7 +1,7 @@
 <?php
 
 namespace Flatbed;
-class InputSelect extends Input implements ReceivesOptions
+class InputSelect extends Input implements ReceivesOptionsInterface
 {
 
     protected $options = [];
@@ -67,4 +67,4 @@ class InputSelect extends Input implements ReceivesOptions
         return $output;
     }
 
-} 
+}

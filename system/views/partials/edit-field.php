@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $fieldname = $response->segment(2);
 $field = $fields->get($fieldname);
@@ -12,7 +12,7 @@ foreach ($templateFields as $templateFieldName => $templateField) {
     $input = $templateField->get('input');
     $input->label = $templateField->title;
     // todo: improve select value handling
-    if($input instanceof ReceivesOptions){
+    if($input instanceof ReceivesOptionsInterface){
         $fieldtype = $field->fieldtype;
         $input->addOptions($fieldtype->options());
     }
@@ -31,10 +31,10 @@ foreach ($templateFields as $templateFieldName => $templateField) {
             <?= $i->render() ?>
         <?php endforeach ?>
         <br>
-        <div class='form-actions'>  
-            <a href='{$field->url}' target='_external' class='button button-view'><i class='fa fa-share'></i></a> 
-            <button type='submit' class='button button-delete'> <i class='fa fa-times'></i></button> 
-            <button type='submit' class='button button-save'><i class='fa fa-save'></i> Save</button> 
+        <div class='form-actions'>
+            <a href='{$field->url}' target='_external' class='button button-view'><i class='fa fa-share'></i></a>
+            <button type='submit' class='button button-delete'> <i class='fa fa-times'></i></button>
+            <button type='submit' class='button button-save'><i class='fa fa-save'></i> Save</button>
         </div>
 
     </form>
