@@ -21,7 +21,7 @@ ref::config('expLvl', 1);
 ref::config('maxDepth', 2);
 
 $exceptionHandler = new Flatbed\ErrorHandler();
-$exceptionHandler->register();
+
 
 try {
 

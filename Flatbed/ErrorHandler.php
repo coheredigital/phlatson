@@ -5,9 +5,7 @@ class ErrorHandler {
 
 	private $isRegistered;
 
-  	public function register()
-	{
-		
+	public function __construct() {
 		set_error_handler([
 			$this,
 			'error'
@@ -17,8 +15,6 @@ class ErrorHandler {
 			$this,
 			'throw'
 		]);
-
-	    return $this;
 	}
 
 	static function error($errno, $errorMessage, $errfile, $errline) {
