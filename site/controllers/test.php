@@ -13,7 +13,7 @@ THIS file MUST do some fundemetal things
 Could define more traditional routes here too?
 
     this could mean that template could by default define a response to the root path of there associated page
-    complex retrun types for the response object could be handled in the controller instead of needing to define
+    complex return types for the response object could be handled in the controller instead of needing to define
     a settings interface in the admin to allow for this
 
     $this->respond("/", function($request){

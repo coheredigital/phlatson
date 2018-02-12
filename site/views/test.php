@@ -1,11 +1,6 @@
 <?php
 namespace Flatbed;
 
-
-
-
 $template = $this->api('page')->template;
-
-r($request);
-
-r($template->routes);
+r($router);
+r($page->template->routes);

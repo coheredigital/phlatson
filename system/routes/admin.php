@@ -3,21 +3,17 @@
 
 $this->respond("/", function($request, $response){
 
-    // redirect user already logged in
-    if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
+    // redirect user not logged in
+    if( !$this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}login/");
     $response->page->layout = $this->api("views")->get('layouts/default');
     $response->page->layout->main .= $this->api("views")->render('partials/header');
 
 });
 
-
-
-
-
 $this->respond("/pages", function($request, $response){
 
-    // redirect user already logged in
-    if( $this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}pages/");
+    // redirect user not logged in
+    if( !$this->api('user')->isLoggedin() ) $response->redirect("{$response->page->url}login/");
     $response->page->layout = $this->api("views")->get('layouts/default');
     $response->page->layout->main .= $this->api("views")->render('partials/header');
 
