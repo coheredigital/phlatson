@@ -1,7 +1,8 @@
 <?php
 
-
 declare(strict_types=1);
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
 define("FLATBED", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
@@ -11,14 +12,6 @@ define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR );
 define('CACHE_PATH', ROOT_PATH . "cache" . DIRECTORY_SEPARATOR );
 define('CORE_PATH', ROOT_PATH . "Flatbed" . DIRECTORY_SEPARATOR );
 define('ROOT_URL', "/");
-
-// pre includes some default core file for flatbed
-// files / class that will be REQUIRED for every single request
-
-require CORE_PATH . '_functions.php';
-
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
 
 // use composer autoloader
 $composer = require_once(VENDOR_PATH .'autoload.php');
