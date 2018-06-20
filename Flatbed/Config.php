@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class Config extends Object
+class Config extends FlatbedObject
 {
 
 

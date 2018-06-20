@@ -2,7 +2,7 @@
 
 namespace Flatbed;
 
-class View extends Object
+class View extends FlatbedObject
 {
     const DATA_FOLDER = 'views';
     protected $attributes = null;

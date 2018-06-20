@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-abstract class Object extends Flatbed implements \JsonSerializable
+abstract class FlatbedObject extends Flatbed implements \JsonSerializable
 {
 
     const DEFAULT_SAVE_FILE = "data.json";
@@ -111,7 +111,7 @@ abstract class Object extends Flatbed implements \JsonSerializable
     }
 
     /**
-    * @return  string  the public accessible url for this Object
+    * @return  string  the public accessible url for this Flatbed
     *
     */
     protected function getUrl()
@@ -123,7 +123,7 @@ abstract class Object extends Flatbed implements \JsonSerializable
     }
 
     /**
-    * @return  string  the public accessible url for this Object
+    * @return  string  the public accessible url for this Flatbed
     *
     */
     protected function getUri()
@@ -236,7 +236,7 @@ abstract class Object extends Flatbed implements \JsonSerializable
     /**
     * @return bool
     *
-    * Determine if Object is a system object
+    * Determine if Flatbed is a system object
     *
     */
     public function isSystem(): bool

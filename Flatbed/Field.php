@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class Field extends Object
+class Field extends FlatbedObject
 {
     const DATA_FOLDER = 'fields';
     protected $attributes = null;

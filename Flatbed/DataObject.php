@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-abstract class DataObject extends Object
+abstract class DataObject extends FlatbedObject
 {
 
 

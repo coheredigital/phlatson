@@ -36,7 +36,7 @@ $this->respond("POST/login", function($request, $response){
         // TODO : give call back access to request
         $username = $request->post->username;
         $password = $request->post->password;
-
+		die("caught");
         if ($this->api('session')->login($username, $password)) {
             $response->redirect("{$response->page->url}/pages");
         }

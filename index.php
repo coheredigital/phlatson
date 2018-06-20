@@ -1,6 +1,11 @@
 <?php
 
+
+
 declare(strict_types=1);
+
+namespace Flatbed;
+
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
@@ -17,29 +22,28 @@ define('ROOT_URL', "/");
 $composer = require_once(VENDOR_PATH .'autoload.php');
 
 // config ref
-ref::config('expLvl', 1);
-ref::config('maxDepth', 2);
+\ref::config('expLvl', 1);
+\ref::config('maxDepth', 2);
 
-$exceptionHandler = new Flatbed\ErrorHandler();
-
+$exceptionHandler = new ErrorHandler();
 
 try {
 
-    $flatbed = new Flatbed\Flatbed;
+    $flatbed = new Flatbed;
     $flatbed->api('flatbed', $flatbed, true);
     $flatbed->api('profile', $profile, true);
-    $flatbed->api('config', $config = new Flatbed\Config, true);
-    $flatbed->api('request', $request = new Flatbed\Request, true);
-    $flatbed->api('users', new Flatbed\Users, true);
-    $flatbed->api('session', new Flatbed\Session($config->sessionName), true);
-    // $flatbed->api('events', new Flatbed\Events, true);
-    $flatbed->api('extensions', new Flatbed\Extensions, true);
-    $flatbed->api('fields', new Flatbed\Fields, true);
-    $flatbed->api('pages', $pages = new Flatbed\Pages, true);
-    $flatbed->api('roles', new Flatbed\Roles, true);
-    $flatbed->api('templates', new Flatbed\Templates, true);
-    $flatbed->api('views', new Flatbed\Views, true);
-    $flatbed->api('router', $router = new Flatbed\Router($request), true);
+    $flatbed->api('config', $config = new Config, true);
+    $flatbed->api('request', $request = new Request, true);
+    $flatbed->api('users', new Users, true);
+    $flatbed->api('session', new Session($config->sessionName), true);
+    // $flatbed->api('events', new Events, true);
+    $flatbed->api('extensions', new Extensions, true);
+    $flatbed->api('fields', new Fields, true);
+    $flatbed->api('pages', $pages = new Pages, true);
+    $flatbed->api('roles', new Roles, true);
+    $flatbed->api('templates', new Templates, true);
+    $flatbed->api('views', new Views, true);
+    $flatbed->api('router', $router = new Router($request), true);
 
     echo $router->execute();
 

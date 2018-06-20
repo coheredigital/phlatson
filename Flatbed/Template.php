@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class Template extends Object
+class Template extends FlatbedObject
 {
 
     const DATA_FOLDER = 'templates';

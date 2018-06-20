@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class User extends Object
+class User extends FlatbedObject
 {
 
     protected $rootFolder = "users";

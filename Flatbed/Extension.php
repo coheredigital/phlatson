@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class Extension extends Object implements ObjectInterface
+class Extension extends FlatbedObject implements ObjectInterface
 {
 
     protected $rootFolder = "extensions";
