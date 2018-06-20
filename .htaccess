@@ -1,5 +1,4 @@
 AllowOverride All
-sdfdf
 # Prevent file browsing
 Options -Indexes
 Options +FollowSymLinks
