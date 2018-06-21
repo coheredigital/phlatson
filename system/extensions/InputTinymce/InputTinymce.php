@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 class InputTinymce extends Input
 {
 

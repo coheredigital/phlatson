@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 class FieldtypeTemplate extends Fieldtype implements ProvidesOptionsInterface
 {
 

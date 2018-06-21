@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 
 class FieldtypeText extends Fieldtype
 {

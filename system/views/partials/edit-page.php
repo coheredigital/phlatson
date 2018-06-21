@@ -7,17 +7,17 @@ $pageEdit = $pages->get($pagename);
 // var_dump($pageEdit->get('template'));
 
 if (!$pageEdit) {
-    throw new Flatbed\Exceptions\FlatbedException("Page: {$pagename} not found");
+    throw new Phlatson\Exceptions\PhlatsonException("Page: {$pagename} not found");
 }
 
 $template = $pageEdit->get('template');
 if (!$template) {
-    throw new Flatbed\Exceptions\FlatbedException("Template not valid");
+    throw new Phlatson\Exceptions\PhlatsonException("Template not valid");
 }
 
 $templateFields = $template->get('fields');
 
-$inputs = new Flatbed\ObjectCollection;
+$inputs = new Phlatson\ObjectCollection;
 
 foreach ($templateFields as $templateFieldName => $templateField) {
 

@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 class FieldtypeDateTime extends Fieldtype
 {
 
@@ -10,7 +10,7 @@ class FieldtypeDateTime extends Fieldtype
             $value = date("c", $value);
         }
         
-        $datetime = new FlatbedDateTime($value);
+        $datetime = new PhlatsonDateTime($value);
 
         return $datetime;
     }
@@ -20,7 +20,7 @@ class FieldtypeDateTime extends Fieldtype
         if(is_int($value)){
             $value = date("c", $value);
         }
-        $datetime = new FlatbedDateTime($value);
+        $datetime = new PhlatsonDateTime($value);
         $value = (int) $datetime->format("U");
         return $value;
     }

@@ -4,18 +4,18 @@
 
 declare (strict_types = 1);
 
-namespace Flatbed;
+namespace Phlatson;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-define("FLATBED", true);
+define("Phlatson", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 define('SYSTEM_PATH', ROOT_PATH . "system" . DIRECTORY_SEPARATOR);
 define('VENDOR_PATH', ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR);
 define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR);
 define('CACHE_PATH', ROOT_PATH . "cache" . DIRECTORY_SEPARATOR);
-define('CORE_PATH', ROOT_PATH . "Flatbed" . DIRECTORY_SEPARATOR);
+define('CORE_PATH', ROOT_PATH . "Phlatson" . DIRECTORY_SEPARATOR);
 define('ROOT_URL', "/");
 
 // use composer autoloader
@@ -29,7 +29,7 @@ $exceptionHandler = new ErrorHandler();
 
 try {
 
-    $flatbed = new Flatbed;
+    $Phlatson = new Phlatson;
 
     $request = new Request();
     $page = new Page($request->url);
@@ -42,6 +42,6 @@ try {
 
     $page->template->render();
 
-} catch (Exceptions\FlatbedException $exception) {
+} catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);
 }

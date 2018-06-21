@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 
 $template = $this->api('page')->template;
 // r(\xdebug_get_code_coverage());

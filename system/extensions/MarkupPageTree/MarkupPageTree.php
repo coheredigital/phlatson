@@ -1,6 +1,6 @@
 <?php
 
-namespace Flatbed;
+namespace Phlatson;
 
 class MarkupPageTree extends Extension
 {

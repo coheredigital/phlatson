@@ -3,7 +3,7 @@ AllowOverride All
 Options -Indexes
 Options +FollowSymLinks
 
-# Flatbed will handle 404s
+# Phlatson will handle 404s
 ErrorDocument 404 /index.php
 
 <Files favicon.ico>
@@ -60,14 +60,14 @@ DirectoryIndex index.php index.html index.htm
 	RewriteCond %{REQUEST_FILENAME} !-d
 
 
-  # prevent flatbed from attempting to load images or anything in assets
+  # prevent Phlatson from attempting to load images or anything in assets
   RewriteCond %{REQUEST_FILENAME} !\.(jpg|jpeg|gif|png|ico)$ [NC]
   RewriteCond %{REQUEST_FILENAME} !(^|/)site/assets/
 
-  # don't send missing image request through Flatbed
+  # don't send missing image request through Phlatson
   RewriteCond %{REQUEST_URI} !\.(gif|jpg|png|ico)$ [NC]
 
-  # pass request to Flatbed (use the seconf rule here instead if using VirtualDocumentRoot)
+  # pass request to Phlatson (use the seconf rule here instead if using VirtualDocumentRoot)
 	RewriteRule ^(.*)$ index.php [L,QSA]
 
 

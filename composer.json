@@ -1,10 +1,10 @@
 {
-    "name": "flatbed/flatbed",
+    "name": "Phlatson/Phlatson",
     "type": "library",
-    "description": "Flatbed CMS",
-    "keywords": ["flatbed", "cms", "cmf", "content management system", "flat file", "JSON"],
+    "description": "Phlatson CMS",
+    "keywords": ["Phlatson", "cms", "cmf", "content management system", "flat file", "JSON"],
     "license": "MPL-2.0",
-    "homepage": "https://flatbed.io",
+    "homepage": "https://Phlatson.io",
     "authors": [{
         "name": "Adam Spruijt",
         "email": "adam@spruijt.design",
@@ -17,7 +17,7 @@
     },
     "autoload": {
       "psr-4": {
-        "Flatbed\\": "Flatbed/"
+        "Phlatson\\": "Phlatson/"
       }
 	}
 }

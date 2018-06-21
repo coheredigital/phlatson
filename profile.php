@@ -1,6 +1,6 @@
 <?php
 
-require 'C:\Users\Adam\Websites\dev\flatbed\libraries\ref\ref.php';
+require 'C:\Users\Adam\Websites\dev\Phlatson\libraries\ref\ref.php';
 
 // add ref for debugging, remove later
 ref::config('expLvl', 0);
@@ -18,7 +18,7 @@ function getMemoryUse() : string
 
 $start = microtime(true);
 
-$folder = 'C:\Users\Adam\Websites\dev\flatbed\site\pages\news\\';
+$folder = 'C:\Users\Adam\Websites\dev\Phlatson\site\pages\news\\';
 
 $data = [];
 

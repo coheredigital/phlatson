@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 class FieldtypeRole extends Fieldtype implements ProvidesOptionsInterface
 {
 

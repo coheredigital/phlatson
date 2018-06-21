@@ -1,5 +1,5 @@
 <?php
-namespace Flatbed;
+namespace Phlatson;
 class InputFields extends Input implements ReceivesOptionsInterface
 {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Flatbed;
+namespace Phlatson;
 class InputSelect extends Input implements ReceivesOptionsInterface
 {
 
