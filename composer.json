@@ -2,9 +2,9 @@
     "name": "Phlatson/Phlatson",
     "type": "library",
     "description": "Phlatson CMS",
-    "keywords": ["Phlatson", "cms", "cmf", "content management system", "flat file", "JSON"],
+    "keywords": ["phlatson", "cms", "cmf", "content management system", "flat file", "JSON"],
     "license": "MPL-2.0",
-    "homepage": "https://Phlatson.io",
+    "homepage": "https://phlatson.io",
     "authors": [{
         "name": "Adam Spruijt",
         "email": "adam@spruijt.design",

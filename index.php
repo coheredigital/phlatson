@@ -1,7 +1,5 @@
 <?php
 
-
-
 declare (strict_types = 1);
 
 namespace Phlatson;
@@ -9,7 +7,7 @@ namespace Phlatson;
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-define("Phlatson", true);
+define("PLATSON", true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 define('SYSTEM_PATH', ROOT_PATH . "system" . DIRECTORY_SEPARATOR);
 define('VENDOR_PATH', ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR);
