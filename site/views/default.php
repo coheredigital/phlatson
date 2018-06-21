@@ -16,4 +16,7 @@
         <?php endif ?>
     </div>
 <?php
+
+r($page);
+
 include 'includes/foot.php';

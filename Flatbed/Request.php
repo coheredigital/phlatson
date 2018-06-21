@@ -4,15 +4,10 @@ class Request
 {
 
     public $httpUrl;
-
     public $path;
 
     // array store path requested and all possible parent paths
     public $urls = [];
-
-    public $matchedUrl;
-
-    public $format;
 
     // TODO : consider seperating request::segments from response:segments
     public $segments = [];
@@ -48,8 +43,6 @@ class Request
         $this->httpUrl = $this->scheme . "://{$this->hostname}{$this->url}";
 
         $this->ssl = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
-        $this->ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
-
         // find the client ip
         $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
         $this->ip = $this->ip === null && isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
@@ -64,11 +57,9 @@ class Request
 
     }
 
-
     protected function objectify(array $array) {
         return json_decode( json_encode( $array ) );
     }
-
 
     protected function getUrls($url) {
         $segments = explode("/", trim($url, '/')); 
@@ -83,13 +74,6 @@ class Request
     protected function getSegments($url) {
         $segments = explode("/", trim($url, '/'));        
         return $segments;
-    }
-
-    public function setMatch(int $key)
-    {
-        $this->matchedUrl = $key;
-        $matchedUrl = $this->urls[$key];
-        $this->segments = $this->getSegments($this->url);
     }
 
 
