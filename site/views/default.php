@@ -1,6 +1,6 @@
-<?php include 'includes/head.php' ?>
+
     <div class="container">
-        <h6><strong><?= $page->modified->format("F j, Y") ?></strong></h6>
+        <h6><strong><?= $page->get('modified')->format("F j, Y") ?></strong></h6>
         <?= $page->markdown ?>
         <?php if ($page->children()): ?>
 
@@ -15,8 +15,3 @@
             </div>
         <?php endif ?>
     </div>
-<?php
-
-r($page);
-
-include 'includes/foot.php';

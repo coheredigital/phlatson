@@ -1,6 +1,6 @@
 <?php
 namespace Flatbed;
-class File extends Object
+class File extends FlatbedObject
 {
 
     public function __construct(Page $page, $name)

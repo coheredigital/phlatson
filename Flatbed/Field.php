@@ -2,7 +2,9 @@
 namespace Flatbed;
 class Field extends FlatbedObject
 {
-    const DATA_FOLDER = 'fields';
+    const BASE_FOLDER = 'fields/';
+    const BASE_URL = 'templates/';
+
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
 

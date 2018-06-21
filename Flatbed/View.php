@@ -4,7 +4,9 @@ namespace Flatbed;
 
 class View extends FlatbedObject
 {
-    const DATA_FOLDER = 'views';
+    const DATA_FOLDER = 'views/';
+    const BASE_URL = 'views/';
+    
     protected $attributes = null;
     protected $requiredElements = ["fieldtype","input"];
 

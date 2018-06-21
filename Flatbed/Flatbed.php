@@ -1,6 +1,5 @@
 <?php
 namespace Flatbed;
-namespace Flatbed;
 
 /**
  * Root class that ties system together
@@ -11,10 +10,13 @@ class Flatbed
 
 
     protected $request;
+    protected $page;
 
-    public function init(Request $request)
+    public function init()
     {
-        $this->request = $request;
+        $this->request = new Request;
+        r($this->request->url);
+        $this->page = new Page($this->request->url);
     }
 
     /**
@@ -25,7 +27,7 @@ class Flatbed
      */
     public function execute()
     {
-        // r();
+        r($this);
     }
 
 }

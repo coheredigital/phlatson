@@ -4,22 +4,30 @@ namespace Flatbed;
 class JsonObject
 {
 
-    protected $filepath;
+    public $file;
+    public $filename;
+    public $path;
+
     protected $data;
 
-    public function __construct(string $filepath ) {
+    public function __construct(string $file ) {
         
-        $this->filepath = ROOT_PATH . $filepath;
+        $this->file = ROOT_PATH . $file;
+        
 
-        if (!file_exists($this->filepath)) {
-            throw new Exceptions\FlatbedException("File ($this->filepath) deos not exist");
+        if (!file_exists($this->file)) {
+            throw new Exceptions\FlatbedException("File ($this->file) deos not exist");
         }
 
-        $this->data = json_decode(file_get_contents($this->filepath), true);
+        // setup some core properties
+        $this->filename = basename($this->file);
+        $this->path = dirname($this->file);
+
+        $this->data = json_decode(file_get_contents($this->file), true);
 
         // check that we got data back from json_decode
         if ($this->data === null) {
-            throw new Exceptions\FlatbedException("File ($this->filepath) is not a valid JSON file");
+            throw new Exceptions\FlatbedException("File ($this->file) is not a valid JSON file");
         }
 
     }
@@ -33,6 +41,14 @@ class JsonObject
     public function get($key)
     {
         return $this->data[$key];
+    }
+
+    /**
+     * Get the time the file was last modified
+     */
+    public function getModifiedTime() : int
+    {
+        return \filemtime($this->file);
     }
 
     /**
@@ -50,7 +66,7 @@ class JsonObject
     public function save()
     {
         $json = json_encode($this->data, JSON_PRETTY_PRINT);
-        file_put_contents($this->filepath, $json);
+        file_put_contents($this->file, $json);
     }
 
 }

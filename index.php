@@ -23,29 +23,22 @@ $composer = require_once(VENDOR_PATH . 'autoload.php');
 
 // config ref
 \ref::config('expLvl', 2);
-\ref::config('maxDepth', 4);
+\ref::config('maxDepth', 6);
 
 $exceptionHandler = new ErrorHandler();
 
 try {
 
-    $request = new Request;
-
-    $pages = new Pages();
-
+    $request = new Request();
+    $page = new Page($request->url);
     
-    $file = new JsonObject("/site/pages/about/data.json");
+    // r($page->template->get('name'));
+    // r($page->template->getViewFile());
+    // r($page->url);
+    // r($page->template->url);
+    // r($page);
 
-    $page = new Page('/about/');
-    r($page);
-    r($file->get('title'));
-    r($file->get('empty'));
-    $file->set("hash", md5(date('U')));
-
-    $file->save();
-    r($request);
-
-    // echo $router->execute();
+    $page->template->render();
 
 } catch (Exceptions\FlatbedException $exception) {
     echo $exception->render($config);
