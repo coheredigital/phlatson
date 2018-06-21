@@ -8,8 +8,6 @@
  *
  * Added __toString magic method and $outputFormat variable / setter to facilitate
  *
- *  TODO: reference Drupal DateTimePlus for some ideas on how to extend
- *
  */
 namespace Flatbed;
 class FlatbedDateTime extends \DateTime
@@ -21,6 +19,11 @@ class FlatbedDateTime extends \DateTime
         $this->outputFormat = $format;
     }
 
+    /**
+     * Allows FlatbedDatetime to be string cast using default format
+     *
+     * @return string
+     */
     public function __toString()
     {
         return parent::format($this->outputFormat);
