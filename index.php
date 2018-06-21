@@ -29,6 +29,8 @@ $exceptionHandler = new ErrorHandler();
 
 try {
 
+    $flatbed = new Flatbed;
+
     $request = new Request();
     $page = new Page($request->url);
     

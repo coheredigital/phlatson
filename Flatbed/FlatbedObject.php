@@ -48,6 +48,7 @@ abstract class FlatbedObject extends Flatbed
                 break;
             case 'modified':
                 $value = $this->data->getModifiedTime();
+                $value = new FlatbedDateTime("@$value");
                 break;
             
             default:

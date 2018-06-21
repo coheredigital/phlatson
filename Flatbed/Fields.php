@@ -2,8 +2,7 @@
 namespace Flatbed;
 class Fields extends Objects
 {
-
-    protected $rootFolder = "fields";
-    protected $singularName = "Field";
-	const SINGULAR_CLASSNAME = 'Field';
+    const SINGULAR_CLASSNAME = 'Field';
+    const BASE_FOLDER = 'fields/';
+    const BASE_URL = 'fields/';
 }
