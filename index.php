@@ -29,7 +29,7 @@ $exceptionHandler = new ErrorHandler();
 
 try {
 
-    $Phlatson = new Phlatson;
+    $phlatson = new Phlatson;
 
     $request = new Request();
     $page = new Page($request->url);
