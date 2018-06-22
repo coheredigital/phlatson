@@ -12,7 +12,7 @@ class JsonObject
 
     public function __construct(string $file ) {
         
-        $this->file = ROOT_PATH . $file;
+        $this->file = rtrim(ROOT_PATH, "/")  . $file;
         
 
         if (!file_exists($this->file)) {

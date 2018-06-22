@@ -7,10 +7,6 @@ class Template extends PhlatsonObject
     const BASE_FOLDER = 'templates/';
     const BASE_URL = 'templates/';
 
-    public $parent; // the object this template belongs to
-    public $defaultFields = ['title', 'fields', 'name', 'view', 'modified'];
-
-
     public function hasField($name)
     {
         $fields = $this->data->get('fields');
@@ -34,6 +30,19 @@ class Template extends PhlatsonObject
     {
         $view = $this->getView();
         return $view->render();
+    }
+
+    public function get($key)
+    {
+
+        switch ($key) {
+            case 'view':
+                return $this->getView();
+            default:
+                return parent::get($key);
+        }
+
+
     }
 
 }

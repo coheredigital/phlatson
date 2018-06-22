@@ -12,17 +12,12 @@ abstract class PhlatsonObject extends Phlatson
     protected $data;
     protected $template;
 
-    protected $defaultFields = [];
-
-    // prep to have a system to turn fromatting on and off TODO: use this, lol
-    protected $enableFormatting = false;
-
     public function __construct($path = null)
     {
 
         if ($path) {
             // normalize
-            $path = "/" . trim($path, "/") . "/";
+            $path = trim($path, "/") . "/";
             $filepath = '/site/' . $this::BASE_FOLDER . $path . $this::DEFAULT_SAVE_FILE;
             $this->data = new JsonObject($filepath);
         }
@@ -38,10 +33,9 @@ abstract class PhlatsonObject extends Phlatson
 
     }
 
-    public function get($key)
+    public function get(string $key)
     {
-
-
+        
         switch ($key) {
             case 'name':
                 $value = \basename($this->data->path);
@@ -50,32 +44,37 @@ abstract class PhlatsonObject extends Phlatson
                 $value = $this->data->path;
                 break;
             case 'url':
-                $value = \str_replace(ROOT_PATH . $this::BASE_FOLDER, '',$this->data->path);
+                $value = $this->data->path;
+                $value = \str_replace(SITE_PATH, '', $value);
+                $value = \str_replace($this::BASE_FOLDER, '', $value);
                 break;
             case 'modified':
                 $value = $this->data->getModifiedTime();
                 $value = new PhlatsonDateTime("@$value");
                 break;
-            
+
             default:
                 $value = $this->data->get($key);
-
-                if ($this->template instanceof Template && $this->template->hasField($key)) {
-
-                    $field = $this->template->getField($key);
-                    // TODO : Testing field formatting, replace
-                    if ($field['fieldtype'] == "FieldtypeDatetime") {
-                        $value = new \DateTime("@{$value}");
-                    }
-
-                }
-
-                
                 break;
         }
 
         return $value;
 
+    }
+
+    /**
+     * Magic method mappaed the self::get() primarily for
+     * syntactical template reasons 
+     * example
+     * <?= $page->title ?>
+     * instead of 
+     * <?= $page->get('title') ?>
+     *
+     * @param string $key
+     * @return void
+     */
+    public function __get (string $key) {
+        return $this->get($key);
     }
 
 }
