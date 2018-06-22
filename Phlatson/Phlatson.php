@@ -22,8 +22,11 @@ class Phlatson
             // return $this allows chaining
             Api::set($name, $value, $lock);
             return $this;
-        } else {
+        } else if(!is_null($name) && is_null($value)) {
             return Api::get($name);
+        }
+        else {
+            return Api::fetchAll();
         }
     }
 

@@ -74,18 +74,13 @@ final class Api
         return array_key_exists($name, static::$registry);
     }
 
-    public static function get($name)
+    public static function get($name) : ?object
     {
-        if (is_null($name)) return static::fetchAll();
-            
         if (!static::has($name)) return null;
 
         if (!is_object(static::$registry[$name])) {
             static::instantiate($name);
         }
-        
-
-
         return static::$registry[$name];
         
     }
