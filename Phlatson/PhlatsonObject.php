@@ -46,6 +46,12 @@ abstract class PhlatsonObject extends Phlatson
             case 'name':
                 $value = \basename($this->data->path);
                 break;
+            case 'path':
+                $value = $this->data->path;
+                break;
+            case 'url':
+                $value = \str_replace(ROOT_PATH . $this::BASE_FOLDER, '',$this->data->path);
+                break;
             case 'modified':
                 $value = $this->data->getModifiedTime();
                 $value = new PhlatsonDateTime("@$value");

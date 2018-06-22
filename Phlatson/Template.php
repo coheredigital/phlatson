@@ -23,15 +23,17 @@ class Template extends PhlatsonObject
         return $fields[$name];
     }
 
-    public function getViewFile() : ? string
+    public function getView() : object
     {
-        $file = SITE_PATH . "views/" . $this->get('name') . ".php";
-        return \file_exists($file) ? $file : null;
+        // get view file of the same name
+        $view = new View($this->get('name'));
+        return $view;
     }
 
     public function render() : ? string
     {
-        include $this->getViewFile();
+        $view = $this->getView();
+        return $view->render();
     }
 
 }

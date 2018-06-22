@@ -2,9 +2,9 @@
 
 namespace Phlatson;
 
-class View extends PhlatsonObject
+class View extends Phlatson
 {
-    const DATA_FOLDER = 'views/';
+    const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';
     
     protected $attributes = null;
@@ -13,14 +13,15 @@ class View extends PhlatsonObject
     protected $page;
     protected $file;
 
-    function __construct($file)
+    function __construct(string $name)
     {
-        if(!file_exists($file)) {
-            throw new Exceptions\PhlatsonException("Ivalide file ($file) cannot be used as view");
+        $filepath = SITE_PATH . $this::BASE_FOLDER . $name . ".php";
+        // volidate view file
+        if(!file_exists($filepath)) {
+            throw new Exceptions\PhlatsonException("Ivalide file ($filepath) cannot be used as view");
         }
-        $this->file = $file;
+        $this->file = $filepath;
     }
-
 
     public function render(?Page $page = null) {
 

@@ -1,17 +1,17 @@
-
-    <div class="container">
-        <h6><strong><?= $page->get('modified')->format("F j, Y") ?></strong></h6>
-        <?= $page->markdown ?>
-        <?php if ($page->children()): ?>
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul>
-                        <?php foreach ($page->children() as $p): ?>
-                            <li><a href="<?php echo $p->url ?>"><?php echo $p->title ?></a></li>
-                        <?php endforeach ?>
-                    </ul>
-                </div>
-            </div>
-        <?php endif ?>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Page</title>
+</head>
+<body>
+    <h1><?= $page->get('title') ?></h1>
+    <?php 
+    r($page->get('url'));
+    r($page->get('path'));
+    r($page);
+    ?>
+</body>
+</html>

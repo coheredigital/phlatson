@@ -8,26 +8,38 @@ namespace Phlatson;
 class Phlatson
 {
 
+    public static $api = [];
 
-    protected $request;
-    protected $page;
-
-    public function init()
+    /**
+     * @param $key
+     * @param $value
+     * @throws Exception
+     */
+    final public function api(string $name = null, $value = null, bool $lock = false)
     {
-        $this->request = new Request;
-        r($this->request->url);
-        $this->page = new Page($this->request->url);
+        if (!is_null($name) && !is_null($value)) {
+            // all APIs set this way are locked
+            // return $this allows chaining
+            Api::set($name, $value, $lock);
+            return $this;
+        } else {
+            return Api::get($name);
+        }
     }
 
     /**
-     * Runs the request 
+     * Runs the request, checks that a Page has been set
      *
      * @param Request $request
      * @return void
      */
     public function execute()
     {
-        r($this);
+        
+        if ($this->api('page') instanceof Page) {
+            return $this->api('page')->render();
+        }
+
     }
 
 }
