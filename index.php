@@ -27,10 +27,14 @@ $exceptionHandler = new ErrorHandler();
 
 try {
 
-    $phlatson = new Phlatson;
+    $phlatson = new Phlatson();
     $request = new Request();
     $config = new Config('site');
     $page = new Page($request->url);
+
+    // inject into API
+    $phlatson->api("request", $request);
+    $phlatson->api("config", $config);
     $phlatson->api("page", $page);
 
     // prepare PHP ini_set options
@@ -39,13 +43,13 @@ try {
     ini_set('session.use_only_cookies', '1');
     // ini_set("session.gc_maxlifetime", "$this->sessionExpireSeconds");
     ini_set("session.save_path", TEMP_PATH . "/sessions");
-    // ini_set("date.timezone", $config->timezone);
+    ini_set("date.timezone", $config->timezone);
     ini_set('default_charset', 'utf-8');
 
     r($config);
     r($request);
     
-    echo $phlatson->execute();
+    echo $phlatson->execute($config);
 
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);
