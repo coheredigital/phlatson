@@ -12,6 +12,7 @@
     r($page->get('url'));
     r($page->get('path'));
     r($page);
+    r($this);
     ?>
 </body>
 </html>

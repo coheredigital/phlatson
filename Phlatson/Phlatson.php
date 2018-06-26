@@ -38,7 +38,6 @@ class Phlatson
      */
     public function execute()
     {
-        
         if ($this->api('page') instanceof Page) {
             return $this->api('page')->render();
         }
