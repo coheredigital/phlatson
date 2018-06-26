@@ -21,7 +21,7 @@ class JsonObject
 
         // setup some core properties
         $this->filename = basename($this->file);
-        $this->path = dirname($this->file);
+        $this->path = dirname($this->file) . "/";
 
         $this->data = json_decode(file_get_contents($this->file), true);
 

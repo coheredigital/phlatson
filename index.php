@@ -46,11 +46,10 @@ try {
     ini_set("date.timezone", $config->timezone);
     ini_set('default_charset', 'utf-8');
 
-    r($config);
-    r($request);
+
     
     echo $phlatson->execute($config);
-
+    r($request);
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);
 }

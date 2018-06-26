@@ -10,10 +10,6 @@ class Page extends PhlatsonObject
     public $template;
     public $routes;
 
-    protected $defaultFields = [
-        "template"
-    ];
-
     function __construct($path = null)
     {
         parent::__construct($path);
