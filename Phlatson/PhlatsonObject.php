@@ -46,7 +46,9 @@ abstract class PhlatsonObject extends Phlatson
             case 'url':
                 $value = $this->data->path;
                 $value = \str_replace(SITE_PATH, '', $value);
-                $value = \str_replace($this::BASE_FOLDER, '', $value) . "/";
+                $value = \str_replace($this::BASE_FOLDER, '', $value);
+                $value = trim($value, "/");
+                $value = $value ? "/$value/" : "/";
                 break;
             case 'modified':
                 $value = $this->data->getModifiedTime();
