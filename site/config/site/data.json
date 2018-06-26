@@ -1,18 +1,7 @@
 {
-    "sessionName": "xpages",
+    "sessionName": "phlatson",
     "sessionExpireSeconds": 3200,
     "timezone": "America/New_York",
     "debug": true,
-    "hostname": "Phlatson.dev",
-    "adminUrl" : "/admin/",
-    "dateTimeFormat" : "F j, Y",
-    "routes" : [
-        {
-            "method": "GET|POST",
-            "name": "admin",
-            "path": "admin/",
-            "before": "Admin.authorize",
-            "after": "Admin.gotoAdminPage"
-        }
-    ]
+    "dateTimeFormat" : "F j, Y"
 }
