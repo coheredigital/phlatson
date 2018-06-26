@@ -4,7 +4,7 @@ namespace Phlatson;
 abstract class PhlatsonObject extends Phlatson
 {
 
-    const DEFAULT_SAVE_FILE = "data.json";
+    const BASE_FILENAME = "data.json";
     const BASE_FOLDER = '';
     const BASE_URL = '';
 
@@ -18,7 +18,7 @@ abstract class PhlatsonObject extends Phlatson
         if ($path) {
             // normalize
             $path = trim($path, "/") . "/";
-            $filepath = '/site/' . $this::BASE_FOLDER . $path . $this::DEFAULT_SAVE_FILE;
+            $filepath = '/site/' . $this::BASE_FOLDER . $path . $this::BASE_FILENAME;
             $this->data = new JsonObject($filepath);
         }
 
