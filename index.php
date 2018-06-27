@@ -8,12 +8,16 @@ error_reporting(E_ALL);
 
 
 // define a few system contants
-define("PLATSON", true);
-define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
-define('SYSTEM_PATH', ROOT_PATH . "system" . DIRECTORY_SEPARATOR);
-define('VENDOR_PATH', ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR);
-define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR);
-define('TEMP_PATH', ROOT_PATH . "temp" . DIRECTORY_SEPARATOR);
+const PHLATSON = [
+    "version" => 0001,
+    "root_path" => __DIR__ . DIRECTORY_SEPARATOR,
+    "system_path" => ROOT_PATH . DIRECTORY_SEPARATOR . "Phlatson" . DIRECTORY_SEPARATOR . "site-default" . DIRECTORY_SEPARATOR,
+];
+const ROOT_PATH = __DIR__ . DIRECTORY_SEPARATOR;
+const SYSTEM_PATH = ROOT_PATH . "system" . DIRECTORY_SEPARATOR;
+const VENDOR_PATH = ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR;
+const SITE_PATH = ROOT_PATH . "site" . DIRECTORY_SEPARATOR;
+const TEMP_PATH = ROOT_PATH . "temp" . DIRECTORY_SEPARATOR;
 
 
 // use composer autoloader
@@ -34,8 +38,11 @@ try {
 
     // inject into API
     $phlatson->api("request", $request);
+
     $phlatson->api("config", $config);
+    $phlatson->api("pages", new Pages);
     $phlatson->api("page", $page);
+
 
     // prepare PHP ini_set options
     ini_set('display_errors', 'On');
@@ -49,7 +56,6 @@ try {
 
     
     echo $phlatson->execute($config);
-    r($request);
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);
 }

@@ -1,19 +1,12 @@
 <?php
 namespace Phlatson;
-class Page extends PhlatsonObject
+class Page extends DataObject
 {
 
     const BASE_FOLDER = 'pages/';
     const BASE_URL = '';
 
     protected $parent;
-    public $template;
-    public $routes;
-
-    function __construct($path = null)
-    {
-        parent::__construct($path);
-    }
 
     public function children() : ObjectCollection
     {
@@ -23,7 +16,9 @@ class Page extends PhlatsonObject
         $folders = glob($this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
 
         foreach ($folders as $folder) {
-            $page = new Page($folder);
+            $folder = str_replace($this->rootPath, "", $folder);
+            $folder = "/" . trim($folder, "/") . "/";
+            // $page = new Page($folder);
             if (!$page instanceof self) continue;
             $children->add($page);
         }

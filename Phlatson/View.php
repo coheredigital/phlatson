@@ -2,16 +2,10 @@
 
 namespace Phlatson;
 
-class View extends Phlatson
+class View extends PhlatsonObject
 {
     const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';
-    
-    protected $attributes = null;
-    protected $requiredElements = ["fieldtype","input"];
-
-    protected $page;
-    protected $file;
 
     function __construct(string $name)
     {
@@ -28,8 +22,6 @@ class View extends Phlatson
         // render template file
         ob_start();
 
-        // TODO :  add support for overriding default page with passed in value
-
         // give the rendered page access to the API
         extract($this->api());
 
@@ -41,6 +33,5 @@ class View extends Phlatson
         return $output;
 
     }
-
 
 }

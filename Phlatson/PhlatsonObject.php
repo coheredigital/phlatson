@@ -11,15 +11,19 @@ abstract class PhlatsonObject extends Phlatson
     // main data container, holds data loaded from JSON file
     protected $data;
     protected $template;
+    protected $file;
+    protected $rootPath;
 
     public function __construct($path = null)
     {
 
+        $this->rootPath = SITE_PATH . $this::BASE_FOLDER;
+
         if ($path) {
             // normalize
             $path = trim($path, "/") . "/";
-            $filepath = '/site/' . $this::BASE_FOLDER . $path . $this::BASE_FILENAME;
-            $this->data = new JsonObject($filepath);
+            $this->file = '/site/' . $this::BASE_FOLDER . $path . $this::BASE_FILENAME;
+            $this->data = new JsonObject($this->file);
         }
 
         // return if no data set (this is a new page)
@@ -31,6 +35,13 @@ abstract class PhlatsonObject extends Phlatson
             $this->template = new Template($templateName);
         }
 
+    }
+
+    protected function getFile($path)
+    {
+        $path = trim($path, "/") . "/";
+        $file = '/site/' . $this::BASE_FOLDER . $path . $this::BASE_FILENAME;
+        
     }
 
     public function get(string $key)
