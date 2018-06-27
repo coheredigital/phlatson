@@ -8,8 +8,6 @@ namespace Phlatson;
 class Phlatson
 {
 
-    public static $api = [];
-
     /**
      * @param $key
      * @param $value

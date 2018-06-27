@@ -1,87 +1,38 @@
-body{
-	font-family: 'Open Sans';
-}
 
-h1, h2, h3, h4 {
-  	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  	font-weight: 300;
-  	line-height: 1em;
-}
-
-.header{
-	padding: 3em 0;
-	border-top: 6px solid $brand;
-	h1{
-		padding: 0;
-		margin: 0;
-	}
-}
-
-.breadcrumbs {
-	margin-top: .4em;
-	a {
-		text-decoration: none;
-		display: inline-block;
-		// text-transform: uppercase;
-		color: $gray;
-		&:after{
-			content: "/";
-			margin: .5em;
-			opacity: .6;
-			text-decoration: none !important;
-		}
-		&:hover{
-			color: $brand;
-		}
-	}
-}
-
-nav{
-	// background: #fff;
-	border-bottom: 1px solid $light-gray;
-	a{
-		text-transform: uppercase;
-		text-decoration: none;
-		color: $brand;
-		display: inline-block;
-		color: $gray !important;
-		padding: 0 0 .7em 0;
-		margin-right: 2em;
-		border-bottom: 3px solid transparent;
-		margin-bottom: -2px;
-		
-		&.active {
-			border-color: $gray;
-		}
-		&:hover{
-			border-color: $brand;
-		}
-	}
-
-	&.sub-menu {
-		border-bottom: 1px solid $light-gray;
-		.container{
-			
-		}
-		a{
-			padding: .7em 1em;
-			border: 1px solid $light-gray;
-			border-top: 0;
-			border-bottom: 0;
-			margin-left: -1px;
-			color: $gray;
-			&:hover{
-				color: $brand;
-			}
-		}
-	}
-}
-
-.main {
-	padding: 4em 0;
+body {
+  min-height: 100%;
+  font-size: 15px;
+  margin: 0px;
+  padding: 0px;
+  color: $text-color;
+  background: $main-background;
+  min-width: 320px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
 }
 
-.footer {
-	text-align: center;
+body.dragging,
+body.dragging * {
+  cursor: move !important;
 }
+
+h1{
+  color: #fff;
+  padding: 1em 0;
+  margin: 0;
+  line-height: 1em;
+}
+
+a{
+  text-decoration: none;
+  color: $blue;
+  &:hover{
+    text-decoration: underline;
+    color: darken($blue, 20%);
+  }
+}
+
+form{
+  margin: 0;
+}
+
