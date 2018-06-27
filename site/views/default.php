@@ -35,8 +35,9 @@ use Phlatson\Pages;
         </table>
         <?php 
         
-        $home = $pages->get("/");
-        r($home);
+
+        r($this);
+        r($view);
 
         r($request);
         ?>

@@ -3,8 +3,8 @@
 namespace Phlatson;
 class Users extends Objects
 {
-
-    protected $rootFolder = "users";
-    protected $singularName = "User";
+    const SINGULAR_CLASSNAME = 'User';
+    const BASE_FOLDER = 'users/';
+    const BASE_URL = 'users/';
 
 }

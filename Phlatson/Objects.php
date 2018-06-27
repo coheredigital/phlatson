@@ -12,9 +12,6 @@ abstract class Objects extends Phlatson
     // set via $this->set($key,$value);
     public $attributes = [];
 
-    protected $url;
-    protected $path;
-
     protected $systemUrl;
     protected $systemPath;
 
@@ -27,8 +24,8 @@ abstract class Objects extends Phlatson
     public function __construct()
     {
         // store paths and urls
-        $this->path = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this::BASE_FOLDER;
-        $this->url = "/site/" . $this::BASE_FOLDER;
+        $this->attributes['path'] = ROOT_PATH . "site" . DIRECTORY_SEPARATOR . $this::BASE_FOLDER;
+        $this->attributes['url'] = "/site/" . $this::BASE_FOLDER;
     }
 
     /**

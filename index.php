@@ -32,7 +32,8 @@ try {
     $phlatson->api("request", $request);
 
     $phlatson->api("config", $config);
-    $phlatson->api("pages", new Pages);
+    $phlatson->api("pages", new Pages());
+    $phlatson->api("views", new Views());
     $phlatson->api("page", $page);
 
 
@@ -46,7 +47,7 @@ try {
     ini_set('default_charset', 'utf-8');
 
 
-    
+
     echo $phlatson->execute($config);
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);
