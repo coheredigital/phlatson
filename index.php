@@ -14,19 +14,11 @@ const PHLATSON = [
     "system_path" => ROOT_PATH . DIRECTORY_SEPARATOR . "Phlatson" . DIRECTORY_SEPARATOR . "site-default" . DIRECTORY_SEPARATOR,
 ];
 const ROOT_PATH = __DIR__ . DIRECTORY_SEPARATOR;
-const SYSTEM_PATH = ROOT_PATH . "system" . DIRECTORY_SEPARATOR;
-const VENDOR_PATH = ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR;
 const SITE_PATH = ROOT_PATH . "site" . DIRECTORY_SEPARATOR;
 const TEMP_PATH = ROOT_PATH . "temp" . DIRECTORY_SEPARATOR;
 
-
 // use composer autoloader
-$composer = require_once(VENDOR_PATH . 'autoload.php');
-
-// config ref
-\ref::config('expLvl', 2);
-\ref::config('maxDepth', 6);
-
+$composer = require_once(ROOT_PATH . 'vendor/autoload.php');
 $exceptionHandler = new ErrorHandler();
 
 try {
