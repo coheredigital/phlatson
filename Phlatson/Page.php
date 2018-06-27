@@ -23,7 +23,7 @@ class Page extends PhlatsonObject
         $folders = glob($this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
 
         foreach ($folders as $folder) {
-            $page = $this->api("pages")->getByPath($folder);
+            $page = new Page($folder);
             if (!$page instanceof self) continue;
             $children->add($page);
         }

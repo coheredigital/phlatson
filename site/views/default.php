@@ -11,6 +11,7 @@
     <?php 
     r($page->get('url'));
     r($page->get('path'));
+    r($page->children());
     r($page);
     r($this);
     ?>
