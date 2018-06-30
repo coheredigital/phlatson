@@ -13,13 +13,8 @@ class ObjectCollection extends Phlatson implements \IteratorAggregate, \ArrayAcc
     public function __construct()
     {
         $this->iterator = new ObjectCollectionIterator();
-        $this->iterator = new ObjectCollectionFilter( $this->iterator, null );
+        $this->iterator = new ObjectCollectionFilter($this->iterator, null);
     }
-
-    // public function setObject($object)
-    // {
-    //     $this->object = $object;
-    // }
 
     protected function isValidItem($item)
     {
@@ -58,19 +53,17 @@ class ObjectCollection extends Phlatson implements \IteratorAggregate, \ArrayAcc
         return $this;
     }
 
-    /**
-     * returns self with a limit set for pagination
-     * @return $this
-     */
-    public function paginate(string $name = "page") : self
-    {
-
-        $requestedPageNumber = (int) $this->api('request')->get->{$name};
-
-        $this->paginate = true;
-        $this->currentPage = $requestedPageNumber > 0 ? $requestedPageNumber : 1;
-        return $this;
-    }
+    // /**
+    //  * returns self with a limit set for pagination
+    //  * @return $this
+    //  */
+    // public function paginate(string $name = "page") : self
+    // {
+    //     $requestedPageNumber = (int) $this->api('request')->get->{$name};
+    //     $this->paginate = true;
+    //     $this->currentPage = $requestedPageNumber > 0 ? $requestedPageNumber : 1;
+    //     return $this;
+    // }
 
 
 
@@ -139,7 +132,7 @@ class ObjectCollection extends Phlatson implements \IteratorAggregate, \ArrayAcc
      */
     public function getIterator() : \Iterator
     {
-        if($this->limit > 0 && !$this->iterator instanceof ObjectCollectionPagination) {
+        if ($this->limit > 0 && !$this->iterator instanceof ObjectCollectionPagination) {
             $offset = $this->paginate ? ($this->currentPage * $this->limit) - $this->limit : 0;
             $this->iterator = new ObjectCollectionPagination($this->iterator, $offset, $this->limit);
         }
@@ -209,7 +202,8 @@ class ObjectCollection extends Phlatson implements \IteratorAggregate, \ArrayAcc
 
     }
 
-    public function __get($name) {
+    public function __get($name)
+    {
         return $this->get($name);
     }
 

@@ -1,6 +1,6 @@
 {
 	"title" : "Admin",
-	"template" : "admin",
+	"extension" : "AdminInterface",
 	"settings": {
 		"hidden" : true,
 		"locked" : true

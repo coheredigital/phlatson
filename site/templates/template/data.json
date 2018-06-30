@@ -2,7 +2,8 @@
     "title": "Template",
     "fields": [
 	    {
-	        "name":"title"
+			"name":"title",
+			"required":true
 	    },
 	    {
 	        "name":"fields"

@@ -47,7 +47,6 @@ try {
     ini_set('default_charset', 'utf-8');
 
 
-
     echo $phlatson->execute($config);
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);

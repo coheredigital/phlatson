@@ -20,34 +20,20 @@ class View extends PhlatsonObject
     public function renderPartial(? string $url = null) : string
     {
 
+        $file = 
+
         $output = "";
-
-
-
     }
 
 
     public function renderSelf() : string
     {
-        $output = "";
-        // render template file
-        ob_start();
-
-        // give the rendered page access to the API
-        extract($this->api());
-
-        // render found file
-        include($this->file);
-
-        $output = ob_get_contents();
-        ob_end_clean();
-
-        return $output;
+        return $this->renderViewFile($this->file);
 
     }
 
 
-    public function renderView(? string $url = null) : string
+    public function renderViewFile(string $file) : string
     {
 
         // render template file
@@ -74,7 +60,7 @@ class View extends PhlatsonObject
         } else {
             $output = $this->renderSelf();
         }
-
+        return $output;
     }
 
 }

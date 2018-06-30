@@ -3,7 +3,6 @@ namespace Phlatson;
 class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
 {
 
-
     protected $currentIndex = 0;
     protected $startIndex = 0;
     protected $endIndex;

@@ -13,14 +13,14 @@ class Page extends DataObject
 
         $children = new ObjectCollection();
 
-        $folders = glob($this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
+        $folders = glob($this->rootPath . "*", GLOB_ONLYDIR | GLOB_NOSORT);
 
         foreach ($folders as $folder) {
             $folder = str_replace($this->rootPath, "", $folder);
             $folder = "/" . trim($folder, "/") . "/";
-            // $page = new Page($folder);
+            $page = new Page($folder);
             if (!$page instanceof self) continue;
-            $children->add($page);
+            $children->append($page);
         }
 
         return $children;
