@@ -11,7 +11,7 @@ class ObjectCollectionFilter extends \FilterIterator
     public function accept()
     {
         $object = $this->getInnerIterator()->current();
-        if( $object->setting('hidden')) return false;
+        // if( $object->setting('hidden')) return false;
         return true;
     }
 

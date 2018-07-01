@@ -11,7 +11,7 @@ error_reporting(E_ALL);
 const PHLATSON = [
     "version" => 0001,
     "root_path" => __DIR__ . DIRECTORY_SEPARATOR,
-    "system_path" => ROOT_PATH . DIRECTORY_SEPARATOR . "Phlatson" . DIRECTORY_SEPARATOR . "site-default" . DIRECTORY_SEPARATOR,
+    "system_path" => __DIR__ . DIRECTORY_SEPARATOR . "Phlatson" . DIRECTORY_SEPARATOR . "site-default" . DIRECTORY_SEPARATOR,
 ];
 const ROOT_PATH = __DIR__ . DIRECTORY_SEPARATOR;
 const SITE_PATH = ROOT_PATH . "site" . DIRECTORY_SEPARATOR;

@@ -1,0 +1,7 @@
+{
+    "sessionName": "phlatson",
+    "sessionExpireSeconds": 3200,
+    "timezone": "America/New_York",
+    "debug": true,
+    "dateTimeFormat" : "F j, Y"
+}

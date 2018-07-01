@@ -1,0 +1,16 @@
+{
+  "label": "User",
+  "fields": [
+    {
+        "name": "name",
+        "required": true
+    },
+    {
+        "name": "password",
+        "required": true
+    },
+    {
+        "name": "role",
+        "required": true
+    }]
+}
