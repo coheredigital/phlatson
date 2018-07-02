@@ -3,14 +3,15 @@
         <!-- PAGE CONTENT -->
         <?php
         // $children = $page->children()->limit(10)->paginate();
+        
         $children = $page->children();
-        r($page->path);
-        r($children);
+
         ?>
         <?php foreach ($children as $p):?>
             <article>
                 <h3><?= $p->title ?></h3>
                 <h6><?= $p->modified ?> :: <?= $p->name ?></h6>
+                <h6><?= $children->index() ?></h6>
                 <a href="<?= $p->url ?>">Read more...</a>
             </article>
             <hr>

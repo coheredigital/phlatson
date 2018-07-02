@@ -13,7 +13,7 @@ class Page extends DataObject
 
         $children = new PageCollection();
 
-        $folders = glob($this->path . "*", GLOB_ONLYDIR | GLOB_NOSORT);
+        $folders = glob($this->path . "*", GLOB_ONLYDIR);
 
         foreach ($folders as $folder) {
             $folder = str_replace($this->rootPath, "", $folder);

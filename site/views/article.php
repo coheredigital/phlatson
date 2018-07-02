@@ -1,5 +1,6 @@
-<?php include 'includes/head.php' ?>
+<?php include 'partials/head.php' ?>
     <div class="container">
+        <?= $page->content ?>
         <!-- PAGE CONTENT -->
         <?php if ($page->children): ?>
             <?php foreach ($page->children as $p): ?>
@@ -8,4 +9,4 @@
             <?php endforeach ?>
         <?php endif ?>
     </div>
-<?php include 'includes/foot.php';
+<?php include 'partials/foot.php';
