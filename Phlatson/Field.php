@@ -1,6 +1,6 @@
 <?php
 namespace Phlatson;
-class Field extends PhlatsonObject
+class Field extends DataObject
 {
     const BASE_FOLDER = 'fields/';
     const BASE_URL = 'templates/';

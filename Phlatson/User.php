@@ -1,6 +1,6 @@
 <?php
 namespace Phlatson;
-class User extends PhlatsonObject
+class User extends DataObject
 {
 
     protected $rootFolder = "users";

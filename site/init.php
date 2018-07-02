@@ -1,7 +1,7 @@
 <?php 
 
 define('VENDOR_PATH', ROOT_PATH . "vendor" . DIRECTORY_SEPARATOR );
-define('SITE_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR );
+define('DATA_PATH', ROOT_PATH . "site" . DIRECTORY_SEPARATOR );
 define('CACHE_PATH', ROOT_PATH . "cache" . DIRECTORY_SEPARATOR );
 define('CORE_PATH', SYSTEM_PATH . "core" . DIRECTORY_SEPARATOR );
 define('ROOT_URL', "/");

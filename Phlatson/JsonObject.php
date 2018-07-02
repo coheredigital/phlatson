@@ -12,11 +12,11 @@ class JsonObject
 
     public function __construct(string $file ) {
         
-        $this->file = rtrim(ROOT_PATH, "/")  . $file;
+        $this->file = $file;
         
 
         if (!file_exists($this->file)) {
-            throw new Exceptions\PhlatsonException("File ($this->file) deos not exist");
+            throw new Exceptions\PhlatsonException("File ($this->file) does not exist");
         }
 
         // setup some core properties
@@ -40,16 +40,18 @@ class JsonObject
      */
     public function get($key)
     {
-        return $this->data[$key];
+        switch ($key) {
+            case 'modified':
+                return \filemtime($this->file);
+                break;
+            
+            default:
+                return $this->data[$key];
+                break;
+        }
+        
     }
 
-    /**
-     * Get the time the file was last modified
-     */
-    public function getModifiedTime() : int
-    {
-        return \filemtime($this->file);
-    }
 
     /**
      * Set the $key in $data array to the supplied $value

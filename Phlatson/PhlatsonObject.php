@@ -9,38 +9,11 @@ abstract class PhlatsonObject extends Phlatson
     const BASE_URL = '';
 
     // main data container, holds data loaded from JSON file
-    protected $data;
-    protected $template;
-    protected $path;
     protected $rootPath;
 
     public function __construct($path = null)
     {
-
-        $this->rootPath = SITE_PATH . $this::BASE_FOLDER;
-
-        if ($path) {
-            // normalize
-            $this->file = '/site/' . $this::BASE_FOLDER . $path . DIRECTORY_SEPARATOR . $this::BASE_FILENAME;
-            $this->data = new JsonObject($this->file);
-        }
-
-        // return if no data set (this is a new page)
-        // the follow could initializes existing pages
-        if (!$this->data) {
-            return;
-        }
-        if ($templateName = $this->data->get("template")) {
-            $this->template = new Template($templateName);
-        }
-
-    }
-
-    protected function getFile($path)
-    {
-        $path = trim($path, "/") . "/";
-        $file = '/site/' . $this::BASE_FOLDER . $path . $this::BASE_FILENAME;
-        
+        $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
     }
 
     public function get(string $key)
@@ -58,8 +31,7 @@ abstract class PhlatsonObject extends Phlatson
                 break;
             case 'url':
                 $value = $this->data->path;
-                $value = \str_replace(SITE_PATH, '', $value);
-                $value = \str_replace($this::BASE_FOLDER, '', $value);
+                $value = \str_replace($this->rootPath, '', $value);
                 $value = trim($value, "/");
                 $value = $value ? "/$value/" : "/";
                 break;
@@ -67,7 +39,6 @@ abstract class PhlatsonObject extends Phlatson
                 $value = $this->data->getModifiedTime();
                 $value = new PhlatsonDateTime("@$value");
                 break;
-
             default:
                 $value = $this->data->get($key);
                 break;
@@ -88,7 +59,7 @@ abstract class PhlatsonObject extends Phlatson
      * @param string $key
      * @return void
      */
-    public function __get (string $key) {
+    final public function __get (string $key) {
         return $this->get($key);
     }
 

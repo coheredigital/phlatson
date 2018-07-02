@@ -9,7 +9,8 @@ class View extends PhlatsonObject
 
     function __construct(string $name)
     {
-        $filepath = SITE_PATH . $this::BASE_FOLDER . $name . ".php";
+        parent::__construct($name);
+        $filepath = DATA_PATH . $this::BASE_FOLDER . $name . ".php";
         // volidate view file
         if (!file_exists($filepath)) {
             throw new Exceptions\PhlatsonException("Ivalide file ($filepath) cannot be used as view");
@@ -19,9 +20,7 @@ class View extends PhlatsonObject
 
     public function renderPartial(? string $url = null) : string
     {
-
         $file = 
-
         $output = "";
     }
 
@@ -29,7 +28,6 @@ class View extends PhlatsonObject
     public function renderSelf() : string
     {
         return $this->renderViewFile($this->file);
-
     }
 
 

@@ -29,7 +29,7 @@ class Controller extends Phlatson
 			$path = SYSTEM_PATH . "controllers" . DIRECTORY_SEPARATOR;
 		}
 		else {
-			$path = SITE_PATH . "controllers" . DIRECTORY_SEPARATOR;
+			$path = DATA_PATH . "controllers" . DIRECTORY_SEPARATOR;
 		}
 
         

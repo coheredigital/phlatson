@@ -10,15 +10,24 @@ abstract class DataObject extends PhlatsonObject
 
     // main data container, holds data loaded from JSON file
     protected $data;
-
+    protected $template;
+    protected $rootPath;
 
     public function __construct($path = null)
     {
 
-		parent::__construct($path);
+        parent::__construct($path);
 
-        $this->data = new JsonObject($this->file);
-        
+        if ($path) {
+            // normalize
+            $file = ROOT_PATH . 'site/' . $this::BASE_FOLDER . trim($path, "/") . DIRECTORY_SEPARATOR . $this::BASE_FILENAME;
+            if (file_exists($file)) {
+                $this->data = new JsonObject($file);
+            }
+        }
+
+
+
         // return if no data set (this is a new page)
         // the follow could initializes existing pages
         if (!$this->data) {
@@ -30,33 +39,41 @@ abstract class DataObject extends PhlatsonObject
 
     }
 
-
     public function get(string $key)
     {
         
         switch ($key) {
+            case 'name':
+                $value = \basename($this->data->path);
+                break;
+            case 'file':
+                $value = $this->data->file;
+                break;
+            case 'path':
+                $value = $this->data->path;
+                break;
+            case 'url':
+                $value = $this->data->path;
+                $value = \str_replace($this->rootPath, '', $value);
+                $value = trim($value, "/");
+                $value = $value ? "/$value/" : "/";
+                break;
+            case 'modified':
+                if ($this->data) {
+                    $value = $this->data->get('modified');
+                }
+                
+                break;
             default:
-                $value = $this->data->get($key);
+                if ($this->data) {
+                    $value = $this->data->get($key);
+                }
+                
                 break;
         }
 
         return $value;
 
-    }
-
-    /**
-     * Magic method mappaed the self::get() primarily for
-     * syntactical template reasons 
-     * example
-     * <?= $page->title ?>
-     * instead of 
-     * <?= $page->get('title') ?>
-     *
-     * @param string $key
-     * @return void
-     */
-    public function __get (string $key) {
-        return $this->get($key);
     }
 
 }

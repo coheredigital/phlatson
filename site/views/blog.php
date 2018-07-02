@@ -1,8 +1,11 @@
-<?php include 'includes/head.php' ?>
+<?php include 'partials/head.php' ?>
     <div class="container">
         <!-- PAGE CONTENT -->
         <?php
-        $children = $page->children()->limit(10)->paginate();
+        // $children = $page->children()->limit(10)->paginate();
+        $children = $page->children();
+        r($page->path);
+        r($children);
         ?>
         <?php foreach ($children as $p):?>
             <article>
@@ -23,4 +26,4 @@
             <?php endif ?>
         <?php endif; ?>
     </div>
-<?php include 'includes/foot.php';
+<?php include 'partials/foot.php';

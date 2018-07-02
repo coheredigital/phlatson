@@ -1,7 +1,7 @@
 <?php
 namespace Phlatson;
 
-class Template extends PhlatsonObject
+class Template extends DataObject
 {
 
     const BASE_FOLDER = 'templates/';
