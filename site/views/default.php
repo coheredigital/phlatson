@@ -2,7 +2,8 @@
 namespace Phlatson;
 
 $home = $pages->get("/");
-r(count($home->children()));
+r($home->children()->count());
+r($home->children());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +22,7 @@ r(count($home->children()));
         <div class="container">
             <?php foreach ($home->children() as $p): ?>
                 <?php r($p->url); ?>
-                <a href="<?= $p->url ?>"><?= $p->url ?></a>
+                <a href="<?= $p->url ?>"><?= $p->title ?></a>
             <?php endforeach; ?>
         </div>
     </div>

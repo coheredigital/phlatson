@@ -41,8 +41,8 @@ class Phlatson
         $template = $page->template;
         $view = $template->view;
 
-        if ($this->api('page') instanceof Page) {
-            return $this->api('page')->render();
+        if ($view instanceof View) {
+            return $view->render();
         }
 
     }

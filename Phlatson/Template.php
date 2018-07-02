@@ -26,12 +26,6 @@ class Template extends PhlatsonObject
         return $view;
     }
 
-    public function render() : ? string
-    {
-        $view = $this->getView();
-        return $view->render();
-    }
-
     public function get($key)
     {
 

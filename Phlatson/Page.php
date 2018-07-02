@@ -11,7 +11,7 @@ class Page extends DataObject
     public function children() : ObjectCollection
     {
 
-        $children = new ObjectCollection();
+        $children = new PageCollection();
 
         $folders = glob($this->rootPath . "*", GLOB_ONLYDIR | GLOB_NOSORT);
 
@@ -24,11 +24,6 @@ class Page extends DataObject
         }
 
         return $children;
-    }
-
-    public function render()
-    {
-        return $this->template->render();
     }
 
 }

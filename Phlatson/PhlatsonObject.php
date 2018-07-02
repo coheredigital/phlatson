@@ -11,7 +11,7 @@ abstract class PhlatsonObject extends Phlatson
     // main data container, holds data loaded from JSON file
     protected $data;
     protected $template;
-    protected $file;
+    protected $path;
     protected $rootPath;
 
     public function __construct($path = null)
@@ -21,8 +21,7 @@ abstract class PhlatsonObject extends Phlatson
 
         if ($path) {
             // normalize
-            $path = trim($path, "/") . "/";
-            $this->file = '/site/' . $this::BASE_FOLDER . $path . $this::BASE_FILENAME;
+            $this->file = '/site/' . $this::BASE_FOLDER . $path . DIRECTORY_SEPARATOR . $this::BASE_FILENAME;
             $this->data = new JsonObject($this->file);
         }
 
@@ -50,6 +49,9 @@ abstract class PhlatsonObject extends Phlatson
         switch ($key) {
             case 'name':
                 $value = \basename($this->data->path);
+                break;
+            case 'file':
+                $value = $this->data->file;
                 break;
             case 'path':
                 $value = $this->data->path;
