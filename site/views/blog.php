@@ -2,10 +2,7 @@
     <div class="container">
         <!-- PAGE CONTENT -->
         <?php
-        // $children = $page->children()->limit(10)->paginate();
-        
-        $children = $page->children();
-
+        $children = $page->children()->limit(10)->paginate(1);
         ?>
         <?php foreach ($children as $p):?>
             <article>

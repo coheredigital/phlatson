@@ -24,18 +24,15 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
         return $this;
     }
 
-    public function count()
-    {
-        return count($collection);
-    }
 
-    public function limit(int $limit)
+
+    public function limit(int $limit) : self
     {
         $this->limit = $limit;
         return $this;
     }
 
-    public function paginate(int $currentPage)
+    public function paginate(int $currentPage) : self
     {
         if ($currentPage < 1) {
             throw new Exceptions\PhlatsonException("Request page number cannot be less than 1");
@@ -44,6 +41,11 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
         return $this;
     }
 
+    public function count() : int
+    {
+        return count($collection);
+    }
+    
     public function index() : int
     {
         if ($this->limit > 0) {
