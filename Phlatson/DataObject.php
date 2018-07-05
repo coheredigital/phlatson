@@ -1,7 +1,7 @@
 <?php
 namespace Phlatson;
 
-abstract class DataObject extends PhlatsonObject
+abstract class DataObject extends BaseObject
 {
 
     const BASE_FILENAME = "data.json";
@@ -26,8 +26,6 @@ abstract class DataObject extends PhlatsonObject
             }
         }
 
-
-
         // return if no data set (this is a new page)
         // the follow could initializes existing pages
         if (!$this->data) {
@@ -43,35 +41,21 @@ abstract class DataObject extends PhlatsonObject
     {
         
         switch ($key) {
-            case 'name':
-                $value = \basename($this->data->path);
-                break;
-            case 'file':
-                $value = $this->data->file;
-                break;
-            case 'path':
-                $value = $this->data->path;
-                break;
-            case 'url':
-                $value = $this->data->path;
-                $value = \str_replace($this->rootPath, '', $value);
-                $value = trim($value, "/");
-                $value = $value ? "/$value/" : "/";
-                break;
             case 'modified':
-                if ($this->data) {
-                    $value = $this->data->get('modified');
-                }
-                
+                $value = $this->data->get('modified');
+                $value = new PhlatsonDateTime("@$value");
                 break;
             default:
                 if ($this->data) {
                     $value = $this->data->get($key);
                 }
-                
                 break;
         }
 
+        if (!$value) {
+            return parent::get($key);
+        }
+        
         return $value;
 
     }

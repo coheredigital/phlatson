@@ -33,7 +33,7 @@ class ErrorHandler {
 			case E_ERROR:
 			case E_PARSE:
 			case E_PARSE:
-				throw new PhlatsonException($errorMessage, $errno);
+				throw new Exceptions\PhlatsonException($errorMessage, $errno);
 				break;
 
 			default:

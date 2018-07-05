@@ -13,12 +13,16 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
     protected $files = [];
     protected $collection = [];    
 
-    public function append(PhlatsonObject $object)
+    public function append($item)
     {
-        if (!in_array($object->file)) {
+        if ($item instanceof BaseObject && !in_array($item->file)) {
             // files array ensures unique entries
-            $this->files[] = $object->file;
-            $this->collection[] = $object;
+            $this->files[] = $item->file;
+            $this->collection[] = $item;
+        }
+        else if(!in_array($item)) {
+            $this->files[] = $item;
+            $this->collection[] = $item;
         }
 
         return $this;
@@ -43,7 +47,7 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
 
     public function count() : int
     {
-        return count($collection);
+        return count($this->collection);
     }
     
     public function index() : int
@@ -70,7 +74,15 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
 
     public function current()
     {
-        return $this->collection[$this->index()];
+
+        $item = $this->collection[$this->index()];
+        if (is_string($item)) {
+            $item = new Page($item);
+            // replace the existing pointer
+            $this->collection[$this->index()] = $item;
+        }
+
+        return $item;
     }
 
     public function key()

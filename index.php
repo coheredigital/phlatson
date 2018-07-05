@@ -6,7 +6,6 @@ namespace Phlatson;
 
 error_reporting(E_ALL);
 
-
 // define a few system contants
 const PHLATSON = 0001;
 const ROOT_PATH = __DIR__ . DIRECTORY_SEPARATOR;
@@ -20,6 +19,9 @@ $exceptionHandler = new ErrorHandler();
 
 try {
 
+    $debugbar = new \DebugBar\StandardDebugBar();
+    $debugbarRenderer = $debugbar->getJavascriptRenderer();
+    
     $phlatson = new Phlatson();
     $request = new Request();
     $config = new Config('site');
@@ -33,17 +35,11 @@ try {
     $phlatson->api("views", new Views());
     $phlatson->api("page", $page);
 
-    // prepare PHP ini_set options
-    ini_set('display_errors', 'On');
-    ini_set('session.use_cookies', 'true');
-    ini_set('session.use_only_cookies', '1');
-    // ini_set("session.gc_maxlifetime", "$this->sessionExpireSeconds");
-    ini_set("session.save_path", TEMP_PATH . "/sessions");
-    ini_set("date.timezone", $config->timezone);
-    ini_set('default_charset', 'utf-8');
-
 
     echo $phlatson->execute();
+
+    echo $debugbarRenderer->renderHead();
+    echo $debugbarRenderer->render();
     
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);

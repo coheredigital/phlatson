@@ -13,7 +13,8 @@
     }],
     "require": {
         "digitalnature/php-ref": "^1.2",
-        "kint-php/kint": "^2.0"
+        "kint-php/kint": "^2.0",
+        "maximebf/debugbar": "1.*"
     },
     "autoload": {
       "psr-4": {

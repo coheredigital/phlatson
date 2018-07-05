@@ -46,6 +46,7 @@ class Phlatson
             return $view->render();
         }
 
+        
     }
 
 }

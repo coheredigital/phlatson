@@ -1,36 +1,51 @@
-<?php 
+<?php
 
 namespace Phlatson;
 
-class FileManager
+class Filemanager
 {
 
 	protected $root;
 
-	public function __construct()
+	public function __construct(string $root)
 	{
-		$this->root = ROOT_PATH;
-	}
-
-	/**
-	 * Return a full validated path from a root relative URL
-	 *
-	 * @param string $url
-	 * @return string
-	 */
-	function get(string $url) : string
-	{
-		$path = $this->root . $url;
-		if (file_exists($path)) {
-			return $path;
+		if (!file_exists()) {
+			throw new Exceptions\PhlatsonException("Root path must be valid folder, '$root' not found.");		
 		}
-		return "";
+
+		$this->root = $root;
 	}
 
-
-	public function exists(string $url)
+	// TODO: Flesh out this concept
+	public static function saveData($data, string $path, $name = "data") : bool
 	{
-		$path = $this->root . $url;
-		return file_exists($path);
+		
+		$filepath = ROOT_PATH . $path;
+		if (!file_exists($filepath)) {
+			throw new Exceptions\PhlatsonException("Path ($filepath) does not exist!");
+		}
+		
+		$json = json_encode($data);
+		
+		$file = "{$filepath}{$name}.json";
+		return file_put_contents($file, $json) ? true : false;
+
 	}
+
+	// TODO: Flesh out this concept
+	public static function getData(string $path, $name = "data") : ?array
+	{
+		
+		$filepath = ROOT_PATH . trim($path, "/") . "/";
+		$file = "{$filepath}{$name}.json";
+		if (!file_exists($file)) {
+			return null;
+		}
+		$data = file_get_contents($file);
+		$json = json_decode($data, true);
+		
+		return $json;
+
+	}
+
 }
