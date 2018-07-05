@@ -15,18 +15,35 @@ class Page extends DataObject
         $url = $this->url;
         $children = $this->children;
 
+        // skip if already stored
         if ($children instanceof PageCollection) {
             return $children;
         }
 
+        // create empty collection
         $children = new PageCollection();
-        $dir = new \FilesystemIterator($this->path);
 
-        foreach ($dir as $file) {
-            if ($file->isDir()) {
-                $name = $file->getFilename();
-                $children->append("{$this->url}{$name}");
+        $folder_index = [];
+        $folder_index = Filemanager::getData($this->folder, "index");
+
+        if (count($folder_index)) {
+            // foreach ($folder_index as $name) {
+                $children->import($folder_index);
+            // }
+        } else {
+            $index_array = [];
+            $dir = new \FilesystemIterator($this->path);
+
+            foreach ($dir as $file) {
+                if ($file->isDir()) {
+                    $name = $file->getFilename();
+                    $url = "{$this->url}{$name}";
+                    $index_array[] = $url;
+                    $children->append($url);
+                }
             }
+
+            Filemanager::saveData($index_array, $this->folder, "index");
         }
 
         $this->children = $children;

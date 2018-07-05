@@ -15,15 +15,26 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
 
     public function append($item)
     {
-        if ($item instanceof BaseObject && !in_array($item->file)) {
+        if ($item instanceof BaseObject && !isset($this->files[$item->file])) {
             // files array ensures unique entries
-            $this->files[] = $item->file;
+            $this->files[$item->file] = true;
+            $this->collection[] = $item->file;
+        }
+        else if(!isset($this->files[$item])) {
+            $this->files[$item] = true;
             $this->collection[] = $item;
         }
-        else if(!in_array($item)) {
-            $this->files[] = $item;
-            $this->collection[] = $item;
-        }
+
+        return $this;
+    }
+
+    public function import(array $collection)
+    {
+        // TODO: this need work
+        $files = array_fill_keys($collection, true);
+        $this->files += $files;
+        $this->collection += $collection;
+        
 
         return $this;
     }
