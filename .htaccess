@@ -23,8 +23,7 @@ ErrorDocument 404 /index.php
 </IfModule>
 
 # Default directory index
-DirectoryIndex index.php index.html index.htm
-
+DirectoryIndex index.php
 
 # rewrite rules
 <IfModule mod_rewrite.c>
@@ -37,13 +36,9 @@ DirectoryIndex index.php index.html index.htm
     </IfModule>
 
   # force trailing slashes
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^(.*)([^/])$  /$1$2/ [L,R=301]
-
-  # set root URL if needed for running from a sub folder
-  # exmplate www.wesite.com/example-url
-  # RewriteBase /example-url
-  RewriteBase /
+  # RewriteCond %{REQUEST_FILENAME} !-f
+  # RewriteRule ^(.*)([^/])$  /$1$2/ [L,R=301]
+  # RewriteBase /
 
   # Lets Encrypt support
   RewriteRule "(^|/)\.(?!well-known)" - [F]
