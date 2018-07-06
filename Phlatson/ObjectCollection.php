@@ -72,6 +72,20 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
 
     }
 
+    public function pageCount() : int
+    {
+        return (int) intval($this->count() / $this->limit) + (($this->count() / $this->limit) ? 1 : 0);
+    }
+
+    public function nextPage() : int
+    {
+        return (int) $this->currentPage + 1;
+    }
+
+    public function previousPage() : int
+    {
+        return (int) $this->currentPage - 1;
+    }
 
     /**
      * Iterator Interface methods

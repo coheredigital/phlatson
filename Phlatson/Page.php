@@ -24,12 +24,10 @@ class Page extends DataObject
         $children = new PageCollection();
 
         $folder_index = [];
-        $folder_index = Filemanager::getData($this->folder, "index");
+        // $folder_index = Filemanager::getData($this->folder, "index");
 
         if (count($folder_index)) {
-            // foreach ($folder_index as $name) {
-                $children->import($folder_index);
-            // }
+            $children->import($folder_index);
         } else {
             $index_array = [];
             $dir = new \FilesystemIterator($this->path);
