@@ -1,7 +1,7 @@
 <?php 
 namespace Phlatson;
 
-$home = $pages->get("/");
+$home = new Page("/");
 
 ?>
 <!DOCTYPE html>
