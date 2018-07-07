@@ -4,8 +4,6 @@ namespace Phlatson;
 
 $home = new Page('/');
 
-// r($page->parent()->parent()->title);
-r($page->parents());
 $debugbarRenderer = $debugbar->getJavascriptRenderer();
 ?>
 <!DOCTYPE html>
