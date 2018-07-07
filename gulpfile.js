@@ -4,12 +4,12 @@ var gulp = require('gulp'),
 
 var browserSync = require('browser-sync').create();
 
-var sassFiles = '**/*.scss';
+var sassFiles = 'site/**/*.scss';
 
 // browser sync proxy server
 gulp.task('serve', function() {
     browserSync.init({
-        proxy: "localhost:8080",
+        proxy: "flatbed.test:8888",
         open: false,
         notify: false
     });
@@ -21,14 +21,13 @@ gulp.task('sass', function () {
   return gulp.src(sassFiles)
     .pipe(sass({
     		outputStyle: "compressed",
-    		includePaths: ['styles'].concat(neat),
     		errLogToConsole: true,
     	}).on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(gulp.dest('.'))
+    .pipe(gulp.dest('site/.'))
     .pipe(browserSync.stream());
 });
 

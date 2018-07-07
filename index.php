@@ -20,7 +20,7 @@ $exceptionHandler = new ErrorHandler();
 try {
 
     $debugbar = new \DebugBar\StandardDebugBar();
-    $debugbarRenderer = $debugbar->getJavascriptRenderer();
+    
 
     $phlatson = new Phlatson();
     $request = new Request();
@@ -39,8 +39,6 @@ try {
 
     echo $phlatson->execute();
 
-    echo $debugbarRenderer->renderHead();
-    echo $debugbarRenderer->render();
     
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);

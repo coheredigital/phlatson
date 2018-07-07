@@ -7,7 +7,8 @@ body {
   color: $text-color;
   background: $main-background;
   min-width: 320px;
-  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
 }
 
 body.dragging,
@@ -24,10 +25,10 @@ h1{
 
 a{
   text-decoration: none;
-  color: $link-color;
+  color: $blue;
   &:hover{
     text-decoration: underline;
-    color: $link-hover-color;
+    color: darken($blue, 20%);
   }
 }
 
@@ -35,18 +36,3 @@ form{
   margin: 0;
 }
 
-.header {
-  background: $brand;
-  margin-bottom: 3rem;
-}
-
-.menu {
-  >a {
-    text-transform: uppercase;
-    text-decoration: none;
-    color: #fff;
-    padding: 1rem;
-    display: inline-block;
-    font-weight: bold;
-  }
-}
