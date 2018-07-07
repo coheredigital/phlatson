@@ -40,7 +40,7 @@ class Page extends DataObject
                 }
             }
 
-            Filemanager::saveData($index_array, $this->folder, "index");
+            // Filemanager::saveData($index_array, $this->folder, "index");
         }
 
         $this->children = $children;
