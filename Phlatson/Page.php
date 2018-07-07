@@ -1,14 +1,51 @@
 <?php
+
 namespace Phlatson;
 
 class Page extends DataObject
 {
-
     const BASE_FOLDER = 'pages/';
     const BASE_URL = '';
 
     protected $parent;
     protected $children;
+    protected $parents;
+
+    public function parent()
+    {
+        $url = dirname($this->path);
+        $url = str_replace($this->rootPath, "", $url);
+        $page = new Page($url);
+
+        if ($page->name) {
+            return $page;
+        }
+        return null;
+    }
+
+    public function parents() : PageCollection
+    {
+        $parents = $this->parents;
+
+        // skip if already stored
+        if ($parents instanceof PageCollection) {
+            return $parents;
+        }
+
+        // create empty collection
+        $parents = new PageCollection();
+
+        $currentPage = $this;
+
+        while ($currentPage->parent() !== null) {
+            $parents->append($currentPage->parent());
+            $currentPage = $currentPage->parent();
+        }
+
+        // cache result
+        $this->parents = $parents;
+        return $parents;
+    }
 
     public function children() : PageCollection
     {
@@ -49,12 +86,10 @@ class Page extends DataObject
 
     public function child(string $name) : Page
     {
-        $name = trim($name, "/");
-        $path = "{$this->url}{$name}/";
+        $name = trim($name, '/');
+        $path = "{$this->path}{$name}/";
 
         $page = new Page($path);
         return $page;
     }
-
-
 }

@@ -18,7 +18,7 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
         if ($item instanceof BaseObject && !isset($this->files[$item->file])) {
             // files array ensures unique entries
             $this->files[$item->file] = true;
-            $this->collection[] = $item->file;
+            $this->collection[] = $item->url;
         }
         else if(!isset($this->files[$item])) {
             $this->files[$item] = true;

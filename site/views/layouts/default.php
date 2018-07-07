@@ -4,7 +4,9 @@ namespace Phlatson;
 
 $home = new Page('/');
 
-    $debugbarRenderer = $debugbar->getJavascriptRenderer();
+// r($page->parent()->parent()->title);
+r($page->parents());
+$debugbarRenderer = $debugbar->getJavascriptRenderer();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +20,12 @@ $home = new Page('/');
 <body>
     <div class="header">
         <div class="container">
+            <div class="breadcrumbs">
+            <?php foreach ($page->parents() as $p) : ?>
+                <a href="<?= $p->url ?>"><?= $p->title ?></a> /
+            <?php endforeach; ?>
+            </div>
+
             <h1><?= $page->get('title') ?></h1>
         </div>
         <div class="container">

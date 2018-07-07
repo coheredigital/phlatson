@@ -40,6 +40,15 @@ form{
   margin-bottom: 3rem;
 }
 
+.breadcrumbs {
+  >a {
+    text-decoration: none;
+    color: #fff;
+    padding: .3rem;
+    display: inline-block;
+  }
+}
+
 .menu {
   >a {
     text-transform: uppercase;

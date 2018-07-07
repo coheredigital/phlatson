@@ -20,7 +20,7 @@ abstract class DataObject extends BaseObject
 
         if ($path) {
             // normalize
-            $file = ROOT_PATH . 'site/' . $this::BASE_FOLDER . trim($path, "/") . DIRECTORY_SEPARATOR . $this::BASE_FILENAME;
+            $file = ROOT_PATH . 'site/' . $this::BASE_FOLDER . trim($path, "/") . "/" . $this::BASE_FILENAME;
             if (file_exists($file)) {
                 $this->data = new JsonObject($file);
             }
