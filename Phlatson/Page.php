@@ -31,7 +31,6 @@ class Page extends DataObject
         } else {
             $index_array = [];
             $dir = new \FilesystemIterator($this->path);
-
             foreach ($dir as $file) {
                 if ($file->isDir()) {
                     $name = $file->getFilename();
