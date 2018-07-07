@@ -21,9 +21,6 @@ try {
 
     $debugbar = new \DebugBar\StandardDebugBar();
     $debugbarRenderer = $debugbar->getJavascriptRenderer();
-    // $debugbar->addCollector(new \DebugBar\DataCollector\MessagesCollector());
-    $debugbar['messages']->info('hello world');
-
 
     $phlatson = new Phlatson();
     $request = new Request();
