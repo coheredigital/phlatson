@@ -28,6 +28,10 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
         return $this;
     }
 
+    public function reverse() {
+        $this->collection = array_reverse($this->collection);
+        return $this;
+    }
     public function import(array $collection)
     {
         // TODO: this need work
@@ -38,6 +42,7 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
 
         return $this;
     }
+
 
 
 

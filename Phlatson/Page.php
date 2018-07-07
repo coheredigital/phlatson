@@ -14,10 +14,12 @@ class Page extends DataObject
     public function parent()
     {
         $url = dirname($this->path);
-        $url = str_replace($this->rootPath, "", $url);
-        $page = new Page($url);
+        $url = '/' . trim($url, '/') . '/';
 
-        if ($page->name) {
+        $url = str_replace($this->rootPath, "", $url);
+        
+        $page = new Page($url);
+        if ($page->exists()) {
             return $page;
         }
         return null;
@@ -43,7 +45,7 @@ class Page extends DataObject
         }
 
         // cache result
-        $this->parents = $parents;
+        $this->parents = $parents->reverse();
         return $parents;
     }
 

@@ -3,7 +3,6 @@
 namespace Phlatson;
 
 $home = new Page('/');
-
 $debugbarRenderer = $debugbar->getJavascriptRenderer();
 ?>
 <!DOCTYPE html>
