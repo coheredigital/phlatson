@@ -1,38 +1,7 @@
 <?php 
 
-$config->styles->add("/system/views/styles/admin.css");
-$config->styles->add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css");
+// $config->styles->add("/system/views/styles/admin.css");
+// $config->styles->add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css");
 
 
-
-if ($response->segment(1) === "login") {
-	$config->styles->add("/system/views/styles/login.css");
-	$page->layout = $views->get('layouts/login');
-}
-
-
-if ($page->messages) {
-	$page->layout->main .= $views->get('partials/messages')->render();
-}
-
-switch ($response->segment(1)) {
-	case 'fields':
-		if ($response->segment(2)) {
-			$page->layout->main .= $views->render('partials/edit-field');
-		}
-		else {
-			$page->layout->main .= $views->render('partials/list-fields');
-		}
-		break;
-	
-	case 'pages':
-		if ($response->segment(2)) {
-			$page->layout->main .= $views->render('partials/edit-page');
-		}
-		else {
-			$page->layout->main .= $views->render('partials/page-tree');
-		}
-		break;
-}
-
-echo $page->layout->render();
+echo $view->render("/layouts/admin");

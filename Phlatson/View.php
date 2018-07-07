@@ -18,10 +18,13 @@ class View extends BaseObject
         $this->file = $filepath;
     }
 
-    public function renderPartial(? string $url = null) : string
+    public function renderPartial(? string $url, array $data = []) : string
     {
-        $file = 
+        $url = trim($url, "/");
+        $file = "{$this->path}{$url}.php";
         $output = "";
+        $output = $this->renderViewFile($file, $data);
+        return $output;
     }
 
 
@@ -30,18 +33,23 @@ class View extends BaseObject
         return $this->renderViewFile($this->file);
     }
 
-
-    public function renderViewFile(string $file) : string
+    public function renderViewFile(string $file, array $data = []) : string
     {
+
+        if (!file_exists($file)) {
+            throw new Exceptions\PhlatsonException("File does not exist: $file");
+        }
 
         // render template file
         ob_start();
+        // extract $data array to varyables
+        extract($data);
 
         // give the rendered page access to the API
         extract($this->api());
 
         // render found file
-        include($this->file);
+        include($file);
 
         $output = ob_get_contents();
         ob_end_clean();
@@ -50,11 +58,11 @@ class View extends BaseObject
     }
 
 
-    public function render(? string $url = null) : string
+    public function render(? string $url = null, array $data = []) : string
     {
         $output = "";
         if ($url) {
-            $output = $this->renderPartial($url);
+            $output = $this->renderPartial($url, $data);
         } else {
             $output = $this->renderSelf();
         }

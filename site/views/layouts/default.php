@@ -1,8 +1,8 @@
-<?php 
+<?php
+
 namespace Phlatson;
 
-$home = new Page("/");
-
+$home = new Page('/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,17 @@ $home = new Page("/");
         <div class="menu">
         <?php foreach ($home->children() as $p) : ?>
             <a class="item" href="<?= $p->url ?>"><?= $p->title ?></a>
-        <?php endforeach; ?></div>
-            
-        </div>
+        <?php endforeach; ?>
+		</div>
     </div>
+	<?= $output ?>
+    </div>
+		<div class="container">
+		<hr>
+		<hr>
+		<?php 
+        r($request);
+        ?>
+	</div>
+</body>
+</html>

@@ -42,22 +42,19 @@ abstract class BaseObject extends Phlatson
 
     public function get(string $key)
     {
-        
         switch ($key) {
             case 'name':
-                $value = \basename($this->data->path);
+                $value = \basename($this->path);
                 break;
             case 'file':
                 $value = $this->data->file;
                 break;
             case 'filename':
-                $value = $this->data->filename;
+                $value = basename($this->file);
                 break;
             case 'filepath':
-                $value = $this->data->path;
-                break;
             case 'path':
-                $value = $this->data->path;
+                $value = dirname($this->file) . "/";
                 break;
             case 'folder':
                 $value = $this->data->path;

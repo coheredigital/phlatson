@@ -1,7 +1,7 @@
 <?php
 namespace Phlatson;
 
-class JsonObject
+class JsonObject extends BaseObject
 {
 
     public $file;
@@ -44,7 +44,6 @@ class JsonObject
             case 'modified':
                 return \filemtime($this->file);
                 break;
-            
             default:
                 return $this->data[$key];
                 break;

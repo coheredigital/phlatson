@@ -21,7 +21,10 @@ try {
 
     $debugbar = new \DebugBar\StandardDebugBar();
     $debugbarRenderer = $debugbar->getJavascriptRenderer();
-    
+    // $debugbar->addCollector(new \DebugBar\DataCollector\MessagesCollector());
+    $debugbar['messages']->info('hello world');
+
+
     $phlatson = new Phlatson();
     $request = new Request();
     $config = new Config('site');
@@ -29,6 +32,7 @@ try {
 
     // inject into API
     $phlatson->api("request", $request);
+    $phlatson->api("debugbar", $debugbar);
 
     $phlatson->api("config", $config);
     $phlatson->api("pages", new Pages());
