@@ -32,14 +32,13 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
         $this->collection = array_reverse($this->collection);
         return $this;
     }
+
     public function import(array $collection)
     {
         // TODO: this need work
         $files = array_fill_keys($collection, true);
         $this->files += $files;
         $this->collection += $collection;
-        
-
         return $this;
     }
 

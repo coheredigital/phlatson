@@ -19,23 +19,17 @@ $exceptionHandler = new ErrorHandler();
 
 try {
 
-    $debugbar = new \DebugBar\StandardDebugBar();
-    
-
     $phlatson = new Phlatson();
-    $request = new Request();
-    $config = new Config('site');
-    $page = new Page($request->url);
 
     // inject into API
-    $phlatson->api("request", $request);
-    $phlatson->api("debugbar", $debugbar);
-
-    $phlatson->api("config", $config);
+    $phlatson->api("request", $request = new Request());
+    $phlatson->api("config", new Config('site'));
+    $phlatson->api("filemanager", new Filemanager(ROOT_PATH));
     $phlatson->api("pages", new Pages());
     $phlatson->api("views", new Views());
-    $phlatson->api("page", $page);
+    $phlatson->api("page", new Page($request->url));
 
+    $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
 
     echo $phlatson->execute();
 
