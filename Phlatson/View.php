@@ -13,7 +13,7 @@ class View extends BaseObject
         $filepath = DATA_PATH . $this::BASE_FOLDER . $name . ".php";
         // volidate view file
         if (!file_exists($filepath)) {
-            throw new Exceptions\PhlatsonException("Ivalide file ($filepath) cannot be used as view");
+            throw new Exceptions\PhlatsonException("Ivalid file ($filepath) cannot be used as view");
         }
         $this->file = $filepath;
     }
