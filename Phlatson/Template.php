@@ -9,20 +9,21 @@ class Template extends DataObject
 
     public function hasField($name)
     {
-        $fields = $this->data->get('fields');
+        $fields = $this->data('fields');
         return isset($fields[$name]);
     }
 
     public function getField($name) : ? array
     {
-        $fields = $this->data->get('fields');
+        $fields = $this->data('fields');
         return $fields[$name];
     }
 
-    public function getView() : object
+    public function view() : object
     {
         // get view file of the same name
-        $view = new View($this->get('name'));
+        $name = $this->get('name');
+        $view = new View($name);
         return $view;
     }
 
@@ -31,7 +32,7 @@ class Template extends DataObject
 
         switch ($key) {
             case 'view':
-                return $this->getView();
+                return $this->view();
             default:
                 return parent::get($key);
         }

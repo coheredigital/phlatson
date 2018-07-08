@@ -58,7 +58,7 @@ abstract class DataObject extends BaseObject
                 $value = $this->data('modified');
                 return new PhlatsonDateTime("@$value");
             default:
-                if ($this->data) {
+                if ($this->data && $this->data($key)) {
                     return $this->data($key);
                 }
                 break;
