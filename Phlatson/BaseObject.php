@@ -40,7 +40,6 @@ abstract class BaseObject extends Phlatson
         $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
     }
 
-
     protected function folder(string $path)
     {
         $value = \str_replace(ROOT_PATH, '', $path);
@@ -74,6 +73,11 @@ abstract class BaseObject extends Phlatson
         return \basename($path);
     }
 
+    protected function filename()
+    {
+        return basename($this->file);
+    }
+
     public function get(string $key)
     {
         switch ($key) {
@@ -82,7 +86,7 @@ abstract class BaseObject extends Phlatson
             case 'file':
                 return $this->data->file;
             case 'filename':
-                return basename($this->file);
+                return $this->filename();
             case 'filepath':
             case 'path':
                 return $this->path($this->file);

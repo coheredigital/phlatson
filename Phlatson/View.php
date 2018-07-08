@@ -18,11 +18,6 @@ class View extends BaseObject
         $this->file = $filepath;
     }
 
-    protected function name($path)
-    {
-        return \basename($this->file);
-    }
-
 
     public function renderPartial(? string $url, array $data = []) : string
     {
