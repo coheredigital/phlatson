@@ -40,24 +40,30 @@ abstract class DataObject extends BaseObject
         return file_exists($this->file);
     }
 
+    /**
+     * Retreive raw data from the data object
+     *
+     * @param string $key
+     * @return void
+     */
+    public function data(string $key)
+    {
+        return $this->data->get($key);
+    }
+
     public function get(string $key)
     {
         switch ($key) {
             case 'modified':
-                $value = $this->data->get('modified');
-                $value = new PhlatsonDateTime("@$value");
-                break;
+                $value = $this->data('modified');
+                return new PhlatsonDateTime("@$value");
             default:
                 if ($this->data) {
-                    $value = $this->data->get($key);
+                    return $this->data($key);
                 }
                 break;
         }
 
-        if (!$value) {
-            return parent::get($key);
-        }
-
-        return $value;
+        return parent::get($key);
     }
 }

@@ -18,6 +18,12 @@ class View extends BaseObject
         $this->file = $filepath;
     }
 
+    protected function name($path)
+    {
+        return \basename($this->file);
+    }
+
+
     public function renderPartial(? string $url, array $data = []) : string
     {
         $url = trim($url, "/");
@@ -26,7 +32,6 @@ class View extends BaseObject
         $output = $this->renderViewFile($file, $data);
         return $output;
     }
-
 
     public function renderSelf() : string
     {
@@ -37,7 +42,7 @@ class View extends BaseObject
     {
 
         if (!file_exists($file)) {
-            throw new Exceptions\PhlatsonException("File does not exist: $file");
+            throw new Exceptions\PhlatsonException("View does not exist: $file");
         }
 
         // render template file

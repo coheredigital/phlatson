@@ -25,7 +25,6 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
                 <a href="<?= $p->url ?>"><?= $p->title ?></a> /
             <?php endforeach; ?>
             </div>
-
             <h1><?= $page->get('title') ?></h1>
         </div>
         <div class="container">

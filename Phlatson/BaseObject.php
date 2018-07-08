@@ -28,7 +28,7 @@ namespace Phlatson;
 abstract class BaseObject extends Phlatson
 {
 
-    const BASE_FILENAME = "data.json";
+
     const BASE_FOLDER = '';
     const BASE_URL = '';
 
@@ -69,11 +69,16 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
+    protected function name($path)
+    {
+        return \basename($path);
+    }
+
     public function get(string $key)
     {
         switch ($key) {
             case 'name':
-                return \basename($this->path);
+                return $this->name($this->path);
             case 'file':
                 return $this->data->file;
             case 'filename':
