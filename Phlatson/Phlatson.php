@@ -53,11 +53,13 @@ class Phlatson
 
         // determine the requested page
         $page = new Page($request->url);
-        $this->api('page', $page);
         $template = $page->template;
         $view = $template->view;
 
+        $this->api('page', $page);
+        $this->api('template', $template);
         $this->api('view', $view);
+
         if ($view instanceof View) {
             return $view->render();
         }

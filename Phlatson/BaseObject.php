@@ -48,9 +48,14 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
-    protected function path($file)
+    protected function file()
     {
+        return $this->data->file;
+    }
 
+    protected function path()
+    {
+        $file = $this->file();
         if (!is_file($file)) {
             throw new Exceptions\PhlatsonException("Cannot get path of $file");
         }
@@ -68,9 +73,9 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
-    protected function name($path)
+    protected function name()
     {
-        return \basename($path);
+        return \basename($this->path());
     }
 
     protected function filename()
@@ -82,14 +87,10 @@ abstract class BaseObject extends Phlatson
     {
         switch ($key) {
             case 'name':
-                return $this->name($this->path);
             case 'file':
-                return $this->data->file;
             case 'filename':
-                return $this->filename();
-            case 'filepath':
             case 'path':
-                return $this->path($this->file);
+                return $this->{$key}();
             case 'folder':
                 return $this->url($this->data->path);
             case 'url':
