@@ -1,5 +1,9 @@
 <div class="container">
-	<h4>Page</h4>
+	<?php if ($page->content): ?>
+		<?= $page->content ?>
+		<hr>
+	<?php endif; ?>
+	
 	<pre><table>
 		<tr>
 			<th>$page->name</th>

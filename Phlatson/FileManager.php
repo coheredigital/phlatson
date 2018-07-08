@@ -6,6 +6,7 @@ class Filemanager
 {
     protected $root;
 
+
     public function __construct(string $root)
     {
         if (!file_exists($root)) {
@@ -36,8 +37,6 @@ class Filemanager
                 $zip->addFile($filePath, $relativePath);
             }
         }
-
-        
     }
 
     // TODO: Flesh out this concept

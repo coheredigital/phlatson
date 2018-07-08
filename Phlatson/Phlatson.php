@@ -1,4 +1,5 @@
 <?php
+
 namespace Phlatson;
 
 /**
@@ -7,6 +8,18 @@ namespace Phlatson;
  */
 class Phlatson
 {
+    protected $filemanager;
+    protected $request;
+
+    // public function __construct(Request $request)
+    // {
+    //     $this->request = $request;
+    // }
+
+    final public function setFilemanager(Filemanager $filemanager) : void
+    {
+        $this->filemanager = $filemanager;
+    }
 
     /**
      * @param $key
@@ -20,10 +33,9 @@ class Phlatson
             // return $this allows chaining
             Api::set($name, $value, $lock);
             return $this;
-        } else if(!is_null($name) && is_null($value)) {
+        } elseif (!is_null($name) && is_null($value)) {
             return Api::get($name);
-        }
-        else {
+        } else {
             return Api::fetchAll();
         }
     }
@@ -34,19 +46,27 @@ class Phlatson
      * @param Request $request
      * @return void
      */
-    public function execute()
+    public function execute(Request $request)
     {
 
-        $page = $this->api('page');
+        $this->request = $request;
+
+        // determine the requested page
+        $page = new Page($request->url);
+        $this->api('page', $page);
         $template = $page->template;
         $view = $template->view;
-        
+
         $this->api('view', $view);
         if ($view instanceof View) {
             return $view->render();
         }
+    }
 
-        
+
+    public function route(string $path, $callback)
+    {
+        # code...
     }
 
 }

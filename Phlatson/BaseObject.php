@@ -40,37 +40,53 @@ abstract class BaseObject extends Phlatson
         $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
     }
 
+
+    protected function folder(string $path)
+    {
+        $value = \str_replace(ROOT_PATH, '', $path);
+        $value = trim($value, "/");
+        $value = $value ? "/$value/" : "/";
+        return $value;
+    }
+
+    protected function path($file)
+    {
+
+        if (!is_file($file)) {
+            throw new Exceptions\PhlatsonException("Cannot get path of $file");
+        }
+
+        $value = dirname($file) . "/";
+        return $value;
+    }
+
+    protected function url($path)
+    {
+        // remove root from path
+        $value = \str_replace($this->rootPath, '', $path);
+        $value = trim($value, "/");
+        $value = $value ? "/$value/" : "/";
+        return $value;
+    }
+
     public function get(string $key)
     {
         switch ($key) {
             case 'name':
-                $value = \basename($this->path);
-                break;
+                return \basename($this->path);
             case 'file':
-                $value = $this->data->file;
-                break;
+                return $this->data->file;
             case 'filename':
-                $value = basename($this->file);
-                break;
+                return basename($this->file);
             case 'filepath':
             case 'path':
-                $value = dirname($this->file) . "/";
-                break;
+                return $this->path($this->file);
             case 'folder':
-                $value = $this->data->path;
-                $value = \str_replace(ROOT_PATH, '', $value);
-                $value = trim($value, "/");
-                $value = $value ? "/$value/" : "/";
-                break;
+                return $this->url($this->data->path);
             case 'url':
-                $value = $this->data->path;
-                $value = \str_replace($this->rootPath, '', $value);
-                $value = trim($value, "/");
-                $value = $value ? "/$value/" : "/";
-                break;
+                return $this->url($this->data->path);
             default:
-                $value = null;
-                break;
+                return null;
         }
 
         return $value;

@@ -14,24 +14,22 @@ define("DATA_PATH", ROOT_PATH . "site/");
 define("TEMP_PATH", ROOT_PATH . "temp/");
 
 // use composer autoloader
-$composer = require_once(ROOT_PATH . 'vendor/autoload.php');
+require_once(ROOT_PATH . 'vendor/autoload.php');
 $exceptionHandler = new ErrorHandler();
 
 try {
-
+    $filemanager = new Filemanager(ROOT_PATH);
     $phlatson = new Phlatson();
+    $phlatson->setFilemanager($filemanager);
 
     // inject into API
-    $phlatson->api("request", $request = new Request());
     $phlatson->api("config", new Config('site'));
-    $phlatson->api("filemanager", new Filemanager(ROOT_PATH));
     $phlatson->api("pages", new Pages());
     $phlatson->api("views", new Views());
-    $phlatson->api("page", new Page($request->url));
 
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
 
-    echo $phlatson->execute();
+    echo $phlatson->execute(new Request());
 
     
 } catch (Exceptions\PhlatsonException $exception) {
