@@ -13,11 +13,12 @@ class Page extends DataObject
 
     public function parent()
     {
-        $url = dirname($this->path);
-        $url = '/' . trim($url, '/') . '/';
+        $root = $this->rootPath();
+        $parent = dirname($this->path()) . "/";
 
-        $url = str_replace($this->rootPath, "", $url);
-        
+        $url = "/" . str_replace($root, "", $parent);
+        $url = rtrim($url, '/') . '/';
+
         $page = new Page($url);
         if ($page->exists()) {
             return $page;
