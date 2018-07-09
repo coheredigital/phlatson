@@ -18,14 +18,8 @@ require_once(ROOT_PATH . 'vendor/autoload.php');
 $exceptionHandler = new ErrorHandler();
 
 try {
-    $filemanager = new Filemanager(ROOT_PATH);
     $phlatson = new Phlatson();
-    $phlatson->setFilemanager($filemanager);
-
-    // inject into API
-    $phlatson->api("config", new Config('site'));
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
-
     echo $phlatson->execute(new Request());
 
     
