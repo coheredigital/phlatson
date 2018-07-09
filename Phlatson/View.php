@@ -23,6 +23,11 @@ class View extends BaseObject
         return $this->file;
     }
 
+    protected function name()
+    {
+        return pathinfo($this->file())['filename'];
+    }
+
     public function renderPartial(? string $url, array $data = []) : string
     {
         $url = trim($url, "/");

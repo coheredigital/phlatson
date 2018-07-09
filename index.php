@@ -24,9 +24,6 @@ try {
 
     // inject into API
     $phlatson->api("config", new Config('site'));
-    $phlatson->api("pages", new Pages());
-    $phlatson->api("views", new Views());
-
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
 
     echo $phlatson->execute(new Request());

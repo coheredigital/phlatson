@@ -37,6 +37,13 @@ abstract class BaseObject extends Phlatson
         // $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
     }
 
+    protected function rootFolder()
+    {   
+        $value = str_replace($this->name(), '', $this->folder());
+        $value = trim($value, "/");
+        return "/$value/";
+    }
+
     protected function folder()
     {
         $value = \str_replace(ROOT_PATH, '', $this->path());
@@ -66,6 +73,20 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
+    protected function rootUrl()
+    {
+
+        $url = $this->url();
+        $url = trim($url, "/");
+        $url = str_replace($this->name(), "", $url);
+        $url = trim($url, "/");
+
+        if (!$url) {
+            return "/";
+        }
+        return "/$url/";
+    }
+
     protected function url()
     {
         return $this->folder();
@@ -89,7 +110,9 @@ abstract class BaseObject extends Phlatson
             case 'filename':
             case 'path':
             case 'rootPath':
+            case 'rootFolder':
             case 'folder':
+            case 'rootUrl':
             case 'url':
                 return $this->{$key}();
             default:

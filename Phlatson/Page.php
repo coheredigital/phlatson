@@ -25,6 +25,11 @@ class Page extends DataObject
         return null;
     }
 
+    protected function rootFolder()
+    {
+        return str_replace($this->url(), '', $this->folder()) . '/';
+    }
+
     protected function url()
     {
         // remove root from path

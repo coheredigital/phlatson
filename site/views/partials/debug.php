@@ -3,6 +3,7 @@
 
 	$properties = [
 		'name',
+		'rootUrl',
 		'url',
 		'rootFolder',
 		'folder',
