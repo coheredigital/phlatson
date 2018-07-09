@@ -59,7 +59,7 @@ abstract class BaseObject extends Phlatson
 
     protected function rootPath()
     {
-        return trim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
+        return rtrim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
     }
 
     protected function path()
