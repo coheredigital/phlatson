@@ -10,11 +10,7 @@ abstract class DataObject extends BaseObject
 
     // main data container, holds data loaded from JSON file
     protected $data;
-
     protected $formattedData = [];
-
-    protected $template;
-    protected $rootPath;
 
     public function __construct($path = null)
     {
@@ -27,14 +23,13 @@ abstract class DataObject extends BaseObject
                 $this->data = new JsonObject($file);
             }
         }
+        
+    }
 
-        // return if no data set (this is a new page)
-        // the follow could initializes existing pages
-        if (!$this->data) {
-            return;
-        }
-        if ($this->data('template')) {
-            $this->template = new Template($this->data('template'));
+    public function template()
+    {
+        if ($name = $this->data('template')) {
+            return new Template($name);
         }
     }
 
@@ -61,7 +56,7 @@ abstract class DataObject extends BaseObject
                 $value = $this->data('modified');
                 return new PhlatsonDateTime("@$value");
             case 'template':
-                return $this->template;
+                return $this->template();
             default:
                 if ($this->data && $this->data($key)) {
                     return $this->data($key);

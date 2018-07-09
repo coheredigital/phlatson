@@ -1,5 +1,5 @@
 <?php 
-$view = $page->template->view;
+// $view = $page->template->view;
 ?>
 <h4>View</h4>
 <pre><table>

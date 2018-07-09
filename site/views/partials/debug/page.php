@@ -13,11 +13,11 @@
 		<td><?= $page->folder ?></td>
 	</tr>
 	<tr>
-		<th>$page->path</th>
+		<th>$page->rootPath</th>
 		<td><?= $page->path ?></td>
 	</tr>
 	<tr>
-		<th>$page->rootPath</th>
+		<th>$page->path</th>
 		<td><?= $page->path ?></td>
 	</tr>
 	<tr>

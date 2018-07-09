@@ -32,9 +32,6 @@ abstract class BaseObject extends Phlatson
     const BASE_FOLDER = '';
     const BASE_URL = '';
 
-    // main data container, holds data loaded from JSON file
-    protected $rootPath;
-
     public function __construct($path = null)
     {
         // $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
@@ -42,7 +39,7 @@ abstract class BaseObject extends Phlatson
 
     protected function folder()
     {
-        $value = \str_replace(ROOT_PATH, '', $this->data->path);
+        $value = \str_replace(ROOT_PATH, '', $this->path());
         $value = trim($value, "/");
         $value = $value ? "/$value/" : "/";
         return $value;
@@ -71,11 +68,7 @@ abstract class BaseObject extends Phlatson
 
     protected function url()
     {
-        // remove root from path
-        $value = \str_replace($this->rootPath(), '', $this->path());
-        $value = trim($value, "/");
-        $value = $value ? "/$value/" : "/";
-        return $value;
+        return $this->folder();
     }
 
     protected function name()
