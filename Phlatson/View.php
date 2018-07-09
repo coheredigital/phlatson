@@ -9,9 +9,9 @@ class View extends BaseObject
 
     function __construct(string $name)
     {
-        parent::__construct($name);
-        $filepath = DATA_PATH . $this::BASE_FOLDER . $name . ".php";
-        // volidate view file
+
+        $filepath = $this->rootPath() . $name . ".php";
+        // validate view file
         if (!file_exists($filepath)) {
             throw new Exceptions\PhlatsonException("Ivalid file ($filepath) cannot be used as view");
         }

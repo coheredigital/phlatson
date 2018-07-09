@@ -17,6 +17,10 @@
 		<td><?= $page->path ?></td>
 	</tr>
 	<tr>
+		<th>$page->rootPath</th>
+		<td><?= $page->path ?></td>
+	</tr>
+	<tr>
 		<th>$page->file</th>
 		<td><?= $page->file ?></td>
 	</tr>

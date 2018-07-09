@@ -37,7 +37,7 @@ abstract class BaseObject extends Phlatson
 
     public function __construct($path = null)
     {
-        $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
+        // $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
     }
 
     protected function folder()
@@ -51,6 +51,11 @@ abstract class BaseObject extends Phlatson
     protected function file()
     {
         return $this->data->file;
+    }
+
+    protected function rootPath()
+    {
+        return trim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
     }
 
     protected function path()
@@ -67,7 +72,7 @@ abstract class BaseObject extends Phlatson
     protected function url()
     {
         // remove root from path
-        $value = \str_replace($this->rootPath, '', $this->data->path);
+        $value = \str_replace($this->rootPath(), '', $this->path());
         $value = trim($value, "/");
         $value = $value ? "/$value/" : "/";
         return $value;
@@ -90,6 +95,7 @@ abstract class BaseObject extends Phlatson
             case 'file':
             case 'filename':
             case 'path':
+            case 'rootPath':
             case 'folder':
             case 'url':
                 return $this->{$key}();
@@ -103,7 +109,7 @@ abstract class BaseObject extends Phlatson
 
     /**
      * Magic method mappaed the self::get() primarily for
-     * syntactical template reasons 
+     * syntactical reasons 
      * example
      * <?= $page->title ?>
      * instead of 

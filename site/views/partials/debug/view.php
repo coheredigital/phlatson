@@ -1,7 +1,5 @@
 <?php 
-
 $view = $page->template->view;
-r($page->template);
 ?>
 <h4>View</h4>
 <pre><table>
@@ -22,6 +20,10 @@ r($page->template);
 		<td><?= $view->path ?></td>
 	</tr>
 	<tr>
+		<th>$view->rootPath</th>
+		<td><?= $view->rootPath ?></td>
+	</tr>
+	<tr>
 		<th>$view->file</th>
 		<td><?= $view->file ?></td>
 	</tr>
@@ -30,4 +32,3 @@ r($page->template);
 		<td><?= $view->filename ?></td>
 	</tr>
 </table></pre>
-<?php r($view); ?>
