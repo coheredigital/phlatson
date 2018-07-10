@@ -2,6 +2,5 @@
     "title": "Our Team ",
     "content": "<p>sdsdsd<\/p>",
     "name": "our-team",
-    "template": "default",
-    "parent": "\/"
+    "template": "default"
 }

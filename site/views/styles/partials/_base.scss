@@ -31,6 +31,8 @@ body {
     min-height: 100%;
     min-width: 100%;
     width: 100%;
+    background: #eee;
+    padding-bottom: 2rem;
 }
 
 ol,
@@ -297,13 +299,6 @@ blockquote {
         float: right;
     }
 
-    // &:before {
-    //     opacity: .3;
-    //     font-weight: 900;
-    //     font-size: 1.3em;
-    //     content: open-quote;
-    //     margin-left: -.75em;
-    // }
 }
 
 address {
@@ -327,11 +322,6 @@ ol ul,
 ul ol,
 ul ul {
     margin-bottom: 0;
-}
-
-code {
-    display: block;
-    padding: 1em;
 }
 
 img {

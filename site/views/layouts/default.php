@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-$home = new Page('/');
+
 $debugbarRenderer = $debugbar->getJavascriptRenderer();
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
 </head>
 <body>
-    <div class="header">
+    <div class="page-header">
         <div class="container">
             <div class="breadcrumbs">
             <?php foreach ($page->parents() as $p) : ?>
@@ -26,13 +26,7 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
             <?php endforeach; ?>
             </div>
             <h1><?= $page->get('title') ?></h1>
-        </div>
-        <div class="container">
-            <div class="menu">
-            <?php foreach ($home->children() as $p) : ?>
-                <a class="item" href="<?= $p->url ?>"><?= $p->title ?></a>
-            <?php endforeach; ?>
-            </div>
+            <?= $view->render("/partials/site-navigation") ?>
 		</div>
     </div>
 	<?= $output ?>

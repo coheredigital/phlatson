@@ -12,6 +12,15 @@
     @include container;
 }
 
+.site-navigation {
+    margin-top: 1rem;
+    color: #fff;
+    a {
+        text-transform: uppercase;
+        padding: 1rem 0;
+        margin-right: 2rem;
+    }
+}
 
 .page-header {
     display: flex;
@@ -20,5 +29,18 @@
     @include section-spacing-bottom;
 	.container {
 		@include section-spacing;
-	}
+    }
+
+}
+
+table {
+    text-align: left;
+    border-collapse: collapse;
+    th {
+        color: #000;
+    }
+    th, td {
+        padding: 0.4rem 1rem;
+        border: 1px solid #ddd;
+    }
 }

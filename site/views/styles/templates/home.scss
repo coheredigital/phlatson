@@ -1,22 +1,19 @@
-.header {
+@import "../partials/variables";
+body {
+	background: $brand;
+}
+
+.site-navigation {
+	margin-bottom: 2rem;
 	text-align: center;
 }
 
-.feature {
+.page-header {
+	text-align: center;
+	color: #fff;
+	
+}
 
-	.code {
-		width: 50%;
-		pre {
-			overflow: hidden;
-			background: #111;
-			color: #fff;
-			padding: 2rem;
-			border-radius: 1rem;
-			box-shadow: 0 0 2rem #aaa;
-			&::after {
-				content: "";
-				
-			}
-		}
-	}
+.feature {
+	color: #fff;
 }

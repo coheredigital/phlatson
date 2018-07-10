@@ -20,5 +20,12 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
 </head>
 <body>
 	<?= $output ?>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+    hljs.initHighlighting();
+    </script>
+    <div class="container">
+        <?= $view->render("/partials/site-navigation") ?>
+    </div>
 </body>
 </html>

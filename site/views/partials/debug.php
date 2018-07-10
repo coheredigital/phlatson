@@ -1,3 +1,4 @@
+<?php namespace Phlatson ?>
 <div class="container">
 	<?php
 
@@ -15,7 +16,7 @@
 
     echo $view->render('/partials/debug/object-table', [
 		"properties" => $properties,
-		"object" => $page
+		"object" => new Page("/")
 	]);
 	echo $view->render('/partials/debug/object-table', [
 		"properties" => $properties,
