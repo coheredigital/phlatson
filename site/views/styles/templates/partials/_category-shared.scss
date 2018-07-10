@@ -1,0 +1,96 @@
+#top {
+    color: #fff;
+}
+.header{
+    padding: 1.5em 0;
+    border: 0;
+    background-color: transparent;
+    h1{
+        padding: 0;
+        color: #fff !important;
+    }
+}
+
+section {
+    margin-bottom: 2em;
+}
+
+.page-listings {
+    @include section-spacing;
+}
+
+.page-related-listings-wrapper {
+    h6 {
+        margin: 0;
+    }
+}
+
+.page-breadcrumbs {
+    color: #000;
+    opacity: .5;
+    margin-bottom: 1rem;
+}
+.page-title {
+    border: 0;
+    color: #fff;
+}
+
+.pagecolor-blue{
+    .page-title, #top {
+        background:$blue !important;
+    }
+}
+
+
+.pagecolor-orange{
+    .page-title, #top {
+        background:$orange !important;
+    }
+}
+
+
+.pagecolor-green{
+    .page-title, #top {
+        background:$green !important;
+    }
+}
+
+.pagecolor-purple{
+    .page-title,#top {
+        background:$purple !important;
+    }
+}
+
+
+.category-nav-wrapper{
+    border: 0;
+    background: rgba(0,0,0,.1);
+}
+
+.category-nav{
+    padding: 0.8em 0;
+    a{
+        display: inline-block;
+        padding: 0.6em 1rem 0.7em;
+        margin: 0 1rem 0 -1rem ;
+        line-height: 1em;
+        border-radius: 2rem;
+        color: #fff;
+
+        font-size: 0.9em;
+        text-transform: uppercase;
+        &:hover,
+        &.active{
+            background: rgba(255,255,255,.2);
+        }
+    }
+}
+
+.bookingwidget-wrapper {
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+
+.list-item {
+    @include soft-shadow;
+}

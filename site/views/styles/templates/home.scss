@@ -1,0 +1,22 @@
+.header {
+	text-align: center;
+}
+
+.feature {
+
+	.code {
+		width: 50%;
+		pre {
+			overflow: hidden;
+			background: #111;
+			color: #fff;
+			padding: 2rem;
+			border-radius: 1rem;
+			box-shadow: 0 0 2rem #aaa;
+			&::after {
+				content: "";
+				
+			}
+		}
+	}
+}
