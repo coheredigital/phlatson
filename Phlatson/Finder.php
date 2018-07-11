@@ -54,7 +54,41 @@ class Finder
         $jsonObject = new JsonObject($file);
         return $jsonObject;
 	}
-	
+    
+    
+    public function getTypeData(string $classname, string $path) : ?JsonObject
+    {
+        // get data object
+        $folder = strtolower($classname);
+        // trim just in case and pluralize
+        $folder = "/" . trim($folder, "/") . "s";
+        
+        $path = $this->sanitizeFolder($path);
+        $path = "{$folder}{$path}";
+        $jsonObject = $this->get($path);
+        return $jsonObject;
+    }
+
+    public function getType(string $classname, $path) : ?DataObject
+    {
+        // get data object
+        $folder = strtolower($classname);
+        // trim just in case and pluralize
+        $folder = "/" . trim($folder, "/") . "s";
+        
+        $path = $this->sanitizeFolder($path);
+        $path = "{$folder}{$path}";
+        $jsonObject = $this->get($path);
+        
+        $classname = ucfirst($classname);
+        $classname = "\Phlatson\\$classname";
+        
+        $objectType = new $classname();
+        $objectType->setData($jsonObject);
+        
+        return $objectType;
+    }
+
 	protected function sanitizeFolder(string $folder)
 	{
 		$folder = str_replace(DIRECTORY_SEPARATOR, '/', $folder);

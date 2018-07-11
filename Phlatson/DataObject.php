@@ -14,21 +14,28 @@ abstract class DataObject extends BaseObject
 
     public function __construct($path = null)
     {
-        parent::__construct($path);
 
-        $rootPath = ROOT_PATH . 'site/' . $this::BASE_FOLDER;
-        $rootPath = ROOT_PATH . 'site/' . $this::BASE_FOLDER;
-        $path = $rootPath . trim($path, '/') . "/";
-        $path = trim($path, "/") . "/";
-
-        if ($path) {
-            // normalize
-            $file = $path . $this::BASE_FILENAME;
-            if (file_exists($file)) {
-                $this->data = new JsonObject($file);
-            }
-        }
         
+
+        $path = "/" . trim($path, '/') . '/';
+
+        if (is_null($path)) {
+            return;
+        }
+
+        $classname = (new \ReflectionClass($this))->getShortName();
+
+        // $jsonData = $this->finder()->getType($classname, $path);
+        $jsonData = $this->finder()->getTypeData($classname, $path);
+        $this->setData($jsonData);
+        
+    }
+
+
+    public function setData(JsonObject $data) : self
+    {
+        $this->data = $data;
+        return $this;
     }
 
     public function template()

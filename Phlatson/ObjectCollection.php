@@ -15,7 +15,7 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
 
     public function append($item)
     {
-        if ($item instanceof BaseObject && !isset($this->files[$item->file])) {
+        if ($item instanceof DataObject && !isset($this->files[$item->file])) {
             // files array ensures unique entries
             $this->files[$item->file] = true;
             $this->collection[] = $item->url;
