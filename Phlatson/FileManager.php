@@ -6,7 +6,6 @@ class Filemanager
 {
     protected $root;
 
-
     public function __construct(string $root)
     {
         if (!file_exists($root)) {
