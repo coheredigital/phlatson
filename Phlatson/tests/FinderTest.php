@@ -22,28 +22,34 @@ class FinderTest extends TestCase
     }
 
     /**
-     * @dataProvider    pathsProvider
+     * @dataProvider    folderProvider
      */
-    public function testFinder($path)
+    public function testValidFolders($folder)
     {
         $finder = new Finder(DATA_PATH);
-
         $this->assertSame(
             true,
-            file_exists($finder->exists($path))
+            file_exists($finder->getPath($folder))
         );
-
+    }
+  
+    /**
+     * @dataProvider    folderProvider
+     */
+    public function testFinder($folder)
+    {
+        $finder = new Finder(DATA_PATH);
         $this->assertInstanceOf(
             JsonObject::class,
-            $finder->get($path)
+            $finder->get($folder)
         );
     }
 
-    public function pathsProvider()
+    public function folderProvider()
     {
         return [
             'page' => ['/pages/about/'],
-            'model' => ['/models/article/'],
+            'model' => ['/models/page/'],
             'user' => ['/users/adam/']
         ];
     }

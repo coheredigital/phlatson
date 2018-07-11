@@ -25,18 +25,16 @@ class Finder
         $this->root = $path;
     }
 
-    public function getFiles(string $path) : array
+    public function getFiles(string $folder) : array
     {
-        $path = $this->root . $path;
-
+        $path = $this->getPath($folder);
         $files = glob("{$path}*.json");
-
         return $files;
     }
 
-    public function exists(string $path)
+    public function exists(string $folder)
     {
-        $path = $this->root . $path;
+        $path = $this->getPath($folder);
         $file = "{$path}data.json";
 
         if (!file_exists($file)) {
@@ -46,13 +44,23 @@ class Finder
         return $file;
     }
 
-    public function get(string $path)
+    public function get(string $file) : JsonObject
     {
-        if (!$file = $this->exists($path)) {
-            return;
-        }
-
         $jsonObject = new JsonObject($file);
         return $jsonObject;
-    }
+	}
+	
+	protected function sanitizeFolder(string $folder)
+	{
+		$folder = str_replace(DIRECTORY_SEPARATOR, '/', $folder);
+		$folder = trim($folder, "/");
+		return "/{$folder}/";
+	}
+	
+	public function getPath(string $folder)
+	{
+		$folder = $this->sanitizeFolder($folder);
+		return $this->root . $folder;
+	}
+
 }
