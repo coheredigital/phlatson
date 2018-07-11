@@ -1,16 +1,28 @@
 {
-  "label": "User",
-  "fields": [
-    {
-        "name": "name",
-        "required": true
-    },
-    {
-        "name": "password",
-        "required": true
-    },
-    {
-        "name": "role",
-        "required": true
-    }]
+    "label": "User",
+    "fields": [
+        {
+            "name": "name",
+            "type": "FieldtypeName",
+            "required": true
+        },
+        {
+            "name": "image",
+            "type": "FieldtypeImage",
+            "required": true,
+            "settings": {
+                "maxCount": 1
+            }
+        },
+        {
+            "name": "password",
+            "type": "FieldtypePassword",
+            "required": true
+        },
+        {
+            "name": "role",
+            "type": "FieldtypeRole",
+            "required": true
+        }
+    ]
 }
