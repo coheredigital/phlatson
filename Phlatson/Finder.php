@@ -44,8 +44,13 @@ class Finder
         return $file;
     }
 
-    public function get(string $file) : JsonObject
+    public function get(string $path) : ?JsonObject
     {
+
+        if (!$file = $this->exists($path)) {
+            return null;
+        }
+        
         $jsonObject = new JsonObject($file);
         return $jsonObject;
 	}

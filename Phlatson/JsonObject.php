@@ -15,19 +15,19 @@ class JsonObject extends BaseObject
         $this->file = $file;
         
 
-        if (!file_exists($this->file)) {
-            throw new Exceptions\PhlatsonException("File ($this->file) does not exist");
+        if (!file_exists($file)) {
+            throw new Exceptions\PhlatsonException("File ($file) does not exist");
         }
 
         // setup some core properties
         $this->filename = basename($this->file);
         $this->path = dirname($this->file) . "/";
 
-        $this->data = json_decode(file_get_contents($this->file), true);
+        $this->data = json_decode(file_get_contents($file), true);
 
         // check that we got data back from json_decode
         if ($this->data === null) {
-            throw new Exceptions\PhlatsonException("File ($this->file) is not a valid JSON file");
+            throw new Exceptions\PhlatsonException("File ($file) is not a valid JSON file");
         }
 
     }
@@ -38,7 +38,7 @@ class JsonObject extends BaseObject
      * @param string $key
      * @return Mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         switch ($key) {
             case 'modified':

@@ -8,7 +8,7 @@ define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__ . '/../../'));
 define('DATA_PATH', ROOT_PATH . 'site/');
 
 use \PHPUnit\Framework\TestCase;
-
+ 
 class FinderTest extends TestCase
 {
     public function testFinderInstance() : Finder
@@ -36,7 +36,7 @@ class FinderTest extends TestCase
     /**
      * @dataProvider    folderProvider
      */
-    public function testFinder($folder)
+    public function testFinderObjects($folder)
     {
         $finder = new Finder(DATA_PATH);
         $this->assertInstanceOf(
