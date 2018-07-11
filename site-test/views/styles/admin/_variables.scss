@@ -1,0 +1,68 @@
+
+/* Colors */
+
+$brand: #f46b4b;
+
+$white: #fff;
+$translucent-white: rgba(255, 255, 255, 0.85);
+
+$black: #000;
+$translucent-black: rgba(0, 0, 0, 0.3);
+
+$darker-gray: #333;
+$dark-gray: #666;
+$gray: #aaa;
+$light-gray: #ddd;
+$lighter-gray: #eee;
+$soft-gray: #f5f5f5;
+$softer-gray: #fafafa;
+
+$blue: #7aa9e9;
+$dark-blue: darken($blue, 5%);
+$darker-blue: darken($blue, 15%);
+
+$navy: #495865;
+$dark-navy: darken($navy, 10%);
+$light-navy: lighten($navy, 10%);
+
+$green: #7bd290;
+$dark-green: darken($green, 10%);
+$light-green: lighten($green, 10%);
+
+$red: #c8655a;
+$dark-red: darken($red, 10%);
+$light-red: lighten($red, 10%);
+
+
+$orange: #f46b4b;
+$dark-orange: darken($orange, 10%);
+$light-orange: lighten($orange, 10%);
+
+/* ELEMENT COLORS */
+$text-color: #555;
+$link-color: $navy;
+$link-hover-color: $blue;
+
+$header-background: $brand;
+$tab-background: #fff;
+$main-background: #eee;
+$sidebar-background: $softer-gray;
+
+// field styling
+$input-padding: .6em .8em;
+$input-border-color: #ccc;
+
+
+// page tree
+$page-tree-item-padding: .8em;
+$page-tree-item-background: #fff;
+$page-tree-item-hover-background: $blue;
+$page-tree-item-hover-title-color: #fff;
+$page-tree-item-title-color: $dark-gray;
+$page-tree-branchline-color: darken($main-background, 12%);
+
+/* SIZES */
+
+$header-height: 50px;
+$footer-height: 65px;
+$sidebar-width: 180px;

@@ -1,0 +1,17 @@
+{
+	"title": "Page (default)",
+	"fields": {
+		"title": {
+			"type": "FieldtypeText",
+			"required": true
+		},
+		"content": {
+			"type": "FieldtypeTextarea",
+			"required": true
+		},
+		"date": {
+			"type": "FieldtypeDatetime",
+			"required": true
+		}
+	}
+}

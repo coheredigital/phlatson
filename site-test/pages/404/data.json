@@ -1,0 +1,8 @@
+{
+	"title":"404",
+	"template":"default",
+	"settings": {
+		"hidden" : true,
+		"locked" : true
+	}
+}

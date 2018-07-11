@@ -8,17 +8,25 @@ namespace Phlatson;
  */
 class Phlatson
 {
-    protected $filemanager;
     protected $request;
-
-    // public function __construct(Request $request)
-    // {
-    //     $this->request = $request;
-    // }
-
-    final public function setFilemanager(Filemanager $filemanager) : void
+    protected $root;
+ 
+    /**
+     * Establishes the data directory to be used for this instance
+     *
+     * @param string $path
+     * @return void
+     */
+    final public function root(string $path) : void
     {
-        $this->filemanager = $filemanager;
+        // normalize the path
+        $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
+
+        if (!file_exists($path)) {
+            throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
+        }
+
+        $this->$root = $root;
     }
 
     /**

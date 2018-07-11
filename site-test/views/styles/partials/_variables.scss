@@ -1,0 +1,22 @@
+
+$gutter: 2rem;
+
+$font-main: Arial, sans-serif;
+$font-main: "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-headings: "Montserrat", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-monospace: "Roboto Mono", monospace;
+
+
+// colors
+$brand: #7963FF;
+$text-color: #000;
+$text-color-secondary: #777;
+
+$link-color: $brand;
+$link-hover-color: darken($brand, 15%);
+
+// animation & transitions
+$cubic-bezier: cubic-bezier(.3, 0, .3, 1);
+$tranistion-time: .25s;
+$transition: $tranistion-time $cubic-bezier;
+

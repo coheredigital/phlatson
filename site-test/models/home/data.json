@@ -1,0 +1,16 @@
+{
+	"title": "Page (default)",
+	"fields": {
+		"title": {
+			"fieldtype": "FieldtypeText",
+			"required": true
+		},
+		"content": {},
+		"markdown": {},
+		"files": {},
+		"date": {
+			"fieldtype": "FieldtypeDatetime",
+			"required": true
+		}
+	}
+}

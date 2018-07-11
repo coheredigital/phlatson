@@ -1,0 +1,10 @@
+{
+	"title": "Admin",
+    "settings": {
+        "allow_segments" : true
+    },
+    "access": {
+    	"view": ["editor"],
+        "redirect" : "{page.url}/login"
+    }
+}

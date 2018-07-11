@@ -18,7 +18,10 @@ require_once(ROOT_PATH . 'vendor/autoload.php');
 $exceptionHandler = new ErrorHandler();
 
 try {
+
     $phlatson = new Phlatson();
+    $phlatson->root(__DIR__ . "/site/");
+
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
     echo $phlatson->execute(new Request());
 

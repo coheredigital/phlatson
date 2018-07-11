@@ -1,0 +1,179 @@
+h1 {
+    text-align: left;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    text-shadow: 0 0 3em #2D9BAB;
+    -webkit-touch-callout: none;
+    user-select: none;
+    display: inline-block;
+    position: relative;
+    z-index: 10;
+    font-size: 3em;
+    @include media('tablet') {
+        font-size: 4em;
+    }
+    span {
+        background: $red;
+        display: inline-block;
+        padding: .08em .15em;
+        margin-left: .2em;
+    }
+}
+#main {
+    background-color: transparent;
+}
+#output {
+    background-color: #31333D;
+    // background-color: #212529;
+    // background-color: #222;
+    > canvas {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        box-sizing: border-box;
+        height: 100%;
+    }
+}
+
+
+#particles-js {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: .4;
+    z-index: 5;
+}
+
+.page-vr-title {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+    width: 90%;
+    max-width: 1600px;
+    margin: 0 auto;
+    .background{
+        // background-image: url("/site/templates/styles/images/vr-girl.png");
+        background-position: 100%;
+        background-size: auto 120%;
+        background-repeat: no-repeat;
+        z-index: -1;
+        opacity: .2;
+    }
+}
+
+
+.page-vr-video {
+    position: relative;
+    box-sizing: border-box;
+
+    width: 90%;
+    max-width: 1600px;
+
+    height: 50vw;
+    max-height: 550px;
+
+    overflow: hidden;
+
+    margin: 0 auto;
+    border-radius: .5em;
+    z-index: 10;
+    box-shadow: 0 .5em 1em rgba(0,0,0,.3);
+    font-size: .6em;
+    transition: box-shadow 0.3s;
+    @include media('tablet') {
+        height: 40vw;
+        font-size: 1em;
+    }
+    @include media('desktop') {
+        height: 34vw;
+    }
+    &:hover {
+        box-shadow: 0 .5em .5em -.4em rgba(0,0,0,.3);
+    }
+    .block-link {
+        z-index: 5;
+    }
+    .background  {
+        z-index: 0;
+        opacity: 1;
+        width: 200%;
+        margin-left: -50%;
+        background-size: auto 100%;
+    }
+}
+
+.page-vr-video-bg {
+    width: 100%;
+    position: absolute;
+    margin-top: -25%;
+    top: 50%;
+}
+
+
+.page-vr-video-title {
+    padding: 2em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    text-align: center;
+    font-size: 1.2em;
+    text-shadow: 0 0 2em #000;
+    @include media('phablet') {
+        font-size: 1.6em;
+    }
+    @include media('tablet') {
+        font-size: 1em;
+        text-align: left;
+    }
+    h2 {
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        z-index: 5;
+        display: inline-block;
+        a {
+            color: #fff;
+        }
+    }
+}
+
+.page-vr-icon {
+    position: absolute;
+    z-index: 10;
+    width: 8em;
+    top: 1.2em;
+    right: 2em;
+    @include media('tablet') {
+        bottom: 1.2em;
+        top: auto;
+        width: 4em;
+    }
+
+    opacity: 1;
+    svg {
+        width: 100%;
+        path {
+            fill: #fff;
+            stroke: rgba(0,0,0,.4);
+            stroke-width: .5;
+        }
+    }
+}
+
+
+.page-vr-share {
+    background: #fff;
+    margin-top: 3em;
+    position: relative;
+    z-index: 5;
+}

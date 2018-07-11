@@ -1,0 +1,197 @@
+
+
+@mixin grid ($gutter: 2rem) {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    @if ($gutter != 0) {
+        margin-left: (-$gutter/2);
+        margin-right: (-$gutter/2);
+
+        > .column {
+            padding: $gutter/2;
+        }
+    }
+}
+@mixin grid-width ($units: 12) {
+    width: 100% / (12/$units);
+}
+@mixin grid-column ($units: false) {
+    flex: 0 0 auto;
+    @if $units {
+        @include grid-width($units);
+    }
+}
+
+
+.container {
+    &.grid {
+
+        padding: 0 .75rem;
+        @include media("phablet") {
+            padding: 0 .5rem;
+        }
+    }
+}
+
+.container-wide {
+    &.grid {
+        padding: 0 .75rem;
+        @include media("phablet") {
+            padding: 0 .5rem;
+        }
+    }
+
+}
+
+.grid {
+    @include grid(1.5rem);
+    @include media("phablet") {
+        @include grid;
+    }
+
+    // modifiers
+    &.-no-gutter {
+        margin: 0;
+        padding: 0;
+        > .column {
+            padding: 0;
+        }
+    }
+
+    &.-width-auto {
+        > .column {
+            width: auto;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+    }
+
+    &.-nowrap {
+        flex-wrap: wrap;
+    }
+    &.-wrap-reverse {
+        flex-wrap: wrap-reverse;
+    }
+
+    // ordering
+    &.-reverse {
+        flex-direction: row-reverse;
+    }
+    &.-column {
+        flex-direction: column;
+    }
+    &.-column-reverse {
+        flex-direction: column-reverse;
+    }
+
+    // justification
+    &.-justify-start {
+        justify-content: flex-start;
+    }
+    &.-justify-center {
+        justify-content: center;
+    }
+    &.-justify-end {
+        justify-content: flex-end;
+    }
+    &.-justify-space-between {
+        justify-content: space-between;
+    }
+    &.-justify-space-around {
+        justify-content: space-around;
+    }
+
+    // vertical alignment
+    &.-align-start {
+        align-items: flex-start;
+    }
+    &.-align-center {
+        align-items: center;
+    }
+    &.-align-end {
+        align-items: flex-end;
+    }
+    &.-align-baseline {
+        align-items: baseline;
+    }
+
+
+    // columns
+    > .column {
+        width: 100%;
+        max-width: 100%;
+        @include grid-column;
+
+        // modifiers
+        &.-first {
+            order: -1;
+        }
+
+        &.-last {
+            order: 1;
+        }
+        
+        &.-width-auto {
+            width: auto;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        // vertical alignment
+        &.-align-start {
+            align-self: flex-start;
+        }
+        &.-align-center {
+            align-self: center;
+        }
+        &.-align-end {
+            align-self: flex-end;
+        }
+        &.-align-baseline {
+            align-self: baseline;
+        }
+
+
+        // responsive size controls
+        @for $i from 1 through 12 {
+            &.-default-#{$i} {
+                @include grid-width($i);
+            }
+        }
+
+        $breakpoint: "phablet";
+        @for $i from 1 through 12 {
+            &.-#{$breakpoint}-#{$i} {
+                @include media($breakpoint) {
+                    @include grid-width($i);
+                }
+            }
+        }
+        $breakpoint: "tablet";
+        @for $i from 1 through 12 {
+            &.-#{$breakpoint}-#{$i} {
+                @include media($breakpoint) {
+                    @include grid-width($i);
+                }
+            }
+        }
+        $breakpoint: "desktop";
+        @for $i from 1 through 12 {
+            &.-#{$breakpoint}-#{$i} {
+                @include media($breakpoint) {
+                    @include grid-width($i);
+                }
+            }
+        }
+        $breakpoint: "hd";
+        @for $i from 1 through 12 {
+            &.-#{$breakpoint}-#{$i} {
+                @include media($breakpoint) {
+                    @include grid-width($i);
+                }
+            }
+        }
+    }
+
+}
