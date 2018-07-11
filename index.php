@@ -20,7 +20,7 @@ $exceptionHandler = new ErrorHandler();
 try {
 
     $phlatson = new Phlatson();
-    $phlatson->root(__DIR__ . "/site/");
+    $phlatson->init(new Finder(__DIR__ . "/site/"));
 
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
     echo $phlatson->execute(new Request());

@@ -8,9 +8,27 @@ namespace Phlatson;
  */
 class Phlatson
 {
-    protected $request;
-    protected $root;
- 
+    public $root;
+    static $finder;
+
+    
+    /**
+     * Establishes the data directory to be used for this instance
+     *
+     * @param string $path
+     * @return void
+     */
+    final public function init(Finder $finder) : void
+    {
+        // normalize the path
+        self::$finder = $finder;
+    }
+
+    public function finder() : Finder
+    {
+        return self::$finder;
+    }
+
     /**
      * Establishes the data directory to be used for this instance
      *
@@ -26,7 +44,7 @@ class Phlatson
             throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
         }
 
-        $this->$root = $root;
+        $this->$root = $path;
     }
 
     /**
@@ -52,7 +70,6 @@ class Phlatson
      * Runs the request, checks that a Page has been set
      *
      * @param Request $request
-     * @return void
      */
     public function execute(Request $request)
     {

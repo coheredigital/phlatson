@@ -3,6 +3,7 @@
 	<?php
 
 	$properties = [
+		'root',
 		'name',
 		'rootUrl',
 		'url',
