@@ -8,10 +8,6 @@ class Finder
 
     public function __construct(string $path)
     {
-        $this->setRoot($path);
-    }
-
-    protected function setRoot(string $path) {
         // normalize the path
         $path = realpath($path) . DIRECTORY_SEPARATOR;
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
@@ -23,6 +19,10 @@ class Finder
         $this->root = $path;
     }
 
+    public function root() : string
+    {
+        return $this->root;
+    }
 
     public function getFiles(string $folder) : array
     {
@@ -43,28 +43,47 @@ class Finder
         return $file;
     }
 
-    public function get(string $path) : ?JsonObject
+    public function get(string $path) : ?DataObject
     {
 
+
+        $jsonObject = $this->getJson($path);
+
+        $path_parts = explode('/', trim($path, "/"));
+
+        $classname = array_shift($path_parts);
+        $classname = ucfirst($classname);
+        $classname = substr($classname, 0, -1);
+        $classname = "\Phlatson\\$classname";
+
+        $path = implode("/", $path_parts);
+        $path = "/$path/";
+
+        $objectType = new $classname();
+        $objectType->setData($jsonObject);
+
+        return $objectType;
+    }
+
+    protected function getJson(string $path) : JsonObject
+    {
         if (!$file = $this->exists($path)) {
             return null;
         }
-        
         $jsonObject = new JsonObject($file);
         return $jsonObject;
-	}
-    
-    
+    }
+
     public function getTypeData(string $classname, string $path) : JsonObject
     {
         // get data object
         $folder = strtolower($classname);
         // trim just in case and pluralize
-        $folder = "/" . trim($folder, "/") . "s";
-        
+        $folder = '/' . trim($folder, '/') . 's';
+
         $path = $this->sanitizeFolder($path);
         $path = "{$folder}{$path}";
-        $jsonObject = $this->get($path);
+        $jsonObject = $this->getJson($path);
         return $jsonObject;
     }
 
@@ -73,32 +92,31 @@ class Finder
         // get data object
         $folder = strtolower($classname);
         // trim just in case and pluralize
-        $folder = "/" . trim($folder, "/") . "s";
-        
+        $folder = '/' . trim($folder, '/') . 's';
+
         $path = $this->sanitizeFolder($path);
         $path = "{$folder}{$path}";
         $jsonObject = $this->get($path);
-        
+
         $classname = ucfirst($classname);
         $classname = "\Phlatson\\$classname";
-        
+
         $objectType = new $classname();
         $objectType->setData($jsonObject);
-        
+
         return $objectType;
     }
 
-	protected function sanitizeFolder(string $folder)
-	{
-		$folder = str_replace(DIRECTORY_SEPARATOR, '/', $folder);
-		$folder = trim($folder, "/");
-		return "/{$folder}/";
-	}
-	
-	public function getPath(string $folder)
-	{
-		$folder = $this->sanitizeFolder($folder);
-		return $this->root . ltrim($folder,"/");
-	}
+    protected function sanitizeFolder(string $folder)
+    {
+        $folder = str_replace(DIRECTORY_SEPARATOR, '/', $folder);
+        $folder = trim($folder, '/');
+        return "/{$folder}/";
+    }
 
+    public function getPath(string $folder)
+    {
+        $folder = $this->sanitizeFolder($folder);
+        return $this->root . ltrim($folder, '/');
+    }
 }

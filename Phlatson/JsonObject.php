@@ -12,7 +12,7 @@ class JsonObject extends Phlatson
 
     protected $type;
 
-    public function __construct(string $file ) {
+    public function __construct(string $file) {
         
         $this->file = $file;
         
