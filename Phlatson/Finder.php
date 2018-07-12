@@ -81,7 +81,7 @@ class Finder
         // trim just in case and pluralize
         $folder = '/' . trim($folder, '/') . 's';
 
-        $path = $this->sanitizeFolder($path);
+        $path = Tools::sanitizeUrl($path);
         $path = "{$folder}{$path}";
         $jsonObject = $this->getJson($path);
         return $jsonObject;
@@ -94,7 +94,7 @@ class Finder
         // trim just in case and pluralize
         $folder = '/' . trim($folder, '/') . 's';
 
-        $path = $this->sanitizeFolder($path);
+        $path = Tools::sanitizeUrl($path);
         $path = "{$folder}{$path}";
         $jsonObject = $this->get($path);
 
@@ -116,7 +116,7 @@ class Finder
 
     public function getPath(string $folder)
     {
-        $folder = $this->sanitizeFolder($folder);
+        $folder = Tools::sanitizeUrl($folder);
         return $this->root . ltrim($folder, '/');
     }
 }
