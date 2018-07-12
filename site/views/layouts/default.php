@@ -20,11 +20,7 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
 <body>
     <div class="page-header">
         <div class="container">
-            <div class="breadcrumbs">
-            <?php foreach ($page->parents() as $p) : ?>
-                <a href="<?= $p->url ?>"><?= $p->title ?></a> /
-            <?php endforeach; ?>
-            </div>
+            <?php // echo $view->render("/partials/breadcrumbs") ?>
             <h1><?= $page->get('title') ?></h1>
             <?= $view->render("/partials/site-navigation") ?>
 		</div>

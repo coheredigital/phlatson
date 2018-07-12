@@ -17,8 +17,9 @@
 
     echo $view->render('/partials/debug/object-table', [
 		"properties" => $properties,
-		"object" => new Page("/")
+		"object" => new Page("/about/")
 	]);
+	
 	echo $view->render('/partials/debug/object-table', [
 		"properties" => $properties,
 		"object" => $page->template
