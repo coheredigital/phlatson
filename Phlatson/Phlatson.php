@@ -4,28 +4,12 @@ namespace Phlatson;
 
 /**
  * Root class that ties system together
- * Classes should extend Flatebed when they require access to one or more API variable
+ *      - Gives access to the internal Api
+ *      - Allow for extending of & addition to class methods
  */
+
 class Phlatson
 {    
-
-    /**
-     * Establishes the data directory to be used for this instance
-     *
-     * @param string $path
-     * @return void
-     */
-    final public function root(string $path) : void
-    {
-        // normalize the path
-        $path = str_replace(DIRECTORY_SEPARATOR, "/", $path);
-
-        if (!file_exists($path)) {
-            throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
-        }
-
-        $this->$root = $path;
-    }
 
     /**
      * @param $key
@@ -44,6 +28,17 @@ class Phlatson
         } else {
             return Api::fetchAll();
         }
+    }
+
+
+
+
+    final public function classname(bool $full = false)
+    {
+        if ($full) {
+            return __CLASS__;
+        }
+        return (new \ReflectionClass($this))->getShortName();
     }
 
     /**
@@ -69,17 +64,6 @@ class Phlatson
         if ($view instanceof View) {
             return $view->render();
         }
-    }
-
-
-    final public function classname(bool $full = false)
-    {
-        if ($full) {
-            return __CLASS__;
-        }
-
-        return (new \ReflectionClass($this))->getShortName();
-
     }
 
 }
