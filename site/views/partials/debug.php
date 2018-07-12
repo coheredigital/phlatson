@@ -3,12 +3,12 @@
 	<?php
 
 	r($finder);
+	r($finder->getData("/pages/about/"));
 	r($finder->get("/pages/about/"));
 
 
 
 	$properties = [
-		'root',
 		'name',
 		'rootUrl',
 		'url',

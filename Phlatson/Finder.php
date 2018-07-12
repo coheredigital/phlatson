@@ -9,8 +9,7 @@ class Finder
     public function __construct(string $path)
     {
         // normalize the path
-        $path = realpath($path) . DIRECTORY_SEPARATOR;
-        $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+        $path = Sanitizer::path($path);
 
         if (!file_exists($path)) {
             throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
@@ -47,7 +46,7 @@ class Finder
     {
 
 
-        $jsonObject = $this->getJson($path);
+        $jsonObject = $this->getData($path);
 
         $path_parts = explode('/', trim($path, "/"));
 
@@ -65,7 +64,7 @@ class Finder
         return $objectType;
     }
 
-    protected function getJson(string $path) : JsonObject
+    public function getData(string $path) : JsonObject
     {
         if (!$file = $this->exists($path)) {
             return null;
@@ -81,9 +80,9 @@ class Finder
         // trim just in case and pluralize
         $folder = '/' . trim($folder, '/') . 's';
 
-        $path = Tools::sanitizeUrl($path);
+        $path = Sanitizer::url($path);
         $path = "{$folder}{$path}";
-        $jsonObject = $this->getJson($path);
+        $jsonObject = $this->getData($path);
         return $jsonObject;
     }
 
@@ -94,7 +93,7 @@ class Finder
         // trim just in case and pluralize
         $folder = '/' . trim($folder, '/') . 's';
 
-        $path = Tools::sanitizeUrl($path);
+        $path = Sanitizer::url($path);
         $path = "{$folder}{$path}";
         $jsonObject = $this->get($path);
 
@@ -116,7 +115,7 @@ class Finder
 
     public function getPath(string $folder)
     {
-        $folder = Tools::sanitizeUrl($folder);
+        $folder = Sanitizer::url($folder);
         return $this->root . ltrim($folder, '/');
     }
 }

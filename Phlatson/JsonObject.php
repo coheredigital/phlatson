@@ -24,7 +24,9 @@ class JsonObject extends Phlatson
         // setup some core properties
         $this->filename = basename($this->file);
         $this->path = dirname($this->file) . "/";
-        $this->folder = str_ireplace($root,"",$this->path);
+        
+        // TODO: improve this, I don't like how I called to API
+        $this->folder = str_ireplace($this->api("finder")->root(),"",$this->path);
 
         $this->data = json_decode(file_get_contents($file), true);
 
