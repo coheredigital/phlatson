@@ -77,7 +77,8 @@ class Phlatson
         $this->request = $request;
 
         // determine the requested page
-        $page = new Page($request->url);
+        $url = $request->url;
+        $page = new Page($url);
         $template = $page->template;
         $view = $template->view;
 

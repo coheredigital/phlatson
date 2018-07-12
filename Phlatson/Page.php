@@ -11,7 +11,7 @@ class Page extends DataObject
     protected $children;
     protected $parents;
 
-    public function parent()
+    public function parent() : Page
     {
         $root = $this->rootPath();
         $parent = dirname($this->path()) . "/";
@@ -23,7 +23,7 @@ class Page extends DataObject
         if ($page->exists()) {
             return $page;
         }
-        return null;
+
     }
 
     protected function rootFolder()
@@ -40,17 +40,17 @@ class Page extends DataObject
         return $value;
     }
 
-    public function parents() : PageCollection
+    public function parents() : ObjectCollection
     {
         $parents = $this->parents;
 
         // skip if already stored
-        if ($parents instanceof PageCollection) {
+        if ($parents instanceof ObjectCollection) {
             return $parents;
         }
 
         // create empty collection
-        $parents = new PageCollection();
+        $parents = new ObjectCollection();
 
         $currentPage = $this;
 
@@ -64,18 +64,18 @@ class Page extends DataObject
         return $parents;
     }
 
-    public function children() : PageCollection
+    public function children() : ObjectCollection
     {
         $url = $this->url;
         $children = $this->children;
 
         // skip if already stored
-        if ($children instanceof PageCollection) {
+        if ($children instanceof ObjectCollection) {
             return $children;
         }
 
         // create empty collection
-        $children = new PageCollection();
+        $children = new ObjectCollection();
 
         $folder_index = [];
         // $folder_index = Filemanager::getData($this->folder, "index");

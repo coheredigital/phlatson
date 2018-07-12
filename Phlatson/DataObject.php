@@ -14,23 +14,17 @@ abstract class DataObject extends BaseObject
 
     public function __construct($path = null)
     {
-
-        
-
-        $path = "/" . trim($path, '/') . '/';
-
         if (is_null($path)) {
             return;
         }
+        $path = '/' . trim($path, '/') . '/';
 
         $classname = (new \ReflectionClass($this))->getShortName();
 
         // $jsonData = $this->finder()->getType($classname, $path);
         $jsonData = $this->finder()->getTypeData($classname, $path);
         $this->setData($jsonData);
-        
     }
-
 
     public function setData(JsonObject $data) : self
     {

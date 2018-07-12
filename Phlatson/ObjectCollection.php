@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-abstract class ObjectCollection extends Phlatson implements \Iterator, \Countable
+class ObjectCollection extends Phlatson implements \Iterator, \Countable
 {
 
     public $iterator;
@@ -17,6 +17,11 @@ abstract class ObjectCollection extends Phlatson implements \Iterator, \Countabl
     {
         if ($item instanceof DataObject && !isset($this->files[$item->file])) {
             // files array ensures unique entries
+
+            if (!$item->url) {
+                return;
+            }
+
             $this->files[$item->file] = true;
             $this->collection[] = $item->url;
         }

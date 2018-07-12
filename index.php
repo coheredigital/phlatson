@@ -21,6 +21,7 @@ try {
 
     $phlatson = new Phlatson();
     $phlatson->init(new Finder(__DIR__ . "/site/"));
+    $phlatson->api("finder", new Finder(__DIR__ . "/site/"));
 
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
     echo $phlatson->execute(new Request());

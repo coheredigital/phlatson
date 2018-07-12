@@ -38,7 +38,7 @@ class Finder
         $file = "{$path}data.json";
 
         if (!file_exists($file)) {
-            return false;
+            throw new Exceptions\PhlatsonException("File ($file) does not exist");
         }
 
         return $file;
@@ -56,7 +56,7 @@ class Finder
 	}
     
     
-    public function getTypeData(string $classname, string $path) : ?JsonObject
+    public function getTypeData(string $classname, string $path) : JsonObject
     {
         // get data object
         $folder = strtolower($classname);
@@ -99,7 +99,7 @@ class Finder
 	public function getPath(string $folder)
 	{
 		$folder = $this->sanitizeFolder($folder);
-		return $this->root . $folder;
+		return $this->root . ltrim($folder,"/");
 	}
 
 }
