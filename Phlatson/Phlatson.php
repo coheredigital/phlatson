@@ -7,27 +7,7 @@ namespace Phlatson;
  * Classes should extend Flatebed when they require access to one or more API variable
  */
 class Phlatson
-{
-    public $root;
-    static $finder;
-
-    
-    /**
-     * Establishes the data directory to be used for this instance
-     *
-     * @param string $path
-     * @return void
-     */
-    final public function init(Finder $finder) : void
-    {
-        // normalize the path
-        self::$finder = $finder;
-    }
-
-    public function finder() : Finder
-    {
-        return self::$finder;
-    }
+{    
 
     /**
      * Establishes the data directory to be used for this instance

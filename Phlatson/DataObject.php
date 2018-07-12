@@ -21,8 +21,7 @@ abstract class DataObject extends BaseObject
 
         $classname = (new \ReflectionClass($this))->getShortName();
 
-        // $jsonData = $this->finder()->getType($classname, $path);
-        $jsonData = $this->finder()->getTypeData($classname, $path);
+        $jsonData = $this->api('finder')->getTypeData($classname, $path);
         $this->setData($jsonData);
     }
 

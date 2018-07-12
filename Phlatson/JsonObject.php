@@ -1,7 +1,7 @@
 <?php
 namespace Phlatson;
 
-class JsonObject extends BaseObject
+class JsonObject extends Phlatson
 {
 
     public $file;
@@ -9,6 +9,8 @@ class JsonObject extends BaseObject
     public $path;
 
     protected $data;
+
+    protected $type;
 
     public function __construct(string $file ) {
         
@@ -22,6 +24,7 @@ class JsonObject extends BaseObject
         // setup some core properties
         $this->filename = basename($this->file);
         $this->path = dirname($this->file) . "/";
+        $this->folder = str_ireplace($root,"",$this->path);
 
         $this->data = json_decode(file_get_contents($file), true);
 

@@ -2,6 +2,10 @@
 <div class="container">
 	<?php
 
+	r($finder->get("/pages/about/"));
+
+
+
 	$properties = [
 		'root',
 		'name',
