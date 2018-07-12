@@ -20,7 +20,7 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
 <body>
     <div class="page-header">
         <div class="container">
-            <?php // echo $view->render("/partials/breadcrumbs") ?>
+            <?= $view->render("/partials/breadcrumbs") ?>
             <h1><?= $page->get('title') ?></h1>
             <?= $view->render("/partials/site-navigation") ?>
 		</div>
