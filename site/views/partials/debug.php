@@ -2,6 +2,7 @@
 <div class="container">
 	<?php
 
+	r($finder);
 	r($finder->get("/pages/about/"));
 
 

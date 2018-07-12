@@ -72,9 +72,14 @@ class Phlatson
     }
 
 
-    public function route(string $path, $callback)
+    final public function classname(bool $full = false)
     {
-        # code...
+        if ($full) {
+            return __CLASS__;
+        }
+
+        return (new \ReflectionClass($this))->getShortName();
+
     }
 
 }

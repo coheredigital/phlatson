@@ -6,16 +6,14 @@ class Finder
 {
     protected $root;
 
-    protected $fileMatches = [
-        'data.json',
-        'published.json',
-        'draft.json',
-        'autosave.json',
-    ];
-
     public function __construct(string $path)
     {
+        $this->setRoot($path);
+    }
+
+    protected function setRoot(string $path) {
         // normalize the path
+        $path = realpath($path) . DIRECTORY_SEPARATOR;
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 
         if (!file_exists($path)) {
@@ -24,6 +22,7 @@ class Finder
 
         $this->root = $path;
     }
+
 
     public function getFiles(string $folder) : array
     {
