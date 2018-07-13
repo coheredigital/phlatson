@@ -12,12 +12,12 @@ abstract class Fieldtype extends Extension
      * @param mixed raw input value
      * @return mixed formatted publc facing variable
      */
-    public function input($value)
+    public function encode($value)
     {
         return $value;
     }
 
-    public function output($value)
+    public function decode($value)
     {
         return $value;
     }

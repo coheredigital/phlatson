@@ -6,8 +6,6 @@
 	r($finder->getData("/pages/about/"));
 	r($finder->get("/pages/about/"));
 
-
-
 	$properties = [
 		'name',
 		'rootUrl',
