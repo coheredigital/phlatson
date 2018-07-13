@@ -6,6 +6,8 @@ class Finder
 {
     protected $root;
 
+    protected $type;
+
     protected $pathMappings = [
         "Page" => [
             "/site/pages/"
@@ -37,14 +39,22 @@ class Finder
         $this->root = $path;
     }
 
+
+
+    final public function setType(string $type) : self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
     final public function addPath(string $path) : self
     {
 
-        $path = Sanitizer::path($path);
+        // $path = Sanitizer::path($path);
 
-        if (!file_exists($path)) {
-            throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
-        }
+        // if (!file_exists($path)) {
+        //     throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
+        // }
 
         // path as key to prevent duplicates
         $this->paths[$path] = $path;
@@ -98,12 +108,48 @@ class Finder
         return $objectType;
     }
 
-    public function getData(string $folder) : JsonObject
+    public function getFromPaths(string $url) : ?DataObject
     {
 
-        foreach ($this->paths as $path) {
-            # code...
+        // sanitizer & trim URL
+        $url = Sanitizer::url($url);
+        $url = ltrim($url, "/");
+
+        foreach ($this->paths as $root) {
+
+            $path = "{$root}{$url}";
+            if (file_exists($path)) {
+                $jsonObject = $this->getData($path);
+                break;
+            }
+
         }
+
+        $path_parts = explode('/', trim($path, "/"));
+
+        $classname = $this->type ? "\Phlatson\\$this->type" : false;
+        
+        if (!$classname) {
+            $classname = array_shift($path_parts);
+            $classname = ucfirst($classname);
+            $classname = substr($classname, 0, -1);
+            $classname = "\Phlatson\\$classname";
+        }
+
+
+
+        $path = implode("/", $path_parts);
+        $path = "/$path/";
+
+        $objectType = new $classname();
+        $objectType->setData($jsonObject);
+
+        return $objectType;
+    }
+    // TODO: make this work with system data
+    public function getData(string $path) : JsonObject
+    {
+
 
         if (!$file = $this->exists($path)) {
             return null;

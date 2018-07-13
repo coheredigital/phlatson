@@ -6,6 +6,7 @@
 
 
 	r($models);
+	r($models->getFromPaths("page"));
 
 
 	$properties = [

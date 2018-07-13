@@ -26,8 +26,9 @@ try {
     $phlatson->api("finder", new Finder(__DIR__ . "/site/"));
 
     $models = new Finder();
-    $models->addPath(__DIR__ . "/site/models/");
-    $models->addPath(__DIR__ . "/Phlatson/data/models/");
+    $models->addPath("/site/models/");
+    $models->addPath("/Phlatson/data/models/");
+    $models->setType("Model");
 
     $phlatson->api("models", $models);
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
