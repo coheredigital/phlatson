@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-class Sanitizer
+class Validator
 {
 
 	private function __construct()
@@ -17,12 +17,9 @@ class Sanitizer
 		return "/{$url}/";
 	}
 
-	public static function path(string $path) : ?string
+	public static function path(string $path) : bool
 	{
-		$path = realpath($path) . DIRECTORY_SEPARATOR;
-		$path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
-		$path = rtrim($path, "/") . "/"; // prevent extra trailing slashes
-		return $path;
+		return file_exists($path);
 	}
 
 }

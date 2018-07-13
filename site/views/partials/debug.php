@@ -2,9 +2,11 @@
 <div class="container">
 	<?php
 
-	r($finder);
-	r($finder->getData("/pages/about/"));
-	r($finder->get("/pages/about/"));
+
+
+
+	r($models);
+
 
 	$properties = [
 		'name',

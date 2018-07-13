@@ -6,16 +6,50 @@ class Finder
 {
     protected $root;
 
-    public function __construct(string $path)
+    protected $pathMappings = [
+        "Page" => [
+            "/site/pages/"
+        ],
+        "Model" => [
+            "/site/models/"
+        ],
+        "Config" => [
+            "/site/config/",
+            "/Phlatson/data/config/"
+        ],
+        "Extension" => [
+            "/site/extensions/",
+            "/Phlatson/data/extensions/"
+        ],
+    ];
+
+    protected $paths = [];
+
+    public function __construct(string $path = "")
     {
         // normalize the path
+        if ($path && !file_exists($path)) {
+            throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
+        }
+
+        $path = Sanitizer::path($path);
+
+        $this->root = $path;
+    }
+
+    final public function addPath(string $path) : self
+    {
+
         $path = Sanitizer::path($path);
 
         if (!file_exists($path)) {
             throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
         }
 
-        $this->root = $path;
+        // path as key to prevent duplicates
+        $this->paths[$path] = $path;
+
+        return $this;
     }
 
     public function root() : string
@@ -64,8 +98,13 @@ class Finder
         return $objectType;
     }
 
-    public function getData(string $path) : JsonObject
+    public function getData(string $folder) : JsonObject
     {
+
+        foreach ($this->paths as $path) {
+            # code...
+        }
+
         if (!$file = $this->exists($path)) {
             return null;
         }
