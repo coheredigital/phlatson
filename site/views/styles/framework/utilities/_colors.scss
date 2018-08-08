@@ -1,0 +1,25 @@
+$text-colors : (
+    'prefix': "color-",
+    'responsive': false,
+    'property': color,
+    'values': $colors
+) !default;
+@include build($text-colors);
+
+// default to same options as colors
+$background-colors : (
+    'prefix': "bg-",
+    'responsive': false,
+    'property': background-color,
+    'values': $colors
+) !default;
+@include build($background-colors);
+
+// default to same options as colors
+$border-colors : (
+    'prefix': "border-",
+    'responsive': false,
+    'property': border-color,
+    'values': $colors
+) !default;
+@include build($border-colors);

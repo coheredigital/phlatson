@@ -1,0 +1,66 @@
+@mixin grid {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    @if ($gutter !=0) {
+        margin-left: (-$gutter/2);
+        margin-right: (-$gutter/2);
+        >.column, 
+        >[class*="column-"] {
+            padding: $gutter/2;
+        }
+    }
+}
+
+@mixin grid-width ($units: 12) {
+    width: 100% / (12/$units);
+}
+
+.container {
+    &.grid {
+        padding: 0;
+        @include media("phablet") {
+            padding: 0 1rem;
+        }
+    }
+}
+
+.container-wide {
+    &.grid {
+        padding: 0;
+        @include media("phablet") {
+            padding: 0 1rem;
+        }
+    }
+}
+
+.grid {
+    @include grid;
+    &.-no-gutter {
+        margin: 0;
+        padding: 0;
+        >.column {
+            padding: 0;
+        }
+    }
+
+    &.grid-auto {
+        flex-wrap: nowrap;
+        &>.column {
+            width: auto;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+    }
+
+}
+
+
+// columns
+.column {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 auto;
+}
+

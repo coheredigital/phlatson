@@ -1,0 +1,163 @@
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  @return $string;
+}
+
+
+@function str-to-list($string, $separator: ' ', $startAt: 1) {
+    $workStr: str-slice($string,$startAt);
+    $list: ();
+    $indexOfFirstSeparator: str-index($workStr,$separator);
+    @if $indexOfFirstSeparator == null {
+        $list: ($workStr);
+    } @else {
+        $list: (str-slice($workStr, 1, $indexOfFirstSeparator - 1));
+        $list: join($list,str-to-list($workStr, $startAt: $indexOfFirstSeparator + 1));
+    }
+    @return $list;
+}
+
+@function register($name,$definition) {
+
+    // handle escaped special cahracters
+    $name: str-replace($name, '\\', '');
+
+    $registry: map-merge($registry, (#{$name}: $definition )) !global;
+    @return $registry;
+
+}
+
+
+@function create-definitions($values, $property) {
+    $definitions: ();
+    @each $name, $value in $values {
+        $definitions: map-merge($definitions, ('#{$name}': (#{$property}: #{$value}) ))
+    }
+    @return $definitions;
+}
+
+@mixin build ($map) {
+
+    $prefix: map-get($map, 'prefix');
+    $property: map-get($map, 'property');
+    $values: map-get($map, 'values');
+    $responsive: map-get($map, 'responsive');
+    $definitions:  map-get($map, 'definitions');
+
+
+    @if $definitions == null {
+        // build the difinition list
+        $definitions: create-definitions($values, $property);
+    }
+
+    @include build-definitions($definitions, $responsive, $prefix);
+    
+}
+
+@mixin build-definitions ($definitions, $responsive, $prefix) {
+    $classname: null;
+    // output default
+     @each $name, $properties in $definitions {
+        $classname: #{$prefix}#{$name};
+
+        @if $build {
+            .#{$classname} {
+                @each $property, $value in $properties {
+                    #{$property}: $value;
+                }
+            }
+        }
+
+        $registry: register($classname,$properties);
+    }
+
+    // build responsive variants
+    @if $responsive {
+        @each $breakpoint, $size in $breakpoints {
+
+            @each $name, $properties in $definitions {
+                $classname: #{$prefix}#{$name};
+                @if $build {
+                    .#{$breakpoint}\:#{$classname} {
+                        @include media($breakpoint) {
+                            @each $property, $value in $properties {
+                                #{$property}: $value;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+@function prefix($prefix, $map) {
+
+    $map-new: ();
+    @each $name, $value in $map {
+        $map-new: map-merge($map-new, ( 
+            '#{$prefix}#{$name}': $value
+        ));
+    }
+    @return $map-new;
+}
+
+
+
+@mixin responsive-properties {
+    
+    // create the default
+    $classname: str-replace(#{&}, ".");
+
+    @at-root {
+        .#{$classname} {
+            @content;
+        }
+    }
+
+    @each $breakpoint, $size in $breakpoints {
+        // render the breakpoints
+        @include media($breakpoint) {
+
+            @at-root {
+                .#{$breakpoint}\:#{$classname} {
+                    @content;
+                }
+            }
+
+        }
+    }
+}
+
+@mixin apply ($classlist) {
+
+    // fixed use of double spaces
+    $classlist: str-replace($classlist, "  ", " ");
+    $classlist: str-replace($classlist, "  ", " ");
+
+    $classlist: str-to-list($classlist);
+
+    $properties: ();
+    // first collect into properties to ensure no property duplication
+    @each $classname in $classlist {
+        $registry-item: map-get($registry, #{$classname});
+        
+        @if $registry-item != null {
+            $properties: map-merge($properties , $registry-item );
+        } @else {
+            @error "'#{$classname}' not found in registry";
+        }
+       
+    }
+
+    // build the property list
+    @each $property-name, $property-value in $properties {
+        #{$property-name}:  $property-value;
+    }
+
+}

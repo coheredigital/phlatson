@@ -1,0 +1,102 @@
+$flex-display : (
+    'prefix': null,
+    'responsive': true,
+    'definitions':  (
+        "flex": (display:flex),
+        "flex-inline": (display:flex-inline),
+    )
+) !default;
+@include build($flex-display);
+
+$flex-directions : (
+    'prefix': "flex-",
+    'responsive': true,
+    'definitions':  (
+        "row": (flex-direction: row),
+        "reverse": (flex-direction: row-reverse),
+        "column": (flex-direction: column),
+        "column-reverse": (flex-direction: column-reverse),
+    )
+) !default;
+@include build($flex-directions);
+
+$flex-wrap : (
+    'prefix': "flex-",
+    'responsive': true,
+    'definitions':  (
+        "no-wrap": (flex-wrap: nowrap),
+        "wrap": (flex-wrap: wrap),
+        "wrap-reverse": (flex-wrap: wrap-reverse),
+    )
+) !default;
+@include build($flex-wrap);
+
+$flex-items : (
+    'prefix': "items-",
+    'responsive': true,
+    'definitions':  (
+        "stretch": (align-items: stretch),
+        "start": (align-items: flex-start),
+        "center": (align-items: center),
+        "end": (align-items: flex-end),
+        "basebline": (align-items: baseline),
+    )
+) !default;
+@include build($flex-items);
+
+
+$flex-content : (
+    'prefix': "content-",
+    'responsive': true,
+    'definitions':  (
+        "start": (align-content: flex-start),
+        "center": (align-content: center),
+        "end": (align-content: flex-end),
+        "between": (align-content: space-between),
+        "around": (align-content: space-around),
+    )
+) !default;
+@include build($flex-content);
+
+$flex-self : (
+    'prefix': "self-",
+    'responsive': true,
+    'definitions':  (
+        "auto": (align-self: flex-auto),
+        "start": (align-self: flex-start),
+        "center": (align-self: center),
+        "end": (align-self: flex-end),
+        "stretch": (align-self: stretch),
+    )
+) !default;
+@include build($flex-self);
+
+$flex-justify : (
+    'prefix': "justify-",
+    'responsive': true,
+    'definitions':  (
+        "start": (justify-content: flex-start),
+        "center": (justify-content: center),
+        "end": (justify-content: flex-end),
+        "between": (justify-content: space-between),
+        "around": (justify-content: space-around),
+    )
+) !default;
+@include build($flex-justify);
+
+
+$flex-utilities : (
+    'prefix': "flex-",
+    'responsive': true,
+    'definitions':  (
+        "initial": (flex: initial),
+        "1": (flex: 1),
+        "auto": (flex: auto),
+        "none": (flex: none),
+        "grow": (flex-grow: 1),
+        "shrink": (flex-shrink: 1),
+        "no-grow": (flex-grow: 0),
+        "no-shrink": (flex-shrink: 0),
+    )
+) !default;
+@include build($flex-utilities);

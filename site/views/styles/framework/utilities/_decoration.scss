@@ -1,0 +1,71 @@
+$decorations : (
+    'prefix': null,
+    'responsive': false,
+    'definitions':  (
+        "rounded-small": (border-radius : .25rem),
+        "rounded": (border-radius : .5rem),
+        "rounded-large": (border-radius : 1rem),
+        "round": (border-radius : 50%),
+        "pill": (border-radius : 9999rem),
+        "shadow": (box-shadow: 0 .25rem .75rem -.25rem rgba(0,0,0,.2)),
+        "shadow-large": (box-shadow: 0 .2rem 1.5rem -.1rem rgba(0,0,0,.1)),
+        "background-cover": (background-size: cover),
+        "background-center": (background-position: center center),
+    )
+) !default;
+@include build($decorations);
+
+$borders : (
+    'prefix': null,
+    'responsive': false,
+    'definitions':  (
+
+        // styles
+        "border-solid": (border-style : solid),
+        "border-dashed": (border-style : dashed),
+        "border-dotted": (border-style : dotted),
+        "border-double": (border-style : double),
+
+        // all sides
+        "b0": (border-width : 0),
+        "b1": (border-width : 1rem),
+        "b3\\/4": (border-width : 1rem*(3/4)),
+        "b1\\/2": (border-width : 1rem*(1/2)),
+        "b1\\/4": (border-width : 1rem*(1/4)),
+        "b1\\/6": (border-width : 1rem*(1/6)),
+        "b1\\/8": (border-width : 1rem*(1/8)),
+        // "b2": (border-width : 2rem),
+        // "b3": (border-width : 3rem),
+        // "b4": (border-width : 4rem),
+
+        // top
+        "bt0": (border-top-width : 0),
+        "bt1": (border-top-width : 1rem),
+        // "bt2": (border-top-width : 2rem),
+        // "bt3": (border-top-width : 3rem),
+        // "bt4": (border-top-width : 4rem),
+
+        // left
+        "bl0": (border-left-width : 0),
+        "bl1": (border-left-width : 1rem),
+        // "bl2": (border-left-width : 2rem),
+        // "bl3": (border-left-width : 3rem),
+        // "bl4": (border-left-width : 4rem),
+
+        // right
+        "br0": (border-right-width : 0),
+        "br1": (border-right-width : 1rem),
+        // "br2": (border-right-width : 2rem),
+        // "br3": (border-right-width : 3rem),
+        // "br4": (border-right-width : 4rem),
+
+        // bottom
+        "bb0": (border-bottom-width : 0),
+        "bb1": (border-bottom-width : 1rem),
+        "bb2": (border-bottom-width : 2rem),
+        "bb3": (border-bottom-width : 3rem),
+        "bb4": (border-bottom-width : 4rem),
+
+    )
+) !default;
+@include build($borders);

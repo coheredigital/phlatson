@@ -1,0 +1,29 @@
+$posistioning : (
+    'prefix': null,
+    'responsive': true,
+    'definitions':  (
+        "relative": (position:relative),
+        "absolute": (position:absolute),
+        "fixed": (position:fixed),
+        "pin-top": (top:0),
+        "pin-left": (left:0),
+        "pin-right": (right:0),
+        "pin-bottom": (bottom:0),
+        "pin-x": (
+			left:0,
+			right:0,
+		),
+        "pin-y": (
+			top:0,
+			bottom:0,
+		),
+        "z-under": (z-index:-1),
+        "z-top": (z-index:3),
+        "z-middle": (z-index:2),
+        "z-bottom": (z-index:1),
+        "z-root": (z-index:0),
+        "z-auto": (z-index:auto),
+    )
+) !default;
+
+@include build($posistioning);

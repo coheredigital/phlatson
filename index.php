@@ -25,7 +25,6 @@ try {
 
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
     echo $phlatson->execute(new Request());
-
     
 } catch (Exceptions\PhlatsonException $exception) {
     echo $exception->render($config);

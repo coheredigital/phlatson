@@ -1,6 +1,6 @@
 
 pre {
-	font-family: $font-monospace;
+	@include apply("font-monospace");
 	overflow: hidden;
 	
 	color: #999;
@@ -13,10 +13,8 @@ pre {
 	code {
 		overflow: hidden;
 		background: #fff;
-		font-family: $font-monospace;
+		@include apply("font-monospace");
 		padding: 1.5em;
-		border-radius: .5rem;
-		@include soft-shadow-large;
 		display: block;
 	}
 }
@@ -25,13 +23,13 @@ code.hljs {
 	
 	.hljs-attr,
 	.hljs-tag {
-		color: $brand;
+		@include apply("color-brand");
 	}
 	.hljs-string {
 		color: #000;
 	}
 	.hljs-number {
-		color: lighten($brand, 15%);
+		@include apply("color-brand-light");
 	}
 	.php {
 		color: #aaa;

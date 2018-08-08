@@ -1,0 +1,21 @@
+$registry: () !default;
+$build: true !default;
+
+// layout
+$container-width: 1130px !default;
+$gutter: 2rem !default;
+
+$colors: (
+    'brand': #20C882,
+    'gray': #999,
+    'white': #fff, 
+    'black': #000, 
+    'transparent': transparent
+) !default;
+
+$breakpoints: (
+    'mobile': 450px,
+    'tablet': 700px,
+    'desktop': 1000px,
+    'hd': 1400px,
+) !default;

@@ -1,0 +1,82 @@
+// forms and inputs
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    ::placeholder {
+        color: inherit;
+        font-family: inherit;
+    }
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none !important;
+}
+
+/* Forms & Inputs */
+fieldset {
+    border: 0;
+    padding: 0;
+}
+
+input,
+select,
+textarea {
+  font-size: 1rem;
+  line-height: inherit;
+  margin: 0;
+  padding: .5em;
+  outline: none !important;
+}
+input,
+select {
+  height: 2.4em;
+  width: 100%;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    height: auto;
+    width: auto !important;
+}
+
+legend{
+  font-size: 1rem;
+  margin: 2rem 0 .5rem;
+  display: block;
+  width: 100%;
+  padding: 0;
+}
+
+textarea {
+  max-width: 100%;
+  padding: 1rem;
+  line-height: 1em;
+  font-family: Verdana, Geneva, sans-serif;
+  height: auto;
+}
+
+textarea {
+  width: 100%;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  background: #fff;
+  border-color: inherit;
+}
+
+label {
+    line-height: 1em;
+    margin: 1.5rem 0 0.5rem 0;
+}
+label input,
+label select {
+  vertical-align: middle;
+}

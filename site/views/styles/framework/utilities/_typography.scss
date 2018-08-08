@@ -1,0 +1,74 @@
+$text-alignment : (
+    'prefix': null,
+    'responsive': true,
+    'definitions':  (
+        "text-center": (text-align: center),
+        "text-right": (text-align: right),
+        "text-left": (text-align: left),
+    )
+) !default;
+@include build($text-alignment);
+
+$text-styles : (
+    'prefix': null,
+    'responsive': false,
+    'definitions':  (
+        "uppercase": (text-transform: uppercase),
+        "lowercase": (text-transform: lowercase),
+        "normal-case": (text-transform: none),
+        "align-baseline": (vertical-align: baseline),
+        "align-top": (vertical-align: top),
+        "align-middle": (vertical-align: middle),
+        "align-bottom": (vertical-align: bottom),
+        "align-text-top": (vertical-align: text-top),
+        "align-text-bottom": (vertical-align: text-bottom),
+        "nowrap": (white-space: nowrap),
+
+        // font weights
+        "font-hairline": (font-weight: 100),
+        "font-thin": (font-weight: 200),
+        "font-light": (font-weight: 300),
+        "font-normal": (font-weight: 400),
+        "font-medium": (font-weight: 500),
+        "font-semibold": (font-weight: 600),
+        "font-bold": (font-weight: 700),
+        "font-extrabold": (font-weight: 800),
+        "font-black": (font-weight: 900),        
+
+        "truncate": (
+            overflow: hidden,
+            text-overflow: ellipsis,
+            white-space: nowrap,
+        ),
+        "text-shadow": (text-shadow: 0 .05em .15em rgba(0,0,0,.3)),
+        "text-shadow-large": ( 0 .05em .15em rgba(0,0,0,.3)),
+
+    )
+) !default;
+@include build($text-styles);
+
+$fonts : (
+    'prefix': "font-",
+    'responsive': false,
+    'property': font-family,
+    'values': (
+        'default': #{"Arial, sans-serif"},
+        'heading': #{"'Montserrat', sans-serif"},
+        'monospace': #{"'Courier New', monospace"}
+    )
+) !default;
+@include build($fonts);
+
+$font-sizes : (
+    'prefix': "size-",
+    'responsive': false,
+    'definitions': (
+        'h1': (font-size: 4rem),
+        'h2': (font-size: 2.4rem),
+        'h3': (font-size: 1.6rem),
+        'h4': (font-size: 1.2rem),
+        'h5': (font-size: 1rem),
+        'h6': (font-size: .8rem),
+    )
+) !default;
+@include build($font-sizes);

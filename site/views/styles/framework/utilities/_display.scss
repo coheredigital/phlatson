@@ -1,0 +1,43 @@
+
+$display : (
+    'prefix': null,
+    'responsive': true,
+    'definitions':  (
+        "hidden": (display: none),
+        "block": (display: block),
+        "inline-block": (display: inline-block),
+        "invisible": (visibility: hidden),
+    )
+) !default;
+@include build($display);
+
+$overflow : (
+    'prefix': null,
+    'responsive': false,
+    'definitions':  (
+        "overflow-hidden": (overflow: hidden),
+        "overflow-auto": (overflow: auto),
+    )
+) !default;
+@include build($overflow);
+
+// lists 
+.list-reset {
+    list-style: none;
+    padding-left: 0;
+}
+
+$opacity : (
+    'prefix': null,
+    'responsive': false,
+    'definitions':  (
+        "opacity-0": (opacity: 0),
+        "opacity-1\\/6": (opacity: (1/6)),
+        "opacity-1\\/4": (opacity: (1/4)),
+        "opacity-1\\/2": (opacity: (1/2)),
+        "opacity-3\\/4": (opacity: (3/4)),
+        "opacity-1": (opacity: 1),
+
+    )
+) !default;
+@include build($opacity);

@@ -9,7 +9,7 @@ var sassFiles = 'site/**/*.scss';
 // browser sync proxy server
 gulp.task('serve', function() {
     browserSync.init({
-        proxy: "flatbed.test:8888",
+        proxy: "phlatson.localhost",
         open: false,
         notify: false
     });

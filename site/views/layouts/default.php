@@ -18,7 +18,7 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
 </head>
 <body>
-    <div class="page-header">
+    <div class="page-header bg-brand color-white py2 mb2">
         <div class="container">
             <?= $view->render("/partials/breadcrumbs") ?>
             <h1><?= $page->get('title') ?></h1>
