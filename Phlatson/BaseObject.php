@@ -45,6 +45,7 @@ abstract class BaseObject extends Phlatson
 
     protected function folder()
     {
+        
         $value = \str_replace(ROOT_PATH, '', $this->path());
         $value = trim($value, "/");
         $value = $value ? "/$value/" : "/";
@@ -104,6 +105,7 @@ abstract class BaseObject extends Phlatson
     public function get(string $key)
     {
         switch ($key) {
+            // publicly expose file properties
             case 'name':
             case 'file':
             case 'filename':
@@ -113,7 +115,8 @@ abstract class BaseObject extends Phlatson
             case 'folder':
             case 'rootUrl':
             case 'url':
-                return $this->{$key}();
+                return $this->{$key}();               
+                break;
             default:
                 return null;
         }

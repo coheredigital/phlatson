@@ -2,8 +2,14 @@
 <div class="container">
 	<?php
 
+
+
+
+	r($models);
+	r($models->getFromPaths("page"));
+
+
 	$properties = [
-		'root',
 		'name',
 		'rootUrl',
 		'url',

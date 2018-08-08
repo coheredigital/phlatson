@@ -1,6 +1,6 @@
 <?php
-namespace Phlatson;
-class FieldtypeMarkdown extends FieldtypeText
+namespace Phlatson\Fieldtype\FieltypeMarkdown;
+class FieldtypeMarkdown extends Fieldtype
 {
 
     protected function setup()

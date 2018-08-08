@@ -19,10 +19,9 @@ abstract class DataObject extends BaseObject
         }
         $path = '/' . trim($path, '/') . '/';
 
-        $classname = (new \ReflectionClass($this))->getShortName();
+        $classname = $this->classname();
 
-        // $jsonData = $this->finder()->getType($classname, $path);
-        $jsonData = $this->finder()->getTypeData($classname, $path);
+        $jsonData = $this->api('finder')->getTypeData($classname, $path);
         $this->setData($jsonData);
     }
 

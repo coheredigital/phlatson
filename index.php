@@ -20,9 +20,17 @@ $exceptionHandler = new ErrorHandler();
 try {
 
     $phlatson = new Phlatson();
-    $phlatson->init(new Finder(__DIR__ . "/site/"));
+    $finder = new Finder(__DIR__ . "/site/");
+    $finder->addPath(__DIR__ . "/site/");
+    
     $phlatson->api("finder", new Finder(__DIR__ . "/site/"));
 
+    $models = new Finder();
+    $models->addPath("/site/models/");
+    $models->addPath("/Phlatson/data/models/");
+    $models->setType("Model");
+
+    $phlatson->api("models", $models);
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
     echo $phlatson->execute(new Request());
     

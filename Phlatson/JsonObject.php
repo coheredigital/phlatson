@@ -1,7 +1,7 @@
 <?php
 namespace Phlatson;
 
-class JsonObject extends BaseObject
+class JsonObject extends Phlatson
 {
 
     public $file;
@@ -10,7 +10,9 @@ class JsonObject extends BaseObject
 
     protected $data;
 
-    public function __construct(string $file ) {
+    protected $type;
+
+    public function __construct(string $file) {
         
         $this->file = $file;
         
@@ -22,6 +24,9 @@ class JsonObject extends BaseObject
         // setup some core properties
         $this->filename = basename($this->file);
         $this->path = dirname($this->file) . "/";
+        
+        // TODO: improve this, I don't like how I called to API
+        $this->folder = str_ireplace($this->api("finder")->root(),"",$this->path);
 
         $this->data = json_decode(file_get_contents($file), true);
 
