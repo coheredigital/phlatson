@@ -25,7 +25,11 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
     hljs.initHighlighting();
     </script>
     <div class="container">
-        <?= $view->render("/partials/site-navigation") ?>
+    <nav class="site-navigation">
+    <?php foreach ($page->children() as $p) : ?>
+        <a class="uppercase mr1 pt1 inline-block" href="<?= $p->url ?>"><?= $p->title ?></a>
+    <?php endforeach; ?>
+    </nav>
     </div>
 </body>
 </html>
