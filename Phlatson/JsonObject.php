@@ -50,7 +50,7 @@ class JsonObject extends Phlatson
                 return \filemtime($this->file);
                 break;
             default:
-                return $this->data[$key];
+                return $this->data[$key] ?? null;
                 break;
         }
         

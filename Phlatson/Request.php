@@ -50,7 +50,7 @@ class Request
         $this->userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
 
         // set params
-        $this->get = count($_COOKIES) ? $this->objectify($_COOKIES) : null;
+        $this->get = isset($_COOKIES) ? $this->objectify($_COOKIES) : null;
         $this->get = count($_GET) ? $this->objectify($_GET) : null;
         $this->post = count($_POST) ? $this->objectify($_POST) : null;
 

@@ -1,10 +1,10 @@
 <?php
 
-// declare (strict_types = 1);
+declare (strict_types = 1);
 
 namespace Phlatson;
 
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
 
 // define a few system contants
 const PHLATSON = 0001;
@@ -15,7 +15,11 @@ define("TEMP_PATH", ROOT_PATH . "temp/");
 
 // use composer autoloader
 require_once(ROOT_PATH . 'vendor/autoload.php');
-$exceptionHandler = new ErrorHandler();
+// $exceptionHandler = new ErrorHandler();
+
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
 
 try {
 
@@ -34,6 +38,6 @@ try {
     $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
     echo $phlatson->execute(new Request());
     
-} catch (Exceptions\PhlatsonException $exception) {
+} catch (Exception $exception) {
     echo $exception->render($config);
 }
