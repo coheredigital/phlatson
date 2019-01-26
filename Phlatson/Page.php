@@ -85,24 +85,16 @@ class Page extends DataObject
         // create empty collection
         $children = new ObjectCollection();
 
-        $folder_index = [];
-        // $folder_index = Filemanager::getData($this->folder, "index");
 
-        if (count($folder_index)) {
-            $children->import($folder_index);
-        } else {
-            $index_array = [];
-            $dir = new \FilesystemIterator($this->path);
-            foreach ($dir as $file) {
-                if ($file->isDir()) {
-                    $name = $file->getFilename();
-                    $url = "{$this->url}{$name}";
-                    $index_array[] = $url;
-                    $children->append($url);
-                }
+        $index_array = [];
+        $dir = new \FilesystemIterator($this->path);
+        foreach ($dir as $file) {
+            if ($file->isDir()) {
+                $name = $file->getFilename();
+                $url = "{$this->url}{$name}";
+                $index_array[] = $url;
+                $children->append($url);
             }
-
-            // Filemanager::saveData($index_array, $this->folder, "index");
         }
 
         $this->children = $children;

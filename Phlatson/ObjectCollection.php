@@ -17,7 +17,6 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
     {
         if ($item instanceof DataObject && !isset($this->files[$item->file])) {
             // files array ensures unique entries
-
             if (!$item->url) {
                 return;
             }
@@ -46,9 +45,6 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
         $this->collection += $collection;
         return $this;
     }
-
-
-
 
     public function limit(int $limit) : self
     {

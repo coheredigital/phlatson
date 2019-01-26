@@ -8,9 +8,6 @@ define('ROOT_URL', "/");
 
 // pre includes some default core file for Phlatson
 // files / class that will be REQUIRED for every single request
-
-
-
 require_once CORE_PATH . '_functions.php';
 
 // check for composer autoloader

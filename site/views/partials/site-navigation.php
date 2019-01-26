@@ -1,6 +1,8 @@
 <?php 
 namespace Phlatson;
+
 $home = new Page('/');
+
 ?>
 <nav class="site-navigation">
 <?php foreach ($home->children() as $p) : ?>
