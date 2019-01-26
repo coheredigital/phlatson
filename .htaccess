@@ -3,8 +3,6 @@
 Options -Indexes
 Options +FollowSymLinks
 
-
-
 # Default directory index
 DirectoryIndex index.php
 
@@ -22,6 +20,12 @@ DirectoryIndex index.php
   # RewriteCond %{REQUEST_FILENAME} !-f
   # RewriteRule ^(.*)([^/])$  /$1$2/ [L,R=301]
   # RewriteBase /
+
+
+  # capture image sizer requests
+  # RewriteRule "^img/(.+)" image-sizer.php  [R,L]
+  RewriteRule ^img/(.*)$ /image-sizer.php?image=$1 [QSA,L]
+	# RewriteRule ^(.*)$ image-sizer.php [L,QSA]
 
   # Lets Encrypt support
   RewriteRule "(^|/)\.(?!well-known)" - [F]
