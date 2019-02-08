@@ -6,7 +6,10 @@
 			"required": true
 		},
 		"content": {},
-		"markdown": {},
+		"markdown": {
+			"fieldtype": "FieldtypeMarkdown",
+			"required": true
+		},
 		"files": {},
 		"date": {
 			"fieldtype": "FieldtypeDatetime",
