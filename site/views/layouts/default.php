@@ -1,9 +1,6 @@
 <?php
 
 namespace Phlatson;
-
-
-$debugbarRenderer = $debugbar->getJavascriptRenderer();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +24,5 @@ $debugbarRenderer = $debugbar->getJavascriptRenderer();
     </div>
 	<?= $output ?>
     </div>
-    <?= $debugbarRenderer->renderHead() ?>
-    <?= $debugbarRenderer->render() ?>
 </body>
 </html>

@@ -57,6 +57,7 @@ class Phlatson
         $template = $page->template;
         $view = $template->view;
 
+        $this->api('request', $request);
         $this->api('page', $page);
         $this->api('template', $template);
         $this->api('view', $view);

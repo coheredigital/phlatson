@@ -1,6 +1,6 @@
 <?php
 
-// declare (strict_types = 1);
+declare (strict_types = 1);
 
 namespace Phlatson;
 
@@ -31,7 +31,7 @@ try {
     $models->setType("Model");
 
     $phlatson->api("models", $models);
-    $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
+
     echo $phlatson->execute(new Request());
     
 } catch (Exceptions\PhlatsonException $exception) {
