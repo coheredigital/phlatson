@@ -29,13 +29,13 @@ try {
     
     $phlatson->api("finder", new Finder(__DIR__ . "/site/"));
 
-    $models = new Finder();
-    $models->addPath("/site/models/");
-    $models->addPath("/Phlatson/data/models/");
-    $models->setType("Model");
+    // $models = new Finder();
+    // $models->addPath("/site/models/");
+    // $models->addPath("/Phlatson/data/models/");
+    // $models->setType("Model");
 
     $phlatson->api("models", $models);
-    $phlatson->api('debugbar', new \DebugBar\StandardDebugBar());
+
     echo $phlatson->execute(new Request());
     
 } catch (Exception $exception) {

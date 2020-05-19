@@ -11,6 +11,7 @@ abstract class DataObject extends BaseObject
     // main data container, holds data loaded from JSON file
     protected $data;
     protected $formattedData = [];
+    protected $fields = [];
 
     public function __construct($path = null)
     {
@@ -64,6 +65,9 @@ abstract class DataObject extends BaseObject
                 return $this->template();
             default:
                 if ($this->data && $this->data($key)) {
+
+                    $field = new Field($key);
+
                     return $this->data($key);
                 }
                 break;

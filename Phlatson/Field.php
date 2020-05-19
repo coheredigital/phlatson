@@ -1,11 +1,11 @@
 <?php
 namespace Phlatson;
-class Field extends BaseObject
+class Field extends DataObject
 {
 
-    public function __construct(array $fieldDefinition)
+    public function type()
     {
-        
+        $type = $this->fieldtype;
     }
 
 }

@@ -8,13 +8,13 @@ class FieldtypeMarkdown extends Fieldtype
         require_once "Parsedown.php";
     }
 
-    public function output($value)
+    public function decode($value)
     {
         $parsedown = new \Parsedown;
         return $parsedown->text($value);
     }
 
-    public function set($value)
+    public function encode($value)
     {
         return trim($value);
     }
