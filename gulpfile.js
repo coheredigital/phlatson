@@ -3,7 +3,6 @@ const gulp = require("gulp");
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
 const cleanCSS = require("gulp-clean-css");
-const del = require("del");
 const pump = require("pump");
 const rename = require("gulp-rename");
 var browserSync = require('browser-sync').create();
@@ -25,9 +24,6 @@ gulp.task("build:styles", function (callback) {
             }),
             autoprefixer(),
             gulp.dest(cssFilesDestination),
-            cleanCSS(),
-            rename({ extname: '.min.css' }),
-            gulp.dest(cssFilesDestination)
         ],
         callback
     );

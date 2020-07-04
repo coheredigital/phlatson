@@ -1,4 +1,4 @@
-$positioning : (
+$posistioning : (
     'responsive': true,
     'pseudo': true,
     'definitions':  (
@@ -56,7 +56,7 @@ $positioning : (
     )
 ) !default;
 
-@include register($positioning);
+@include register($posistioning);
 
 
 $transform : (
