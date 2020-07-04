@@ -43,8 +43,6 @@ Thumbs.db
 /vendor
 /vendor/*
 
-#CMS Assets
-cache/*
-assets/*
-libraries/*
+#IDEs
 .vscode/*
+.idea/*
