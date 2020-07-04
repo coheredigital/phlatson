@@ -1,34 +1,65 @@
-var gulp = require('gulp'),
-  sass = require('gulp-sass'),
-  autoprefixer = require('gulp-autoprefixer');
-
+// PLUGINS
+const gulp = require("gulp");
+const sass = require("gulp-sass");
+const autoprefixer = require("gulp-autoprefixer");
+const cleanCSS = require("gulp-clean-css");
+const del = require("del");
+const pump = require("pump");
+const rename = require("gulp-rename");
 var browserSync = require('browser-sync').create();
 
-var sassFiles = 'site/**/*.scss';
+// FILES
+var scssFiles = "site/views/styles/**/*.scss";
+var scssIncludePaths = ["site/views/styles/"];
+var cssFilesDestination = "site/views/styles/";
+var phpFiles = "site/views/**/*.php";
 
-// browser sync proxy server
-gulp.task('serve', function () {
-  browserSync.init({
-    proxy: "phlatson.localhost",
-    open: false,
-    notify: false
-  });
-  gulp.watch(sassFiles, ['sass']);
+gulp.task("cleanup:styles", function () {
+    return del(cssFilesDestination);
 });
 
-
-gulp.task('sass', function () {
-  return gulp.src(sassFiles)
-    .pipe(sass({
-      outputStyle: "compressed",
-      errLogToConsole: true,
-    }).on('error', sass.logError))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .pipe(gulp.dest('site/.'))
-    .pipe(browserSync.stream());
+gulp.task("build:styles", function (callback) {
+    pump(
+        [
+            gulp.src(scssFiles),
+            sass({
+                errLogToConsole: false,
+                includePaths: scssIncludePaths
+            }),
+            autoprefixer(),
+            gulp.dest(cssFilesDestination),
+            cleanCSS(),
+            rename({ extname: '.min.css' }),
+            gulp.dest(cssFilesDestination)
+        ],
+        callback
+    );
 });
 
-gulp.task('default', ['serve']);
+gulp.task(
+    "build",
+    gulp.series(
+        "cleanup:styles",
+        "build:styles"
+    )
+);
+
+gulp.task("sync", function () {
+
+    // sync in browser
+    browserSync.init({
+        proxy: "http://mediatool.localhost/",
+        open: false,
+        notify: false
+    });
+
+    // auto build
+    gulp.watch(scssFiles, gulp.series("build:styles"));
+    gulp.watch(phpFiles).on('change', browserSync.reload);
+});
+
+class FrameworkExtractor {
+    static extract(content) {
+        return content.match(/[A-Za-z0-9-_:\/]+/g) || [];
+    }
+}
