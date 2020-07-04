@@ -8,14 +8,14 @@ namespace Phlatson;
  *      example for this case a Page, located at
  *      /site/pages/about-us/our-team/jane-doe/data.json
  * 
- *      $file = "/site/pages/about-us/our-team/jane-doe"
- *      the full path relative to the site root, minus filename
+ *      $file = "/site/pages/about-us/our-team/jane-doe/data.json"
+ *      the full path relative to the site root including filename
  * 
  *      $path = "/site/pages/about-us/our-team/jane-doe"
  *      the full path relative to the site root, minus filename
  * 
  *      $url = "/about-us/our-team/jane-doe"
- *      web accesible URL
+ *      web accessible URL
  * 
  *      $folder = "/about-us/our-team/jane-doe"
  *      path relative to other objects of this type

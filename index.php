@@ -23,19 +23,13 @@ $whoops->register();
 
 try {
 
+
     $phlatson = new Phlatson();
+    
     $finder = new Finder(__DIR__ . "/site/");
     $finder->addPath(__DIR__ . "/site/");
+    $phlatson->api("finder", $finder);
     
-    $phlatson->api("finder", new Finder(__DIR__ . "/site/"));
-
-    $models = new Finder();
-    $models->addPath("/site/models/");
-    $models->addPath("/Phlatson/data/models/");
-    $models->setType("Model");
-
-    $phlatson->api("models", $models);
-
     echo $phlatson->execute(new Request());
     
 } catch (Exception $exception) {
