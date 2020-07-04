@@ -14,9 +14,6 @@ var scssIncludePaths = ["site/views/styles/"];
 var cssFilesDestination = "site/views/styles/";
 var phpFiles = "site/views/**/*.php";
 
-gulp.task("cleanup:styles", function () {
-    return del(cssFilesDestination);
-});
 
 gulp.task("build:styles", function (callback) {
     pump(
@@ -39,7 +36,6 @@ gulp.task("build:styles", function (callback) {
 gulp.task(
     "build",
     gulp.series(
-        "cleanup:styles",
         "build:styles"
     )
 );
