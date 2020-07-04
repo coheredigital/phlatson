@@ -3,15 +3,6 @@
   "version": "1.0.0",
   "description": "NFT Main Site",
   "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://aspruijt@bitbucket.org/aspruijt/main-website.git"
-  },
   "author": "",
   "license": "ISC",
   "homepage": "https://bitbucket.org/aspruijt/main-website#readme",
@@ -24,16 +15,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-purgecss": "^1.1.1",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2",
-    "gulp-uglify-es": "^2.0.0",
-    "moon": "1.0.0-beta.4",
-    "moon-compiler": "1.0.0-beta.4",
-    "node-sass": "^4.13.1",
-    "pump": "^3.0.0",
-    "rollup": "^2.3.1",
-    "rollup-plugin-buble": "^0.19.8",
-    "rollup-plugin-moon": "^0.1.0"
+    "gulp-sass": "^4.0.2"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",

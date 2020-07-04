@@ -27,12 +27,12 @@ sftp-config.json
 *.sublime-workspace
 gulpfile.js
 
-# Deployer
-deploy.php
-
-# Docker
-docker-compose.yml
-__docker
+# OS Generated
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
 
 # Node Modules
 /node_modules
