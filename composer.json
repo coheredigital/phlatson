@@ -1,5 +1,5 @@
 {
-    "name": "Phlatson/Phlatson",
+    "name": "phlatson/phlatson",
     "type": "library",
     "description": "Phlatson CMS",
     "keywords": ["phlatson", "cms", "cmf", "content management system", "flat file", "JSON"],
