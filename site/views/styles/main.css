@@ -110,21 +110,6 @@ BUTTONS
     pointer-events: none !important;
     background: #999 !important; }
 
-.button-blue {
-  background-image: linear-gradient(120deg, #84d0de, #9cc8e5); }
-  .button-blue:hover {
-    background-image: linear-gradient(120deg, #9cd8e5, #b8d9ec); }
-
-.button-purple {
-  background-image: linear-gradient(120deg, #c24bae, #c962a0); }
-  .button-purple:hover {
-    background-image: linear-gradient(120deg, #c962b7, #d27cb2); }
-
-.button-red {
-  background-image: linear-gradient(120deg, #df3154, #e3504b); }
-  .button-red:hover {
-    background-image: linear-gradient(120deg, #e34b68, #e86c6a); }
-
 .button-green {
   background-image: linear-gradient(120deg, #15c441, #18e078); }
   .button-green:hover {
@@ -140,27 +125,3 @@ BUTTONS
   color: #000000 !important; }
   .button-white:hover {
     background-image: linear-gradient(120deg, white, white); }
-
-.dz-success .dz-progress {
-  opacity: 0;
-  -webkit-transform: translateY(2rem);
-          transform: translateY(2rem); }
-
-.dz-success .dz-ready {
-  -webkit-transform: translateX(0);
-          transform: translateX(0); }
-
-.dz-success .dz-upload {
-  background-color: #13b24d; }
-
-.dz-success .dz-details {
-  -webkit-transform: translateY(0);
-          transform: translateY(0); }
-
-.dz-drag-hover {
-  background: #fff;
-  -webkit-box-shadow: 0 0.25rem 0.75rem -0.25rem rgba(0, 0, 0, 0.15);
-          box-shadow: 0 0.25rem 0.75rem -0.25rem rgba(0, 0, 0, 0.15); }
-
-.uppy-Dashboard-poweredBy {
-  display: none !important; }

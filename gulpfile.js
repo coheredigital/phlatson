@@ -2,9 +2,7 @@
 const gulp = require("gulp");
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
-const cleanCSS = require("gulp-clean-css");
 const pump = require("pump");
-const rename = require("gulp-rename");
 var browserSync = require('browser-sync').create();
 
 // FILES
@@ -40,7 +38,7 @@ gulp.task("sync", function () {
 
     // sync in browser
     browserSync.init({
-        proxy: "http://mediatool.localhost/",
+        proxy: "http://phlatson.localhost/",
         open: false,
         notify: false
     });

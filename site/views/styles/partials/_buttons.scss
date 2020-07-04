@@ -1,5 +1,5 @@
 
-@mixin button-gradient($color: $green) {
+@mixin button-gradient($color) {
 
     $bg: lighten($color,4%);
     $bg: adjust-hue($bg, -7);
@@ -8,7 +8,7 @@
     @include linear-gradient(120deg, $bg, $blend);
 }
 
-@mixin button-gradient-hover($color: $green) {
+@mixin button-gradient-hover($color) {
 
     $bg: lighten($color,10%);
     $bg: adjust-hue($bg, -6);
@@ -59,30 +59,14 @@ BUTTONS
         background: color('gray') !important;
     }
 }
-.button-blue {
-    @include button-gradient( color('blue') );
-    &:hover {
-        @include button-gradient-hover( color('blue') );
-    }
-}
-.button-purple {
-    @include button-gradient( color('purple') );
-    &:hover {
-        @include button-gradient-hover( color('purple') );
-    }
-}
-.button-red {
-    @include button-gradient( color('red') );
-    &:hover {
-        @include button-gradient-hover( color('red') );
-    }
-}
+
 .button-green {
     @include button-gradient( color('green') );
     &:hover {
         @include button-gradient-hover( color('green') );
     }
 }
+
 .button-gray {
     @include button-gradient( color('gray') );
     &:hover {
