@@ -31,7 +31,10 @@ $fonts : (
 
 
 // import framwork
-@import "framework/framework";
+@import "framework/reset";
+@import "framework/init";
+
+@include build();
 
 // import partials
 @import "partials/base";

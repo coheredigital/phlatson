@@ -4,6 +4,7 @@
 
   @return $is-keyword or $is-angle;
 }
+
 @function legacy-direction($value) {
   @if is-direction($value) == false {
     @error "Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be a direction.";
@@ -63,6 +64,20 @@
     }
 }
 
+@function color($name) {
+    @if $name {
+        @return map_get($colors, $name);
+    }
+}
+
+@function contrast($color) {
+    @if (lightness($color) > 50) {
+        @return #000000; // Lighter backgorund, return dark color
+    } @else {
+        @return #ffffff; // Darker background, return light color
+    }
+}
+
 @mixin linear-gradient($direction, $color-stops...) {
     // Direction has been omitted and happens to be a color-stop
     @if is-direction($direction) == false {
@@ -70,9 +85,9 @@
         $direction: 180deg;
     }
 
-    background: nth(nth($color-stops, 1), 1);
+    // background-image: nth(nth($color-stops, 1), 1);
     // background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
-    background: linear-gradient($direction, $color-stops);
+    background-image: linear-gradient($direction, $color-stops);
 }
 
 @mixin linear-gradient-border($direction, $color-stops...) {

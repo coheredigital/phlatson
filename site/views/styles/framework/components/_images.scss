@@ -1,41 +1,30 @@
-@mixin pseudo-image-aspect ($width: 1, $height: 1, $breakpoint: '') {
+$aspects : (
+    'prefix': "aspect-",
+    'responsive': true,
+    'definitions':  (
+        "auto": (padding-top : 0),
+        "1x1": (padding-top : percentage(1/1)),
+        "2x1": (padding-top : percentage(1/2)),
+        "1x2": (padding-top : percentage(2/1)),
+        "1x3": (padding-top : percentage(3/1)),
+        "3x1": (padding-top : percentage(1/3)),
+        "4x1": (padding-top : percentage(1/4)),
+        "3x2": (padding-top : percentage(2/3)),
+        "5x2": (padding-top : percentage(2/5)),
+        "5x3": (padding-top : percentage(3/5)),
+        "4x3": (padding-top : percentage(3/4)),
+        "5x4": (padding-top : percentage(4/5)),
+        "4x5": (padding-top : percentage(5/4)),
+        "2x3": (padding-top : percentage(3/2)),
+        "16x9": (padding-top : percentage(9/16)),
+    )
+) !default;
+@include register($aspects);
 
-    $class: ".aspect-" + $width + "x" + $height;
-
-    @if $breakpoint != '' {
-        $class: ".#{$breakpoint}\\:aspect-" + $width + "x" + $height;
-    }
-
-    #{$class} {
-        padding-top: percentage($height/$width);
-    }
-}
-
-@mixin default-pseudo-image-aspects($breakpoint:'') {
-    @include pseudo-image-aspect(1,1,$breakpoint);
-    @include pseudo-image-aspect(2,1,$breakpoint);
-    @include pseudo-image-aspect(3,1,$breakpoint);
-    @include pseudo-image-aspect(3,2,$breakpoint);
-    @include pseudo-image-aspect(4,3,$breakpoint);
-    @include pseudo-image-aspect(5,4,$breakpoint);
-}
-.pseudo-image {
-    background-size: cover !important;
-    background-position: center !important;
-    width: 100%;
-    display: block;
-    
-
-    // loop through breakpoints to create responsive image aspects
-    // class="pseudo-image -aspect-1x1" (sqaure image)
-
-
-}
-
-@include default-pseudo-image-aspects;
-
-@each $name, $width in $breakpoints {
-    @include media($name) {
-        @include default-pseudo-image-aspects($name);
-    }
-}
+$fit : (
+    'definitions': (
+        "object-contain": (object-fit: contain),
+        "object-cover": (object-fit: cover),
+    )
+) !default;
+@include register($fit);

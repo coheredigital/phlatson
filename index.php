@@ -23,13 +23,10 @@ $whoops->register();
 
 try {
 
-
     $phlatson = new Phlatson();
-    
     $finder = new Finder(__DIR__ . "/site/");
     $finder->addPath(__DIR__ . "/site/");
     $phlatson->api("finder", $finder);
-    
     echo $phlatson->execute(new Request());
     
 } catch (Exception $exception) {

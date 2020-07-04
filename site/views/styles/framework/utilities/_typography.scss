@@ -1,18 +1,30 @@
-$text-alignment : (
-    'prefix': null,
+$text-align : (
     'responsive': true,
     'definitions':  (
         "text-center": (text-align: center),
         "text-right": (text-align: right),
         "text-left": (text-align: left),
+        "balance-text" : (text-wrap: balance),
     )
 ) !default;
-@include build($text-alignment);
+@include register($text-align);
+
+$text-decoration : (
+    'responsive': true,
+    'hover': true,
+    'definitions':  (
+        "underline": (text-decoration: underline),
+        "line-through": (text-decoration: line-through),
+        "no-underline": (text-decoration: none),
+    )
+) !default;
+@include register($text-decoration);
 
 $text-styles : (
-    'prefix': null,
-    'responsive': false,
+    'responsive': true,
     'definitions':  (
+        "italic": (font-style: italic),    
+        "not-italic": (font-style: normal),
         "uppercase": (text-transform: uppercase),
         "lowercase": (text-transform: lowercase),
         "normal-case": (text-transform: none),
@@ -22,7 +34,15 @@ $text-styles : (
         "align-bottom": (vertical-align: bottom),
         "align-text-top": (vertical-align: text-top),
         "align-text-bottom": (vertical-align: text-bottom),
+
+        "whitespace-normal": (white-space: normal),
+        "whitespace-pre": (white-space: pre),
         "nowrap": (white-space: nowrap),
+        "break-words":	(
+            word-wrap: break-word,
+        ),
+        "break-all":	(word-break: break-all),
+        "break-normal":	(word-wrap: normal),
 
         // font weights
         "font-hairline": (font-weight: 100),
@@ -33,42 +53,65 @@ $text-styles : (
         "font-semibold": (font-weight: 600),
         "font-bold": (font-weight: 700),
         "font-extrabold": (font-weight: 800),
-        "font-black": (font-weight: 900),        
+        "font-black": (font-weight: 900),
+        
+        // line heights
+        "leading-condensed": (line-height: .65),        
+        "leading-none": (line-height: 1),        
+        "leading-tight": (line-height: 1.2),        
+        "leading-normal": (line-height: 1.6),        
+        "leading-loose": (line-height: 2.2),
 
+        // line heights
+        "leading-60": (line-height: .60),        
+        "leading-70": (line-height: .70),        
+        "leading-80": (line-height: .80),        
+        "leading-90": (line-height: .90),        
+        "leading-100": (line-height: 1),        
+        "leading-120": (line-height: 1.2),        
+        "leading-140": (line-height: 1.4),        
+        "leading-160": (line-height: 1.6),        
+        "leading-180": (line-height: 1.8),        
+        "leading-200": (line-height: 2),        
+        "leading-220": (line-height: 2.2),    
+
+        "list-reset": (
+            list-style: none!important,
+            padding-left: 0
+        ),    
+        
         "truncate": (
             overflow: hidden,
             text-overflow: ellipsis,
             white-space: nowrap,
         ),
         "text-shadow": (text-shadow: 0 .05em .15em rgba(0,0,0,.3)),
-        "text-shadow-large": ( 0 .05em .15em rgba(0,0,0,.3)),
+        "text-shadow-large": (text-shadow: 0 .05em .3em rgba(0,0,0,.2)),
 
     )
 ) !default;
-@include build($text-styles);
+@include register($text-styles);
 
 $fonts : (
-    'prefix': "font-",
-    'responsive': false,
-    'property': font-family,
-    'values': (
-        'default': #{"Arial, sans-serif"},
-        'heading': #{"'Montserrat', sans-serif"},
-        'monospace': #{"'Courier New', monospace"}
-    )
-) !default;
-@include build($fonts);
-
-$font-sizes : (
-    'prefix': "size-",
     'responsive': false,
     'definitions': (
-        'h1': (font-size: 4rem),
-        'h2': (font-size: 2.4rem),
-        'h3': (font-size: 1.6rem),
-        'h4': (font-size: 1.2rem),
-        'h5': (font-size: 1rem),
-        'h6': (font-size: .8rem),
+        'font-default': (font-family: #{"Arial, sans-serif"}),
+        'font-heading': (font-family: #{"'Montserrat', sans-serif"}),
+        'font-monospace': (font-family: #{"'Courier New', monospace"})
     )
 ) !default;
-@include build($font-sizes);
+@include register($fonts);
+
+$font-sizes : (
+    'responsive': true,
+    'pseudo': true,
+    'definitions': (
+        'size-h1': (font-size: 4rem),
+        'size-h2': (font-size: 2.4rem),
+        'size-h3': (font-size: 1.6rem),
+        'size-h4': (font-size: 1.2rem),
+        'size-h5': (font-size: 1rem),
+        'size-h6': (font-size: .8rem),
+    )
+) !default;
+@include register($font-sizes);

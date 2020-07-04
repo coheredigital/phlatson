@@ -1,0 +1,22 @@
+// default config
+@import './config';
+
+// primary functions and tools
+@import './tools/methods';
+@import './tools/mixins';
+
+// components
+@import './components/grid';
+@import './components/images';
+
+// utilities need to have the power to override components
+@import './utilities/sizing';
+@import './utilities/spacing';
+@import './utilities/position';
+@import './utilities/display';
+@import './utilities/flexbox';
+@import './utilities/typography';
+@import './utilities/decoration';
+@import './utilities/colors';
+@import './utilities/pseudo-elements';
+

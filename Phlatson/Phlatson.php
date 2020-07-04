@@ -30,9 +30,6 @@ class Phlatson
         }
     }
 
-
-
-
     final public function classname(bool $full = false)
     {
         if ($full) {

@@ -1,22 +1,52 @@
-$posistioning : (
-    'prefix': null,
+$positioning : (
     'responsive': true,
+    'pseudo': true,
     'definitions':  (
         "relative": (position:relative),
         "absolute": (position:absolute),
         "fixed": (position:fixed),
+        "static": (position:static),
         "pin-top": (top:0),
         "pin-left": (left:0),
         "pin-right": (right:0),
         "pin-bottom": (bottom:0),
+
+        "push-top": (top:100%),
+        "push-left": (left:100%),
+        "push-right": (right:100%),
+        "push-bottom": (bottom:100%),
+        
         "pin-x": (
 			left:0,
 			right:0,
-		),
+        ),
+        
         "pin-y": (
 			top:0,
 			bottom:0,
 		),
+        "pin-all": (
+			top:0,
+			bottom:0,
+			left:0,
+			right:0,
+		),
+        "pin-none": (
+			top:auto,
+			bottom:auto,
+			left:auto,
+			right:auto,
+        ),
+        
+        "center-y": (
+			top: 50%,
+			transform: translateY(-50%),
+        ),
+        "center-x": (
+			left: 50%,
+			transform: translateX(-50%),
+        ),
+
         "z-under": (z-index:-1),
         "z-top": (z-index:3),
         "z-middle": (z-index:2),
@@ -26,4 +56,88 @@ $posistioning : (
     )
 ) !default;
 
-@include build($posistioning);
+@include register($positioning);
+
+
+$transform : (
+    'responsive': false,
+    'hover': true,
+    'definitions':  (
+
+        "translateX0": (transform: translateX(0)),
+
+        "translateX1": (transform: translateX(1rem)),
+        "translateX2": (transform: translateX(2rem)),
+        "translateX4": (transform: translateX(4rem)),
+        "translateX6": (transform: translateX(6rem)),
+        "translateX8": (transform: translateX(8rem)),
+        "translateX16": (transform: translateX(16rem)),
+
+        "translateX-1": (transform: translateX(-1rem)),
+        "translateX-2": (transform: translateX(-2rem)),
+        "translateX-4": (transform: translateX(-4rem)),
+        "translateX-6": (transform: translateX(-6rem)),
+        "translateX-8": (transform: translateX(-8rem)),
+        "translateX-16": (transform: translateX(-8rem)),
+
+        "translateY0": (transform: translateY(0)),
+
+        "translateY1": (transform: translateY(1rem)),
+        "translateY2": (transform: translateY(2rem)),
+        "translateY4": (transform: translateY(4rem)),
+        "translateY6": (transform: translateY(6rem)),
+        "translateY8": (transform: translateY(8rem)),
+
+        "translateY-1": (transform: translateY(-1rem)),
+        "translateY-2": (transform: translateY(-2rem)),
+        "translateY-4": (transform: translateY(-4rem)),
+        "translateY-6": (transform: translateY(-6rem)),
+        "translateY-8": (transform: translateY(-8rem)),
+
+        "translateZ2": (transform: translateZ(2rem)),
+        "translateZ1": (transform: translateZ(1rem)),
+        "translateZ-1": (transform: translateZ(-1rem)),
+        "translateZ-2": (transform: translateZ(-2rem)),
+        "translateZ-4": (transform: translateZ(-4rem)),
+
+        "preserve3D": (transform-style: preserve-3d),
+
+        "scale110": (transform: scale(1.1)),
+        "scale105": (transform: scale(1.05)),
+        "scale95": (transform: scale(.95)),
+        "scale90": (transform: scale(.90)),
+
+        "rotate15": (transform: rotate(15deg)),
+        "rotate30": (transform: rotate(30deg)),
+        "rotate45": (transform: rotate(45deg)),
+        "rotate60": (transform: rotate(60deg)),
+        "rotate75": (transform: rotate(75deg)),
+        "rotate90": (transform: rotate(90deg)),
+        "rotate105": (transform: rotate(105deg)),
+        "rotate120": (transform: rotate(120deg)),
+        "rotate135": (transform: rotate(135deg)),
+        "rotate150": (transform: rotate(150deg)),
+        "rotate165": (transform: rotate(165deg)),
+        "rotate180": (transform: rotate(180deg)),
+
+        "rotate-15": (transform: rotate(-15deg)),
+        "rotate-30": (transform: rotate(-30deg)),
+        "rotate-45": (transform: rotate(-45deg)),
+        "rotate-60": (transform: rotate(-60deg)),
+        "rotate-75": (transform: rotate(-75deg)),
+        "rotate-90": (transform: rotate(-90deg)),
+        "rotate-105": (transform: rotate(-105deg)),
+        "rotate-120": (transform: rotate(-120deg)),
+        "rotate-135": (transform: rotate(-135deg)),
+        "rotate-150": (transform: rotate(-150deg)),
+        "rotate-165": (transform: rotate(-165deg)),
+        "rotate-180": (transform: rotate(-180deg)),
+
+
+        "popup": (
+            transform:scale(1.04) translateY(-.35rem),
+        ),
+    )
+) !default;
+
+@include register($transform);

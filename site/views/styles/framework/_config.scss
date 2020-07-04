@@ -1,4 +1,15 @@
-$registry: () !default;
+
+$classRegistry: () !default;
+$buildRegistry: () !default;
+
+$registrySets: (
+    "default": (),
+    "responsive": (),
+    "hover": (),
+    "pseudo": (),
+    "print": (),
+);
+
 $build: true !default;
 
 // layout
@@ -10,12 +21,13 @@ $colors: (
     'gray': #999,
     'white': #fff, 
     'black': #000, 
-    'transparent': transparent
+    'transparent': transparent,
+    'inherit': inherit
 ) !default;
 
-$breakpoints: (
-    'mobile': 450px,
-    'tablet': 700px,
-    'desktop': 1000px,
-    'hd': 1400px,
+$breakpoints:  (
+    'sm': 550px,
+    'md': 768px,
+    'lg': 1024px,
+    'xl': 1280px
 ) !default;

@@ -1,42 +1,59 @@
-@mixin grid {
-    display: flex;
-    flex: 0 1 auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    @if ($gutter !=0) {
-        margin-left: (-$gutter/2);
-        margin-right: (-$gutter/2);
-        >.column, 
-        >[class*="column-"] {
-            padding: $gutter/2;
-        }
-    }
-}
+.container {
+    max-width: $container-width;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 100%;
+    padding: 0 1rem;
+    @include media('tablet') {
+      padding: 0 2rem;
 
-@mixin grid-width ($units: 12) {
-    width: 100% / (12/$units);
+    }
 }
 
 .container {
     &.grid {
         padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+        @include media("tablet") {
+            padding: 0 1rem;
+        }
+    }
+}
+.container-wide {
+    padding: 0 1rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    @include media("tablet") {
+        padding: 0 $gutter;
+    }
+    &.grid {
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
         @include media("phablet") {
             padding: 0 1rem;
         }
     }
 }
-
-.container-wide {
-    &.grid {
-        padding: 0;
-        @include media("phablet") {
-            padding: 0 1rem;
-        }
+.container-max {
+    @include media("hd") {
+        max-width: 1600px;
     }
 }
 
 .grid {
-    @include grid;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: (-$gutter/4);    
+    @include media("tablet") {
+        margin: (-$gutter/2);
+    }
+
     &.-no-gutter {
         margin: 0;
         padding: 0;
@@ -58,7 +75,13 @@
 
 
 // columns
-.column {
+.column { 
+    
+    padding: $gutter/4;
+    @include media("tablet") {
+        padding: $gutter/2;
+    }
+    
     width: 100%;
     max-width: 100%;
     flex: 0 0 auto;
