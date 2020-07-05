@@ -6,7 +6,7 @@ namespace Phlatson;
 
 // error_reporting(E_ALL);
 
-// define a few system contants
+// define a few system constants
 const PHLATSON = 0001;
 
 define("ROOT_PATH", str_replace(DIRECTORY_SEPARATOR, "/", __DIR__ . "/"));
@@ -29,6 +29,6 @@ try {
     $phlatson->api("finder", $finder);
     echo $phlatson->execute(new Request());
     
-} catch (Exception $exception) {
-    echo $exception->render($config);
+} catch (\Exception $exception) {
+    echo $exception;
 }
