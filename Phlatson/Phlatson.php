@@ -16,9 +16,6 @@ class Phlatson
      * @param $value
      * @throws Exception
      */
-
-    final public $finder;
-
     final public function api(string $name = null, $value = null, bool $lock = false)
     {
         if (!is_null($name) && !is_null($value)) {
@@ -33,38 +30,12 @@ class Phlatson
         }
     }
 
-    // final public function classname(bool $full = false)
-    // {
-    //     if ($full) {
-    //         return __CLASS__;
-    //     }
-    //     return (new \ReflectionClass($this))->getShortName();
-    // }
-
-    /**
-     * Runs the request, checks that a Page has been set
-     *
-     * @param Request $request
-     */
-    public function execute(Request $request)
+    final public function classname(bool $full = false)
     {
-
-        $this->request = $request;
-
-        // determine the requested page
-        $url = $request->url;
-        $page = new Page($url);
-        $template = $page->template;
-        $view = $template->view;
-
-        $this->api('request', $request);
-        $this->api('page', $page);
-        $this->api('template', $template);
-        $this->api('view', $view);
-
-        if ($view instanceof View) {
-            return $view->render();
+        if ($full) {
+            return __CLASS__;
         }
+        return (new \ReflectionClass($this))->getShortName();
     }
 
 }

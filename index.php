@@ -4,8 +4,6 @@ declare (strict_types = 1);
 
 namespace Phlatson;
 
-// error_reporting(E_ALL);
-
 // define a few system constants
 const PHLATSON = 0001;
 
@@ -15,7 +13,6 @@ define("TEMP_PATH", ROOT_PATH . "temp/");
 
 // use composer autoloader
 require_once(ROOT_PATH . 'vendor/autoload.php');
-// $exceptionHandler = new ErrorHandler();
 
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
@@ -24,10 +21,35 @@ $whoops->register();
 try {
 
     $phlatson = new Phlatson();
-    $finder = new Finder(__DIR__ . "/site/");
-    $finder->addPath(__DIR__ . "/site/");
+
+    $finder = new Finder(__DIR__);
+    $finder->addPathMapping("Page", "/site/pages/");
+    $finder->addPathMapping("Template", "/site/templates/");
+    $finder->addPathMapping("Field", "/site/fields/");
+    $finder->addPathMapping("Config", '/site/config/');
+    $finder->addPathMapping("Config", '/Phlatson/data/config/');
+    // $finder->addPathMapping("Extension", '/site/extensions/');
+    // $finder->addPathMapping("Extension", '/Phlatson/data/extensions/');
     $phlatson->api("finder", $finder);
-    echo $phlatson->execute(new Request());
+
+    $request = new Request();
+    
+    $phlatson->api("request", $request);
+
+    // determine the requested page
+    $url = $request->url;
+    $page = $finder->getType("Page",$url);
+    $template = $page->template;
+    $view = $template->view;
+
+    $phlatson->api('request', $request);
+    $phlatson->api('page', $page);
+    $phlatson->api('template', $template);
+    $phlatson->api('view', $view);
+
+    if ($view instanceof View) {
+        echo $view->render();
+    }
     
 } catch (\Exception $exception) {
     echo $exception;
