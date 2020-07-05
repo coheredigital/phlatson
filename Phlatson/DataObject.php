@@ -26,7 +26,7 @@ abstract class DataObject extends BaseObject
         $this->setData($jsonData);
     }
 
-    public function setData(JsonObject $data) : self
+    public function setData(JsonObject $data): self
     {
         $this->data = $data;
         return $this;
@@ -39,7 +39,7 @@ abstract class DataObject extends BaseObject
         }
     }
 
-    public function exists() : bool
+    public function exists(): bool
     {
         return file_exists($this->file);
     }
