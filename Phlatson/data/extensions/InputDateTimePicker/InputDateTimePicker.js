@@ -1,3 +1,0 @@
-$(function () {
-    $('.InputDateTime input').datetimepicker();
-});
