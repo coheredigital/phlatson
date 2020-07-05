@@ -7,9 +7,9 @@ dump($request);
 dump($finder);
 dump($page);
 
-// $finder->addPathMapping("Page","");
 
-// $test = $finder->get("Page::/");
+$test = $finder->getType("Page","/");
+dump($test->modified);
 
 echo $view->render('/layouts/default', [
     "output" => $view->render("/partials/body")

@@ -58,19 +58,17 @@ abstract class DataObject extends BaseObject
     public function get(string $key)
     {
         switch ($key) {
-            // case 'modified':
-            //     $value = $this->data('modified');
-            //     return new PhlatsonDateTime("@$value");
             case 'template':
                 return $this->template();
             default:
                 if ($this->data && $this->data($key)) {
+                    $finder = $this->api('finder');
+                    $field = $finder->getType("Field", $key);
 
-                    $field = new Field($key);
-
-                    return $this->data($key);
+                    
                 }
-                break;
+
+                return $this->data($key);
         }
 
         return parent::get($key);

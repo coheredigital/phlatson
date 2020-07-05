@@ -5,6 +5,7 @@ namespace Phlatson;
 /**
  * 
  * Variable convention for Phlatson objects (Page, Field, Template, View)
+ * 
  *      example for this case a Page, located at
  *      /site/pages/about-us/our-team/jane-doe/data.json
  * 
@@ -126,8 +127,7 @@ abstract class BaseObject extends Phlatson
     }
 
     /**
-     * Magic method mappaed the self::get() primarily for
-     * syntactical reasons 
+     * Magic method mapped the self::get() primarily for readability 
      * example
      * <?= $page->title ?>
      * instead of 

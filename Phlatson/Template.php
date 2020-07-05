@@ -1,4 +1,5 @@
 <?php
+
 namespace Phlatson;
 
 class Template extends DataObject
@@ -13,16 +14,16 @@ class Template extends DataObject
         return isset($fields[$name]);
     }
 
-    public function getField($name) : ? array
+    public function getField($name): ?array
     {
         $fields = $this->data('fields');
         return $fields[$name];
     }
 
-    public function view() : object
+    public function view(): object
     {
         // get view file of the same name
-        $name = $this->get('name');
+        $name = $this->name();
         $view = new View($name);
         return $view;
     }
@@ -36,8 +37,5 @@ class Template extends DataObject
             default:
                 return parent::get($key);
         }
-
-
     }
-
 }

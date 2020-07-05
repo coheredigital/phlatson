@@ -42,67 +42,6 @@ class Finder
         return $this;
     }
 
-    public function root(): string
-    {
-        return $this->root;
-    }
-
-
-
-    public function get(string $path): ?DataObject
-    {
-        $jsonObject = $this->getData($path);
-
-        $path_parts = explode('/', trim($path, '/'));
-
-        $classname = array_shift($path_parts);
-        $classname = ucfirst($classname);
-        $classname = substr($classname, 0, -1);
-        $classname = "\Phlatson\\$classname";
-
-        $path = implode('/', $path_parts);
-        $path = "/$path/";
-
-        $objectType = new $classname();
-        $objectType->setData($jsonObject);
-
-        return $objectType;
-    }
-
-    public function getFromPaths(string $url): ?DataObject
-    {
-        // sanitizer & trim URL
-        $url = Sanitizer::url($url);
-        $url = ltrim($url, '/');
-
-        foreach ($this->paths as $root) {
-            $path = "{$root}{$url}";
-            if (file_exists($path)) {
-                $jsonObject = $this->getData($path);
-                break;
-            }
-        }
-
-        $path_parts = explode('/', trim($path, '/'));
-
-        $classname = $this->type ? "\Phlatson\\$this->type" : false;
-
-        if (!$classname) {
-            $classname = array_shift($path_parts);
-            $classname = ucfirst($classname);
-            $classname = substr($classname, 0, -1);
-            $classname = "\Phlatson\\$classname";
-        }
-
-        $path = implode('/', $path_parts);
-        $path = "/$path/";
-
-        $objectType = new $classname();
-        $objectType->setData($jsonObject);
-
-        return $objectType;
-    }
-
     // TODO: make this work with system data
     public function getData(string $path): ?JsonObject
     {
@@ -112,6 +51,8 @@ class Finder
 
     public function getTypeData(string $classname, string $uri): JsonObject
     {
+
+        $uri = \trim($uri, '/');
 
         // validate class
         // TODO: This could be cleaner
@@ -123,7 +64,10 @@ class Finder
         $paths = $this->getPaths($classname);
 
         foreach ($paths as $path) {
-            $folder = $this->root . \trim($path, '/') . $uri;
+
+            
+            $path = \trim($path, '/');
+            $folder = "{$this->root}$path/$uri/";
             if (\file_exists($folder)) {
                 $data = $this->getData($folder);
                 break;

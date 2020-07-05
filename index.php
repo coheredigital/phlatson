@@ -23,11 +23,14 @@ try {
     $phlatson = new Phlatson();
 
     $finder = new Finder(__DIR__);
+    
     $finder->addPathMapping("Page", "/site/pages/");
     $finder->addPathMapping("Template", "/site/templates/");
     $finder->addPathMapping("Field", "/site/fields/");
-    $finder->addPathMapping("Config", '/site/config/');
+    $finder->addPathMapping("Field", "/Phlatson/data/fields/");
     $finder->addPathMapping("Config", '/Phlatson/data/config/');
+    $finder->addPathMapping("Config", '/site/config/');
+
     // $finder->addPathMapping("Extension", '/site/extensions/');
     // $finder->addPathMapping("Extension", '/Phlatson/data/extensions/');
     $phlatson->api("finder", $finder);
