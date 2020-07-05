@@ -87,7 +87,7 @@ class Page extends DataObject
 
 
         $index_array = [];
-        $dir = new \FilesystemIterator($this->path);
+        $dir = new \FilesystemIterator($this->path());
         foreach ($dir as $file) {
             if ($file->isDir()) {
                 $name = $file->getFilename();
