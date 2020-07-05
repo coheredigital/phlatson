@@ -35,6 +35,8 @@ class JsonObject extends Phlatson
             throw new Exceptions\PhlatsonException("File ($file) is not a valid JSON file");
         }
 
+        $this->set('modified', \filemtime($this->file));
+
     }
 
     /**
@@ -46,9 +48,6 @@ class JsonObject extends Phlatson
     public function get(string $key)
     {
         switch ($key) {
-            case 'modified':
-                return \filemtime($this->file);
-                break;
             default:
                 return $this->data[$key] ?? null;
                 break;
