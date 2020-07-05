@@ -44,5 +44,6 @@ Thumbs.db
 /vendor/*
 
 #IDEs
+.code-workspace
 .vscode/*
 .idea/*
