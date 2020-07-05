@@ -55,7 +55,7 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
     public function paginate(int $currentPage) : self
     {
         if ($currentPage < 1) {
-            throw new Exceptions\PhlatsonException("Request page number cannot be less than 1");
+            throw new \Exception("Request page number cannot be less than 1");
         }
         $this->currentPage = $currentPage;
         return $this;

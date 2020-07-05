@@ -18,7 +18,7 @@ class JsonObject extends Phlatson
         
 
         if (!file_exists($file)) {
-            throw new Exceptions\PhlatsonException("File ($file) does not exist");
+            throw new \Exception("File ($file) does not exist");
         }
 
         // setup some core properties
@@ -32,7 +32,7 @@ class JsonObject extends Phlatson
 
         // check that we got data back from json_decode
         if ($this->data === null) {
-            throw new Exceptions\PhlatsonException("File ($file) is not a valid JSON file");
+            throw new \Exception("File ($file) is not a valid JSON file");
         }
 
         $this->set('modified', \filemtime($this->file));

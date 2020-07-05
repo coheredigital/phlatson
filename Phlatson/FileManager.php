@@ -9,7 +9,7 @@ class Filemanager
     public function __construct(string $root)
     {
         if (!file_exists($root)) {
-            throw new Exceptions\PhlatsonException("Root path must be valid folder, '$root' not found.");
+            throw new \Exception("Root path must be valid folder, '$root' not found.");
         }
 
         $this->root = $root;
@@ -43,7 +43,7 @@ class Filemanager
     {
         $filepath = ROOT_PATH . $path;
         if (!file_exists($filepath)) {
-            throw new Exceptions\PhlatsonException("Path ($filepath) does not exist!");
+            throw new \Exception("Path ($filepath) does not exist!");
         }
 
         $json = json_encode($data);

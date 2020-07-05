@@ -66,7 +66,7 @@ abstract class BaseObject extends Phlatson
     {
         $file = $this->file();
         if (!is_file($file)) {
-            throw new Exceptions\PhlatsonException("Cannot get path of $file");
+            throw new \Exception("Cannot get path of $file");
         }
 
         $value = dirname($file) . "/";

@@ -33,19 +33,19 @@ class ErrorHandler {
 			case E_ERROR:
 			case E_PARSE:
 			case E_PARSE:
-				throw new Exceptions\PhlatsonException($errorMessage, $errno);
+				throw new \Exception($errorMessage, $errno);
 				break;
 
 			default:
 				// var_dump($errno);
-				// throw new Exceptions\PhlatsonException($errorMessage, $errno);
+				// throw new \Exception($errorMessage, $errno);
 				break;
 		}
 		return true;
 	}
 
 	static function throw($errorMessage) {
-		throw new Exceptions\PhlatsonException($errorMessage, $errno);
+		throw new \Exception($errorMessage, $errno);
 	}
 
 }

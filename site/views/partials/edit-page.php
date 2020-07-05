@@ -7,12 +7,12 @@ $pageEdit = $pages->get($pagename);
 // var_dump($pageEdit->get('template'));
 
 if (!$pageEdit) {
-    throw new Phlatson\Exceptions\PhlatsonException("Page: {$pagename} not found");
+    throw new Phlatson\\Exception("Page: {$pagename} not found");
 }
 
 $template = $pageEdit->get('template');
 if (!$template) {
-    throw new Phlatson\Exceptions\PhlatsonException("Template not valid");
+    throw new Phlatson\\Exception("Template not valid");
 }
 
 $templateFields = $template->get('fields');

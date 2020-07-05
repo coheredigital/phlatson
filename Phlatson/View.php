@@ -13,7 +13,7 @@ class View extends BaseObject
         $filepath = $this->rootPath() . $name . ".php";
         // validate view file
         if (!file_exists($filepath)) {
-            throw new Exceptions\PhlatsonException("Ivalid file ($filepath) cannot be used as view");
+            throw new \Exception("Ivalid file ($filepath) cannot be used as view");
         }
         $this->file = $filepath;
     }
@@ -46,7 +46,7 @@ class View extends BaseObject
     {
 
         if (!file_exists($file)) {
-            throw new Exceptions\PhlatsonException("View does not exist: $file");
+            throw new \Exception("View does not exist: $file");
         }
 
         // render template file

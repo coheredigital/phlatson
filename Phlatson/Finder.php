@@ -31,7 +31,7 @@ class Finder
     {
         // normalize the path
         if ($path && !file_exists($path)) {
-            throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
+            throw new \Exception("Path ($path) does not exist, cannot be used as site data");
         }
 
         $path = Sanitizer::path($path);
@@ -50,7 +50,7 @@ class Finder
         // $path = Sanitizer::path($path);
 
         // if (!file_exists($path)) {
-        //     throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
+        //     throw new \Exception("Path ($path) does not exist, cannot be used as site data");
         // }
 
         // path as key to prevent duplicates
