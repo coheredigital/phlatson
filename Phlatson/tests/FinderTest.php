@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -8,35 +8,41 @@ define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', realpath(__DIR__ . '/.
 
 use \PHPUnit\Framework\TestCase;
 
-
-
-
 class FinderTest extends TestCase
 {
 
     protected $data_path = ROOT_PATH . 'site/';
+    protected $finder;
 
-    public function testFinderInstance() : Finder
+
+    protected function setUp(): void
     {
-        $finder = new Finder($this->data_path);
+        $this->finder = new Finder($this->data_path);
+        $this->finder->addPathMapping("Page", "/pages/");
+        $this->finder->addPathMapping("Field", "/pages/");
+    }
+
+    public function testFinderInstance()
+    {
         $this->assertInstanceOf(
             Finder::class,
-            $finder
+            $this->finder
         );
-        return $finder;
     }
-    
-    public function testFinderPage() : Finder
-    {
-        $finder = new Finder($this->data_path);
 
-        $finder->addPathMapping("Page", "/pages/" );
+    public function testFinderPage()
+    {
+
+        $page = $this->finder->getType("Page", "/");
+        $this->assertIsObject($page);
+        $this->assertInstanceOf(Page::class, $page);
+    }
+    public function testFinderPageValues()
+    {
 
         $this->assertInstanceOf(
             Page::class,
-            $finder->getType("Page", "/")
+            $this->finder->getType("Page", "/")
         );
-        return $finder;
     }
-
 }
