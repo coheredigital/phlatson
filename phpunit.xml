@@ -4,7 +4,7 @@
 	colors="true">
     <testsuites>
         <testsuite name="Phlatson Test Suite">
-            <directory>tests</directory>
+            <directory>Phlatson/tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
