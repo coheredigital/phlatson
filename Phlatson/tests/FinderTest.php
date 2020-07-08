@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Phlatson;
 
-define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__ . '/../../'));
+define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', realpath(__DIR__ . '/../../') . "/"));
 
 use \PHPUnit\Framework\TestCase;
 
@@ -29,9 +29,12 @@ class FinderTest extends TestCase
     public function testFinderPage() : Finder
     {
         $finder = new Finder($this->data_path);
+
+        $finder->addPathMapping("Page", "/pages/" );
+
         $this->assertInstanceOf(
-            Finder::class,
-            $finder
+            Page::class,
+            $finder->getType("Page", "/")
         );
         return $finder;
     }
