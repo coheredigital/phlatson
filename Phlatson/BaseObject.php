@@ -116,7 +116,7 @@ abstract class BaseObject extends Phlatson
             case 'folder':
             case 'rootUrl':
             case 'url':
-                return $this->{$key}();               
+                return $this->{$key}();
                 break;
             default:
                 return null;

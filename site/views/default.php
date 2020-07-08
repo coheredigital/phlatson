@@ -5,7 +5,8 @@ namespace Phlatson;
 // FIXME: This crashes
 // \Kint::dump($request);
 // \Kint::dump($finder);
-// \Kint::dump($page);
+$clockwork->info($page->url(), [ 'trace' => true ]);
+// d($page);
 
 
 $test = $finder->getType("Page","/");

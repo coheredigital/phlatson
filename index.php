@@ -18,7 +18,7 @@ $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
-
+\Kint\Renderer\RichRenderer::$theme = 'aante-light.css';
 
 try {
 
@@ -26,6 +26,7 @@ try {
 
     // TODO: move this to seperate init file / or addon
     $clockwork = \Clockwork\Support\Vanilla\Clockwork::init([
+        'api' => '/__clockwork/?request=',
         'storage_files_path' => __DIR__ . "/storage/clockwork/"
     ]);
     $phlatson->api('clockwork',$clockwork);
@@ -41,8 +42,6 @@ try {
 
     $request = new Request();
     $phlatson->api("request", $request);
-
-
 
     // determine the requested page
     $url = $request->url;
