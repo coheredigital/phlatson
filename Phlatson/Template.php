@@ -5,9 +5,6 @@ namespace Phlatson;
 class Template extends DataObject
 {
 
-    const BASE_FOLDER = 'templates/';
-    const BASE_URL = 'templates/';
-
     public function hasField($name)
     {
         $fields = $this->data('fields');

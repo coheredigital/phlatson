@@ -4,14 +4,10 @@ namespace Phlatson;
 
 abstract class DataObject extends BaseObject
 {
-    const BASE_FILENAME = 'data.json';
-    const BASE_FOLDER = '';
-    const BASE_URL = '';
 
-    // main data container, holds data loaded from JSON file
-    protected $data;
-    protected $formattedData = [];
-    protected $fields = [];
+    protected JsonObject    $data;
+    protected array         $formattedData  = [];
+    protected array         $fields         = [];
 
     public function __construct($path = null)
     {
@@ -64,8 +60,6 @@ abstract class DataObject extends BaseObject
                 if ($this->data && $this->data($key)) {
                     $finder = $this->api('finder');
                     $field = $finder->getType("Field", $key);
-
-                    
                 }
 
                 return $this->data($key);

@@ -1,6 +1,6 @@
 {
     "sessionName": "phlatson",
-    "sessionExpireSeconds": 3200,
+    "sessionExpireSeconds": 86400, 
     "timezone": "America/New_York",
     "debug": true,
     "dateTimeFormat" : "F j, Y"
