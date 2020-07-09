@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Phlatson;
 
@@ -29,7 +29,7 @@ try {
         'api' => '/__clockwork/?request=',
         'storage_files_path' => __DIR__ . "/storage/clockwork/"
     ]);
-    $phlatson->api('clockwork',$clockwork);
+    $phlatson->api('clockwork', $clockwork);
 
     $finder = new Finder(__DIR__);
     $finder->addPathMapping("Page", "/site/pages/");
@@ -50,7 +50,7 @@ try {
 
     // determine the requested page
     $url = $request->url;
-    $page = $finder->getType("Page",$url);
+    $page = $finder->getType("Page", $url);
     $template = $page->template;
     $view = $template->view;
 
@@ -64,7 +64,6 @@ try {
     }
 
     $clockwork->requestProcessed();
-    
 } catch (\Exception $exception) {
     echo $exception;
 }
