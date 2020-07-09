@@ -42,14 +42,14 @@ class Finder
         return $this;
     }
 
-    // TODO: make this work with system data
-    public function getData(string $path): ?JsonObject
+
+    public function getDataFile(string $path, string $filename = 'data'): ?JsonObject
     {
-        $jsonObject = new JsonObject("{$path}data.json");
+        $jsonObject = new JsonObject("{$path}{$filename}.json");
         return $jsonObject;
     }
 
-    public function getTypeData(string $classname, string $uri): JsonObject
+    public function getData(string $classname, string $uri): JsonObject
     {
 
         $uri = \trim($uri, '/');
@@ -65,11 +65,10 @@ class Finder
 
         foreach ($paths as $path) {
 
-            
             $path = \trim($path, '/');
             $folder = "{$this->root}$path/$uri/";
             if (\file_exists($folder)) {
-                $data = $this->getData($folder);
+                $data = $this->getDataFile($folder);
                 break;
             }
         }
@@ -80,7 +79,7 @@ class Finder
     public function getType(string $classname, $path): ?DataObject
     {
         // get data object
-        $jsonObject = $this->getTypeData($classname,$path);
+        $jsonObject = $this->getData($classname,$path);
 
         $classname = "\Phlatson\\$classname";
         $objectType = new $classname();

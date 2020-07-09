@@ -29,8 +29,6 @@ namespace Phlatson;
 abstract class BaseObject extends Phlatson
 {
 
-    const BASE_FOLDER = '';
-    const BASE_URL = '';
 
     public function __construct($path = null)
     {

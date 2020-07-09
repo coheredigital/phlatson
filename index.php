@@ -36,9 +36,14 @@ try {
     $finder->addPathMapping("Template", "/site/templates/");
     $finder->addPathMapping("Field", "/site/fields/");
     $finder->addPathMapping("Field", "/Phlatson/data/fields/");
-    $finder->addPathMapping("Config", '/Phlatson/data/config/');
-    $finder->addPathMapping("Config", '/site/config/');
+
+    // config files
+    $finder->addPathMapping("DataObject", '/Phlatson/data/config/');
+    $finder->addPathMapping("DataObject", '/site/config/');
     $phlatson->api("finder", $finder);
+
+    $config = $finder->getData("DataObject", "site");
+    $phlatson->api("config", $config);
 
     $request = new Request();
     $phlatson->api("request", $request);

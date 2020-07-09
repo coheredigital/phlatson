@@ -2,12 +2,10 @@
 
 namespace Phlatson;
 
-// FIXME: This crashes
-// \Kint::dump($request);
-// \Kint::dump($finder);
-$clockwork->info($page->url(), [ 'trace' => true ]);
-// d($page);
 
+$clockwork->info($page->url(), [ 'trace' => true ]);
+d($config);
+// d($config->debug);
 
 $test = $finder->getType("Page","/");
 

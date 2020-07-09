@@ -22,7 +22,7 @@ abstract class DataObject extends BaseObject
 
         $classname = $this->classname();
 
-        $jsonData = $this->api('finder')->getTypeData($classname, $path);
+        $jsonData = $this->api('finder')->getData($classname, $path);
         $this->setData($jsonData);
     }
 
