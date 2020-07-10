@@ -30,11 +30,6 @@ abstract class BaseObject extends Phlatson
 {
 
 
-    public function __construct($path = null)
-    {
-        // $this->rootPath = trim(DATA_PATH . $this::BASE_FOLDER, "/") . "/";
-    }
-
     protected function rootFolder()
     {   
         $value = str_replace($this->name(), '', $this->folder());

@@ -28,5 +28,5 @@ Desktop.ini
 
 #IDEs
 .vscode/*
-*.code-workspace
+# *.code-workspace
 .idea/*

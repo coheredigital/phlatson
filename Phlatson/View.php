@@ -4,6 +4,7 @@ namespace Phlatson;
 
 class View extends BaseObject
 {
+    
     const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';
 
