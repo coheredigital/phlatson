@@ -332,7 +332,7 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 	 */
 	public function getIterator()
 	{
-		return new ArrayIterator($this->attributes);
+		return new \ArrayIterator($this->attributes);
 	}
 
 	/**

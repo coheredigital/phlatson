@@ -115,8 +115,6 @@ abstract class BaseObject extends Phlatson
                 return null;
         }
 
-        return $value;
-
     }
 
     /**
