@@ -30,11 +30,8 @@ class Phlatson
         }
     }
 
-    final public function classname(bool $full = false)
+    final public function classname() : string
     {
-        if ($full) {
-            return __CLASS__;
-        }
         return (new \ReflectionClass($this))->getShortName();
     }
 
