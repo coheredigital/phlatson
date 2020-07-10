@@ -4,10 +4,8 @@ namespace Phlatson;
 
 class Finder
 {
+    
     protected $root;
-
-    protected $type;
-
     protected $pathMappings = [];
 
     public function __construct(string $rootPath = '')

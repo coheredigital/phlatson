@@ -2,10 +2,9 @@
 
 namespace Phlatson;
 
-
-$clockwork->info($page->url(), [ 'trace' => true ]);
-d($config);
-// d($config->debug);
+!d($config);
+!d($finder);
+!d($page);
 
 $test = $finder->getType("Page","/");
 
