@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-class Filemanager
+class FileManager
 {
     protected $root;
 
