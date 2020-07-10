@@ -12,13 +12,11 @@ namespace Phlatson;
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $page->title ?> | Phlatson</title>
     <link rel="stylesheet" href="<?= $view->rootUrl ?>styles/framework.css?<?= date('U') ?>">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700,900">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,900;1,700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
 </head>
 
 <body class="font-default pb4">
-    <div class="page-header bg-brand color-white py2 mb2">
+    <div class="page-header color-brand bg-white py2 mb2">
         <div class="container">
             <?= $view->render("/partials/breadcrumbs") ?>
             <h1><?= $page->get('title') ?></h1>
