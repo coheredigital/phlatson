@@ -5,9 +5,11 @@ namespace Phlatson;
 abstract class DataObject extends BaseObject
 {
 
-    protected JsonObject    $data;
-    protected array         $formattedData  = [];
-    protected array         $fields         = [];
+    protected JsonObject        $data;
+    protected array             $formattedData  = [];
+    protected FieldCollection   $fields;
+    protected Template          $template;
+
 
     public function __construct($path = null)
     {
@@ -20,6 +22,12 @@ abstract class DataObject extends BaseObject
 
         $jsonData = $this->api('finder')->getData($classname, $path);
         $this->setData($jsonData);
+
+        if ($template = $this->data->get('template')) {
+            $this->template = $this->api('finder')->getType("Template", $template);
+        }
+        
+
     }
 
     public function setData(JsonObject $data): self
@@ -60,8 +68,10 @@ abstract class DataObject extends BaseObject
                 break;
             default:
                 $value = $this->data->get($key);
-                if ($this->data && $this->data->get($key)) {
+
+                if ($this->data->get($key)) {
                     $field = $this->api('finder')->getType("Field", $key);
+                    $fieldtype = $field->type();
                 }
 
                 $value = $this->data->get($key);

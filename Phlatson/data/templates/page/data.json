@@ -3,9 +3,6 @@
 	"fields": [
 		{
 			"name": "title"
-		},
-		{
-			"name": "fields"
 		}
 	]
 }
