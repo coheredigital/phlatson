@@ -53,18 +53,23 @@ abstract class DataObject extends BaseObject
 
     public function get(string $key)
     {
+        $value = null;
         switch ($key) {
             case 'template':
-                return $this->template();
+                $value = $this->template();
+                break;
             default:
-                if ($this->data && $this->data($key)) {
-                    $finder = $this->api('finder');
-                    $field = $finder->getType("Field", $key);
+                $value = $this->data->get($key);
+                if ($this->data && $this->data->get($key)) {
+                    $field = $this->api('finder')->getType("Field", $key);
                 }
 
-                return $this->data($key);
+                $value = $this->data->get($key);
+                break;
         }
 
-        return parent::get($key);
+        
+        return $value ?: parent::get($key);
+
     }
 }
