@@ -87,4 +87,19 @@ abstract class DataObject extends BaseObject
         return $value ?: null;
 
     }
+
+    /**
+     * Magic method mapped the self::get() primarily for readability 
+     * example
+     * <?= $page->title ?>
+     * instead of 
+     * <?= $page->get('title') ?>
+     *
+     * @param string $key
+     * @return void
+     */
+    final public function __get (string $key) {
+        return $this->get($key);
+    }
+
 }

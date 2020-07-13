@@ -81,7 +81,7 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
-    public function url()
+    public function url() : string
     {
         return $this->folder();
     }
@@ -94,41 +94,6 @@ abstract class BaseObject extends Phlatson
     public function filename()
     {
         return basename($this->file);
-    }
-
-    // public function get(string $key)
-    // {
-    //     switch ($key) {
-    //         // // publicly expose file properties
-    //         // case 'name':
-    //         // case 'file':
-    //         // case 'filename':
-    //         // case 'path':
-    //         // case 'rootPath':
-    //         // case 'rootFolder':
-    //         // case 'folder':
-    //         // case 'rootUrl':
-    //         // case 'url':
-    //         //     return $this->{$key}();
-    //         //     break;
-    //         default:
-    //             return null;
-    //     }
-
-    // }
-
-    /**
-     * Magic method mapped the self::get() primarily for readability 
-     * example
-     * <?= $page->title ?>
-     * instead of 
-     * <?= $page->get('title') ?>
-     *
-     * @param string $key
-     * @return void
-     */
-    final public function __get (string $key) {
-        return $this->get($key);
     }
 
 }
