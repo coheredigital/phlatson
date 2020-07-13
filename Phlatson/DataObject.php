@@ -39,7 +39,7 @@ abstract class DataObject extends BaseObject
     public function template()
     {
         if ($name = $this->data('template')) {
-            return new Template($name);
+            return $this->api('finder')->getType("Template", $name);
         }
     }
 

@@ -24,8 +24,6 @@ class Page extends DataObject
         $url = "/" . str_replace($rootPath, "", $parentPath);
         $url = rtrim($url, '/') . '/';
 
-
-
         $page = new Page($url);
 
         if ($page->exists()) {
