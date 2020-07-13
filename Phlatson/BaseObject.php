@@ -31,14 +31,14 @@ abstract class BaseObject extends Phlatson
 
     protected $rootPath;
 
-    protected function rootFolder()
+    public function rootFolder()
     {   
         $value = str_replace($this->name(), '', $this->folder());
         $value = trim($value, "/");
         return "/$value/";
     }
 
-    protected function folder()
+    public function folder()
     {
         $value = \str_replace(ROOT_PATH, '', $this->path());
         $value = trim($value, "/");
@@ -46,25 +46,14 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
-    protected function file()
+    public function file()
     {
         return $this->data->file;
     }
 
-    protected function rootPath()
+    public function rootPath()
     {
         return rtrim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
-    }
-
-    protected function path()
-    {
-        $file = $this->file();
-        if (!is_file($file)) {
-            throw new \Exception("Cannot get path of $file");
-        }
-
-        $value = dirname($file) . "/";
-        return $value;
     }
 
     protected function rootUrl()
@@ -81,17 +70,28 @@ abstract class BaseObject extends Phlatson
         return "/$url/";
     }
 
-    protected function url()
+    public function path()
+    {
+        $file = $this->file();
+        if (!is_file($file)) {
+            throw new \Exception("Cannot get path of $file");
+        }
+
+        $value = dirname($file) . "/";
+        return $value;
+    }
+
+    public function url()
     {
         return $this->folder();
     }
 
-    protected function name()
+    public function name()
     {
         return \basename($this->path());
     }
 
-    protected function filename()
+    public function filename()
     {
         return basename($this->file);
     }
@@ -99,18 +99,18 @@ abstract class BaseObject extends Phlatson
     public function get(string $key)
     {
         switch ($key) {
-            // publicly expose file properties
-            case 'name':
-            case 'file':
-            case 'filename':
-            case 'path':
-            case 'rootPath':
-            case 'rootFolder':
-            case 'folder':
-            case 'rootUrl':
-            case 'url':
-                return $this->{$key}();
-                break;
+            // // publicly expose file properties
+            // case 'name':
+            // case 'file':
+            // case 'filename':
+            // case 'path':
+            // case 'rootPath':
+            // case 'rootFolder':
+            // case 'folder':
+            // case 'rootUrl':
+            // case 'url':
+            //     return $this->{$key}();
+            //     break;
             default:
                 return null;
         }

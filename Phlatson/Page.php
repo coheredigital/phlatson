@@ -29,9 +29,10 @@ class Page extends DataObject
         if ($page->exists()) {
             return $page;
         }
+        return null;
     }
 
-    protected function rootFolder()
+    public function rootFolder()
     {
         return str_replace($this->url(), '', $this->folder()) . '/';
     }

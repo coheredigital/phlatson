@@ -19,12 +19,12 @@ class View extends BaseObject
         $this->file = $filepath;
     }
 
-    protected function file()
+    public function file()
     {
         return $this->file;
     }
 
-    protected function name()
+    public function name()
     {
         return pathinfo($this->file())['filename'];
     }
@@ -32,7 +32,7 @@ class View extends BaseObject
     public function renderPartial(? string $url, array $data = []) : string
     {
         $url = trim($url, "/");
-        $file = "{$this->path}{$url}.php";
+        $file = "{$this->path()}{$url}.php";
         $output = "";
         $output = $this->renderViewFile($file, $data);
         return $output;
