@@ -84,7 +84,7 @@ abstract class DataObject extends BaseObject
         }
 
         
-        return $value ?: parent::get($key);
+        return $value ?: null;
 
     }
 }

@@ -96,26 +96,26 @@ abstract class BaseObject extends Phlatson
         return basename($this->file);
     }
 
-    public function get(string $key)
-    {
-        switch ($key) {
-            // // publicly expose file properties
-            // case 'name':
-            // case 'file':
-            // case 'filename':
-            // case 'path':
-            // case 'rootPath':
-            // case 'rootFolder':
-            // case 'folder':
-            // case 'rootUrl':
-            // case 'url':
-            //     return $this->{$key}();
-            //     break;
-            default:
-                return null;
-        }
+    // public function get(string $key)
+    // {
+    //     switch ($key) {
+    //         // // publicly expose file properties
+    //         // case 'name':
+    //         // case 'file':
+    //         // case 'filename':
+    //         // case 'path':
+    //         // case 'rootPath':
+    //         // case 'rootFolder':
+    //         // case 'folder':
+    //         // case 'rootUrl':
+    //         // case 'url':
+    //         //     return $this->{$key}();
+    //         //     break;
+    //         default:
+    //             return null;
+    //     }
 
-    }
+    // }
 
     /**
      * Magic method mapped the self::get() primarily for readability 
