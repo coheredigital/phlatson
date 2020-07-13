@@ -14,17 +14,17 @@ class View extends BaseObject
         $filepath = $this->rootPath() . $name . ".php";
         // validate view file
         if (!file_exists($filepath)) {
-            throw new \Exception("Ivalid file ($filepath) cannot be used as view");
+            throw new \Exception("Invalid file ($filepath) cannot be used as view");
         }
         $this->file = $filepath;
     }
 
-    public function file()
+    public function file() : string
     {
         return $this->file;
     }
 
-    public function name()
+    public function name() : string
     {
         return pathinfo($this->file())['filename'];
     }

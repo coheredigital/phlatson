@@ -46,17 +46,17 @@ abstract class BaseObject extends Phlatson
         return $value;
     }
 
-    public function file()
+    public function file() : string
     {
         return $this->data->file;
     }
 
-    public function rootPath()
+    public function rootPath() : string
     {
         return rtrim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
     }
 
-    protected function rootUrl()
+    protected function rootUrl() : string
     {
 
         $url = $this->url();
@@ -70,7 +70,7 @@ abstract class BaseObject extends Phlatson
         return "/$url/";
     }
 
-    public function path()
+    public function path() : string
     {
         $file = $this->file();
         if (!is_file($file)) {
@@ -86,12 +86,12 @@ abstract class BaseObject extends Phlatson
         return $this->folder();
     }
 
-    public function name()
+    public function name() : string
     {
         return \basename($this->path());
     }
 
-    public function filename()
+    public function filename() : string
     {
         return basename($this->file);
     }

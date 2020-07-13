@@ -4,6 +4,8 @@ namespace Phlatson;
 
 
 // !d($config);
-// !d($finder);
+!d($page->path());
+!d($page->url());
+!d($page->rootFolder());
 !d($page);
 !d($page->template);
