@@ -22,7 +22,7 @@ class JsonObject extends Phlatson
         $this->filename = basename($this->file);
         $this->path = dirname($this->file) . "/";
 
-        $this->data = json_decode(file_get_contents($file), true);
+        $this->data = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
 
         // check that we got data back from json_decode
         if ($this->data === null) {
@@ -64,7 +64,7 @@ class JsonObject extends Phlatson
 
     public function save()
     {
-        $json = json_encode($this->data, JSON_PRETTY_PRINT);
+        $json = json_encode($this->data, JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR);
         file_put_contents($this->file, $json);
     }
 

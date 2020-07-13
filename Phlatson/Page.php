@@ -11,7 +11,7 @@ class Page extends DataObject
     protected $children;
     protected $parents;
 
-    public function parent() : ?Page
+    public function parent(): ?Page
     {
         $rootPath = $this->rootPath();
         $parentPath = dirname($this->path()) . "/";
@@ -24,14 +24,13 @@ class Page extends DataObject
         $url = "/" . str_replace($rootPath, "", $parentPath);
         $url = rtrim($url, '/') . '/';
 
-        
+
 
         $page = new Page($url);
 
         if ($page->exists()) {
             return $page;
         }
-
     }
 
     protected function rootFolder()
@@ -48,7 +47,7 @@ class Page extends DataObject
         return $value;
     }
 
-    public function parents() : ObjectCollection
+    public function parents(): ObjectCollection
     {
         $parents = $this->parents;
 
@@ -72,7 +71,7 @@ class Page extends DataObject
         return $parents;
     }
 
-    public function children() : ObjectCollection
+    public function children(): ObjectCollection
     {
         $url = $this->url;
         $children = $this->children;
@@ -101,7 +100,7 @@ class Page extends DataObject
         return $children;
     }
 
-    public function child(string $name) : Page
+    public function child(string $name): Page
     {
         $name = trim($name, '/');
         $path = "{$this->path}{$name}/";
