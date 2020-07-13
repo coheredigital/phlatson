@@ -29,6 +29,7 @@ namespace Phlatson;
 abstract class BaseObject extends Phlatson
 {
 
+    protected $rootPath;
 
     protected function rootFolder()
     {   
@@ -39,7 +40,6 @@ abstract class BaseObject extends Phlatson
 
     protected function folder()
     {
-        
         $value = \str_replace(ROOT_PATH, '', $this->path());
         $value = trim($value, "/");
         $value = $value ? "/$value/" : "/";

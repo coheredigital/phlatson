@@ -5,10 +5,10 @@ namespace Phlatson;
 abstract class DataObject extends BaseObject
 {
 
-    protected JsonObject        $data;
-    protected array             $formattedData  = [];
-    protected FieldCollection   $fields;
-    protected Template          $template;
+    protected JsonObject $data;
+    protected array $formattedData  = [];
+    protected FieldCollection $fields;
+    protected ?Template $template = null;
 
 
     public function __construct($path = null)
@@ -23,11 +23,6 @@ abstract class DataObject extends BaseObject
         $jsonData = $this->api('finder')->getData($classname, $path);
         $this->setData($jsonData);
 
-        if ($template = $this->data->get('template')) {
-            $this->template = $this->api('finder')->getType("Template", $template);
-        }
-        
-
     }
 
     public function setData(JsonObject $data): self
@@ -36,11 +31,21 @@ abstract class DataObject extends BaseObject
         return $this;
     }
 
+    public function url() : string
+    {
+        // remove root from path
+        $value = \str_replace($this->rootPath(), '', $this->path());
+        $value = trim($value, "/");
+        $value = $value ? "/$value/" : "/";
+        return $value;
+    }
+
     public function template()
     {
-        if ($name = $this->data('template')) {
-            return $this->api('finder')->getType("Template", $name);
+        if (!$this->template && $name = $this->data('template')) {
+            $this->template = $this->api('finder')->getType("Template", $name);
         }
+        return $this->template;
     }
 
     public function exists(): bool

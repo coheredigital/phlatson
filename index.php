@@ -14,9 +14,9 @@ define("TEMP_PATH", ROOT_PATH . "temp/");
 // use composer autoloader
 require_once(ROOT_PATH . 'vendor/autoload.php');
 
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
+// $whoops = new \Whoops\Run;
+// $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+// $whoops->register();
 
 \Kint\Renderer\RichRenderer::$theme = 'aante-light.css';
 
@@ -52,7 +52,7 @@ try {
     // determine the requested page
     $url = $request->url;
     $page = $finder->getType("Page", $url);
-    $template = $page->template;
+    $template = $page->template();
     $view = $template->view;
 
     $phlatson->api('request', $request);

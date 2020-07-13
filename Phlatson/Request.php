@@ -9,7 +9,7 @@ class Request
     // array store path requested and all possible parent paths
     public $urls = [];
 
-    // TODO : consider seperating request::segments from response:segments
+    // TODO : consider separating request::segments from response:segments
     public $segments = [];
 
     public $domain;

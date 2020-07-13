@@ -6,29 +6,17 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
 {
 
     public $iterator;
-    protected $currentPage = 1;
-    protected $limit = 0;
-    protected $position = 0;
+    protected int $currentPage = 1;
+    protected int $limit = 0;
+    protected int $position = 0;
 
-    protected $files = [];
-    protected $collection = [];    
+    protected array $files = [];
+    protected array $collection = [];    
 
-    public function append($item)
+    public function append(DataObject $item)
     {
-        if ($item instanceof DataObject && !isset($this->files[$item->file])) {
-            // files array ensures unique entries
-            if (!$item->url) {
-                return;
-            }
-
-            $this->files[$item->file] = true;
-            $this->collection[] = $item->url;
-        }
-        else if(!isset($this->files[$item])) {
-            $this->files[$item] = true;
-            $this->collection[] = $item;
-        }
-
+        $this->files[$item->file] = true;
+        $this->collection[] = $item;
         return $this;
     }
 
@@ -107,7 +95,7 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
 
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
-            $item = new Page($item);
+            $item = $this->api('finder')->getType("Page",$item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }

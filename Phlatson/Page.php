@@ -36,37 +36,27 @@ class Page extends DataObject
         return str_replace($this->url(), '', $this->folder()) . '/';
     }
 
-    protected function url()
-    {
-        // remove root from path
-        $value = \str_replace($this->rootPath(), '', $this->path());
-        $value = trim($value, "/");
-        $value = $value ? "/$value/" : "/";
-        return $value;
-    }
-
     public function parents(): ObjectCollection
     {
-        $parents = $this->parents;
 
         // skip if already stored
-        if ($parents instanceof ObjectCollection) {
-            return $parents;
+        if ($this->parents instanceof ObjectCollection) {
+            return $this->parents;
         }
 
         // create empty collection
-        $parents = new ObjectCollection();
+        $this->parents = new ObjectCollection();
 
         $currentPage = $this;
 
         while ($currentPage->parent() !== null) {
-            $parents->append($currentPage->parent());
+            $this->parents->append($currentPage->parent());
             $currentPage = $currentPage->parent();
         }
 
         // cache result
-        $this->parents = $parents->reverse();
-        return $parents;
+        $this->parents->reverse();
+        return $this->parents;
     }
 
     public function children(): ObjectCollection
@@ -88,9 +78,10 @@ class Page extends DataObject
         foreach ($dir as $file) {
             if ($file->isDir()) {
                 $name = $file->getFilename();
-                $url = "{$this->url}{$name}";
+                $url = "{$this->url()}{$name}";
                 $index_array[] = $url;
-                $children->append($url);
+                $child = $this->api('finder')->getType("Page", $url);
+                $children->append($child);
             }
         }
 
