@@ -134,7 +134,8 @@ abstract class DataObject extends Phlatson
 
     
     /**
-     * Retrieve raw data from the data object
+     * Retrieve raw unformatted data from the data object
+     * if not $key is provided returns the entire data object
      *
      * @param string $key
      * @return mixed
