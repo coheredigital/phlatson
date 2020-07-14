@@ -32,6 +32,7 @@ abstract class DataObject extends Phlatson
     protected array $formattedData  = [];
     protected FieldCollection $fields;
     protected ?Template $template = null;
+    protected string $rootPath;
 
     public function __construct($path = null)
     {
@@ -55,7 +56,7 @@ abstract class DataObject extends Phlatson
 
     public function template()
     {
-        if (!$this->template && $name = $this->data('template')) {
+        if (!$this->template && $name = $this->data->get('template')) {
             $this->template = $this->api('finder')->getType("Template", $name);
         }
         return $this->template;
@@ -65,57 +66,6 @@ abstract class DataObject extends Phlatson
     {
         return file_exists($this->file);
     }
-
-    /**
-     * Retreive raw data from the data object
-     *
-     * @param string $key
-     * @return void
-     */
-    public function data(string $key)
-    {
-        return $this->data->get($key);
-    }
-
-    public function get(string $key)
-    {
-        $value = null;
-        switch ($key) {
-            case 'template':
-                $value = $this->template();
-                break;
-            default:
-                $value = $this->data->get($key);
-
-                if ($this->data->get($key)) {
-                    $field = $this->api('finder')->getType("Field", $key);
-                    $fieldtype = $field->type();
-                }
-
-                $value = $this->data->get($key);
-                break;
-        }
-
-        
-        return $value ?: null;
-
-    }
-
-    /**
-     * Magic method mapped the self::get() primarily for readability 
-     * example
-     * <?= $page->title ?>
-     * instead of 
-     * <?= $page->get('title') ?>
-     *
-     * @param string $key
-     * @return void
-     */
-    final public function __get (string $key) {
-        return $this->get($key);
-    }
-
-    protected $rootPath;
 
     public function rootFolder()
     {   
@@ -181,5 +131,39 @@ abstract class DataObject extends Phlatson
     {
         return basename($this->file);
     }
+
+    public function get(string $key)
+    {
+        $value = null;
+
+        $value = $this->data->get($key);
+
+        if ($this->data->get($key)) {
+            $field = $this->api('finder')->getType("Field", $key);
+            $fieldtype = $field->type();
+        }
+
+        $value = $this->data->get($key);
+        
+        return $value ?: null;
+
+    }
+
+    
+
+    /**
+     * Magic method mapped the self::get() primarily for readability 
+     * example
+     * <?= $page->title ?>
+     * instead of 
+     * <?= $page->get('title') ?>
+     *
+     * @param string $key
+     * @return void
+     */
+    final public function __get (string $key) {
+        return $this->get($key);
+    }
+
 
 }

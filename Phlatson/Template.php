@@ -25,14 +25,4 @@ class Template extends DataObject
         return $view;
     }
 
-    public function get($key)
-    {
-
-        switch ($key) {
-            case 'view':
-                return $this->view();
-            default:
-                return parent::get($key);
-        }
-    }
 }
