@@ -25,14 +25,9 @@ class View extends Phlatson
         $this->path = dirname($filepath);
     }
 
-    public function file() : string
-    {
-        return $this->file;
-    }
-
     public function name() : string
     {
-        return pathinfo($this->file())['filename'];
+        return pathinfo($this->file)['filename'];
     }
 
     public function renderPartial(? string $url, array $data = []) : string
