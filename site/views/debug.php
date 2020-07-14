@@ -3,7 +3,7 @@
 namespace Phlatson;
 
 
-// !d($config);
+!d($config);
 !d($page->path());
 !d($page->url());
 !d($page->rootFolder());

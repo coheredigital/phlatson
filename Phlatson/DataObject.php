@@ -54,7 +54,7 @@ abstract class DataObject extends Phlatson
         return $this;
     }
 
-    public function template()
+    public function template() : Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
             $this->template = $this->api('finder')->getType("Template", $name);
@@ -67,14 +67,14 @@ abstract class DataObject extends Phlatson
         return file_exists($this->file);
     }
 
-    public function rootFolder()
+    public function rootFolder() : string
     {   
         $value = str_replace($this->name(), '', $this->folder());
         $value = trim($value, "/");
         return "/$value/";
     }
 
-    public function folder()
+    public function folder() : string
     {
         $value = \str_replace(ROOT_PATH, '', $this->path());
         $value = trim($value, "/");
