@@ -53,7 +53,7 @@ try {
     $url = $request->url;
     $page = $finder->getType("Page", $url);
     $template = $page->template();
-    $view = $template->view;
+    $view = $template->view();
 
     $phlatson->api('request', $request);
     $phlatson->api('page', $page);

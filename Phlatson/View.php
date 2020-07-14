@@ -3,17 +3,18 @@
 namespace Phlatson;
 
 
-class View extends DataObject
+class View extends Phlatson
 {
     
     const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';
 
+    protected $path;
+
     function __construct(string $file)
     {
         // TODO: remove hard coding
         $root = DATA_PATH . 'views/';
-
         $filepath = "{$root}{$file}.php";
         
         // validate view file
@@ -21,6 +22,7 @@ class View extends DataObject
             throw new \Exception("Invalid file ($filepath) cannot be used as view");
         }
         $this->file = $filepath;
+        $this->path = dirname($filepath);
     }
 
     public function file() : string
@@ -36,7 +38,7 @@ class View extends DataObject
     public function renderPartial(? string $url, array $data = []) : string
     {
         $url = trim($url, "/");
-        $file = "{$this->path()}{$url}.php";
+        $file = "{$this->path}/{$url}.php";
         $output = "";
         $output = $this->renderViewFile($file, $data);
         return $output;
