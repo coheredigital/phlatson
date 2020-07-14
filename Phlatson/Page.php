@@ -37,6 +37,15 @@ class Page extends DataObject
         return str_replace($this->url(), '', $this->folder()) . '/';
     }
 
+    public function url() : string
+    {
+        // remove root from path
+        $value = \str_replace($this->rootPath(), '', $this->path());
+        $value = trim($value, "/");
+        $value = $value ? "/$value/" : "/";
+        return $value;
+    }
+
     public function parents(): ObjectCollection
     {
 
