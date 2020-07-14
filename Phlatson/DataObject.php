@@ -132,11 +132,23 @@ abstract class DataObject extends Phlatson
         return basename($this->file);
     }
 
+    
+    /**
+     * Retrieve raw data from the data object
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function data(?string $key = null)
+    {
+        return $key ? $this->data->get($key) : $this->data;
+    }
+
     public function get(string $key)
     {
         $value = null;
 
-        $value = $this->data->get($key);
+        $value = $this->data($key);
 
         if ($this->data->get($key)) {
             $field = $this->api('finder')->getType("Field", $key);
