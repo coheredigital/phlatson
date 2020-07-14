@@ -11,18 +11,16 @@ class Template extends DataObject
         return isset($fields[$name]);
     }
 
-    public function getField($name): ?array
+    public function getField($name): ?Field
     {
         $fields = $this->data('fields');
         return $fields[$name];
     }
 
-    public function view(): object
+    public function view(): View
     {
         // get view file of the same name
-        $name = $this->name();
-        $view = new View($name);
-        return $view;
+        return new View($this->name());
     }
 
 }
