@@ -9,4 +9,12 @@ class Field extends DataObject
     {
         $name = $this->data->get('fieldtype');
     }
+
+    public function template(): Template
+    {
+        $template = $this->api('finder')->getType("Template","template");
+        return $template;
+    }
+
+
 }

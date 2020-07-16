@@ -23,4 +23,10 @@ class Template extends DataObject
         return new View($this->name());
     }
 
+    public function template(): Template
+    {
+        $template = $this->api('finder')->getType("Template","template");
+        return $template;
+    }
+
 }

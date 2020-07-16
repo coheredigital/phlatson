@@ -3,9 +3,10 @@
 namespace Phlatson;
 
 
-!d($config);
-!d($page->path());
-!d($page->url());
-!d($page->rootFolder());
-!d($page);
-!d($page->template);
+dump($config);
+dump($page->path());
+dump($page->url());
+dump($page->rootFolder());
+dump($page);
+dump($page->template());
+dump($page->template()->template());

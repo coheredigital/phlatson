@@ -1,4 +1,5 @@
 <?php
+
 namespace Phlatson;
 
 
@@ -31,8 +32,8 @@ abstract class DataObject extends Phlatson
     protected JsonObject $data;
     protected array $formattedData  = [];
     protected FieldCollection $fields;
-    protected ?Template $template = null;
     protected string $rootPath;
+    protected ?Template $template = null;
 
     public function __construct($path = null)
     {
@@ -45,7 +46,6 @@ abstract class DataObject extends Phlatson
 
         $jsonData = $this->api('finder')->getData($classname, $path);
         $this->setData($jsonData);
-
     }
 
     public function setData(JsonObject $data): self
@@ -54,7 +54,14 @@ abstract class DataObject extends Phlatson
         return $this;
     }
 
-    public function template() : Template
+
+    public function setTemplate(Template $template): self
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
             $this->template = $this->api('finder')->getType("Template", $name);
@@ -67,14 +74,14 @@ abstract class DataObject extends Phlatson
         return file_exists($this->file);
     }
 
-    public function rootFolder() : string
-    {   
+    public function rootFolder(): string
+    {
         $value = str_replace($this->name(), '', $this->folder());
         $value = trim($value, "/");
         return "/$value/";
     }
 
-    public function folder() : string
+    public function folder(): string
     {
         $value = \str_replace(ROOT_PATH, '', $this->path());
         $value = trim($value, "/");
@@ -82,17 +89,17 @@ abstract class DataObject extends Phlatson
         return $value;
     }
 
-    public function file() : string
+    public function file(): string
     {
         return $this->data->file;
     }
 
-    public function rootPath() : string
+    public function rootPath(): string
     {
         return rtrim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
     }
 
-    protected function rootUrl() : string
+    protected function rootUrl(): string
     {
 
         $url = $this->url();
@@ -106,7 +113,7 @@ abstract class DataObject extends Phlatson
         return "/$url/";
     }
 
-    public function path() : string
+    public function path(): string
     {
         $file = $this->file();
         if (!is_file($file)) {
@@ -117,22 +124,22 @@ abstract class DataObject extends Phlatson
         return $value;
     }
 
-    public function url() : string
+    public function url(): string
     {
         return $this->folder();
     }
 
-    public function name() : string
+    public function name(): string
     {
         return \basename($this->path());
     }
 
-    public function filename() : string
+    public function filename(): string
     {
         return basename($this->file);
     }
 
-    
+
     /**
      * Retrieve raw unformatted data from the data object
      * if not $key is provided returns the entire data object
@@ -157,12 +164,11 @@ abstract class DataObject extends Phlatson
         }
 
         $value = $this->data->get($key);
-        
-        return $value ?: null;
 
+        return $value ?: null;
     }
 
-    
+
 
     /**
      * Magic method mapped the self::get() primarily for readability 
@@ -174,9 +180,8 @@ abstract class DataObject extends Phlatson
      * @param string $key
      * @return void
      */
-    final public function __get (string $key) {
+    final public function __get(string $key)
+    {
         return $this->get($key);
     }
-
-
 }
