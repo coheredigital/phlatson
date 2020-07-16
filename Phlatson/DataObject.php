@@ -139,6 +139,10 @@ abstract class DataObject extends Phlatson
         return basename($this->file);
     }
 
+    public function save(): string
+    {
+        return basename($this->file);
+    }
 
     /**
      * Retrieve raw unformatted data from the data object
@@ -167,8 +171,6 @@ abstract class DataObject extends Phlatson
 
         return $value ?: null;
     }
-
-
 
     /**
      * Magic method mapped the self::get() primarily for readability 
