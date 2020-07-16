@@ -44,7 +44,7 @@ abstract class DataObject extends Phlatson
 
         $classname = $this->classname();
 
-        $jsonData = $this->api('finder')->getData($classname, $path);
+        $jsonData = $this->api('finder')->getDataFor($classname, $path);
         $this->setData($jsonData);
     }
 

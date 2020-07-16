@@ -47,7 +47,7 @@ class Finder
         return $jsonObject;
     }
 
-    protected function getData(string $classname, string $uri): JsonObject
+    public function getDataFor(string $classname, string $uri): JsonObject
     {
 
         $uri = \trim($uri, '/');
@@ -77,7 +77,7 @@ class Finder
     public function get(string $classname, $path, string $file = "data.json"): ?DataObject
     {
         // get data object
-        $jsonObject = $this->getData($classname,$path);
+        $jsonObject = $this->getDataFor($classname,$path);
 
         $classname = "\Phlatson\\$classname";
         $dataobject = new $classname();
