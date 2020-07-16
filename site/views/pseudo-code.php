@@ -83,4 +83,14 @@ $child->overwrite(); // replaces / creates new
 // validation with be provide by passing DataContainer (JsonObject) to $
 $template->validate($jsonData);
 
+// -----------------------------------------------------------
+// Page languages 
+// -----------------------------------------------------------
+$page->language("en")->title;
 
+/**
+ * Storage for languages
+ * separate files
+ * data_en.json
+ * data_fr.json
+ */
