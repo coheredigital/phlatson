@@ -64,7 +64,7 @@ abstract class DataObject extends Phlatson
     public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
-            $this->template = $this->api('finder')->getType("Template", $name);
+            $this->template = $this->api('finder')->get("Template", $name);
         }
         return $this->template;
     }
@@ -159,7 +159,7 @@ abstract class DataObject extends Phlatson
         $value = $this->data($key);
 
         if ($this->data->get($key)) {
-            $field = $this->api('finder')->getType("Field", $key);
+            $field = $this->api('finder')->get("Field", $key);
             $fieldtype = $field->type();
         }
 

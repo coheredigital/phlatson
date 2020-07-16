@@ -74,7 +74,7 @@ class Finder
         return $data;
     }
 
-    public function getType(string $classname, $path, string $file = "data.json"): ?DataObject
+    public function get(string $classname, $path, string $file = "data.json"): ?DataObject
     {
         // get data object
         $jsonObject = $this->getData($classname,$path);

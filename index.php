@@ -43,7 +43,7 @@ try {
     $finder->addPathMapping("Config", '/site/config/');
     $phlatson->api("finder", $finder);
 
-    $config = $finder->getType("Config", "site");
+    $config = $finder->get("Config", "site");
     $phlatson->api("config", $config);
 
     $request = new Request();
@@ -51,7 +51,7 @@ try {
 
     // determine the requested page
     $url = $request->url;
-    $page = $finder->getType("Page", $url);
+    $page = $finder->get("Page", $url);
     $template = $page->template();
     $view = $template->view();
 

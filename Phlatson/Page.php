@@ -90,7 +90,7 @@ class Page extends DataObject
                 $name = $file->getFilename();
                 $url = "{$this->url()}{$name}";
                 $index_array[] = $url;
-                $child = $this->api('finder')->getType("Page", $url);
+                $child = $this->api('finder')->get("Page", $url);
                 $children->append($child);
             }
         }

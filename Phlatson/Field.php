@@ -12,7 +12,7 @@ class Field extends DataObject
 
     public function template(): Template
     {
-        $template = $this->api('finder')->getType("Template","template");
+        $template = $this->api('finder')->get("Template","template");
         return $template;
     }
 

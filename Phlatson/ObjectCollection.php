@@ -95,7 +95,7 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
 
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
-            $item = $this->api('finder')->getType("Page",$item);
+            $item = $this->api('finder')->get("Page",$item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }

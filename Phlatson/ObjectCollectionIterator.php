@@ -55,7 +55,7 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
             throw new \Exception("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
         }
 
-        $type = gettype($value);
+        $type = get($value);
 
 
         usort(

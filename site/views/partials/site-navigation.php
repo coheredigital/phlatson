@@ -1,7 +1,7 @@
 <?php 
 namespace Phlatson;
 
-$home = $finder->getType("Page", "/");
+$home = $finder->get("Page", "/");
 
 ?>
 <nav class="site-navigation">

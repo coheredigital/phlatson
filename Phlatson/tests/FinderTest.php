@@ -33,7 +33,7 @@ class FinderTest extends TestCase
     public function testFinderPage()
     {
 
-        $page = $this->finder->getType("Page", "/");
+        $page = $this->finder->get("Page", "/");
         $this->assertIsObject($page);
         $this->assertInstanceOf(Page::class, $page);
     }
@@ -42,7 +42,7 @@ class FinderTest extends TestCase
 
         $this->assertInstanceOf(
             Page::class,
-            $this->finder->getType("Page", "/")
+            $this->finder->get("Page", "/")
         );
     }
 }
