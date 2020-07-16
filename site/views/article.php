@@ -2,6 +2,6 @@
 
 namespace Phlatson;
 
-echo $view->render('/layouts/default', [
-    "output" => $view->render("/partials/body")
+echo $this->render('/layouts/default', [
+    "output" => $this->render("/partials/body")
 ]);

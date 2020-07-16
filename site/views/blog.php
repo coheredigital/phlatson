@@ -2,8 +2,8 @@
 
 namespace Phlatson;
 
-echo $view->render('/layouts/default', [
-    'output' => $view->render('/partials/articles',[
+echo $this->render('/layouts/default', [
+    'output' => $this->render('/partials/articles',[
         'page_number' => $request->get->page ?? 1
     ]),    
 ]);

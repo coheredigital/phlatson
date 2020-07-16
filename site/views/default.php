@@ -4,9 +4,9 @@ namespace Phlatson;
 
 $test = $finder->get("Page","/");
 
-$output = $view->render("/partials/body");
-$output .= $view->render("/partials/children");
+$output = $this->render("/partials/body");
+$output .= $this->render("/partials/children");
 
-echo $view->render('/layouts/default', [
+echo $this->render('/layouts/default', [
     "output" => $output
 ]);

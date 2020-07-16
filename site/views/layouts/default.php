@@ -18,9 +18,9 @@ namespace Phlatson;
 <body class="font-default pb4">
     <div class="page-header color-brand bg-white py2 mb2">
         <div class="container">
-            <?= $view->render("/partials/breadcrumbs") ?>
+            <?= $this->render("/partials/breadcrumbs") ?>
             <h1><?= $page->get('title') ?></h1>
-            <?= $view->render("/partials/site-navigation") ?>
+            <?= $this->render("/partials/site-navigation") ?>
         </div>
     </div>
     <?= $output ?>

@@ -57,8 +57,6 @@ try {
 
     $phlatson->api('request', $request);
     $phlatson->api('page', $page);
-    $phlatson->api('template', $template);
-    $phlatson->api('view', $view);
 
     if ($view instanceof View) {
         echo $view->render();
