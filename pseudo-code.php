@@ -25,7 +25,7 @@ $app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alter
 // Phlatson class can be the glue
 $phlatson->init("/core/Phlatson"); // pass root ?
 $phlatson = new Phlatson(); // or none, the default data doesn't move
-$phlatson = new Phlatson("/core/Phlatson"); // alternate to override
+$phlatson = new Phlatson("/core/data"); // alternate to override
 $phlatson->app("name", "/site-name"); // add a site location. I think I want to support multisite from the start
 
 // -----------------------------------------------------------

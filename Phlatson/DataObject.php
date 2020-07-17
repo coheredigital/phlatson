@@ -54,13 +54,6 @@ abstract class DataObject extends Phlatson
         return $this;
     }
 
-
-    public function setTemplate(Template $template): self
-    {
-        $this->template = $template;
-        return $this;
-    }
-
     public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
