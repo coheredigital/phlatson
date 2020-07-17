@@ -40,11 +40,30 @@ class Finder
         return $this;
     }
 
-
     public function getDataFile(string $path, string $filename = 'data'): ?JsonObject
     {
         $jsonObject = new JsonObject("{$path}{$filename}.json");
         return $jsonObject;
+    }
+
+    public function hasDataFor(string $classname, string $uri): bool
+    {
+
+        $uri = \trim($uri, '/');
+
+        // get mappings paths
+        $paths = $this->getPaths($classname);
+
+        foreach ($paths as $path) {
+
+            $path = \trim($path, '/');
+            $folder = "{$this->root}$path/$uri/";
+            if (\file_exists($folder)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getDataFor(string $classname, string $uri): JsonObject
@@ -77,13 +96,17 @@ class Finder
     public function get(string $classname, $path, string $file = "data.json"): ?DataObject
     {
         // get data object
+        if (!$this->hasDataFor($classname, $path)) {
+            return null;
+        }
+
         $jsonObject = $this->getDataFor($classname,$path);
-
         $classname = "\Phlatson\\$classname";
-        $dataobject = new $classname();
-        $dataobject->setData($jsonObject);
+        
+        $object = new $classname();
+        $object->setData($jsonObject);
 
-        return $dataobject;
+        return $object;
     }
 
     public function getPaths(string $classname): array

@@ -52,11 +52,15 @@ try {
     // determine the requested page
     $url = $request->url;
     $page = $finder->get("Page", $url);
-    $template = $page->template();
-    $view = $template->view();
-
+    if (!$page) {
+        // TODO: tidy this
+        $page = $finder->get("Page", "/404");
+    }
     $phlatson->api('request', $request);
     $phlatson->api('page', $page);
+    
+
+    $view = $page->template()->view();
 
     if ($view instanceof View) {
         echo $view->render();

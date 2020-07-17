@@ -1,7 +1,5 @@
 <?php
 
-namespace Phlatson;
-
 /**
  * The core DataObject in Phlatson are
  * 
