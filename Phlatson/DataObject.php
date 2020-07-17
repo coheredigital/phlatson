@@ -160,14 +160,15 @@ abstract class DataObject extends Phlatson
     {
         $value = null;
 
-        $value = $this->data($key);
+        $value = $this->data->get($key);
 
         if ($this->data->get($key)) {
             $field = $this->api('finder')->get("Field", $key);
             $fieldtype = $field->type();
+            $value = $fieldtype->decode($value);
         }
 
-        $value = $this->data->get($key);
+
 
         return $value ?: null;
     }

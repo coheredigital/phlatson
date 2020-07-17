@@ -16,5 +16,10 @@ class Fieldtype extends DataObject
 	public function init(): void
 	{
 	}
+
+	public function decode($value) 
+	{
+		return $value;
+	}
 	
 }

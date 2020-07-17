@@ -66,6 +66,46 @@ class Finder
         return false;
     }
 
+    // TODO: re-evaluate
+    public function getCustomClassFile(string $classname, string $uri): ?string
+    {
+
+        $uri = \trim($uri, '/');
+
+        // get mappings paths
+        $paths = $this->getPaths($classname);
+
+        foreach ($paths as $path) {
+
+            $path = \trim($path, '/');
+            $file = "{$this->root}{$path}/{$uri}/{$uri}.php";
+            if (\file_exists($file)) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
+    public function requireCustomClassFor(string $classname, string $uri): bool
+    {
+
+        $uri = \trim($uri, '/');
+
+        // get mappings paths
+        $paths = $this->getPaths($classname);
+
+        foreach ($paths as $path) {
+
+            $path = \trim($path, '/');
+            $file = "{$this->root}{$path}/{$uri}.php";
+            if (\file_exists($file)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getDataFor(string $classname, string $uri): JsonObject
     {
 
@@ -93,7 +133,7 @@ class Finder
         return $data;
     }
 
-    public function get(string $classname, $path, string $file = "data.json"): ?DataObject
+    public function get(string $classname, $path): ?DataObject
     {
         // get data object
         if (!$this->hasDataFor($classname, $path)) {
@@ -101,8 +141,19 @@ class Finder
         }
 
         $jsonObject = $this->getDataFor($classname,$path);
-        $classname = "\Phlatson\\$classname";
+        
+
+        // load custom class if detected
+        if ($classFile = $this->getCustomClassFile($classname, $path)) {
+            require_once $classFile;
+            $classname = "\Phlatson\\$path";
+        }
+        else {
+            $classname = "\Phlatson\\$classname";
+        }
+
         $object = new $classname();
+        
         if ($object instanceof DataObject ) {
             $object->setData($jsonObject);
         }
