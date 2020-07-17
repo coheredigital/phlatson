@@ -102,9 +102,10 @@ class Finder
 
         $jsonObject = $this->getDataFor($classname,$path);
         $classname = "\Phlatson\\$classname";
-        
         $object = new $classname();
-        $object->setData($jsonObject);
+        if ($object instanceof DataObject ) {
+            $object->setData($jsonObject);
+        }
 
         return $object;
     }
