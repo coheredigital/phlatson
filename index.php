@@ -33,10 +33,15 @@ try {
 
     $finder = new Finder(__DIR__);
     $finder->addPathMapping("Page", "/site/pages/");
+
     $finder->addPathMapping("Template", "/Phlatson/data/templates/");
     $finder->addPathMapping("Template", "/site/templates/");
-    $finder->addPathMapping("Field", "/site/fields/");
+
     $finder->addPathMapping("Field", "/Phlatson/data/fields/");
+    $finder->addPathMapping("Field", "/site/fields/");
+
+    $finder->addPathMapping("Fieldtype", "/site/fieldtypes/");
+    $finder->addPathMapping("Fieldtype", "/Phlatson/data/fieldtypes/");
 
     // config files
     $finder->addPathMapping("Config", '/Phlatson/data/config/');
