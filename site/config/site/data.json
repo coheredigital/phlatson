@@ -1,5 +1,8 @@
 {
-    "sessionName": "phlatson",
+    "domains" : [
+        "docs.phlatson.localhost"
+    ],
+    "sessionName": "phlatson-docs",
     "sessionExpireSeconds": 3200,
     "timezone": "America/New_York",
     "debug": true,
