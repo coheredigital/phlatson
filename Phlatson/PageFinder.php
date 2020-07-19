@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace Phlatson;
 
-class PageFinder
+class PageFinder extends Phlatson
 {
-	// TODO: placeholder 
+	// TODO: placeholder
 }

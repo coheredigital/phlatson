@@ -11,6 +11,20 @@ class Page extends DataObject
     protected $children;
     protected $parents;
 
+    public function rootFolder(): string
+    {
+        return str_replace($this->url(), '', $this->folder()) . '/';
+    }
+
+    public function url(): string
+    {
+        // remove root from path
+        $value = \str_replace($this->rootPath(), '', $this->path());
+        $value = trim($value, "/");
+        $value = $value ? "/$value/" : "/";
+        return $value;
+    }
+
     public function parent(): ?Page
     {
         $rootPath = $this->rootPath();
@@ -32,27 +46,13 @@ class Page extends DataObject
         return null;
     }
 
-    public function rootFolder(): string
-    {
-        return str_replace($this->url(), '', $this->folder()) . '/';
-    }
-
-    public function url(): string
-    {
-        // remove root from path
-        $value = \str_replace($this->rootPath(), '', $this->path());
-        $value = trim($value, "/");
-        $value = $value ? "/$value/" : "/";
-        return $value;
-    }
-
     public function parents(): ObjectCollection
     {
 
         // skip if already stored
-        if ($this->parents instanceof ObjectCollection) {
-            return $this->parents;
-        }
+        // if ($this->parents instanceof ObjectCollection) {
+        //     return $this->parents;
+        // }
 
         // create empty collection
         $this->parents = new ObjectCollection();

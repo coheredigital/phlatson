@@ -4,7 +4,7 @@ namespace Phlatson;
 
 
 dump($config);
-dump($page->path());
+dump($page->parent());
 dump($page->url());
 dump($page->rootFolder());
 dump($page);

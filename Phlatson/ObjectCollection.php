@@ -11,7 +11,7 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
     protected int $position = 0;
 
     protected array $files = [];
-    protected array $collection = [];    
+    protected array $collection = [];
 
     public function append(DataObject $item)
     {
@@ -53,7 +53,7 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
     {
         return count($this->collection);
     }
-    
+
     public function index() : int
     {
         if ($this->limit > 0) {

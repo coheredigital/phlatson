@@ -4,31 +4,34 @@ namespace Phlatson;
 
 
 /**
- * 
+ *
  * Variable convention for Phlatson objects (Page, Field, Template, View)
- * 
+ *
  *      example for this case a Page, located at
  *      /site/pages/about-us/our-team/jane-doe/data.json
- * 
+ *
  *      $file = "/site/pages/about-us/our-team/jane-doe/data.json"
  *      the full path relative to the site root including filename
- * 
+ *
  *      $path = "/site/pages/about-us/our-team/jane-doe"
  *      the full path relative to the site root, minus filename
- * 
+ *
  *      $url = "/about-us/our-team/jane-doe"
  *      web accessible URL
- * 
+ *
  *      $folder = "/about-us/our-team/jane-doe"
  *      path relative to other objects of this type
- * 
+ *
  *      $name = "jane-doe"
  *      the base name of the path  : /page
- * 
+ *
  */
 
-abstract class DataObject extends Phlatson
+abstract class DataObject
 {
+
+    use ApiAccess;
+
     protected JsonObject $data;
     protected array $formattedData  = [];
     protected FieldCollection $fields;
@@ -167,10 +170,10 @@ abstract class DataObject extends Phlatson
     }
 
     /**
-     * Magic method mapped the self::get() primarily for readability 
+     * Magic method mapped the self::get() primarily for readability
      * example
      * <?= $page->title ?>
-     * instead of 
+     * instead of
      * <?= $page->get('title') ?>
      *
      * @param string $key
