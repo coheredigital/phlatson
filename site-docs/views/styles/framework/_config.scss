@@ -1,0 +1,33 @@
+
+$classRegistry: () !default;
+$buildRegistry: () !default;
+
+$registrySets: (
+    "default": (),
+    "responsive": (),
+    "hover": (),
+    "pseudo": (),
+    "print": (),
+);
+
+$build: true !default;
+
+// layout
+$container-width: 1130px !default;
+$gutter: 2rem !default;
+
+$colors: (
+    'brand': #20C882,
+    'gray': #999,
+    'white': #fff, 
+    'black': #000, 
+    'transparent': transparent,
+    'inherit': inherit
+) !default;
+
+$breakpoints:  (
+    'sm': 550px,
+    'md': 768px,
+    'lg': 1024px,
+    'xl': 1280px
+) !default;

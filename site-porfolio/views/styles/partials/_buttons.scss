@@ -1,0 +1,84 @@
+
+@mixin button-gradient($color) {
+
+    $bg: lighten($color,4%);
+    $bg: adjust-hue($bg, -7);
+    $blend: lighten($color,10%);
+    $blend: adjust-hue($blend, 7);
+    @include linear-gradient(120deg, $bg, $blend);
+}
+
+@mixin button-gradient-hover($color) {
+
+    $bg: lighten($color,10%);
+    $bg: adjust-hue($bg, -6);
+    $blend: lighten($color,17%);
+    $blend: adjust-hue($blend, 6);
+    @include linear-gradient(120deg, $bg, $blend);
+}
+
+@mixin button($color, $hover: true) {
+
+    $text-color: contrast($color);
+
+    $text-color: fade-out($text-color, .1);
+
+    font-size: .9em;
+    color: $text-color !important;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    font-weight: 600;
+    vertical-align: middle;
+    padding: .6em 1.2em;
+    border-radius: 2em;
+    border: 0 !important;
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 1em;
+    @include button-gradient( $color );
+	// @include soft-shadow;
+	box-shadow: 0 .25rem .75rem -.25rem rgba(0,0,0,.1);
+    @if $hover {
+        &:hover {
+			box-shadow: 0 1rem .6rem -.8rem rgba(0,0,0,.05);
+			@include button-gradient-hover($color);
+        }
+    }
+}
+
+
+/* ==================================================
+BUTTONS
+================================================== */
+.button {
+    @include button(#000);
+    &:disabled {
+        opacity: 0.3 !important;
+        pointer-events: none !important;
+        background: color('gray') !important;
+    }
+}
+
+.button-green {
+    @include button-gradient( color('green') );
+    &:hover {
+        @include button-gradient-hover( color('green') );
+    }
+}
+
+.button-gray {
+    @include button-gradient( color('gray') );
+    &:hover {
+        @include button-gradient-hover( color('gray') );
+    }
+}
+
+.button-white {
+    
+    @include button-gradient( #eee );
+    &:hover {
+        @include button-gradient-hover( #fff );
+    }
+    color: contrast(#eee) !important;
+}
