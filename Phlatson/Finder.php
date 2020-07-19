@@ -161,6 +161,9 @@ class Finder
         return $object;
     }
 
+
+
+
     public function getPaths(string $classname): array
     {
 
@@ -171,5 +174,26 @@ class Finder
         return $this->pathMappings[$classname];
     }
 
+    /**
+     * Allows better readability for DataObject retrieval
+     *
+     * @param string $name
+     * @param [type] $arguments
+     * @return DataObject|null
+     */
+    public function __call(string $name, $arguments): ?DataObject
+    {
+        // TODO: is a test, and a mess, improve or remove
+        $startsWith = substr($name, 0, 3);
+
+        if ($startsWith !== 'get') {
+            throw new Exception("No method $name");
+        }
+
+        $typeName = str_replace($startsWith, "", $name);
+
+        return $this->get($typeName, $arguments[0]);
+
+    }
 
 }

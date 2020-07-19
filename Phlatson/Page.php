@@ -32,12 +32,12 @@ class Page extends DataObject
         return null;
     }
 
-    public function rootFolder() : string
+    public function rootFolder(): string
     {
         return str_replace($this->url(), '', $this->folder()) . '/';
     }
 
-    public function url() : string
+    public function url(): string
     {
         // remove root from path
         $value = \str_replace($this->rootPath(), '', $this->path());
