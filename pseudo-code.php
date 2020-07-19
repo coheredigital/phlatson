@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * The core DataObject in Phlatson are
  *
@@ -28,14 +30,16 @@ $phlatson = new Phlatson(); // or none, the default data doesn't move
 $phlatson = new Phlatson("/core/data"); // alternate to override
 $phlatson->app("name", "/site-name"); // add a site location. I think I want to support multi-site from the start
 
-// -----------------------------------------------------------
-// App object
-// -----------------------------------------------------------
-$app = new App('domain.com');
-$app = new App("/site"); // (alternate) point at folder, check for config
+
+/**
+ * App object
+ * think of the $site or $app object as the glue
+ * this is what the index file might look like, the index.php file will be user owned
+ */
+$app = new App("C:\Users\Adam\Websites\phlatson\site"); // (alternate) point at folder, check for config
 $app->domain('domain.com');
 $app->alias('www.domain.com');
-$app->data("/site");
+$app->setDataLocation("/site");
 
 $phlatson->importApp($app); // stored by domain?
 
