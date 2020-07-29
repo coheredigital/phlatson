@@ -51,7 +51,7 @@ class ObjectCollectionPagination extends \LimitIterator
     {
 
         if ($this->limit <  1) {
-            throw new Exceptions\PhlatsonException("Must set a limit on ObjectCollection before pagination can be used.");
+            throw new \Exception("Must set a limit on ObjectCollection before pagination can be used.");
         }
 
         $this->isPaginated = true;

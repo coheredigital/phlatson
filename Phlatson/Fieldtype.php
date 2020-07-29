@@ -1,25 +1,25 @@
 <?php
+
 namespace Phlatson;
-abstract class Fieldtype extends Extension
+
+class Fieldtype extends DataObject
 {
 
-    protected $field;
-    public $object;
+	protected $value = null;
 
-    /**
-     * format value for output
-     *
-     * @param mixed raw input value
-     * @return mixed formatted publc facing variable
-     */
-    public function encode($value)
-    {
-        return $value;
-    }
+	public function __construct()
+	{
+		// $this->value = $value;
+		$this->init();
+	}
 
-    public function decode($value)
-    {
-        return $value;
-    }
+	public function init(): void
+	{
+	}
 
+	public function decode($value) 
+	{
+		return $value;
+	}
+	
 }

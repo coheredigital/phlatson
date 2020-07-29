@@ -1,84 +1,48 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace Phlatson;
 
-define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__ . '/../../'));
-define('DATA_PATH', ROOT_PATH . 'site/');
+define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', realpath(__DIR__ . '/../../') . "/"));
 
 use \PHPUnit\Framework\TestCase;
 
 class FinderTest extends TestCase
 {
-    public function testFinderInstance() : Finder
+
+    protected $data_path = ROOT_PATH . 'site/';
+    protected $finder;
+
+
+    protected function setUp(): void
     {
-        $finder = new Finder(DATA_PATH);
+        $this->finder = new Finder($this->data_path);
+        $this->finder->addPathMapping("Page", "/pages/");
+        $this->finder->addPathMapping("Field", "/pages/");
+    }
+
+    public function testFinderInstance()
+    {
         $this->assertInstanceOf(
             Finder::class,
-            $finder
-        );
-        return $finder;
-    }
-
-    /**
-     * @dataProvider    folderProvider
-     */
-    public function testValidFolders($folder)
-    {
-        $finder = new Finder(DATA_PATH);
-        $this->assertSame(
-            true,
-            file_exists($finder->getPath($folder))
+            $this->finder
         );
     }
 
-    /**
-     * @dataProvider    folderProvider
-     */
-    public function testFinderObjects($folder)
+    public function testFinderPage()
     {
-        $finder = new Finder(DATA_PATH);
-        $this->assertInstanceOf(
-            JsonObject::class,
-            $finder->get($folder)
-        );
-    }
 
-    /**
-     * @dataProvider    folderTypesProvider
-     */
-    public function testFinderTypes($type, $folder)
+        $page = $this->finder->get("Page", "/");
+        $this->assertIsObject($page);
+        $this->assertInstanceOf(Page::class, $page);
+    }
+    public function testFinderPageValues()
     {
-        $finder = new Finder(DATA_PATH);
 
         $this->assertInstanceOf(
-            JsonObject::class,
-            $finder->getTypeData($type, $folder)
+            Page::class,
+            $this->finder->get("Page", "/")
         );
-
-        $this->assertInstanceOf(
-            DataObject::class,
-            $finder->getType($type, $folder)
-        );
-    }
-
-    public function folderProvider()
-    {
-        return [
-            'page' => ['/pages/', 'Page'],
-            'page' => ['/pages/about/', 'Page'],
-            'model' => ['/models/page/', 'Model'],
-            'user' => ['/users/adam/', 'User']
-        ];
-    }
-
-    public function folderTypesProvider()
-    {
-        return [
-            'page' => ['Page', '/about/'],
-            'model' => ['Model', '/page/'],
-            'user' => ['User', '/adam/']
-        ];
     }
 }

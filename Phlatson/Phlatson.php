@@ -30,38 +30,9 @@ class Phlatson
         }
     }
 
-    final public function classname(bool $full = false)
+    final public function classname() : string
     {
-        if ($full) {
-            return __CLASS__;
-        }
         return (new \ReflectionClass($this))->getShortName();
-    }
-
-    /**
-     * Runs the request, checks that a Page has been set
-     *
-     * @param Request $request
-     */
-    public function execute(Request $request)
-    {
-
-        $this->request = $request;
-
-        // determine the requested page
-        $url = $request->url;
-        $page = new Page($url);
-        $template = $page->template;
-        $view = $template->view;
-
-        $this->api('request', $request);
-        $this->api('page', $page);
-        $this->api('template', $template);
-        $this->api('view', $view);
-
-        if ($view instanceof View) {
-            return $view->render();
-        }
     }
 
 }

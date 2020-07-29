@@ -1,0 +1,106 @@
+
+$font-main: 'Open Sans', Arial, sans-serif;
+$font-headings: 'Bebas Neue', Impact, sans-serif;
+$font-monospace: 'Courier New', monospace;
+
+// base colors
+$colors : (
+
+    // corporate
+    'facebook': #3b5998,
+    'twitter': #1da1f2,
+    'instagram': #e1306c,
+
+    // brand
+    'brand': #7963FF,
+    'brand-light': lighten(#7963FF, 15%),
+    'red': #d92232,
+    'green': #13b24d,
+    'yellow': #f9db35,
+    'yellow-light': #fff6c7,
+
+    // shades
+    'gray-soft': #eee,
+    'gray-light': #ccc,
+    'gray': #999,
+    'gray-dark': #444,
+    'black': #000,
+    'white': #fff,
+    'shade': rgba(25,25,25,.25),
+    'shade-darker': rgba(25,25,25,.5),
+    'shade-darkest': rgba(25,25,25,.75),
+
+    // utility
+    'transparent': transparent,
+    'current': currentColor,
+);
+
+$fonts : (
+    'responsive': false,
+    'definitions': (
+        'font-default': (font-family: #{"'Open Sans', Arial, sans-serif"}),
+        'font-heading': (font-family: #{"'Bebas Neue', Impact, sans-serif"}),
+        'font-monospace': (font-family: #{"'Courier New', monospace"})
+    )
+) !default;
+
+$font-sizes : (
+    'responsive': true,
+    'definitions': (
+        'size-reset': (font-size: 1rem),
+
+        'size-h1': (font-size: 4rem),
+        'size-h2': (font-size: 2.4rem),
+        'size-h3': (font-size: 1.6rem),
+        'size-h4': (font-size: 1.3rem),
+        'size-h5': (font-size: 1rem),
+        'size-h6': (font-size: .8rem),
+
+        'size-70': (font-size: .7em),
+        'size-80': (font-size: .8em),
+        'size-100': (font-size: 1em),
+        'size-125': (font-size: 1.25em),
+        'size-150': (font-size: 1.5em),
+        'size-200': (font-size: 2em),
+        'size-300': (font-size: 3em),
+        'size-400': (font-size: 4em),
+        'size-500': (font-size: 5em),
+
+        'size-small': (font-size: .8em),
+        'size-large': (font-size: 1.1em),
+
+    )
+);
+
+// elements
+$text-color: #000;
+$text-color-secondary: #777;
+$border-color: #e5e5e5;
+$table-border-color: $border-color;
+$background-color: #f3f3f3;
+$main-bg : #f9f9f9;
+
+$link-color: color('dark-blue');
+$link-hover-color: color('blue');
+
+// input  & forms
+$input-background: #fafafa;
+$input-placeholder-color: #aaa;
+$input-border: 1px solid #ddd;
+$input-border-radius: .2rem;
+
+
+@mixin input-reset {
+	padding: .5em;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+    height: 2.5em;
+    font-size: 1rem;
+    background: #ddd;
+    border: #aaa;
+    color: inherit;
+    font-family: inherit;
+}
+
+

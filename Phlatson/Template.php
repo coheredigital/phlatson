@@ -1,11 +1,9 @@
 <?php
+
 namespace Phlatson;
 
 class Template extends DataObject
 {
-
-    const BASE_FOLDER = 'templates/';
-    const BASE_URL = 'templates/';
 
     public function hasField($name)
     {
@@ -13,31 +11,22 @@ class Template extends DataObject
         return isset($fields[$name]);
     }
 
-    public function getField($name) : ? array
+    public function getField($name): ?Field
     {
         $fields = $this->data('fields');
         return $fields[$name];
     }
 
-    public function view() : object
+    public function view(): View
     {
         // get view file of the same name
-        $name = $this->get('name');
-        $view = new View($name);
-        return $view;
+        return new View($this->name());
     }
 
-    public function get($key)
+    public function template(): Template
     {
-
-        switch ($key) {
-            case 'view':
-                return $this->view();
-            default:
-                return parent::get($key);
-        }
-
-
+        $template = $this->api('finder')->get("Template","template");
+        return $template;
     }
 
 }

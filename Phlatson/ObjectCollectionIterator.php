@@ -52,10 +52,10 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
         $object = $this->first();
 
         if(!$value = $object->getUnformatted($fieldname)){
-            throw new Exceptions\PhlatsonException("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
+            throw new \Exception("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
         }
 
-        $type = gettype($value);
+        $type = get($value);
 
 
         usort(
@@ -139,7 +139,7 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
     {
 
         if(!count($this->collection)){
-            throw new Exceptions\PhlatsonException("$this->className is empty, cannot retrieve index($x)");
+            throw new \Exception("$this->className is empty, cannot retrieve index($x)");
         }
         return array_values($this->collection)[$x];
     }

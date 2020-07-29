@@ -1,191 +1,199 @@
-<?php 
+<?php
 
 namespace Phlatson;
 
 class Finder
 {
+    
     protected $root;
+    protected $pathMappings = [];
 
-    protected $type;
-
-    protected $pathMappings = [
-        'Page' => [
-            '/site/pages/'
-        ],
-        'Model' => [
-            '/site/models/'
-        ],
-        'Config' => [
-            '/site/config/',
-            '/Phlatson/data/config/'
-        ],
-        'Extension' => [
-            '/site/extensions/',
-            '/Phlatson/data/extensions/'
-        ],
-    ];
-
-    protected $paths = [];
-
-    public function __construct(string $path = '')
+    public function __construct(string $rootPath = '')
     {
+
         // normalize the path
-        if ($path && !file_exists($path)) {
-            throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
+        if ($rootPath && !file_exists($rootPath)) {
+            throw new \Exception("Path ($rootPath) does not exist, cannot be used as site data");
         }
 
-        $path = Sanitizer::path($path);
+        $rootPath = Sanitizer::path($rootPath);
 
-        $this->root = $path;
+        $this->root = $rootPath;
     }
 
-    final public function setType(string $type) : self
+
+    final public function addPathMapping(string $classname, string $path): self
     {
-        $this->type = $type;
+
+        // validate class
+        if (!class_exists("\Phlatson\\{$classname}")) {
+            throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
+        }
+
+        // normalize the path
+        if ($path && !file_exists($this->root . $path)) {
+            throw new \Exception("Path ($path) does not exist, cannot be used as site data");
+        }
+
+        $this->pathMappings[$classname][] = $path;
+
         return $this;
     }
 
-    final public function addPath(string $path) : self
+    public function getDataFile(string $path, string $filename = 'data'): ?JsonObject
     {
-        // $path = Sanitizer::path($path);
-
-        // if (!file_exists($path)) {
-        //     throw new Exceptions\PhlatsonException("Path ($path) does not exist, cannot be used as site data");
-        // }
-
-        // path as key to prevent duplicates
-        $this->paths[$path] = $path;
-
-        return $this;
+        $jsonObject = new JsonObject("{$path}{$filename}.json");
+        return $jsonObject;
     }
 
-    public function root() : string
+    public function hasDataFor(string $classname, string $uri): bool
     {
-        return $this->root;
+
+        $uri = \trim($uri, '/');
+
+        // get mappings paths
+        $paths = $this->getPaths($classname);
+
+        foreach ($paths as $path) {
+
+            $path = \trim($path, '/');
+            $folder = "{$this->root}$path/$uri/";
+            if (\file_exists($folder)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function getFiles(string $folder) : array
+    // TODO: re-evaluate
+    public function getCustomClassFile(string $classname, string $uri): ?string
     {
-        $path = $this->getPath($folder);
-        $files = glob("{$path}*.json");
-        return $files;
+
+        $uri = \trim($uri, '/');
+
+        // get mappings paths
+        $paths = $this->getPaths($classname);
+
+        foreach ($paths as $path) {
+
+            $path = \trim($path, '/');
+            $file = "{$this->root}{$path}/{$uri}/{$uri}.php";
+            if (\file_exists($file)) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
+    public function requireCustomClassFor(string $classname, string $uri): bool
+    {
+
+        $uri = \trim($uri, '/');
+
+        // get mappings paths
+        $paths = $this->getPaths($classname);
+
+        foreach ($paths as $path) {
+
+            $path = \trim($path, '/');
+            $file = "{$this->root}{$path}/{$uri}.php";
+            if (\file_exists($file)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function exists(string $folder)
+    public function getDataFor(string $classname, string $uri): JsonObject
     {
-        $path = $this->getPath($folder);
-        $file = "{$path}data.json";
 
-        return !file_exists($file) ? false : $file;
-    }
+        $uri = \trim($uri, '/');
 
-    public function get(string $path) : ?DataObject
-    {
-        $jsonObject = $this->getData($path);
+        // validate class
+        // TODO: This could be cleaner
+        if (!class_exists("\Phlatson\\$classname")) {
+            throw new \Exception("Class ($classname) does not exist, cannot be used to get data");
+        }
 
-        $path_parts = explode('/', trim($path, '/'));
+        // get mappings paths
+        $paths = $this->getPaths($classname);
 
-        $classname = array_shift($path_parts);
-        $classname = ucfirst($classname);
-        $classname = substr($classname, 0, -1);
-        $classname = "\Phlatson\\$classname";
+        foreach ($paths as $path) {
 
-        $path = implode('/', $path_parts);
-        $path = "/$path/";
-
-        $objectType = new $classname();
-        $objectType->setData($jsonObject);
-
-        return $objectType;
-    }
-
-    public function getFromPaths(string $url) : ?DataObject
-    {
-        // sanitizer & trim URL
-        $url = Sanitizer::url($url);
-        $url = ltrim($url, '/');
-
-        foreach ($this->paths as $root) {
-            $path = "{$root}{$url}";
-            if (file_exists($path)) {
-                $jsonObject = $this->getData($path);
+            $path = \trim($path, '/');
+            $folder = "{$this->root}$path/$uri/";
+            if (\file_exists($folder)) {
+                $data = $this->getDataFile($folder);
                 break;
             }
         }
 
-        $path_parts = explode('/', trim($path, '/'));
+        return $data;
+    }
 
-        $classname = $this->type ? "\Phlatson\\$this->type" : false;
+    public function get(string $classname, $path): ?DataObject
+    {
+        // get data object
+        if (!$this->hasDataFor($classname, $path)) {
+            return null;
+        }
 
-        if (!$classname) {
-            $classname = array_shift($path_parts);
-            $classname = ucfirst($classname);
-            $classname = substr($classname, 0, -1);
+        $jsonObject = $this->getDataFor($classname,$path);
+        
+
+        // load custom class if detected
+        if ($classFile = $this->getCustomClassFile($classname, $path)) {
+            require_once $classFile;
+            $classname = "\Phlatson\\$path";
+        }
+        else {
             $classname = "\Phlatson\\$classname";
         }
 
-        $path = implode('/', $path_parts);
-        $path = "/$path/";
-
-        $objectType = new $classname();
-        $objectType->setData($jsonObject);
-
-        return $objectType;
-    }
-
-    // TODO: make this work with system data
-    public function getData(string $path) : ? JsonObject
-    {
-        if (!$file = $this->exists($path)) {
-            return null;
+        $object = new $classname();
+        
+        if ($object instanceof DataObject ) {
+            $object->setData($jsonObject);
         }
-        $jsonObject = new JsonObject($file);
-        return $jsonObject;
+
+        return $object;
     }
 
-    public function getTypeData(string $classname, string $path) : ?JsonObject
+
+
+
+    public function getPaths(string $classname): array
     {
-        // get data object
-        $folder = strtolower($classname);
-        // trim just in case and pluralize
-        $folder = '/' . trim($folder, '/') . 's';
 
-        $path = Sanitizer::url($path);
-        $path = "{$folder}{$path}";
-        $jsonObject = $this->getData($path);
-        return $jsonObject;
+        if (!isset($this->pathMappings[$classname])) {
+            throw new \Exception("Path mapping for ($classname) not found, cannot be used to get data");
+        }
+
+        return $this->pathMappings[$classname];
     }
 
-    public function getType(string $classname, $path) : ?DataObject
+    /**
+     * Allows better readability for DataObject retrieval
+     *
+     * @param string $name
+     * @param [type] $arguments
+     * @return DataObject|null
+     */
+    public function __call(string $name, $arguments): ?DataObject
     {
-        // get data object
-        $folder = strtolower($classname);
-        // trim just in case and pluralize
-        $folder = '/' . trim($folder, '/') . 's';
+        // TODO: is a test, and a mess, improve or remove
+        $startsWith = substr($name, 0, 3);
 
-        $path = Sanitizer::url($path);
-        $path = "{$folder}{$path}";
-        $jsonObject = $this->get($path);
+        if ($startsWith !== 'get') {
+            throw new Exception("No method $name");
+        }
 
-        $classname = ucfirst($classname);
-        $classname = "\Phlatson\\$classname";
+        $typeName = str_replace($startsWith, "", $name);
 
-        $objectType = new $classname();
-        $objectType->setData($jsonObject);
+        return $this->get($typeName, $arguments[0]);
 
-        return $objectType;
     }
 
-    protected function sanitizeFolder(string $folder)
-    {
-        $folder = str_replace(DIRECTORY_SEPARATOR, '/', $folder);
-        $folder = trim($folder, '/');
-        return "/{$folder}/";
-    }
-
-    public function getPath(string $folder)
-    {
-        $folder = Sanitizer::url($folder);
-        return $this->root . ltrim($folder, '/');
-    }
 }

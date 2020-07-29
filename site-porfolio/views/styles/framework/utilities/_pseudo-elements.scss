@@ -1,0 +1,73 @@
+
+$pseudo-elements : (
+    'responsive': false,
+    'hover': false,
+    'definitions':  (
+        "after\\:chevron-down::after" : (
+            content: '',
+            vertical-align: baseline,
+            position: relative,
+            font-size: 1em,
+            height: .6em,
+            width: .6em,
+            border: 2px solid,
+            color: inherit,
+            display: inline-block,
+            transform: rotate(45deg),
+            margin-left: .5em,
+            margin-bottom: .25em,
+            border-top: 0,
+            border-left: 0,
+        ),
+        "before\\:chevron-down::before" : (
+            content: '',
+            vertical-align: baseline,
+            position: relative,
+            font-size: 1em,
+            height: .6em,
+            width: .6em,
+            border: 2px solid,
+            color: inherit,
+            display: inline-block,
+            transform: rotate(45deg),
+            margin-right: .5em,
+            margin-bottom: .25em,
+            border-top: 0,
+            border-left: 0,
+        ),
+    )
+) !default;
+@include register($pseudo-elements);
+
+$pseudo-height : (
+    'responsive': false,
+    'hover': false,
+    'definitions':  (
+        "before\\:h-0::before" : (height: 0),
+        "before\\:h-1\\/6::before" : (height: percentage(1/6)),
+        "before\\:h-1\\/5::before" : (height: percentage(1/5)),
+        "before\\:h-1\\/4::before" : (height: percentage(1/4)),
+        "before\\:h-1\\/3::before" : (height: percentage(1/3)),
+        "before\\:h-2\\/5::before" : (height: percentage(2/5)),
+        "before\\:h-1\\/2::before" : (height: percentage(1/2)),
+        "before\\:h-3\\/5::before" : (height: percentage(3/5)),
+        "before\\:h-2\\/3::before" : (height: percentage(2/3)),
+        "before\\:h-4\\/5::before" : (height: percentage(4/5)),
+        "before\\:h-3\\/4::before" : (height: percentage(3/4)),
+        "before\\:h-5\\/6::before" : (height: percentage(5/6)),
+        "before\\:h-full::before" : (height: percentage(1)),
+    )
+) !default;
+@include register($pseudo-height);
+
+$pseudo-decoration : (
+    'responsive': false,
+    'hover': false,
+    'definitions':  (
+        "after\\:rounded::after" : (border-radius: .5rem),
+        "after\\:rounded-small::after" : (border-radius: .25rem),
+        "before\\:rounded::before" : (border-radius: .5rem),
+        "before\\:rounded-small::before" : (border-radius: .25rem),
+    )
+) !default;
+@include register($pseudo-decoration);

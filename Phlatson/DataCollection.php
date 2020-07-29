@@ -37,11 +37,11 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 	 * returns the keys that match the mask
 	 *
 	 * @param array $mask               The parameter mask array
-	 * @param boolean $fill_with_nulls  Whether or not to fill the returned array with
+	 * @param boolean $fillWithNulls  Whether or not to fill the returned array with
 	 *  values to match the given mask, even if they don't exist in the collection
 	 * @return array
 	 */
-	public function keys($mask = null, $fill_with_nulls = true)
+	public function keys($mask = null, $fillWithNulls = true)
 	{
 		if (null !== $mask) {
             // Support a more "magical" call
@@ -53,11 +53,11 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 			 * Make sure that the returned array has at least the values
 			 * passed into the mask, since the user will expect them to exist
 			 */
-			if ($fill_with_nulls) {
+			$keys = [];
+			
+			if ($fillWithNulls) {
 				$keys = $mask;
-			} else {
-				$keys = array();
-			}
+			} 
 
             /*
 			 * Remove all of the values from the keys
@@ -79,11 +79,11 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 	 * returns the keys that match the mask
 	 *
 	 * @param array $mask               The parameter mask array
-	 * @param boolean $fill_with_nulls  Whether or not to fill the returned array with
+	 * @param boolean $fillWithNulls  Whether or not to fill the returned array with
 	 *  values to match the given mask, even if they don't exist in the collection
 	 * @return array
 	 */
-	public function all($mask = null, $fill_with_nulls = true)
+	public function all($mask = null, $fillWithNulls = true)
 	{
 		if (null !== $mask) {
             // Support a more "magical" call
@@ -95,7 +95,7 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 			 * Make sure that each key in the mask has at least a
 			 * null value, since the user will expect the key to exist
 			 */
-			if ($fill_with_nulls) {
+			if ($fillWithNulls) {
 				$attributes = array_fill_keys($mask, null);
 			} else {
 				$attributes = array();
@@ -332,7 +332,7 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 	 */
 	public function getIterator()
 	{
-		return new ArrayIterator($this->attributes);
+		return new \ArrayIterator($this->attributes);
 	}
 
 	/**

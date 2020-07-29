@@ -12,7 +12,7 @@
 				<p>Vestibulum feugiat diam a eu parturient duis dis a sem netus fringilla condimentum tellus vestibulum </p>
 			</div>
 			<div class="column -desktop-8">
-			<pre><code>{
+				<pre><code>{
   "title": "Canada",
   "content": "Canada is a country located in the northern part of North America. Its ten provinces and three territories extend from the Atlantic to the Pacific",
   "template": "article",
@@ -32,14 +32,15 @@
 				<p>Vestibulum feugiat diam a eu parturient duis dis a sem netus fringilla condimentum tellus vestibulum risus adipiscing suspendisse</p>
 			</div>
 			<div class="column -desktop-8">
-				<?= $view->render("/partials/code-block", [
+				<?= $this->render("/partials/code-block", [
 					"string" => '<article>
-  <h2><?= $page->title ?></h2>
-  <p><?= $page->content ?></p>
-  <?php if ($page->template == "article"): ?>
-    <h6>Last updated: <?= $page->modified->format("Y/d/d") ?></h6>
-  <?php endif; ?>
-</article>']); ?>
+								<h2><?= $page->title ?></h2>
+								<p><?= $page->content ?></p>
+								<?php if ($page->template == "article"): ?>
+									<h6>Last updated: <?= $page->modified->format("Y/d/d") ?></h6>
+								<?php endif; ?>
+								</article>'
+				]); ?>
 			</div>
 		</div>
 

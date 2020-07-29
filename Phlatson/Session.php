@@ -207,7 +207,7 @@ class Session extends Phlatson implements \IteratorAggregate
         // should sanitize name
         $user = $this->api('users')->get("$name");
         if (!$user instanceof User) {
-            throw new Exceptions\PhlatsonException("User {$name} not found!");
+            throw new \Exception("User {$name} not found!");
         }
 
         if ($user->authenticate($password)) {

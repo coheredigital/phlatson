@@ -2,36 +2,38 @@
 
 namespace Phlatson;
 
-class View extends BaseObject
+
+class View extends Phlatson
 {
+
     const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';
 
-    function __construct(string $name)
-    {
+    protected $path;
 
-        $filepath = $this->rootPath() . $name . ".php";
+    function __construct(string $file)
+    {
+        // TODO: remove hard coding
+        $root = ROOT_PATH . "site/" . 'views/';
+        $filepath = "{$root}{$file}.php";
+
         // validate view file
         if (!file_exists($filepath)) {
-            throw new Exceptions\PhlatsonException("Ivalid file ($filepath) cannot be used as view");
+            throw new \Exception("Invalid file ($filepath) cannot be used as view");
         }
         $this->file = $filepath;
+        $this->path = dirname($filepath);
     }
 
-    protected function file()
+    public function name() : string
     {
-        return $this->file;
-    }
-
-    protected function name()
-    {
-        return pathinfo($this->file())['filename'];
+        return pathinfo($this->file)['filename'];
     }
 
     public function renderPartial(? string $url, array $data = []) : string
     {
         $url = trim($url, "/");
-        $file = "{$this->path}{$url}.php";
+        $file = "{$this->path}/{$url}.php";
         $output = "";
         $output = $this->renderViewFile($file, $data);
         return $output;
@@ -46,7 +48,7 @@ class View extends BaseObject
     {
 
         if (!file_exists($file)) {
-            throw new Exceptions\PhlatsonException("View does not exist: $file");
+            throw new \Exception("View does not exist: $file");
         }
 
         // render template file
