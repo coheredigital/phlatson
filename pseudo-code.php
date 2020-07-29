@@ -2,47 +2,6 @@
 
 
 
-/**
- * The core DataObject in Phlatson are
- *
- * - Page (front facing viewable object)
- * - Template (defines the field used, the data type returned)
- * - Field (defines the fieldtype, how data is stored)
- *
- */
-
-// Data Storage, multi-site related
-// $phlatson->location("C:/Websites/this-site/core-location");
-$storage->addLocation("C:/Websites/this-site/core"); // need a method to inform the system that this is default data, not editable
-$storage->addLocation("C:/Websites/this-site/site");
-// maybe the idea on App objects?
-$app = new Phlatson("/core/Phlatson"); // with a pointer to the core
-$app->addDataLocation("Page","/site/pages/");
-// another sharing core
-$app2 = new App("/core/Phlatson");
-$app2->addDataLocation("Page","/site-other/pages/");
-$app2->addDataLocation("Fieldtypes","/site/fieldtypes/"); // shared with $app
-$app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alternate syntax
-
-// Phlatson class can be the glue
-$phlatson->init("/core/Phlatson"); // pass root ?
-$phlatson = new Phlatson(); // or none, the default data doesn't move
-$phlatson = new Phlatson("/core/data"); // alternate to override
-$phlatson->app("name", "/site-name"); // add a site location. I think I want to support multi-site from the start
-
-
-/**
- * App object
- * think of the $site or $app object as the glue
- * this is what the index file might look like, the index.php file will be user owned
- */
-$app = new App("C:\Users\Adam\Websites\phlatson\site"); // (alternate) point at folder, check for config
-$app->domain('domain.com');
-$app->alias('www.domain.com');
-$app->setDataLocation("/site");
-
-$phlatson->importApp($app); // stored by domain?
-
 
 // -----------------------------------------------------------
 // Finder
@@ -119,3 +78,42 @@ $phlatson->site('site-name')->getPage("/");
  * data_en.json
  * data_fr.json
  */
+
+
+/**
+ * The core DataObject in Phlatson are
+ *
+ * - Page (front facing viewable object)
+ * - Template (defines the field used, the data type returned)
+ * - Field (defines the fieldtype, how data is stored)
+ *
+ */
+
+// maybe the idea on App objects?
+$app = new Phlatson();
+$app->addDataLocation("Page","/site/pages/");
+$app->addDataLocation("Page","/site/pages/");
+// another sharing core
+$app2 = new App("/core/Phlatson");
+$app2->addDataLocation("Page","/site-other/pages/");
+$app2->addDataLocation("Fieldtypes","/site/fieldtypes/"); // shared with $app
+$app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alternate syntax
+
+// Phlatson class can be the glue
+$phlatson->init("/core/Phlatson"); // pass root ?
+$phlatson = new Phlatson(); // or none, the default data doesn't move
+$phlatson = new Phlatson("/core/data"); // alternate to override
+$phlatson->app("name", "/site-name"); // add a site location. I think I want to support multi-site from the start
+
+
+/**
+ * App object
+ * think of the $site or $app object as the glue
+ * this is what the index file might look like, the index.php file will be user owned
+ */
+$app = new App("C:\Users\Adam\Websites\phlatson\site"); // (alternate) point at folder, check for config
+$app->domain('domain.com');
+$app->alias('www.domain.com');
+$app->setDataLocation("/site");
+
+$phlatson->importApp($app); // stored by domain?
