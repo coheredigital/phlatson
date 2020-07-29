@@ -2,8 +2,10 @@
 
 namespace Phlatson;
 
-class ObjectCollection extends Phlatson implements \Iterator, \Countable
+class ObjectCollection implements \Iterator, \Countable
 {
+
+    use ApiAccess;
 
     public $iterator;
     protected int $currentPage = 1;

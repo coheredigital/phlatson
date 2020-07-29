@@ -20,7 +20,8 @@ $whoops->register();
 
 try {
 
-    $phlatson = new Phlatson();
+    $phlatson = new Phlatson(__DIR__ . "/site");
+    $phlatson->api('phlatson', $phlatson);
 
     // TODO: move this to separate init file / or addon
     $clockwork = \Clockwork\Support\Vanilla\Clockwork::init([

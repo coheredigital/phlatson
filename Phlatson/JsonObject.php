@@ -1,7 +1,7 @@
 <?php
 namespace Phlatson;
 
-class JsonObject extends Phlatson
+class JsonObject
 {
 
     public string $file;
@@ -11,9 +11,9 @@ class JsonObject extends Phlatson
 
 
     public function __construct(string $file) {
-        
+
         $this->file = $file;
-        
+
         if (!file_exists($file)) {
             throw new \Exception("File ($file) does not exist");
         }

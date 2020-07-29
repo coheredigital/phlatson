@@ -9,30 +9,16 @@ namespace Phlatson;
  */
 
 class Phlatson
-{    
+{
 
-    /**
-     * @param $key
-     * @param $value
-     * @throws Exception
-     */
-    final public function api(string $name = null, $value = null, bool $lock = false)
-    {
-        if (!is_null($name) && !is_null($value)) {
-            // all APIs set this way are locked
-            // return $this allows chaining
-            Api::set($name, $value, $lock);
-            return $this;
-        } elseif (!is_null($name) && is_null($value)) {
-            return Api::get($name);
-        } else {
-            return Api::fetchAll();
-        }
-    }
+    use ApiAccess;
 
-    final public function classname() : string
+    private string $path;
+
+    public function __construct(string $path)
     {
-        return (new \ReflectionClass($this))->getShortName();
+        $this->path = $path;
+        $this->config = new Config("$path/config/data.json");
     }
 
 }
