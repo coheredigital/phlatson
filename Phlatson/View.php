@@ -5,7 +5,7 @@ namespace Phlatson;
 
 class View extends Phlatson
 {
-    
+
     const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';
 
@@ -14,9 +14,9 @@ class View extends Phlatson
     function __construct(string $file)
     {
         // TODO: remove hard coding
-        $root = DATA_PATH . 'views/';
+        $root = ROOT_PATH . "site/" . 'views/';
         $filepath = "{$root}{$file}.php";
-        
+
         // validate view file
         if (!file_exists($filepath)) {
             throw new \Exception("Invalid file ($filepath) cannot be used as view");

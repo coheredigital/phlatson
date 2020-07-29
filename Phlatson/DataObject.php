@@ -92,7 +92,7 @@ abstract class DataObject
 
     public function rootPath(): string
     {
-        return rtrim(DATA_PATH . $this::BASE_FOLDER, '/') . '/';
+        return rtrim(ROOT_PATH . "site/" . $this::BASE_FOLDER, '/') . '/';
     }
 
     protected function rootUrl(): string
