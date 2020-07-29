@@ -24,7 +24,7 @@ try {
 
     $phlatson = new Phlatson();
 
-    // TODO: move this to seperate init file / or addon
+    // TODO: move this to separate init file / or addon
     $clockwork = \Clockwork\Support\Vanilla\Clockwork::init([
         'api' => '/__clockwork/?request=',
         'storage_files_path' => __DIR__ . "/storage/clockwork/"
@@ -63,7 +63,7 @@ try {
     }
     $phlatson->api('request', $request);
     $phlatson->api('page', $page);
-    
+
 
     $view = $page->template()->view();
 
