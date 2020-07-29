@@ -103,3 +103,19 @@ $page->language("en")->title;
  * data_en.json
  * data_fr.json
  */
+
+
+
+// -----------------------------------------------------------
+// Multisite
+// -----------------------------------------------------------
+$page->language("en")->title;
+
+$phlatson->site('site-name')->getPage("/");
+
+/**
+ * Storage for languages
+ * separate files
+ * data_en.json
+ * data_fr.json
+ */
