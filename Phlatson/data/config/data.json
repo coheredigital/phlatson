@@ -1,7 +1,5 @@
 {
-    "domains": [
-        "docs.phlatson.com"
-    ],
+    "domains": [],
     "storage": {
         "Page": "/pages",
         "Template": "/templates",

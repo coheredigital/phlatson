@@ -1,6 +1,7 @@
 {
     "domains": [
-        "docs.phlatson.com"
+        "docs.phlatson.com",
+        "phlatson-docs.localhost"
     ],
     "storage": {
         "Page": "/pages",

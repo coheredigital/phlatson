@@ -1,6 +1,8 @@
 {
     "domains" : [
-        "docs.phlatson.localhost"
+        "phlatson.com",
+        "www.phlatson.com",
+        "phlatson.localhost"
     ],
     "sessionName": "phlatson-docs",
     "sessionExpireSeconds": 3200,
