@@ -97,8 +97,13 @@ $app2->addDataLocation("Fieldtypes","/site/fieldtypes/"); // shared with $app
 $app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alternate syntax
 
 // Phlatson class can be the glue
-$phlatson->init("/core/Phlatson"); // pass root ?
-$phlatson = new Phlatson(); // or none, the default data doesn't move
+
+
+
+$phlatson = new Phlatson("/site-docs"); // just creates Phlatson, an loads config so that can respond to domain to full init
+
+
+
 $phlatson = new Phlatson("/core/data"); // alternate to override
 $phlatson->app("name", "/site-name"); // add a site location. I think I want to support multi-site from the start
 
