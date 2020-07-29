@@ -4,5 +4,10 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"search.exclude": {
+			"/**/*.json": true
+		},
+		"search.quickOpen.includeHistory": false
+	}
 }
