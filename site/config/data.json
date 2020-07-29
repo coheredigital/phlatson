@@ -4,9 +4,5 @@
         "www.phlatson.com",
         "phlatson.localhost"
     ],
-    "sessionName": "phlatson-docs",
-    "sessionExpireSeconds": 3200,
-    "timezone": "America/New_York",
-    "debug": true,
-    "dateTimeFormat" : "F j, Y"
+    "debug": false
 }
