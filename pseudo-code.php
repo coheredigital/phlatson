@@ -112,8 +112,8 @@ $phlatson->app("name", "/site-name"); // add a site location. I think I want to 
  * this is what the index file might look like, the index.php file will be user owned
  */
 $app = new App("C:\Users\Adam\Websites\phlatson\site"); // (alternate) point at folder, check for config
-$app->domain('domain.com');
+$app->domains('domain.com');
 $app->alias('www.domain.com');
-$app->setDataLocation("/site");
+$app->setDataLocation("/site"); // this assumes default folders. or they are set in config
 
 $phlatson->importApp($app); // stored by domain?
