@@ -4,6 +4,7 @@
         "Page": "/pages",
         "Template": "/templates",
         "Field": "/fields",
+        "Fieldtype": "/fieldtypes",
         "View": "/views",
         "User": "/users"
     },

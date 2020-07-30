@@ -20,7 +20,7 @@ $whoops->register();
 
 try {
 
-    $phlatson = new Phlatson(__DIR__ . "/site");
+    $phlatson = new Phlatson(ROOT_PATH . "site");
     $phlatson->api('phlatson', $phlatson);
 
     // TODO: move this to separate init file / or addon

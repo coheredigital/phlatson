@@ -5,21 +5,21 @@ namespace Phlatson;
 class Finder
 {
 
-    protected $root;
+    // protected $root;
     protected $pathMappings = [];
 
-    public function __construct(string $rootPath = '')
-    {
+    // public function __construct(string $rootPath = '')
+    // {
 
-        // normalize the path
-        if ($rootPath && !file_exists($rootPath)) {
-            throw new \Exception("Path ($rootPath) does not exist, cannot be used as site data");
-        }
+    //     // normalize the path
+    //     if ($rootPath && !file_exists($rootPath)) {
+    //         throw new \Exception("Path ($rootPath) does not exist, cannot be used as site data");
+    //     }
 
-        $rootPath = Sanitizer::path($rootPath);
+    //     $rootPath = Sanitizer::path($rootPath);
 
-        $this->root = $rootPath;
-    }
+    //     $this->root = $rootPath;
+    // }
 
 
     final public function addPathMapping(string $classname, string $path): self
@@ -30,12 +30,14 @@ class Finder
             throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
         }
 
+        $path = trim($path, "/");
+
         // normalize the path
-        if ($path && !file_exists($this->root . $path)) {
-            throw new \Exception("Path ({$this->root}{$path}) does not exist, cannot be used as site data");
+        if ($path && !file_exists($path)) {
+            throw new \Exception("Path ({$path}) does not exist, cannot be used as site data");
         }
 
-        $this->pathMappings[$classname][] = trim($path, "/");
+        $this->pathMappings[$classname][] = $path;
 
         return $this;
     }
@@ -55,9 +57,7 @@ class Finder
         $paths = $this->getPaths($classname);
 
         foreach ($paths as $path) {
-
-            $path = \trim($path, '/');
-            $folder = "{$this->root}$path/$uri/";
+            $folder = "$path/$uri/";
             if (\file_exists($folder)) {
                 return true;
             }
@@ -78,7 +78,7 @@ class Finder
         foreach ($paths as $path) {
 
             $path = \trim($path, '/');
-            $file = "{$this->root}{$path}/{$uri}/{$uri}.php";
+            $file = "{$path}/{$uri}/{$uri}.php";
             if (\file_exists($file)) {
                 return $file;
             }
@@ -122,8 +122,8 @@ class Finder
 
         foreach ($paths as $path) {
 
-            $path = \trim($path, '/');
-            $folder = "{$this->root}$path/$uri/";
+            $path = \rtrim($path, '/');
+            $folder = "$path/$uri/";
             if (\file_exists($folder)) {
                 $data = $this->getDataFile($folder);
                 break;
