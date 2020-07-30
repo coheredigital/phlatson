@@ -24,11 +24,11 @@ try {
     $phlatson->api('phlatson', $phlatson);
 
     // TODO: move this to separate init file / or addon
-    $clockwork = \Clockwork\Support\Vanilla\Clockwork::init([
-        'api' => '/__clockwork/?request=',
-        'storage_files_path' => __DIR__ . "/storage/clockwork/"
-    ]);
-    $phlatson->api('clockwork', $clockwork);
+    // $clockwork = \Clockwork\Support\Vanilla\Clockwork::init([
+    //     'api' => '/__clockwork/?request=',
+    //     'storage_files_path' => __DIR__ . "/storage/clockwork/"
+    // ]);
+    // $phlatson->api('clockwork', $clockwork);
 
     $finder = new Finder(__DIR__);
     $finder->addPathMapping("Page", "/site/pages/");
@@ -70,7 +70,7 @@ try {
         echo $view->render();
     }
 
-    $clockwork->requestProcessed();
+    // $clockwork->requestProcessed();
 } catch (\Exception $exception) {
     echo $exception;
 }
