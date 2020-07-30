@@ -101,12 +101,7 @@ $app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alter
 
 
 $phlatson = new Phlatson("/site-docs"); // just creates Phlatson, an loads config so that can respond to domain to full init
-
-
-
-$phlatson = new Phlatson("/core/data"); // alternate to override
-$phlatson->app("name", "/site-name"); // add a site location. I think I want to support multi-site from the start
-
+$phlatson->execute($request);
 
 /**
  * App object

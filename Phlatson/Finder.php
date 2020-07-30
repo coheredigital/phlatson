@@ -4,7 +4,7 @@ namespace Phlatson;
 
 class Finder
 {
-    
+
     protected $root;
     protected $pathMappings = [];
 
@@ -32,10 +32,10 @@ class Finder
 
         // normalize the path
         if ($path && !file_exists($this->root . $path)) {
-            throw new \Exception("Path ($path) does not exist, cannot be used as site data");
+            throw new \Exception("Path ({$this->root}{$path}) does not exist, cannot be used as site data");
         }
 
-        $this->pathMappings[$classname][] = $path;
+        $this->pathMappings[$classname][] = trim($path, "/");
 
         return $this;
     }
@@ -141,7 +141,7 @@ class Finder
         }
 
         $jsonObject = $this->getDataFor($classname,$path);
-        
+
 
         // load custom class if detected
         if ($classFile = $this->getCustomClassFile($classname, $path)) {
@@ -153,7 +153,7 @@ class Finder
         }
 
         $object = new $classname();
-        
+
         if ($object instanceof DataObject ) {
             $object->setData($jsonObject);
         }

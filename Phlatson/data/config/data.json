@@ -5,7 +5,7 @@
         "Template": "/templates",
         "Field": "/fields",
         "View": "/views",
-        "User": "/user"
+        "User": "/users"
     },
     "session": {
         "name": "phlatson",
