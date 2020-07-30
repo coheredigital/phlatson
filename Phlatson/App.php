@@ -11,6 +11,4 @@ class App
 
 	protected string $domain;
 
-
-
 }
