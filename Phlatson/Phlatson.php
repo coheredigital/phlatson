@@ -14,11 +14,13 @@ class Phlatson
     use ApiAccess;
 
     private string $path;
+    private Config $config;
 
     public function __construct(string $path)
     {
         $this->path = $path;
-        $this->config = new Config("$path/config/data.json");
+        $this->config = new Config(__DIR__ . "/data/config/data.json");
+        $siteConfig = new Config("$path/config/data.json");
+        $this->config->merge($siteConfig);
     }
-
 }

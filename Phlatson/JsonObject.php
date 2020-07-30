@@ -1,4 +1,5 @@
 <?php
+
 namespace Phlatson;
 
 class JsonObject
@@ -10,7 +11,8 @@ class JsonObject
     protected array $data;
 
 
-    public function __construct(string $file) {
+    public function __construct(string $file)
+    {
 
         $this->file = $file;
 
@@ -62,10 +64,19 @@ class JsonObject
         $this->data[$key] = $value;
     }
 
-    public function save()
+    public function data(): array
     {
-        $json = json_encode($this->data, JSON_PRETTY_PRINT|JSON_THROW_ON_ERROR);
-        file_put_contents($this->file, $json);
+        return $this->data;
     }
 
+    public function merge(JsonObject $json)
+    {
+        $this->data = array_replace_recursive($this->data, $json->data());
+    }
+
+    public function save()
+    {
+        $json = json_encode($this->data, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+        file_put_contents($this->file, $json);
+    }
 }

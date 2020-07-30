@@ -4,5 +4,8 @@
         "www.phlatson.com",
         "phlatson.localhost"
     ],
-    "debug": false
+    "debug": false,
+    "session": {
+        "expire": 3600
+    }
 }
