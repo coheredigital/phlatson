@@ -31,20 +31,20 @@ try {
     // $phlatson->api('clockwork', $clockwork);
 
     $finder = new Finder(__DIR__);
-    $finder->addPathMapping("Page", "/site/pages/");
+    $finder->addPathMapping("Page", ROOT_PATH . "site/pages/");
 
-    $finder->addPathMapping("Template", "/Phlatson/data/templates/");
-    $finder->addPathMapping("Template", "/site/templates/");
+    $finder->addPathMapping("Template", ROOT_PATH . "Phlatson/data/templates/");
+    $finder->addPathMapping("Template", ROOT_PATH . "site/templates/");
 
-    $finder->addPathMapping("Field", "/Phlatson/data/fields/");
-    $finder->addPathMapping("Field", "/site/fields/");
+    $finder->addPathMapping("Field", ROOT_PATH . "Phlatson/data/fields/");
+    $finder->addPathMapping("Field", ROOT_PATH . "site/fields/");
 
-    $finder->addPathMapping("Fieldtype", "/site/fieldtypes/");
-    $finder->addPathMapping("Fieldtype", "/Phlatson/data/fieldtypes/");
+    $finder->addPathMapping("Fieldtype", ROOT_PATH . "site/fieldtypes/");
+    $finder->addPathMapping("Fieldtype", ROOT_PATH . "Phlatson/data/fieldtypes/");
 
     // config files
-    $finder->addPathMapping("Config", '/Phlatson/data/config/');
-    $finder->addPathMapping("Config", '/site/config/');
+    $finder->addPathMapping("Config", ROOT_PATH . "Phlatson/data/config/");
+    $finder->addPathMapping("Config", ROOT_PATH . "site/config/");
     $phlatson->api("finder", $finder);
 
     $config = $finder->get("Config", "site");

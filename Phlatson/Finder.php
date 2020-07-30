@@ -8,19 +8,6 @@ class Finder
     // protected $root;
     protected $pathMappings = [];
 
-    // public function __construct(string $rootPath = '')
-    // {
-
-    //     // normalize the path
-    //     if ($rootPath && !file_exists($rootPath)) {
-    //         throw new \Exception("Path ($rootPath) does not exist, cannot be used as site data");
-    //     }
-
-    //     $rootPath = Sanitizer::path($rootPath);
-
-    //     $this->root = $rootPath;
-    // }
-
 
     final public function addPathMapping(string $classname, string $path): self
     {
