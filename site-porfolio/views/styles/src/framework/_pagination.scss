@@ -1,0 +1,112 @@
+.pagination {
+	margin: 2em 0;
+}
+.MarkupPagerNav {
+	display: block;
+	position: relative;
+	z-index: 2;
+	display: block;
+	list-style: none;
+	padding: 0;
+	text-align: center;
+	clear: both;
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+
+	}
+	&::before {
+		@include pseudo;
+		// border-bottom: 1px solid $soft-gray;
+		z-index: -1;
+		top: 50%;
+		width: 98%;
+		margin: -2px 1% 0 1%;
+	}
+
+	span{
+		padding: 0;
+		margin: 0;
+	}
+
+	li{
+		display: inline-block;
+		line-height: 1em;
+		padding: .4em;
+		margin: 0 -2px;
+		font-weight: 600;
+		color: $gray;
+		// background: $background-color;
+		vertical-align: middle;
+		@include media($max:"desktop") {
+			display: none;
+			&.MarkupPagerNavPrevious,
+			&.MarkupPagerNavNext ,
+			&.MarkupPagerNavOn {
+				display: inline-block;
+			}
+			&.MarkupPagerNavOn {
+
+				a {
+					cursor: default;
+					border: 0 !important;
+				}
+			}
+		}
+	}
+	// span,
+	a {
+		padding: .6em;
+		display: inline-block;
+		margin: 0;
+		line-height: 1em;
+		width: auto;
+		color: inherit;
+		vertical-align: middle;
+		text-transform: uppercase;
+		text-decoration: none !important;
+		border-bottom: 3px solid transparent;
+		// background: $background-color;
+		&:hover {
+			color: $dark-gray;
+			border-color: $gray;
+		}
+	}
+}
+
+.MarkupPagerNavOn {
+	a{
+
+		border-color: $red !important;
+		span {
+			color: $dark-gray !important;
+		}
+		text-decoration: none !important;
+	}
+}
+.MarkupPagerNavPrevious ,
+.MarkupPagerNavNext {
+	position: absolute;
+	a{
+		border: 0 !important;
+	}
+	span{
+		margin: 0;
+	}
+}
+
+.MarkupPagerNavNext {
+	right: 0;
+	a {
+		@include chevron-right;
+	}
+}
+
+.MarkupPagerNavPrevious {
+	left:  0;
+	a {
+		@include chevron-left("::before");
+	}
+}

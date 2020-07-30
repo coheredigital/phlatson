@@ -1,0 +1,327 @@
+
+
+
+
+@mixin pseudo-shadow {
+    position: relative;
+    z-index: 2;
+    &::before {
+		@include pseudo;
+		top: 0;
+		left: 0;
+        bottom: 0;
+        right: 0;
+        margin: .8em;
+		box-shadow: 0 .2em 1rem .5em rgba(0,0,0,.15);
+		z-index: -1;
+	}
+}
+
+@mixin pseudo-blend ($element: '::after') {
+    position: relative;
+    overflow: hidden;
+
+    &#{$element} {
+		@include pseudo;
+		top: 100%;
+		left: 0;
+        right: 0;
+        bottom: 0;
+        height: 5rem;
+		box-shadow: 0 .2em 5rem 1.5rem;
+        opacity: .8;
+		z-index: 0;
+        @content;
+	}
+}
+
+@mixin soft-shadow {
+    box-shadow: 0 .25rem .75rem -.25rem rgba(0,0,0,.1);
+}
+@mixin soft-shadow-large {
+	box-shadow: 0 .2rem 1rem -.1rem rgba(0,0,0,.2);
+}
+
+
+@mixin pseudo-glow ($element: '::after', $color: null) {
+    &#{$element} {
+		@include pseudo;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+        box-shadow: 0 0 4rem 1em $color;
+		z-index: 1;
+        opacity: .2;
+        @content;
+	}
+}
+
+
+@mixin pseudo-x ($element: '::after') {
+    &#{$element} {
+        @include pseudo;
+        position: relative;
+        content: "\d7";
+        font-size: 2em;
+        line-height: .5em;
+        @content;
+    }
+}
+
+@mixin pseudo-icon ($element: '::after') {
+    &#{$element} {
+        @include pseudo;
+        @content;
+    }
+}
+
+@mixin pseudo-arrow ($element: '::after') {
+    &#{$element} {
+        @include pseudo;
+        height: .8rem;
+        width: .8rem;
+        margin: -.4rem;
+        box-sizing: border-box;
+        background: #fff;
+        transform: rotate(45deg);
+        z-index: 0;
+        @content;
+	}
+}
+
+
+@mixin hover-pop{
+
+    transition: .2s $cubic-bezier;
+    ::after, ::before,
+    &::after, &::before {
+        transition: .2s $cubic-bezier;
+    }
+    &:hover {
+        @include media('desktop') {
+            transform:  scale(1.03) translateY(-3%);
+        }
+
+        box-shadow: 0 1rem .6rem -.8rem rgba(0,0,0,.05);
+        &::before {
+            opacity: .6;
+            transform: translateY(9%) scale(.9);
+        }
+        &::after {
+            opacity: .25;
+            box-shadow: 0 0 3rem 0;
+        }
+
+    }
+}
+
+@mixin glow-pop {
+    position: relative;
+    @include soft-shadow;
+    @include pseudo-glow;
+    @include hover-pop;
+}
+
+
+@mixin glow-shadow($color, $offset:0rem, $size: 5rem, $spread:.4rem, $opacity: .2) {
+
+    $fade: 1 - $opacity;
+
+    $color: theme-glow-color($color);
+
+    $glow-color: fade-out($color, $fade);
+
+    $shadow-color: darken($color, 30%);
+    $shadow-color: desaturate($shadow-color, 20%);
+    $shadow-color: fade-out($shadow-color, ( 1 - ($opacity/2) ));
+
+
+    box-shadow:  0 $offset $size $spread $glow-color, 0 ($offset+.2rem) .75rem -.25rem $shadow-color;
+}
+
+@mixin theme-glow-pop($color) {
+    transition: .2s;
+    @include glow-shadow($color);
+    &:hover {
+        transform:  scale(1.03) translateY(-3%);
+        @include glow-shadow($color, .2rem, 3rem,.2rem);
+    }
+
+}
+
+
+@mixin chevron ($element: '::after') {
+    content: '';
+    vertical-align: middle;
+    position: relative;
+    font-size: 1em;
+    height: .65em;
+    width: .65em;
+    border: 2px solid;
+    color: inherit;
+    display: inline-block;
+    top: -.05em;
+    transform: rotate(45deg);
+    box-sizing: border-box;
+    @if ($element == '::after') {
+        margin-left: .3em;
+    }
+    @if ($element == '::before') {
+        margin-right: .3em;
+    }
+
+}
+
+@mixin chevron-left ($element: '::after') {
+    &#{$element} {
+        @include chevron($element);
+        content: "";
+        border-right: 0;
+        border-top: 0;
+        @content;
+    }
+}
+
+
+@mixin chevron-right ($element: '::after') {
+
+    &#{$element} {
+        @include chevron($element);
+        @content;
+        border-left: 0;
+        border-bottom: 0;
+    }
+}
+
+@mixin chevron-up ($element: '::after') {
+    &#{$element} {
+        @include chevron($element);
+        @if ($element == '::after') {
+            margin-left: .5em;
+        }
+        @if ($element == '::before') {
+            margin-right: .5em;
+        }
+        border-bottom: 0;
+        border-right: 0;
+        top: .1em;
+
+        @content;
+    }
+}
+
+@mixin chevron-down ($element: '::after') {
+    &#{$element} {
+        @include chevron($element);
+        @if ($element == '::after') {
+            margin-left: .5em;
+        }
+        @if ($element == '::before') {
+            margin-right: .5em;
+        }
+        border-top: 0;
+        border-left: 0;
+        top: -.3em;
+
+        @content;
+    }
+}
+
+@mixin transparent-navigation {
+    .site-header {
+        background: transparent;
+        color: #fff;
+        text-shadow: 0 0 .4em rgba(0,0,0,.4);
+        background: rgba(0,0,0,.2);
+        &::before {
+            @include pseudo;
+            // @include simple-gradient(#000,transparent);
+            height: 150%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: .4;
+        }
+    }
+    #output {
+        margin-top: -4rem;
+    }
+
+}
+
+@mixin navigation-shadow {
+    .site-header {
+        @include soft-shadow;
+    }
+}
+
+@mixin button-gradient($color: $green) {
+
+    $bg: lighten($color,4%);
+    $bg: adjust-hue($bg, -7);
+    $blend: lighten($color,10%);
+    $blend: adjust-hue($blend, 7);
+    @include linear-gradient(120deg, $bg, $blend);
+}
+
+@mixin button-gradient-hover($color: $green) {
+
+    $bg: lighten($color,10%);
+    $bg: adjust-hue($bg, -6);
+    $blend: lighten($color,17%);
+    $blend: adjust-hue($blend, 6);
+    @include linear-gradient(120deg, $bg, $blend);
+}
+
+@mixin button($color: $green, $text: false, $hover: true) {
+
+    $text-color: contrast($color);
+
+    @if $text {
+        $text-color: $text;
+    }
+
+    $text-color: fade-out($text-color, .1);
+    font-size: .9em;
+    color: $text-color !important;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    font-weight: 600;
+    vertical-align: middle;
+    padding: .75em 1.5em;
+    border-radius: 2em;
+    border: 0 !important;
+    transition: .2s $cubic-bezier;
+    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    line-height: 1em;
+    display: inline-block;
+
+    @include button-gradient( $color );
+    @include soft-shadow;
+    @if $hover {
+
+        &:hover {
+            @include media('desktop') {
+                transform:  scale(1.03) translateY(-3%);
+                box-shadow: 0 1rem .6rem -.8rem rgba(0,0,0,.05);
+                @include button-gradient-hover($color);
+            }
+        }
+
+    }
+}
+
+@mixin view-all() {
+
+    @include chevron-right;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: $gray;
+
+    font-size: 1em;
+}

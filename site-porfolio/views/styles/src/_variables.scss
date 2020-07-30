@@ -1,0 +1,70 @@
+
+$gutter: 2rem;
+
+$font-main: Arial, sans-serif;
+$font-main: "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-headings: "Montserrat", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-monospace: "Roboto Mono", monospace;
+
+// COLORS
+// brand
+$brand: #7963FF;
+$text-color: #000;
+$text-color-secondary: #777;
+
+// generics
+$red : #d92232;
+$light-red : lighten($red, 8%);
+$soft-red : lighten($red, 25%);
+$dark-red : darken($red, 8%);
+
+$orange : #f36e23;
+$light-orange : lighten($orange, 8%);
+$soft-orange : lighten($orange, 25%);
+$dark-orange : darken($orange, 8%);
+$pale-orange : #ED8449;
+
+$blue : #1ca9e1;
+$light-blue : lighten($blue, 8%);
+$soft-blue : lighten($blue, 25%);
+$dark-blue : darken($blue, 8%);
+$pale-blue: #7baac0;
+
+$purple : #b93f97;
+$light-purple : lighten($purple, 8%);
+$soft-purple : lighten($purple, 25%);
+$dark-purple : darken($purple, 8%);
+
+$green : #13b24d;
+$light-green : lighten($green, 8%);
+$soft-green : lighten($green, 25%);
+$dark-green : darken($green, 8%);
+
+// shades
+$darker-gray : #222;
+$dark-gray: #444;
+$gray : #999;
+$lighter-gray : #ccc;
+$light-gray : #bbb;
+$soft-gray : #dfdfdf;
+$softer-gray : #fafafa;
+
+$link-color: $brand;
+$link-hover-color: darken($brand, 15%);
+
+// animation & transitions
+$cubic-bezier: cubic-bezier(.3, 0, .3, 1);
+$tranistion-time: .25s;
+$transition: $tranistion-time $cubic-bezier;
+
+
+// input  & forms
+$input-background: #fafafa;
+$input-placeholder-color: $gray;
+$input-border: 1px solid $lighter-gray;
+$input-border-radius: .2rem;
+
+$form-error-color: $red;
+$form-warning-color: $orange;
+$form-success-color: $green;
+$form-notes-color: #fceea3;

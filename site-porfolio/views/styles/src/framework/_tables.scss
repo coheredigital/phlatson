@@ -1,0 +1,90 @@
+table {
+    width: 100% !important;
+    border: none;
+    border-top: 1px solid $soft-gray;
+    border-bottom: none;
+    background-color: transparent;
+    border-spacing: 0;
+    margin: 2rem 0;
+    background: #fff;
+    font-size: .9em;
+}
+
+th, td {
+    padding: .6rem .8rem ;
+}
+
+td {
+    border: none;
+    border-bottom: 1px solid $soft-gray;
+    border-right: 1px solid $soft-gray;
+    &:first-child  {
+        border-left: 1px solid $soft-gray;
+    }
+    vertical-align: middle;
+
+}
+
+th {
+    border: 0;
+    // border-bottom: 1px solid $soft-gray;
+    background: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .85em;
+    text-align: left;
+    line-height: 1.1em;
+    background: #000 !important;
+    color: #fff !important;
+    p {
+        line-height: 1em;
+    }
+}
+
+#main {
+    table {
+        background: #fff;
+    }
+}
+
+.page-body {
+    table {
+        @include media($max: "tablet") {
+            border: 0;
+
+            tr {
+                display: block;
+                border: 1px solid $soft-gray;
+                margin-bottom: -1px;
+                // padding: 1rem;
+                td,
+                th {
+                    display: block;
+                    line-height: 1.2em;
+                    padding: 0;
+                    margin: 0;
+                    padding: 0.3rem 1rem;
+                    font-size: 0.9em;
+                    font-weight: normal;
+                    color: $dark-gray;
+                    border: 0 !important;
+
+                    &:first-child {
+                        padding-top: 0.9rem;
+                        font-weight: bold !important;
+                        font-size: 1em;
+                        // color: $text-color;
+                    }
+
+                    &:last-child {
+                        padding-bottom: 1em;
+                    }
+                    // &:nth-child(2){
+                    //     font-style: italic;
+                    //     color: $gray;
+                    // }
+                }
+            }
+        }
+    }
+}

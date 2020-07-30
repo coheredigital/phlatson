@@ -1,10 +1,5 @@
 <?php
 
-namespace Phlatson;
+namespace ProcessWire;
 
-$output = $this->render("/partials/body");
-$output .= $this->render("/partials/children");
-
-echo $this->render('/layouts/default', [
-    "output" => $output
-]);
+$page->output->main .= $page->render("title");
