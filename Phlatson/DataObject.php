@@ -61,6 +61,7 @@ abstract class DataObject
     {
         if (!$this->template && $name = $this->data->get('template')) {
             $this->template = $this->api('finder')->get("Template", $name);
+            $this->template->setOwner($this);
         }
         return $this->template;
     }

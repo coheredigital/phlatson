@@ -52,7 +52,6 @@ final class Api
 
     }
 
-
     public static function fetchAll()
     {
         // instantiate an objects passed as string value
@@ -63,14 +62,8 @@ final class Api
         return static::$registry;
     }
 
-    public static function instantiate($name)
-    {
-        $classname = new static::$registry[$name];
-        static::$registry[$name] = new static::$registry[$name];
-    }
-
     protected static function has($name)
-    {       
+    {
         return array_key_exists($name, static::$registry);
     }
 
@@ -82,7 +75,7 @@ final class Api
             static::instantiate($name);
         }
         return static::$registry[$name];
-        
+
     }
 
 }

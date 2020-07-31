@@ -19,15 +19,17 @@ class App
     protected string $path;
     protected string $siteFolder;
 
+    // core api classes
     protected Config $config;
     protected Finder $finder;
+    protected Request $request;
     protected Page $page;
-
 
     public function __construct(string $path)
     {
 
         $this->api('app', $this);
+        $this->request = new Request();
 
         // setup default config and import site config
         $this->name = basename($path);
@@ -71,8 +73,6 @@ class App
 
     public function execute(Request $request)
     {
-        // import for use by views, extensions, etc
-        $this->api('request', $request);
 
         // determine the requested page
         $url = $request->url;
@@ -87,7 +87,10 @@ class App
         $view = $page->template()->view();
 
         if ($view instanceof View) {
-            echo $view->render();
+            echo $view->render(null,[
+                "page" => $page
+            ]);
         }
     }
+
 }

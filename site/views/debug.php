@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
+// dump($phlatson);
 dump($app);
-dump($request);
 dump($page);
 dump($this);
