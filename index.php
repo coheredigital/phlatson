@@ -23,13 +23,11 @@ try {
     $request = new Request();
     $phlatson = new Phlatson();
 
-
     $phlatson->importApp(new App(ROOT_PATH . "site"));
     // $phlatson->importApp(new App(ROOT_PATH . "site-portfolio"));
 
     $phlatson->execute($request);
 
-    // $clockwork->requestProcessed();
 } catch (\Exception $exception) {
     echo $exception;
 }
