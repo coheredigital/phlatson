@@ -38,17 +38,16 @@ abstract class DataObject
     protected string $rootPath;
     protected ?Template $template = null;
 
-    public function __construct($path = null)
+    public function __construct(?string $path = null)
     {
         if (is_null($path)) {
             return;
         }
         $path = '/' . trim($path, '/') . '/';
 
-        $classname = $this->classname();
-
-        $jsonData = $this->api('finder')->getDataFor($classname, $path);
+        $jsonData = $this->api('finder')->getDataFor($this->classname(), $path);
         $this->setData($jsonData);
+
     }
 
     public function setData(JsonObject $data): self

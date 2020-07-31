@@ -26,6 +26,10 @@ $phlatson->app('site-name');
 $page = new Page('/about/contact-us', $template, $parent);
 $page->save();
 
+$page->template()->view()->data([
+	"title" => "Awsome page title.",
+	"author" => "Adam Spruijt"
+])->render();
 
 // RELATIONAL (object alternate)
 // (?optional URI?) name of any object is inferred from a field otherwise, setting URI allows skipping manually setting parent

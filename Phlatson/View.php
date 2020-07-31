@@ -7,10 +7,9 @@ class View
 {
 
     use ApiAccess;
-
-    protected array $data = [];
     protected string $path;
-    protected Template $template;
+    protected string $file;
+    protected array $data = [];
 
     function __construct(string $file, ?array $data)
     {
@@ -38,7 +37,7 @@ class View
 
     public function renderPartial(?string $url, array $data = []): string
     {
-        $url = trim($url, "/");
+        $url = trim($url, '/');
         $file = "{$this->path}/{$url}.php";
         $output = "";
         $output = $this->renderViewFile($file, $data);
@@ -61,15 +60,15 @@ class View
         }
 
         // render template file
-        ob_start();
+        \ob_start();
         // extract $data array to variables
-        extract($data);
+        \extract($data);
 
         // render found file
-        include($file);
+        include $file;
 
-        $output = ob_get_contents();
-        ob_end_clean();
+        $output = \ob_get_contents();
+        \ob_end_clean();
         return $output;
     }
 

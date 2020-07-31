@@ -34,8 +34,8 @@ class App
         // setup default config and import site config
         $this->name = basename($path);
         $this->path = \rtrim($path, "/");
-        $this->config = new Config(ROOT_PATH . "Phlatson/data/config/data.json");
-        $siteConfig = new Config("$path/config/data.json");
+        $this->config = new Config(ROOT_PATH . 'Phlatson/data/config/data.json');
+        $siteConfig = new Config($path . '/config/data.json');
         $this->config->merge($siteConfig);
 
         // create finder (I know, yuck)
@@ -53,7 +53,7 @@ class App
 
         // add path mappings from config
         foreach ($this->config->get('storage') as $className => $folder) {
-            $this->finder->addPathMapping($className, "{$this->path}{$folder}");
+            $this->finder->addPathMapping($className, $this->path . $folder);
         }
 
         // add domains
@@ -82,18 +82,16 @@ class App
             $page = $this->finder->get("Page", "/404");
         }
 
-        // get and render the view
+        // get and render the view with API variables as default
         $view = $page->template()->view([
+            "app" => $this,
             "finder" => $this->finder,
             "page" => $page,
+            "request" => $request,
         ]);
 
         if ($view instanceof View) {
-            echo $view->render(null,[
-                "app" => $this,
-                "request" => $request,
-                "page" => $page
-            ]);
+            echo $view->render();
         }
 
     }
