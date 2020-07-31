@@ -24,6 +24,7 @@ class App
     protected Finder $finder;
     protected Request $request;
     protected Page $page;
+    protected User $user;
 
     public function __construct(string $path)
     {
@@ -69,6 +70,11 @@ class App
             return;
         }
         $this->domains[] = $domain;
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
     }
 
     public function execute(Request $request)

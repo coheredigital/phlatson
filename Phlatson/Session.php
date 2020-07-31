@@ -4,12 +4,12 @@ class Session implements \IteratorAggregate
 {
 
     protected $name;
-    protected $users;
+    protected App $app;
 
-    function __construct(string $name, UserFinder $users)
+    function __construct(string $name, App $app)
     {
-        $this->users = $users;
         $this->name = $name;
+        $this->app = $app;
 
         if($this->exists()){
             $this->start();
@@ -18,7 +18,7 @@ class Session implements \IteratorAggregate
         // check for a logged in user
         // TODO: update, some of this sudo code
         if ($username = $this->get('_user_name')) {
-            $user = $this->users->get($username);
+            $user = $app->users->get($username);
 
             // update timestamp to extend session life
             if ($user) {
@@ -26,13 +26,11 @@ class Session implements \IteratorAggregate
             }
 
         } else {
-            $user = $this->users->get("guest");
+            $user = $app->users->get("guest");
         }
 
         // set current user found user
-        // TODO: remove API use
-        $this->api('user', $user);
-
+        $app->setUser($user);
 
     }
 
