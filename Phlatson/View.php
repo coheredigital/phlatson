@@ -3,8 +3,10 @@
 namespace Phlatson;
 
 
-class View extends Phlatson
+class View
 {
+
+    use ApiAccess;
 
     const BASE_FOLDER = 'views/';
     const BASE_URL = 'views/';

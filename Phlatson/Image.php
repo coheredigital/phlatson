@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-class Image extends Phlatson
+class Image extends File
 {
-
+	// placeholder
 }

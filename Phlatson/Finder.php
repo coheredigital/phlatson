@@ -158,7 +158,7 @@ class Finder
             throw new \Exception("Path mapping for ($classname) not found, cannot be used to get data");
         }
 
-        return $this->pathMappings[$classname];
+        return array_reverse($this->pathMappings[$classname]);
     }
 
     /**

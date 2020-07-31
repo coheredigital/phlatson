@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-class PageFinder extends Phlatson
+class PageFinder extends Finder
 {
 	// TODO: placeholder
 }

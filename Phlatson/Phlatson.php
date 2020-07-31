@@ -18,7 +18,7 @@ class Phlatson
     private string $siteFolder;
 
     private Config $config;
-    private Finder $finder;
+
 
     // private $dataFolders = [
     //     "Page"
@@ -34,19 +34,21 @@ class Phlatson
         $this->config->merge($siteConfig);
 
         // create finder (I know, yuck)
-        $this->finder = new Finder(ROOT_PATH);
+        $finder = new Finder(ROOT_PATH);
+        $this->api('finder', $finder);
 
         // add system path mappings
         foreach ($this->config->get('storage') as $className => $folder) {
             // TODO: create a better method of ensuring folder names are good
             // possible add an array that define which class names are default and their locations
             $name = strtolower($className);
-            $this->finder->addPathMapping($className, ROOT_PATH . "Phlatson/data/{$name}s/"); // system folder
+            $finder->addPathMapping($className, ROOT_PATH . "Phlatson/data/{$name}s/"); // system folder
         }
 
         // add path mappings from config
         foreach ($this->config->get('storage') as $className => $folder) {
-            $this->finder->addPathMapping($className, "{$this->path}{$folder}");
+            $finder->addPathMapping($className, "{$this->path}{$folder}");
         }
     }
+
 }

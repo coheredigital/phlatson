@@ -1,6 +1,6 @@
 <?php
 namespace Phlatson;
-class Session extends Phlatson implements \IteratorAggregate
+class Session implements \IteratorAggregate
 {
 
     protected $name;
@@ -22,7 +22,7 @@ class Session extends Phlatson implements \IteratorAggregate
             if ($user) {
                 $this->set('_user_ts', time());
             }
-            
+
         } else {
             $user = $this->api('users')->get("guest");
         }

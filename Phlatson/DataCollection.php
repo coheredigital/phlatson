@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-class DataCollection extends Phlatson implements \Iterator, \Countable
+class DataCollection implements \Iterator, \Countable
 {
 	/**
 	 * Class properties
@@ -54,10 +54,10 @@ class DataCollection extends Phlatson implements \Iterator, \Countable
 			 * passed into the mask, since the user will expect them to exist
 			 */
 			$keys = [];
-			
+
 			if ($fillWithNulls) {
 				$keys = $mask;
-			} 
+			}
 
             /*
 			 * Remove all of the values from the keys
