@@ -16,8 +16,6 @@ $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
-\Kint\Renderer\RichRenderer::$theme = 'aante-light.css';
-
 try {
 
     $request = new Request();

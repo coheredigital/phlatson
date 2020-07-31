@@ -10,10 +10,7 @@ namespace Phlatson;
 class Phlatson
 {
 
-    use ApiAccess;
-
     protected array $apps = [];
-
 
     public function importApp(App $app)
     {
