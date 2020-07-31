@@ -81,16 +81,21 @@ class App
             // TODO: improved 404 handle (throw exception)
             $page = $this->finder->get("Page", "/404");
         }
-        $this->api('page', $page);
 
         // get and render the view
-        $view = $page->template()->view();
+        $view = $page->template()->view([
+            "finder" => $this->finder,
+            "page" => $page,
+        ]);
 
         if ($view instanceof View) {
             echo $view->render(null,[
+                "app" => $this,
+                "request" => $request,
                 "page" => $page
             ]);
         }
+
     }
 
 }

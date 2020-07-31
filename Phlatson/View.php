@@ -12,11 +12,11 @@ class View
     protected string $path;
     protected Template $template;
 
-    function __construct(string $file, Template $template)
+    function __construct(string $file, ?array $data)
     {
         // TODO: remove hard coding
         $root = ROOT_PATH . 'site/views/';
-        $filepath = $root . $file. '.php';
+        $filepath = $root . $file . '.php';
 
         // validate view file
         if (!file_exists($filepath)) {
@@ -24,15 +24,19 @@ class View
         }
         $this->file = $filepath;
         $this->path = dirname($filepath);
-        $this->template = $template;
+
+        if (isset($data)) {
+            $this->data = $data;
+        }
+
     }
 
-    public function name() : string
+    public function name(): string
     {
         return pathinfo($this->file)['filename'];
     }
 
-    public function renderPartial(? string $url, array $data = []) : string
+    public function renderPartial(?string $url, array $data = []): string
     {
         $url = trim($url, "/");
         $file = "{$this->path}/{$url}.php";
@@ -41,16 +45,16 @@ class View
         return $output;
     }
 
-    public function renderSelf(?array $data = []) : string
+    public function renderSelf(?array $data = []): string
     {
         return $this->renderViewFile($this->file, $data);
     }
 
-    public function renderViewFile(string $file, array $data = []) : string
+    public function renderViewFile(string $file, array $data = []): string
     {
 
         // merge set data over api
-        $data = \array_merge($this->api(), $data);
+        $data = \array_merge($this->data, $data);
 
         if (!file_exists($file)) {
             throw new \Exception("View does not exist: $file");
@@ -67,16 +71,14 @@ class View
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-
     }
 
 
-    public function render(? string $url = null, array $data = []) : string
+    public function render(?string $url = null, array $data = []): string
     {
         if ($url) {
             return $this->renderPartial($url, $data);
         }
         return $this->renderSelf($data);
     }
-
 }
