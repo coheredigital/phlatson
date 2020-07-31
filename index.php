@@ -20,34 +20,14 @@ $whoops->register();
 
 try {
 
-    $app = new App(ROOT_PATH . "site");
-    $app->api('phlatson', $app);
-
-    // TODO: move this to separate init file / or addon
-    // $clockwork = \Clockwork\Support\Vanilla\Clockwork::init([
-    //     'api' => '/__clockwork/?request=',
-    //     'storage_files_path' => __DIR__ . "/storage/clockwork/"
-    // ]);
-    // $app->api('clockwork', $clockwork);
-
     $request = new Request();
-    $app->api("request", $request);
-
-    // determine the requested page
-    $url = $request->url;
-    $page = $app->api('finder')->get("Page", $url);
-    if (!$page) {
-        // TODO: tidy this
-        $page = $finder->get("Page", "/404");
-    }
-    $app->api('page', $page);
+    $phlatson = new Phlatson();
 
 
-    $view = $page->template()->view();
+    $phlatson->importApp(new App(ROOT_PATH . "site"));
+    // $phlatson->importApp(new App(ROOT_PATH . "site-portfolio"));
 
-    if ($view instanceof View) {
-        echo $view->render();
-    }
+    $phlatson->execute($request);
 
     // $clockwork->requestProcessed();
 } catch (\Exception $exception) {

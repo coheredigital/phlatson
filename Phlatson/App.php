@@ -13,10 +13,11 @@ class App
 
     use ApiAccess;
 
-    protected string $name;
+    public string $name;
+    public array $domains = [];
+
     protected string $path;
-	protected string $siteFolder;
-	protected array $domains = [];
+    protected string $siteFolder;
 
     protected Config $config;
     protected Finder $finder;
@@ -35,7 +36,7 @@ class App
         $this->finder = new Finder(ROOT_PATH);
         $this->api('finder', $this->finder);
 
-		// PATH MAPPINGS ========================================
+        // PATH MAPPINGS ========================================
         // add system path mappings
         foreach ($this->config->get('storage') as $className => $folder) {
             // TODO: create a better method of ensuring folder names are good
@@ -48,8 +49,41 @@ class App
         foreach ($this->config->get('storage') as $className => $folder) {
             $this->finder->addPathMapping($className, "{$this->path}{$folder}");
         }
+
+        // add domains
+        foreach ($this->config->get('domains') as $domain) {
+            $this->addDomain($domain);
+        }
+
     }
 
+    public function addDomain(string $domain)
+    {
+        if (in_array($domain, $this->domains)) {
+            return;
+        }
+        $this->domains[] = $domain;
+    }
 
+    public function execute(Request $request)
+    {
+        // import for use by views, extensions, etc
+        $this->api('request', $request);
 
+        // determine the requested page
+        $url = $request->url;
+        $page = $this->finder->get("Page", $url);
+        if (!$page) {
+            // TODO: improved 404 handle (throw exception)
+            $page = $this->finder->get("Page", "/404");
+        }
+        $this->api('page', $page);
+
+        // get and render the view
+        $view = $page->template()->view();
+
+        if ($view instanceof View) {
+            echo $view->render();
+        }
+    }
 }
