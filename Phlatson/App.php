@@ -21,10 +21,14 @@ class App
 
     protected Config $config;
     protected Finder $finder;
+    protected Page $page;
 
 
     public function __construct(string $path)
     {
+
+        $this->api('app', $this);
+
         // setup default config and import site config
         $this->name = basename($path);
         $this->path = \rtrim($path, "/");
@@ -33,7 +37,7 @@ class App
         $this->config->merge($siteConfig);
 
         // create finder (I know, yuck)
-        $this->finder = new Finder(ROOT_PATH);
+        $this->finder = new Finder();
         $this->api('finder', $this->finder);
 
         // PATH MAPPINGS ========================================

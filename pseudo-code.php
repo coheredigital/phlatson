@@ -12,7 +12,12 @@ $finder->field("title");
 
 $fields->get("title");
 
-
+// get from app
+$app->page("/something/page")->url();
+$app->template("default")->fields();
+// switch sites
+$app('site-name')->template("default")->fields();
+$phlatson->app('site-name');
 // -----------------------------------------------------------
 // API Page creation
 // -----------------------------------------------------------
@@ -93,7 +98,7 @@ $app2->addDataLocation("Page","/site-other/pages/");
 $app2->addDataLocation(
 	"Fieldtypes",
 	"/site/fieldtypes/"
-); 
+);
 // shared with $app
 $app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alternate syntax
 

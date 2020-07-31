@@ -23,13 +23,21 @@ class Phlatson
         }
     }
 
+    public function app($domain): ?App
+    {
+
+        if (!isset($this->apps[$domain])) {
+            return null;
+        }
+
+        return $this->apps[$domain];
+
+    }
 
     public function execute(Request $request)
     {
-        if (isset($this->apps[$request->domain])) {
-            $app = $this->apps[$request->domain];
+        if ($app = $this->app($request->domain)) {
             $app->execute($request);
         }
     }
-
 }
