@@ -22,7 +22,7 @@ try {
     $phlatson = new Phlatson();
 
     $phlatson->importApp(new App(ROOT_PATH . "site"));
-    // $phlatson->importApp(new App(ROOT_PATH . "site-portfolio"));
+    $phlatson->importApp(new App(ROOT_PATH . "site-portfolio"));
 
     $phlatson->execute($request);
 
