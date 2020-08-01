@@ -9,7 +9,6 @@ final class Api
 
     private static $registry = [];
     private static $lock = [];
-    private static $instance = null;
 
     public static function __callStatic($name, $arguments)
     {
@@ -22,35 +21,18 @@ final class Api
      * @param bool $lock
      * @throws Exception
      */
-    public static function set($key, $value, $lock = true)
+    public static function set($key, $value)
     {
 
         if (isset(static::$registry[$key]) && in_array($key, static::$lock)) {
             throw new \Exception("There is already an API entry for '{$key}', value is locked.");
         }
         // set $key and $value the same to avoid duplicates
-        if ($lock) static::$lock[$key] = $key;
+        static::$lock[$key] = $key;
         static::$registry[$key] = $value;
 
     }
 
-    /**
-     * @param null $name
-     * @return array
-     * @throws Exception
-     */
-    public function __invoke($name = null, $object = null, $lock = true)
-    {
-
-        if (!is_null($name) && !is_null($object)) {
-            static::set($name, $object, $lock);
-        } else {
-            return static::get($name);
-        }
-
-        return false;
-
-    }
 
     public static function fetchAll()
     {
