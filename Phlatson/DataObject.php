@@ -37,16 +37,18 @@ abstract class DataObject
     protected FieldCollection $fields;
     protected string $rootPath;
     protected ?Template $template = null;
+    protected Finder $finder;
 
-    public function __construct(?string $path = null)
+    public function __construct(?string $path = null, Finder $finder)
     {
-        if (is_null($path)) {
+        if (!isset($path)) {
             return;
         }
-        $path = '/' . trim($path, '/') . '/';
 
-        $jsonData = $this->api('finder')->getDataFor($this->classname(), $path);
-        $this->setData($jsonData);
+        $this->finder = $finder;
+
+        $path = '/' . trim($path, '/') . '/';
+        $this->setData($this->finder->getDataFor($this->classname(), $path));
 
     }
 
@@ -59,7 +61,7 @@ abstract class DataObject
     public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
-            $this->template = $this->api('finder')->get("Template", $name);
+            $this->template = $this->finder->get("Template", $name);
             $this->template->setOwner($this);
         }
         return $this->template;
@@ -159,7 +161,7 @@ abstract class DataObject
         $value = $this->data->get($key);
 
         if ($this->data->get($key)) {
-            $field = $this->api('finder')->get("Field", $key);
+            $field = $this->finder->get("Field", $key);
             $fieldtype = $field->type();
             $value = $fieldtype->decode($value);
         }

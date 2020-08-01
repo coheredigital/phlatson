@@ -38,7 +38,8 @@ class Page extends DataObject
         $url = "/" . str_replace($rootPath, "", $parentPath);
         $url = rtrim($url, '/') . '/';
 
-        $page = new Page($url);
+        $page = new Page($url, $this->finder);
+        // $page->setData($this->finder->getDataFor("Page", $url));
 
         if ($page->exists()) {
             return $page;
@@ -55,7 +56,7 @@ class Page extends DataObject
         // }
 
         // create empty collection
-        $this->parents = new ObjectCollection();
+        $this->parents = new ObjectCollection($this->finder);
 
         $currentPage = $this;
 
@@ -80,8 +81,7 @@ class Page extends DataObject
         }
 
         // create empty collection
-        $children = new ObjectCollection();
-
+        $children = new ObjectCollection($this->finder);
 
         $index_array = [];
         $dir = new \FilesystemIterator($this->path());
@@ -90,7 +90,7 @@ class Page extends DataObject
                 $name = $file->getFilename();
                 $url = "{$this->url()}{$name}";
                 $index_array[] = $url;
-                $child = $this->api('finder')->get("Page", $url);
+                $child = $this->finder->get("Page", $url);
                 $children->append($child);
             }
         }
@@ -103,8 +103,6 @@ class Page extends DataObject
     {
         $name = trim($name, '/');
         $path = "{$this->path}{$name}/";
-
-        $page = new Page($path);
-        return $page;
+        return new Page($path, $this->finder);
     }
 }

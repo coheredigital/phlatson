@@ -17,7 +17,7 @@ class App
     public array $domains = [];
 
     protected string $path;
-    protected string $siteFolder;
+    // protected string $siteFolder;
 
     // core api classes
     protected Config $config;

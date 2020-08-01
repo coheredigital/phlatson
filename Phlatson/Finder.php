@@ -127,9 +127,6 @@ class Finder
             return null;
         }
 
-        $jsonObject = $this->getDataFor($classname,$path);
-
-
         // load custom class if detected
         if ($classFile = $this->getCustomClassFile($classname, $path)) {
             require_once $classFile;
@@ -139,11 +136,7 @@ class Finder
             $classname = "\Phlatson\\$classname";
         }
 
-        $object = new $classname();
-
-        if ($object instanceof DataObject ) {
-            $object->setData($jsonObject);
-        }
+        $object = new $classname($path, $this);
 
         return $object;
     }
