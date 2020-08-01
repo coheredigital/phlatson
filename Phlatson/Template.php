@@ -24,10 +24,13 @@ class Template extends DataObject
         $this->owner = $owner;
     }
 
-    public function view(?array $data): View
+    public function view(?array $data = []): View
     {
         // get view file of the same name
-        $view = new View($this->name(), $data);
+        $view = $this->finder->getView($this->name());
+        if (isset($data)) {
+            $view->data($data);
+        }
         return $view;
     }
 

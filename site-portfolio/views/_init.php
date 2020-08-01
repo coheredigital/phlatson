@@ -3,10 +3,11 @@
 namespace ProcessWire;
 
 // default styles and scripts
-$config->styles->append('https://fonts.googleapis.com/css?family=Roboto:400,700');
-$config->styles->append('https://fonts.googleapis.com/css?family=Montserrat:700,900');
-// $config->styles->append('https://fonts.googleapis.com/css?family=Roboto+Mono');
-$config->styles->append('/site/templates/styles/main.css');
+$style = [];
+$style[] = 'https://fonts.googleapis.com/css?family=Roboto:400,700';
+$style[] = 'https://fonts.googleapis.com/css?family=Montserrat:700,900';
+// $style[] = ('https://fonts.googleapis.com/css?family=Roboto+Mono';
+$style[] = '/site/templates/styles/main.css';
 
 // add home to api
 $home = $pages->get('/');

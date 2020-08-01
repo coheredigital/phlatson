@@ -10,11 +10,11 @@ class View
     protected string $file;
     protected array $data = [];
 
-    function __construct(string $file, ?array $data)
+    function __construct(string $root, string $uri)
     {
         // TODO: remove hard coding
-        $root = ROOT_PATH . 'site/views/';
-        $filepath = $root . $file . '.php';
+
+        $filepath = $root . '/' . $uri . '.php';
 
         // validate view file
         if (!file_exists($filepath)) {
@@ -23,10 +23,11 @@ class View
         $this->file = $filepath;
         $this->path = dirname($filepath);
 
-        if (isset($data)) {
-            $this->data = $data;
-        }
+    }
 
+    public function data(array $data)
+    {
+        $this->data = $data;
     }
 
     public function name(): string

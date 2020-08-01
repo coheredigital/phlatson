@@ -1,7 +1,8 @@
 {
     "domains" : [
         "spruijt.design",
-        "www.spruijt.design"
+        "www.spruijt.design",
+        "spruijtdesign.localhost"
     ],
     "debug": false
 }

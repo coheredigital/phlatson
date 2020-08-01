@@ -154,6 +154,33 @@ class Finder
         return array_reverse($this->pathMappings[$classname]);
     }
 
+
+    public function getPage(string $uri): Page
+    {
+        return $this->get("Page", $uri);
+    }
+
+
+    public function getView(string $uri): View
+    {
+
+        // get mappings paths
+        $paths = $this->getPaths("View");
+
+        foreach ($paths as $path) {
+
+            $path = \rtrim($path, '/');
+            $file = "$path/$uri.php";
+            if (\file_exists($file)) {
+                $view = new View($path,$uri);
+                break;
+            }
+        }
+
+        return $view;
+    }
+
+
     /**
      * Allows better readability for DataObject retrieval
      *
