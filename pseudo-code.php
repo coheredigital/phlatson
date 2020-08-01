@@ -31,8 +31,8 @@ $page->template()->view()->data([
 	"author" => "Adam Spruijt"
 ])->render();
 
-// RELATIONAL (object alternate)
-// (?optional URI?) name of any object is inferred from a field otherwise, setting URI allows skipping manually setting parent
+// RELATIONAL (DataDataDataDataDataDataObject alternate)
+// (?optional URI?) name of any DataDataObject is inferred from a field otherwise, setting URI allows skipping manually setting parent
 // requires validating existence of parent on init
 $child = new Page("/parent/name-here");
 $child->template(new Template("article")); // template allows data to be set
@@ -44,13 +44,13 @@ $child->content = "A very short article"; // $child->set('published',929672343);
 $child->published = 929672343; // $child->set('published',929672343);
 
 // key methods
-$child->rename("new-name-here"); // name of any object is inferred from a field by default
-$child->rename($child->title); // name of any object is inferred from a field by default
+$child->rename("new-name-here"); // name of any DataObject is inferred from a field by default
+$child->rename($child->title); // name of any DataObject is inferred from a field by default
 $child->save(); // ??MAYBE NOT ALLOWED??, Page does not exist, save merges with exist data
 $child->overwrite(); // replaces / creates new
 
 // required fields must be set, will be validated before save
-// validation with be provide by passing DataContainer (JsonObject) to $
+// validation with be provide by passing DataContainer (JsonDataObject) to $
 $template->validate($jsonData);
 
 // ultra simple example
@@ -68,7 +68,6 @@ $page->language("en")->title;
  * data_en.json
  * data_fr.json
  */
-
 
 
 // -----------------------------------------------------------
@@ -89,7 +88,7 @@ $phlatson->site('site-name')->getPage("/");
 /**
  * The core DataObject in Phlatson are
  *
- * - Page (front facing viewable object)
+ * - Page (front facing viewable DataObject)
  * - Template (defines the field used, the data type returned)
  * - Field (defines the fieldtype, how data is stored)
  *
@@ -110,8 +109,8 @@ $phlatson = new Phlatson("/site-docs"); // just creates Phlatson, an loads confi
 $phlatson->execute($request);
 
 /**
- * App object
- * think of the $site or $app object as the glue
+ * App DataObject
+ * think of the $site or $app DataObject as the glue
  * this is what the index file might look like, the index.php file will be user owned
  */
 $app = new App("C:\Users\Adam\Websites\phlatson\site"); // (alternate) point at folder, check for config
