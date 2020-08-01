@@ -33,7 +33,7 @@ class Template extends DataObject
 
     public function template(): Template
     {
-        $template = $this->api('finder')->get("Template", "template");
+        $template = $this->finder->get("Template", "template");
         return $template;
     }
 }

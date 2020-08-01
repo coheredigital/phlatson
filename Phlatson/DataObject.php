@@ -30,8 +30,6 @@ namespace Phlatson;
 abstract class DataObject
 {
 
-    use ApiAccess;
-
     protected JsonObject $data;
     protected array $formattedData  = [];
     protected FieldCollection $fields;
@@ -185,4 +183,11 @@ abstract class DataObject
     {
         return $this->get($key);
     }
+
+    // TODO: Look at removing
+	final public function classname() : string
+    {
+        return (new \ReflectionClass($this))->getShortName();
+    }
+
 }

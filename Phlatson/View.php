@@ -6,7 +6,6 @@ namespace Phlatson;
 class View
 {
 
-    use ApiAccess;
     protected string $path;
     protected string $file;
     protected array $data = [];

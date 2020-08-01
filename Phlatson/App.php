@@ -11,8 +11,6 @@ namespace Phlatson;
 class App
 {
 
-    use ApiAccess;
-
     public string $name;
     public array $domains = [];
 
@@ -29,7 +27,6 @@ class App
     public function __construct(string $path)
     {
 
-        $this->api('app', $this);
         $this->request = new Request();
 
         // setup default config and import site config
@@ -41,7 +38,6 @@ class App
 
         // create finder (I know, yuck)
         $this->finder = new Finder();
-        $this->api('finder', $this->finder);
 
         // PATH MAPPINGS ========================================
         // add system path mappings

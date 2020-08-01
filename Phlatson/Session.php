@@ -215,7 +215,8 @@ class Session implements \IteratorAggregate
             $this->regenerate(); // rebuild session data
             $this->set('_user_name', $user->name);
             $this->set('_user_time', time());
-            $this->api('user', $user);
+            // FIXME: remove / replace API use
+            // $this->api('user', $user);
             return true;
         }
         return null;

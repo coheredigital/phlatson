@@ -5,8 +5,6 @@ namespace Phlatson;
 class ObjectCollection implements \Iterator, \Countable
 {
 
-    use ApiAccess;
-
     public $iterator;
 
     protected Finder $finder;
@@ -104,7 +102,7 @@ class ObjectCollection implements \Iterator, \Countable
 
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
-            $item = $this->api('finder')->get("Page", $item);
+            $item = $this->finder->get("Page", $item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }
