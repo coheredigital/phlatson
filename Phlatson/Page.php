@@ -30,7 +30,7 @@ class Page extends DataObject
     public function parent(): ?Page
     {
         $rootPath = $this->rootPath();
-        $parentPath = dirname($this->path()) . '/';
+        $parentPath = \dirname($this->path()) . '/';
 
         // check if root is in parent path
         if (false === strpos($parentPath, $rootPath)) {

@@ -90,5 +90,5 @@ return PhpCsFixer\Config::create()
 		'unary_operator_spaces' => true,
 		'whitespace_after_comma_in_array' => true,
 	])
-	//->setIndent("\t")
+	->setIndent("\t")
 	->setLineEnding("\n");
