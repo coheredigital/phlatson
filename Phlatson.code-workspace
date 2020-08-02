@@ -8,6 +8,9 @@
 		"search.exclude": {
 			"/**/*.json": true
 		},
-		"search.quickOpen.includeHistory": false
+		"search.quickOpen.includeHistory": false,
+		"cSpell.words": [
+			"subfolders"
+		]
 	}
 }

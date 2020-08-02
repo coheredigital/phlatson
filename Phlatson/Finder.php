@@ -93,7 +93,7 @@ class Finder
         return false;
     }
 
-    public function getDataFor(string $classname, string $uri): JsonObject
+    public function getDataFor(string $classname, string $uri): ?JsonObject
     {
 
         $uri = \trim($uri, '/');
@@ -112,12 +112,12 @@ class Finder
             $path = \rtrim($path, '/');
             $folder = "$path/$uri/";
             if (\file_exists($folder)) {
-                $data = $this->getDataFile($folder);
+                return $this->getDataFile($folder);
                 break;
             }
         }
 
-        return $data;
+        return null;
     }
 
     public function get(string $classname, $path): ?DataObject

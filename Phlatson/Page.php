@@ -84,23 +84,27 @@ class Page extends DataObject
         // create empty collection
         $children = new ObjectCollection($this->finder);
 
-        $dir = new \FilesystemIterator($this->path());
-        foreach ($dir as $file) {
-            if ($file->isDir()) {
-                $name = $file->getFilename();
-                $children->append($this->child($name));
-            }
+        $folders = $this->subfolders();
+        foreach ($folders as $folder) {
+            $name = basename($folder);
+            $children->append($this->child($name));
         }
 
         $this->children = $children;
         return $children;
     }
 
+    public function subfolders(): array
+    {
+        $path = $this->path() . '/*';
+        return glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
+    }
+
     public function child(string $name): Page
     {
         $name = trim($name, '/');
-        $path = "{$this->path}{$name}/";
-        return new self($path, $this->finder);
+        $path = $this->url() . $name;
+        return new Page($path, $this->finder);
     }
 
     public function files(): array
