@@ -14,7 +14,7 @@ class Page extends DataObject
 
     public function rootFolder(): string
     {
-        return str_replace($this->url(), '', $this->folder()).'/';
+        return str_replace($this->url(), '', $this->folder()) . '/';
     }
 
     public function url(): string
@@ -30,15 +30,15 @@ class Page extends DataObject
     public function parent(): ?Page
     {
         $rootPath = $this->rootPath();
-        $parentPath = dirname($this->path()).'/';
+        $parentPath = dirname($this->path()) . '/';
 
         // check if root is in parent path
         if (false === strpos($parentPath, $rootPath)) {
             return null;
         }
 
-        $url = '/'.str_replace($rootPath, '', $parentPath);
-        $url = rtrim($url, '/').'/';
+        $url = '/' . str_replace($rootPath, '', $parentPath);
+        $url = rtrim($url, '/') . '/';
 
         $page = new Page($url, $this->finder);
         // $page->setData($this->finder->getDataFor("Page", $url));
@@ -99,7 +99,7 @@ class Page extends DataObject
 
     public function subfolders(): array
     {
-        $path = $this->path().'/*';
+        $path = $this->path() . '/*';
 
         return glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
     }
@@ -107,7 +107,7 @@ class Page extends DataObject
     public function child(string $name): Page
     {
         $name = trim($name, '/');
-        $path = $this->url().$name;
+        $path = $this->url() . $name;
 
         return new Page($path, $this->finder);
     }
