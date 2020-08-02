@@ -1,9 +1,10 @@
 <?php
+
 namespace Phlatson;
+
 class ObjectCollectionFilter extends \FilterIterator
 {
-
-    public function __construct(\Iterator $collection , $filter )
+    public function __construct(\Iterator $collection, $filter)
     {
         parent::__construct($collection);
     }
@@ -14,7 +15,6 @@ class ObjectCollectionFilter extends \FilterIterator
         // if( $object->setting('hidden')) return false;
         return true;
     }
-
 
     // /**
     //  * returns self with a limit set for pagination
@@ -30,7 +30,6 @@ class ObjectCollectionFilter extends \FilterIterator
 
     //     return $this;
     // }
-
 
     // /**
     //  * returns self with a limit set for pagination
@@ -62,6 +61,4 @@ class ObjectCollectionFilter extends \FilterIterator
 
     //     return $this;
     // }
-
-
 }

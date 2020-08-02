@@ -1,17 +1,18 @@
 <?php
+
 namespace Phlatson;
+
 class Session implements \IteratorAggregate
 {
-
     protected $name;
     protected App $app;
 
-    function __construct(string $name, App $app)
+    public function __construct(string $name, App $app)
     {
         $this->name = $name;
         $this->app = $app;
 
-        if($this->exists()){
+        if ($this->exists()) {
             $this->start();
         }
 
@@ -24,52 +25,57 @@ class Session implements \IteratorAggregate
             if ($user) {
                 $this->set('_user_ts', time());
             }
-
         } else {
-            $user = $app->users->get("guest");
+            $user = $app->users->get('guest');
         }
 
         // set current user found user
         $app->setUser($user);
-
     }
 
     // check that a valid session still exists
-    public function exists(){
-        if( isset($_SESSION) || $_COOKIE[$this->name] ){
+    public function exists()
+    {
+        if (isset($_SESSION) || $_COOKIE[$this->name]) {
             return true;
         }
+
         return false;
     }
 
-    public function set( string $name, $value)
+    public function set(string $name, $value)
     {
-
-        if(!$this->exists()) $this->start();
+        if (!$this->exists()) {
+            $this->start();
+        }
 
         $_SESSION["$this->name"][$name] = $value;
+
         return $this;
     }
 
     /**
-     * Gets a session / flash variable
-     * @param  string $name
+     * Gets a session / flash variable.
+     *
+     * @param string $name
+     *
      * @return mixed
      */
     public function get($name)
     {
-
         $value = $this->has($name) ? $_SESSION["$this->name"][$name] : null;
         // check if the key is a flash variable and remove if it is
         if ($this->isFlash($name) && !is_null($value)) {
             $this->remove($name);
             $this->removeFlash($name);
         }
+
         return $value;
     }
 
     /**
-     * Get all session variables
+     * Get all session variables.
+     *
      * @return array
      */
     public function all()
@@ -79,10 +85,11 @@ class Session implements \IteratorAggregate
 
     /**
      * Checks for the existence of a session variable
-     * Particularly useful for flash variables, where calling get will unset them
+     * Particularly useful for flash variables, where calling get will unset them.
      *
-     * @param  string   $name the session key to check for
-     * @return boolean  isset() result
+     * @param string $name the session key to check for
+     *
+     * @return bool isset() result
      */
     public function has($name)
     {
@@ -90,41 +97,40 @@ class Session implements \IteratorAggregate
     }
 
     /**
+     * Sets a read-once flash value on the segment or convert an existing session variable into a flash variable if no value supplied.
      *
-     * Sets a read-once flash value on the segment or convert an existing session variable into a flash variable if no value supplied
-     * @param string $name The key for the flash value.
-     * @param mixed $value The value for the flash.
-     *
+     * @param string $name  The key for the flash value.
+     * @param mixed  $value The value for the flash.
      */
     public function flash($name, $value = null)
     {
-
-        if($value){
+        if ($value) {
             // set the value in session
             $this->set($name, $value);
         }
 
-        if($this->has($name)){
-            $_SESSION["$this->name"]["_flash"][$name] = 1;
+        if ($this->has($name)) {
+            $_SESSION["$this->name"]['_flash'][$name] = 1;
         }
-
     }
 
-
     /**
-     * determine if $key exists in flash session settings
-     * @param  string $key
+     * determine if $key exists in flash session settings.
+     *
+     * @param string $key
+     *
      * @return boolean
      */
     public function hasFlash($key)
     {
-        return isset($_SESSION["$this->name"]["_flash"][$key]);
+        return isset($_SESSION["$this->name"]['_flash'][$key]);
     }
 
-
     /**
-     * Checks if session varaible is defined as a flash variable
+     * Checks if session varaible is defined as a flash variable.
+     *
      * @param string $key The key for the flash value.
+     *
      * @return mixed The flash value.
      */
     public function isFlash($key)
@@ -132,42 +138,47 @@ class Session implements \IteratorAggregate
         if ($this->hasFlash($key) && $this->has($key)) {
             return true;
         }
+
         return false;
     }
 
     /**
      * Removes existing flash session key
      * Session varible will go back to being a regular session variable,
-     * and will remain in session until it expires
-     * @param  string $key
+     * and will remain in session until it expires.
+     *
+     * @param string $key
+     *
      * @return $this
      */
     public function removeFlash($key)
     {
-        unset($_SESSION["$this->name"]["_flash"][$key]);
+        unset($_SESSION["$this->name"]['_flash'][$key]);
+
         return $this;
     }
 
     /**
-     * Removes an existing session key
-     * @param  string $key
+     * Removes an existing session key.
+     *
+     * @param string $key
+     *
      * @return $this
      */
     public function remove($key)
     {
         unset($_SESSION["$this->name"][$key]);
+
         return $this;
     }
 
-
-    public function __set( string $key, $value)
+    public function __set(string $key, $value)
     {
         return $this->set($key, $value);
     }
 
-
     /**
-     * start the session, provide for syntactical convenience
+     * start the session, provide for syntactical convenience.
      */
     protected function start()
     {
@@ -176,10 +187,9 @@ class Session implements \IteratorAggregate
     }
 
     /**
+     * Regenerates and replaces the current session id.
      *
-     * Regenerates and replaces the current session id
      * @return bool true is regeneration worked, false if not.
-     *
      */
     public function regenerate()
     {
@@ -187,7 +197,7 @@ class Session implements \IteratorAggregate
     }
 
     /**
-     * clear all session variables
+     * clear all session variables.
      */
     public function clear()
     {
@@ -195,13 +205,12 @@ class Session implements \IteratorAggregate
     }
 
     /**
-     * destroy / ends the current session
+     * destroy / ends the current session.
      */
     public function destroy()
     {
         session_destroy();
     }
-
 
     public function login($name, $password)
     {
@@ -219,6 +228,7 @@ class Session implements \IteratorAggregate
             // $this->api('user', $user);
             return true;
         }
+
         return null;
     }
 
@@ -227,16 +237,13 @@ class Session implements \IteratorAggregate
         $this->clear();
 
         if (isset($_COOKIE[$this->name])) {
-
             $sessionTime = time() - 42000;
 
             setcookie($this->name, '', $sessionTime, '/');
         }
 
-
         // end the current session
         $this->destroy();
-
 
         return $this;
     }
@@ -247,13 +254,14 @@ class Session implements \IteratorAggregate
     }
 
     /**
-     * Returns the current session status:
+     * Returns the current session status:.
+     *
      * @return int
+     *
      * @see session_status()
      */
     public function getStatus()
     {
         return session_status();
     }
-
 }

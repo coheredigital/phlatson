@@ -4,7 +4,5 @@ namespace Phlatson;
 
 class User extends DataObject
 {
-
-	// placeholder
-
+    // placeholder
 }

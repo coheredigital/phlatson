@@ -2,19 +2,17 @@
 
 namespace Phlatson;
 
-
 class View
 {
-
     protected string $path;
     protected string $file;
     protected array $data = [];
 
-    function __construct(string $root, string $uri)
+    public function __construct(string $root, string $uri)
     {
         // TODO: remove hard coding
 
-        $filepath = $root . '/' . $uri . '.php';
+        $filepath = $root.'/'.$uri.'.php';
 
         // validate view file
         if (!file_exists($filepath)) {
@@ -22,7 +20,6 @@ class View
         }
         $this->file = $filepath;
         $this->path = dirname($filepath);
-
     }
 
     public function data(array $data)
@@ -39,8 +36,9 @@ class View
     {
         $url = trim($url, '/');
         $file = "{$this->path}/{$url}.php";
-        $output = "";
+        $output = '';
         $output = $this->renderViewFile($file, $data);
+
         return $output;
     }
 
@@ -51,7 +49,6 @@ class View
 
     public function renderViewFile(string $file, array $data = []): string
     {
-
         // merge set data over api
         $data = \array_merge($this->data, $data);
 
@@ -69,15 +66,16 @@ class View
 
         $output = \ob_get_contents();
         \ob_end_clean();
+
         return $output;
     }
-
 
     public function render(?string $url = null, array $data = []): string
     {
         if ($url) {
             return $this->renderPartial($url, $data);
         }
+
         return $this->renderSelf($data);
     }
 }

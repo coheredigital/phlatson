@@ -4,16 +4,13 @@ namespace Phlatson;
 
 class JsonObject
 {
-
     public string $file;
     public string $filename;
     public string $path;
     protected array $data;
 
-
     public function __construct(string $file)
     {
-
         $this->file = $file;
 
         if (!file_exists($file)) {
@@ -22,25 +19,23 @@ class JsonObject
 
         // setup some core properties
         $this->filename = basename($this->file);
-        $this->path = dirname($this->file) . "/";
+        $this->path = dirname($this->file).'/';
 
         $this->data = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
 
         // check that we got data back from json_decode
-        if ($this->data === null) {
+        if (null === $this->data) {
             throw new \Exception("File ($file) is not a valid JSON file");
         }
 
         // populate inferred data
         $this->set('modified', \filemtime($this->file));
         // $this->set('path', dirname($this->file) . "/");
-
     }
 
     /**
-     * Gets and returns a key from the data array
+     * Gets and returns a key from the data array.
      *
-     * @param string $key
      * @return Mixed
      */
     public function get(string $key)
@@ -53,10 +48,11 @@ class JsonObject
     }
 
     /**
-     * Set the $key in $data array to the supplied $value
+     * Set the $key in $data array to the supplied $value.
      *
-     * @param String $key
-     * @param Mixed $value
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return void
      */
     public function set($key, $value)

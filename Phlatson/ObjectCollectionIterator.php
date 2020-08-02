@@ -1,31 +1,29 @@
 <?php
+
 namespace Phlatson;
+
 class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
 {
-
     protected $currentIndex = 0;
     protected $startIndex = 0;
     protected $endIndex;
-
     protected $limit = 0;
     protected $pageCount;
     protected $currentPage;
-
     protected $isPaginated = false;
-
     protected $collection = [];
 
-
-    public function append(Object $item)
+    public function append(object $item)
     {
         $this->collection += [$item->name => $item];
+
         return $this;
     }
 
-    public function prepend(Object $item)
+    public function prepend(object $item)
     {
+        $this->collection = [$item->name => $item] + $this->collection;
 
-        $this->collection = [ $item->name => $item ] + $this->collection;
         return $this;
     }
 
@@ -37,26 +35,25 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
             }
             $this->append($item);
         }
+
         return $this;
     }
-
 
     /**
      * @param $fieldname
      * @param string $direction
+     *
      * @return $this
      */
-    public function sort($fieldname, $direction = "ASC")
+    public function sort($fieldname, $direction = 'ASC')
     {
-
         $object = $this->first();
 
-        if(!$value = $object->getUnformatted($fieldname)){
+        if (!$value = $object->getUnformatted($fieldname)) {
             throw new \Exception("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
         }
 
         $type = get($value);
-
 
         usort(
             $this->collection,
@@ -65,31 +62,28 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
                 $v2 = $b->get($fieldname);
 
                 switch ($type) {
-                    case "integer":
+                    case 'integer':
                         if ($v1 == $v2) {
                             return 0;
                         }
+
                         return ($v1 < $v2) ? -1 : 1;
                     default:
                         return strcmp($v1, $v2);
                 }
-
             }
         );
 
-        if ($direction == "DESC") $this->reverse();
+        if ('DESC' == $direction) {
+            $this->reverse();
+        }
 
         return $this;
     }
 
-
-
-
-
-
-
     /**
-     * returns new collection with index range items
+     * returns new collection with index range items.
+     *
      * @return $this
      */
     public function slice(int $start, $end)
@@ -99,15 +93,16 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
     }
 
     /**
-     * reverses array orders
+     * reverses array orders.
+     *
      * @return $this
      */
     public function reverse()
     {
         $this->collection = array_reverse($this->collection);
+
         return $this;
     }
-
 
     public function has($name)
     {
@@ -115,7 +110,8 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
     }
 
     /**
-     * return first item in data array
+     * return first item in data array.
+     *
      * @return Object
      */
     public function first()
@@ -124,7 +120,8 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
     }
 
     /**
-     * return last item in data array
+     * return last item in data array.
+     *
      * @return Object
      */
     public function last()
@@ -133,20 +130,19 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
     }
 
     /**
-     * return item at given index
+     * return item at given index.
      */
     public function index($x)
     {
-
-        if(!count($this->collection)){
+        if (!count($this->collection)) {
             throw new \Exception("$this->className is empty, cannot retrieve index($x)");
         }
+
         return array_values($this->collection)[$x];
     }
 
     public function getArray($key, $value)
     {
-
         $array = [];
         foreach ($this as $object) {
             $key = $object->get($key);
@@ -154,22 +150,20 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
 
             $array[$key] = $value;
         }
+
         return $array;
-
     }
-
 
     /* Interface requirements */
     public function rewind()
     {
-        if ( $this->currentPage > 1 ) {
+        if ($this->currentPage > 1) {
             $this->currentIndex = ($this->currentPage - 1) * $this->limit;
-        }
-        else {
+        } else {
             $this->currentIndex = 0;
         }
-
     }
+
     public function current()
     {
         return $this->index($this->currentIndex);
@@ -182,22 +176,26 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
 
     public function next()
     {
-        $this->currentIndex++;
+        ++$this->currentIndex;
     }
 
     public function valid()
     {
-        if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) return false;
+        if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) {
+            return false;
+        }
 
-        return array_key_exists( $this->key() , $this->collection );
+        return array_key_exists($this->key(), $this->collection);
     }
+
     /* Interface requirements */
 
     /**
-     * simply return the count of elments in the data container
+     * simply return the count of elments in the data container.
+     *
      * @return int
      */
-    public function count() : int
+    public function count(): int
     {
         return (int) count($this->collection);
     }
@@ -222,12 +220,8 @@ class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
         return $this->has($key);
     }
 
-
-
     public function __get($name)
     {
         return $this->get($name);
     }
-
-
 }

@@ -4,18 +4,19 @@ namespace Phlatson;
 
 class Template extends DataObject
 {
-
     protected DataObject $owner;
 
     public function hasField($name)
     {
         $fields = $this->data('fields');
+
         return isset($fields[$name]);
     }
 
     public function getField($name): ?Field
     {
         $fields = $this->data('fields');
+
         return $fields[$name];
     }
 
@@ -31,12 +32,14 @@ class Template extends DataObject
         if (isset($data)) {
             $view->data($data);
         }
+
         return $view;
     }
 
     public function template(): Template
     {
-        $template = $this->finder->get("Template", "template");
+        $template = $this->finder->get('Template', 'template');
+
         return $template;
     }
 }

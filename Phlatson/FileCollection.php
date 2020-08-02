@@ -4,15 +4,11 @@ namespace Phlatson;
 
 class FileCollection implements \Iterator, \Countable
 {
-
     public $iterator;
-
     protected Finder $finder;
-
     protected int $currentPage = 1;
     protected int $limit = 0;
     protected int $position = 0;
-
     protected array $files = [];
     protected array $collection = [];
 
@@ -25,12 +21,14 @@ class FileCollection implements \Iterator, \Countable
     {
         $this->files[$item->file] = true;
         $this->collection[] = $item;
+
         return $this;
     }
 
     public function reverse(): self
     {
         $this->collection = array_reverse($this->collection);
+
         return $this;
     }
 
@@ -40,21 +38,24 @@ class FileCollection implements \Iterator, \Countable
         $files = array_fill_keys($collection, true);
         $this->files += $files;
         $this->collection += $collection;
+
         return $this;
     }
 
     public function limit(int $limit): self
     {
         $this->limit = $limit;
+
         return $this;
     }
 
     public function paginate(int $currentPage): self
     {
         if ($currentPage < 1) {
-            throw new \Exception("Request page number cannot be less than 1");
+            throw new \Exception('Request page number cannot be less than 1');
         }
         $this->currentPage = $currentPage;
+
         return $this;
     }
 
@@ -73,7 +74,7 @@ class FileCollection implements \Iterator, \Countable
     }
 
     /**
-     * Iterator Interface methods
+     * Iterator Interface methods.
      *
      * @return void
      */
@@ -84,10 +85,9 @@ class FileCollection implements \Iterator, \Countable
 
     public function current(): File
     {
-
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
-            $item = $this->finder->get("File", $item);
+            $item = $this->finder->get('File', $item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }
@@ -110,6 +110,7 @@ class FileCollection implements \Iterator, \Countable
         if ($this->limit && $this->position == $this->limit) {
             return false;
         }
+
         return isset($this->collection[$this->index()]);
     }
 }

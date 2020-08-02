@@ -2,10 +2,8 @@
 
 namespace Phlatson;
 
-
 /**
- *
- * Variable convention for Phlatson objects (Page, Field, Template, View)
+ * Variable convention for Phlatson objects (Page, Field, Template, View).
  *
  *      example for this case a Page, located at
  *      /site/pages/about-us/our-team/jane-doe/data.json
@@ -24,14 +22,11 @@ namespace Phlatson;
  *
  *      $name = "jane-doe"
  *      the base name of the path  : /page
- *
  */
-
 abstract class DataObject
 {
-
     protected JsonObject $data;
-    protected array $formattedData  = [];
+    protected array $formattedData = [];
     protected FieldCollection $fields;
     protected string $rootPath;
     protected ?Template $template = null;
@@ -45,23 +40,24 @@ abstract class DataObject
 
         $this->finder = $finder;
 
-        $path = '/' . trim($path, '/') . '/';
+        $path = '/'.trim($path, '/').'/';
         $this->setData($this->finder->getDataFor($this->classname(), $path));
-
     }
 
     public function setData(JsonObject $data): self
     {
         $this->data = $data;
+
         return $this;
     }
 
     public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
-            $this->template = $this->finder->get("Template", $name);
+            $this->template = $this->finder->get('Template', $name);
             $this->template->setOwner($this);
         }
+
         return $this->template;
     }
 
@@ -73,15 +69,17 @@ abstract class DataObject
     public function rootFolder(): string
     {
         $value = str_replace($this->name(), '', $this->folder());
-        $value = trim($value, "/");
+        $value = trim($value, '/');
+
         return "/$value/";
     }
 
     public function folder(): string
     {
         $value = \str_replace(ROOT_PATH, '', $this->path());
-        $value = trim($value, "/");
-        $value = $value ? "/$value/" : "/";
+        $value = trim($value, '/');
+        $value = $value ? "/$value/" : '/';
+
         return $value;
     }
 
@@ -92,20 +90,20 @@ abstract class DataObject
 
     public function rootPath(): string
     {
-        return rtrim(ROOT_PATH . "site/" . $this::BASE_FOLDER, '/') . '/';
+        return rtrim(ROOT_PATH.'site/'.$this::BASE_FOLDER, '/').'/';
     }
 
     protected function rootUrl(): string
     {
-
         $url = $this->url();
-        $url = trim($url, "/");
-        $url = str_replace($this->name(), "", $url);
-        $url = trim($url, "/");
+        $url = trim($url, '/');
+        $url = str_replace($this->name(), '', $url);
+        $url = trim($url, '/');
 
         if (!$url) {
-            return "/";
+            return '/';
         }
+
         return "/$url/";
     }
 
@@ -116,7 +114,8 @@ abstract class DataObject
             throw new \Exception("Cannot get path of $file");
         }
 
-        $value = dirname($file) . "/";
+        $value = dirname($file).'/';
+
         return $value;
     }
 
@@ -142,9 +141,10 @@ abstract class DataObject
 
     /**
      * Retrieve raw unformatted data from the data object
-     * if not $key is provided returns the entire data object
+     * if not $key is provided returns the entire data object.
      *
      * @param string $key
+     *
      * @return mixed
      */
     public function data(?string $key = null)
@@ -159,12 +159,10 @@ abstract class DataObject
         $value = $this->data->get($key);
 
         if ($this->data->get($key)) {
-            $field = $this->finder->get("Field", $key);
+            $field = $this->finder->get('Field', $key);
             $fieldtype = $field->type();
             $value = $fieldtype->decode($value);
         }
-
-
 
         return $value ?: null;
     }
@@ -174,9 +172,8 @@ abstract class DataObject
      * example
      * <?= $page->title ?>
      * instead of
-     * <?= $page->get('title') ?>
+     * <?= $page->get('title') ?>.
      *
-     * @param string $key
      * @return void
      */
     final public function __get(string $key)
@@ -185,9 +182,8 @@ abstract class DataObject
     }
 
     // TODO: Look at removing
-	final public function classname() : string
+    final public function classname(): string
     {
         return (new \ReflectionClass($this))->getShortName();
     }
-
 }
