@@ -8,8 +8,8 @@ class Page extends DataObject
     const BASE_URL = '';
 
     protected $parent;
-    protected $children;
     protected $parents;
+    protected $children;
     protected array $files = [];
 
     public function rootFolder(): string
@@ -52,18 +52,18 @@ class Page extends DataObject
     {
 
         // skip if already stored
-        // if ($this->parents instanceof ObjectCollection) {
-        //     return $this->parents;
-        // }
+        if (isset($this->parents) && $this->parents instanceof ObjectCollection) {
+            return $this->parents;
+        }
 
         // create empty collection
         $this->parents = new ObjectCollection($this->finder);
 
-        $currentPage = $this;
+        $current = $this;
 
-        while ($currentPage->parent() !== null) {
-            $this->parents->append($currentPage->parent());
-            $currentPage = $currentPage->parent();
+        while ($current->parent() !== null) {
+            $this->parents->append($current->parent());
+            $current = $current->parent();
         }
 
         // cache result
@@ -84,15 +84,11 @@ class Page extends DataObject
         // create empty collection
         $children = new ObjectCollection($this->finder);
 
-        $index_array = [];
         $dir = new \FilesystemIterator($this->path());
         foreach ($dir as $file) {
             if ($file->isDir()) {
                 $name = $file->getFilename();
-                $url = "{$this->url()}{$name}";
-                $index_array[] = $url;
-                $child = $this->finder->get("Page", $url);
-                $children->append($child);
+                $children->append($this->child($name));
             }
         }
 
@@ -104,11 +100,27 @@ class Page extends DataObject
     {
         $name = trim($name, '/');
         $path = "{$this->path}{$name}/";
-        return new Page($path, $this->finder);
+        return new self($path, $this->finder);
     }
 
     public function files(): array
     {
+        $index_array = [];
 
+        if (!$this->files) {
+            $path = $this->path();
+            $files = new \FilesystemIterator($this->path(), \FilesystemIterator::SKIP_DOTS);
+            foreach ($files as $file) {
+
+
+
+                if (!$file->isDir()) {
+                    $file = $file->getPathname();
+                    $this->files[] = new File($file);
+                }
+            }
+        }
+
+        return $this->files;
     }
 }

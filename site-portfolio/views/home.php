@@ -3,6 +3,7 @@
 namespace ProcessWire;
 
 dump($page);
+dump($page->files());
 
 $output = $this->render('snippets/site-title');
 
