@@ -1,10 +1,12 @@
-<?php
+<hr>
+<div class="_section-spacing">
 
-// return if ID forgotten
-if (!isset($id)) return;
-
-$form = $forms->load($id);
-
-if (!$form) return;
-
-echo $form->render();
+	<div class="container grid">
+		<div class="column -phablet-4 -tablet-3 _text-center">
+			<h2>Get in touch</h2>
+		</div>
+		<div class="column -phablet-8 -tablet-9">
+			<?= $value ?>
+		</div>
+	</div>
+</div>

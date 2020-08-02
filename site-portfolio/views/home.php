@@ -2,14 +2,21 @@
 
 namespace ProcessWire;
 
+$output = $this->render('snippets/site-title');
 
-// $page->output->main .= $page->render("title");
-$page->profile_image = $page->images->getTag("profile");
-
-$page->form = $page->snippet("form", [
-	"id" => "contact"
+$output .= $this->render('snippets/intro', [
+	"value" => $page->get('content')
 ]);
 
-// render markup
-$page->output->main .= $page->render('summary');
-$page->output->main .= $page->render('form');
+$output .= $this->render('snippets/form', [
+	"value" => $this->render('forms/contact')
+]);
+
+echo $this->render('/layouts/default', [
+	'styles' => [
+		'https://fonts.googleapis.com/css?family=Roboto:400,700',
+		'https://fonts.googleapis.com/css?family=Montserrat:700,900',
+		'/site-portfolio/views/styles/main.css'
+	],
+	'content' => $output
+]);

@@ -26,9 +26,6 @@ try {
 
     $phlatson->execute($request);
 
-    \dump($request);
-    \dump($phlatson);
-
 } catch (\Exception $exception) {
     echo $exception;
 }
