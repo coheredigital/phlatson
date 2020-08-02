@@ -115,9 +115,6 @@ class Page extends DataObject
             $path = $this->path();
             $files = new \FilesystemIterator($this->path(), \FilesystemIterator::SKIP_DOTS);
             foreach ($files as $file) {
-
-
-
                 if (!$file->isDir()) {
                     $file = $file->getPathname();
                     $this->files[] = new File($file);
