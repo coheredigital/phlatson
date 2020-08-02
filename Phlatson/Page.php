@@ -10,6 +10,7 @@ class Page extends DataObject
     protected $parent;
     protected $children;
     protected $parents;
+    protected array $files = [];
 
     public function rootFolder(): string
     {
@@ -104,5 +105,10 @@ class Page extends DataObject
         $name = trim($name, '/');
         $path = "{$this->path}{$name}/";
         return new Page($path, $this->finder);
+    }
+
+    public function files(): array
+    {
+
     }
 }

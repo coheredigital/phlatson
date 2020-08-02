@@ -6,29 +6,26 @@ class File
 {
 
 	protected string $file;
+	protected string $name;
 	protected string $path;
-	protected string $path;
-
+	protected string $url;
 
 	public function __construct(string $file, ?Page $page = null)
 	{
 
-		// TODO : throw PhlatsonException if not valid file
+		// TODO : throw Exception if not valid file
 		$this->file = $file;
-
-
-		// $this->url = $this->api('pages')->url . $page->uri . "/" . rawurlencode($name);
-		$this->file = $page->path . $name;
-
 		$this->filesizeFormatted = $this->formatSizeUnits($this->filesize);
-		$this->name = $name;
+		$this->name = \basename($file);
 		$this->extension = pathinfo($name, PATHINFO_EXTENSION);
 
-		//
+		// page dependant parameters
 		if (isset($page)) {
+			$this->url = $page->url . $page->uri . "/" . rawurlencode($name);
 			$this->page = $page->url;
 			$this->path = $page->path;
 		}
+
 	}
 
 	public function filesize(): int

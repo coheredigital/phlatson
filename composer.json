@@ -29,7 +29,6 @@
     },
     "require": {
         "php": ">=7.4.0",
-        "digitalnature/php-ref": "^1.2",
         "scrivo/highlight.php": "v9.12.0.3",
         "filp/whoops": "^2.3",
         "symfony/var-dumper": "^5.1"

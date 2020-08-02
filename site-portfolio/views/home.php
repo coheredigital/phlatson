@@ -2,6 +2,8 @@
 
 namespace ProcessWire;
 
+dump($page);
+
 $output = $this->render('snippets/site-title');
 
 $output .= $this->render('snippets/intro', [
