@@ -2,12 +2,12 @@
 
 namespace Phlatson;
 
-$folder = new DataFolder('fields', $app);
-$data = $folder->get('title');
+// $folder = new DataFolder('fields', $app);
+// $data = $folder->get('title');
 
-dump($data);
-dump($data->path());
-dump($data->folder());
+// dump($data);
+// dump($data->path());
+// dump($data->folder());
 
 // dump($app);
 // dump($app->config());

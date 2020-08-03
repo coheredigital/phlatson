@@ -40,7 +40,7 @@ class Page extends DataObject
         $url = '/' . str_replace($rootPath, '', $parentPath);
         $url = rtrim($url, '/') . '/';
 
-        $page = new Page($url, $this->app);
+        $page = $this->app->getPage($url);
 
         if ($page->exists()) {
             return $page;

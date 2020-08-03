@@ -34,7 +34,6 @@ abstract class DataObject
     protected string $rootPath;
     protected ?Template $template = null;
 
-
     public function __construct(?string $path = null, App $app)
     {
         if (!isset($path)) {
@@ -79,7 +78,7 @@ abstract class DataObject
 
     public function folder(): string
     {
-        $value = \str_replace(ROOT_PATH, '', $this->path());
+        $value = \str_replace($this->app->path(), '', $this->path());
         $value = \trim($value, '/');
         $value = $value ? "/$value/" : '/';
 
