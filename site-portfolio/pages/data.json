@@ -1,5 +1,10 @@
 {
     "title": "Home",
     "content": "<p>Hello,</p><p>My name is Adam Spruijt, I&nbsp;am a&nbsp;Web Design­er, Developer and&nbsp;the Cre­at­ive Dir­ect­or of <a href='https://www.niagarafallstourism.com/'>Niagara Falls Tour­ism</a>. In my roll I&nbsp;design and devel­op all aspects of the web­site, advert­ising and pub­lic­a­tions (<a href='https://issuu.com/niagarafallstourism/docs/visitor_guide'>issuu</a>) start to fin­ish. I&nbsp;also handle the a&nbsp;large amount of our pho­to­graphy (<a href='https://www.flickr.com/photos/62067598@N08/'>Flickr</a>) and videography.</p><p>I have more than 10 years of exper­i­ence cre­at­ing excep­tion­al products for cli­ents from a&nbsp;range of fields.</p><p>In my freel­ance work I&nbsp;design, devel­op and&nbsp;host all of my cli­ents’ sites. I&nbsp;believe the tight integ­ra­tion of every level of a&nbsp;web­site cre­ates an end product of unmatched qual­ity. See the below links for a&nbsp;few live examples:</p><ul><li><a href='https://www.topofcliftonhill.com/'>Top of Clifton Hill</a>&nbsp;</li><li><a href='https://electgillregion.ca/'>Elect Gil for Region</a></li><li><a href='https://decoderringtheatre.com/'>Decoder Ring Theatre</a></li></ul>",
-    "template": "home"
+    "template": "home",
+    "files" : [
+        {
+            "filename" : "adam-spruijt.jpg"
+        }
+    ]
 }
