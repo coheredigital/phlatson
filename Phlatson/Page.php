@@ -41,7 +41,6 @@ class Page extends DataObject
         $url = rtrim($url, '/') . '/';
 
         $page = new Page($url, $this->finder);
-        // $page->setData($this->finder->getDataFor("Page", $url));
 
         if ($page->exists()) {
             return $page;

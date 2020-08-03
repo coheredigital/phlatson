@@ -26,11 +26,11 @@ class Finder
         return $this;
     }
 
-    public function getDataFile(string $path, string $filename = 'data'): ?JsonObject
+    public function getDataFile(string $path, string $filename = 'data'): ?DataFile
     {
-        $jsonObject = new JsonObject("{$path}{$filename}.json");
+        $DataFile = new DataFile("{$path}{$filename}.json");
 
-        return $jsonObject;
+        return $DataFile;
     }
 
     public function hasDataFor(string $classname, string $uri): bool
@@ -87,7 +87,7 @@ class Finder
         return false;
     }
 
-    public function getDataFor(string $classname, string $uri): ?JsonObject
+    public function getDataFor(string $classname, string $uri): ?DataFile
     {
         $uri = \trim($uri, '/');
 

@@ -4,22 +4,30 @@ namespace Phlatson;
 
 class File
 {
-    protected string $file;
-    protected string $name;
-    protected string $extension;
-    protected string $path;
-    protected string $url;
+    public string $file;
+    public string $path;
+    public string $name;
+    public string $extension;
+    public string $url;
+    protected int $modified;
 
     public function __construct(string $file, ?Page $page = null)
     {
+
+        if (!file_exists($file)) {
+            throw new \Exception("File ($file) does not exist");
+        }
+
         // TODO : throw Exception if not valid file
         $this->file = $file;
+        $this->path = dirname($this->file) . '/';
         $this->name = \basename($file);
         $this->extension = pathinfo($file, PATHINFO_EXTENSION);
+        $this->modified = \filemtime($this->file);
 
         // page dependant parameters
         if (isset($page)) {
-            $this->url = $page->url.$page->uri.'/'.rawurlencode($name);
+            $this->url = $page->url . $page->uri . '/' . rawurlencode($name);
             $this->page = $page->url;
             $this->path = $page->path;
         }
@@ -35,15 +43,15 @@ class File
         $bytes = $this->filesize();
 
         if ($bytes >= 1073741824) {
-            return number_format($bytes / 1073741824, 1).' GiB';
+            return number_format($bytes / 1073741824, 1) . ' GiB';
         } elseif ($bytes >= 104857) {
-            return number_format($bytes / 1048576, 1).' MiB';
+            return number_format($bytes / 1048576, 1) . ' MiB';
         } elseif ($bytes >= 1024) {
-            return number_format($bytes / 1024, 1).' KiB';
+            return number_format($bytes / 1024, 1) . ' KiB';
         } elseif ($bytes > 1) {
-            return $bytes.' bytes';
+            return $bytes . ' bytes';
         } elseif (1 == $bytes) {
-            return $bytes.' byte';
+            return $bytes . ' byte';
         } else {
             return '0 bytes';
         }

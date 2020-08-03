@@ -2,35 +2,23 @@
 
 namespace Phlatson;
 
-class JsonObject
+class DataFile extends File
 {
-    public string $file;
-    public string $filename;
-    public string $path;
+
     protected array $data;
 
     public function __construct(string $file)
     {
-        $this->file = $file;
+        // setup base object
+        parent::__construct($file);
 
-        if (!file_exists($file)) {
-            throw new \Exception("File ($file) does not exist");
-        }
-
-        // setup some core properties
-        $this->filename = basename($this->file);
-        $this->path = dirname($this->file).'/';
-
+        // import data
         $this->data = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
 
         // check that we got data back from json_decode
         if (null === $this->data) {
             throw new \Exception("File ($file) is not a valid JSON file");
         }
-
-        // populate inferred data
-        $this->set('modified', \filemtime($this->file));
-        // $this->set('path', dirname($this->file) . "/");
     }
 
     /**
@@ -65,7 +53,7 @@ class JsonObject
         return $this->data;
     }
 
-    public function merge(JsonObject $json)
+    public function merge(DataFile $json)
     {
         $this->data = array_replace_recursive($this->data, $json->data());
     }

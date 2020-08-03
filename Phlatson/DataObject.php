@@ -25,7 +25,7 @@ namespace Phlatson;
  */
 abstract class DataObject
 {
-    protected JsonObject $data;
+    protected DataFile $data;
     protected array $formattedData = [];
     protected FieldCollection $fields;
     protected string $rootPath;
@@ -44,7 +44,7 @@ abstract class DataObject
         $this->setData($this->finder->getDataFor($this->classname(), $path));
     }
 
-    public function setData(JsonObject $data): self
+    public function setData(DataFile $data): self
     {
         $this->data = $data;
 
