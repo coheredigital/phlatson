@@ -10,13 +10,15 @@ namespace Phlatson;
 class DataFolder
 {
 	public App $app;
+	protected string $path;
 	protected string $uri;
 	protected array $cache = [];
 
-	public function __construct(string $uri, App $app)
+	public function __construct(string $path, string $uri, App $app)
 	{
 
 		$this->app = $app;
+		$this->path = $path;
 		$this->uri = trim($uri,"/") . "/";
 
 		if (!file_exists($this->path())) {

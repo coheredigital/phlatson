@@ -38,16 +38,19 @@ class App
         // add default system path mappings
         foreach ($config->get('storage') as $className => $folder) {
             $folderName = strtolower($className);
-            $folder = $this->sanitizePath(__DIR__ . "/data/{$folderName}s/");
-            $dataFolder = new DataFolder("{$folderName}s", $this);
+            $path = $this->sanitizePath(__DIR__ . "/data/");
+            $folder = $this->sanitizePath($path . "{$folderName}s/");
+            $dataFolder = new DataFolder($path, "{$folderName}s", $this);
             $this->finder->addPathMapping($className, $folder);
             $this->finder->addDataFolder($className, $dataFolder);
         }
 
         // add path mappings from config
-        foreach ($config->get('storage') as $className => $folder) {
-            $folder = $this->sanitizePath($this->path . $folder);
+        foreach ($config->get('storage') as $className => $folderName) {
+            $folder = $this->sanitizePath($this->path . $folderName);
+            $dataFolder = new DataFolder($this->path, $folderName, $this);
             $this->finder->addPathMapping($className, $folder);
+            $this->finder->addDataFolder($className, $dataFolder);
         }
 
         // add domains
