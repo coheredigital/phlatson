@@ -10,8 +10,9 @@ class File
     public string $extension;
     public string $url;
     protected int $modified;
+    protected DataFolder $folder;
 
-    public function __construct(string $file, ?Page $page = null)
+    public function __construct(string $file)
     {
 
         if (!file_exists($file)) {
@@ -25,17 +26,18 @@ class File
         $this->extension = pathinfo($file, PATHINFO_EXTENSION);
         $this->modified = \filemtime($this->file);
 
-        // page dependant parameters
-        if (isset($page)) {
-            $this->url = $page->url . $page->uri . '/' . rawurlencode($name);
-            $this->page = $page->url;
-        }
     }
 
     public function path(): string
     {
         return $this->path;
     }
+
+    public function folder(): string
+    {
+        return $this->path;
+    }
+
 
     public function filesize(): int
     {
@@ -64,4 +66,6 @@ class File
     public function rename(string $name): void
     {
     }
+
+
 }

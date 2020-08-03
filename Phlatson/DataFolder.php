@@ -52,7 +52,7 @@ class DataFolder
 			}
 
 			// create the dataFile and cache
-			$dataFile = new DataFile($file);
+			$dataFile = new DataFile($file, $this);
 			$this->cache[$uri] = $dataFile;
 
 			return $dataFile;

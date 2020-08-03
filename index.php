@@ -6,6 +6,7 @@ namespace Phlatson;
 
 // define a few system constants
 const PHLATSON = 0001;
+define("ROOT_PATH", str_replace(DIRECTORY_SEPARATOR, "/", __DIR__ . "/"));
 
 // use composer autoloader
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -21,6 +22,7 @@ try {
     $phlatson->registerApp("site-portfolio");
 
     $phlatson->execute();
+
 } catch (\Exception $exception) {
     echo $exception;
 }

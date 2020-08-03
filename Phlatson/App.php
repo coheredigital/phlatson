@@ -12,7 +12,7 @@ class App
     public string $name;
     public array $domains = [];
 
-    protected string $rootPath;
+    protected string $root;
     // protected string $siteFolder;
 
     // core api classes
@@ -23,23 +23,39 @@ class App
     protected User $user;
 
     public function __construct(
-        string $rootPath,
+        string $root,
         Request $request,
         Config $config,
         Finder $finder
     ) {
 
         // setup default config and import site config
-        $this->name = basename($rootPath);
-        $this->rootPath = $rootPath;
+        $this->name = basename($root);
+        $this->root = $root;
         $this->request = $request;
         $this->finder = $finder;
+        $this->config = $config;
 
         // add domains
         foreach ($config->get('domains') as $domain) {
             $this->addDomain($domain);
         }
     }
+
+    // GETTERS
+    public function name(): string
+    {
+		return $this->name;
+    }
+    public function root(): string
+    {
+		return $this->root;
+    }
+    public function domains(): array
+    {
+		return $this->domains;
+    }
+
 
     public function addDomain(string $domain)
     {

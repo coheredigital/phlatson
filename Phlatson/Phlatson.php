@@ -24,8 +24,8 @@ class Phlatson
     public function registerApp(string $name)
     {
         // create the config
-        $config = new Config($this->rootPath . '/Phlatson/data/config.json');
-        $config->merge(new Config($this->rootPath . "/" . $name . '/config/data.json'));
+        $config = new Config(__DIR__ . '/data/config.json');
+        $config->merge(new Config($this->rootPath . "/" . $name . '/config.json'));
 
         $finder = new Finder($this->rootPath);
 

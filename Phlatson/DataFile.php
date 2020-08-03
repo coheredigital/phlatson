@@ -7,7 +7,7 @@ class DataFile extends File
 
     protected array $data;
 
-    public function __construct(string $file)
+    public function __construct(string $file, ?DataFolder $folder = null)
     {
         // setup base object
         parent::__construct($file);
@@ -19,6 +19,11 @@ class DataFile extends File
         if (null === $this->data) {
             throw new \Exception("File ($file) is not a valid JSON file");
         }
+
+        if (isset($folder)) {
+            $this->folder = $folder;
+        }
+
     }
 
     /**
