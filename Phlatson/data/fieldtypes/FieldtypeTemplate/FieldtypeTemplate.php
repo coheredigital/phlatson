@@ -15,7 +15,7 @@ class FieldtypeTemplate
 
 	public function get()
 	{
-		return new Template($this->value);
+		return $this->app->getTemplate($this->value);
 	}
 
 

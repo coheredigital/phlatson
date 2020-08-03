@@ -144,7 +144,6 @@ class Finder
             $object->setData($data);
         }
 
-
         return $object;
     }
 
