@@ -109,7 +109,7 @@ class Page extends DataObject
         $url = trim($this->url(), '/');
         $path = $url . $name;
 
-        return new Page($path, $this->app);
+        return $this->app->getPage($path);
     }
 
     public function files(): array
