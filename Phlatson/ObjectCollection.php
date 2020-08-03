@@ -5,16 +5,16 @@ namespace Phlatson;
 class ObjectCollection implements \Iterator, \Countable
 {
     public $iterator;
-    protected Finder $finder;
+    protected App $app;
     protected int $currentPage = 1;
     protected int $limit = 0;
     protected int $position = 0;
     protected array $files = [];
     protected array $collection = [];
 
-    public function __construct(Finder $finder)
+    public function __construct(App $app)
     {
-        $this->finder = $finder;
+        $this->app = $app;
     }
 
     public function append(DataObject $item): self
@@ -102,7 +102,7 @@ class ObjectCollection implements \Iterator, \Countable
     {
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
-            $item = $this->finder->get('Page', $item);
+            $item = $this->app->getPage($item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }

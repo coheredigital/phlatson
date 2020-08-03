@@ -140,10 +140,17 @@ class Finder
 
         $object = new $classname($path, $this->app);
 
+        if ($this->hasMapping($object->classname()) && $data = $this->getDataFor($object->classname(), $path)) {
+            $object->setData($data);
+        }
 
-        $object->setData($this->getDataFor($object->classname(), $path));
 
         return $object;
+    }
+
+    public function hasMapping(string $name): bool
+    {
+		return isset($this->pathMappings[$name]);
     }
 
     public function getPaths(string $classname): array

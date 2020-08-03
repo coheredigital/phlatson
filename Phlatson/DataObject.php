@@ -159,6 +159,10 @@ abstract class DataObject
     {
         $value = null;
 
+        if (!isset($this->data)) {
+			return $value;
+        }
+
         $value = $this->data->get($key);
 
         if ($this->data->get($key)) {

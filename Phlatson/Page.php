@@ -40,7 +40,7 @@ class Page extends DataObject
         $url = '/' . str_replace($rootPath, '', $parentPath);
         $url = rtrim($url, '/') . '/';
 
-        $page = new Page($url, $this->finder);
+        $page = new Page($url, $this->app);
 
         if ($page->exists()) {
             return $page;
@@ -57,7 +57,7 @@ class Page extends DataObject
         }
 
         // create empty collection
-        $this->parents = new ObjectCollection($this->finder);
+        $this->parents = new ObjectCollection($this->app);
 
         $current = $this;
 
@@ -83,7 +83,7 @@ class Page extends DataObject
         }
 
         // create empty collection
-        $children = new ObjectCollection($this->finder);
+        $children = new ObjectCollection($this->app);
 
         $folders = $this->subfolders();
         foreach ($folders as $folder) {
@@ -109,7 +109,7 @@ class Page extends DataObject
         $url = trim($this->url(), '/');
         $path = $url . $name;
 
-        return new Page($path, $this->finder);
+        return new Page($path, $this->app);
     }
 
     public function files(): array
