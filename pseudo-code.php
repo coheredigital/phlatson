@@ -92,34 +92,17 @@ $phlatson->site('site-name')->getPage("/");
  * - Page (front facing viewable DataObject)
  * - Template (defines the field used, the data type returned)
  * - Field (defines the fieldtype, how data is stored)
- *
+ * - Fieldtype
+ * - User
  */
 
-// another sharing core
-$app2 = new App("C:/full/path/to/site-name");
-// manually add data sources? optional, config used otherwise
-$app2->addDataLocation("Page","/site-other/pages/");
-$app2->addDataLocation(
-	"Fieldtypes",
-	"/site/fieldtypes/"
-);
-// shared with $app
-$app2 = $phlatson->new()->addDataLocation("Page","/site-other/pages/"); // alternate syntax
 
-$phlatson = new Phlatson("/site-docs"); // just creates Phlatson, an loads config so that can respond to domain to full init
-$phlatson->execute($request);
 
-/**
- * App DataObject
- * think of the $site or $app DataObject as the glue
- * this is what the index file might look like, the index.php file will be user owned
- */
-$app = new App("C:\Users\Adam\Websites\phlatson\site"); // (alternate) point at folder, check for config
-$app->domains([
-    'domain.com',
-    'www.domain.com'
-]);
+ class DataManager {
 
-$app->setDataLocation("/site"); // this assumes default folders. or they are set in config
 
-$phlatson->importApp($app); // stored by domain?
+
+
+
+
+ }

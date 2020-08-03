@@ -40,7 +40,7 @@ abstract class DataObject
 
         $this->finder = $finder;
 
-        $path = '/'.trim($path, '/').'/';
+        $path = '/' . trim($path, '/') . '/';
         $this->setData($this->finder->getDataFor($this->classname(), $path));
     }
 
@@ -90,7 +90,7 @@ abstract class DataObject
 
     public function rootPath(): string
     {
-        return rtrim(ROOT_PATH.'site/'.$this::BASE_FOLDER, '/').'/';
+        return rtrim(ROOT_PATH . 'site/' . $this::BASE_FOLDER, '/') . '/';
     }
 
     protected function rootUrl(): string
@@ -114,7 +114,7 @@ abstract class DataObject
             throw new \Exception("Cannot get path of $file");
         }
 
-        $value = dirname($file).'/';
+        $value = dirname($file) . '/';
 
         return $value;
     }
