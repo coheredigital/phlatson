@@ -25,16 +25,26 @@ class App
     public function __construct(
         string $path,
         Request $request,
-        Config $config,
-        Finder $finder
+        Config $config
     ) {
 
         // setup default config and import site config
         $this->name = basename($path);
         $this->path = $this->sanitizePath($path);
         $this->request = $request;
-        $this->finder = $finder;
+        $this->finder = new Finder($this);
         $this->config = $config;
+
+        // add default system path mappings
+        foreach ($config->get('storage') as $className => $folder) {
+            $folder = strtolower($className);
+            $this->finder->addPathMapping($className, __DIR__ . "/data/{$folder}s/");
+        }
+
+        // add path mappings from config
+        foreach ($config->get('storage') as $className => $folder) {
+            $this->finder->addPathMapping($className, $this->path . $folder);
+        }
 
         // add domains
         foreach ($config->get('domains') as $domain) {
@@ -81,15 +91,30 @@ class App
 		return $path;
 	}
 
+
+    public function getPage(string $uri): Page
+    {
+        return $this->finder->get('Page', $uri);
+    }
+    public function getTemplate(string $uri): Template
+    {
+        return $this->finder->get('Template', $uri);
+    }
+
+    public function getView(string $uri): View
+    {
+        return $this->finder->getView($uri);
+    }
+
     public function execute()
     {
         // determine the requested page
-        $url = $this->request->url;
-        $page = $this->finder->get('Page', $url);
+        $page = $this->getPage($this->request->url);
         if (!$page) {
             // TODO: improved 404 handle (throw exception)
             $page = $this->finder->get('Page', '/404');
         }
+        $this->page = $page;
 
         // get and render the view with API variables as default
         $view = $page->template()->view([

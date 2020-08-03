@@ -27,25 +27,13 @@ class Phlatson
         $config = new Config(__DIR__ . '/data/config.json');
         $config->merge(new Config($this->rootPath . "/" . $name . '/config.json'));
 
-        $finder = new Finder($this->rootPath);
-
-        // add default system path mappings
-        foreach ($config->get('storage') as $className => $folder) {
-            $folder = strtolower($className);
-            $finder->addPathMapping($className, $this->rootPath . "/Phlatson/data/{$folder}s/");
-        }
-
-        // add path mappings from config
-        foreach ($config->get('storage') as $className => $folder) {
-            $finder->addPathMapping($className, $this->rootPath . "/" . $name . "/" . $folder);
-        }
 
         $app = new App(
             $this->rootPath . '/' . $name,
             $this->request,
-            $config,
-            $finder
+            $config
         );
+
 
         foreach ($app->domains as $domain) {
             $this->apps[$domain] = $app;
@@ -53,19 +41,13 @@ class Phlatson
     }
 
 
-    public function app($domain): ?App
+    public function app(): ?App
     {
-        if (!isset($this->apps[$domain])) {
+        if (!isset($this->apps[$this->request->domain])) {
             return null;
         }
 
-        return $this->apps[$domain];
+        return $this->apps[$this->request->domain];
     }
 
-    public function execute()
-    {
-        if ($app = $this->app($this->request->domain)) {
-            $app->execute($this->request);
-        }
-    }
 }

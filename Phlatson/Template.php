@@ -28,7 +28,7 @@ class Template extends DataObject
     public function view(?array $data = []): View
     {
         // get view file of the same name
-        $view = $this->finder->getView($this->name());
+        $view = $this->app->getView($this->name());
         if (isset($data)) {
             $view->data($data);
         }
@@ -38,7 +38,7 @@ class Template extends DataObject
 
     public function template(): Template
     {
-        $template = $this->finder->get('Template', 'template');
+        $template = $this->app->getTemplate('template');
 
         return $template;
     }

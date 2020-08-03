@@ -8,14 +8,14 @@ class Finder
     protected string $rootPath;
     protected $pathMappings = [];
 
-    public function __construct(string $rootPath)
+    public function __construct(App $app)
     {
-        $this->rootPath = $rootPath;
+        $this->app = $app;
     }
 
     public function getRootPath(): string
     {
-        return $this->rootPath;
+        return $this->app->path();
     }
 
     final public function addPathMapping(string $classname, string $path): self
@@ -138,7 +138,10 @@ class Finder
             $classname = "\Phlatson\\$classname";
         }
 
-        $object = new $classname($path, $this);
+        $object = new $classname($path, $this->app);
+
+
+        $object->setData($this->getDataFor($object->classname(), $path));
 
         return $object;
     }

@@ -21,7 +21,16 @@ try {
     $phlatson->registerApp("site");
     $phlatson->registerApp("site-portfolio");
 
-    $phlatson->execute();
+    // get the current app
+	$app = $phlatson->app();
+
+
+
+    if (!isset($app)) {
+        throw new \Exception("No App found.");
+    }
+
+    $app->execute();
 
 } catch (\Exception $exception) {
     echo $exception;

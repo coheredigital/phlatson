@@ -25,23 +25,26 @@ namespace Phlatson;
  */
 abstract class DataObject
 {
+
+
+    protected App $app;
     protected DataFile $data;
     protected array $formattedData = [];
     protected FieldCollection $fields;
     protected string $rootPath;
     protected ?Template $template = null;
-    protected Finder $finder;
 
-    public function __construct(?string $path = null, Finder $finder)
+
+    public function __construct(?string $path = null, App $app)
     {
         if (!isset($path)) {
             return;
         }
 
-        $this->finder = $finder;
+        $this->app = $app;
 
         $path = '/' . trim($path, '/') . '/';
-        $this->setData($this->finder->getDataFor($this->classname(), $path));
+
     }
 
     public function setData(DataFile $data): self
@@ -54,7 +57,7 @@ abstract class DataObject
     public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
-            $this->template = $this->finder->get('Template', $name);
+            $this->template = $this->app->getTemplate($name);
             $this->template->setOwner($this);
         }
 
@@ -90,7 +93,7 @@ abstract class DataObject
 
     public function rootPath(): string
     {
-        return rtrim( $this->data->folder->path(), '/') . '/';
+        return rtrim( $this->app->path(), '/') . '/';
     }
 
     protected function rootUrl(): string
