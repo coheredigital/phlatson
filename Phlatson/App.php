@@ -37,9 +37,11 @@ class App
 
         // add default system path mappings
         foreach ($config->get('storage') as $className => $folder) {
-            $folder = strtolower($className);
-			$folder = $this->sanitizePath(__DIR__ . "/data/{$folder}s/");
+            $folderName = strtolower($className);
+            $folder = $this->sanitizePath(__DIR__ . "/data/{$folderName}s/");
+            $dataFolder = new DataFolder("{$folderName}s", $this);
             $this->finder->addPathMapping($className, $folder);
+            $this->finder->addDataFolder($className, $dataFolder);
         }
 
         // add path mappings from config

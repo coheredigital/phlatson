@@ -20,7 +20,7 @@ class DataFolder
 		$this->uri = trim($uri,"/") . "/";
 
 		if (!file_exists($this->path())) {
-			throw new \Exception('Invalid file');
+			throw new \Exception('Invalid file: ' . $this->path());
 		}
 
 	}

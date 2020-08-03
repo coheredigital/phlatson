@@ -78,6 +78,7 @@ abstract class DataObject
 
     public function folder(): string
     {
+
         $value = \str_replace($this->app->path(), '', $this->path());
         $value = \trim($value, '/');
         $value = $value ? "/$value/" : '/';
