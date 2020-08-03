@@ -2,9 +2,7 @@
 
 namespace Phlatson;
 
-$folder = new DataFolder();
-$folder->addPath('C:/Users/Adam/Websites/phlatson/Phlatson/data/fields');
-$folder->addPath('C:/Users/Adam/Websites/phlatson/site/fields');
+$folder = new DataFolder('fields', $app);
 
 $data = $folder->get('title');
 $data = $folder->get('markdown');
@@ -12,10 +10,12 @@ $data = $folder->get('content');
 
 
 dump($app);
+dump($app->config());
+dump($app->config()->path());
 dump($folder);
 dump($folder->get('title'));
-dump($folder->get('title')->path());
-dump($folder->get('title')->folder());
+// dump($folder->get('title')->path());
+// dump($folder->get('title')->folder());
 
 // dump($page);
 // dump($page->template());

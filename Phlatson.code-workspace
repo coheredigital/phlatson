@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"search.exclude": {
-			"/**/*.json": true
+			"**/pseudo-code.php": true,
+			"**/*.json": true
 		},
 		"search.quickOpen.includeHistory": false,
 		"cSpell.words": [

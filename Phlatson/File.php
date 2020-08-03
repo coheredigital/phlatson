@@ -4,6 +4,7 @@ namespace Phlatson;
 
 class File
 {
+    protected ?App $app;
     public string $file;
     public string $path;
     public string $name;
@@ -12,7 +13,7 @@ class File
     protected int $modified;
     protected DataFolder $folder;
 
-    public function __construct(string $file)
+    public function __construct(string $file, ?App $app = null)
     {
 
         if (!file_exists($file)) {
@@ -20,6 +21,7 @@ class File
         }
 
         // TODO : throw Exception if not valid file
+        $this->app = $app;
         $this->file = $file;
         $this->path = dirname($this->file) . '/';
         $this->name = \basename($file);

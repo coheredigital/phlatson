@@ -9,27 +9,23 @@ namespace Phlatson;
  */
 class DataFolder
 {
-	protected $paths = [];
-	protected $cache = [];
+	protected App $app;
+	protected string $path;
+	protected array $cache = [];
 
-	public function addPath(string $path)
+	public function __construct(string $uri, App $app)
 	{
-		$path = $this->sanitizePath($path);
 
-		if (!file_exists($path)) {
+		$this->app = $app;
+		$this->path = $app->path() . trim($uri,"/") . "/";
+
+		if (!file_exists($this->path)) {
 			throw new \Exception('Invalid file');
 		}
 
-		$this->paths[$path] = null;
 	}
 
-	protected function sanitizePath(string $path): string
-	{
-		$path = \realpath($path);
-		$path = str_replace(DIRECTORY_SEPARATOR, '/', $path . '/');
-		$path = rtrim($path, '/') . '/';
-		return $path;
-	}
+
 
 	public function get(string $uri): ?DataFile
 	{
@@ -43,25 +39,20 @@ class DataFolder
 		}
 
 		// find in filesystem
-		foreach ($this->paths() as $path => $value) {
-			$file = $path . $uri . '/data.json';
 
-			if (!\file_exists($file)) {
-				$this->cache[$uri] = null;
-				continue;
-			}
-
-			// create the dataFile and cache
-			$dataFile = new DataFile($file, $this);
-			$this->cache[$uri] = $dataFile;
-
-			return $dataFile;
+		$file = $this->path . $uri . '/data.json';
+		if (!\file_exists($file)) {
+			$this->cache[$uri] = null;
+			return null;
 		}
+
+		// create the dataFile and cache
+		$dataFile = new DataFile($file, $this);
+		$this->cache[$uri] = $dataFile;
+
+		return $dataFile;
+
 	}
 
-    public function paths(): array
-    {
-        return array_reverse($this->paths);
-    }
 
 }
