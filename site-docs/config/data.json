@@ -4,11 +4,11 @@
         "phlatson-docs.localhost"
     ],
     "storage": {
-        "Page": "/storage/pages",
-        "Template": "/storage/templates",
-        "Field": "/storage/fields",
-        "User": "/storage/user",
-        "View": "/theme/views",
-        "Fieldtype": "/theme/fieldtypes"
+        "Page": "storage/pages",
+        "Template": "storage/templates",
+        "Field": "storage/fields",
+        "User": "storage/user",
+        "View": "theme/views",
+        "Fieldtype": "site:fieldtypes"
     }
 }
