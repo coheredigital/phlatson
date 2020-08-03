@@ -41,7 +41,7 @@ class Phlatson
         }
 
         $app = new App(
-            $this->rootPath . $name,
+            $this->rootPath . '/' . $name,
             $this->request,
             $config,
             $finder
