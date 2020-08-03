@@ -7,7 +7,7 @@ class Field extends DataObject
     public function type(): Fieldtype
     {
         $name = $this->data->get('fieldtype');
-        $fieldtype = $this->finder->get('Fieldtype', $name);
+        $fieldtype = $this->app->getFieldtype($name);
         // TODO: reevaluate return the default base Fieldtype
         if (!$fieldtype) {
             $fieldtype = new Fieldtype();

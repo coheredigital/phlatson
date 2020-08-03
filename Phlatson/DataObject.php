@@ -162,7 +162,7 @@ abstract class DataObject
         $value = $this->data->get($key);
 
         if ($this->data->get($key)) {
-            $field = $this->finder->get('Field', $key);
+            $field = $this->app->getField($key);
             $fieldtype = $field->type();
             $value = $fieldtype->decode($value);
         }

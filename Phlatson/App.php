@@ -100,7 +100,14 @@ class App
     {
         return $this->finder->get('Template', $uri);
     }
-
+    public function getField(string $uri): Field
+    {
+        return $this->finder->get('Field', $uri);
+    }
+    public function getFieldtype(string $uri): Fieldtype
+    {
+        return $this->finder->get('Fieldtype', $uri);
+    }
     public function getView(string $uri): View
     {
         return $this->finder->getView($uri);
