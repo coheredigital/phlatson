@@ -25,7 +25,7 @@ class Finder
             throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
         }
 
-        $path = trim($path, '/');
+        $folder = trim($path, '/');
 
         // normalize the path
         if ($path && !file_exists($path)) {

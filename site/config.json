@@ -1,0 +1,11 @@
+{
+    "domains" : [
+        "phlatson.com",
+        "www.phlatson.com",
+        "phlatson.localhost"
+    ],
+    "debug": false,
+    "session": {
+        "expire": 3600
+    }
+}

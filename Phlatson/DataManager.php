@@ -4,33 +4,36 @@ use Phlatson\DataFile;
 
 class DataManager
 {
-	/**
-	 * Manages finding, updating, moving, deleting of DataFile(s)
-	 */
-	protected string $rootPath;
-	protected $cache = [];
+	// /**
+	//  * Manages finding, updating, moving, deleting of DataFile(s)
+	//  */
+	// protected string $rootPath;
+	// protected $cache = [];
 
-	public function __construct(string $path)
-	{
-		// setup default config and import site config
-		$this->rootPath = \rtrim($path, '/');
-	}
+	// public function __construct(string $path)
+	// {
+	// 	// setup default config and import site config
+	// 	$this->rootPath = \rtrim($path, '/');
+	// }
 
-	public function get(string $path): ?DataFile
-	{
 
-		$path = trim($path, "/");
+	final public function addFolder(string $classname, DataFolder $folder): self
+    {
+        // validate class
+        if (!class_exists("\Phlatson\\{$classname}")) {
+            throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
+        }
 
-		if (isset($this->cache[$path])) {
-			return $this->cache[$path];
-		}
+        $folder = trim($path, '/');
 
-		$file = $this->rootPath . '/' . $path;
+        // normalize the path
+        if ($path && !file_exists($path)) {
+            throw new \Exception("Path ({$path}) does not exist, cannot be used as site data");
+        }
 
-		if (!file_exists($file)) {
-			return null;
-		}
+        $this->pathMappings[$classname][] = $path;
 
-		$dataFile = new DataFile($file);
-	}
+        return $this;
+    }
+
 }
