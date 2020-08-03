@@ -12,7 +12,7 @@ class App
     public string $name;
     public array $domains = [];
 
-    protected string $path;
+    protected string $rootPath;
     // protected string $siteFolder;
 
     // core api classes
@@ -22,36 +22,21 @@ class App
     protected Page $page;
     protected User $user;
 
-    public function __construct(string $path)
-    {
-        $this->request = new Request();
+    public function __construct(
+        string $rootPath,
+        Request $request,
+        Config $config,
+        Finder $finder
+    ) {
 
         // setup default config and import site config
-        $this->name = basename($path);
-        $this->path = \rtrim($path, '/');
-        $this->config = new Config(ROOT_PATH.'Phlatson/data/config/data.json');
-        $siteConfig = new Config($path.'/config/data.json');
-        $this->config->merge($siteConfig);
-
-        // create finder (I know, yuck)
-        $this->finder = new Finder();
-
-        // PATH MAPPINGS ========================================
-        // add system path mappings
-        foreach ($this->config->get('storage') as $className => $folder) {
-            // TODO: create a better method of ensuring folder names are good
-            // possible add an array that define which class names are default and their locations
-            $name = strtolower($className);
-            $this->finder->addPathMapping($className, ROOT_PATH."Phlatson/data/{$name}s/"); // system folder
-        }
-
-        // add path mappings from config
-        foreach ($this->config->get('storage') as $className => $folder) {
-            $this->finder->addPathMapping($className, $this->path.$folder);
-        }
+        $this->name = basename($rootPath);
+        $this->rootPath = $rootPath;
+        $this->request = $request;
+        $this->finder = $finder;
 
         // add domains
-        foreach ($this->config->get('domains') as $domain) {
+        foreach ($config->get('domains') as $domain) {
             $this->addDomain($domain);
         }
     }
@@ -69,10 +54,10 @@ class App
         $this->user = $user;
     }
 
-    public function execute(Request $request)
+    public function execute()
     {
         // determine the requested page
-        $url = $request->url;
+        $url = $this->request->url;
         $page = $this->finder->get('Page', $url);
         if (!$page) {
             // TODO: improved 404 handle (throw exception)
@@ -84,7 +69,7 @@ class App
             'app' => $this,
             'finder' => $this->finder,
             'page' => $page,
-            'request' => $request,
+            'request' => $this->request,
         ]);
 
         if ($view instanceof View) {

@@ -29,8 +29,12 @@ class File
         if (isset($page)) {
             $this->url = $page->url . $page->uri . '/' . rawurlencode($name);
             $this->page = $page->url;
-            $this->path = $page->path;
         }
+    }
+
+    public function path(): string
+    {
+        return $this->path;
     }
 
     public function filesize(): int

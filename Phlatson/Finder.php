@@ -4,8 +4,19 @@ namespace Phlatson;
 
 class Finder
 {
-    // protected $root;
+
+    protected string $rootPath;
     protected $pathMappings = [];
+
+    public function __construct(string $rootPath)
+    {
+        $this->rootPath = $rootPath;
+    }
+
+    public function getRootPath(): string
+    {
+        return $this->rootPath;
+    }
 
     final public function addPathMapping(string $classname, string $path): self
     {
@@ -28,9 +39,9 @@ class Finder
 
     public function getDataFile(string $path, string $filename = 'data'): ?DataFile
     {
-        $DataFile = new DataFile("{$path}{$filename}.json");
+        $dataFile = new DataFile("{$path}{$filename}.json");
 
-        return $DataFile;
+        return $dataFile;
     }
 
     public function hasDataFor(string $classname, string $uri): bool

@@ -8,15 +8,50 @@ namespace Phlatson;
  */
 class Phlatson
 {
+
+    protected string $rootPath;
+    protected Request $request;
     protected array $apps = [];
 
-    public function importApp(App $app)
+    public function __construct(string $path, Request $request)
     {
-        // TODO: lazy method, needs improvement
+        // setup default config and import site config
+        $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+        $this->rootPath = \rtrim($path, '/');
+        $this->request = $request;
+    }
+
+    public function registerApp(string $name)
+    {
+        // create the config
+        $config = new Config($this->rootPath . '/Phlatson/data/config/data.json');
+        $config->merge(new Config($this->rootPath . "/" . $name . '/config/data.json'));
+
+        $finder = new Finder($this->rootPath);
+
+        // add default system path mappings
+        foreach ($config->get('storage') as $className => $folder) {
+            $folder = strtolower($className);
+            $finder->addPathMapping($className, $this->rootPath . "/Phlatson/data/{$folder}s/");
+        }
+
+        // add path mappings from config
+        foreach ($config->get('storage') as $className => $folder) {
+            $finder->addPathMapping($className, $this->rootPath . "/" . $name . "/" . $folder);
+        }
+
+        $app = new App(
+            $this->rootPath . $name,
+            $this->request,
+            $config,
+            $finder
+        );
+
         foreach ($app->domains as $domain) {
             $this->apps[$domain] = $app;
         }
     }
+
 
     public function app($domain): ?App
     {
@@ -27,10 +62,10 @@ class Phlatson
         return $this->apps[$domain];
     }
 
-    public function execute(Request $request)
+    public function execute()
     {
-        if ($app = $this->app($request->domain)) {
-            $app->execute($request);
+        if ($app = $this->app($this->request->domain)) {
+            $app->execute($this->request);
         }
     }
 }
