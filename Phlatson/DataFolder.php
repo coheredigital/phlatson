@@ -9,7 +9,7 @@ namespace Phlatson;
  */
 class DataFolder
 {
-	protected App $app;
+	public App $app;
 	protected string $uri;
 	protected array $cache = [];
 
@@ -23,6 +23,11 @@ class DataFolder
 			throw new \Exception('Invalid file');
 		}
 
+	}
+
+	public function app(): App
+    {
+		return $this->app;
 	}
 
 	public function path(): string

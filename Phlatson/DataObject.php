@@ -77,7 +77,7 @@ abstract class DataObject
     public function folder(): string
     {
         $value = \str_replace(ROOT_PATH, '', $this->path());
-        $value = trim($value, '/');
+        $value = \trim($value, '/');
         $value = $value ? "/$value/" : '/';
 
         return $value;
@@ -90,7 +90,7 @@ abstract class DataObject
 
     public function rootPath(): string
     {
-        return rtrim(ROOT_PATH . 'site/' . $this::BASE_FOLDER, '/') . '/';
+        return rtrim( $this->data->folder->path(), '/') . '/';
     }
 
     protected function rootUrl(): string

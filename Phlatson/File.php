@@ -13,7 +13,7 @@ class File
     public string $url;
     public string $uri;
     protected int $modified;
-    protected ?DataFolder $folder = null;
+    public ?DataFolder $folder = null;
 
     public function __construct(string $file, ?DataFolder $folder = null)
     {
