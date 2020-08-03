@@ -10,7 +10,7 @@ class DataFile extends File
     public function __construct(string $file, ?DataFolder $folder = null)
     {
         // setup base object
-        parent::__construct($file);
+        parent::__construct($file, $folder);
 
         // import data
         $this->data = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
@@ -18,10 +18,6 @@ class DataFile extends File
         // check that we got data back from json_decode
         if (null === $this->data) {
             throw new \Exception("File ($file) is not a valid JSON file");
-        }
-
-        if (isset($folder)) {
-            $this->folder = $folder;
         }
 
     }

@@ -10,22 +10,25 @@ namespace Phlatson;
 class DataFolder
 {
 	protected App $app;
-	protected string $path;
+	protected string $uri;
 	protected array $cache = [];
 
 	public function __construct(string $uri, App $app)
 	{
 
 		$this->app = $app;
-		$this->path = $app->path() . trim($uri,"/") . "/";
+		$this->uri = trim($uri,"/") . "/";
 
-		if (!file_exists($this->path)) {
+		if (!file_exists($this->path())) {
 			throw new \Exception('Invalid file');
 		}
 
 	}
 
-
+	public function path(): string
+    {
+		return $this->app->path() . $this->uri;
+    }
 
 	public function get(string $uri): ?DataFile
 	{
@@ -40,7 +43,7 @@ class DataFolder
 
 		// find in filesystem
 
-		$file = $this->path . $uri . '/data.json';
+		$file = $this->path() . $uri . '/data.json';
 		if (!\file_exists($file)) {
 			$this->cache[$uri] = null;
 			return null;

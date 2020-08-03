@@ -106,7 +106,8 @@ class Page extends DataObject
     public function child(string $name): Page
     {
         $name = trim($name, '/');
-        $path = $this->url() . $name;
+        $url = trim($this->url(), '/');
+        $path = $url . $name;
 
         return new Page($path, $this->finder);
     }

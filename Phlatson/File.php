@@ -4,42 +4,49 @@ namespace Phlatson;
 
 class File
 {
-    protected ?App $app;
+
     public string $file;
+    public string $filename;
     public string $path;
     public string $name;
     public string $extension;
     public string $url;
+    public string $uri;
     protected int $modified;
-    protected DataFolder $folder;
+    protected ?DataFolder $folder = null;
 
-    public function __construct(string $file, ?App $app = null)
+    public function __construct(string $file, ?DataFolder $folder = null)
     {
 
-        if (!file_exists($file)) {
+        if (!\file_exists($file)) {
             throw new \Exception("File ($file) does not exist");
         }
 
-        // TODO : throw Exception if not valid file
-        $this->app = $app;
+		$pathinfo = \pathinfo($file);
+
         $this->file = $file;
-        $this->path = dirname($this->file) . '/';
-        $this->name = \basename($file);
-        $this->extension = pathinfo($file, PATHINFO_EXTENSION);
+        $this->filename = $pathinfo['filename'];
+        $this->path = $pathinfo['dirname'] . '/';
+        $this->name = $pathinfo['basename'];
+        $this->extension = $pathinfo['extension'];
         $this->modified = \filemtime($this->file);
+
+        if (isset($folder)) {
+            $this->folder = $folder;
+        }
+
 
     }
 
     public function path(): string
     {
-        return $this->path;
+        return  $this->path;
     }
 
     public function folder(): string
     {
-        return $this->path;
+        return \str_replace($this->folder->path(), "/", $this->path());
     }
-
 
     public function filesize(): int
     {
