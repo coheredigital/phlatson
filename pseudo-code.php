@@ -68,7 +68,6 @@ $phlatson->site('site-name')->getPage('/');
  * - Fieldtype
  * - User
  */
-
  class DataManager
  {
  	protected $paths = [
@@ -86,7 +85,9 @@ $phlatson->site('site-name')->getPage('/');
  	];
  }
 
- $userDataManager->get('adam');
+$data = ['item'];
+
+$userDataManager->get('adam');
 //  $dataManager->get("User::adam");
 
 $dataFolder->get('adam');
