@@ -79,7 +79,7 @@ class App
 		return $this->config;
 	}
 
-	public function addDomain(string $domain)
+	public function addDomain(string $domain): void
 	{
 		if (in_array($domain, $this->domains)) {
 			return;
@@ -87,7 +87,7 @@ class App
 		$this->domains[] = $domain;
 	}
 
-	public function setUser(User $user)
+	public function setUser(User $user): void
 	{
 		$this->user = $user;
 	}
