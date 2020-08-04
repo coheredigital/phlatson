@@ -31,7 +31,7 @@ class App
 		$this->name = basename($path);
 		$this->path = $this->sanitizePath($path);
 		$this->request = $request;
-		$this->finder = new Finder($this);
+		$this->finder = new Finder($this, $this->path);
 		$this->config = $config;
 
 		// add default system path mappings
@@ -40,7 +40,7 @@ class App
 			$path = $this->sanitizePath(__DIR__ . '/data/');
 			$folder = $this->sanitizePath($path . "{$folderName}s/");
 			$dataFolder = new DataFolder($path, "{$folderName}s", $this);
-			$this->finder->addPathMapping($className, $folder);
+			$this->finder->map($className, $folder);
 			$this->finder->addDataFolder($className, $dataFolder);
 		}
 
@@ -48,7 +48,7 @@ class App
 		foreach ($config->get('storage') as $className => $folderName) {
 			$folder = $this->sanitizePath($this->path . $folderName);
 			$dataFolder = new DataFolder($this->path, $folderName, $this);
-			$this->finder->addPathMapping($className, $folder);
+			$this->finder->map($className, $folder);
 			$this->finder->addDataFolder($className, $dataFolder);
 		}
 

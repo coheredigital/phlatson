@@ -19,6 +19,14 @@
 			"titleBar.inactiveBackground": "#4f429e99",
 			"titleBar.inactiveForeground": "#e7e7e799"
 		},
-		"peacock.color": "#4f429e"
+		"peacock.color": "#4f429e",
+		"files.watcherExclude": {
+			"**/.php_cs": true,
+			"**/pseudo-code.php": true
+		},
+		"intelephense.files.exclude": [
+			"**/*.php_cs",
+			"**/pseudo-code.php"
+		]
 	}
 }

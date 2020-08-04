@@ -10,6 +10,7 @@
         <directory name="Phlatson" />
         <ignoreFiles>
             <directory name="vendor" />
+            <file name=".php_cs" />
         </ignoreFiles>
     </projectFiles>
 </psalm>

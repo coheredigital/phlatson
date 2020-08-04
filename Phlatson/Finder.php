@@ -4,13 +4,15 @@ namespace Phlatson;
 
 class Finder
 {
+	protected App $app;
 	protected string $rootPath;
-	protected $pathMappings = [];
-	protected $dataFolders = [];
+	protected array $pathMappings = [];
+	protected array $dataFolders = [];
 
-	public function __construct(App $app)
+	public function __construct(App $app, string $rootPath)
 	{
 		$this->app = $app;
+		$this->rootPath = $rootPath;
 	}
 
 	public function getRootPath(): string
@@ -18,7 +20,7 @@ class Finder
 		return $this->app->path();
 	}
 
-	public function addPathMapping(string $classname, string $path): self
+	public function map(string $classname, string $path): self
 	{
 		// validate class
 		if (!class_exists("\Phlatson\\{$classname}")) {

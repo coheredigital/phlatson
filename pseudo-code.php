@@ -1,5 +1,7 @@
 <?php
 
+namespace Phlatson;
+
 $app = new App('/path/to/app-name');
 
 $app->path();
@@ -7,7 +9,6 @@ $app->path();
 $folder = new AppData($app, '/relative/path');
 
 $data = new DataFile('/relative/path', $app);
-
 
 $app->pages->get('/')->create('new-page');
 $app->pages('/')->create('about');
@@ -30,8 +31,7 @@ $fields->get('title');
 $app->page('/something/page')->url();
 $app->template('default')->fields();
 // switch sites
-$phlatson->app('site-name')->template("default")->fields();
-
+$phlatson->app('site-name')->template('default')->fields();
 
 // -----------------------------------------------------------
 // Page languages
@@ -90,3 +90,10 @@ $phlatson->site('site-name')->getPage('/');
 //  $dataManager->get("User::adam");
 
 $dataFolder->get('adam');
+
+// App(
+// 	AppData(
+// 		"/path/to/data"
+// 		get("/url/to/page")
+// 	)
+// )

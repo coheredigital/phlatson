@@ -2,8 +2,8 @@
 
 namespace Phlatson;
 
-$folder = new DataFolder($app->path(), 'fields', $app);
-$data = $folder->get('title');
+$folder = new DataFolder($app->path(), 'pages', $app);
+$data = $folder->get('debug');
 
 dump($data);
 dump($data->path());
@@ -24,3 +24,4 @@ dump($page->url());
 // dump($page->template());
 // dump($page->parent());
 // dump($this);
+dump($app);
