@@ -6,7 +6,7 @@ namespace Phlatson;
 
 define('ROOT_PATH', str_replace(DIRECTORY_SEPARATOR, '/', realpath(__DIR__ . '/../../') . '/'));
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class FinderTest extends TestCase
 {

@@ -174,19 +174,19 @@ abstract class DataObject
 	 * Magic method mapped the self::get() primarily for readability
 	 * example
 	 * <?= $page->title ?>
-* instead of
-* <?= $page->get('title') ?>.
-*
-* @return void
-*/
-final public function __get(string $key)
-{
-return $this->get($key);
-}
+	 * instead of
+	 * <?= $page->get('title') ?>.
+	 *
+	 * @return void
+	 */
+	final public function __get(string $key)
+	{
+		return $this->get($key);
+	}
 
-// TODO: Look at removing
-final public function classname(): string
-{
-return (new \ReflectionClass($this))->getShortName();
-}
+	// TODO: Look at removing
+	final public function classname(): string
+	{
+		return (new \ReflectionClass($this))->getShortName();
+	}
 }

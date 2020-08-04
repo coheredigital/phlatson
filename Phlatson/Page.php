@@ -4,8 +4,8 @@ namespace Phlatson;
 
 class Page extends DataObject
 {
-	const BASE_FOLDER = 'pages/';
-	const BASE_URL = '';
+	public const BASE_FOLDER = 'pages/';
+	public const BASE_URL = '';
 
 	protected $parent;
 	protected $parents;
@@ -61,7 +61,7 @@ class Page extends DataObject
 
 		$current = $this;
 
-		while (null !== $current->parent()) {
+		while ($current->parent() !== null) {
 			$this->parents->append($current->parent());
 			$current = $current->parent();
 		}

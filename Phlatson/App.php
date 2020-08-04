@@ -97,6 +97,7 @@ class App
 		$path = \realpath($path);
 		$path = str_replace(DIRECTORY_SEPARATOR, '/', $path . '/');
 		$path = rtrim($path, '/') . '/';
+
 		return $path;
 	}
 

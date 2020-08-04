@@ -4,5 +4,5 @@ namespace Phlatson;
 
 class Config extends DataFile
 {
-    // placeholder
+	// placeholder
 }

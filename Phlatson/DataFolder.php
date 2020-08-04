@@ -16,26 +16,24 @@ class DataFolder
 
 	public function __construct(string $path, string $uri, App $app)
 	{
-
 		$this->app = $app;
 		$this->path = $path;
-		$this->uri = trim($uri,"/") . "/";
+		$this->uri = trim($uri, '/') . '/';
 
 		if (!file_exists($this->path())) {
 			throw new \Exception('Invalid file: ' . $this->path());
 		}
-
 	}
 
 	public function app(): App
-    {
+	{
 		return $this->app;
 	}
 
 	public function path(): string
-    {
+	{
 		return $this->app->path() . $this->uri;
-    }
+	}
 
 	public function get(string $uri): ?DataFile
 	{
@@ -53,6 +51,7 @@ class DataFolder
 		$file = $this->path() . $uri . '/data.json';
 		if (!\file_exists($file)) {
 			$this->cache[$uri] = null;
+
 			return null;
 		}
 
@@ -61,8 +60,5 @@ class DataFolder
 		$this->cache[$uri] = $dataFile;
 
 		return $dataFile;
-
 	}
-
-
 }

@@ -54,6 +54,7 @@ class Finder
 	public function getDataFile(string $path, string $filename = 'data'): ?DataFile
 	{
 		$dataFile = new DataFile("{$path}{$filename}.json");
+
 		return $dataFile;
 	}
 

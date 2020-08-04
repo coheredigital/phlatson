@@ -20,7 +20,7 @@ class Phlatson
 		$this->request = $request;
 	}
 
-	public function registerApp(string $name):void
+	public function registerApp(string $name): void
 	{
 		// create the config
 		$config = new Config(__DIR__ . '/data/config.json');

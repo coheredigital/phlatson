@@ -4,7 +4,6 @@ namespace Phlatson;
 
 class FieldtypeImage
 {
-
 	protected $value = null;
 
 	public function set($value)
@@ -16,5 +15,4 @@ class FieldtypeImage
 	{
 		return new Image($this->value);
 	}
-
 }

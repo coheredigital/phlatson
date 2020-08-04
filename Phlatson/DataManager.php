@@ -16,24 +16,22 @@ class DataManager
 	// 	$this->rootPath = \rtrim($path, '/');
 	// }
 
-
 	final public function addFolder(string $classname, DataFolder $folder): self
-    {
-        // validate class
-        if (!class_exists("\Phlatson\\{$classname}")) {
-            throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
-        }
+	{
+		// validate class
+		if (!class_exists("\Phlatson\\{$classname}")) {
+			throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
+		}
 
-        $folder = trim($path, '/');
+		$folder = trim($path, '/');
 
-        // normalize the path
-        if ($path && !file_exists($path)) {
-            throw new \Exception("Path ({$path}) does not exist, cannot be used as site data");
-        }
+		// normalize the path
+		if ($path && !file_exists($path)) {
+			throw new \Exception("Path ({$path}) does not exist, cannot be used as site data");
+		}
 
-        $this->pathMappings[$classname][] = $path;
+		$this->pathMappings[$classname][] = $path;
 
-        return $this;
-    }
-
+		return $this;
+	}
 }

@@ -4,9 +4,7 @@ namespace Phlatson;
 
 class FieldtypeTemplate
 {
-
 	protected $value = null;
-
 
 	public function set($value)
 	{
@@ -17,6 +15,4 @@ class FieldtypeTemplate
 	{
 		return $this->app->getTemplate($this->value);
 	}
-
-
 }
