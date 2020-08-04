@@ -7,6 +7,12 @@ $app->path();
 
 $data = new DataFile('/relative/path', $app);
 
+
+$app->pages->get('/')->create('new-page');
+$app->pages('/')->create('about');
+$app->getPage('/')->createChild('about');
+$app->data('pages/about');
+
 // -----------------------------------------------------------
 // Finder
 // -----------------------------------------------------------
@@ -23,10 +29,7 @@ $fields->get("title");
 $app->page("/something/page")->url();
 $app->template("default")->fields();
 // switch sites
-$app('site-name')->template("default")->fields();
-$phlatson->app('site-name');
-
-
+$phlatson->app('site-name')->template("default")->fields();
 
 
 // -----------------------------------------------------------
