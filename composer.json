@@ -34,7 +34,8 @@
         "symfony/var-dumper": "^5.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.0",
+        "vimeo/psalm": "^3.13"
     },
     "config": {
         "optimize-autoloader": true

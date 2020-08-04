@@ -1,9 +1,10 @@
 <?php
 
-
 $app = new App('/path/to/app-name');
 
 $app->path();
+
+$folder = new AppData($app, '/relative/path');
 
 $data = new DataFile('/relative/path', $app);
 
@@ -16,18 +17,18 @@ $app->data('pages/about');
 // -----------------------------------------------------------
 // Finder
 // -----------------------------------------------------------
-$finder->addMapping("Page", "/site/pages");
+$finder->map('Page', '/site/pages');
 // use __call() magic method to allow
-$finder->getPage("/about-us"); // OR
-$finder->page("/about-us");
-$finder->field("title");
-$finder->field("title");
+$finder->getPage('/about-us'); // OR
+$finder->page('/about-us');
+$finder->field('title');
+$finder->field('title');
 
-$fields->get("title");
+$fields->get('title');
 
 // get from app
-$app->page("/something/page")->url();
-$app->template("default")->fields();
+$app->page('/something/page')->url();
+$app->template('default')->fields();
 // switch sites
 $phlatson->app('site-name')->template("default")->fields();
 
@@ -35,7 +36,7 @@ $phlatson->app('site-name')->template("default")->fields();
 // -----------------------------------------------------------
 // Page languages
 // -----------------------------------------------------------
-$page->language("en")->title;
+$page->language('en')->title;
 
 /**
  * Storage for languages
@@ -43,14 +44,13 @@ $page->language("en")->title;
  * data_en.json
  * data_fr.json
  */
-
 
 // -----------------------------------------------------------
 // Multisite
 // -----------------------------------------------------------
-$page->language("en")->title;
+$page->language('en')->title;
 
-$phlatson->site('site-name')->getPage("/");
+$phlatson->site('site-name')->getPage('/');
 
 /**
  * Storage for languages
@@ -58,7 +58,6 @@ $phlatson->site('site-name')->getPage("/");
  * data_en.json
  * data_fr.json
  */
-
 
 /**
  * The core DataObject in Phlatson are
@@ -70,33 +69,24 @@ $phlatson->site('site-name')->getPage("/");
  * - User
  */
 
+ class DataManager
+ {
+ 	protected $paths = [
+ 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/pages',
+ 		'C:/Users/Adam/Websites/phlatson/site/pages',
 
+ 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/fields',
+ 		'C:/Users/Adam/Websites/phlatson/site/fields',
 
- class DataManager {
+ 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/templates',
+ 		'C:/Users/Adam/Websites/phlatson/site/templates',
 
-
-
-	protected $paths = [
-
-		"C:/Users/Adam/Websites/phlatson/Phlatson/data/pages",
-		"C:/Users/Adam/Websites/phlatson/site/pages",
-
-		"C:/Users/Adam/Websites/phlatson/Phlatson/data/fields",
-		"C:/Users/Adam/Websites/phlatson/site/fields",
-
-		"C:/Users/Adam/Websites/phlatson/Phlatson/data/templates",
-		"C:/Users/Adam/Websites/phlatson/site/templates",
-
-		"C:/Users/Adam/Websites/phlatson/Phlatson/data/users",
-		"C:/Users/Adam/Websites/phlatson/site/users",
-
-	];
-
-
-
+ 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/users',
+ 		'C:/Users/Adam/Websites/phlatson/site/users',
+ 	];
  }
 
- $userDataManager->get("adam");
+ $userDataManager->get('adam');
 //  $dataManager->get("User::adam");
 
 $dataFolder->get('adam');

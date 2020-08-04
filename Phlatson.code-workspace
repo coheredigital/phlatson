@@ -6,12 +6,19 @@
 	],
 	"settings": {
 		"search.exclude": {
-			"**/pseudo-code.php": true,
 			"**/*.json": true
 		},
 		"search.quickOpen.includeHistory": false,
 		"cSpell.words": [
 			"subfolders"
-		]
+		],
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#4f429e",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.border": "#4f429e",
+			"titleBar.inactiveBackground": "#4f429e99",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#4f429e"
 	}
 }
