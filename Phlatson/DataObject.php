@@ -177,7 +177,6 @@ abstract class DataObject
 	 * instead of
 	 * <?= $page->get('title') ?>.
 	 *
-	 * @return void
 	 */
 	final public function __get(string $key)
 	{

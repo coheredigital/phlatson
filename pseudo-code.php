@@ -68,22 +68,22 @@ $phlatson->site('site-name')->getPage('/');
  * - Fieldtype
  * - User
  */
- class DataManager
- {
- 	protected $paths = [
- 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/pages',
- 		'C:/Users/Adam/Websites/phlatson/site/pages',
+class DataManager
+{
+	protected $paths = [
+		'C:/Users/Adam/Websites/phlatson/Phlatson/data/pages',
+		'C:/Users/Adam/Websites/phlatson/site/pages',
 
- 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/fields',
- 		'C:/Users/Adam/Websites/phlatson/site/fields',
+		'C:/Users/Adam/Websites/phlatson/Phlatson/data/fields',
+		'C:/Users/Adam/Websites/phlatson/site/fields',
 
- 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/templates',
- 		'C:/Users/Adam/Websites/phlatson/site/templates',
+		'C:/Users/Adam/Websites/phlatson/Phlatson/data/templates',
+		'C:/Users/Adam/Websites/phlatson/site/templates',
 
- 		'C:/Users/Adam/Websites/phlatson/Phlatson/data/users',
- 		'C:/Users/Adam/Websites/phlatson/site/users',
- 	];
- }
+		'C:/Users/Adam/Websites/phlatson/Phlatson/data/users',
+		'C:/Users/Adam/Websites/phlatson/site/users',
+	];
+}
 
 $data = ['item'];
 

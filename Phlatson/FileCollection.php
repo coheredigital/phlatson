@@ -76,7 +76,6 @@ class FileCollection implements \Iterator, \Countable
 	/**
 	 * Iterator Interface methods.
 	 *
-	 * @return void
 	 */
 	public function rewind(): void
 	{
