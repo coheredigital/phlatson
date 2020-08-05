@@ -1,6 +1,9 @@
 # Phlatson Managed folder
 /storage/*
 
+# PHP CS Fixer
+.php_cs.cache
+
 # IDE Files
 .vscode
 sftp-config.json
