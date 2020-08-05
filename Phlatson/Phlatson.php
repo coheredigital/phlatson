@@ -23,7 +23,7 @@ class Phlatson
 	public function registerApp(string $name): void
 	{
 		// create the config
-		$config = new Config(__DIR__ . "/data/config.json");
+		$config = new Config(__DIR__ . '/data/config.json');
 		$config->merge(new Config($this->rootPath . '/' . $name . '/config.json'));
 
 		$app = new App(
