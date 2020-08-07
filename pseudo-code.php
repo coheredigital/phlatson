@@ -3,8 +3,11 @@
 namespace Phlatson;
 
 $app = new App('/path/to/app-name');
-
 $app->path();
+
+// add read only data from another site
+// allow sharing to write but not by default
+$app->addSharedData($appData);
 
 $folder = new AppData($app, '/relative/path');
 
@@ -70,19 +73,19 @@ $phlatson->site('site-name')->getPage('/');
  */
 class DataManager
 {
-	protected $paths = [
-		'C:/Users/Adam/Websites/phlatson/Phlatson/data/pages',
-		'C:/Users/Adam/Websites/phlatson/site/pages',
+    protected $paths = [
+        'C:/Users/Adam/Websites/phlatson/Phlatson/data/pages',
+        'C:/Users/Adam/Websites/phlatson/site/pages',
 
-		'C:/Users/Adam/Websites/phlatson/Phlatson/data/fields',
-		'C:/Users/Adam/Websites/phlatson/site/fields',
+        'C:/Users/Adam/Websites/phlatson/Phlatson/data/fields',
+        'C:/Users/Adam/Websites/phlatson/site/fields',
 
-		'C:/Users/Adam/Websites/phlatson/Phlatson/data/templates',
-		'C:/Users/Adam/Websites/phlatson/site/templates',
+        'C:/Users/Adam/Websites/phlatson/Phlatson/data/templates',
+        'C:/Users/Adam/Websites/phlatson/site/templates',
 
-		'C:/Users/Adam/Websites/phlatson/Phlatson/data/users',
-		'C:/Users/Adam/Websites/phlatson/site/users',
-	];
+        'C:/Users/Adam/Websites/phlatson/Phlatson/data/users',
+        'C:/Users/Adam/Websites/phlatson/site/users',
+    ];
 }
 
 $data = ['item'];
