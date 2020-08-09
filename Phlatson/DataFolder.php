@@ -5,11 +5,12 @@ namespace Phlatson;
 class DataFolder
 {
     protected App $app;
+    protected DataFolder $parent;
     protected string $path;
-    protected array $subfolders;
+    protected array $children;
     protected array $files;
 
-    public function __construct(App $app, string $path)
+    public function __construct(App $app, string $path, ?DataFolder $parent = null)
     {
         $this->app = $app;
         $this->path = $app->path() . trim($path, '/') . '/';
@@ -17,6 +18,13 @@ class DataFolder
         if (!\file_exists($this->path)) {
             throw new \Exception('Invalid path: ' . $this->path);
         }
+
+        if (isset($parent)) {
+            $this->parent = $parent;
+        }
+
+        $this->files();
+        $this->children();
     }
 
     public function folder(): string
@@ -24,33 +32,38 @@ class DataFolder
         return \str_replace($this->app->path(), '', $this->path);
     }
 
-    public function subfolders(): array
+    public function children(): array
     {
-        if (isset($this->subfolders)) {
-            return $this->subfolders;
+        if (isset($this->children)) {
+            return $this->children;
         }
 
-        $this->subfolders = [];
+        $this->children = [];
 
-        $subfolders = glob($this->path . '*', GLOB_ONLYDIR | GLOB_NOSORT);
+        $folders = glob($this->path . '*', GLOB_ONLYDIR | GLOB_NOSORT);
 
-        if (!\count($subfolders)) {
-            return $this->subfolders;
+        if (!\count($folders)) {
+            return $this->children;
         }
 
-        foreach ($subfolders as $subfolder) {
-            $subfolder = \basename($subfolder);
-            $this->subfolders[$subfolder] = new DataFolder($this->app, $this->folder() . $subfolder);
+        foreach ($folders as $folder) {
+            $folder = \basename($folder);
+            $this->children[$folder] = new DataFolder($this->app, $this->folder() . $folder, $this);
         }
 
-        return $this->subfolders;
+        return $this->children;
+    }
+
+    public function parent(): ?DataFolder
+    {
+        return $this->parent ?? null;
     }
 
     public function files(): array
     {
-        // if (isset($this->files)) {
-        // 	return $this->files;
-        // }
+        if (isset($this->files)) {
+            return $this->files;
+        }
 
         $this->files = [];
 
