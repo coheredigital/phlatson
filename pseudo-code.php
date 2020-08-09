@@ -3,12 +3,13 @@
 namespace Phlatson;
 
 $app = new App('/path/to/app-name');
-$app->path();
+$app->path(); // retuns the full validated path
 
 // add read only data from another site
 // allow sharing to write but not by default
 $app->addSharedData($appData);
-
+// this is how i can handle multisite eventually
+// for now focus on single site
 $folder = new AppData($app, '/relative/path');
 
 $data = new DataFile('/relative/path', $app);
@@ -26,15 +27,15 @@ $finder->map('Page', '/site/pages');
 $finder->getPage('/about-us'); // OR
 $finder->page('/about-us');
 $finder->field('title');
-$finder->field('title');
-
-$fields->get('title');
 
 // get from app
 $app->page('/something/page')->url();
-$app->template('default')->fields();
-// switch sites
+$fields = $app->template('default')->fields();
+$fields->get('title');
+
+// switch sites or get other sites data
 $phlatson->app('site-name')->template('default')->fields();
+$phlatson->site('site-name')->page('/');
 
 // -----------------------------------------------------------
 // Page languages
@@ -48,12 +49,8 @@ $page->language('en')->title;
  * data_fr.json
  */
 
-// -----------------------------------------------------------
-// Multisite
-// -----------------------------------------------------------
-$page->language('en')->title;
 
-$phlatson->site('site-name')->getPage('/');
+
 
 /**
  * Storage for languages
@@ -71,33 +68,3 @@ $phlatson->site('site-name')->getPage('/');
  * - Fieldtype
  * - User
  */
-class DataManager
-{
-    protected $paths = [
-        'C:/Users/Adam/Websites/phlatson/Phlatson/data/pages',
-        'C:/Users/Adam/Websites/phlatson/site/pages',
-
-        'C:/Users/Adam/Websites/phlatson/Phlatson/data/fields',
-        'C:/Users/Adam/Websites/phlatson/site/fields',
-
-        'C:/Users/Adam/Websites/phlatson/Phlatson/data/templates',
-        'C:/Users/Adam/Websites/phlatson/site/templates',
-
-        'C:/Users/Adam/Websites/phlatson/Phlatson/data/users',
-        'C:/Users/Adam/Websites/phlatson/site/users',
-    ];
-}
-
-$data = ['item'];
-
-$userDataManager->get('adam');
-//  $dataManager->get("User::adam");
-
-$dataFolder->get('adam');
-
-// App(
-// 	AppData(
-// 		"/path/to/data"
-// 		get("/url/to/page")
-// 	)
-// )
