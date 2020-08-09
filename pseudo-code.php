@@ -5,12 +5,21 @@ namespace Phlatson;
 $app = new App('/path/to/app-name');
 $app->path(); // retuns the full validated path
 
+$app->get("/pages/about"); // returns Page('/about')
+
 // add read only data from another site
 // allow sharing to write but not by default
 $app->addSharedData($appData);
 // this is how i can handle multisite eventually
 // for now focus on single site
-$folder = new AppData($app, '/relative/path');
+
+$folder = new AppData($app, '/pages');
+$app->addData($folder);
+
+// AppData
+$folder->get('/about') // get item at about path
+
+$folder = new DataFolder($app, '/relative/path');
 
 $data = new DataFile('/relative/path', $app);
 
@@ -48,9 +57,6 @@ $page->language('en')->title;
  * data_en.json
  * data_fr.json
  */
-
-
-
 
 /**
  * Storage for languages

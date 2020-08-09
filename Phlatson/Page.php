@@ -4,126 +4,127 @@ namespace Phlatson;
 
 class Page extends DataObject
 {
-	public const BASE_FOLDER = 'pages/';
-	public const BASE_URL = '';
+    public const BASE_FOLDER = 'pages/';
+    public const BASE_URL = '';
 
-	protected $parent;
-	protected $parents;
-	protected $children;
-	protected array $files = [];
+    protected $parent;
+    protected $parents;
+    protected $children;
+    protected array $files = [];
 
-	public function rootFolder(): string
-	{
-		return str_replace($this->url(), '', $this->folder()) . '/';
-	}
+    public function rootFolder(): string
+    {
+        return str_replace($this->url(), '', $this->folder()) . '/';
+    }
 
-	public function url(): string
-	{
-		// remove root from path
-		$value = \str_replace($this->rootPath(), '', $this->path());
-		$value = trim($value, '/');
-		$value = $value ? "/$value/" : '/';
+    public function url(): string
+    {
+        // remove root from path
+        $value = \str_replace($this->rootPath(), '', $this->path());
+        $value = trim($value, '/');
+        $value = $value ? "/$value/" : '/';
 
-		return $value;
-	}
+        return $value;
+    }
 
-	public function parent(): ?Page
-	{
-		$rootPath = $this->rootPath();
-		$parentPath = \dirname($this->path()) . '/';
+    public function parent(): ?Page
+    {
+        $rootPath = $this->rootPath();
+        $parentPath = \dirname($this->path()) . '/';
 
-		// check if root is in parent path
-		if (false === strpos($parentPath, $rootPath)) {
-			return null;
-		}
+        // check if root is in parent path
+        if (false === strpos($parentPath, $rootPath)) {
+            return null;
+        }
 
-		$url = '/' . str_replace($rootPath, '', $parentPath);
-		$url = rtrim($url, '/') . '/';
+        $url = '/' . str_replace($rootPath, '', $parentPath);
+        $url = rtrim($url, '/') . '/';
 
-		$page = $this->app->getPage($url);
+        $page = $this->app->getPage($url);
 
-		if ($page->exists()) {
-			return $page;
-		}
+        if ($page->exists()) {
+            return $page;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public function parents(): ObjectCollection
-	{
-		// skip if already stored
-		if (isset($this->parents) && $this->parents instanceof ObjectCollection) {
-			return $this->parents;
-		}
+    public function parents(): ObjectCollection
+    {
+        // skip if already stored
+        if (isset($this->parents) && $this->parents instanceof ObjectCollection) {
+            return $this->parents;
+        }
 
-		// create empty collection
-		$this->parents = new ObjectCollection($this->app);
+        // create empty collection
+        $this->parents = new ObjectCollection($this->app);
 
-		$current = $this;
+        $current = $this;
 
-		while ($current->parent() !== null) {
-			$this->parents->append($current->parent());
-			$current = $current->parent();
-		}
+        while ($current->parent() !== null) {
+            $this->parents->append($current->parent());
+            $current = $current->parent();
+        }
 
-		// cache result
-		$this->parents->reverse();
+        // cache result
+        $this->parents->reverse();
 
-		return $this->parents;
-	}
+        return $this->parents;
+    }
 
-	public function children(): ObjectCollection
-	{
-		$url = $this->url;
-		$children = $this->children;
+    public function children(): ObjectCollection
+    {
+        // skip if already stored
+        if ($this->children instanceof ObjectCollection) {
+            return $this->children;
+        }
 
-		// skip if already stored
-		if ($children instanceof ObjectCollection) {
-			return $children;
-		}
+        // create empty collection
+        $this->children = new ObjectCollection($this->app);
 
-		// create empty collection
-		$children = new ObjectCollection($this->app);
+        $folders = $this->subfolders();
+        foreach ($folders as $folder) {
+            $name = basename($folder);
+            $this->children->append($this->child($name));
+        }
 
-		$folders = $this->subfolders();
-		foreach ($folders as $folder) {
-			$name = basename($folder);
-			$children->append($this->child($name));
-		}
+        return $this->children;
+    }
 
-		$this->children = $children;
+    public function subfolders(): array
+    {
+        $path = $this->path() . '/*';
 
-		return $children;
-	}
+        return glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
+    }
 
-	public function subfolders(): array
-	{
-		$path = $this->path() . '/*';
+    public function child(string $name): Page
+    {
+        $name = trim($name, '/');
+        $url = trim($this->url(), '/');
+        $path = $url . $name;
 
-		return glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
-	}
+        return $this->app->getPage($path);
+    }
 
-	public function child(string $name): Page
-	{
-		$name = trim($name, '/');
-		$url = trim($this->url(), '/');
-		$path = $url . $name;
+    public function files(): array
+    {
+        if (!$this->files) {
+            $files = new \FilesystemIterator($this->path(), \FilesystemIterator::SKIP_DOTS);
+            foreach ($files as $file) {
+                if (!$file->isDir()) {
+                    $file = $file->getPathname();
+                    $this->files[] = new File($file);
+                }
+            }
+        }
 
-		return $this->app->getPage($path);
-	}
+        return $this->files;
+    }
 
-	public function files(): array
-	{
-		if (!$this->files) {
-			$files = new \FilesystemIterator($this->path(), \FilesystemIterator::SKIP_DOTS);
-			foreach ($files as $file) {
-				if (!$file->isDir()) {
-					$file = $file->getPathname();
-					$this->files[] = new File($file);
-				}
-			}
-		}
-
-		return $this->files;
-	}
+    // statuses, placeholder pseduo code for now
+    public function isPublished(): bool
+    {
+        return $this->dataFolder->has('published.json');
+    }
 }

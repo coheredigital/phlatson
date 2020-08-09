@@ -39,7 +39,7 @@ class App
             $folderName = strtolower($className);
             $path = $this->sanitizePath(__DIR__ . '/data/');
             $folder = $this->sanitizePath($path . "{$folderName}s/");
-            $dataFolder = new DataFolder($path, "{$folderName}s", $this);
+            $dataFolder = new DataStorage($path, "{$folderName}s", $this);
             $this->finder->map($className, $folder);
             $this->finder->addDataFolder($className, $dataFolder);
         }
@@ -47,7 +47,7 @@ class App
         // add path mappings from config
         foreach ($config->get('storage') as $className => $folderName) {
             $folder = $this->sanitizePath($this->path . $folderName);
-            $dataFolder = new DataFolder($this->path, $folderName, $this);
+            $dataFolder = new DataStorage($this->path, $folderName, $this);
             $this->finder->map($className, $folder);
             $this->finder->addDataFolder($className, $dataFolder);
         }

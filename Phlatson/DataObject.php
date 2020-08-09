@@ -25,167 +25,164 @@ namespace Phlatson;
  */
 abstract class DataObject
 {
-	protected App $app;
-	protected DataFile $data;
-	protected array $formattedData = [];
-	protected FieldCollection $fields;
-	protected string $rootPath;
-	protected ?Template $template = null;
+    protected App $app;
+    protected DataFile $data;
+    protected DataFileCollection $dataFiles;
+    protected array $formattedData = [];
+    protected FieldCollection $fields;
+    protected string $rootPath;
+    protected ?Template $template = null;
 
-	public function __construct(?string $path = null, App $app)
-	{
-		if (!isset($path)) {
-			return;
-		}
+    public function __construct(?string $path = null, App $app)
+    {
+        if (!isset($path)) {
+            return;
+        }
 
-		$this->app = $app;
+        $this->app = $app;
 
-		$path = '/' . trim($path, '/') . '/';
-	}
+        $path = '/' . trim($path, '/') . '/';
+    }
 
-	public function setData(DataFile $data): self
-	{
-		$this->data = $data;
+    public function setData(DataFile $data): self
+    {
+        $this->data = $data;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function template(): Template
-	{
-		if (!$this->template && $name = $this->data->get('template')) {
-			$this->template = $this->app->getTemplate($name);
-			$this->template->setOwner($this);
-		}
+    public function template(): Template
+    {
+        if (!$this->template && $name = $this->data->get('template')) {
+            $this->template = $this->app->getTemplate($name);
+            $this->template->setOwner($this);
+        }
 
-		return $this->template;
-	}
+        return $this->template;
+    }
 
-	public function exists(): bool
-	{
-		return file_exists($this->file);
-	}
+    public function exists(): bool
+    {
+        return file_exists($this->file);
+    }
 
-	public function rootFolder(): string
-	{
-		$value = str_replace($this->name(), '', $this->folder());
-		$value = trim($value, '/');
+    public function rootFolder(): string
+    {
+        $value = str_replace($this->name(), '', $this->folder());
+        $value = trim($value, '/');
 
-		return "/$value/";
-	}
+        return "/$value/";
+    }
 
-	public function folder(): string
-	{
-		$value = \str_replace($this->app->path(), '', $this->path());
-		$value = \trim($value, '/');
-		$value = $value ? "/$value/" : '/';
+    public function folder(): string
+    {
+        $value = \str_replace($this->app->path(), '', $this->path());
+        $value = \trim($value, '/');
+        $value = $value ? "/$value/" : '/';
 
-		return $value;
-	}
+        return $value;
+    }
 
-	public function file(): string
-	{
-		return $this->data->file;
-	}
+    public function file(): string
+    {
+        return $this->data->file;
+    }
 
-	public function rootPath(): string
-	{
-		return rtrim($this->app->path(), '/') . '/';
-	}
+    public function rootPath(): string
+    {
+        return rtrim($this->app->path(), '/') . '/';
+    }
 
-	protected function rootUrl(): string
-	{
-		$url = $this->url();
-		$url = trim($url, '/');
-		$url = str_replace($this->name(), '', $url);
-		$url = trim($url, '/');
+    protected function rootUrl(): string
+    {
+        $url = $this->url();
+        $url = trim($url, '/');
+        $url = str_replace($this->name(), '', $url);
+        $url = trim($url, '/');
 
-		if (!$url) {
-			return '/';
-		}
+        if (!$url) {
+            return '/';
+        }
 
-		return "/$url/";
-	}
+        return "/$url/";
+    }
 
-	public function path(): string
-	{
-		$file = $this->file();
-		if (!is_file($file)) {
-			throw new \Exception("Cannot get path of $file");
-		}
+    public function path(): string
+    {
+        $file = $this->file();
+        if (!is_file($file)) {
+            throw new \Exception("Cannot get path of $file");
+        }
 
-		$value = dirname($file) . '/';
+        $value = dirname($file) . '/';
 
-		return $value;
-	}
+        return $value;
+    }
 
-	public function url(): string
-	{
-		return $this->folder();
-	}
+    public function url(): string
+    {
+        return $this->folder();
+    }
 
-	public function name(): string
-	{
-		return \basename($this->path());
-	}
+    public function name(): string
+    {
+        return \basename($this->path());
+    }
 
-	public function filename(): string
-	{
-		return basename($this->file);
-	}
+    public function filename(): string
+    {
+        return basename($this->file);
+    }
 
-	public function save(): string
-	{
-		return basename($this->file);
-	}
+    public function save(): string
+    {
+        return basename($this->file);
+    }
 
-	/**
-	 * Retrieve raw unformatted data from the data object
-	 * if not $key is provided returns the entire data object.
-	 *
-	 * @param string $key
-	 *
-	 * @return mixed
-	 */
-	public function data(?string $key = null)
-	{
-		return $key ? $this->data->get($key) : $this->data;
-	}
+    /**
+     * Retrieve raw unformatted data from the data object
+     * if not $key is provided returns the entire data object.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function data(?string $key = null)
+    {
+        return $key ? $this->data->get($key) : $this->data;
+    }
 
-	public function get(string $key)
-	{
-		$value = null;
+    public function get(string $key)
+    {
+        if (!isset($this->data)) {
+            return null;
+        }
 
-		if (!isset($this->data)) {
-			return $value;
-		}
+        if ($value = $this->data->get($key)) {
+            $field = $this->app->getField($key);
+            $fieldtype = $field->type();
+            $value = $fieldtype->decode($value);
+        }
 
-		$value = $this->data->get($key);
+        return $value ?: null;
+    }
 
-		if ($this->data->get($key)) {
-			$field = $this->app->getField($key);
-			$fieldtype = $field->type();
-			$value = $fieldtype->decode($value);
-		}
+    /**
+     * Magic method mapped the self::get() primarily for readability
+     * example
+     * <?= $page->title ?>
+     * instead of
+     * <?= $page->get('title') ?>.
+     *
+     */
+    final public function __get(string $key)
+    {
+        return $this->get($key);
+    }
 
-		return $value ?: null;
-	}
-
-	/**
-	 * Magic method mapped the self::get() primarily for readability
-	 * example
-	 * <?= $page->title ?>
-	 * instead of
-	 * <?= $page->get('title') ?>.
-	 *
-	 */
-	final public function __get(string $key)
-	{
-		return $this->get($key);
-	}
-
-	// TODO: Look at removing
-	final public function classname(): string
-	{
-		return (new \ReflectionClass($this))->getShortName();
-	}
+    // TODO: Look at removing
+    final public function classname(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
+    }
 }

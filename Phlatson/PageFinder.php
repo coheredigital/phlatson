@@ -4,18 +4,18 @@ namespace Phlatson;
 
 class PageFinder
 {
-	// TODO: placeholder
-	protected DataFolder $data;
+    // TODO: placeholder
+    protected DataStorage $data;
 
-	public function __construct(DataFolder $data)
-	{
-		$this->data = $data;
-	}
+    public function __construct(DataStorage $data)
+    {
+        $this->data = $data;
+    }
 
-	public function get($uri): Page
-	{
-		$datafile = $this->data->get($uri);
-		// code...
-		$page = new Page($datafile);
-	}
+    public function get($uri): Page
+    {
+        $datafile = $this->data->get($uri);
+        // code...
+        $page = new Page($datafile);
+    }
 }

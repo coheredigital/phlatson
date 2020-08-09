@@ -6,7 +6,7 @@ class DataFile extends File
 {
 	protected array $data;
 
-	public function __construct(string $file, ?DataFolder $folder = null)
+	public function __construct(string $file, ?DataStorage $folder = null)
 	{
 		// setup base object
 		parent::__construct($file, $folder);

@@ -2,12 +2,12 @@
 
 namespace Phlatson;
 
-$folder = new DataFolder($app->path(), 'pages', $app);
-$data = $folder->get('debug');
+$folder = new DataFolder("C:\Users\Adam\Websites\phlatson\site\pages");
 
-dump($data);
-dump($data->path());
-dump($data->folder());
+dump($folder);
+dump($folder->subfolders());
+dump($folder->files());
+
 
 // dump($app);
 // dump($app->config());

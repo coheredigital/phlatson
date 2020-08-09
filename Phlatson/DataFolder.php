@@ -2,63 +2,69 @@
 
 namespace Phlatson;
 
-/**
- * This Class marks a file system folder as a storage location for DataFiles (JSON)
- * could define folder permission, app ownership, readonly status, etc
- *
- */
 class DataFolder
 {
-	public App $app;
-	protected string $path;
-	protected string $uri;
-	protected array $cache = [];
+    protected App $app;
+    protected string $path;
+    protected array $subfolders;
+    protected array $files;
 
-	public function __construct(string $path, string $uri, App $app)
-	{
-		$this->app = $app;
-		$this->path = $path;
-		$this->uri = trim($uri, '/') . '/';
+    public function __construct(App $app, string $path)
+    {
+        $this->app = $app;
+        $this->path = $app->path() . trim($path, '/') . '/';
 
-		if (!file_exists($this->path())) {
-			throw new \Exception('Invalid file: ' . $this->path());
-		}
-	}
+        if (!\file_exists($this->path)) {
+            throw new \Exception('Invalid path: ' . $this->path);
+        }
+    }
 
-	public function app(): App
-	{
-		return $this->app;
-	}
+    public function folder(): string
+    {
+        return \str_replace($this->app->path(), '', $this->path);
+    }
 
-	public function path(): string
-	{
-		return $this->app->path() . $this->uri;
-	}
+    public function subfolders(): array
+    {
+        if (isset($this->subfolders)) {
+            return $this->subfolders;
+        }
 
-	public function get(string $uri): ?DataFile
-	{
-		// sanitizer the URI
-		$uri = \strtolower($uri);
-		$uri = \trim($uri, '/');
+        $this->subfolders = [];
 
-		// check already loaded
-		if (isset($this->cache[$uri])) {
-			return $this->cache[$uri];
-		}
+        $subfolders = glob($this->path . '*', GLOB_ONLYDIR | GLOB_NOSORT);
 
-		// find in filesystem
+        if (!\count($subfolders)) {
+            return $this->subfolders;
+        }
 
-		$file = $this->path() . $uri . '/data.json';
-		if (!\file_exists($file)) {
-			$this->cache[$uri] = null;
+        foreach ($subfolders as $subfolder) {
+            $subfolder = \basename($subfolder);
+            $this->subfolders[$subfolder] = new DataFolder($this->app, $this->folder() . $subfolder);
+        }
 
-			return null;
-		}
+        return $this->subfolders;
+    }
 
-		// create the dataFile and cache
-		$dataFile = new DataFile($file, $this);
-		$this->cache[$uri] = $dataFile;
+    public function files(): array
+    {
+        // if (isset($this->files)) {
+        // 	return $this->files;
+        // }
 
-		return $dataFile;
-	}
+        $this->files = [];
+
+        $files = glob($this->path . '*.*', GLOB_NOSORT);
+
+        if (!\count($files)) {
+            return $this->files;
+        }
+
+        foreach ($files as $file) {
+            $file = \basename($file);
+            $this->files[$file] = new File($this->path . $file);
+        }
+
+        return $this->files;
+    }
 }
