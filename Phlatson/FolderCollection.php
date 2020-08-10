@@ -2,7 +2,7 @@
 
 namespace Phlatson;
 
-class FileCollection implements \Iterator, \Countable
+class FolderCollection implements \Iterator, \Countable
 {
     public $iterator;
     protected App $app;
@@ -17,9 +17,9 @@ class FileCollection implements \Iterator, \Countable
         $this->app = $app;
     }
 
-    public function append(File $file): self
+    public function append(Folder $folder): self
     {
-        $this->collection[$file->name] = $file;
+        $this->collection[$folder->name()] = $folder;
 
         return $this;
     }
@@ -27,6 +27,33 @@ class FileCollection implements \Iterator, \Countable
     public function reverse(): self
     {
         $this->collection = array_reverse($this->collection);
+
+        return $this;
+    }
+
+    public function import(array $collection): self
+    {
+        // TODO: this need work
+        $files = array_fill_keys($collection, true);
+        $this->files += $files;
+        $this->collection += $collection;
+
+        return $this;
+    }
+
+    public function limit(int $limit): self
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    public function paginate(int $currentPage): self
+    {
+        if ($currentPage < 1) {
+            throw new \Exception('Request page number cannot be less than 1');
+        }
+        $this->currentPage = $currentPage;
 
         return $this;
     }
@@ -45,6 +72,21 @@ class FileCollection implements \Iterator, \Countable
         }
     }
 
+    public function pageCount(): int
+    {
+        return (int) intval($this->count() / $this->limit) + (($this->count() / $this->limit) ? 1 : 0);
+    }
+
+    public function nextPage(): int
+    {
+        return (int) $this->currentPage + 1;
+    }
+
+    public function previousPage(): int
+    {
+        return (int) $this->currentPage - 1;
+    }
+
     /**
      * Iterator Interface methods.
      *
@@ -58,6 +100,7 @@ class FileCollection implements \Iterator, \Countable
     {
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
+            $item = $this->app->getPage($item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }

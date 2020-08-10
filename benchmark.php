@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Phlatson;
 
 // use composer autoloader
@@ -17,19 +16,14 @@ $app = $phlatson->app();
 dump($app);
 
 for ($i = 0; $i < $repeat; $i++) {
-	# code...
+    // code...
 
-	$folder = new DataFolder($app, "pages");
+    $folder = new Folder($app, 'pages');
 
-	$subfolders = $folder->subfolders();
-	$files = $folder->files();
+    $subfolders = $folder->children();
+    $files = $folder->subfolders();
+    $files = $folder->files();
 }
-
-
-
-
-
-
 
 $executionEndTime = microtime(true);
 

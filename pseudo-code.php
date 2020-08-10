@@ -19,7 +19,7 @@ $app->addData($folder);
 // AppData
 $folder->get('/about') // get item at about path
 
-$folder = new DataFolder($app, '/relative/path');
+$folder = new Folder($app, '/relative/path');
 
 $data = new DataFile('/relative/path', $app);
 
@@ -47,8 +47,17 @@ $phlatson->app('site-name')->template('default')->fields();
 $phlatson->site('site-name')->page('/');
 
 // -----------------------------------------------------------
-// Page languages
+// Page variations
 // -----------------------------------------------------------
+$page->load("autosave");
+$page->load("draft");
+$page->load("revision_82382948722");
+// alias
+$page->revisions()->get('82382948722');
+$page->revision('82382948722');
+
+$page->saveAs('draft');
+
 $page->language('en')->title;
 
 /**

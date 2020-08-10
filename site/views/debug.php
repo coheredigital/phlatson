@@ -2,9 +2,10 @@
 
 namespace Phlatson;
 
-$folder = new DataFolder($app, 'pages');
+$folder = new Folder($app, 'pages');
 
 dump($folder);
-dump($folders = $folder->children());
+dump($folders = $folder->subfolders());
 dump($folder->files());
 dump($folder->parent());
+dump($folder);
