@@ -13,3 +13,4 @@ dump($folder->isRoot());
 dump($subfolder = $folder->subfolders()->first());
 dump($subfolder->rootParent());
 dump($subfolder->isRoot());
+dump($subfolder->hasFiles());

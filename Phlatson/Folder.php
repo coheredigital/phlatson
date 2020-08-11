@@ -112,4 +112,9 @@ class Folder
 
         return $this->files;
     }
+
+    public function hasFiles(): bool
+    {
+        return $this->files()->count() > 0;
+    }
 }
