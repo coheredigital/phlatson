@@ -93,13 +93,6 @@ class Folder
         return $this->parent ?? null;
     }
 
-    // public function hasChild(string $name): bool
-    // {
-    //     $path = $this->path . \ltrim($name, '/');
-
-    //     return \file_exists($path);
-    // }
-
     public function child(string $name): ?Folder
     {
         $children = $this->children();
