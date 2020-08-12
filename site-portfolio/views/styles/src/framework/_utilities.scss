@@ -1,0 +1,81 @@
+._text-center {
+    text-align: center;
+}
+._text-right {
+    text-align: right;
+}
+._text-left {
+    text-align: left;
+}
+
+
+
+._rounded {
+  border-radius: 1rem;
+}
+._round {
+    border-radius: 50%;
+}
+
+@mixin shadow {
+    box-shadow: 0 .25rem .75rem -.25rem rgba(0,0,0,.1);
+}
+._shadow {
+    @include shadow;
+}
+
+@mixin shadow-large {
+	box-shadow: 0 .2rem 1rem -.1rem rgba(0,0,0,.2);
+}
+._shadow-large {
+    @include shadow-large;
+}
+
+._background{
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: .4;
+}
+
+
+
+@mixin section-spacing-top {
+    margin-top: 2rem;
+    @include media("desktop") {
+        margin-top: 3rem;
+    }
+    @include media("hd") {
+        margin-top: 4rem;
+    }
+}
+
+@mixin section-spacing-bottom {
+    margin-bottom: 2rem;
+    @include media("desktop") {
+        margin-bottom: 3rem;
+    }
+    @include media("hd") {
+        margin-bottom: 4rem;
+    }
+}
+
+@mixin section-spacing {
+    @include section-spacing-top;
+    @include section-spacing-bottom;
+}
+
+._section-spacing {
+  @include section-spacing;
+}
+._section-spacing-top {
+  @include section-spacing-top;
+}
+._section-spacing-bottom {
+  @include section-spacing-bottom;
+}
+

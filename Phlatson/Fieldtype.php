@@ -4,7 +4,6 @@ namespace Phlatson;
 
 class Fieldtype extends DataObject
 {
-
 	protected $value = null;
 
 	public function __construct()
@@ -17,9 +16,8 @@ class Fieldtype extends DataObject
 	{
 	}
 
-	public function decode($value) 
+	public function decode($value)
 	{
 		return $value;
 	}
-	
 }

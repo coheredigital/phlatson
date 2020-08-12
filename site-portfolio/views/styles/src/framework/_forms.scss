@@ -1,0 +1,209 @@
+
+.FormBuilder {
+    ._success {
+        background: $green;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.FormBuilderForm {
+    margin: 0;
+    >.Inputfields {
+        margin: -1rem;
+        // margin-right: -1rem;
+    } 
+    // honeypot field
+    #wrap_Inputfield- {
+        height: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+}
+
+.FormBuilderErrors {
+    padding: 1rem 2rem;
+    background: $red;
+    color: #fff;
+}
+
+.Inputfields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.InputfieldFieldset {
+    width: 100%;
+    margin-top: 2rem;
+    &:first-child {
+        margin: 0;
+    }
+    >._description {
+        padding: 0 1rem;
+    }
+    >legend {
+        padding: 0 1rem;
+    }
+}
+
+.Inputfield {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-top: 0;
+    @include media($max: "tablet") {
+        width: 100% !important;
+    }
+    >label {
+        display: block;
+        position: relative;
+        margin: 0;
+        margin-bottom: .5rem;
+        cursor: pointer;
+        &::after {
+            content: "(optional)";
+            position: absolute;
+            right: 0;
+            opacity: .8;
+            text-decoration: none !important;
+            margin-left: .5rem;
+            text-transform: uppercase;
+            font-size: .7em;
+            color: $blue;
+        }
+    }
+    >ul {
+        padding: 0;
+        list-style: none;
+    }
+    >._description,
+    ._notes,
+    ._error {
+        font-size: .8rem;
+        margin: .5rem 0;
+        color: $dark-gray;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    >._description {
+        color: $dark-gray;
+        font-style: italic;
+    }
+    ._notes,
+    ._error {
+        padding: .2rem .5rem;
+        border-radius: $input-border-radius;
+    }
+    ._error {
+        background: $red;
+        color: #fff;
+        font-weight: 600;
+    }
+    ._notes {
+        background: $form-notes-color;
+        color: $text-color;
+    }
+    input {
+        width: 100%;
+    }
+    &.-is-required {
+        label {
+            &::after {
+                content: "";
+            }
+        }
+    }
+}
+
+// field states
+.InputfieldStateShowIf {
+    display: none; // opacity: .25;
+    &.-is-visible {
+        display: block;
+        opacity: 1;
+    }
+}
+
+// field type specific
+.InputfieldFormBuilderFileList {
+    padding: 0;
+    margin: 0;
+
+    li {
+        position: relative;
+        background: $input-background;
+        border: $input-border;
+        border-radius: $input-border-radius;
+        cursor: pointer;
+        &:last-child {
+            margin: 0;
+        }
+        &::before {
+            content: "Choose file to upload.";
+            position: absolute;
+            top: 50%;
+            left: .7rem;
+            margin-top: -.7rem;
+            cursor: pointer !important;
+            z-index: 0;
+        }
+        &:hover {
+            &::before {
+                text-decoration: underline;
+                color: $link-color;
+            }
+        }
+    }
+    input {
+        height: auto;
+        border: 0;
+        padding: .35rem .7rem !important;
+        padding: 0;
+        background-color: transparent;
+        opacity: 0;
+        cursor: pointer;
+
+    }
+}
+
+
+.InputfieldCheckboxes {
+    ul {
+        padding: .4rem .9rem;
+        margin: 0;
+        background: $input-background;
+        border: $input-border;
+        border-radius: $input-border-radius;
+        &.InputfieldCheckboxesFloated {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        li {
+            margin: 0;
+            margin-bottom: .2rem;
+            flex-grow: 1;
+        }
+        label {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+                color: $link-color;
+            }
+            span {
+                font-weight: normal;
+                font-size: .9rem;
+                margin-left: .3rem;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+.InputfieldSubmit {
+    padding-top: 2rem;
+    font-size: 1.2rem;
+    text-align: right;
+}

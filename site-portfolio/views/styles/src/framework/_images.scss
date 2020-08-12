@@ -1,0 +1,174 @@
+
+/* ========================================================
+-----------------------------------------------------------
+Images
+-----------------------------------------------------------
+==========================================================*/
+
+/* Image Alignments */
+img.alignright,
+.align_right {
+  float: right;
+  vertical-align: text-top;
+  margin: .2em 0 1.7em 1.5em;
+}
+img.alignleft,
+.align_left {
+  float: left;
+  vertical-align: text-top;
+  margin: .2em 1.7em 1.5em 0;
+}
+img.aligncenter,
+.align_center {
+  margin: 4px auto 1em;
+  display: block;
+}
+
+.image-share{
+  position: absolute;
+  // display: none;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  top: 0;
+  padding: .6em .3em;
+  font-size: .8em;
+  z-index: 5;
+  margin-top: -4em;
+  transition: .4s;
+}
+
+.image-wrapper{
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  font-family: $font-main;
+  font-size: 1rem;
+  text-transform: none;
+  font-weight: normal;
+  line-height: 1.5rem;
+  img{
+    display: block;
+    clear: both;
+    // width: 100%;
+  }
+  &:hover{
+    // img{
+    //   opacity: .4;
+    //   transition: .4s;
+    // }
+    .image-share {
+      margin-top: 0;
+    }
+  }
+}
+
+
+.image-share-label {
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+  font-size: .8em;
+  color: #fff;
+  margin-bottom: .4em;
+    font-weight: bold;
+}
+
+.image-share-button{
+  // background: #fff;
+
+  color: #000;
+  padding: .2em .6em;
+  border-radius: .2em;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none !important;
+  &:hover{
+    background: #000;
+    color: #fff;
+  }
+}
+
+.body-image{
+  max-width: 45%;
+}
+
+
+
+@media screen and (max-width: 770px) {
+  .body-image{
+    max-width: 60%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .body-image{
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+
+svg {
+    &.svg--feather {
+        stroke: currentColor !important;
+    }
+    &.svg--font-awesome {
+        fill: currentColor !important;
+        margin-top: -.1em;
+    }
+
+}
+
+// PW rendered SVGs
+svg.svg {
+    font-size: 1em;
+    width: 1em;
+    height: 1em;
+    // height: auto;
+    // height can't be auto, cause layout problems in ie
+    line-height: 1em;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+
+// pseudo images
+
+
+@mixin pseudo-image-aspect ($width: 1, $height: 1, $breakpoint: '') {
+    $class: ".-aspect-" + $width + "x" + $height;
+
+    @if $breakpoint != '' {
+        $class: ".-aspect-" + $breakpoint + "-" + $width + "x" + $height;
+    }
+
+    &#{$class} {
+        padding-top: percentage($height/$width);
+    }
+}
+
+@mixin default-pseudo-image-aspects($breakpoint:'') {
+    @include pseudo-image-aspect(1,1,$breakpoint);
+    @include pseudo-image-aspect(2,1,$breakpoint);
+    @include pseudo-image-aspect(3,2,$breakpoint);
+    @include pseudo-image-aspect(4,3,$breakpoint);
+    @include pseudo-image-aspect(5,4,$breakpoint);
+}
+.pseudo-image {
+    background-size: cover !important;
+    background-position: center !important;
+    width: 100%;
+    display: block;
+    @include default-pseudo-image-aspects;
+
+    // loop through breakpoints to create responsive image aspects
+    // class="pseudo-image -aspect-1x1" (sqaure image)
+    @each $bp in $breakpoint-names {
+        @include media($bp) {
+            @include default-pseudo-image-aspects($bp);
+        }
+    }
+
+}

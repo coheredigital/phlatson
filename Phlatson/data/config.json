@@ -1,0 +1,18 @@
+{
+    "domains": [],
+    "storage": {
+        "Page": "/pages",
+        "Template": "/templates",
+        "Field": "/fields",
+        "Fieldtype": "/fieldtypes",
+        "View": "/views",
+        "User": "/users"
+    },
+    "session": {
+        "name": "phlatson",
+        "expire": 86400
+    },
+    "timezone": "America/New_York",
+    "debug": true,
+    "dateTimeFormat": "F j, Y"
+}

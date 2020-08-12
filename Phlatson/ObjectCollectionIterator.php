@@ -1,233 +1,227 @@
 <?php
+
 namespace Phlatson;
+
 class ObjectCollectionIterator implements \Iterator, \ArrayAccess, \Countable
 {
+	protected $currentIndex = 0;
+	protected $startIndex = 0;
+	protected $endIndex;
+	protected $limit = 0;
+	protected $pageCount;
+	protected $currentPage;
+	protected $isPaginated = false;
+	protected $collection = [];
 
-    protected $currentIndex = 0;
-    protected $startIndex = 0;
-    protected $endIndex;
+	public function append(object $item)
+	{
+		$this->collection += [$item->name => $item];
 
-    protected $limit = 0;
-    protected $pageCount;
-    protected $currentPage;
+		return $this;
+	}
 
-    protected $isPaginated = false;
+	public function prepend(object $item)
+	{
+		$this->collection = [$item->name => $item] + $this->collection;
 
-    protected $collection = [];
+		return $this;
+	}
 
+	public function import(ObjectCollection $items)
+	{
+		foreach ($items as $item) {
+			if (!$this->isValidItem($item)) {
+				continue;
+			}
+			$this->append($item);
+		}
 
-    public function append(Object $item)
-    {
-        $this->collection += [$item->name => $item];
-        return $this;
-    }
+		return $this;
+	}
 
-    public function prepend(Object $item)
-    {
+	/**
+	 * @param $fieldname
+	 * @param string $direction
+	 *
+	 * @return $this
+	 */
+	public function sort($fieldname, $direction = 'ASC')
+	{
+		$object = $this->first();
 
-        $this->collection = [ $item->name => $item ] + $this->collection;
-        return $this;
-    }
+		if (!$value = $object->getUnformatted($fieldname)) {
+			throw new \Exception("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
+		}
 
-    public function import(ObjectCollection $items)
-    {
-        foreach ($items as $item) {
-            if (!$this->isValidItem($item)) {
-                continue;
-            }
-            $this->append($item);
-        }
-        return $this;
-    }
+		$type = get($value);
 
+		usort(
+			$this->collection,
+			function ($a, $b) use ($fieldname, $type) {
+				$v1 = $a->get($fieldname);
+				$v2 = $b->get($fieldname);
 
-    /**
-     * @param $fieldname
-     * @param string $direction
-     * @return $this
-     */
-    public function sort($fieldname, $direction = "ASC")
-    {
+				switch ($type) {
+					case 'integer':
+						if ($v1 == $v2) {
+							return 0;
+						}
 
-        $object = $this->first();
+						return ($v1 < $v2) ? -1 : 1;
+					default:
+						return strcmp($v1, $v2);
+				}
+			}
+		);
 
-        if(!$value = $object->getUnformatted($fieldname)){
-            throw new \Exception("Cannot sort by '$fieldname' no data by that name can be found in {$this}.");
-        }
+		if ('DESC' == $direction) {
+			$this->reverse();
+		}
 
-        $type = get($value);
+		return $this;
+	}
 
+	/**
+	 * returns new collection with index range items.
+	 *
+	 * @return $this
+	 */
+	public function slice(int $start, $end)
+	{
+		// TODO : implement non destructive slice
+		return $this;
+	}
 
-        usort(
-            $this->collection,
-            function ($a, $b) use ($fieldname, $type) {
-                $v1 = $a->get($fieldname);
-                $v2 = $b->get($fieldname);
+	/**
+	 * reverses array orders.
+	 *
+	 * @return $this
+	 */
+	public function reverse()
+	{
+		$this->collection = array_reverse($this->collection);
 
-                switch ($type) {
-                    case "integer":
-                        if ($v1 == $v2) {
-                            return 0;
-                        }
-                        return ($v1 < $v2) ? -1 : 1;
-                    default:
-                        return strcmp($v1, $v2);
-                }
+		return $this;
+	}
 
-            }
-        );
+	public function has($name)
+	{
+		return isset($this->collection[$name]);
+	}
 
-        if ($direction == "DESC") $this->reverse();
+	/**
+	 * return first item in data array.
+	 *
+	 * @return Object
+	 */
+	public function first()
+	{
+		return $this->index(0);
+	}
 
-        return $this;
-    }
+	/**
+	 * return last item in data array.
+	 *
+	 * @return Object
+	 */
+	public function last()
+	{
+		return $this->index(-1);
+	}
 
+	/**
+	 * return item at given index.
+	 */
+	public function index($x)
+	{
+		if (!count($this->collection)) {
+			throw new \Exception("$this->className is empty, cannot retrieve index($x)");
+		}
 
+		return array_values($this->collection)[$x];
+	}
 
+	public function getArray($key, $value)
+	{
+		$array = [];
+		foreach ($this as $object) {
+			$key = $object->get($key);
+			$value = $object->get($value);
 
+			$array[$key] = $value;
+		}
 
+		return $array;
+	}
 
+	/* Interface requirements */
+	public function rewind()
+	{
+		if ($this->currentPage > 1) {
+			$this->currentIndex = ($this->currentPage - 1) * $this->limit;
+		} else {
+			$this->currentIndex = 0;
+		}
+	}
 
-    /**
-     * returns new collection with index range items
-     * @return $this
-     */
-    public function slice(int $start, $end)
-    {
-        // TODO : implement non destructive slice
-        return $this;
-    }
+	public function current()
+	{
+		return $this->index($this->currentIndex);
+	}
 
-    /**
-     * reverses array orders
-     * @return $this
-     */
-    public function reverse()
-    {
-        $this->collection = array_reverse($this->collection);
-        return $this;
-    }
+	public function key()
+	{
+		return array_keys($this->collection)[$this->currentIndex];
+	}
 
+	public function next()
+	{
+		++$this->currentIndex;
+	}
 
-    public function has($name)
-    {
-        return isset($this->collection[$name]);
-    }
+	public function valid()
+	{
+		if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) {
+			return false;
+		}
 
-    /**
-     * return first item in data array
-     * @return Object
-     */
-    public function first()
-    {
-        return $this->index(0);
-    }
+		return array_key_exists($this->key(), $this->collection);
+	}
 
-    /**
-     * return last item in data array
-     * @return Object
-     */
-    public function last()
-    {
-        return $this->index(-1);
-    }
+	/* Interface requirements */
 
-    /**
-     * return item at given index
-     */
-    public function index($x)
-    {
+	/**
+	 * simply return the count of elments in the data container.
+	 *
+	 * @return int
+	 */
+	public function count(): int
+	{
+		return (int) count($this->collection);
+	}
 
-        if(!count($this->collection)){
-            throw new \Exception("$this->className is empty, cannot retrieve index($x)");
-        }
-        return array_values($this->collection)[$x];
-    }
+	public function offsetSet($key, $value)
+	{
+		$this->set($key, $value);
+	}
 
-    public function getArray($key, $value)
-    {
+	public function offsetGet($key)
+	{
+		return $this->get($key);
+	}
 
-        $array = [];
-        foreach ($this as $object) {
-            $key = $object->get($key);
-            $value = $object->get($value);
+	public function offsetUnset($key)
+	{
+		return $this->remove($key);
+	}
 
-            $array[$key] = $value;
-        }
-        return $array;
+	public function offsetExists($key)
+	{
+		return $this->has($key);
+	}
 
-    }
-
-
-    /* Interface requirements */
-    public function rewind()
-    {
-        if ( $this->currentPage > 1 ) {
-            $this->currentIndex = ($this->currentPage - 1) * $this->limit;
-        }
-        else {
-            $this->currentIndex = 0;
-        }
-
-    }
-    public function current()
-    {
-        return $this->index($this->currentIndex);
-    }
-
-    public function key()
-    {
-        return array_keys($this->collection)[$this->currentIndex];
-    }
-
-    public function next()
-    {
-        $this->currentIndex++;
-    }
-
-    public function valid()
-    {
-        if ($this->limit > 0 && $this->currentIndex === ($this->endIndex + 1)) return false;
-
-        return array_key_exists( $this->key() , $this->collection );
-    }
-    /* Interface requirements */
-
-    /**
-     * simply return the count of elments in the data container
-     * @return int
-     */
-    public function count() : int
-    {
-        return (int) count($this->collection);
-    }
-
-    public function offsetSet($key, $value)
-    {
-        $this->set($key, $value);
-    }
-
-    public function offsetGet($key)
-    {
-        return $this->get($key);
-    }
-
-    public function offsetUnset($key)
-    {
-        return $this->remove($key);
-    }
-
-    public function offsetExists($key)
-    {
-        return $this->has($key);
-    }
-
-
-
-    public function __get($name)
-    {
-        return $this->get($name);
-    }
-
-
+	public function __get($name)
+	{
+		return $this->get($name);
+	}
 }

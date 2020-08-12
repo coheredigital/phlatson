@@ -4,21 +4,23 @@ namespace Phlatson;
 
 class Field extends DataObject
 {
-
-    public function type() : Fieldtype
+    public function type(): Fieldtype
     {
         $name = $this->data->get('fieldtype');
-        $fieldtype = $this->api('finder')->get("Fieldtype", $name);
+        $fieldtype = $this->app->getFieldtype($name);
         // TODO: reevaluate return the default base Fieldtype
         if (!$fieldtype) {
-            $fieldtype = new Fieldtype();
+            // $fieldtype = new Fieldtype();
+            throw new \Exception("Fieldtype ($name) does not exist");
         }
+
         return $fieldtype;
     }
 
     public function template(): Template
     {
-        $template = $this->api('finder')->get("Template", "template");
+        $template = $this->finder->get('Template', 'template');
+
         return $template;
     }
 }

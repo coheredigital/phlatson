@@ -4,12 +4,13 @@ namespace Phlatson;
 
 class Page extends DataObject
 {
-    const BASE_FOLDER = 'pages/';
-    const BASE_URL = '';
+    public const BASE_FOLDER = 'pages/';
+    public const BASE_URL = '';
 
     protected $parent;
-    protected $children;
     protected $parents;
+    protected $children;
+    protected array $files = [];
 
     public function rootFolder(): string
     {
@@ -20,91 +21,110 @@ class Page extends DataObject
     {
         // remove root from path
         $value = \str_replace($this->rootPath(), '', $this->path());
-        $value = trim($value, "/");
-        $value = $value ? "/$value/" : "/";
+        $value = trim($value, '/');
+        $value = $value ? "/$value/" : '/';
+
         return $value;
     }
 
     public function parent(): ?Page
     {
         $rootPath = $this->rootPath();
-        $parentPath = dirname($this->path()) . "/";
+        $parentPath = \dirname($this->path()) . '/';
 
         // check if root is in parent path
-        if (strpos($parentPath, $rootPath) === false) {
+        if (false === strpos($parentPath, $rootPath)) {
             return null;
         }
 
-        $url = "/" . str_replace($rootPath, "", $parentPath);
+        $url = '/' . str_replace($rootPath, '', $parentPath);
         $url = rtrim($url, '/') . '/';
 
-        $page = new Page($url);
+        $page = $this->app->getPage($url);
 
         if ($page->exists()) {
             return $page;
         }
+
         return null;
     }
 
     public function parents(): ObjectCollection
     {
-
         // skip if already stored
-        // if ($this->parents instanceof ObjectCollection) {
-        //     return $this->parents;
-        // }
+        if (isset($this->parents) && $this->parents instanceof ObjectCollection) {
+            return $this->parents;
+        }
 
         // create empty collection
-        $this->parents = new ObjectCollection();
+        $this->parents = new ObjectCollection($this->app);
 
-        $currentPage = $this;
+        $current = $this;
 
-        while ($currentPage->parent() !== null) {
-            $this->parents->append($currentPage->parent());
-            $currentPage = $currentPage->parent();
+        while ($current->parent() !== null) {
+            $this->parents->append($current->parent());
+            $current = $current->parent();
         }
 
         // cache result
         $this->parents->reverse();
+
         return $this->parents;
     }
 
     public function children(): ObjectCollection
     {
-        $url = $this->url;
-        $children = $this->children;
-
         // skip if already stored
-        if ($children instanceof ObjectCollection) {
-            return $children;
+        if ($this->children instanceof ObjectCollection) {
+            return $this->children;
         }
 
         // create empty collection
-        $children = new ObjectCollection();
+        $this->children = new ObjectCollection($this->app);
 
-
-        $index_array = [];
-        $dir = new \FilesystemIterator($this->path());
-        foreach ($dir as $file) {
-            if ($file->isDir()) {
-                $name = $file->getFilename();
-                $url = "{$this->url()}{$name}";
-                $index_array[] = $url;
-                $child = $this->api('finder')->get("Page", $url);
-                $children->append($child);
-            }
+        $folders = $this->subfolders();
+        foreach ($folders as $folder) {
+            $name = basename($folder);
+            $this->children->append($this->child($name));
         }
 
-        $this->children = $children;
-        return $children;
+        return $this->children;
+    }
+
+    public function subfolders(): array
+    {
+        $path = $this->path() . '/*';
+
+        return glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
     }
 
     public function child(string $name): Page
     {
         $name = trim($name, '/');
-        $path = "{$this->path}{$name}/";
+        $url = trim($this->url(), '/');
+        $path = $url . $name;
 
-        $page = new Page($path);
-        return $page;
+        return $this->app->getPage($path);
+    }
+
+    public function files(): array
+    {
+        if (!$this->files) {
+            $files = new \FilesystemIterator($this->path(), \FilesystemIterator::SKIP_DOTS);
+            foreach ($files as $file) {
+                if (!$file->isDir()) {
+                    $file = $file->getPathname();
+                    $this->files[] = new File($file);
+                }
+            }
+        }
+
+        return $this->files;
+    }
+
+    // statuses, placeholder pseduo code for now
+    public function isPublished(): bool
+    {
+        return $this->dataFolder->has('published.json');
     }
 }

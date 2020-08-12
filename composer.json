@@ -29,16 +29,13 @@
     },
     "require": {
         "php": ">=7.4.0",
-        "digitalnature/php-ref": "^1.2",
         "scrivo/highlight.php": "v9.12.0.3",
         "filp/whoops": "^2.3",
-        "erusev/parsedown": "^1.7",
-        "itsgoingd/clockwork": "^4.1",
         "symfony/var-dumper": "^5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
-        "kint-php/kint": "^3.3"
+        "vimeo/psalm": "^3.13"
     },
     "config": {
         "optimize-autoloader": true

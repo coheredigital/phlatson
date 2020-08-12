@@ -2,10 +2,8 @@
 
 namespace Phlatson;
 
-
 /**
- *
- * Variable convention for Phlatson objects (Page, Field, Template, View)
+ * Variable convention for Phlatson objects (Page, Field, Template, View).
  *
  *      example for this case a Page, located at
  *      /site/pages/about-us/our-team/jane-doe/data.json
@@ -24,44 +22,42 @@ namespace Phlatson;
  *
  *      $name = "jane-doe"
  *      the base name of the path  : /page
- *
  */
-
 abstract class DataObject
 {
-
-    use ApiAccess;
-
-    protected JsonObject $data;
-    protected array $formattedData  = [];
+    protected App $app;
+    protected DataFile $data;
+    protected DataFileCollection $dataFiles;
+    protected array $formattedData = [];
     protected FieldCollection $fields;
     protected string $rootPath;
     protected ?Template $template = null;
 
-    public function __construct($path = null)
+    public function __construct(?string $path = null, App $app)
     {
-        if (is_null($path)) {
+        if (!isset($path)) {
             return;
         }
+
+        $this->app = $app;
+
         $path = '/' . trim($path, '/') . '/';
-
-        $classname = $this->classname();
-
-        $jsonData = $this->api('finder')->getDataFor($classname, $path);
-        $this->setData($jsonData);
     }
 
-    public function setData(JsonObject $data): self
+    public function setData(DataFile $data): self
     {
         $this->data = $data;
+
         return $this;
     }
 
     public function template(): Template
     {
         if (!$this->template && $name = $this->data->get('template')) {
-            $this->template = $this->api('finder')->get("Template", $name);
+            $this->template = $this->app->getTemplate($name);
+            $this->template->setOwner($this);
         }
+
         return $this->template;
     }
 
@@ -73,15 +69,17 @@ abstract class DataObject
     public function rootFolder(): string
     {
         $value = str_replace($this->name(), '', $this->folder());
-        $value = trim($value, "/");
+        $value = trim($value, '/');
+
         return "/$value/";
     }
 
     public function folder(): string
     {
-        $value = \str_replace(ROOT_PATH, '', $this->path());
-        $value = trim($value, "/");
-        $value = $value ? "/$value/" : "/";
+        $value = \str_replace($this->app->path(), '', $this->path());
+        $value = \trim($value, '/');
+        $value = $value ? "/$value/" : '/';
+
         return $value;
     }
 
@@ -92,20 +90,20 @@ abstract class DataObject
 
     public function rootPath(): string
     {
-        return rtrim(ROOT_PATH . "site/" . $this::BASE_FOLDER, '/') . '/';
+        return rtrim($this->app->path(), '/') . '/';
     }
 
     protected function rootUrl(): string
     {
-
         $url = $this->url();
-        $url = trim($url, "/");
-        $url = str_replace($this->name(), "", $url);
-        $url = trim($url, "/");
+        $url = trim($url, '/');
+        $url = str_replace($this->name(), '', $url);
+        $url = trim($url, '/');
 
         if (!$url) {
-            return "/";
+            return '/';
         }
+
         return "/$url/";
     }
 
@@ -116,7 +114,8 @@ abstract class DataObject
             throw new \Exception("Cannot get path of $file");
         }
 
-        $value = dirname($file) . "/";
+        $value = dirname($file) . '/';
+
         return $value;
     }
 
@@ -142,9 +141,10 @@ abstract class DataObject
 
     /**
      * Retrieve raw unformatted data from the data object
-     * if not $key is provided returns the entire data object
+     * if not $key is provided returns the entire data object.
      *
      * @param string $key
+     *
      * @return mixed
      */
     public function data(?string $key = null)
@@ -154,17 +154,15 @@ abstract class DataObject
 
     public function get(string $key)
     {
-        $value = null;
+        if (!isset($this->data)) {
+            return null;
+        }
 
-        $value = $this->data->get($key);
-
-        if ($this->data->get($key)) {
-            $field = $this->api('finder')->get("Field", $key);
+        if ($value = $this->data->get($key)) {
+            $field = $this->app->getField($key);
             $fieldtype = $field->type();
             $value = $fieldtype->decode($value);
         }
-
-
 
         return $value ?: null;
     }
@@ -174,13 +172,17 @@ abstract class DataObject
      * example
      * <?= $page->title ?>
      * instead of
-     * <?= $page->get('title') ?>
+     * <?= $page->get('title') ?>.
      *
-     * @param string $key
-     * @return void
      */
     final public function __get(string $key)
     {
         return $this->get($key);
+    }
+
+    // TODO: Look at removing
+    final public function classname(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
     }
 }

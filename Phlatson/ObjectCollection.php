@@ -2,100 +2,106 @@
 
 namespace Phlatson;
 
-class ObjectCollection extends Phlatson implements \Iterator, \Countable
+class ObjectCollection implements \Iterator, \Countable
 {
-
     public $iterator;
+    protected App $app;
     protected int $currentPage = 1;
     protected int $limit = 0;
     protected int $position = 0;
-
     protected array $files = [];
     protected array $collection = [];
 
-    public function append(DataObject $item)
+    public function __construct(App $app)
+    {
+        $this->app = $app;
+    }
+
+    public function append(DataObject $item): self
     {
         $this->files[$item->file] = true;
         $this->collection[] = $item;
+
         return $this;
     }
 
-    public function reverse() {
+    public function reverse(): self
+    {
         $this->collection = array_reverse($this->collection);
+
         return $this;
     }
 
-    public function import(array $collection)
+    public function import(array $collection): self
     {
         // TODO: this need work
         $files = array_fill_keys($collection, true);
         $this->files += $files;
         $this->collection += $collection;
+
         return $this;
     }
 
-    public function limit(int $limit) : self
+    public function limit(int $limit): self
     {
         $this->limit = $limit;
+
         return $this;
     }
 
-    public function paginate(int $currentPage) : self
+    public function paginate(int $currentPage): self
     {
         if ($currentPage < 1) {
-            throw new \Exception("Request page number cannot be less than 1");
+            throw new \Exception('Request page number cannot be less than 1');
         }
         $this->currentPage = $currentPage;
+
         return $this;
     }
 
-    public function count() : int
+    public function count(): int
     {
         return count($this->collection);
     }
 
-    public function index() : int
+    public function index(): int
     {
         if ($this->limit > 0) {
             return ($this->currentPage * $this->limit) - $this->limit + $this->position;
-        }
-        else {
+        } else {
             return $this->position;
         }
-
     }
 
-    public function pageCount() : int
+    public function pageCount(): int
     {
         return (int) intval($this->count() / $this->limit) + (($this->count() / $this->limit) ? 1 : 0);
     }
 
-    public function nextPage() : int
+    public function nextPage(): int
     {
         return (int) $this->currentPage + 1;
     }
 
-    public function previousPage() : int
+    public function previousPage(): int
     {
         return (int) $this->currentPage - 1;
     }
 
     /**
-     * Iterator Interface methods
+     * Iterator Interface methods.
      *
-     * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
 
-    public function current()
+    public function current(): DataObject
     {
-
         $item = $this->collection[$this->index()];
         if (is_string($item)) {
-            $item = $this->api('finder')->get("Page",$item);
+            $item = $this->app->getPage($item);
             // replace the existing pointer
             $this->collection[$this->index()] = $item;
         }
@@ -118,7 +124,7 @@ class ObjectCollection extends Phlatson implements \Iterator, \Countable
         if ($this->limit && $this->position == $this->limit) {
             return false;
         }
+
         return isset($this->collection[$this->index()]);
     }
-
 }

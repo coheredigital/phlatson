@@ -2,82 +2,80 @@
 
 namespace Phlatson;
 
-
-class View extends Phlatson
+class View
 {
+	protected string $path;
+	protected string $file;
+	protected array $data = [];
 
-    const BASE_FOLDER = 'views/';
-    const BASE_URL = 'views/';
+	public function __construct(string $root, string $uri)
+	{
+		// TODO: remove hard coding
 
-    protected $path;
+		$filepath = $root . '/' . $uri . '.php';
 
-    function __construct(string $file)
-    {
-        // TODO: remove hard coding
-        $root = ROOT_PATH . "site/" . 'views/';
-        $filepath = "{$root}{$file}.php";
+		// validate view file
+		if (!file_exists($filepath)) {
+			throw new \Exception("Invalid file ($filepath) cannot be used as view");
+		}
+		$this->file = $filepath;
+		$this->path = dirname($filepath);
+	}
 
-        // validate view file
-        if (!file_exists($filepath)) {
-            throw new \Exception("Invalid file ($filepath) cannot be used as view");
-        }
-        $this->file = $filepath;
-        $this->path = dirname($filepath);
-    }
+	public function data(array $data)
+	{
+		$this->data = $data;
+	}
 
-    public function name() : string
-    {
-        return pathinfo($this->file)['filename'];
-    }
+	public function name(): string
+	{
+		return pathinfo($this->file)['filename'];
+	}
 
-    public function renderPartial(? string $url, array $data = []) : string
-    {
-        $url = trim($url, "/");
-        $file = "{$this->path}/{$url}.php";
-        $output = "";
-        $output = $this->renderViewFile($file, $data);
-        return $output;
-    }
+	public function renderPartial(?string $url, array $data = []): string
+	{
+		$url = trim($url, '/');
+		$file = "{$this->path}/{$url}.php";
+		$output = '';
+		$output = $this->renderViewFile($file, $data);
 
-    public function renderSelf() : string
-    {
-        return $this->renderViewFile($this->file);
-    }
+		return $output;
+	}
 
-    public function renderViewFile(string $file, array $data = []) : string
-    {
+	public function renderSelf(?array $data = []): string
+	{
+		return $this->renderViewFile($this->file, $data);
+	}
 
-        if (!file_exists($file)) {
-            throw new \Exception("View does not exist: $file");
-        }
+	public function renderViewFile(string $file, array $data = []): string
+	{
+		// merge set data over api
+		$data = \array_merge($this->data, $data);
 
-        // render template file
-        ob_start();
-        // extract $data array to varyables
-        extract($data);
+		if (!file_exists($file)) {
+			throw new \Exception("View does not exist: $file");
+		}
 
-        // give the rendered page access to the API
-        extract($this->api());
+		// render template file
+		\ob_start();
+		// extract $data array to variables
+		\extract($data);
 
-        // render found file
-        include($file);
+		// render found file
+		include $file;
 
-        $output = ob_get_contents();
-        ob_end_clean();
-        return $output;
+		$output = \ob_get_contents();
+		\ob_end_clean();
 
-    }
+		return $output;
+	}
 
+	public function render(?string $url = null, array $data = []): string
+	{
+		if ($url) {
+			return $this->renderPartial($url, $data);
+		}
 
-    public function render(? string $url = null, array $data = []) : string
-    {
-        $output = "";
-        if ($url) {
-            $output = $this->renderPartial($url, $data);
-        } else {
-            $output = $this->renderSelf();
-        }
-        return $output;
-    }
-
+		return $this->renderSelf($data);
+	}
 }

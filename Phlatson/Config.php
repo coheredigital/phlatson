@@ -2,9 +2,7 @@
 
 namespace Phlatson;
 
-class Config extends DataObject
+class Config extends DataFile
 {
-
 	// placeholder
-
 }
