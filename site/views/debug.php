@@ -6,7 +6,7 @@ $folder = new Folder($app, 'pages');
 
 dump($page);
 dump($finder);
-dump($child = $finder->getPage('/about/contact-us'));
+dump($child = $app->getPage('/about/contact-us'));
 dump($folder);
 dump($folder->contents());
 dump($folders = $folder->find('/about/contact-us/'));

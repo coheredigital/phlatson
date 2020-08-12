@@ -48,6 +48,11 @@ class Folder
         return $this->uri;
     }
 
+    public function path(): string
+    {
+        return $this->path;
+    }
+
     public function contents(?string $type = null): array
     {
         if (!isset($this->contents)) {

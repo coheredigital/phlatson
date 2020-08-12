@@ -90,11 +90,9 @@ class Finder
             throw new \Exception("Class ($classname) does not exist, cannot be used to get data");
         }
 
-        foreach ($this->mappings as $mapping) {
-            foreach ($mapping as $rootFolder) {
-                if ($rootFolder->hasChild($uri)) {
-                    $folder = $rootFolder->find($uri);
-                }
+        foreach ($this->mappings[$classname] as $rootFolder) {
+            if ($rootFolder->hasChild($uri)) {
+                $folder = $rootFolder->find($uri);
             }
         }
 
@@ -138,10 +136,10 @@ class Finder
     public function getView(string $uri): View
     {
         // get mappings paths
-        $paths = $this->getPaths('View');
+        $folders = $this->getPaths('View');
 
-        foreach ($paths as $path) {
-            $path = \rtrim($path, '/');
+        foreach ($folders as $folder) {
+            $path = \rtrim($folder->path(), '/');
             $file = "$path/$uri.php";
             if (\file_exists($file)) {
                 $view = new View($path, $uri);
