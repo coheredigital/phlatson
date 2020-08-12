@@ -19,5 +19,6 @@ $folder = new Folder($app, '/pages/');
 
 dump($app);
 dump($folder);
+dump($folder->index());
 dump($folder->children());
 dump($folder->children()->get('benchmark'));

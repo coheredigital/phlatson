@@ -33,6 +33,20 @@ class Folder
         }
     }
 
+    // TODO: remove this
+    public function index()
+    {
+        $file = $this->path . 'folder.json';
+        if (\file_exists($file)) {
+            $data = \json_decode($file, true, 512, JSON_THROW_ON_ERROR);
+            if (isset($data)) {
+                $this->contents = $data;
+            }
+        }
+
+        return $data;
+    }
+
     public function name(): string
     {
         return $this->name;
