@@ -53,15 +53,20 @@ class Folder
         return $this->path;
     }
 
+    public function init(): void
+    {
+        $contents = glob($this->path . '*', GLOB_NOSORT);
+        foreach ($contents as $path) {
+            $type = \is_file($path) ? 'files' : 'folders';
+            $basename = \basename($path);
+            $this->contents[$type][$basename] = $basename;
+        }
+    }
+
     public function contents(?string $type = null): array
     {
         if (!isset($this->contents)) {
-            $contents = glob($this->path . '*', GLOB_NOSORT);
-            foreach ($contents as $path) {
-                $type = \is_file($path) ? 'files' : 'folders';
-                $basename = \basename($path);
-                $this->contents[$type][$basename] = $basename;
-            }
+            $this->init();
         }
 
         return $type === null ? $this->contents : $this->contents[$type];
@@ -197,6 +202,6 @@ class Folder
 
     public function hasFiles(): bool
     {
-        return $this->files()->count() > 0;
+        return count($this->contents('files')) > 0;
     }
 }

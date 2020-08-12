@@ -6,6 +6,12 @@ class DataFile extends File
 {
     protected array $data;
 
+    public function __construct(string $file, ?Folder $folder = null)
+    {
+        // setup base object
+        parent::__construct($file, $folder);
+    }
+
     protected function init(): void
     {
         $this->data = json_decode(file_get_contents($this->file), true, 512, JSON_THROW_ON_ERROR);
