@@ -2,13 +2,16 @@
 
 namespace Phlatson;
 
+// TODO: consider extending from File class
 class DataFile
 {
     public string $name;
+    public string $path;
+    public string $filename;
+    public string $extension;
     public string $file; // TODO: make protected
     protected array $data;
     protected Folder $parent;
-    protected int $modified;
 
     public function __construct(?string $file = null, ?Folder $parent = null)
     {
@@ -16,9 +19,8 @@ class DataFile
             $this->file = $file;
         }
 
-        // TODO: consider extending from File class
         if (isset($file)) {
-            $this->loadFromFile();
+            $this->init();
         }
 
         if (isset($parent)) {
@@ -26,7 +28,7 @@ class DataFile
         }
     }
 
-    protected function loadFromFile(): void
+    protected function init(): void
     {
         if (!\file_exists($this->file)) {
             throw new \Exception("File ($this->file) does not exist");
@@ -36,7 +38,13 @@ class DataFile
         $this->path = $pathinfo['dirname'] . '/';
         $this->name = $pathinfo['basename'];
         $this->extension = $pathinfo['extension'];
-        $this->modified = \filemtime($this->file);
+    }
+
+    protected function loadData(): void
+    {
+        if (!\file_exists($this->file)) {
+            throw new \Exception("File ($this->file) does not exist");
+        }
         $this->data = json_decode(file_get_contents($this->file), true, 512, JSON_THROW_ON_ERROR);
     }
 
@@ -69,7 +77,7 @@ class DataFile
     public function data(?string $key = null)
     {
         if (!isset($this->data)) {
-            $this->loadFromFile();
+            $this->loadData();
         }
 
         if (isset($key)) {
