@@ -12,7 +12,7 @@ class DataFile extends File
         parent::__construct($file, $folder);
     }
 
-    protected function decodeData(): void
+    protected function importData(): void
     {
         $this->data = json_decode(file_get_contents($this->file), true, 512, JSON_THROW_ON_ERROR);
     }
@@ -46,7 +46,7 @@ class DataFile extends File
     public function data(?string $key = null)
     {
         if (!isset($this->data)) {
-            $this->decodeData();
+            $this->importData();
         }
 
         if (isset($key)) {
