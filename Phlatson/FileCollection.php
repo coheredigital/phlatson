@@ -17,7 +17,7 @@ class FileCollection implements \Iterator, \Countable
         $this->app = $app;
     }
 
-    public function append(File $file): self
+    public function append($file): self
     {
         $this->collection[$file->name] = $file;
 

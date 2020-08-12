@@ -1,0 +1,18 @@
+{
+    "files": [
+        "404.php",
+        "benchmark.php",
+        "clockwork.php",
+        "debug.php",
+        "default.php"
+    ],
+    "folders": [
+        "favicons",
+        "fields",
+        "images",
+        "layouts",
+        "partials",
+        "styles"
+    ],
+    "modified": 1597275376
+}

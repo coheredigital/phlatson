@@ -2,18 +2,41 @@
 
 namespace Phlatson;
 
-class DataFile extends File
+class DataFile
 {
+    public string $name;
     protected array $data;
+    public string $file;
+    protected Folder $parent;
+    protected int $modified;
 
-    public function __construct(string $file, ?Folder $folder = null)
+    public function __construct(?string $file = null, ?Folder $parent = null)
     {
-        // setup base object
-        parent::__construct($file, $folder);
+        if (isset($file)) {
+            $this->file = $file;
+        }
+
+        // TODO: consider extending from File class
+        if (isset($file)) {
+            $this->loadFromFile();
+        }
+
+        if (isset($parent)) {
+            $this->parent = $parent;
+        }
     }
 
-    protected function init(): void
+    protected function loadFromFile(): void
     {
+        if (!\file_exists($this->file)) {
+            throw new \Exception("File ($this->file) does not exist");
+        }
+        $pathinfo = \pathinfo($this->file);
+        $this->filename = $pathinfo['filename'];
+        $this->path = $pathinfo['dirname'] . '/';
+        $this->name = $pathinfo['basename'];
+        $this->extension = $pathinfo['extension'];
+        $this->modified = \filemtime($this->file);
         $this->data = json_decode(file_get_contents($this->file), true, 512, JSON_THROW_ON_ERROR);
     }
 
@@ -46,7 +69,7 @@ class DataFile extends File
     public function data(?string $key = null)
     {
         if (!isset($this->data)) {
-            $this->init();
+            $this->loadFromFile();
         }
 
         if (isset($key)) {
@@ -61,9 +84,10 @@ class DataFile extends File
         $this->data = array_replace_recursive($this->data(), $json->data());
     }
 
-    public function save()
+    public function save(string $name = 'data')
     {
         $json = json_encode($this->data, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
-        file_put_contents($this->file, $json);
+        $file = $this->parent->path() . $name . '.json';
+        file_put_contents($file, $json);
     }
 }

@@ -5,6 +5,7 @@ namespace Phlatson;
 class Folder
 {
     protected App $app;
+    protected DataFile $index;
     protected Folder $parent;
     protected string $name;
     protected string $path;
@@ -28,6 +29,8 @@ class Folder
 
         $this->path = $app->path() . \ltrim($this->uri, '/');
 
+        $this->index();
+
         if (!\file_exists($this->path)) {
             throw new \Exception('Invalid path: ' . $this->path);
         }
@@ -36,15 +39,35 @@ class Folder
     // TODO: remove this
     public function index()
     {
-        $file = $this->path . 'folder.json';
-        if (\file_exists($file)) {
-            $data = \json_decode($file, true, 512, JSON_THROW_ON_ERROR);
-            if (isset($data)) {
-                $this->contents = $data;
-            }
+        $file = $this->path . 'index.json';
+        if (!\file_exists($file)) {
+            $this->updateIndex();
         }
 
-        return $data;
+        $this->index = new DataFile($file);
+
+        return $this->index;
+    }
+
+    public function updateIndex()
+    {
+        $index = new DataFile(null, $this);
+        $data = [
+            'files' => [],
+            'folders' => []
+        ];
+        $contents = glob($this->path . '*', GLOB_NOSORT);
+
+        foreach ($contents as $path) {
+            $type = \is_file($path) ? 'files' : 'folders';
+            $data[$type][] = \basename($path);
+        }
+
+        $index->set('files', $data['files']);
+        $index->set('folders', $data['folders']);
+        $index->set('modified', (int) date('U'));
+        $index->save('index');
+        // return $this->index;
     }
 
     public function name(): string
@@ -92,7 +115,7 @@ class Folder
             $this->children = new FolderCollection($this->app, $this);
         }
 
-        if (count($this->contents('folders')) !== $this->children->count()) {
+        if (count($this->index->get('folders')) !== $this->children->count()) {
             $files = $this->contents('folders');
             foreach ($files as $basename) {
                 $this->children->append($basename);
@@ -167,7 +190,7 @@ class Folder
         return $this->files;
     }
 
-    public function file(string $name): ?File
+    public function file(string $name)
     {
         if (!isset($this->files)) {
             $this->files = new FileCollection($this->app);

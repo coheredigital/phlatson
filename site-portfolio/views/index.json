@@ -1,0 +1,17 @@
+{
+    "files": [
+        "default.php",
+        "home.php",
+        "_init.php",
+        "_out.php"
+    ],
+    "folders": [
+        "favicon",
+        "forms",
+        "images",
+        "layouts",
+        "snippets",
+        "styles"
+    ],
+    "modified": 1597275376
+}

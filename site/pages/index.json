@@ -1,11 +1,6 @@
 {
 	"modified": 7921394293547,
-	"folders": [
-		"__clockwork",
-		"about",
-		"benchmark",
-		"debug"
-	],
+	"folders": ["__clockwork", "about", "benchmark", "debug"],
 	"files": [
 		"autosave.json",
 		"data.json",
