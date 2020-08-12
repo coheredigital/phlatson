@@ -10,14 +10,11 @@ class DataFile extends File
     {
         // setup base object
         parent::__construct($file, $folder);
+    }
 
-        // import data
-        $this->data = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
-
-        // check that we got data back from json_decode
-        if (null === $this->data) {
-            throw new \Exception("File ($file) is not a valid JSON file");
-        }
+    protected function decodeData(): void
+    {
+        $this->data = json_decode(file_get_contents($this->file), true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -29,7 +26,7 @@ class DataFile extends File
     {
         switch ($key) {
             default:
-                return $this->data[$key] ?? null;
+                return $this->data($key) ?? null;
                 break;
         }
     }
@@ -46,14 +43,22 @@ class DataFile extends File
         $this->data[$key] = $value;
     }
 
-    public function data(): array
+    public function data(?string $key = null)
     {
+        if (!isset($this->data)) {
+            $this->decodeData();
+        }
+
+        if (isset($key)) {
+            return $this->data[$key] ?? null;
+        }
+
         return $this->data;
     }
 
     public function merge(DataFile $json)
     {
-        $this->data = array_replace_recursive($this->data, $json->data());
+        $this->data = array_replace_recursive($this->data(), $json->data());
     }
 
     public function save()
