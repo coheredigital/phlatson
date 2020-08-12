@@ -9,8 +9,8 @@ class Folder
     protected string $name;
     protected string $path;
     protected string $uri;
-    protected array $children;
-    protected FolderCollection $folders;
+    protected array $contents;
+    protected FolderCollection $children;
     protected FileCollection $files;
 
     public function __construct(App $app, string $path, ?Folder $parent = null)
@@ -38,45 +38,94 @@ class Folder
         return $this->name;
     }
 
+    public function uri(): string
+    {
+        return $this->uri;
+    }
+
     public function folder(): string
     {
         return $this->uri;
     }
 
-    public function children(): array
+    public function contents(?string $type = null): array
     {
-        if (!isset($this->children)) {
-            $this->children = glob($this->path . '*', GLOB_NOSORT);
+        if (!isset($this->contents)) {
+            $contents = glob($this->path . '*', GLOB_NOSORT);
+            foreach ($contents as $path) {
+                $type = \is_file($path) ? 'files' : 'folders';
+                $basename = \basename($path);
+                $this->contents[$type][$basename] = $basename;
+            }
+        }
+
+        return $type === null ? $this->contents : $this->contents[$type];
+    }
+
+    public function children(): FolderCollection
+    {
+        if (!isset($this->children) || count($this->contents('folders')) !== $this->children->count()) {
+            $files = $this->contents('folders');
+            foreach ($files as $basename) {
+                // retrieve the folder, it will automatically be store in the collection
+                $this->child($basename);
+            }
         }
 
         return $this->children;
     }
 
-    public function subfolders(): FolderCollection
-    {
-        if (!isset($this->folders)) {
-            $this->folders = new FolderCollection($this->app);
-            $children = $this->children();
-            foreach ($children as $path) {
-                $basename = \basename($path);
-                if (\is_file($path)) {
-                    continue;
-                }
-                $folder = new Folder(
-                    $this->app,
-                    $this->uri . $basename,
-                    $this
-                );
-                $this->folders->append($folder);
-            }
-        }
-
-        return $this->folders;
-    }
-
     public function parent(): ?Folder
     {
         return $this->parent ?? null;
+    }
+
+    public function hasChild(string $name): bool
+    {
+        $path = $this->path . \ltrim($name, '/');
+
+        return \file_exists($path);
+    }
+
+    public function child(string $name): ?Folder
+    {
+        if (!isset($this->children)) {
+            $this->children = new FolderCollection($this->app);
+        }
+
+        if (!$this->hasChild($name)) {
+            return null;
+        }
+
+        $folder = new Folder(
+            $this->app,
+            $name,
+            $this
+        );
+
+        // automatically store in children collection
+        $this->children->append($folder);
+
+        return $folder;
+    }
+
+    public function find(string $uri): ?Folder
+    {
+        $uri = \trim($uri, '/');
+
+        $parts = \explode('/', $uri);
+
+        $folder = $this;
+
+        foreach ($parts as $name) {
+            $parent = $folder;
+            if (!$parent->hasChild($name)) {
+                return null;
+            }
+            $folder = $parent->child($name);
+        }
+
+        return $folder;
     }
 
     public function rootParent(): Folder
@@ -96,21 +145,49 @@ class Folder
 
     public function files(): FileCollection
     {
-        if (!isset($this->files)) {
+        if (!isset($this->files) || count($this->contents('folders')) !== $this->children->count()) {
             $this->files = new FileCollection($this->app);
-            $children = $this->children();
-            foreach ($children as $path) {
+            foreach ($this->contents('files') as $path) {
                 $basename = \basename($path);
 
-                if (!\is_file($path)) {
-                    continue;
-                }
-                $file = new File($this->path . $basename);
+                $file = $this->file($basename);
                 $this->files->append($file);
             }
         }
 
         return $this->files;
+    }
+
+    public function file(string $name): ?File
+    {
+        if (!isset($this->files)) {
+            $this->files = new FileCollection($this->app);
+        }
+
+        if (!$this->hasFile($name)) {
+            return null;
+        }
+
+        $info = \pathinfo($name);
+
+        switch ($info['extension']) {
+            case 'json':
+                $file = new DataFile($this->path . $name, $this);
+                break;
+
+            default:
+                $file = new File($this->path . $name, $this);
+                break;
+        }
+
+        $this->files->append($file);
+
+        return $file;
+    }
+
+    public function hasFile(string $name): bool
+    {
+        return \file_exists($this->path . $name);
     }
 
     public function hasFiles(): bool

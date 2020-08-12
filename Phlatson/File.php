@@ -11,16 +11,19 @@ class File
     public string $extension;
     public string $url;
     public string $uri;
+    protected Folder $parent;
     protected int $modified;
-    public ?DataStorage $folder = null;
 
-    public function __construct(string $file, ?DataStorage $folder = null)
+    public function __construct(string $file, ?Folder $parent)
     {
         if (!\file_exists($file)) {
             throw new \Exception("File ($file) does not exist");
         }
 
         $pathinfo = \pathinfo($file);
+        if (isset($parent)) {
+            $this->parent = $parent;
+        }
 
         $this->file = $file;
         $this->filename = $pathinfo['filename'];
@@ -28,10 +31,6 @@ class File
         $this->name = $pathinfo['basename'];
         $this->extension = $pathinfo['extension'];
         $this->modified = \filemtime($this->file);
-
-        if (isset($folder)) {
-            $this->folder = $folder;
-        }
     }
 
     public function path(): string
@@ -41,7 +40,7 @@ class File
 
     public function folder(): string
     {
-        return \str_replace($this->folder->path(), '/', $this->path());
+        return \str_replace($this->parent->path(), '/', $this->path());
     }
 
     public function filesize(): int

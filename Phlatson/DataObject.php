@@ -129,16 +129,6 @@ abstract class DataObject
         return \basename($this->path());
     }
 
-    public function filename(): string
-    {
-        return basename($this->file);
-    }
-
-    public function save(): string
-    {
-        return basename($this->file);
-    }
-
     /**
      * Retrieve raw unformatted data from the data object
      * if not $key is provided returns the entire data object.
@@ -178,11 +168,5 @@ abstract class DataObject
     final public function __get(string $key)
     {
         return $this->get($key);
-    }
-
-    // TODO: Look at removing
-    final public function classname(): string
-    {
-        return (new \ReflectionClass($this))->getShortName();
     }
 }

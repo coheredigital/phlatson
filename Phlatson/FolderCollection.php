@@ -16,7 +16,7 @@ class FolderCollection implements \Iterator, \Countable
 
     public function append(Folder $folder): self
     {
-        $this->collection[$folder->name()] = $folder;
+        $this->collection[$folder->uri()] = $folder;
 
         return $this;
     }

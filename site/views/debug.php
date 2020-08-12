@@ -5,12 +5,17 @@ namespace Phlatson;
 $folder = new Folder($app, 'pages');
 
 dump($page);
+dump($finder);
+dump($child = $finder->getPage('/about/contact-us'));
 dump($folder);
-dump($folders = $folder->subfolders());
-dump($folder->files());
-dump($folder->parent());
-dump($folder->isRoot());
-dump($subfolder = $folder->subfolders()->first());
-dump($subfolder->rootParent());
-dump($subfolder->isRoot());
-dump($subfolder->hasFiles());
+dump($folder->contents());
+dump($folders = $folder->find('/about/contact-us/'));
+
+dump($folder);
+// dump($folder->files());
+// dump($folder->parent());
+// dump($folder->isRoot());
+// dump($subfolder = $folder->children()->first());
+// dump($subfolder->rootParent());
+// dump($subfolder->isRoot());
+// dump($subfolder->hasFiles());

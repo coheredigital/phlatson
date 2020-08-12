@@ -6,8 +6,7 @@ class Finder
 {
     protected App $app;
     protected string $rootPath;
-    protected array $pathMappings = [];
-    protected array $dataFolders = [];
+    protected array $mappings = [];
 
     public function __construct(App $app, string $rootPath)
     {
@@ -27,26 +26,12 @@ class Finder
             throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
         }
 
-        $folder = trim($path, '/');
-
         // normalize the path
         if ($path && !file_exists($path)) {
             throw new \Exception("Path ({$path}) does not exist, cannot be used as site data");
         }
 
-        $this->pathMappings[$classname][] = $path;
-
-        return $this;
-    }
-
-    public function addDataFolder(string $classname, DataStorage $folder): self
-    {
-        // validate class
-        if (!class_exists("\Phlatson\\{$classname}")) {
-            throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
-        }
-
-        $this->dataFolders[$classname][] = $folder;
+        $this->mappings[$classname][$path] = new Folder($this->app, $path);
 
         return $this;
     }
@@ -56,11 +41,6 @@ class Finder
         $dataFile = new DataFile("{$path}{$filename}.json");
 
         return $dataFile;
-    }
-
-    public function getDataFolders(string $classname): ?array
-    {
-        return $this->dataFolders[$classname] ?? null;
     }
 
     // TODO: re-evaluate
@@ -110,17 +90,18 @@ class Finder
             throw new \Exception("Class ($classname) does not exist, cannot be used to get data");
         }
 
-        // get mappings paths
-        $folders = $this->getDataFolders($classname);
-
-        foreach ($folders as $folder) {
-            if ($folder->has($uri)) {
-                return $folder->get($uri);
-                break;
+        foreach ($this->mappings as $mapping) {
+            foreach ($mapping as $rootFolder) {
+                if ($rootFolder->hasChild($uri)) {
+                    $folder = $rootFolder->find($uri);
+                }
             }
         }
 
-        return null;
+        // TODO: support variable file
+        $file = $folder->file('data.json');
+
+        return $file;
     }
 
     public function get(string $classname, $path): ?DataObject
@@ -131,46 +112,27 @@ class Finder
         }
 
         // load custom class if detected
-        if ($classFile = $this->getCustomClassFile($classname, $path)) {
-            require_once $classFile;
-            $classname = "\Phlatson\\$path";
-        } else {
-            $classname = "\Phlatson\\$classname";
-        }
+        // this is need for Fieldtypes, possibly more later
+        // if ($classFile = $this->getCustomClassFile($classname, $path)) {
+        //     require_once $classFile;
+        //     $classname = "\Phlatson\\$path";
+        // } else {
+        $classname = "\Phlatson\\$classname";
+        // }
 
         $object = new $classname($path, $this->app);
-
-        if (
-            $this->hasMapping($object->classname())
-        ) {
-            $object->setData($data);
-        }
+        $object->setData($data);
 
         return $object;
     }
 
-    public function hasMapping(string $name): bool
-    {
-        return isset($this->pathMappings[$name]);
-    }
-
     public function getPaths(string $classname): array
     {
-        if (!isset($this->pathMappings[$classname])) {
+        if (!isset($this->mappings[$classname])) {
             throw new \Exception("Path mapping for ($classname) not found, cannot be used to get data");
         }
 
-        return array_reverse($this->pathMappings[$classname]);
-    }
-
-    public function getPage(string $uri): Page
-    {
-        return $this->get('Page', $uri);
-    }
-
-    public function getTemplate(string $uri): Template
-    {
-        return $this->get('Template', $uri);
+        return array_reverse($this->mappings[$classname]);
     }
 
     public function getView(string $uri): View

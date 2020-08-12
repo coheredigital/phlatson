@@ -13,7 +13,7 @@ for ($i = 0; $i < $repeat; $i++) {
     // code...
 
     $folder = new Folder($app, 'pages');
-    $folders = $folder->subfolders();
+    $folders = $folder->children();
     $files = $folder->files();
 }
 
