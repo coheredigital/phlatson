@@ -10,8 +10,7 @@
 		},
 		"search.quickOpen.includeHistory": false,
 		"cSpell.words": [
-			"subfolder",
-			"subfolders"
+			"subfolder"
 		],
 		"workbench.colorCustomizations": {
 			"titleBar.activeBackground": "#4f429e",
