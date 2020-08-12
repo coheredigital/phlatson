@@ -74,11 +74,14 @@ class Folder
 
     public function children(): FolderCollection
     {
-        if (!isset($this->children) || count($this->contents('folders')) !== $this->children->count()) {
+        if (!isset($this->children)) {
+            $this->children = new FolderCollection($this->app, $this);
+        }
+
+        if (count($this->contents('folders')) !== $this->children->count()) {
             $files = $this->contents('folders');
             foreach ($files as $basename) {
-                // retrieve the folder, it will automatically be store in the collection
-                $this->child($basename);
+                $this->children->append($basename);
             }
         }
 
@@ -90,33 +93,22 @@ class Folder
         return $this->parent ?? null;
     }
 
-    public function hasChild(string $name): bool
-    {
-        $path = $this->path . \ltrim($name, '/');
+    // public function hasChild(string $name): bool
+    // {
+    //     $path = $this->path . \ltrim($name, '/');
 
-        return \file_exists($path);
-    }
+    //     return \file_exists($path);
+    // }
 
     public function child(string $name): ?Folder
     {
-        if (!isset($this->children)) {
-            $this->children = new FolderCollection($this->app);
-        }
+        $children = $this->children();
 
-        if (!$this->hasChild($name)) {
+        if (!$children->has($name)) {
             return null;
         }
 
-        $folder = new Folder(
-            $this->app,
-            $name,
-            $this
-        );
-
-        // automatically store in children collection
-        $this->children->append($folder);
-
-        return $folder;
+        return $this->children->get($name);
     }
 
     public function find(string $uri): ?Folder
@@ -129,10 +121,10 @@ class Folder
 
         foreach ($parts as $name) {
             $parent = $folder;
-            if (!$parent->hasChild($name)) {
+            if (!$parent->children()->has($name)) {
                 return null;
             }
-            $folder = $parent->child($name);
+            $folder = $parent->children()->get($name);
         }
 
         return $folder;

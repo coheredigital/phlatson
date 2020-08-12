@@ -91,8 +91,8 @@ class Finder
         }
 
         foreach ($this->mappings[$classname] as $rootFolder) {
-            if ($rootFolder->hasChild($uri)) {
-                $folder = $rootFolder->find($uri);
+            if ($folder = $rootFolder->find($uri)) {
+                break;
             }
         }
 

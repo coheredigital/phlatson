@@ -2,35 +2,28 @@
 
 namespace Phlatson;
 
-class FolderCollection implements \Iterator, \Countable
+class FolderCollection implements \ArrayAccess, \Countable
 {
-    public $iterator;
     protected App $app;
+    protected Folder $parent;
     protected int $position = 0;
     protected array $collection = [];
 
-    public function __construct(App $app)
+    public function __construct(App $app, Folder $parent)
     {
         $this->app = $app;
+        $this->parent = $parent;
     }
 
-    public function append(Folder $folder): self
+    public function append(string $name): self
     {
-        $this->collection[$folder->uri()] = $folder;
+        if (!\file_exists($this->parent->path() . $name)) {
+            throw new \Exception('Folder (' . $this->parent->path() . $name . ') does not exist, cannot append to collection.');
+        }
+
+        $this->collection[$name] = $name;
 
         return $this;
-    }
-
-    public function reverse(): self
-    {
-        $this->collection = array_reverse($this->collection);
-
-        return $this;
-    }
-
-    public function first(): Folder
-    {
-        return reset($this->collection);
     }
 
     public function count(): int
@@ -38,52 +31,43 @@ class FolderCollection implements \Iterator, \Countable
         return count($this->collection);
     }
 
-    public function index(): int
+    public function has($key): bool
     {
-        if ($this->limit > 0) {
-            return ($this->currentPage * $this->limit) - $this->limit + $this->position;
-        } else {
-            return $this->position;
-        }
+        return isset($this->collection[$key]);
     }
 
-    /**
-     * Iterator Interface methods.
-     *
-     */
-    public function rewind(): void
+    public function get($key): ?Folder
     {
-        $this->position = 0;
-    }
-
-    public function current(): DataObject
-    {
-        $item = $this->collection[$this->index()];
-        if (is_string($item)) {
-            $item = $this->app->getPage($item);
-            // replace the existing pointer
-            $this->collection[$this->index()] = $item;
+        if (!$this->has($key)) {
+            return null;
         }
 
-        return $item;
+        $folder = new Folder(
+            $this->app,
+            $this->collection[$key],
+            $this->parent
+        );
+
+        return $folder;
     }
 
-    public function key()
+    public function offsetGet($key)
     {
-        return $this->index();
+        return $this->get($key);
     }
 
-    public function next()
+    public function offsetSet($key, $value): void
     {
-        ++$this->position;
+        $this->collection[$key] = $value;
     }
 
-    public function valid()
+    public function offsetUnset($key): void
     {
-        if ($this->limit && $this->position == $this->limit) {
-            return false;
-        }
+        unset($this->collection[$key]);
+    }
 
-        return isset($this->collection[$this->index()]);
+    public function offsetExists($key): bool
+    {
+        return $this->has($key);
     }
 }

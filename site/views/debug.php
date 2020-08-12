@@ -8,9 +8,7 @@ dump($page);
 dump($finder);
 dump($child = $app->getPage('/about/contact-us'));
 dump($folder);
-dump($folder->contents());
-dump($folder->contents('folders'));
-dump($folder->contents('files'));
+
 dump($folders = $folder->find('/about/contact-us/'));
 
 dump($folder);
