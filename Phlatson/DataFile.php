@@ -5,8 +5,8 @@ namespace Phlatson;
 class DataFile
 {
     public string $name;
+    public string $file; // TODO: make protected
     protected array $data;
-    public string $file;
     protected Folder $parent;
     protected int $modified;
 
@@ -84,10 +84,10 @@ class DataFile
         $this->data = array_replace_recursive($this->data(), $json->data());
     }
 
-    public function save(string $name = 'data')
+    public function save(): void
     {
         $json = json_encode($this->data, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
-        $file = $this->parent->path() . $name . '.json';
+        $file = $this->parent->path() . $this->name . '.json';
         file_put_contents($file, $json);
     }
 }

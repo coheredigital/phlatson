@@ -63,10 +63,10 @@ class Folder
             $data[$type][] = \basename($path);
         }
 
+        $index->name = 'index';
         $index->set('files', $data['files']);
         $index->set('folders', $data['folders']);
         $index->set('modified', (int) date('U'));
-        $index->save('index');
         // return $this->index;
     }
 
