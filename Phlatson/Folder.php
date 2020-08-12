@@ -26,7 +26,7 @@ class Folder
         $this->uri = isset($this->parent) ? $this->parent->folder() : '/';
         $this->uri .= $this->name . '/';
 
-        $this->path = $app->path() . $this->uri . '/';
+        $this->path = $app->path() . \ltrim($this->uri, '/');
 
         if (!\file_exists($this->path)) {
             throw new \Exception('Invalid path: ' . $this->path);
@@ -79,6 +79,21 @@ class Folder
         return $this->parent ?? null;
     }
 
+    public function rootParent(): Folder
+    {
+        $parent = $this;
+        while ($parent->parent()) {
+            $parent = $parent->parent();
+        }
+
+        return $parent;
+    }
+
+    public function isRoot(): bool
+    {
+        return $this->parent() === null;
+    }
+
     public function files(): FileCollection
     {
         if (!isset($this->files)) {
@@ -96,5 +111,10 @@ class Folder
         }
 
         return $this->files;
+    }
+
+    public function hasFiles(): bool
+    {
+        return $this->files()->count() > 0;
     }
 }

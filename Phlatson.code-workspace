@@ -3,5 +3,30 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"search.exclude": {
+			"**/*.json": true
+		},
+		"search.quickOpen.includeHistory": false,
+		"cSpell.words": [
+			"subfolder",
+			"subfolders"
+		],
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#4f429e",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.inactiveBackground": "#4f429e99",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#4f429e",
+		"files.watcherExclude": {
+			"**/.php_cs": true,
+			"**/pseudo-code.php": true
+		},
+		"intelephense.files.exclude": [
+			"**/*.php_cs",
+			"**/pseudo-code.php"
+		]
+	}
 }
