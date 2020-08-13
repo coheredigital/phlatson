@@ -16,6 +16,12 @@ for ($i = 0; $i < $repeat; $i++) {
     // $content = $folder->contents();
     $folders = $folder->children();
     $files = $folder->files();
+
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
 }
 dump($folder);
 

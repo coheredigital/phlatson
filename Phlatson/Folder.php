@@ -109,6 +109,17 @@ class Folder
         return $type === null ? $this->contents : $this->contents[$type];
     }
 
+    public function child(string $name): ?Folder
+    {
+        $children = $this->children();
+
+        if (!$children->has($name)) {
+            return null;
+        }
+
+        return $this->children->get($name);
+    }
+
     public function children(): FolderCollection
     {
         if (!isset($this->children)) {
@@ -122,20 +133,37 @@ class Folder
         return $this->children;
     }
 
-    public function parent(): ?Folder
+    public function file(string $name)
     {
-        return $this->parent ?? null;
-    }
+        $files = $this->files();
 
-    public function child(string $name): ?Folder
-    {
-        $children = $this->children();
-
-        if (!$children->has($name)) {
+        if (!$this->hasFile($name)) {
             return null;
         }
 
-        return $this->children->get($name);
+        if (!$files->has($name)) {
+            return null;
+        }
+
+        return $files->get($name);
+    }
+
+    public function files(): FileCollection
+    {
+        if (!isset($this->files)) {
+            $this->files = new FileCollection($this->app, $this);
+        }
+
+        foreach ($this->contents('files') as $path) {
+            $this->files->append($path);
+        }
+
+        return $this->files;
+    }
+
+    public function parent(): ?Folder
+    {
+        return $this->parent ?? null;
     }
 
     public function find(string $uri): ?Folder
@@ -172,49 +200,11 @@ class Folder
         return $this->parent() === null;
     }
 
-    public function files(): FileCollection
-    {
-        if (!isset($this->files)) {
-            $this->files = new FileCollection($this->app);
-        }
-
-        foreach ($this->contents('files') as $path) {
-            $file = $this->file(\basename($path));
-            $this->files->append($file);
-        }
-
-        return $this->files;
-    }
-
-    public function file(string $name)
-    {
-        if (!isset($this->files)) {
-            $this->files = new FileCollection($this->app);
-        }
-
-        if (!$this->hasFile($name)) {
-            return null;
-        }
-
-        $info = \pathinfo($name);
-
-        switch ($info['extension']) {
-            case 'json':
-                $file = new DataFile($this->path . $name, $this);
-                break;
-
-            default:
-                $file = new File($this->path . $name, $this);
-                break;
-        }
-
-        $this->files->append($file);
-
-        return $file;
-    }
-
     public function hasFile(string $name): bool
     {
+        // $files = $this->index->get('files');
+
+        // return isset($files[$name]);
         return \file_exists($this->path . $name);
     }
 

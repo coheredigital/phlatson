@@ -17,9 +17,6 @@ class DataFile
     {
         if (isset($file)) {
             $this->file = $file;
-        }
-
-        if (isset($file)) {
             $this->init();
         }
 
