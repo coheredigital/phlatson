@@ -193,14 +193,11 @@ class Folder
 
     public function hasFile(string $name): bool
     {
-        // $files = $this->index->get('files');
-
-        // return isset($files[$name]);
         return \file_exists($this->path . $name);
     }
 
     public function hasFiles(): bool
     {
-        return count($this->contents('files')) > 0;
+        return count($this->index->get('files')) > 0;
     }
 }
