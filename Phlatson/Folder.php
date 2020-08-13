@@ -126,17 +126,11 @@ class Folder
 
     public function file(string $name)
     {
-        $files = $this->files();
-
-        if (!$this->hasFile($name)) {
+        if (!$this->files()->has($name)) {
             return null;
         }
 
-        if (!$files->has($name)) {
-            return null;
-        }
-
-        return $files->get($name);
+        return $this->files()->get($name);
     }
 
     public function files(): FileCollection
@@ -189,15 +183,5 @@ class Folder
     public function isRoot(): bool
     {
         return $this->parent() === null;
-    }
-
-    public function hasFile(string $name): bool
-    {
-        return \file_exists($this->path . $name);
-    }
-
-    public function hasFiles(): bool
-    {
-        return count($this->index->get('files')) > 0;
     }
 }
