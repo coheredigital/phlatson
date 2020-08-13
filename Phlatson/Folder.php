@@ -100,15 +100,6 @@ class Folder
         }
     }
 
-    public function contents(?string $type = null): array
-    {
-        if (!isset($this->contents)) {
-            $this->init();
-        }
-
-        return $type === null ? $this->contents : $this->contents[$type];
-    }
-
     public function child(string $name): ?Folder
     {
         $children = $this->children();
@@ -154,7 +145,7 @@ class Folder
             $this->files = new FileCollection($this->app, $this);
         }
 
-        foreach ($this->contents('files') as $path) {
+        foreach ($this->index->get('files') as $path) {
             $this->files->append($path);
         }
 
