@@ -29,16 +29,7 @@ class Folder
 
         $this->path = $app->path() . \ltrim($this->uri, '/');
 
-        $this->index();
-
-        if (!\file_exists($this->path)) {
-            throw new \Exception('Invalid path: ' . $this->path);
-        }
-    }
-
-    // TODO: remove this
-    public function index()
-    {
+        // preload the index
         $file = $this->path . 'index.json';
         if (!\file_exists($file)) {
             $this->updateIndex();
@@ -46,7 +37,9 @@ class Folder
 
         $this->index = new DataFile($file);
 
-        return $this->index;
+        if (!\file_exists($this->path)) {
+            throw new \Exception('Invalid path: ' . $this->path);
+        }
     }
 
     public function updateIndex()

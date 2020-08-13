@@ -12,11 +12,26 @@ dump($page);
 for ($i = 0; $i < $repeat; $i++) {
     // code...
     $folder = new Folder($app, 'pages');
-    $index = $folder->index();
+
     // $content = $folder->contents();
     $folders = $folder->children();
     $files = $folder->files();
 
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
+    $files = $folder->file('data.json');
     $files = $folder->file('data.json');
     $files = $folder->file('data.json');
     $files = $folder->file('data.json');
