@@ -10,7 +10,7 @@ class Folder
     protected string $name;
     protected string $path;
     protected string $uri;
-    protected array $contents;
+    protected array $cache = [];
     protected FolderCollection $children;
     protected FileCollection $files;
 
@@ -123,7 +123,12 @@ class Folder
             return null;
         }
 
-        return $this->files()->get($name);
+        // TODO: evaluate the need for this
+        if (isset($this->cache[$name])) {
+            return $this->cache[$name];
+        }
+
+        return $this->cache[$name] = $this->files()->get($name);
     }
 
     public function files(): FileCollection
