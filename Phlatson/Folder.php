@@ -115,11 +115,8 @@ class Folder
             $this->children = new FolderCollection($this->app, $this);
         }
 
-        if (count($this->index->get('folders')) !== $this->children->count()) {
-            $files = $this->contents('folders');
-            foreach ($files as $basename) {
-                $this->children->append($basename);
-            }
+        foreach ($this->index->get('folders') as $basename) {
+            $this->children->append($basename);
         }
 
         return $this->children;
@@ -177,14 +174,13 @@ class Folder
 
     public function files(): FileCollection
     {
-        if (!isset($this->files) || count($this->contents('folders')) !== $this->children->count()) {
+        if (!isset($this->files)) {
             $this->files = new FileCollection($this->app);
-            foreach ($this->contents('files') as $path) {
-                $basename = \basename($path);
+        }
 
-                $file = $this->file($basename);
-                $this->files->append($file);
-            }
+        foreach ($this->contents('files') as $path) {
+            $file = $this->file(\basename($path));
+            $this->files->append($file);
         }
 
         return $this->files;

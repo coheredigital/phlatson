@@ -14,8 +14,8 @@ for ($i = 0; $i < $repeat; $i++) {
     $folder = new Folder($app, 'pages');
     $index = $folder->index();
     // $content = $folder->contents();
-    // $folders = $folder->children();
-    // $files = $folder->files();
+    $folders = $folder->children();
+    $files = $folder->files();
 }
 dump($folder);
 
