@@ -119,16 +119,12 @@ class Folder
 
     public function file(string $name)
     {
+        // FIXME: this is also being called inside FileCollection::get, decide where make more sense and remove one
         if (!$this->files()->has($name)) {
             return null;
         }
 
-        // TODO: evaluate the need for this
-        if (isset($this->cache[$name])) {
-            return $this->cache[$name];
-        }
-
-        return $this->cache[$name] = $this->files()->get($name);
+        return $this->files()->get($name);
     }
 
     public function files(): FileCollection
@@ -137,8 +133,10 @@ class Folder
             $this->files = new FileCollection($this->app, $this);
         }
 
-        foreach ($this->index->get('files') as $path) {
-            $this->files->append($path);
+        if (count($this->index->get('files')) !== $this->files->count()) {
+            foreach ($this->index->get('files') as $path) {
+                $this->files->append($path);
+            }
         }
 
         return $this->files;

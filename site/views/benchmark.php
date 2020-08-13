@@ -17,26 +17,26 @@ for ($i = 0; $i < $repeat; $i++) {
     $folders = $folder->children();
     $files = $folder->files();
 
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
-    $files = $folder->file('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
+    $files = $folder->files()->get('data.json');
 }
 dump($folder);
 
