@@ -80,6 +80,25 @@ class Finder
         return false;
     }
 
+    public function getFolderFor(string $classname, string $uri): ?Folder
+    {
+        $uri = \trim($uri, '/');
+
+        // validate class
+        // TODO: This could be cleaner
+        if (!class_exists("\Phlatson\\$classname")) {
+            throw new \Exception("Class ($classname) does not exist, cannot be used to get data");
+        }
+
+        foreach ($this->mappings[$classname] as $rootFolder) {
+            if ($folder = $rootFolder->find($uri)) {
+                return $folder;
+            }
+        }
+
+        return null;
+    }
+
     public function getDataFor(string $classname, string $uri): ?DataFile
     {
         $uri = \trim($uri, '/');
@@ -105,7 +124,12 @@ class Finder
     public function get(string $classname, $path): ?DataObject
     {
         // get data object
-        if (!$data = $this->getDataFor($classname, $path)) {
+
+        if (!$folder = $this->getFolderFor($classname, $path)) {
+            return null;
+        }
+
+        if (!$data = $folder->file('data.json')) {
             return null;
         }
 
@@ -120,6 +144,7 @@ class Finder
 
         $object = new $classname($path, $this->app);
         $object->setData($data);
+        $object->setFolder($folder);
 
         return $object;
     }
