@@ -42,7 +42,11 @@ class Folder
         }
     }
 
-    public function updateIndex()
+    /**
+     * Rebuild the index for the current Folder
+     *
+     */
+    public function updateIndex(): void
     {
         $index = new DataFile(null, $this);
         $data = [
@@ -60,7 +64,7 @@ class Folder
         $index->set('files', $data['files']);
         $index->set('folders', $data['folders']);
         $index->set('modified', (int) date('U'));
-        // return $this->index;
+        $index->save();
     }
 
     public function name(): string

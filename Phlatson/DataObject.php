@@ -27,6 +27,7 @@ abstract class DataObject
 {
     protected App $app;
     protected DataFile $data;
+    protected Folder $folder;
     protected DataFileCollection $dataFiles;
     protected array $formattedData = [];
     protected FieldCollection $fields;
@@ -47,6 +48,13 @@ abstract class DataObject
     public function setData(DataFile $data): self
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    public function setFolder(Folder $folder): self
+    {
+        $this->folder = $folder;
 
         return $this;
     }
