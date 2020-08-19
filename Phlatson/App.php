@@ -125,7 +125,7 @@ class App
     public function execute()
     {
         // determine the requested page
-        $page = $this->getPage($this->request->url);
+        $page = $this->getPage($this->request->path);
         if (!$page) {
             // TODO: improved 404 handle (throw exception)
             $page = $this->finder->get('Page', '/404');

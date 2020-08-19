@@ -91,6 +91,10 @@ class Finder
         }
 
         foreach ($this->mappings[$classname] as $rootFolder) {
+            // TODO: this feels bad, shouldn't have to check for special cases
+            if (!$uri) {
+                return $rootFolder;
+            }
             if ($folder = $rootFolder->find($uri)) {
                 return $folder;
             }
