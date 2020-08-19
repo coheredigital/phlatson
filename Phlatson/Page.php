@@ -14,17 +14,18 @@ class Page extends DataObject
 
     public function rootFolder(): string
     {
-        return str_replace($this->url(), '', $this->folder()) . '/';
+        return $this->folder->parent()->folder();
     }
 
     public function url(): string
     {
-        // remove root from path
-        $value = \str_replace($this->rootPath(), '', $this->path());
-        $value = trim($value, '/');
-        $value = $value ? "/$value/" : '/';
+        $rootFolder = $this->rootFolder();
+        $folder = $this->folder();
 
-        return $value;
+        $url = \str_replace($rootFolder, '', $folder);
+        $url = \trim($url, '/');
+
+        return "/$url/";
     }
 
     public function parent(): ?Page
@@ -70,6 +71,16 @@ class Page extends DataObject
         $this->parents->reverse();
 
         return $this->parents;
+    }
+
+    public function rootParent(): Folder
+    {
+        $parent = $this;
+        while ($parent->parent()) {
+            $parent = $parent->parent();
+        }
+
+        return $parent;
     }
 
     public function children(): ObjectCollection
