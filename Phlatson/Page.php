@@ -14,7 +14,7 @@ class Page extends DataObject
 
     public function rootFolder(): string
     {
-        return $this->folder->parent()->folder();
+        return $this->folder->parent() ? $this->folder->parent()->folder() : $this->folder();
     }
 
     public function url(): string
