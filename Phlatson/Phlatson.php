@@ -39,6 +39,8 @@ class Phlatson
 
 	public function app(): ?App
 	{
+
+
 		if (!isset($this->apps[$this->request->domain])) {
 			return null;
 		}

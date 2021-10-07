@@ -30,6 +30,7 @@ Desktop.ini
 /vendor/*
 
 #IDEs
+.code-workspace
 .vscode/*
 # *.code-workspace
 .idea/*
