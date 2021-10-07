@@ -2,7 +2,7 @@
     "domains" : [
         "phlatson.com",
         "www.phlatson.com",
-        "phlatson.localhost"
+        "phlatson.test"
     ],
     "debug": false,
     "session": {

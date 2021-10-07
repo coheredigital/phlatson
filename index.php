@@ -22,11 +22,6 @@ try {
 
 	// get the current app
 	$app = $phlatson->app();
-
-	if (!isset($app)) {
-		throw new \Exception('No App found.');
-	}
-
 	$app->execute();
 } catch (\Exception $exception) {
 	echo $exception;

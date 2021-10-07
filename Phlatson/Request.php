@@ -24,8 +24,8 @@ class Request
 
 	public function __construct()
 	{
-		$this->method = $_SERVER['REQUEST_METHOD'];
-		$this->scheme = $_SERVER['REQUEST_SCHEME'];
+		$this->method = $_SERVER['REQUEST_METHOD'] ?? '';
+		$this->scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
 		$this->hostname = $_SERVER['HTTP_HOST'];
 		$this->domain = $this->hostname;
 
