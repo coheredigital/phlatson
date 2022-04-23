@@ -67,7 +67,7 @@ class Page extends DataObject
             $current = $current->parent();
         }
 
-        // cache result
+        // cache result`
         $this->parents->reverse();
 
         return $this->parents;

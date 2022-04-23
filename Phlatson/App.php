@@ -97,7 +97,7 @@ class App
         return $path;
     }
 
-    public function getPage(string $uri): Page
+    public function getPage(string $uri): ?Page
     {
         return $this->finder->get('Page', $uri);
     }
@@ -128,7 +128,7 @@ class App
         $page = $this->getPage($this->request->path);
         if (!$page) {
             // TODO: improved 404 handle (throw exception)
-            $page = $this->finder->get('Page', '/404');
+            $page = $this->getPage('/404');
         }
         $this->page = $page;
 

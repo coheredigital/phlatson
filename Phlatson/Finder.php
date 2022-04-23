@@ -21,7 +21,8 @@ class Finder
 
     public function map(string $classname, string $path): self
     {
-        // validate class
+
+
         if (!class_exists("\Phlatson\\{$classname}")) {
             throw new \Exception("Class ($classname) does not exist, cannot be used for path mappings");
         }
@@ -31,7 +32,11 @@ class Finder
             throw new \Exception("Path ({$path}) does not exist, cannot be used as site data");
         }
 
-        $this->mappings[$classname][$path] = new Folder($this->app, $path);
+        // validate class
+        $this->mappings[$classname] = [];
+        $path_mappings = $this->mappings[$classname];
+
+        $this->mappings[$classname] = [$path => new Folder($this->app, $path)] + $path_mappings;
 
         return $this;
     }
