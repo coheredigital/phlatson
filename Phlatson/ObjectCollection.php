@@ -109,17 +109,17 @@ class ObjectCollection implements \Iterator, \Countable
         return $item;
     }
 
-    public function key()
+    public function key(): mixed
     {
         return $this->index();
     }
 
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
 
-    public function valid()
+    public function valid(): bool
     {
         if ($this->limit && $this->position == $this->limit) {
             return false;

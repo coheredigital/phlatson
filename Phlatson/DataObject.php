@@ -34,7 +34,7 @@ abstract class DataObject
     protected string $rootPath;
     protected ?Template $template = null;
 
-    public function __construct(?string $path = null, App $app)
+    public function __construct(string|null $path = null, App $app)
     {
         if (!isset($path)) {
             return;
@@ -71,7 +71,7 @@ abstract class DataObject
 
     public function exists(): bool
     {
-        return file_exists($this->file);
+        return $this->file && file_exists($this->file);
     }
 
     public function rootFolder(): string

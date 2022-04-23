@@ -51,7 +51,7 @@ class FolderCollection implements \ArrayAccess, \Countable
         return $folder;
     }
 
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         return $this->get($key);
     }

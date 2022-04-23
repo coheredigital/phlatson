@@ -88,7 +88,7 @@ class FileCollection implements \ArrayAccess
      * @param string $key
      *
      */
-    public function offsetGet($key)
+    public function offsetGet($key): mixed
     {
         return $this->get($key);
     }
