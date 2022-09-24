@@ -24,5 +24,5 @@ try {
 	$app = $phlatson->app();
 	$app->execute();
 } catch (\Exception $exception) {
-	echo $exception;
+	echo $whoops->handleException($exception);
 }

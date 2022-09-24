@@ -1,7 +1,6 @@
 {
   "name": "phlatson",
   "version": "1.0.0",
-  "description": "NFT Main Site",
   "main": "gulpfile.js",
   "author": "",
   "license": "ISC",

@@ -36,7 +36,7 @@ class FileCollection implements \ArrayAccess
         return isset($this->collection[$key]);
     }
 
-    public function get($key)
+    public function get($key): mixed
     {
         if (!$this->has($key)) {
             return null;
@@ -88,7 +88,7 @@ class FileCollection implements \ArrayAccess
      * @param string $key
      *
      */
-    public function offsetGet($key): mixed
+    public function offsetGet(mixed $key): mixed
     {
         return $this->get($key);
     }
